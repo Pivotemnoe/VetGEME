@@ -2,9 +2,11 @@
   "use strict";
 
   const DAY_START = 8 * 60;
-  const DAY_END = 18 * 60;
+  const STANDARD_DAY_END = 18 * 60;
+  const EXTENDED_DAY_END = 20 * 60;
   const MAX_LOCAL_EXAMS = 2;
   const MICROSCOPY_COST = 2;
+  const campaign = window.PET_CLINIC_CAMPAIGN;
 
   const speciesLabels = {
     dog: "собака",
@@ -178,6 +180,18 @@
       label: "Только наблюдение",
       note: "Минимальное вмешательство. Дешево, но рискованно.",
       fee: 60
+    },
+    {
+      id: "giSupport",
+      label: "Поддержка ЖКТ и домашнее наблюдение",
+      note: "Регидратация, щадящий режим и четкие тревожные признаки.",
+      fee: 250
+    },
+    {
+      id: "urgentReferral",
+      label: "Стабилизация и срочное направление",
+      note: "Не задерживать пациента, если кабинета недостаточно для безопасной помощи.",
+      fee: 180
     }
   ];
 
@@ -219,8 +233,8 @@
     },
     {
       id: "gastroenteritis",
-      label: "Гастроэнтерит",
-      note: "Похож на ЖКТ-жалобы, но не равен панкреатиту."
+      label: "Острое расстройство ЖКТ",
+      note: "Короткий эпизод рвоты или диареи без признаков тяжелого состояния."
     },
     {
       id: "foreignBody",
@@ -228,9 +242,9 @@
       note: "Опасная версия рвоты и боли, которую важно учитывать."
     },
     {
-      id: "fractureDislocation",
-      label: "Перелом или вывих",
-      note: "Возможная причина боли и нарушения опоры на конечность."
+      id: "urinaryObstruction",
+      label: "Обструкция мочевыводящих путей",
+      note: "Срочная версия жалобы «не ходит в туалет» у кота."
     }
   ];
 
@@ -528,6 +542,89 @@
         return outcome("wrong", 0.2, "Лечение не закрывает ЖКТ-боль и повторную рвоту.");
       }
     },
+    gastroenteritis: {
+      name: "Острое расстройство ЖКТ",
+      short: "рвота или диарея",
+      species: ["dog", "cat"],
+      baseFee: 120,
+      complaints: [
+        "один-два раза вырвало",
+        "стал хуже есть",
+        "жидкий стул",
+        "урчит живот",
+        "недавно сменили корм",
+        "мог стащить еду",
+        "пьет воду"
+      ],
+      makeFlags() {
+        return { trigger: pick(["резко сменили корм", "украл еду со стола", "получил новое лакомство"]), vomitCount: pick([1, 2]) };
+      },
+      anamnesis(patient) {
+        return [
+          { id: "start", label: "Когда началось и сколько эпизодов?", answer: `Началось сегодня, рвота была ${patient.flags.vomitCount || 1} раз.` },
+          { id: "food", label: "Что ел в последние сутки?", answer: `Возможный пищевой фактор: ${patient.flags.trigger}.` },
+          { id: "water", label: "Пьет и удерживает воду?", answer: "Воду пьет небольшими порциями и не срыгивает." },
+          { id: "toilet", label: "Мочеиспускание сохранено?", answer: "Мочеиспускание есть, стул мягкий или жидкий." },
+          { id: "danger", label: "Есть кровь, сильная боль или инородное тело?", answer: "Крови нет, сильной постоянной боли и известного инородного тела нет." }
+        ];
+      },
+      temperature() { return "Температура в норме."; },
+      mucous() { return "Слизистые розовые, умеренно влажные, тяжелого обезвоживания нет."; },
+      local: {
+        ears: "Уши без выраженных изменений.",
+        abdomen: "Живот мягкий, умеренно чувствительный, без резкой локальной боли.",
+        skin: "Кожа без значимых очагов.",
+        gait: "Походка обычная, слабости нет.",
+        head: "Голова без травм, сознание ясное."
+      },
+      microscopy() { return "Микроскопия материала из уха не относится к этой жалобе и не дает полезных данных."; },
+      evaluate(patient, treatmentId) {
+        if (treatmentId === "giSupport") return outcome("correct", 0.05, "Выбран безопасный поддерживающий план с контролем тревожных признаков.");
+        if (treatmentId === "watchfulWaiting") return outcome("partial", 0.14, "Наблюдение возможно, но владельцу не хватает четкого плана поддержки.");
+        if (treatmentId === "pancreatitisSupport") return outcome("partial", 0.09, "Поддержка поможет, но схема избыточна для неосложненного случая.");
+        return outcome("wrong", 0.2, "Назначение не соответствует острой желудочно-кишечной жалобе.");
+      }
+    },
+    urinaryObstruction: {
+      name: "Обструкция мочевыводящих путей",
+      short: "не может помочиться",
+      species: ["cat"],
+      baseFee: 150,
+      complaints: [
+        "как будто запор",
+        "часто садится в лоток",
+        "мяукает в туалете",
+        "лижет под хвостом",
+        "выходит по капле",
+        "стал беспокойным",
+        "прячется и не ест"
+      ],
+      makeFlags() { return { lastUrineHours: 12 }; },
+      anamnesis(patient) {
+        return [
+          { id: "urine", label: "Моча или кал не выходят?", answer: "Владелец сначала говорит о запоре, но в лотке нет нормальной мочи, только несколько капель." },
+          { id: "duration", label: "Когда последний раз нормально мочился?", answer: `Нормального мочеиспускания не было около ${patient.flags.lastUrineHours || 12} часов.` },
+          { id: "sex", label: "Кот или кошка?", answer: "Это кот. Риск закупорки мочеиспускательного канала выше." },
+          { id: "pain", label: "Есть боль, вокализация, рвота?", answer: "Кот беспокоится, мяукает в лотке и не дает трогать низ живота." },
+          { id: "foodToilet", label: "Аппетит, вода, рвота?", answer: "Аппетит снизился, рвоты пока не было." }
+        ];
+      },
+      temperature() { return "Температура пока в норме, но состояние потенциально срочное."; },
+      mucous() { return "Слизистые розовые. Отсутствие изменений не исключает обструкцию."; },
+      local: {
+        ears: "Уши без выраженных изменений.",
+        abdomen: "Внизу живота пальпируется напряженный болезненный мочевой пузырь. Осмотр нужно прекратить без лишнего давления.",
+        skin: "Кожа без значимых очагов.",
+        gait: "Движения скованные из-за боли, травмы конечностей нет.",
+        head: "Сознание ясное, но кот беспокоен и болезненно реагирует."
+      },
+      microscopy() { return "Микроскопия ушного материала не относится к срочной жалобе и задерживает помощь."; },
+      evaluate(patient, treatmentId) {
+        if (treatmentId === "urgentReferral") return outcome("correct", 0.02, "Срочный пациент не задержан и направлен для катетеризации и мониторинга.");
+        if (treatmentId === "watchfulWaiting") return outcome("wrong", 0.7, "Домашнее наблюдение при вероятной обструкции опасно.");
+        return outcome("wrong", 0.48, "Назначение задерживает помощь при вероятной обструкции.");
+      }
+    },
     dermatitis: {
       name: "Простой дерматит",
       short: "красное зудящее пятно",
@@ -671,6 +768,7 @@
   const state = {
     day: 1,
     minute: DAY_START,
+    dayEnd: STANDARD_DAY_END,
     money: 1350,
     reputation: 74,
     queue: [],
@@ -683,12 +781,21 @@
     log: "Клиника открыта. Владелец с животным ждет приема.",
     treatedToday: 0,
     revenueToday: 0,
+    expensesToday: 0,
     returnsToday: 0,
     mistakesToday: 0,
     pendingReturns: [],
     caseJournal: [],
-    modalOpen: false,
-    animationTime: 0
+    modalOpen: true,
+    animationTime: 0,
+    dayStarted: false,
+    hoursMode: "standard",
+    selectedDoctorId: campaign.doctors[0].id,
+    doctors: campaign.doctors.map((doctor) => ({ ...doctor, shiftsWorked: 0, consecutiveShifts: 0, lastShiftDay: -1 })),
+    lostToday: 0,
+    goalStats: {},
+    shiftExtended: false,
+    chapterComplete: false
   };
 
   const canvas = document.getElementById("clinicCanvas");
@@ -697,6 +804,10 @@
   const portraitCtx = portraitCanvas.getContext("2d");
 
   const el = {
+    campaignProgress: document.getElementById("campaignProgress"),
+    dayTitle: document.getElementById("dayTitle"),
+    dayGoalsList: document.getElementById("dayGoalsList"),
+    goalScore: document.getElementById("goalScore"),
     nextPatientCard: document.getElementById("nextPatientCard"),
     queueStrip: document.getElementById("queueStrip"),
     queueCountLabel: document.getElementById("queueCountLabel"),
@@ -704,7 +815,7 @@
     caseStage: document.getElementById("caseStage"),
     caseTitle: document.getElementById("caseTitle"),
     caseOwner: document.getElementById("caseOwner"),
-    caseUrgency: document.getElementById("caseUrgency"),
+    caseUrgencyBtn: document.getElementById("caseUrgencyBtn"),
     caseDuration: document.getElementById("caseDuration"),
     closeCaseBtn: document.getElementById("closeCaseBtn"),
     ownerComplaint: document.getElementById("ownerComplaint"),
@@ -752,7 +863,23 @@
     developerBtn: document.getElementById("developerBtn"),
     developerPanel: document.getElementById("developerPanel"),
     closeDeveloperBtn: document.getElementById("closeDeveloperBtn"),
-    developerData: document.getElementById("developerData")
+    developerData: document.getElementById("developerData"),
+    shiftWindow: document.getElementById("shiftWindow"),
+    shiftTitle: document.getElementById("shiftTitle"),
+    shiftBriefing: document.getElementById("shiftBriefing"),
+    doctorOptions: document.getElementById("doctorOptions"),
+    startShiftBtn: document.getElementById("startShiftBtn"),
+    closeShiftWindow: document.getElementById("closeShiftWindow"),
+    closeShiftSummary: document.getElementById("closeShiftSummary"),
+    extendShiftBtn: document.getElementById("extendShiftBtn"),
+    transferQueueBtn: document.getElementById("transferQueueBtn"),
+    finishShiftBtn: document.getElementById("finishShiftBtn"),
+    closeShiftBtn: document.getElementById("closeShiftBtn"),
+    doctorHudName: document.getElementById("doctorHudName"),
+    doctorFatigue: document.getElementById("doctorFatigue"),
+    doctorFatigueMeter: document.getElementById("doctorFatigueMeter"),
+    devResolvePatientBtn: document.getElementById("devResolvePatientBtn"),
+    devFinishDayBtn: document.getElementById("devFinishDayBtn")
   };
 
   function outcome(quality, returnRisk, note) {
@@ -805,6 +932,37 @@
     return state.queue.find((patient) => patient.id === state.activeId) || null;
   }
 
+  function currentPlan() {
+    return campaign.days.find((plan) => plan.day === state.day) || null;
+  }
+
+  function currentDoctor() {
+    return state.doctors.find((doctor) => doctor.id === state.selectedDoctorId) || state.doctors[0];
+  }
+
+  function adjustedActionMinutes(minutes) {
+    const doctor = currentDoctor();
+    const multiplier = 1 + doctor.fatigue / 180;
+    return Math.max(1, Math.round(minutes * multiplier));
+  }
+
+  function addDoctorFatigue(amount) {
+    const doctor = currentDoctor();
+    doctor.fatigue = clamp(doctor.fatigue + amount, 0, 100);
+  }
+
+  function incrementGoal(id, amount = 1) {
+    state.goalStats[id] = (state.goalStats[id] || 0) + amount;
+  }
+
+  function goalProgress(goal) {
+    return clamp(state.goalStats[goal.id] || 0, 0, goal.target);
+  }
+
+  function goalComplete(goal) {
+    return goalProgress(goal) >= goal.target;
+  }
+
   function setLog(text) {
     state.log = text;
     el.messageLog.textContent = text;
@@ -815,7 +973,11 @@
   }
 
   function isReadingInterfaceOpen() {
-    return !el.caseWindow.classList.contains("hidden") || !el.choiceWindow.classList.contains("hidden");
+    return !el.caseWindow.classList.contains("hidden")
+      || !el.choiceWindow.classList.contains("hidden")
+      || !el.shiftWindow.classList.contains("hidden")
+      || !el.closeShiftWindow.classList.contains("hidden")
+      || !el.summaryWindow.classList.contains("hidden");
   }
 
   function waitingMood(patient) {
@@ -836,25 +998,28 @@
     }
   }
 
-  function createPatient(forcedDiseaseId, isReturn) {
+  function createPatient(forcedDiseaseId, isReturn, overrides = {}) {
     const diseaseId = forcedDiseaseId || pick(diseaseIds);
     const disease = diseases[diseaseId];
-    const species = pick(disease.species);
-    const flags = disease.makeFlags ? disease.makeFlags() : {};
-    const complaints = sample(disease.complaints, 3);
-    const profile = pick(ownerProfiles);
+    const species = overrides.species || pick(disease.species);
+    const flags = { ...(disease.makeFlags ? disease.makeFlags() : {}), ...(overrides.flags || {}) };
+    const complaints = overrides.complaints || sample(disease.complaints, 3);
+    const profile = ownerProfiles.find((item) => item.id === overrides.profileId) || pick(ownerProfiles);
     const patient = {
       id: state.nextPatientId,
-      owner: pick(owners),
+      owner: overrides.owner || pick(owners),
       ownerProfile: profile,
       budget: profile.budget + Math.round((Math.random() - 0.5) * 120),
-      animal: pick(speciesNames[species]),
+      animal: overrides.animal || pick(speciesNames[species]),
       species,
-      ageYears: species === "rabbit" ? pick([1, 2, 3, 4, 5]) : pick([1, 2, 3, 4, 6, 8, 10]),
-      sex: pick(["самец", "самка"]),
+      ageYears: overrides.ageYears || (species === "rabbit" ? pick([1, 2, 3, 4, 5]) : pick([1, 2, 3, 4, 6, 8, 10])),
+      sex: overrides.sex || pick(["самец", "самка"]),
       diseaseId,
       flags,
       complaints,
+      ownerLead: overrides.ownerLead || "",
+      urgency: overrides.urgency || "routine",
+      selectedUrgency: null,
       age: 0,
       patience: 82 + Math.random() * 34,
       mood: 100,
@@ -876,7 +1041,10 @@
       microscopyDone: false,
       selectedDiagnosisId: null,
       selectedCommunicationId: null,
-      returnVisit: Boolean(isReturn)
+      returnVisit: Boolean(isReturn || overrides.returnVisit),
+      completeExamCredited: false,
+      screenX: 730,
+      screenY: 590
     };
     state.nextPatientId += 1;
     patient.findings.push(isReturn
@@ -885,9 +1053,9 @@
     return patient;
   }
 
-  function spawnPatient(forcedDiseaseId, isReturn) {
+  function spawnPatient(forcedDiseaseId, isReturn, overrides = {}) {
     if (state.queue.length >= 12 && !isReturn) return;
-    const patient = createPatient(forcedDiseaseId, isReturn);
+    const patient = createPatient(forcedDiseaseId, isReturn, overrides);
     state.queue.push(patient);
     if (!state.activeId) state.activeId = patient.id;
     setLog(isReturn
@@ -898,11 +1066,12 @@
 
   function passTime(minutes, options = {}) {
     if (state.modalOpen) return;
-    const adjusted = Math.max(1, Math.round(minutes));
+    const adjusted = options.rawTime ? Math.max(1, Math.round(minutes)) : adjustedActionMinutes(minutes);
     const patientInConsult = activePatient();
     if (options.trackVisit !== false && isPatientInConsult(patientInConsult)) {
       spendVisitTime(patientInConsult, adjusted);
     }
+    if (options.doctorWork !== false) addDoctorFatigue(adjusted * 0.12);
     state.minute += adjusted;
     state.spawnMeter += adjusted;
     state.queue.forEach((patient) => {
@@ -912,13 +1081,14 @@
     });
     removeLostPatients();
     maybeSpawn();
-    if (state.minute >= DAY_END) {
-      endDay();
+    if (state.minute >= state.dayEnd) {
+      requestShiftClose(true);
     }
     renderAll();
   }
 
   function maybeSpawn() {
+    if (state.day <= 5) return;
     const interval = clamp(72 - state.day * 4 - state.reputation * 0.16, 36, 78);
     while (state.spawnMeter >= interval) {
       state.spawnMeter -= interval;
@@ -932,6 +1102,8 @@
       const lost = patient.age > patient.patience;
       if (lost) {
         state.reputation = clamp(state.reputation - 3, 0, 100);
+        state.lostToday += 1;
+        state.goalStats.noLost = 0;
       }
       return !lost;
     });
@@ -944,7 +1116,10 @@
   function askQuestion(patient, question) {
     if (patient.asked[question.id]) return;
     patient.asked[question.id] = true;
-    if (question.id === "budget") patient.budgetAsked = true;
+    if (question.id === "budget") {
+      patient.budgetAsked = true;
+      incrementGoal("budget");
+    }
     patient.dxPoints += 1;
     patient.findings.push(question.answer);
     setLog("Анамнез собран: +1 диагностическое очко.");
@@ -961,6 +1136,7 @@
     patient.stress = clamp(patient.stress + 6, 0, 100);
     patient.findings.push(`Общий осмотр: ${diseaseFor(patient).temperature(patient)} ${diseaseFor(patient).mucous(patient)}`);
     setLog("Проведен общий осмотр: состояние, температура, слизистые и дыхание.");
+    creditCompleteExam(patient);
     passTime(3);
   }
 
@@ -994,9 +1170,18 @@
     patient.dxPoints += 1;
     patient.stress = clamp(patient.stress + 5, 0, 100);
     patient.findings.push(typeof result === "function" ? result(patient) : result);
+    incrementGoal("targetExam");
     setLog(`Локальный осмотр: ${option.label}.`);
     closeChoice();
+    creditCompleteExam(patient);
     passTime(option.time);
+  }
+
+  function creditCompleteExam(patient) {
+    if (!patient.completeExamCredited && patient.generalExamDone && patient.localUsed > 0) {
+      patient.completeExamCredited = true;
+      incrementGoal("completeExam");
+    }
   }
 
   function doSample() {
@@ -1048,7 +1233,9 @@
     let trustDelta = preferred ? 8 : 2;
     if (option.id === "strict" && patient.ownerProfile.id === "anxious") trustDelta = -4;
     if (option.id === "budgetPlan" && patient.ownerProfile.id === "budget") trustDelta = 10;
+    if (currentDoctor().fatigue >= 70) trustDelta -= 2;
     adjustTrust(patient, trustDelta);
+    incrementGoal("explained");
     setLog(`План объяснен: ${option.label.toLowerCase()}. Реакция владельца отражена в шкале доверия.`);
     closeChoice();
     passTime(4);
@@ -1067,12 +1254,19 @@
     state.money += total;
     state.revenueToday += total;
     state.treatedToday += 1;
+    incrementGoal("treated");
+    if (patient.returnVisit) incrementGoal("returns");
     let reputationChange = 0;
     let risk = result.returnRisk;
     let effectiveQuality = result.quality;
 
     if (diagnosticsScore < 45) {
       risk += 0.08;
+    }
+
+    if (patient.urgency === "urgent" && patient.selectedUrgency !== "urgent") {
+      risk += 0.2;
+      reputationChange -= 2;
     }
 
     const overtime = Math.max(0, patient.visitTimeUsed - patient.visitTimeLimit);
@@ -1106,13 +1300,13 @@
       patient.findings.push("Назначения даны без отдельного объяснения владельцу.");
     } else if (communicationMatch) {
       risk = Math.max(0, risk - 0.06);
-      reputationChange += 1;
+      reputationChange += 0.35;
     } else {
       risk += 0.04;
     }
 
     if (effectiveQuality === "correct") {
-      reputationChange += patient.returnVisit ? 2 : 1;
+      reputationChange += patient.returnVisit ? 1 : 0.45;
     } else if (effectiveQuality === "partial") {
       if (diagnosisCorrect) state.mistakesToday += 1;
       reputationChange -= patient.returnVisit ? 2 : 0;
@@ -1122,6 +1316,13 @@
     }
 
     state.reputation = clamp(state.reputation + reputationChange, 0, 100);
+    if (patient.diseaseId === "urinaryObstruction"
+      && patient.selectedUrgency === "urgent"
+      && diagnosisCorrect
+      && treatment.id === "urgentReferral") {
+      incrementGoal("urgent");
+      state.reputation = clamp(state.reputation + 2, 0, 100);
+    }
     if (Math.random() < risk) {
       state.pendingReturns.push({ diseaseId: patient.diseaseId, day: state.day + 1 });
     }
@@ -1131,6 +1332,7 @@
       animal: patient.animal,
       species: patient.species,
       owner: patient.owner,
+      doctor: currentDoctor().name,
       ownerType: patient.ownerProfile.label,
       complaint: patient.complaints.join(", "),
       trueDiagnosis: disease.name,
@@ -1148,7 +1350,7 @@
     state.activeId = state.queue[0] ? state.queue[0].id : null;
     closeChoice();
     if (!state.activeId) el.caseWindow.classList.add("hidden");
-    passTime(18, { trackVisit: false });
+    passTime(12, { trackVisit: false });
   }
 
   function diagnosticScore(patient) {
@@ -1160,44 +1362,264 @@
     return clamp(score, 0, 100);
   }
 
-  function endDay() {
-    state.modalOpen = true;
-    state.paused = true;
-    const todayCases = state.caseJournal.filter((item) => item.day === state.day);
-    const lastCase = todayCases[todayCases.length - 1];
-    el.summaryTitle.textContent = `День ${state.day} завершен`;
-    el.summaryText.innerHTML = [
-      `Пациентов принято: <b>${state.treatedToday}</b>.`,
-      `Доход: <b>${formatMoney(state.revenueToday)} веткоинов</b>.`,
-      `Репутация: <b>${state.reputation}</b>/100.`,
-      `Повторных обращений сегодня: <b>${state.returnsToday}</b>.`,
-      lastCase
-        ? `Последний случай: <b>${lastCase.animal}</b>, рабочая версия: <b>${lastCase.selectedDiagnosis}</b>.`
-        : "Журнал случаев пока пуст."
-    ].join("<br>");
-    el.summaryWindow.classList.remove("hidden");
+  function correctTreatmentId(patient) {
+    const map = {
+      bacterialOtitis: patient.flags.durationDays > 14 ? "dropsAntibiotic" : "antibacterialDrops",
+      inflammatoryOtitis: "antiInflammatoryDrops",
+      miteOtitis: "antiparasitic",
+      pancreatitis: "pancreatitisSupport",
+      gastroenteritis: "giSupport",
+      dermatitis: "dermatitisLocal",
+      trauma: "traumaCare",
+      urinaryObstruction: "urgentReferral"
+    };
+    return map[patient.diseaseId] || "watchfulWaiting";
   }
 
-  function startNextDay() {
-    state.day += 1;
+  function debugResolveActivePatient() {
+    const patient = activePatient();
+    if (!patient) return;
+    el.caseWindow.classList.remove("hidden");
+    if (!patient.selectedUrgency) selectUrgency(patient.urgency);
+    if (!patient.generalExamDone) doGeneralExam();
+    if (patient.localUsed === 0) {
+      const localId = patient.diseaseId.includes("Otitis") ? "ears"
+        : patient.diseaseId === "dermatitis" ? "skin"
+          : patient.diseaseId === "trauma" ? "gait" : "abdomen";
+      doLocalExam(localExamOptions.find((option) => option.id === localId));
+    }
+    if (!patient.budgetAsked) {
+      patient.budgetAsked = true;
+      incrementGoal("budget");
+    }
+    if (patient.diseaseId.includes("Otitis") && !patient.microscopyDone) {
+      if (!patient.sampleTaken) doSample();
+      doMicroscopy();
+    }
+    selectDiagnosis(diagnosisOptions.find((diagnosis) => diagnosis.id === patient.diseaseId));
+    selectCommunication(communicationOptions.find((option) => option.id === patient.ownerProfile.prefers));
+    treatPatient(treatmentOptions.find((treatment) => treatment.id === correctTreatmentId(patient)));
+  }
+
+  function debugFinishDay() {
+    state.queue.forEach((patient) => { patient.patience = 999; });
+    let safety = 20;
+    while (state.queue.length && safety > 0) {
+      state.activeId = state.queue[0].id;
+      debugResolveActivePatient();
+      safety -= 1;
+    }
+    requestShiftClose(false);
+    finishShift();
+  }
+
+  function renderShiftPlanning() {
+    const plan = currentPlan();
+    el.shiftTitle.textContent = plan ? `День ${state.day} · ${plan.title}` : `День ${state.day} · Свободная работа`;
+    el.shiftBriefing.textContent = plan
+      ? plan.briefing
+      : "Сюжетная глава завершена. Клиника продолжает работу в свободном режиме.";
+    el.doctorOptions.textContent = "";
+    state.doctors.forEach((doctor) => {
+      const unavailable = doctor.lastShiftDay === state.day - 1;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `doctor-option${doctor.id === state.selectedDoctorId ? " selected" : ""}`;
+      button.disabled = unavailable;
+      const avatar = document.createElement("span");
+      avatar.className = "doctor-avatar";
+      avatar.style.background = doctor.color;
+      avatar.textContent = doctor.name.split(" ").map((part) => part[0]).join("");
+      const copy = document.createElement("span");
+      const name = document.createElement("strong");
+      name.textContent = doctor.name;
+      const fatigue = document.createElement("span");
+      fatigue.textContent = `Усталость: ${Math.round(doctor.fatigue)}% · смен подряд: ${doctor.consecutiveShifts}`;
+      const note = document.createElement("small");
+      note.textContent = unavailable ? "Обязательный выходной после вчерашней смены." : doctor.note;
+      copy.append(name, fatigue, note);
+      button.append(avatar, copy);
+      button.addEventListener("click", () => {
+        state.selectedDoctorId = doctor.id;
+        renderShiftPlanning();
+      });
+      el.doctorOptions.appendChild(button);
+    });
+    const selectedMode = document.querySelector(`input[name="hoursMode"][value="${state.hoursMode}"]`);
+    if (selectedMode) selectedMode.checked = true;
+  }
+
+  function openShiftPlanning() {
+    state.modalOpen = true;
+    state.paused = true;
+    state.dayStarted = false;
+    el.caseWindow.classList.add("hidden");
+    el.choiceWindow.classList.add("hidden");
+    el.summaryWindow.classList.add("hidden");
+    el.closeShiftWindow.classList.add("hidden");
+    el.shiftWindow.classList.remove("hidden");
+    const availableDoctors = state.doctors
+      .filter((doctor) => doctor.lastShiftDay !== state.day - 1)
+      .sort((left, right) => left.fatigue - right.fatigue);
+    if (availableDoctors.length) state.selectedDoctorId = availableDoctors[0].id;
+    renderShiftPlanning();
+    renderAll();
+  }
+
+  function resetDayState() {
     state.minute = DAY_START;
+    state.hoursMode = "standard";
+    state.dayEnd = STANDARD_DAY_END;
     state.spawnMeter = 0;
     state.treatedToday = 0;
     state.revenueToday = 0;
+    state.expensesToday = 0;
     state.returnsToday = 0;
     state.mistakesToday = 0;
-    state.paused = false;
+    state.lostToday = 0;
+    state.goalStats = { noLost: 1 };
+    state.shiftExtended = false;
+    state.queue = [];
+    state.activeId = null;
+  }
+
+  function startShift() {
+    const doctor = currentDoctor();
+    if (doctor.lastShiftDay === state.day - 1) {
+      setLog(`${doctor.name} отдыхает после предыдущей смены. Выберите второго врача.`);
+      renderShiftPlanning();
+      return;
+    }
+    const selectedMode = document.querySelector('input[name="hoursMode"]:checked');
+    state.hoursMode = selectedMode ? selectedMode.value : "standard";
+    state.dayEnd = state.hoursMode === "extended" ? EXTENDED_DAY_END : STANDARD_DAY_END;
+    state.dayStarted = true;
     state.modalOpen = false;
-    el.summaryWindow.classList.add("hidden");
+    state.paused = false;
+    doctor.shiftsWorked += 1;
+    doctor.consecutiveShifts += 1;
+    doctor.lastShiftDay = state.day;
+    if (state.hoursMode === "extended") addDoctorFatigue(5);
+    el.shiftWindow.classList.add("hidden");
+
+    const plan = currentPlan();
     const returns = state.pendingReturns.filter((item) => item.day === state.day);
     state.pendingReturns = state.pendingReturns.filter((item) => item.day !== state.day);
     returns.forEach((item) => {
       state.returnsToday += 1;
       spawnPatient(item.diseaseId, true);
     });
-    while (state.queue.length < 3) spawnPatient();
-    setLog(returns.length ? "День начался с повторных обращений." : "Новый день. Очередь постепенно собирается.");
+    if (plan) {
+      plan.patients.forEach((template) => spawnPatient(template.diseaseId, template.returnVisit, template));
+      if (state.hoursMode === "extended") spawnPatient(pick(["inflammatoryOtitis", "dermatitis", "trauma", "gastroenteritis"]), false);
+    } else {
+      while (state.queue.length < (state.hoursMode === "extended" ? 5 : 3)) spawnPatient();
+    }
+    setLog(`${doctor.name} начал${doctor.name.endsWith("а") ? "а" : ""} смену. ${plan ? plan.briefing : "Клиника работает в свободном режиме."}`);
     renderAll();
+  }
+
+  function requestShiftClose(forced = false) {
+    if (!state.dayStarted || !el.closeShiftWindow.classList.contains("hidden")) return;
+    if (!forced && state.queue.length > 0 && state.minute < state.dayEnd - 120) {
+      setLog("Смену рано закрывать: в очереди остаются пациенты и рабочее время еще не закончилось.");
+      return;
+    }
+    state.modalOpen = true;
+    state.paused = true;
+    const urgent = state.queue.filter((patient) => patient.selectedUrgency === "urgent").length;
+    el.closeShiftSummary.innerHTML = [
+      `<b>В очереди:</b> ${state.queue.length}.`,
+      `<b>Срочных:</b> ${urgent}.`,
+      `<b>Непросмотренных результатов:</b> 0.`,
+      `<b>Усталость ${currentDoctor().shortName}:</b> ${Math.round(currentDoctor().fatigue)}%.`,
+      `<b>Текущее время:</b> ${formatTime(state.minute)}.`
+    ].join("<br>");
+    el.extendShiftBtn.disabled = state.shiftExtended;
+    el.finishShiftBtn.disabled = urgent > 0;
+    el.closeShiftWindow.classList.remove("hidden");
+  }
+
+  function extendShift() {
+    state.dayEnd += 60;
+    state.shiftExtended = true;
+    addDoctorFatigue(8);
+    state.modalOpen = false;
+    state.paused = false;
+    el.closeShiftWindow.classList.add("hidden");
+    setLog("Смена продлена на 60 минут. Дополнительные часы увеличат зарплату и усталость.");
+    renderAll();
+  }
+
+  function transferAndClose() {
+    const routine = state.queue.filter((patient) => patient.selectedUrgency !== "urgent").length;
+    const urgent = state.queue.length - routine;
+    if (routine > 0) state.reputation = clamp(state.reputation - Math.min(3, routine), 0, 100);
+    if (urgent > 0) state.reputation = clamp(state.reputation + 1, 0, 100);
+    state.queue = [];
+    state.activeId = null;
+    setLog(`Обычные пациенты перенесены: ${routine}. Срочные направлены: ${urgent}.`);
+    endDay();
+  }
+
+  function finishShift() {
+    if (state.queue.length > 0) {
+      state.lostToday += state.queue.length;
+      state.goalStats.noLost = 0;
+      state.reputation = clamp(state.reputation - Math.min(5, state.queue.length * 2), 0, 100);
+      state.queue = [];
+      state.activeId = null;
+    }
+    endDay();
+  }
+
+  function endDay() {
+    state.modalOpen = true;
+    state.paused = true;
+    state.dayStarted = false;
+    el.closeShiftWindow.classList.add("hidden");
+    const plan = currentPlan();
+    const goals = plan ? plan.goals : [];
+    const completedGoals = goals.filter(goalComplete).length;
+    const todayCases = state.caseJournal.filter((item) => item.day === state.day);
+    const doctor = currentDoctor();
+    const payroll = state.hoursMode === "extended" ? 430 : 360;
+    const rentAndUtilities = state.hoursMode === "extended" ? 150 : 110;
+    const supplies = state.treatedToday * 35;
+    state.expensesToday = payroll + rentAndUtilities + supplies;
+    state.money -= state.expensesToday;
+    const net = state.revenueToday - state.expensesToday;
+    addDoctorFatigue(6 + (state.hoursMode === "extended" ? 8 : 0) + (state.shiftExtended ? 6 : 0));
+    state.doctors.forEach((item) => {
+      if (item.id !== doctor.id) {
+        item.fatigue = clamp(item.fatigue - 16, 0, 100);
+        item.consecutiveShifts = 0;
+      }
+    });
+    const goalsHtml = goals.length
+      ? goals.map((goal) => `${goalComplete(goal) ? "Выполнено" : "Не выполнено"}: ${goal.label} (${goalProgress(goal)}/${goal.target})`).join("<br>")
+      : "Свободный режим без сюжетных целей.";
+    state.chapterComplete = state.day === 5;
+    el.summaryTitle.textContent = state.chapterComplete ? "Первая глава завершена" : `День ${state.day} завершен`;
+    el.summaryText.innerHTML = [
+      `<b>${plan ? plan.title : "Свободная смена"}</b>`,
+      `Врач: <b>${doctor.name}</b>. Усталость после смены: <b>${Math.round(doctor.fatigue)}%</b>.`,
+      `Пациентов принято: <b>${state.treatedToday}</b>. Потеряно: <b>${state.lostToday}</b>.`,
+      `Доход: <b>${formatMoney(state.revenueToday)} V</b>. Расходы: <b>${formatMoney(state.expensesToday)} V</b>. Итог: <b>${net >= 0 ? "+" : ""}${formatMoney(net)} V</b>.`,
+      `Репутация: <b>${Math.round(state.reputation)}/100</b>.`,
+      `Цели: <b>${completedGoals}/${goals.length}</b>.<br>${goalsHtml}`,
+      plan ? `<br><b>Завтра:</b> ${plan.tomorrow}` : ""
+    ].join("<br>");
+    el.nextDayBtn.textContent = state.chapterComplete ? "Продолжить после главы" : "Планировать следующий день";
+    el.summaryWindow.classList.remove("hidden");
+    renderAll();
+  }
+
+  function startNextDay() {
+    state.day += 1;
+    resetDayState();
+    el.summaryWindow.classList.add("hidden");
+    openShiftPlanning();
   }
 
   function openCase(patientId) {
@@ -1268,6 +1690,33 @@
     openChoice("Осмотр", "Что осмотреть дополнительно?", items);
   }
 
+  function openTriage() {
+    const patient = activePatient();
+    if (!patient) return;
+    openChoice("Триаж", "Какую срочность установить?", [
+      {
+        label: "Обычная",
+        note: "Пациент может ждать в общей очереди.",
+        onClick: () => selectUrgency("routine")
+      },
+      {
+        label: "Высокая",
+        note: "Пациента нельзя задерживать обычной очередью.",
+        onClick: () => selectUrgency("urgent")
+      }
+    ]);
+  }
+
+  function selectUrgency(value) {
+    const patient = activePatient();
+    if (!patient) return;
+    patient.selectedUrgency = value;
+    patient.findings.push(`Триаж: установлена ${value === "urgent" ? "высокая" : "обычная"} срочность.`);
+    closeChoice();
+    setLog(`Срочность пациента ${patient.animal} определена.`);
+    passTime(1);
+  }
+
   function openDiagnosis() {
     const patient = activePatient();
     if (!patient) return;
@@ -1332,7 +1781,10 @@
       const title = document.createElement("strong");
       title.textContent = `${patient.animal} • ${speciesLabels[patient.species]}`;
       const note = document.createElement("span");
-      note.textContent = patient.returnVisit ? "повторное обращение" : `Ждет ${Math.max(1, Math.round(patient.age))} мин.`;
+      note.textContent = patient.selectedUrgency === "urgent"
+        ? `СРОЧНО · ждет ${Math.max(1, Math.round(patient.age))} мин.`
+        : patient.returnVisit ? "повторное обращение" : `Ждет ${Math.max(1, Math.round(patient.age))} мин.`;
+      if (patient.selectedUrgency === "urgent") button.classList.add("urgent");
       const owner = document.createElement("span");
       owner.textContent = `Жалоба: ${patient.complaints[0]}`;
       const bar = document.createElement("div");
@@ -1364,11 +1816,14 @@
     el.caseStage.textContent = patient.returnVisit ? "Повторный прием" : "Кабинет врача";
     el.caseTitle.textContent = `${patient.animal} · ${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.`;
     el.caseOwner.textContent = `Владелец: ${patient.owner}`;
-    el.caseUrgency.textContent = "Срочность: обычная";
+    el.caseUrgencyBtn.textContent = patient.selectedUrgency === "urgent"
+      ? "Срочность: высокая"
+      : patient.selectedUrgency === "routine" ? "Срочность: обычная" : "Срочность: не определена";
+    el.caseUrgencyBtn.classList.toggle("urgent", patient.selectedUrgency === "urgent");
     el.caseDuration.textContent = `Прием длится: ${patient.visitTimeUsed} мин.`;
     el.ownerComplaint.textContent = patient.returnVisit
       ? `«После прошлого лечения не стало нормально. ${patient.complaints.join(", ")}.»`
-      : `«${patient.complaints.join(", ")}.»`;
+      : `«${patient.ownerLead ? `${patient.ownerLead}. ` : ""}${patient.complaints.join(", ")}.»`;
     el.findingsList.textContent = "";
     patient.findings.filter((finding) => !finding.startsWith("Жалобы владельца:")).slice(-8).forEach((finding) => {
       const li = document.createElement("li");
@@ -1396,7 +1851,7 @@
     el.tensionMeter.style.width = `${patient.ownerProfile.anxiety}%`;
     el.stressMeter.style.width = `${patient.stress}%`;
     el.visitTimeMeter.style.width = `${visitPercent}%`;
-    el.patientFacts.innerHTML = `<strong>${patient.animal}</strong><span>${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.</span><span>Состояние: стабильное</span>`;
+    el.patientFacts.innerHTML = `<strong>${patient.animal}</strong><span>${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.</span><span>Состояние: ${patient.selectedUrgency === "urgent" ? "требует срочной помощи" : "требует оценки"}</span>`;
     el.ownerName.textContent = patient.owner;
     el.ownerBudget.textContent = patient.budgetAsked
       ? `${Math.max(100, Math.floor((patient.budget - 60) / 50) * 50)}–${Math.ceil((patient.budget + 60) / 50) * 50} V`
@@ -1420,24 +1875,53 @@
     document.querySelector(`.stage-tabs button[data-stage="${stage}"]`)?.classList.add("active");
     el.developerData.textContent = [
       `Истинный диагноз: ${diseaseFor(patient).name}`,
+      `Истинная срочность: ${patient.urgency === "urgent" ? "высокая" : "обычная"}`,
       `Тип владельца: ${patient.ownerProfile.label}`,
       `Точный бюджет: ${patient.budget} V`,
       `Надежность назначений: ${Math.round(patient.ownerProfile.reliability * 100)}%`,
-      `Диагностические очки: ${patient.dxPoints}`
+      `Диагностические очки: ${patient.dxPoints}`,
+      `Врач смены: ${currentDoctor().name}, усталость ${Math.round(currentDoctor().fatigue)}%`
     ].join("\n");
     drawPortrait(patient);
   }
 
+  function renderCampaign() {
+    const plan = currentPlan();
+    el.campaignProgress.textContent = plan
+      ? `Глава 1 · день ${plan.chapterDay}/5 · кампания ${state.day}/30`
+      : `Свободный режим · день ${state.day}`;
+    el.dayTitle.textContent = plan ? plan.title : "Клиника продолжает работу";
+    el.dayGoalsList.textContent = "";
+    const goals = plan ? plan.goals : [];
+    goals.forEach((goal) => {
+      const row = document.createElement("div");
+      row.className = `goal-row${goalComplete(goal) ? " complete" : ""}`;
+      row.textContent = `${goal.label}: ${goalProgress(goal)}/${goal.target}`;
+      el.dayGoalsList.appendChild(row);
+    });
+    if (!goals.length) {
+      const row = document.createElement("div");
+      row.className = "goal-row complete";
+      row.textContent = "Свободная работа клиники";
+      el.dayGoalsList.appendChild(row);
+    }
+    el.goalScore.textContent = `${goals.filter(goalComplete).length}/${goals.length}`;
+  }
+
   function renderHud() {
+    const doctor = currentDoctor();
     el.moneyValue.textContent = formatMoney(state.money);
     el.todayRevenue.textContent = `+${formatMoney(state.revenueToday)} V`;
-    el.dateValue.textContent = `День ${state.day}`;
+    el.dateValue.textContent = `День ${state.day}/30`;
     el.timeValue.textContent = formatTime(state.minute);
-    el.closingTime.textContent = `${Math.max(0, Math.ceil((DAY_END - state.minute) / 60))} ч.`;
+    el.closingTime.textContent = `${Math.max(0, Math.ceil((state.dayEnd - state.minute) / 60))} ч.`;
     el.reputationMeter.style.width = `${state.reputation}%`;
     el.reputationValue.textContent = `${Math.round(state.reputation)} / 100`;
     el.reputationLabel.textContent = state.reputation >= 80 ? "Известная клиника" : state.reputation >= 55 ? "Новая клиника" : "Клиника под наблюдением";
     el.queueValue.textContent = `${state.queue.length} / 12`;
+    el.doctorHudName.textContent = state.dayStarted ? doctor.shortName : "Смена не открыта";
+    el.doctorFatigue.textContent = `${Math.round(doctor.fatigue)}%`;
+    el.doctorFatigueMeter.style.width = `${doctor.fatigue}%`;
     el.pauseBtn.textContent = state.paused ? "▶" : "II";
     el.speedBtn.textContent = `${state.speed}x`;
     el.messageLog.textContent = `${formatTime(state.minute)} · ${state.log}`;
@@ -1446,6 +1930,7 @@
   function renderAll() {
     renderQueue();
     renderCase();
+    renderCampaign();
     renderHud();
     drawClinic();
   }
@@ -1492,6 +1977,7 @@
     drawReception(865, 445);
     drawExamDesk(205, 182);
     drawMicroscope(615, 190);
+    drawClinicFixtures();
     drawBenches();
     drawPlants();
     drawDoors();
@@ -1573,6 +2059,154 @@
     ctx.fillRect(x + 121, y - 22, 22, 14);
     ctx.fillStyle = "#f4d47e";
     ctx.fillRect(x + 20, y + 13, 30, 16);
+  }
+
+  function drawClinicFixtures() {
+    // Cabinet: fixed clinical equipment and wall details.
+    drawWallCabinet(92, 148, 84, 42, "ПЕРВАЯ ПОМОЩЬ");
+    drawPoster(406, 119, "УХО", "ОСМОТР");
+    drawSink(102, 248);
+    drawScale(370, 288);
+
+    // Laboratory corner: storage and recognizable bench supplies.
+    drawWallCabinet(520, 122, 76, 38, "МАТЕРИАЛ");
+    drawShelf(690, 128);
+    [0, 1, 2, 3].forEach((index) => {
+      ctx.fillStyle = ["#e95d67", "#f2cc56", "#62b985", "#6caed1"][index];
+      ctx.fillRect(552 + index * 14, 264 - index * 3, 8, 18 + index * 3);
+      ctx.fillStyle = "#eef9fc";
+      ctx.fillRect(551 + index * 14, 260 - index * 3, 10, 5);
+    });
+
+    // Waiting room and entrance are intentionally static scenery.
+    drawPoster(525, 415, "ПРИЕМ", "ПО ОЧЕРЕДИ");
+    drawWaterCooler(585, 452);
+    drawClock(1135, 418);
+    drawNoticeBoard(755, 430);
+    ctx.fillStyle = "#eef8fb";
+    ctx.fillRect(1080, 525, 72, 45);
+    ctx.strokeStyle = "#405a6c";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(1080, 525, 72, 45);
+    ctx.fillStyle = "#2b78a8";
+    ctx.font = "bold 10px Trebuchet MS";
+    ctx.fillText("PET CLINIC", 1087, 544);
+    ctx.fillStyle = "#5f7686";
+    ctx.font = "9px Trebuchet MS";
+    ctx.fillText("ветеринарная", 1087, 558);
+  }
+
+  function drawWallCabinet(x, y, w, h, label) {
+    ctx.fillStyle = "rgba(13,31,46,.2)";
+    ctx.fillRect(x + 5, y + 6, w, h);
+    ctx.fillStyle = "#edf8fb";
+    ctx.fillRect(x, y, w, h);
+    ctx.strokeStyle = "#304958";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, w, h);
+    ctx.beginPath();
+    ctx.moveTo(x + w / 2, y);
+    ctx.lineTo(x + w / 2, y + h);
+    ctx.stroke();
+    ctx.fillStyle = "#2d84b7";
+    ctx.fillRect(x + w / 2 - 2, y + 12, 4, 17);
+    ctx.fillStyle = "#40596a";
+    ctx.font = "bold 7px Trebuchet MS";
+    ctx.fillText(label, x + 5, y + h - 5);
+  }
+
+  function drawPoster(x, y, top, bottom) {
+    ctx.fillStyle = "#f7fbf4";
+    ctx.fillRect(x, y, 64, 48);
+    ctx.strokeStyle = "#79583d";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(x, y, 64, 48);
+    ctx.fillStyle = "#2d81b5";
+    ctx.fillRect(x + 7, y + 7, 12, 12);
+    ctx.fillStyle = "#edf8fb";
+    ctx.fillRect(x + 11, y + 8, 4, 10);
+    ctx.fillRect(x + 8, y + 11, 10, 4);
+    ctx.fillStyle = "#40576a";
+    ctx.font = "bold 8px Trebuchet MS";
+    ctx.fillText(top, x + 24, y + 17);
+    ctx.font = "7px Trebuchet MS";
+    ctx.fillText(bottom, x + 7, y + 36);
+  }
+
+  function drawSink(x, y) {
+    ctx.fillStyle = "#d8eef3";
+    ctx.fillRect(x, y, 58, 27);
+    ctx.strokeStyle = "#314958";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, 58, 27);
+    ctx.fillStyle = "#9cc8d2";
+    ctx.fillRect(x + 11, y + 7, 36, 13);
+    ctx.fillStyle = "#617b86";
+    ctx.fillRect(x + 25, y - 10, 7, 12);
+    ctx.fillRect(x + 29, y - 10, 12, 5);
+  }
+
+  function drawScale(x, y) {
+    ctx.fillStyle = "#a8cbd3";
+    ctx.fillRect(x, y, 55, 18);
+    ctx.strokeStyle = "#314958";
+    ctx.strokeRect(x, y, 55, 18);
+    ctx.fillStyle = "#f0f7f8";
+    ctx.fillRect(x + 19, y + 4, 17, 8);
+  }
+
+  function drawShelf(x, y) {
+    ctx.fillStyle = "#5d493c";
+    ctx.fillRect(x, y, 88, 8);
+    ctx.fillRect(x, y + 36, 88, 8);
+    ctx.fillRect(x, y, 6, 44);
+    ctx.fillRect(x + 82, y, 6, 44);
+    ["#d8edf2", "#78bad0", "#f2d472", "#8ac798"].forEach((color, index) => {
+      ctx.fillStyle = color;
+      ctx.fillRect(x + 11 + index * 17, y + 14, 12, 17);
+    });
+  }
+
+  function drawWaterCooler(x, y) {
+    ctx.fillStyle = "#e9f4f6";
+    ctx.fillRect(x, y + 31, 35, 57);
+    ctx.strokeStyle = "#405868";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y + 31, 35, 57);
+    ctx.fillStyle = "#81d3e6";
+    ctx.fillRect(x + 6, y, 23, 35);
+    ctx.fillStyle = "#2c79a5";
+    ctx.fillRect(x + 7, y + 43, 8, 5);
+    ctx.fillStyle = "#df5b5b";
+    ctx.fillRect(x + 20, y + 43, 8, 5);
+  }
+
+  function drawClock(x, y) {
+    ctx.fillStyle = "#f7fbfc";
+    ctx.beginPath();
+    ctx.arc(x, y, 19, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#314958";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x, y - 10);
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 9, y + 5);
+    ctx.stroke();
+  }
+
+  function drawNoticeBoard(x, y) {
+    ctx.fillStyle = "#8a6547";
+    ctx.fillRect(x, y, 85, 55);
+    ctx.strokeStyle = "#4f3c30";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(x, y, 85, 55);
+    [[8, 9, 27, 16], [44, 7, 31, 21], [13, 33, 54, 13]].forEach(([dx, dy, w, h], index) => {
+      ctx.fillStyle = ["#f7f0ca", "#d8edf4", "#ffffff"][index];
+      ctx.fillRect(x + dx, y + dy, w, h);
+    });
   }
 
   function drawBenches() {
@@ -1663,16 +2297,21 @@
 
   function drawCharacters() {
     const idle = Math.round(Math.sin(state.animationTime / 380) * 1.5);
-    drawPerson(390, 235 + idle, { shirt: "#ffffff", pants: "#253c65", hair: "#1f1f1f", coat: true });
+    const doctor = currentDoctor();
+    drawPerson(390, 235 + idle, { shirt: doctor.color, pants: "#253c65", hair: doctor.hair, coat: true });
     ctx.fillStyle = "#0f2641";
     ctx.font = "bold 12px Trebuchet MS";
-    ctx.fillText("врач", 374, 282 + idle);
+    ctx.fillText(state.dayStarted ? doctor.shortName : "кабинет закрыт", 354, 282 + idle);
 
     state.queue.forEach((patient, index) => {
       const inCabinet = patient.id === state.activeId && el.caseWindow.classList.contains("hidden") === false;
       const bob = Math.round(Math.sin(state.animationTime / 420 + index) * 1.5);
-      const x = inCabinet ? 270 : 175 + (index % 3) * 155;
-      const y = inCabinet ? 250 + bob : 505 + Math.floor(index / 3) * 72 + bob;
+      const targetX = inCabinet ? 270 : 175 + (index % 3) * 155;
+      const targetY = inCabinet ? 250 : 505 + Math.floor(index / 3) * 72;
+      patient.screenX += (targetX - patient.screenX) * 0.08;
+      patient.screenY += (targetY - patient.screenY) * 0.08;
+      const x = Math.round(patient.screenX);
+      const y = Math.round(patient.screenY + bob);
       const color = ownerColor(index);
       drawPerson(x, y, color);
       drawAnimal(patient.species, x + 27, y + 18, patient.id === state.activeId);
@@ -1717,11 +2356,16 @@
     ctx.fillStyle = options.pants || "#2c4365";
     ctx.fillRect(x - 2, y + 19, 8, 22);
     ctx.fillRect(x + 9, y + 19, 8, 22);
+    ctx.fillStyle = "#26313b";
+    ctx.fillRect(x - 5, y + 38, 11, 5);
+    ctx.fillRect(x + 9, y + 38, 12, 5);
     ctx.fillStyle = options.coat ? "#f4fbff" : options.shirt;
     ctx.fillRect(x - 6, y + 3, 27, 23);
     if (options.coat) {
       ctx.fillStyle = "#8fc6dd";
       ctx.fillRect(x + 6, y + 4, 3, 21);
+      ctx.fillStyle = "#2c79a5";
+      ctx.fillRect(x + 13, y + 8, 5, 6);
     }
     ctx.fillStyle = skin;
     ctx.fillRect(x - 2, y - 17, 17, 17);
@@ -1731,6 +2375,8 @@
     ctx.fillStyle = "#111827";
     ctx.fillRect(x + 2, y - 10, 3, 3);
     ctx.fillRect(x + 10, y - 10, 3, 3);
+    ctx.fillStyle = "#a85f50";
+    ctx.fillRect(x + 6, y - 4, 5, 2);
     ctx.fillStyle = skin;
     ctx.fillRect(x - 12, y + 8, 6, 15);
     ctx.fillRect(x + 21, y + 8, 6, 15);
@@ -1761,6 +2407,9 @@
     ctx.fillRect(12, 18, 5, 9);
     ctx.fillStyle = "#111827";
     ctx.fillRect(22, 2, 3, 3);
+    ctx.fillRect(27, 7, 3, 3);
+    ctx.fillStyle = "#3b78a2";
+    ctx.fillRect(12, 9, 14, 3);
   }
 
   function drawCat() {
@@ -1775,6 +2424,10 @@
     ctx.fillRect(10, 18, 4, 8);
     ctx.fillStyle = "#101824";
     ctx.fillRect(21, 1, 3, 3);
+    ctx.fillStyle = "#eef5d0";
+    ctx.fillRect(18, 1, 2, 2);
+    ctx.fillStyle = "#c95e66";
+    ctx.fillRect(20, 7, 4, 2);
   }
 
   function drawRabbit() {
@@ -1790,6 +2443,10 @@
     ctx.fillRect(19, -15, 2, 13);
     ctx.fillStyle = "#101824";
     ctx.fillRect(20, 3, 3, 3);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(-13, 10, 7, 7);
+    ctx.fillStyle = "#d69daf";
+    ctx.fillRect(22, 8, 3, 2);
   }
 
   function drawPortrait(patient) {
@@ -1839,6 +2496,7 @@
     el.sampleBtn.addEventListener("click", doSample);
     el.microscopyBtn.addEventListener("click", doMicroscopy);
     el.diagnosisBtn.addEventListener("click", openDiagnosis);
+    el.caseUrgencyBtn.addEventListener("click", openTriage);
     el.communicationBtn.addEventListener("click", openCommunication);
     el.treatmentBtn.addEventListener("click", openTreatment);
     el.pauseBtn.addEventListener("click", () => {
@@ -1851,8 +2509,15 @@
     });
     el.nextPatientBtn.addEventListener("click", cyclePatient);
     el.nextDayBtn.addEventListener("click", startNextDay);
+    el.startShiftBtn.addEventListener("click", startShift);
+    el.closeShiftBtn.addEventListener("click", () => requestShiftClose(false));
+    el.extendShiftBtn.addEventListener("click", extendShift);
+    el.transferQueueBtn.addEventListener("click", transferAndClose);
+    el.finishShiftBtn.addEventListener("click", finishShift);
     el.developerBtn.addEventListener("click", () => el.developerPanel.classList.toggle("hidden"));
     el.closeDeveloperBtn.addEventListener("click", () => el.developerPanel.classList.add("hidden"));
+    el.devResolvePatientBtn.addEventListener("click", debugResolveActivePatient);
+    el.devFinishDayBtn.addEventListener("click", debugFinishDay);
     document.querySelectorAll(".stage-tabs button").forEach((button) => {
       button.addEventListener("click", () => {
         const handlers = {
@@ -1878,10 +2543,11 @@
     if (!state.lastTick) state.lastTick = timestamp;
     const delta = timestamp - state.lastTick;
     state.lastTick = timestamp;
-    if (!state.paused && !state.modalOpen && !isReadingInterfaceOpen()) {
+    if (state.dayStarted && !state.paused && !state.modalOpen && !isReadingInterfaceOpen()) {
       const minutes = (delta / 1000) * state.speed * 0.5;
       state.minute += minutes;
       state.spawnMeter += minutes;
+      addDoctorFatigue(minutes * 0.002);
       state.queue.forEach((patient) => {
         if (isPatientInConsult(patient)) return;
         patient.age += minutes;
@@ -1889,8 +2555,8 @@
       });
       removeLostPatients();
       maybeSpawn();
-      if (state.minute >= DAY_END) {
-        endDay();
+      if (state.minute >= state.dayEnd) {
+        requestShiftClose(true);
       }
       renderAll();
     } else {
@@ -1901,12 +2567,9 @@
 
   function init() {
     bindEvents();
-    spawnPatient("bacterialOtitis");
-    spawnPatient("miteOtitis");
-    spawnPatient("pancreatitis");
-    el.caseWindow.classList.add("hidden");
-    setLog("Клиника открыта. Выберите пациента из очереди и пригласите в кабинет.");
-    renderAll();
+    resetDayState();
+    setLog("Выберите врача и режим работы перед открытием клиники.");
+    openShiftPlanning();
     window.requestAnimationFrame(tick);
   }
 
