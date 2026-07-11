@@ -330,6 +330,10 @@ button:disabled {
   background: linear-gradient(90deg, #e45757, #f0bf4a 45%, #4dbd72);
 }
 
+.time-meter i {
+  background: linear-gradient(90deg, #4dbd72, #f0bf4a 68%, #e45757);
+}
+
 .metric-chips {
   display: flex;
   gap: 6px;
@@ -345,6 +349,18 @@ button:disabled {
   text-align: center;
   font-size: 12px;
   font-weight: 700;
+}
+
+.diagnosis-chip {
+  margin-top: 6px;
+  border: 2px solid var(--line);
+  background: #ffffff;
+  color: var(--blue-900);
+  padding: 5px 6px;
+  min-height: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .case-notes {

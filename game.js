@@ -37,6 +37,7 @@
       trust: 78,
       anxiety: 24,
       budget: 760,
+      visitLimit: 56,
       reliability: 0.9,
       prefers: "calmDetailed",
       note: "Внимательно слушает и выполняет назначения."
@@ -47,6 +48,7 @@
       trust: 58,
       anxiety: 86,
       budget: 650,
+      visitLimit: 46,
       reliability: 0.72,
       prefers: "calmDetailed",
       note: "Паникует и хуже воспринимает короткие ответы."
@@ -57,6 +59,7 @@
       trust: 62,
       anxiety: 54,
       budget: 360,
+      visitLimit: 44,
       reliability: 0.78,
       prefers: "budgetPlan",
       note: "Согласится не на все, нужен безопасный компромисс."
@@ -67,6 +70,7 @@
       trust: 44,
       anxiety: 60,
       budget: 560,
+      visitLimit: 42,
       reliability: 0.62,
       prefers: "riskFocus",
       note: "Может спорить и требовать уже выбранное лечение."
@@ -77,6 +81,7 @@
       trust: 55,
       anxiety: 38,
       budget: 520,
+      visitLimit: 48,
       reliability: 0.52,
       prefers: "strict",
       note: "Может забыть детали и нарушить назначения."
@@ -87,6 +92,7 @@
       trust: 36,
       anxiety: 68,
       budget: 700,
+      visitLimit: 36,
       reliability: 0.58,
       prefers: "riskFocus",
       note: "Требует гарантий и быстро теряет доверие."
@@ -699,8 +705,10 @@
     ownerComplaint: document.getElementById("ownerComplaint"),
     findingsList: document.getElementById("findingsList"),
     trustMeter: document.getElementById("trustMeter"),
+    visitTimeMeter: document.getElementById("visitTimeMeter"),
     dxPointsChip: document.getElementById("dxPointsChip"),
     localExamChip: document.getElementById("localExamChip"),
+    visitTimeChip: document.getElementById("visitTimeChip"),
     diagnosisChip: document.getElementById("diagnosisChip"),
     anamnesisBtn: document.getElementById("anamnesisBtn"),
     temperatureBtn: document.getElementById("temperatureBtn"),
@@ -785,6 +793,32 @@
     el.messageLog.textContent = text;
   }
 
+  function isPatientInConsult(patient) {
+    return Boolean(patient && patient.id === state.activeId && !el.caseWindow.classList.contains("hidden"));
+  }
+
+  function isReadingInterfaceOpen() {
+    return !el.caseWindow.classList.contains("hidden") || !el.choiceWindow.classList.contains("hidden");
+  }
+
+  function waitingMood(patient) {
+    return clamp(100 - (patient.age / patient.patience) * 100, 0, 100);
+  }
+
+  function adjustTrust(patient, delta) {
+    patient.trust = clamp(patient.trust + delta, 0, 100);
+  }
+
+  function spendVisitTime(patient, minutes) {
+    if (!patient) return;
+    patient.visitTimeUsed += minutes;
+    if (!patient.overtimeWarned && patient.visitTimeUsed > patient.visitTimeLimit) {
+      patient.overtimeWarned = true;
+      adjustTrust(patient, -6);
+      patient.findings.push("Прием затянулся: владелец начинает уставать от долгого процесса.");
+    }
+  }
+
   function createPatient(forcedDiseaseId, isReturn) {
     const diseaseId = forcedDiseaseId || pick(diseaseIds);
     const disease = diseases[diseaseId];
@@ -805,6 +839,10 @@
       age: 0,
       patience: 82 + Math.random() * 34,
       mood: 100,
+      trust: clamp(profile.trust + Math.round((Math.random() - 0.5) * 10), 12, 95),
+      visitTimeUsed: 0,
+      visitTimeLimit: profile.visitLimit,
+      overtimeWarned: false,
       dxPoints: 0,
       localUsed: 0,
       findings: [],
@@ -836,14 +874,19 @@
     renderAll();
   }
 
-  function passTime(minutes) {
+  function passTime(minutes, options = {}) {
     if (state.modalOpen) return;
     const adjusted = Math.max(1, Math.round(minutes));
+    const patientInConsult = activePatient();
+    if (options.trackVisit !== false && isPatientInConsult(patientInConsult)) {
+      spendVisitTime(patientInConsult, adjusted);
+    }
     state.minute += adjusted;
     state.spawnMeter += adjusted;
     state.queue.forEach((patient) => {
+      if (isPatientInConsult(patient)) return;
       patient.age += adjusted;
-      patient.mood = clamp(100 - (patient.age / patient.patience) * 100, 0, 100);
+      patient.mood = waitingMood(patient);
     });
     removeLostPatients();
     maybeSpawn();
@@ -950,7 +993,12 @@
     if (!patient) return;
     patient.selectedCommunicationId = option.id;
     patient.findings.push(`Объяснение владельцу: ${option.label}.`);
-    setLog(`Выбран стиль объяснения: ${option.label}.`);
+    const preferred = option.id === patient.ownerProfile.prefers;
+    let trustDelta = preferred ? 8 : 2;
+    if (option.id === "strict" && patient.ownerProfile.id === "anxious") trustDelta = -4;
+    if (option.id === "budgetPlan" && patient.ownerProfile.id === "budget") trustDelta = 10;
+    adjustTrust(patient, trustDelta);
+    setLog(`Выбран стиль объяснения: ${option.label}. Доверие ${trustDelta >= 0 ? "+" : ""}${trustDelta}.`);
     closeChoice();
     passTime(4);
   }
@@ -974,6 +1022,13 @@
 
     if (diagnosticsScore < 45) {
       risk += 0.08;
+    }
+
+    const overtime = Math.max(0, patient.visitTimeUsed - patient.visitTimeLimit);
+    if (overtime > 0) {
+      risk += Math.min(0.12, overtime / 100);
+      if (overtime >= 12) reputationChange -= 1;
+      patient.findings.push(`Прием занял ${patient.visitTimeUsed} минут при комфортном лимите ${patient.visitTimeLimit} минут.`);
     }
 
     if (!patient.selectedDiagnosisId) {
@@ -1031,6 +1086,8 @@
       selectedDiagnosis: diagnosisLabel(patient.selectedDiagnosisId) || "не выбран",
       treatment: treatment.label,
       communication: communicationLabel(patient.selectedCommunicationId) || "без объяснения",
+      visitTime: patient.visitTimeUsed,
+      trust: patient.trust,
       quality: effectiveQuality,
       risk: Math.round(risk * 100)
     });
@@ -1040,7 +1097,7 @@
     state.activeId = state.queue[0] ? state.queue[0].id : null;
     closeChoice();
     if (!state.activeId) el.caseWindow.classList.add("hidden");
-    passTime(18);
+    passTime(18, { trackVisit: false });
   }
 
   function diagnosticScore(patient) {
@@ -1132,7 +1189,7 @@
     const disease = diseaseFor(patient);
     const questions = disease.anamnesis(patient).map((question) => ({
       label: question.label,
-      note: patient.asked[question.id] ? "Уже спросили." : "Спросить владельца.",
+      note: patient.asked[question.id] ? "Уже спросили." : "Спросить владельца. Потратит 7 минут приема.",
       disabled: patient.asked[question.id],
       onClick: () => {
         askQuestion(patient, question);
@@ -1151,7 +1208,7 @@
         ? "Уже осмотрено."
         : patient.localUsed >= MAX_LOCAL_EXAMS
           ? "Лимит локальных осмотров исчерпан."
-          : "Потратит один локальный осмотр.",
+          : `Потратит один локальный осмотр и ${option.time} минут приема.`,
       disabled: patient.localDone[option.id] || patient.localUsed >= MAX_LOCAL_EXAMS,
       onClick: () => doLocalExam(option)
     }));
@@ -1165,7 +1222,7 @@
       label: diagnosis.label,
       note: patient.selectedDiagnosisId === diagnosis.id
         ? "Сейчас выбран этот диагноз."
-        : diagnosis.note,
+        : `${diagnosis.note} Потратит 3 минуты приема.`,
       onClick: () => selectDiagnosis(diagnosis)
     }));
     openChoice("Диагноз", "Выберите один из 10 диагнозов", items);
@@ -1178,7 +1235,7 @@
       label: option.label,
       note: patient.selectedCommunicationId === option.id
         ? "Сейчас выбран этот стиль."
-        : option.note,
+        : `${option.note} Потратит 4 минуты приема.`,
       onClick: () => selectCommunication(option)
     }));
     openChoice("Объяснение", `Владелец: ${patient.ownerProfile.label}`, items);
@@ -1247,16 +1304,16 @@
       li.textContent = finding;
       el.findingsList.appendChild(li);
     });
-    el.trustMeter.style.width = `${patient.mood}%`;
+    const visitPercent = clamp((patient.visitTimeUsed / patient.visitTimeLimit) * 100, 0, 100);
+    el.trustMeter.style.width = `${patient.trust}%`;
+    el.visitTimeMeter.style.width = `${visitPercent}%`;
     el.dxPointsChip.textContent = `${patient.dxPoints} ДО`;
     el.localExamChip.textContent = `${patient.localUsed}/${MAX_LOCAL_EXAMS} осм.`;
+    el.visitTimeChip.textContent = `${patient.visitTimeUsed}/${patient.visitTimeLimit} мин.`;
     const selectedDiagnosis = diagnosisOptions.find((diagnosis) => diagnosis.id === patient.selectedDiagnosisId);
-    const selectedCommunication = communicationOptions.find((option) => option.id === patient.selectedCommunicationId);
     el.diagnosisChip.textContent = selectedDiagnosis
       ? selectedDiagnosis.label
-      : selectedCommunication
-        ? selectedCommunication.label
-        : "диагноз?";
+      : "диагноз?";
     el.temperatureBtn.disabled = patient.temperatureDone;
     el.mucousBtn.disabled = patient.mucousDone;
     el.localExamBtn.disabled = patient.localUsed >= MAX_LOCAL_EXAMS;
@@ -1671,13 +1728,14 @@
     if (!state.lastTick) state.lastTick = timestamp;
     const delta = timestamp - state.lastTick;
     state.lastTick = timestamp;
-    if (!state.paused && !state.modalOpen) {
+    if (!state.paused && !state.modalOpen && !isReadingInterfaceOpen()) {
       const minutes = (delta / 1000) * state.speed * 2.2;
       state.minute += minutes;
       state.spawnMeter += minutes;
       state.queue.forEach((patient) => {
+        if (isPatientInConsult(patient)) return;
         patient.age += minutes;
-        patient.mood = clamp(100 - (patient.age / patient.patience) * 100, 0, 100);
+        patient.mood = waitingMood(patient);
       });
       removeLostPatients();
       maybeSpawn();

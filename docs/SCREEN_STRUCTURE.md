@@ -1,4 +1,4 @@
-# Vet Clinic Tycoon - Screen Structure
+# VetGEME / Мечевет - Screen Structure
 
 ## 1. Главный Принцип Интерфейса
 
