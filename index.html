@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Мечевет: клиника</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eaf6ff'/%3E%3Cpath d='M13 5h6v22h-6zM5 13h22v6H5z' fill='%231976d2'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="game-shell" aria-label="Мечевет: пиксельная ветеринарная стратегия">
+      <canvas id="clinicCanvas" width="1280" height="720" aria-label="Изометрическая клиника"></canvas>
+
+      <div class="brand-chip" aria-label="Название игры">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <strong>Мечевет</strong>
+          <span>первый кабинет</span>
+        </div>
+      </div>
+
+      <section class="queue-strip" id="queueStrip" aria-label="Очередь пациентов"></section>
+
+      <section class="case-window hidden" id="caseWindow" aria-label="Карточка приема">
+        <div class="staff-tabs" id="staffTabs"></div>
+        <div class="case-main">
+          <header class="case-header">
+            <div>
+              <p class="eyebrow" id="caseStage">Прием</p>
+              <h1 id="caseTitle">Пациент</h1>
+            </div>
+            <button class="window-close" id="closeCaseBtn" type="button" title="Закрыть">×</button>
+          </header>
+
+          <div class="case-grid">
+            <div class="portrait-panel">
+              <canvas id="portraitCanvas" width="192" height="192" aria-label="Портрет пациента"></canvas>
+              <div class="meter-row">
+                <span>Доверие</span>
+                <div class="meter"><i id="trustMeter"></i></div>
+              </div>
+              <div class="metric-chips">
+                <span id="dxPointsChip">0 ДО</span>
+                <span id="localExamChip">0/2 осм.</span>
+                <span id="diagnosisChip">диагноз?</span>
+              </div>
+            </div>
+
+            <div class="case-notes">
+              <h2>Что говорит владелец</h2>
+              <p id="ownerComplaint"></p>
+              <h2>Данные приема</h2>
+              <ul id="findingsList"></ul>
+            </div>
+          </div>
+
+          <div class="case-actions">
+            <button id="anamnesisBtn" type="button">Анамнез</button>
+            <button id="temperatureBtn" type="button">Температура</button>
+            <button id="mucousBtn" type="button">Слизистые</button>
+            <button id="localExamBtn" type="button">Локальный осмотр</button>
+            <button id="microscopyBtn" type="button">Микроскопия</button>
+            <button id="diagnosisBtn" type="button">Диагноз</button>
+            <button id="communicationBtn" type="button">Объяснение</button>
+            <button class="primary" id="treatmentBtn" type="button">Назначить лечение</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="choice-window hidden" id="choiceWindow" aria-live="polite" aria-label="Выбор действия">
+        <header>
+          <div>
+            <p class="eyebrow" id="choiceKicker">Действие</p>
+            <h2 id="choiceTitle">Выберите вариант</h2>
+          </div>
+          <button class="window-close" id="closeChoiceBtn" type="button" title="Закрыть">×</button>
+        </header>
+        <div class="choice-body" id="choiceBody"></div>
+      </section>
+
+      <section class="summary-window hidden" id="summaryWindow" aria-live="assertive" aria-label="Итог дня">
+        <div class="summary-card">
+          <h2 id="summaryTitle">Итог дня</h2>
+          <p id="summaryText"></p>
+          <button class="primary" id="nextDayBtn" type="button">Следующий день</button>
+        </div>
+      </section>
+
+      <section class="bottom-hud" aria-label="Панель клиники">
+        <div class="money-block">
+          <span class="coin-icon">V</span>
+          <strong id="moneyValue">0</strong>
+          <small>веткоинов</small>
+        </div>
+        <div class="calendar-block">
+          <strong id="dateValue">День 1</strong>
+          <span id="timeValue">08:00</span>
+        </div>
+        <div class="hud-buttons">
+          <button id="pauseBtn" type="button" title="Пауза">II</button>
+          <button id="speedBtn" type="button" title="Скорость">1x</button>
+          <button id="nextPatientBtn" type="button" title="Следующий пациент">▶</button>
+        </div>
+        <div class="status-block">
+          <div class="status-line">
+            <span>Репутация</span>
+            <div class="meter"><i id="reputationMeter"></i></div>
+          </div>
+          <div class="status-line">
+            <span>Очередь</span>
+            <strong id="queueValue">0</strong>
+          </div>
+        </div>
+        <div class="message-log" id="messageLog">Клиника открыта. Ожидаем первых пациентов.</div>
+      </section>
+    </main>
+
+    <script src="game.js" defer></script>
+  </body>
+</html>
