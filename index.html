@@ -3,85 +3,125 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Мечевет: клиника</title>
+    <title>Pet Clinic: ветеринарная клиника</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eaf6ff'/%3E%3Cpath d='M13 5h6v22h-6zM5 13h22v6H5z' fill='%231976d2'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <main class="game-shell" aria-label="Мечевет: пиксельная ветеринарная стратегия">
-      <canvas id="clinicCanvas" width="1280" height="720" aria-label="Изометрическая клиника"></canvas>
+    <main class="game-shell" aria-label="Pet Clinic: ветеринарная стратегия">
+      <canvas id="clinicCanvas" width="1280" height="720" aria-label="Клиника"></canvas>
 
       <div class="brand-chip" aria-label="Название игры">
         <span class="brand-mark" aria-hidden="true"></span>
         <div>
-          <strong>Мечевет</strong>
-          <span>первый кабинет</span>
+          <strong>Pet Clinic</strong>
+          <span>районная клиника · уровень 1</span>
         </div>
       </div>
 
-      <section class="queue-strip" id="queueStrip" aria-label="Очередь пациентов"></section>
+      <aside class="patient-rail" aria-label="Пациенты клиники">
+        <section class="next-patient" aria-label="Следующий пациент">
+          <span class="panel-label">Следующий пациент</span>
+          <div id="nextPatientCard"></div>
+        </section>
+        <section class="queue-panel">
+          <header>
+            <strong>Очередь</strong>
+            <span id="queueCountLabel">0 пациентов</span>
+          </header>
+          <div class="queue-strip" id="queueStrip"></div>
+          <div class="queue-locked">Место появится после расширения</div>
+        </section>
+      </aside>
 
       <section class="case-window hidden" id="caseWindow" aria-label="Карточка приема">
-        <div class="staff-tabs" id="staffTabs"></div>
-        <div class="case-main">
-          <header class="case-header">
-            <div>
-              <p class="eyebrow" id="caseStage">Прием</p>
-              <h1 id="caseTitle">Пациент</h1>
-            </div>
-            <button class="window-close" id="closeCaseBtn" type="button" title="Закрыть">×</button>
-          </header>
+        <header class="case-header">
+          <div class="case-heading">
+            <p class="eyebrow" id="caseStage">Прием</p>
+            <h1 id="caseTitle">Пациент</h1>
+          </div>
+          <div class="case-meta">
+            <span id="caseOwner">Владелец</span>
+            <span id="caseUrgency">Срочность: обычная</span>
+            <span id="caseDuration">Прием длится: 0 мин.</span>
+          </div>
+          <button class="window-close" id="closeCaseBtn" type="button" title="Закрыть" aria-label="Закрыть окно приема">×</button>
+        </header>
 
-          <div class="case-grid">
-            <div class="portrait-panel">
-              <canvas id="portraitCanvas" width="192" height="192" aria-label="Портрет пациента"></canvas>
-              <div class="meter-row">
-                <span>Доверие</span>
-                <div class="meter"><i id="trustMeter"></i></div>
-              </div>
-              <div class="meter-row">
-                <span>Время</span>
-                <div class="meter time-meter"><i id="visitTimeMeter"></i></div>
-              </div>
-              <div class="metric-chips">
-                <span id="dxPointsChip">0 ДО</span>
-                <span id="localExamChip">0/2 осм.</span>
-                <span id="visitTimeChip">0 мин.</span>
-              </div>
-              <div class="diagnosis-chip" id="diagnosisChip">диагноз?</div>
+        <div class="case-workspace">
+          <section class="patient-column">
+            <canvas id="portraitCanvas" width="192" height="192" aria-label="Портрет пациента"></canvas>
+            <div class="patient-facts" id="patientFacts"></div>
+            <div class="patient-state">
+              <div class="meter-row"><span>Стресс</span><div class="meter stress-meter"><i id="stressMeter"></i></div></div>
+              <div class="meter-row"><span>Время</span><div class="meter time-meter"><i id="visitTimeMeter"></i></div></div>
             </div>
+            <button class="history-button" type="button" disabled>История посещений (0)</button>
+          </section>
 
-            <div class="case-notes">
+          <nav class="stage-tabs" aria-label="Этапы приема">
+            <button class="active" type="button" data-stage="complaint"><span>1</span> Жалоба</button>
+            <button type="button" data-stage="anamnesis"><span>2</span> Анамнез</button>
+            <button type="button" data-stage="exam"><span>3</span> Осмотр</button>
+            <button type="button" data-stage="research"><span>4</span> Исследования</button>
+            <button type="button" data-stage="decision"><span>5</span> Решение</button>
+            <button type="button" data-stage="discharge"><span>6</span> Выписка</button>
+          </nav>
+
+          <section class="clinical-column">
+            <div class="clinical-block">
               <h2>Что говорит владелец</h2>
               <p id="ownerComplaint"></p>
-              <h2>Данные приема</h2>
-              <ul id="findingsList"></ul>
             </div>
-          </div>
+            <div class="clinical-split">
+              <div class="clinical-block unknown-block">
+                <h2>Не уточнено</h2>
+                <ul id="unknownList"></ul>
+              </div>
+              <div class="clinical-block">
+                <h2>Данные осмотра и исследований</h2>
+                <ul id="findingsList"></ul>
+              </div>
+            </div>
+          </section>
 
-          <div class="case-actions">
-            <button id="anamnesisBtn" type="button">Анамнез</button>
-            <button id="temperatureBtn" type="button">Температура</button>
-            <button id="mucousBtn" type="button">Слизистые</button>
-            <button id="localExamBtn" type="button">Локальный осмотр</button>
-            <button id="microscopyBtn" type="button">Микроскопия</button>
-            <button id="diagnosisBtn" type="button">Диагноз</button>
-            <button id="communicationBtn" type="button">Объяснение</button>
-            <button class="primary" id="treatmentBtn" type="button">Назначить лечение</button>
-          </div>
+          <aside class="owner-column">
+            <h2>Владелец</h2>
+            <strong id="ownerName">—</strong>
+            <div class="meter-row"><span>Доверие</span><div class="meter"><i id="trustMeter"></i></div></div>
+            <div class="meter-row"><span>Напряжение</span><div class="meter tension-meter"><i id="tensionMeter"></i></div></div>
+            <dl class="owner-details">
+              <dt>Бюджет</dt><dd id="ownerBudget">не обсуждался</dd>
+              <dt>Согласие</dt><dd id="ownerConsent">нужно уточнить</dd>
+            </dl>
+            <div class="diagnosis-chip" id="diagnosisChip">Рабочая версия не выбрана</div>
+          </aside>
+        </div>
+
+        <div class="case-actions">
+          <button id="anamnesisBtn" type="button"><span>Анамнез</span><small>1–3 мин.</small></button>
+          <button id="generalExamBtn" type="button"><span>Общий осмотр</span><small>3 мин. · стресс</small></button>
+          <button id="localExamBtn" type="button"><span>Целевой осмотр</span><small>3–5 мин.</small></button>
+          <button id="sampleBtn" type="button"><span>Взять материал</span><small>2 мин.</small></button>
+          <button id="microscopyBtn" type="button"><span>Микроскопия</span><small>7 мин. · 90 V</small></button>
+          <button id="diagnosisBtn" type="button"><span>Рабочая версия</span><small>10 диагнозов</small></button>
+          <button id="communicationBtn" type="button"><span>Объяснение и план</span><small>4 мин.</small></button>
+          <button class="primary" id="treatmentBtn" type="button"><span>Назначить лечение</span><small>завершить прием</small></button>
         </div>
       </section>
 
       <section class="choice-window hidden" id="choiceWindow" aria-live="polite" aria-label="Выбор действия">
         <header>
-          <div>
-            <p class="eyebrow" id="choiceKicker">Действие</p>
-            <h2 id="choiceTitle">Выберите вариант</h2>
-          </div>
-          <button class="window-close" id="closeChoiceBtn" type="button" title="Закрыть">×</button>
+          <div><p class="eyebrow" id="choiceKicker">Действие</p><h2 id="choiceTitle">Выберите вариант</h2></div>
+          <button class="window-close" id="closeChoiceBtn" type="button" title="Закрыть" aria-label="Закрыть выбор">×</button>
         </header>
         <div class="choice-body" id="choiceBody"></div>
       </section>
+
+      <aside class="developer-panel hidden" id="developerPanel">
+        <header><strong>Режим разработчика</strong><button id="closeDeveloperBtn" type="button">×</button></header>
+        <div id="developerData"></div>
+      </aside>
 
       <section class="summary-window hidden" id="summaryWindow" aria-live="assertive" aria-label="Итог дня">
         <div class="summary-card">
@@ -92,34 +132,15 @@
       </section>
 
       <section class="bottom-hud" aria-label="Панель клиники">
-        <div class="money-block">
-          <span class="coin-icon">V</span>
-          <strong id="moneyValue">0</strong>
-          <small>веткоинов</small>
-        </div>
-        <div class="calendar-block">
-          <strong id="dateValue">День 1</strong>
-          <span id="timeValue">08:00</span>
-        </div>
-        <div class="hud-buttons">
-          <button id="pauseBtn" type="button" title="Пауза">II</button>
-          <button id="speedBtn" type="button" title="Скорость">1x</button>
-          <button id="nextPatientBtn" type="button" title="Следующий пациент">▶</button>
-        </div>
-        <div class="status-block">
-          <div class="status-line">
-            <span>Репутация</span>
-            <div class="meter"><i id="reputationMeter"></i></div>
-          </div>
-          <div class="status-line">
-            <span>Очередь</span>
-            <strong id="queueValue">0</strong>
-          </div>
-        </div>
+        <div class="money-block"><span class="coin-icon">V</span><strong id="moneyValue">0</strong><small>сегодня: <span id="todayRevenue">+0 V</span></small></div>
+        <div class="calendar-block"><strong id="dateValue">День 1</strong><span id="timeValue">08:00</span><small>до закрытия <span id="closingTime">10 ч.</span></small></div>
+        <div class="hud-buttons"><button id="pauseBtn" type="button" title="Пауза">II</button><button id="speedBtn" type="button" title="Скорость">1x</button><button id="nextPatientBtn" type="button" title="Следующий пациент">▶</button></div>
+        <div class="status-block"><div><span>Репутация клиники</span><strong id="reputationValue">0 / 100</strong></div><div class="meter"><i id="reputationMeter"></i></div><small id="reputationLabel">Новая клиника</small></div>
+        <div class="queue-summary"><strong id="queueValue">0 / 12</strong><span>ожидают приема</span></div>
         <div class="message-log" id="messageLog">Клиника открыта. Ожидаем первых пациентов.</div>
+        <button class="settings-button" id="developerBtn" type="button" title="Режим разработчика" aria-label="Режим разработчика">⚙</button>
       </section>
     </main>
-
     <script src="game.js" defer></script>
   </body>
 </html>

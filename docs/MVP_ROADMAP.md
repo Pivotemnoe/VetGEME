@@ -1,4 +1,4 @@
-# VetGEME / Мечевет - MVP Roadmap
+# Pet Clinic / Темичеввет - MVP Roadmap
 
 ## 1. Правило Работы
 

@@ -103,31 +103,31 @@
     {
       id: "calmDetailed",
       label: "Спокойно и подробно",
-      note: "Лучше для тревожных и внимательных владельцев."
+      note: "Обсудить, что известно, что пока неясно и что делать дальше."
     },
     {
       id: "riskFocus",
       label: "Объяснить риски",
-      note: "Полезно, когда владелец спорит или недооценивает проблему."
+      note: "Сначала обозначить опасные признаки и сроки повторного обращения."
     },
     {
       id: "budgetPlan",
       label: "План с учетом бюджета",
-      note: "Снижает конфликт, если денег мало."
+      note: "Разделить обязательный минимум и дополнительные шаги."
     },
     {
       id: "strict",
       label: "Коротко и строго",
-      note: "Помогает при опасном поведении, но тревожных может раздражать."
+      note: "Дать короткие пункты и попросить владельца повторить план."
     }
   ];
 
   const localExamOptions = [
-    { id: "ears", label: "Заглянуть в уши", time: 8 },
-    { id: "abdomen", label: "Пальпация живота", time: 8 },
-    { id: "skin", label: "Осмотр кожи и расчесов", time: 8 },
-    { id: "gait", label: "Осмотр лап и походки", time: 8 },
-    { id: "head", label: "Осмотр головы и болезненности", time: 8 }
+    { id: "ears", label: "Отоскопия и осмотр ушей", time: 4 },
+    { id: "abdomen", label: "Пальпация живота", time: 4 },
+    { id: "skin", label: "Осмотр кожи и расчесов", time: 4 },
+    { id: "gait", label: "Осмотр лап и походки", time: 4 },
+    { id: "head", label: "Осмотр головы и болезненности", time: 4 }
   ];
 
   const treatmentOptions = [
@@ -215,7 +215,7 @@
     {
       id: "allergy",
       label: "Аллергия",
-      note: "Похожий кожный или ушной зуд, но для MVP это отвлекающий диагноз."
+      note: "Может проявляться кожным или ушным зудом."
     },
     {
       id: "gastroenteritis",
@@ -225,12 +225,12 @@
     {
       id: "foreignBody",
       label: "Инородное тело ЖКТ",
-      note: "Опасная версия рвоты и боли, в MVP чаще неправильный выбор."
+      note: "Опасная версия рвоты и боли, которую важно учитывать."
     },
     {
       id: "fractureDislocation",
       label: "Перелом или вывих",
-      note: "Похож на травму, но для кабинета 1 это слишком тяжелый диагноз."
+      note: "Возможная причина боли и нарушения опоры на конечность."
     }
   ];
 
@@ -687,7 +687,8 @@
     mistakesToday: 0,
     pendingReturns: [],
     caseJournal: [],
-    modalOpen: false
+    modalOpen: false,
+    animationTime: 0
   };
 
   const canvas = document.getElementById("clinicCanvas");
@@ -696,24 +697,32 @@
   const portraitCtx = portraitCanvas.getContext("2d");
 
   const el = {
+    nextPatientCard: document.getElementById("nextPatientCard"),
     queueStrip: document.getElementById("queueStrip"),
+    queueCountLabel: document.getElementById("queueCountLabel"),
     caseWindow: document.getElementById("caseWindow"),
-    staffTabs: document.getElementById("staffTabs"),
     caseStage: document.getElementById("caseStage"),
     caseTitle: document.getElementById("caseTitle"),
+    caseOwner: document.getElementById("caseOwner"),
+    caseUrgency: document.getElementById("caseUrgency"),
+    caseDuration: document.getElementById("caseDuration"),
     closeCaseBtn: document.getElementById("closeCaseBtn"),
     ownerComplaint: document.getElementById("ownerComplaint"),
     findingsList: document.getElementById("findingsList"),
+    unknownList: document.getElementById("unknownList"),
+    patientFacts: document.getElementById("patientFacts"),
+    stressMeter: document.getElementById("stressMeter"),
     trustMeter: document.getElementById("trustMeter"),
+    tensionMeter: document.getElementById("tensionMeter"),
     visitTimeMeter: document.getElementById("visitTimeMeter"),
-    dxPointsChip: document.getElementById("dxPointsChip"),
-    localExamChip: document.getElementById("localExamChip"),
-    visitTimeChip: document.getElementById("visitTimeChip"),
     diagnosisChip: document.getElementById("diagnosisChip"),
+    ownerName: document.getElementById("ownerName"),
+    ownerBudget: document.getElementById("ownerBudget"),
+    ownerConsent: document.getElementById("ownerConsent"),
     anamnesisBtn: document.getElementById("anamnesisBtn"),
-    temperatureBtn: document.getElementById("temperatureBtn"),
-    mucousBtn: document.getElementById("mucousBtn"),
+    generalExamBtn: document.getElementById("generalExamBtn"),
     localExamBtn: document.getElementById("localExamBtn"),
+    sampleBtn: document.getElementById("sampleBtn"),
     microscopyBtn: document.getElementById("microscopyBtn"),
     diagnosisBtn: document.getElementById("diagnosisBtn"),
     communicationBtn: document.getElementById("communicationBtn"),
@@ -728,14 +737,22 @@
     summaryText: document.getElementById("summaryText"),
     nextDayBtn: document.getElementById("nextDayBtn"),
     moneyValue: document.getElementById("moneyValue"),
+    todayRevenue: document.getElementById("todayRevenue"),
     dateValue: document.getElementById("dateValue"),
     timeValue: document.getElementById("timeValue"),
+    closingTime: document.getElementById("closingTime"),
     pauseBtn: document.getElementById("pauseBtn"),
     speedBtn: document.getElementById("speedBtn"),
     nextPatientBtn: document.getElementById("nextPatientBtn"),
     reputationMeter: document.getElementById("reputationMeter"),
+    reputationValue: document.getElementById("reputationValue"),
+    reputationLabel: document.getElementById("reputationLabel"),
     queueValue: document.getElementById("queueValue"),
-    messageLog: document.getElementById("messageLog")
+    messageLog: document.getElementById("messageLog"),
+    developerBtn: document.getElementById("developerBtn"),
+    developerPanel: document.getElementById("developerPanel"),
+    closeDeveloperBtn: document.getElementById("closeDeveloperBtn"),
+    developerData: document.getElementById("developerData")
   };
 
   function outcome(quality, returnRisk, note) {
@@ -833,6 +850,8 @@
       budget: profile.budget + Math.round((Math.random() - 0.5) * 120),
       animal: pick(speciesNames[species]),
       species,
+      ageYears: species === "rabbit" ? pick([1, 2, 3, 4, 5]) : pick([1, 2, 3, 4, 6, 8, 10]),
+      sex: pick(["самец", "самка"]),
       diseaseId,
       flags,
       complaints,
@@ -843,11 +862,15 @@
       visitTimeUsed: 0,
       visitTimeLimit: profile.visitLimit,
       overtimeWarned: false,
+      stress: clamp(18 + Math.round(profile.anxiety * 0.22), 18, 48),
       dxPoints: 0,
       localUsed: 0,
       findings: [],
       asked: {},
       localDone: {},
+      generalExamDone: false,
+      sampleTaken: false,
+      budgetAsked: false,
       temperatureDone: false,
       mucousDone: false,
       microscopyDone: false,
@@ -859,12 +882,11 @@
     patient.findings.push(isReturn
       ? "Повторное обращение: владелец говорит, что прошлое лечение не помогло."
       : `Жалобы владельца: ${complaints.join(", ")}.`);
-    patient.findings.push(`Тип владельца: ${profile.label}. Бюджет примерно ${patient.budget} веткоинов. ${profile.note}`);
     return patient;
   }
 
   function spawnPatient(forcedDiseaseId, isReturn) {
-    if (state.queue.length >= 7 && !isReturn) return;
+    if (state.queue.length >= 12 && !isReturn) return;
     const patient = createPatient(forcedDiseaseId, isReturn);
     state.queue.push(patient);
     if (!state.activeId) state.activeId = patient.id;
@@ -922,10 +944,24 @@
   function askQuestion(patient, question) {
     if (patient.asked[question.id]) return;
     patient.asked[question.id] = true;
+    if (question.id === "budget") patient.budgetAsked = true;
     patient.dxPoints += 1;
     patient.findings.push(question.answer);
     setLog("Анамнез собран: +1 диагностическое очко.");
-    passTime(7);
+    passTime(question.id === "budget" ? 1 : 2);
+  }
+
+  function doGeneralExam() {
+    const patient = activePatient();
+    if (!patient || patient.generalExamDone) return;
+    patient.generalExamDone = true;
+    patient.temperatureDone = true;
+    patient.mucousDone = true;
+    patient.dxPoints += 2;
+    patient.stress = clamp(patient.stress + 6, 0, 100);
+    patient.findings.push(`Общий осмотр: ${diseaseFor(patient).temperature(patient)} ${diseaseFor(patient).mucous(patient)}`);
+    setLog("Проведен общий осмотр: состояние, температура, слизистые и дыхание.");
+    passTime(3);
   }
 
   function doTemperature() {
@@ -956,15 +992,30 @@
     patient.localDone[option.id] = true;
     patient.localUsed += 1;
     patient.dxPoints += 1;
+    patient.stress = clamp(patient.stress + 5, 0, 100);
     patient.findings.push(typeof result === "function" ? result(patient) : result);
     setLog(`Локальный осмотр: ${option.label}.`);
     closeChoice();
     passTime(option.time);
   }
 
+  function doSample() {
+    const patient = activePatient();
+    if (!patient || patient.sampleTaken) return;
+    patient.sampleTaken = true;
+    patient.stress = clamp(patient.stress + 4, 0, 100);
+    patient.findings.push("Материал для микроскопии взят и промаркирован.");
+    setLog("Взят материал для исследования.");
+    passTime(2);
+  }
+
   function doMicroscopy() {
     const patient = activePatient();
     if (!patient || patient.microscopyDone) return;
+    if (!patient.sampleTaken) {
+      setLog("Сначала нужно взять материал для исследования.");
+      return;
+    }
     if (patient.dxPoints < MICROSCOPY_COST) {
       setLog("Для микроскопии нужно минимум 2 диагностических очка.");
       return;
@@ -975,7 +1026,7 @@
     state.money += 90;
     state.revenueToday += 90;
     setLog("Микроскопия выполнена: владелец оплатил исследование.");
-    passTime(14);
+    passTime(7);
   }
 
   function selectDiagnosis(diagnosis) {
@@ -998,7 +1049,7 @@
     if (option.id === "strict" && patient.ownerProfile.id === "anxious") trustDelta = -4;
     if (option.id === "budgetPlan" && patient.ownerProfile.id === "budget") trustDelta = 10;
     adjustTrust(patient, trustDelta);
-    setLog(`Выбран стиль объяснения: ${option.label}. Доверие ${trustDelta >= 0 ? "+" : ""}${trustDelta}.`);
+    setLog(`План объяснен: ${option.label.toLowerCase()}. Реакция владельца отражена в шкале доверия.`);
     closeChoice();
     passTime(4);
   }
@@ -1092,7 +1143,7 @@
       risk: Math.round(risk * 100)
     });
 
-    setLog(`${patient.animal}: лечение назначено. ${diagnosisCorrect ? result.note : "Диагноз выбран неверно, поэтому риск возврата выше."}`);
+    setLog(`${patient.animal}: лечение назначено. Результат станет понятен после наблюдения или повторного обращения.`);
     state.queue = state.queue.filter((item) => item.id !== patient.id);
     state.activeId = state.queue[0] ? state.queue[0].id : null;
     closeChoice();
@@ -1112,7 +1163,6 @@
   function endDay() {
     state.modalOpen = true;
     state.paused = true;
-    const returned = state.pendingReturns.filter((item) => item.day === state.day + 1).length;
     const todayCases = state.caseJournal.filter((item) => item.day === state.day);
     const lastCase = todayCases[todayCases.length - 1];
     el.summaryTitle.textContent = `День ${state.day} завершен`;
@@ -1120,11 +1170,9 @@
       `Пациентов принято: <b>${state.treatedToday}</b>.`,
       `Доход: <b>${formatMoney(state.revenueToday)} веткоинов</b>.`,
       `Репутация: <b>${state.reputation}</b>/100.`,
-      state.mistakesToday
-        ? `Риск повторных обращений: <b>${returned}</b>. Ошибки пока не всегда видны сразу.`
-        : "Грубых ошибок сегодня не выявлено.",
+      `Повторных обращений сегодня: <b>${state.returnsToday}</b>.`,
       lastCase
-        ? `Последний случай: <b>${lastCase.animal}</b>, диагноз игрока: <b>${lastCase.selectedDiagnosis}</b>, истинно: <b>${lastCase.trueDiagnosis}</b>.`
+        ? `Последний случай: <b>${lastCase.animal}</b>, рабочая версия: <b>${lastCase.selectedDiagnosis}</b>.`
         : "Журнал случаев пока пуст."
     ].join("<br>");
     el.summaryWindow.classList.remove("hidden");
@@ -1187,9 +1235,14 @@
     const patient = activePatient();
     if (!patient) return;
     const disease = diseaseFor(patient);
-    const questions = disease.anamnesis(patient).map((question) => ({
+    const budgetQuestion = {
+      id: "budget",
+      label: "Есть ограничения по бюджету?",
+      answer: `Владелец просит по возможности уложиться примерно в ${Math.max(100, Math.floor((patient.budget - 60) / 50) * 50)}–${Math.ceil((patient.budget + 60) / 50) * 50} веткоинов.`
+    };
+    const questions = [...disease.anamnesis(patient), budgetQuestion].map((question) => ({
       label: question.label,
-      note: patient.asked[question.id] ? "Уже спросили." : "Спросить владельца. Потратит 7 минут приема.",
+      note: patient.asked[question.id] ? "Уже спросили." : `Спросить владельца. Потратит ${question.id === "budget" ? 1 : 2} мин. приема.`,
       disabled: patient.asked[question.id],
       onClick: () => {
         askQuestion(patient, question);
@@ -1208,7 +1261,7 @@
         ? "Уже осмотрено."
         : patient.localUsed >= MAX_LOCAL_EXAMS
           ? "Лимит локальных осмотров исчерпан."
-          : `Потратит один локальный осмотр и ${option.time} минут приема.`,
+          : `Потратит один локальный осмотр и ${option.time} мин. приема.`,
       disabled: patient.localDone[option.id] || patient.localUsed >= MAX_LOCAL_EXAMS,
       onClick: () => doLocalExam(option)
     }));
@@ -1238,7 +1291,7 @@
         : `${option.note} Потратит 4 минуты приема.`,
       onClick: () => selectCommunication(option)
     }));
-    openChoice("Объяснение", `Владелец: ${patient.ownerProfile.label}`, items);
+    openChoice("Объяснение", "Как объяснить владельцу план?", items);
   }
 
   function openTreatment() {
@@ -1251,7 +1304,11 @@
     }
     const items = treatmentOptions.map((treatment) => ({
       label: `${treatment.label} (+${treatment.fee} вет.)`,
-      note: `${treatment.note} ${diseaseFor(patient).baseFee + treatment.fee > patient.budget ? "Выше бюджета владельца." : "В бюджет владельца помещается."}`,
+      note: `${treatment.note} ${patient.budgetAsked
+        ? diseaseFor(patient).baseFee + treatment.fee > patient.budget
+          ? "Выше обсужденного бюджета."
+          : "В обсужденный бюджет помещается."
+        : "Бюджет владельца не обсуждался."}`,
       onClick: () => treatPatient(treatment)
     }));
     openChoice("Лечение", "Назначение владельцу", items);
@@ -1265,17 +1322,19 @@
   }
 
   function renderQueue() {
+    el.nextPatientCard.textContent = "";
     el.queueStrip.textContent = "";
-    state.queue.forEach((patient) => {
+    el.queueCountLabel.textContent = `${state.queue.length} из 12`;
+    state.queue.forEach((patient, index) => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = `queue-card${patient.id === state.activeId ? " active" : ""}`;
       const title = document.createElement("strong");
       title.textContent = `${patient.animal} • ${speciesLabels[patient.species]}`;
       const note = document.createElement("span");
-      note.textContent = patient.returnVisit ? "повторное обращение" : diseaseFor(patient).short;
+      note.textContent = patient.returnVisit ? "повторное обращение" : `Ждет ${Math.max(1, Math.round(patient.age))} мин.`;
       const owner = document.createElement("span");
-      owner.textContent = `владелец ${patient.owner}`;
+      owner.textContent = `Жалоба: ${patient.complaints[0]}`;
       const bar = document.createElement("div");
       bar.className = "patience-bar";
       const fill = document.createElement("i");
@@ -1283,8 +1342,17 @@
       bar.appendChild(fill);
       button.append(title, note, owner, bar);
       button.addEventListener("click", () => openCase(patient.id));
+      if (index === 0) el.nextPatientCard.appendChild(button.cloneNode(true));
       el.queueStrip.appendChild(button);
     });
+    const nextButton = el.nextPatientCard.querySelector(".queue-card");
+    if (nextButton && state.queue[0]) nextButton.addEventListener("click", () => openCase(state.queue[0].id));
+    if (!state.queue.length) {
+      const empty = document.createElement("div");
+      empty.className = "queue-locked";
+      empty.textContent = "Очередь пуста";
+      el.nextPatientCard.appendChild(empty);
+    }
   }
 
   function renderCase() {
@@ -1293,65 +1361,86 @@
       el.caseWindow.classList.add("hidden");
       return;
     }
-    el.caseStage.textContent = patient.returnVisit ? "Повторный прием" : "Кабинет 1";
-    el.caseTitle.textContent = `${patient.animal}, ${speciesLabels[patient.species]}`;
+    el.caseStage.textContent = patient.returnVisit ? "Повторный прием" : "Кабинет врача";
+    el.caseTitle.textContent = `${patient.animal} · ${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.`;
+    el.caseOwner.textContent = `Владелец: ${patient.owner}`;
+    el.caseUrgency.textContent = "Срочность: обычная";
+    el.caseDuration.textContent = `Прием длится: ${patient.visitTimeUsed} мин.`;
     el.ownerComplaint.textContent = patient.returnVisit
-      ? `Владелец ${patient.owner} (${patient.ownerProfile.label}, бюджет ~${patient.budget}): "После прошлого лечения не стало нормально. ${patient.complaints.join(", ")}."`
-      : `Владелец ${patient.owner} (${patient.ownerProfile.label}, бюджет ~${patient.budget}): "${patient.complaints.join(", ")}."`;
+      ? `«После прошлого лечения не стало нормально. ${patient.complaints.join(", ")}.»`
+      : `«${patient.complaints.join(", ")}.»`;
     el.findingsList.textContent = "";
-    patient.findings.slice(-9).forEach((finding) => {
+    patient.findings.filter((finding) => !finding.startsWith("Жалобы владельца:")).slice(-8).forEach((finding) => {
       const li = document.createElement("li");
       li.textContent = finding;
       el.findingsList.appendChild(li);
     });
+    if (!el.findingsList.children.length) {
+      const li = document.createElement("li");
+      li.textContent = "Осмотр еще не проводился.";
+      el.findingsList.appendChild(li);
+    }
+    const unknown = [];
+    if (!patient.asked.duration && !patient.asked.start) unknown.push("Когда точно начались симптомы");
+    if (!patient.asked.previous) unknown.push("Были ли подобные эпизоды");
+    if (!patient.asked.parasite) unknown.push("Проводились ли обработки");
+    if (!patient.budgetAsked) unknown.push("Есть ли ограничения по бюджету");
+    el.unknownList.textContent = "";
+    (unknown.length ? unknown : ["Основные сведения уточнены"]).forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      el.unknownList.appendChild(li);
+    });
     const visitPercent = clamp((patient.visitTimeUsed / patient.visitTimeLimit) * 100, 0, 100);
     el.trustMeter.style.width = `${patient.trust}%`;
+    el.tensionMeter.style.width = `${patient.ownerProfile.anxiety}%`;
+    el.stressMeter.style.width = `${patient.stress}%`;
     el.visitTimeMeter.style.width = `${visitPercent}%`;
-    el.dxPointsChip.textContent = `${patient.dxPoints} ДО`;
-    el.localExamChip.textContent = `${patient.localUsed}/${MAX_LOCAL_EXAMS} осм.`;
-    el.visitTimeChip.textContent = `${patient.visitTimeUsed}/${patient.visitTimeLimit} мин.`;
+    el.patientFacts.innerHTML = `<strong>${patient.animal}</strong><span>${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.</span><span>Состояние: стабильное</span>`;
+    el.ownerName.textContent = patient.owner;
+    el.ownerBudget.textContent = patient.budgetAsked
+      ? `${Math.max(100, Math.floor((patient.budget - 60) / 50) * 50)}–${Math.ceil((patient.budget + 60) / 50) * 50} V`
+      : "не обсуждался";
+    el.ownerConsent.textContent = patient.sampleTaken ? "на исследование получено" : "нужно уточнить";
     const selectedDiagnosis = diagnosisOptions.find((diagnosis) => diagnosis.id === patient.selectedDiagnosisId);
     el.diagnosisChip.textContent = selectedDiagnosis
-      ? selectedDiagnosis.label
-      : "диагноз?";
-    el.temperatureBtn.disabled = patient.temperatureDone;
-    el.mucousBtn.disabled = patient.mucousDone;
+      ? `Рабочая версия: ${selectedDiagnosis.label}`
+      : "Рабочая версия не выбрана";
+    el.generalExamBtn.disabled = patient.generalExamDone;
     el.localExamBtn.disabled = patient.localUsed >= MAX_LOCAL_EXAMS;
-    el.microscopyBtn.disabled = patient.microscopyDone;
+    el.sampleBtn.disabled = patient.sampleTaken;
+    el.microscopyBtn.disabled = patient.microscopyDone || !patient.sampleTaken;
     el.treatmentBtn.disabled = !patient.selectedDiagnosisId;
-    renderStaffTabs();
+    document.querySelectorAll(".stage-tabs button").forEach((button) => button.classList.remove("active"));
+    const stage = patient.selectedCommunicationId ? "discharge"
+      : patient.selectedDiagnosisId ? "decision"
+        : patient.microscopyDone || patient.sampleTaken ? "research"
+          : patient.generalExamDone || patient.localUsed ? "exam"
+            : Object.keys(patient.asked).length ? "anamnesis" : "complaint";
+    document.querySelector(`.stage-tabs button[data-stage="${stage}"]`)?.classList.add("active");
+    el.developerData.textContent = [
+      `Истинный диагноз: ${diseaseFor(patient).name}`,
+      `Тип владельца: ${patient.ownerProfile.label}`,
+      `Точный бюджет: ${patient.budget} V`,
+      `Надежность назначений: ${Math.round(patient.ownerProfile.reliability * 100)}%`,
+      `Диагностические очки: ${patient.dxPoints}`
+    ].join("\n");
     drawPortrait(patient);
-  }
-
-  function renderStaffTabs() {
-    const patient = activePatient();
-    const tabs = [
-      { name: "Врач", active: true },
-      { name: patient ? patient.animal : "Пациент", active: Boolean(patient) },
-      { name: "Каб. 2", active: false }
-    ];
-    el.staffTabs.textContent = "";
-    tabs.forEach((tab) => {
-      const div = document.createElement("div");
-      div.className = `staff-tab${tab.active ? " active" : ""}`;
-      const face = document.createElement("div");
-      face.className = "staff-face";
-      const name = document.createElement("span");
-      name.textContent = tab.name;
-      div.append(face, name);
-      el.staffTabs.appendChild(div);
-    });
   }
 
   function renderHud() {
     el.moneyValue.textContent = formatMoney(state.money);
+    el.todayRevenue.textContent = `+${formatMoney(state.revenueToday)} V`;
     el.dateValue.textContent = `День ${state.day}`;
     el.timeValue.textContent = formatTime(state.minute);
+    el.closingTime.textContent = `${Math.max(0, Math.ceil((DAY_END - state.minute) / 60))} ч.`;
     el.reputationMeter.style.width = `${state.reputation}%`;
-    el.queueValue.textContent = String(state.queue.length);
+    el.reputationValue.textContent = `${Math.round(state.reputation)} / 100`;
+    el.reputationLabel.textContent = state.reputation >= 80 ? "Известная клиника" : state.reputation >= 55 ? "Новая клиника" : "Клиника под наблюдением";
+    el.queueValue.textContent = `${state.queue.length} / 12`;
     el.pauseBtn.textContent = state.paused ? "▶" : "II";
     el.speedBtn.textContent = `${state.speed}x`;
-    el.messageLog.textContent = state.log;
+    el.messageLog.textContent = `${formatTime(state.minute)} · ${state.log}`;
   }
 
   function renderAll() {
@@ -1371,66 +1460,78 @@
   }
 
   function drawBackground() {
-    ctx.fillStyle = "#b7e977";
+    ctx.fillStyle = "#173a29";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    for (let y = 0; y < canvas.height; y += 24) {
-      for (let x = 0; x < canvas.width; x += 24) {
-        ctx.fillStyle = (x / 24 + y / 24) % 2 ? "#a9de6c" : "#c4ef88";
-        ctx.fillRect(x, y, 24, 24);
-      }
+    ctx.fillStyle = "#24523a";
+    ctx.fillRect(0, 610, canvas.width, 110);
+    ctx.fillStyle = "#345c4c";
+    ctx.fillRect(650, 640, 120, 80);
+    ctx.fillStyle = "#73808a";
+    ctx.fillRect(674, 638, 72, 82);
+    for (let x = 10; x < canvas.width; x += 64) {
+      ctx.fillStyle = x % 128 ? "#2b6543" : "#31714a";
+      ctx.fillRect(x, 30, 36, 60);
+      ctx.fillRect(x - 10, 48, 56, 22);
     }
-    ctx.fillStyle = "#94cb62";
-    ctx.fillRect(55, 62, 1140, 574);
-    ctx.fillStyle = "#7fb250";
-    ctx.fillRect(55, 62, 1140, 16);
-    ctx.fillRect(55, 620, 1140, 16);
-    ctx.fillRect(55, 62, 16, 574);
-    ctx.fillRect(1179, 62, 16, 574);
   }
 
   function drawClinicShell() {
-    drawRoom(120, 110, 1040, 460, "#d8dde5", "Коридор");
-    drawRoom(150, 135, 295, 180, "#e9c7c9", "Кабинет 1");
-    drawRoom(470, 135, 235, 180, "#d7c9ef", "Микроскопия");
-    drawRoom(735, 135, 385, 180, "#d0f2f4", "Кабинет 2 позже");
-    drawRoom(150, 340, 400, 190, "#eef5f8", "Ожидание");
-    drawRoom(580, 340, 540, 190, "#d8dde5", "Приемный холл");
-    drawReception(870, 375);
-    drawExamDesk(245, 205);
-    drawMicroscope(570, 220);
+    ctx.fillStyle = "rgba(0,0,0,.35)";
+    ctx.fillRect(54, 100, 1168, 540);
+    drawRoom(70, 95, 430, 225, "#d9b6b7", "Кабинет врача");
+    drawRoom(500, 95, 310, 225, "#c9b7df", "Лабораторный уголок");
+    drawRoom(810, 95, 390, 225, "#5b646b", "Расширение клиники");
+    drawRoom(70, 390, 590, 230, "#b8d2b7", "Зона ожидания");
+    drawRoom(660, 390, 540, 230, "#d8d5c3", "Регистратура и вход");
+    ctx.fillStyle = "#9aa6ad";
+    ctx.fillRect(70, 320, 1130, 70);
+    drawTiles(70, 320, 1130, 70);
+    ctx.fillStyle = "#3c4e5a";
+    ctx.font = "bold 14px Trebuchet MS";
+    ctx.fillText("ОБЩИЙ КОРИДОР", 560, 360);
+    drawReception(865, 445);
+    drawExamDesk(205, 182);
+    drawMicroscope(615, 190);
     drawBenches();
     drawPlants();
     drawDoors();
-    drawLockedRibbon(883, 222);
+    drawLockedRibbon(902, 188);
+    drawEntrance();
   }
 
   function drawRoom(x, y, w, h, floor, label) {
-    ctx.fillStyle = "#f5fbff";
-    ctx.fillRect(x - 8, y - 8, w + 16, h + 16);
+    ctx.fillStyle = "#dce6eb";
+    ctx.fillRect(x - 8, y - 10, w + 16, h + 18);
+    ctx.fillStyle = "#74828b";
+    ctx.fillRect(x - 8, y - 10, w + 16, 13);
+    ctx.fillRect(x - 8, y - 10, 13, h + 18);
     ctx.fillStyle = floor;
     ctx.fillRect(x, y, w, h);
     drawTiles(x, y, w, h);
-    ctx.lineWidth = 6;
-    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = "#eaf1f4";
     ctx.strokeRect(x, y, w, h);
     ctx.lineWidth = 2;
-    ctx.strokeStyle = "#8796a5";
+    ctx.strokeStyle = "#687784";
     ctx.strokeRect(x + 5, y + 5, w - 10, h - 10);
-    ctx.fillStyle = "rgba(19, 32, 51, 0.68)";
+    const labelWidth = Math.max(130, label.length * 8 + 20);
+    ctx.fillStyle = "rgba(16,36,59,.86)";
+    ctx.fillRect(x + 12, y + 11, labelWidth, 25);
+    ctx.fillStyle = "#f4fbff";
     ctx.font = "bold 15px Trebuchet MS";
-    ctx.fillText(label, x + 14, y + 25);
+    ctx.fillText(label, x + 22, y + 29);
   }
 
   function drawTiles(x, y, w, h) {
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.45)";
+    ctx.strokeStyle = "rgba(255,255,255,.28)";
     ctx.lineWidth = 1;
-    for (let tx = x; tx <= x + w; tx += 32) {
+    for (let tx = x; tx <= x + w; tx += 36) {
       ctx.beginPath();
       ctx.moveTo(tx, y);
       ctx.lineTo(tx, y + h);
       ctx.stroke();
     }
-    for (let ty = y; ty <= y + h; ty += 32) {
+    for (let ty = y; ty <= y + h; ty += 28) {
       ctx.beginPath();
       ctx.moveTo(x, ty);
       ctx.lineTo(x + w, ty);
@@ -1439,14 +1540,18 @@
   }
 
   function drawExamDesk(x, y) {
-    drawFurniture(x, y, 120, 58, "#6d4730", "#3a2518");
-    drawFurniture(x + 150, y + 8, 86, 46, "#9fd9ef", "#4f9eb8");
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(x + 18, y + 13, 28, 20);
-    ctx.fillStyle = "#2b3950";
-    ctx.fillRect(x + 18, y + 8, 28, 8);
-    ctx.fillStyle = "#3a7fd6";
-    ctx.fillRect(x + 78, y + 58, 34, 42);
+    drawFurniture(x, y + 35, 165, 60, "#80b9c7", "#477987");
+    ctx.fillStyle = "#dff7fb";
+    ctx.fillRect(x + 14, y + 45, 137, 12);
+    drawFurniture(x + 205, y, 120, 58, "#6d4730", "#3a2518");
+    ctx.fillStyle = "#e8f5f8";
+    ctx.fillRect(x + 225, y + 12, 32, 22);
+    ctx.fillStyle = "#26384a";
+    ctx.fillRect(x + 222, y + 8, 38, 8);
+    ctx.fillStyle = "#eef7fa";
+    ctx.fillRect(x + 335, y + 25, 42, 55);
+    ctx.fillStyle = "#6aa9bd";
+    ctx.fillRect(x + 340, y + 42, 32, 9);
   }
 
   function drawMicroscope(x, y) {
@@ -1461,22 +1566,21 @@
   }
 
   function drawReception(x, y) {
-    drawFurniture(x, y, 155, 60, "#65c4dd", "#1d86ae");
+    drawFurniture(x, y, 190, 68, "#8f694c", "#60442f");
     ctx.fillStyle = "#f6fbff";
-    ctx.fillRect(x + 100, y - 28, 34, 28);
+    ctx.fillRect(x + 115, y - 28, 34, 28);
     ctx.fillStyle = "#0f2641";
-    ctx.fillRect(x + 106, y - 22, 22, 14);
-    drawPerson(x + 88, y + 42, { shirt: "#ffffff", pants: "#41698a", hair: "#e7c073", coat: true });
+    ctx.fillRect(x + 121, y - 22, 22, 14);
+    ctx.fillStyle = "#f4d47e";
+    ctx.fillRect(x + 20, y + 13, 30, 16);
   }
 
   function drawBenches() {
     const benches = [
-      [205, 402],
-      [205, 455],
-      [340, 402],
-      [340, 455],
-      [660, 455],
-      [795, 455]
+      [135, 455],
+      [315, 455],
+      [135, 548],
+      [315, 548]
     ];
     benches.forEach(([x, y]) => {
       drawFurniture(x, y, 94, 18, "#7ce26f", "#47a94b");
@@ -1487,26 +1591,54 @@
   }
 
   function drawPlants() {
-    [[110, 502], [518, 501], [1126, 506], [458, 288]].forEach(([x, y]) => {
-      ctx.fillStyle = "#f5fbff";
-      ctx.fillRect(x - 9, y + 26, 24, 18);
-      ctx.fillStyle = "#2ea84f";
-      ctx.fillRect(x, y + 3, 8, 30);
-      ctx.fillRect(x - 16, y + 10, 24, 8);
-      ctx.fillRect(x + 4, y + 15, 26, 8);
-      ctx.fillRect(x - 12, y + 24, 18, 7);
+    [[92, 515], [595, 525], [1140, 525], [465, 270], [780, 530]].forEach(([x, y]) => {
+      ctx.fillStyle = "#8d6547";
+      ctx.fillRect(x - 10, y + 25, 25, 18);
+      ctx.fillStyle = "#68452f";
+      ctx.fillRect(x - 7, y + 39, 19, 5);
+      ctx.fillStyle = "#2f8848";
+      ctx.beginPath();
+      ctx.arc(x + 2, y + 19, 10, 0, Math.PI * 2);
+      ctx.arc(x - 7, y + 12, 9, 0, Math.PI * 2);
+      ctx.arc(x + 12, y + 10, 9, 0, Math.PI * 2);
+      ctx.arc(x + 2, y + 2, 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#4caf61";
+      ctx.fillRect(x, y + 8, 4, 20);
     });
   }
 
   function drawDoors() {
-    [[430, 242], [688, 242], [810, 242], [542, 410], [610, 410]].forEach(([x, y]) => {
+    [[445, 250], [745, 250], [835, 250], [610, 410], [710, 410]].forEach(([x, y]) => {
+      ctx.fillStyle = "#31424d";
+      ctx.fillRect(x, y, 44, 70);
+      ctx.fillStyle = "#182832";
+      ctx.fillRect(x + 5, y + 5, 34, 65);
       ctx.fillStyle = "#9d6b45";
-      ctx.fillRect(x, y, 38, 72);
-      ctx.fillStyle = "#d7ecf5";
-      ctx.fillRect(x + 8, y + 12, 22, 12);
+      ctx.beginPath();
+      ctx.moveTo(x + 5, y + 5);
+      ctx.lineTo(x + 31, y + 14);
+      ctx.lineTo(x + 31, y + 70);
+      ctx.lineTo(x + 5, y + 70);
+      ctx.closePath();
+      ctx.fill();
       ctx.fillStyle = "#f3d76d";
-      ctx.fillRect(x + 29, y + 36, 5, 5);
+      ctx.fillRect(x + 25, y + 40, 4, 4);
     });
+  }
+
+  function drawEntrance() {
+    ctx.fillStyle = "#96d3e3";
+    ctx.fillRect(685, 570, 92, 50);
+    ctx.strokeStyle = "#27465a";
+    ctx.lineWidth = 4;
+    ctx.strokeRect(685, 570, 92, 50);
+    ctx.beginPath();
+    ctx.moveTo(731, 570);
+    ctx.lineTo(731, 620);
+    ctx.stroke();
+    ctx.fillStyle = "#465963";
+    ctx.fillRect(674, 620, 114, 16);
   }
 
   function drawLockedRibbon(x, y) {
@@ -1530,15 +1662,17 @@
   }
 
   function drawCharacters() {
-    drawPerson(330, 250, { shirt: "#ffffff", pants: "#253c65", hair: "#1f1f1f", coat: true });
+    const idle = Math.round(Math.sin(state.animationTime / 380) * 1.5);
+    drawPerson(390, 235 + idle, { shirt: "#ffffff", pants: "#253c65", hair: "#1f1f1f", coat: true });
     ctx.fillStyle = "#0f2641";
     ctx.font = "bold 12px Trebuchet MS";
-    ctx.fillText("врач", 312, 296);
+    ctx.fillText("врач", 374, 282 + idle);
 
     state.queue.forEach((patient, index) => {
       const inCabinet = patient.id === state.activeId && el.caseWindow.classList.contains("hidden") === false;
-      const x = inCabinet ? 365 : 230 + (index % 4) * 105;
-      const y = inCabinet ? 282 : 430 + Math.floor(index / 4) * 58;
+      const bob = Math.round(Math.sin(state.animationTime / 420 + index) * 1.5);
+      const x = inCabinet ? 270 : 175 + (index % 3) * 155;
+      const y = inCabinet ? 250 + bob : 505 + Math.floor(index / 3) * 72 + bob;
       const color = ownerColor(index);
       drawPerson(x, y, color);
       drawAnimal(patient.species, x + 27, y + 18, patient.id === state.activeId);
@@ -1547,9 +1681,10 @@
   }
 
   function drawFloatingLabels() {
-    const patient = activePatient();
-    if (!patient) return;
-    drawBubble(580, 106, `${patient.animal}: ${diseaseFor(patient).short}`);
+    state.queue.forEach((patient, index) => {
+      if (patient.id === state.activeId && !el.caseWindow.classList.contains("hidden")) return;
+      if (patient.mood < 38) drawBubble(190 + (index % 3) * 155, 445 + Math.floor(index / 3) * 72, "ждет долго");
+    });
   }
 
   function drawBubble(x, y, text) {
@@ -1676,7 +1811,7 @@
     portraitCtx.font = "bold 17px Trebuchet MS";
     portraitCtx.fillText(patient.animal, 16, 168);
     portraitCtx.font = "12px Trebuchet MS";
-    portraitCtx.fillText(diseaseFor(patient).short, 16, 184);
+    portraitCtx.fillText(speciesLabels[patient.species], 16, 184);
     void old;
   }
 
@@ -1699,9 +1834,9 @@
     });
     el.closeChoiceBtn.addEventListener("click", closeChoice);
     el.anamnesisBtn.addEventListener("click", openAnamnesis);
-    el.temperatureBtn.addEventListener("click", doTemperature);
-    el.mucousBtn.addEventListener("click", doMucous);
+    el.generalExamBtn.addEventListener("click", doGeneralExam);
     el.localExamBtn.addEventListener("click", openLocalExam);
+    el.sampleBtn.addEventListener("click", doSample);
     el.microscopyBtn.addEventListener("click", doMicroscopy);
     el.diagnosisBtn.addEventListener("click", openDiagnosis);
     el.communicationBtn.addEventListener("click", openCommunication);
@@ -1716,6 +1851,20 @@
     });
     el.nextPatientBtn.addEventListener("click", cyclePatient);
     el.nextDayBtn.addEventListener("click", startNextDay);
+    el.developerBtn.addEventListener("click", () => el.developerPanel.classList.toggle("hidden"));
+    el.closeDeveloperBtn.addEventListener("click", () => el.developerPanel.classList.add("hidden"));
+    document.querySelectorAll(".stage-tabs button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const handlers = {
+          anamnesis: openAnamnesis,
+          exam: doGeneralExam,
+          research: () => activePatient()?.sampleTaken ? doMicroscopy() : doSample(),
+          decision: openDiagnosis,
+          discharge: openCommunication
+        };
+        handlers[button.dataset.stage]?.();
+      });
+    });
     canvas.addEventListener("click", () => {
       if (activePatient()) {
         el.caseWindow.classList.remove("hidden");
@@ -1725,11 +1874,12 @@
   }
 
   function tick(timestamp) {
+    state.animationTime = timestamp;
     if (!state.lastTick) state.lastTick = timestamp;
     const delta = timestamp - state.lastTick;
     state.lastTick = timestamp;
     if (!state.paused && !state.modalOpen && !isReadingInterfaceOpen()) {
-      const minutes = (delta / 1000) * state.speed * 2.2;
+      const minutes = (delta / 1000) * state.speed * 0.5;
       state.minute += minutes;
       state.spawnMeter += minutes;
       state.queue.forEach((patient) => {
@@ -1754,8 +1904,8 @@
     spawnPatient("bacterialOtitis");
     spawnPatient("miteOtitis");
     spawnPatient("pancreatitis");
-    openCase(state.queue[0].id);
-    setLog("Выберите пациента и проведите прием: анамнез, осмотр, лечение.");
+    el.caseWindow.classList.add("hidden");
+    setLog("Клиника открыта. Выберите пациента из очереди и пригласите в кабинет.");
     renderAll();
     window.requestAnimationFrame(tick);
   }

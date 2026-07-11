@@ -1,4 +1,4 @@
-# VetGEME / Мечевет - MVP 1 Medical Spec
+# Pet Clinic / Темичеввет - MVP 1 Medical Spec
 
 ## 1. Статус
 
