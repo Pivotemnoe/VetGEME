@@ -17,6 +17,7 @@
   const mode = requestedMode();
   window.PET_CLINIC_GENERATOR_MODE = Object.freeze({
     mode,
+    gameSaveKey: window.PET_CLINIC_SAVE_NAMESPACES.gameSaveKey(mode),
     modes: MODES.slice(),
     isCurrent: mode === "current",
     isLegacy: mode === "legacy-v1",
