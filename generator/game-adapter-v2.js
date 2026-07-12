@@ -36,6 +36,21 @@
     end_shift_without_unreviewed_urgent_tasks: "Не оставить срочные задачи без решения",
     maintain_team_fatigue_below_critical: "Не довести усталость врача до критической"
   };
+  const goalTargets = {
+    complete_two_full_visits: 2,
+    check_owner_understanding_twice: 2,
+    finish_two_followups: 2
+  };
+  const bookingReasonByFamily = {
+    ear: "Проблема с ухом",
+    skin: "Зуд или изменение кожи",
+    gastrointestinal: "Проблема с пищеварением",
+    urinary: "Проблема с мочеиспусканием",
+    eyes: "Проблема с глазом",
+    respiratory: "Кашель или выделения",
+    trauma: "Травма или хромота",
+    perianal: "Дискомфорт под хвостом"
+  };
 
   function clone(value) {
     return JSON.parse(JSON.stringify(value));
@@ -105,7 +120,7 @@
     return {
       arrivalMinute: visit.arrivalMinute,
       source: visit.source === "unplanned" ? "walkIn" : visit.source,
-      bookingLabel: visit.complaint.text,
+      bookingLabel: visit.bookingReason || bookingReasonByFamily[visit.family] || "Причина обращения",
       diseaseId: visit.caseId,
       profileId: visit.owner.profileId,
       ownerProfile: ownerProfileForVisit(visit),
@@ -126,7 +141,7 @@
     const definition = catalog.dayGoals.goalsByDay.find((item) => item.day === dayNumber);
     if (!definition) return [];
     const ids = [...definition.required, ...definition.candidates.slice(0, 1)];
-    return ids.map((id) => ({ id, label: goalLabels[id] || id, target: 1 }));
+    return ids.map((id) => ({ id, label: goalLabels[id] || id, target: goalTargets[id] || 1 }));
   }
 
   function planFromDay(day, catalog) {
@@ -134,7 +149,7 @@
       day: day.day,
       chapterDay: day.day,
       title: day.title,
-      briefing: "Расписание сформировано генератором. Незапланированные визиты появятся только после открытия клиники.",
+      briefing: "В расписании показаны пациенты, записанные заранее. Обращения без записи могут появиться в течение дня.",
       endMinute: Number(day.end.split(":")[0]) * 60 + Number(day.end.split(":")[1]),
       maxWaiting: Math.min(4, Math.max(1, Math.ceil(day.plannedVisitCount / 2))),
       loadLabel: `${day.plannedVisitCount} визитов`,
@@ -153,19 +168,7 @@
       note: option.feedback,
       unsafe: option.isUnsafeChoice
     }));
-    const usedLabels = new Set(primary.map((item) => item.label));
-    for (const candidate of catalog.cases) {
-      if (primary.length >= 10) break;
-      if (usedLabels.has(candidate.preliminaryDiagnosisLabel)) continue;
-      usedLabels.add(candidate.preliminaryDiagnosisLabel);
-      primary.push({
-        id: `distractor:${candidate.id}`,
-        label: candidate.preliminaryDiagnosisLabel,
-        note: "Вариант из каталога предварительных диагнозов.",
-        unsafe: false
-      });
-    }
-    return primary.slice(0, 10);
+    return primary;
   }
 
   function treatmentOptionsFor(patient) {

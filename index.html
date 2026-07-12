@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pet Clinic: ветеринарная клиника</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eaf6ff'/%3E%3Cpath d='M13 5h6v22h-6zM5 13h22v6H5z' fill='%231976d2'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="styles.css?v=20260712l">
+    <link rel="stylesheet" href="styles.css?v=20260712m">
   </head>
   <body>
     <main class="game-shell" aria-label="Pet Clinic: ветеринарная стратегия">
@@ -108,7 +108,7 @@
               <dt>Бюджет</dt><dd id="ownerBudget">не обсуждался</dd>
               <dt>Согласие</dt><dd id="ownerConsent">нужно уточнить</dd>
             </dl>
-            <div class="diagnosis-chip" id="diagnosisChip">Рабочая версия не выбрана</div>
+            <div class="diagnosis-chip" id="diagnosisChip">Предварительный диагноз не выбран</div>
           </aside>
         </div>
 
@@ -118,7 +118,7 @@
           <button id="localExamBtn" type="button"><span>Целевой осмотр</span><small>3–5 мин.</small></button>
           <button id="sampleBtn" type="button"><span>Взять материал</span><small>2 мин.</small></button>
           <button id="microscopyBtn" type="button"><span>Микроскопия</span><small>7 мин. · доход 90 V</small></button>
-          <button id="diagnosisBtn" type="button"><span>Рабочая версия</span><small>10 диагнозов</small></button>
+          <button id="diagnosisBtn" type="button"><span>Предварительный диагноз</span><small>варианты по случаю</small></button>
           <button id="communicationBtn" type="button"><span>Объяснение и план</span><small>4 мин.</small></button>
           <button class="primary" id="treatmentBtn" type="button"><span>Назначить лечение</span><small>завершить прием</small></button>
         </div>
@@ -151,7 +151,7 @@
           <div class="doctor-options" id="doctorOptions"></div>
           <fieldset class="hours-options">
             <legend>Часы работы</legend>
-            <label><input type="radio" name="hoursMode" value="standard" checked><span><strong>Сюжетный график</strong><small id="standardHoursLabel">08:00–18:00</small></span></label>
+            <label><input type="radio" name="hoursMode" value="standard" checked><span><strong>Обычная смена</strong><small id="standardHoursLabel">08:00–18:00</small></span></label>
             <label><input type="radio" name="hoursMode" value="extended"><span><strong>Продлённый день</strong><small>Откроется после первой недели</small></span></label>
           </fieldset>
           <button class="primary shift-start" id="startShiftBtn" type="button">Открыть клинику</button>
@@ -191,9 +191,9 @@
     </main>
     <script src="campaign.js?v=20260712k" defer></script>
     <script src="generator/content-loader-v2.js?v=20260712a" defer></script>
-    <script src="generator/generator-v2.js?v=20260712a" defer></script>
-    <script src="generator/game-adapter-v2.js?v=20260712a" defer></script>
+    <script src="generator/generator-v2.js?v=20260712b" defer></script>
+    <script src="generator/game-adapter-v2.js?v=20260712c" defer></script>
     <script src="generator/generator-mode.js?v=20260712a" defer></script>
-    <script src="game.js?v=20260712l" defer></script>
+    <script src="game.js?v=20260712o" defer></script>
   </body>
 </html>

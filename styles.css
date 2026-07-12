@@ -299,8 +299,10 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
 .shift-forecast h3 { margin: 0 0 7px; color: var(--blue-900); font-size: 12px; }
 .shift-forecast-summary { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-bottom: 8px; color: #445d72; font-size: 10px; }
 .shift-forecast-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 5px 10px; }
-.shift-forecast-row { display: grid; grid-template-columns: 44px 1fr; gap: 7px; padding: 5px 7px; border: 1px solid #a8bbc6; background: #e8eff3; color: #536979; font-size: 10px; }
+.shift-forecast-row { display: grid; grid-template-columns: 44px 1fr; gap: 7px; padding: 5px 7px; border: 1px solid #a8bbc6; background: #e8eff3; color: #536979; font-size: 11px; }
 .shift-forecast-row strong { color: var(--blue-900); }
+.shift-forecast-row span { display: grid; gap: 2px; }
+.shift-forecast-row small { color: var(--ink-soft); font-size: 10px; }
 .doctor-options { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; padding: 0 16px 14px; }
 .doctor-option { display: grid; grid-template-columns: 48px 1fr; gap: 9px; align-items: center; padding: 10px; text-align: left; background: #f7fcff; box-shadow: 0 3px 0 #0b1b2c; }
 .doctor-option.selected { outline: 4px solid #f2cf55; }

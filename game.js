@@ -1773,7 +1773,7 @@
       const name = document.createElement("strong");
       name.textContent = doctor.name;
       const fatigue = document.createElement("span");
-      fatigue.textContent = `Усталость: ${Math.round(doctor.fatigue)}% · серия: ${doctor.consecutiveShifts}/${MAX_CONSECUTIVE_SHIFTS}`;
+      fatigue.textContent = `Усталость: ${Math.round(doctor.fatigue)}% · смен подряд: ${doctor.consecutiveShifts}/${MAX_CONSECUTIVE_SHIFTS}`;
       const note = document.createElement("small");
       note.textContent = unavailable ? "После трех смен подряд врачу нужен выходной." : doctor.note;
       copy.append(name, fatigue, note);
@@ -1804,14 +1804,17 @@
     const rows = plan.patients.map((patient) => `
       <div class="shift-forecast-row">
         <strong>${formatTime(patient.arrivalMinute)}</strong>
-        <span>${patient.bookingLabel}${patient.returnVisit ? " · контроль" : ""}</span>
+        <span>${patient.animal}, ${speciesLabels[patient.species] || patient.species} · ${patient.returnVisit ? "повторный" : "первичный"}<small>${patient.bookingLabel || "Причина обращения"}</small></span>
       </div>`).join("");
+    const walkInSummary = plan.unplannedRange?.max > 0
+      ? `<span>Возможны без записи: <b>${walkInRange}</b></span>`
+      : "";
     el.shiftForecast.innerHTML = `
       <h3>Запись на сегодня</h3>
       <div class="shift-forecast-summary">
         <span>Записано: <b>${plan.patients.length - walkIns}</b></span>
         <span>Повторных: <b>${returns}</b></span>
-        <span>Без записи: <b>${walkInRange}</b></span>
+        ${walkInSummary}
         <span>Нагрузка: <b>${plan.loadLabel}</b></span>
         <span>Закрытие: <b>${formatTime(plan.endMinute)}</b></span>
       </div>
@@ -2148,7 +2151,7 @@
         : `${diagnosis.note} Потратит 3 минуты приема.`,
       onClick: () => selectDiagnosis(diagnosis)
     }));
-    openChoice("Диагноз", "Выберите один из 10 диагнозов", items);
+    openChoice("Предварительный диагноз", `Выберите один из ${availableDiagnoses.length} вариантов`, items);
   }
 
   function openCommunication() {
@@ -2334,8 +2337,14 @@
     el.ownerConsent.textContent = patient.sampleTaken ? "на исследование получено" : "нужно уточнить";
     const selectedDiagnosis = diagnosisLabel(patient.selectedDiagnosisId);
     el.diagnosisChip.textContent = selectedDiagnosis
-      ? `Рабочая версия: ${selectedDiagnosis}`
-      : "Рабочая версия не выбрана";
+      ? `Предварительный диагноз: ${selectedDiagnosis}`
+      : "Предварительный диагноз не выбран";
+    const diagnosisButtonLabel = el.diagnosisBtn.querySelector("span");
+    const diagnosisCount = el.diagnosisBtn.querySelector("small");
+    if (diagnosisButtonLabel) diagnosisButtonLabel.textContent = "Предварительный диагноз";
+    if (diagnosisCount) diagnosisCount.textContent = patient.v2Visit
+      ? `${window.PET_CLINIC_GAME_ADAPTER_V2.diagnosisOptionsFor(patient, generatorRuntime.catalog).length} варианта`
+      : "10 диагнозов";
     el.anamnesisBtn.disabled = false;
     el.generalExamBtn.disabled = patient.generalExamDone;
     el.localExamBtn.disabled = patient.localUsed >= MAX_LOCAL_EXAMS;

@@ -88,9 +88,10 @@
         "max": 1
       },
       "unplannedNew": {
-        "min": 1,
+        "min": 0,
         "max": 1
       },
+      "unplannedProbability": 0.45,
       "urgentSubset": {
         "min": 0,
         "max": 0
@@ -123,9 +124,10 @@
         "max": 1
       },
       "unplannedNew": {
-        "min": 1,
+        "min": 0,
         "max": 1
       },
+      "unplannedProbability": 0.6,
       "urgentSubset": {
         "min": 1,
         "max": 1
@@ -163,9 +165,10 @@
         "max": 1
       },
       "unplannedNew": {
-        "min": 1,
+        "min": 0,
         "max": 1
       },
+      "unplannedProbability": 0.65,
       "urgentSubset": {
         "min": 0,
         "max": 1
@@ -198,9 +201,10 @@
         "max": 2
       },
       "unplannedNew": {
-        "min": 1,
+        "min": 0,
         "max": 1
       },
+      "unplannedProbability": 0.5,
       "urgentSubset": {
         "min": 0,
         "max": 1

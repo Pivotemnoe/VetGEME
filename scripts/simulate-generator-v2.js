@@ -91,6 +91,9 @@ async function main() {
   if (Object.keys(caseCounts).length !== catalog.manifest.caseCount) {
     throw new Error(`coverage reached ${Object.keys(caseCounts).length}/${catalog.manifest.caseCount} cases`);
   }
+  if (unplannedVisits <= runs || unplannedVisits >= runs * 5) {
+    throw new Error(`optional unplanned visits are not varying: ${unplannedVisits} across ${runs} weeks`);
+  }
   const incompatibleStorage = generatorApi.createMemoryStorage();
   incompatibleStorage.setItem(generatorApi.SAVE_KEY, JSON.stringify({
     saveVersion: 1,

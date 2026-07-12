@@ -12,6 +12,17 @@
   const GENERATOR_VERSION = "tier-01-v2.0.0";
   const SUPPORTED_MODES = ["current", "legacy-v1", "tier-01-v2"];
   const DEFAULT_EQUIPMENT = ["otoscope", "microscope"];
+  const FIRST_TUTORIAL_CASE_IDS = ["EAR_FUNGAL_OTITIS", "EAR_MITES"];
+  const BOOKING_REASONS = {
+    ear: "Проблема с ухом",
+    skin: "Зуд или изменение кожи",
+    gastrointestinal: "Проблема с пищеварением",
+    urinary: "Проблема с мочеиспусканием",
+    eyes: "Проблема с глазом",
+    respiratory: "Кашель или выделения",
+    trauma: "Травма или хромота",
+    perianal: "Дискомфорт под хвостом"
+  };
   const animalNames = {
     dog: ["Бакс", "Рекс", "Лада", "Тайга", "Нора", "Ричи", "Сёма", "Найда"],
     cat: ["Мурка", "Буся", "Тучка", "Ириска", "Рыжик", "Малыш", "Мята", "Клевер"]
@@ -64,6 +75,14 @@
     const min = Number(range.min);
     const max = Number(range.max);
     return min + Math.floor(random() * (max - min + 1));
+  }
+
+  function unplannedCountForRule(rule, random) {
+    if (rule.unplannedNew.min === rule.unplannedNew.max) return rule.unplannedNew.min;
+    if (Number.isFinite(rule.unplannedProbability)) {
+      return random() < rule.unplannedProbability ? rule.unplannedNew.max : rule.unplannedNew.min;
+    }
+    return integerBetween(rule.unplannedNew, random);
   }
 
   function weightedPick(items, random, weightFor = (item) => item.weight || 1) {
@@ -239,6 +258,7 @@
       patient: identity,
       owner,
       complaint: clone(complaint),
+      bookingReason: BOOKING_REASONS[caseData.family] || caseData.family,
       returnVisit: source === "follow_up",
       originalVisitId: options.originalVisitId || null,
       missingEquipment,
@@ -252,9 +272,18 @@
     const start = minutesFromClock(dayRule.start);
     const end = minutesFromClock(dayRule.end);
     const visible = visits.filter((visit) => includeUnplanned || visit.source !== "unplanned");
+    const occupiedBookedMinutes = new Set();
     visible.forEach((visit, index) => {
       const segment = Math.max(25, Math.floor((end - start - 45) / Math.max(1, visible.length)));
-      visit.arrivalMinute = Math.min(end - 30, start + 15 + index * segment + Math.floor(random() * Math.min(16, segment)));
+      const rawMinute = Math.min(end - 30, start + 15 + index * segment + Math.floor(random() * Math.min(16, segment)));
+      if (visit.source === "unplanned") {
+        visit.arrivalMinute = rawMinute;
+        return;
+      }
+      let roundedMinute = Math.round(rawMinute / 5) * 5;
+      while (occupiedBookedMinutes.has(roundedMinute) && roundedMinute < end - 30) roundedMinute += 5;
+      visit.arrivalMinute = roundedMinute;
+      occupiedBookedMinutes.add(roundedMinute);
     });
     return visits.sort((left, right) => (left.arrivalMinute || Infinity) - (right.arrivalMinute || Infinity));
   }
@@ -324,7 +353,7 @@
       }
       const random = createRandom(state.campaignSeed, `day:${dayNumber}:plan`);
       const plannedVisitCount = integerBetween(rule.visitsTotal, random);
-      const pendingUnplanned = integerBetween(rule.unplannedNew, random);
+      const pendingUnplanned = unplannedCountForRule(rule, random);
       const requestedFollowUps = integerBetween(rule.followUps, random);
       const availableFollowUps = state.pendingFollowUps.filter((item) => item.eligibleDay <= dayNumber);
       const selectedFollowUps = [];
@@ -347,8 +376,18 @@
         selectedCases = ensureUrgentSelection(selectedCases, catalog, rule, random, state.seenCaseCounts);
       }
       if (dayNumber === 1) {
-        const tutorialIndex = selectedCases.findIndex((item) => item.tutorialEligible);
-        if (tutorialIndex > 0) [selectedCases[0], selectedCases[tutorialIndex]] = [selectedCases[tutorialIndex], selectedCases[0]];
+        const tutorialIds = new Set(FIRST_TUTORIAL_CASE_IDS);
+        const tutorialIndex = selectedCases.findIndex((item) => tutorialIds.has(item.id));
+        if (tutorialIndex >= 0) {
+          [selectedCases[0], selectedCases[tutorialIndex]] = [selectedCases[tutorialIndex], selectedCases[0]];
+        } else {
+          const tutorialPool = FIRST_TUTORIAL_CASE_IDS.map((id) => catalog.casesById[id]).filter(Boolean);
+          const tutorialCase = weightedPick(tutorialPool, random, (item) => 1 / (1 + (state.seenCaseCounts[item.id] || 0)));
+          const earIndex = selectedCases.findIndex((item) => item.family === "ear");
+          selectedCases[earIndex >= 0 ? earIndex : 0] = tutorialCase;
+          const insertedIndex = selectedCases.indexOf(tutorialCase);
+          [selectedCases[0], selectedCases[insertedIndex]] = [selectedCases[insertedIndex], selectedCases[0]];
+        }
       }
       const visits = selectedCases.map((caseData, index) => createVisit(
         caseData,
@@ -460,7 +499,7 @@
           visitId: visit.visitId,
           animal: visit.patient.animal,
           species: visit.patient.species,
-          bookedReason: visit.complaint.text,
+          bookingReason: visit.bookingReason,
           arrivalMinute: visit.arrivalMinute
         })),
         unplannedRange: clone(day.unplannedRange),
