@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "bundleId": "DUAL_EAR_MITES_BACTERIAL",
+  "status": "pending_content",
+  "trueDiagnosisIds": ["EAR_MITES", "EAR_BACTERIAL_OTITIS"],
+  "diagnosisMode": "multiple",
+  "maximumDiagnosisSelections": 2,
+  "safetyClass": "standard",
+  "approvedClinicalContent": null
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "status": "engine_ready_content_pending",
+  "automaticPairingAllowed": false,
+  "bundles": [
+    { "bundleId": "DUAL_EAR_FUNGAL_BACTERIAL", "file": "ear-fungal-bacterial.json" },
+    { "bundleId": "DUAL_EAR_MITES_BACTERIAL", "file": "ear-mites-bacterial.json" },
+    { "bundleId": "DUAL_FLEA_ALLERGY_PYODERMA", "file": "flea-allergy-pyoderma.json" },
+    { "bundleId": "DUAL_GROOMING_IRRITATION_PYODERMA", "file": "grooming-irritation-pyoderma.json" },
+    { "bundleId": "DUAL_EAR_FOREIGN_BODY_BACTERIAL", "file": "ear-foreign-body-bacterial.json" },
+    { "bundleId": "DUAL_CAT_URI_CONJUNCTIVITIS", "file": "cat-uri-conjunctivitis.json" },
+    { "bundleId": "DUAL_WOUND_SOFT_TISSUE_LAMENESS", "file": "wound-soft-tissue-lameness.json" },
+    { "bundleId": "DUAL_CONJUNCTIVITIS_CORNEAL_ULCER", "file": "conjunctivitis-corneal-ulcer.json" },
+    { "bundleId": "DUAL_CANINE_COUGH_PNEUMONIA", "file": "canine-cough-pneumonia.json" },
+    { "bundleId": "DUAL_WOUND_FRACTURE", "file": "wound-fracture.json" }
+  ]
+}

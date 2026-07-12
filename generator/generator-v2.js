@@ -8,8 +8,8 @@
   "use strict";
 
   const SAVE_KEY = "pet-clinic-generator-v2";
-  const SAVE_VERSION = 2;
-  const GENERATOR_VERSION = "tier-01-v2.0.0";
+  const SAVE_VERSION = 3;
+  const GENERATOR_VERSION = "tier-01-v2.1.0";
   const SUPPORTED_MODES = ["current", "legacy-v1", "tier-01-v2"];
   const DEFAULT_EQUIPMENT = ["otoscope", "microscope"];
   const FIRST_TUTORIAL_CASE_IDS = ["EAR_FUNGAL_OTITIS", "EAR_MITES"];
@@ -54,8 +54,8 @@
     };
   }
 
-  function createRandom(seed, scope) {
-    return mulberry32(hashString(`${seed}|${GENERATOR_VERSION}|${scope}`));
+  function createRandom(seed, scope, namespace = GENERATOR_VERSION) {
+    return mulberry32(hashString(`${seed}|${namespace}|${scope}`));
   }
 
   function randomSeed() {
@@ -102,8 +102,52 @@
     return hours * 60 + minutes;
   }
 
-  function migrateState(saved, seed) {
-    if (saved && saved.saveVersion === SAVE_VERSION && saved.generatorVersion === GENERATOR_VERSION) return saved;
+  function contentPackMetadata(catalog) {
+    return {
+      contentPackId: catalog.manifest.contentPackId,
+      contentPackVersion: catalog.manifest.contentPackVersion,
+      contentPackHash: catalog.manifest.contentPackHash
+    };
+  }
+
+  function contentPackMatches(saved, contentPack) {
+    return saved.contentPackId === contentPack.contentPackId
+      && saved.contentPackVersion === contentPack.contentPackVersion
+      && saved.contentPackHash === contentPack.contentPackHash;
+  }
+
+  function migrateState(saved, seed, contentPack = {}) {
+    if (saved && saved.saveVersion === SAVE_VERSION && saved.generatorVersion === GENERATOR_VERSION && contentPackMatches(saved, contentPack)) return saved;
+    if (saved && saved.saveVersion === 2 && saved.generatorVersion === "tier-01-v2.0.0") {
+      const migrated = clone(saved);
+      Object.assign(migrated, contentPack, { saveVersion: SAVE_VERSION, generatorVersion: GENERATOR_VERSION });
+      Object.values(migrated.generatedDays || {}).forEach((day) => {
+        Object.assign(day, contentPack, { schemaVersion: SAVE_VERSION, generatorVersion: GENERATOR_VERSION });
+        const occupied = new Set();
+        (day.visits || []).forEach((visit) => {
+          visit.bookingReason ||= BOOKING_REASONS[visit.family] || "Причина обращения";
+          visit.caseIds ||= [visit.caseId];
+          visit.bundleId ??= null;
+          visit.diagnosisMode ||= "single";
+          visit.maximumDiagnosisSelections ||= 1;
+          visit.trueDiagnosisIds ||= [visit.caseId];
+          visit.diagnosisRoles ||= [{ caseId: visit.caseId, role: "primary", coverageWeight: 1 }];
+          visit.selectedDiagnosisIds ||= [];
+          visit.diagnosticCoverage ??= 0;
+          visit.treatmentCoverage ??= 0;
+          if (visit.source !== "unplanned" && Number.isFinite(visit.arrivalMinute)) {
+            let rounded = Math.round(visit.arrivalMinute / 5) * 5;
+            while (occupied.has(rounded)) rounded += 5;
+            visit.arrivalMinute = rounded;
+            occupied.add(rounded);
+          }
+        });
+        day.fullFingerprint = fullFingerprint(day, contentPack);
+        day.structuralFingerprint = structuralFingerprint(day, contentPack);
+        day.fingerprint = day.fullFingerprint;
+      });
+      return migrated;
+    }
     if (saved) {
       return {
         ...saved,
@@ -115,6 +159,7 @@
     return {
       saveVersion: SAVE_VERSION,
       generatorVersion: GENERATOR_VERSION,
+      ...contentPack,
       campaignSeed: seed || randomSeed(),
       generatedDays: {},
       pendingFollowUps: [],
@@ -124,11 +169,11 @@
     };
   }
 
-  function loadState(storage, seed) {
+  function loadState(storage, seed, contentPack) {
     try {
-      return migrateState(JSON.parse(storage.getItem(SAVE_KEY) || "null"), seed);
+      return migrateState(JSON.parse(storage.getItem(SAVE_KEY) || "null"), seed, contentPack);
     } catch (error) {
-      return migrateState(null, seed);
+      return migrateState(null, seed, contentPack);
     }
   }
 
@@ -252,6 +297,15 @@
       day: dayNumber,
       source,
       caseId: caseData.id,
+      caseIds: [caseData.id],
+      bundleId: null,
+      diagnosisMode: "single",
+      maximumDiagnosisSelections: 1,
+      trueDiagnosisIds: [caseData.id],
+      diagnosisRoles: [{ caseId: caseData.id, role: "primary", coverageWeight: 1 }],
+      selectedDiagnosisIds: [],
+      diagnosticCoverage: 0,
+      treatmentCoverage: 0,
       family: caseData.family,
       severity: caseData.severity,
       urgency: caseIsUrgent(caseData) ? "urgent" : caseData.severity,
@@ -261,6 +315,7 @@
       bookingReason: BOOKING_REASONS[caseData.family] || caseData.family,
       returnVisit: source === "follow_up",
       originalVisitId: options.originalVisitId || null,
+      followUpReason: options.followUpReason || null,
       missingEquipment,
       requiresReferral: missingEquipment.length > 0,
       safeReferralAvailable,
@@ -288,8 +343,9 @@
     return visits.sort((left, right) => (left.arrivalMinute || Infinity) - (right.arrivalMinute || Infinity));
   }
 
-  function fingerprint(day) {
+  function fullFingerprint(day, contentPack = {}) {
     const structure = {
+      contentPack,
       day: day.day,
       opened: day.opened,
       visits: day.visits.map((visit) => [
@@ -308,17 +364,44 @@
     return hashString(JSON.stringify(structure)).toString(16).padStart(8, "0");
   }
 
+  function structuralFingerprint(day, contentPack = {}) {
+    const structure = {
+      contentPack,
+      day: day.day,
+      visits: day.visits.map((visit) => ({
+        caseId: visit.caseId,
+        family: visit.family,
+        source: visit.source,
+        urgency: visit.urgency,
+        ownerProfileId: visit.owner.profileId,
+        ownerModifierId: visit.owner.modifierId,
+        homeActionId: visit.owner.homeActionId,
+        complaintVariantId: visit.complaint.id,
+        followUpReason: visit.followUpReason || null
+      })),
+      pendingUnplanned: day.pendingUnplanned
+    };
+    return hashString(JSON.stringify(structure)).toString(16).padStart(8, "0");
+  }
+
+  function fingerprint(day, contentPack = {}) {
+    return fullFingerprint(day, contentPack);
+  }
+
   function validateGeneratedDay(day, catalog, equipment) {
     const errors = [];
     const rule = catalog.dayPlan.days.find((item) => item.day === day.day);
     if (!rule) return [`Unknown day ${day.day}`];
     if (day.visits.length + day.pendingUnplanned !== day.plannedVisitCount) errors.push("visit total does not match the persisted plan");
     if (day.plannedVisitCount < rule.visitsTotal.min || day.plannedVisitCount > rule.visitsTotal.max) errors.push("visit total outside day rules");
+    if (!contentPackMatches(day, contentPackMetadata(catalog))) errors.push("generated day content pack metadata mismatch");
     const allowedSpecies = new Set(catalog.manifest.contentPolicy.allowedSpeciesTier01);
     const urgentCount = day.visits.filter((visit) => caseIsUrgent(visit.medicalContent)).length;
     if (day.opened && (urgentCount < rule.urgentSubset.min || urgentCount > rule.urgentSubset.max)) errors.push("urgent count outside day rules");
     day.visits.forEach((visit) => {
       if (!catalog.casesById[visit.caseId]) errors.push(`unknown case ${visit.caseId}`);
+      if (visit.diagnosisMode !== "single" || visit.maximumDiagnosisSelections !== 1) errors.push(`single visit schema mismatch for ${visit.caseId}`);
+      if (visit.caseIds.length !== 1 || visit.trueDiagnosisIds.length !== 1 || visit.caseIds[0] !== visit.caseId) errors.push(`single visit diagnosis ids mismatch for ${visit.caseId}`);
       if (!allowedSpecies.has(visit.patient.species)) errors.push(`unsupported species ${visit.patient.species}`);
       if (!caseSupportsOwner(visit.medicalContent, visit.owner.profileId)) errors.push(`owner ${visit.owner.profileId} incompatible with ${visit.caseId}`);
       if (visit.owner.homeAction && !visit.owner.homeAction.compatibleFamilies.includes(visit.family)) errors.push(`home action incompatible with ${visit.caseId}`);
@@ -331,11 +414,13 @@
   function createGenerator(options = {}) {
     if (!options.catalog || options.catalog.schemaVersion !== 2) throw new Error("Tier 01 v2 catalog is required");
     const catalog = options.catalog;
+    const contentPack = contentPackMetadata(catalog);
+    const seedNamespace = `${GENERATOR_VERSION}|${contentPack.contentPackId}|${contentPack.contentPackVersion}|${contentPack.contentPackHash}`;
     const storage = options.storage || (typeof localStorage !== "undefined" ? localStorage : createMemoryStorage());
     const equipment = options.availableEquipment || DEFAULT_EQUIPMENT;
-    const state = loadState(storage, options.seed);
+    const state = loadState(storage, options.seed, contentPack);
     if (state.migrationRequired) {
-      throw new Error(`Generator save migration required: ${state.saveVersion || "unknown"}/${state.generatorVersion || "unknown"} -> ${SAVE_VERSION}/${GENERATOR_VERSION}`);
+      throw new Error(`Generator save migration required: ${state.saveVersion || "unknown"}/${state.generatorVersion || "unknown"}/${state.contentPackVersion || "unknown"} -> ${SAVE_VERSION}/${GENERATOR_VERSION}/${contentPack.contentPackVersion}`);
     }
     persist(storage, state);
 
@@ -351,10 +436,14 @@
       if (dayNumber > 1 && !state.generatedDays[String(dayNumber - 1)]?.closed) {
         throw new Error(`Day ${dayNumber - 1} must be closed before day ${dayNumber} is generated`);
       }
-      const random = createRandom(state.campaignSeed, `day:${dayNumber}:plan`);
+      const random = createRandom(state.campaignSeed, `day:${dayNumber}:plan`, seedNamespace);
       const plannedVisitCount = integerBetween(rule.visitsTotal, random);
       const pendingUnplanned = unplannedCountForRule(rule, random);
-      const requestedFollowUps = integerBetween(rule.followUps, random);
+      const followUpRange = {
+        min: Math.min(rule.followUpTarget ?? rule.followUps.min, rule.followUpMaximum ?? rule.followUps.max),
+        max: rule.followUpMaximum ?? rule.followUps.max
+      };
+      const requestedFollowUps = integerBetween(followUpRange, random);
       const availableFollowUps = state.pendingFollowUps.filter((item) => item.eligibleDay <= dayNumber);
       const selectedFollowUps = [];
       let selectedUrgentFollowUps = 0;
@@ -406,6 +495,7 @@
           owner: followUp.owner,
           originalVisitId: followUp.originalVisitId,
           followUpLine: line,
+          followUpReason: followUp.reason,
           availableEquipment: equipment
         }));
       });
@@ -415,6 +505,7 @@
       const day = {
         schemaVersion: SAVE_VERSION,
         generatorVersion: GENERATOR_VERSION,
+        ...contentPack,
         campaignSeed: state.campaignSeed,
         day: dayNumber,
         title: rule.title,
@@ -423,14 +514,21 @@
         tutorial: rule.tutorial,
         themeTags: clone(rule.themeTags),
         plannedVisitCount,
+        followUpTarget: rule.followUpTarget ?? rule.followUps.min,
+        followUpMaximum: rule.followUpMaximum ?? rule.followUps.max,
+        followUpFallbackCount: Math.max(0, requestedFollowUps - followUpCount),
         pendingUnplanned,
         unplannedRange: clone(rule.unplannedNew),
         opened: false,
         closed: false,
         visits,
-        fingerprint: null
+        fingerprint: null,
+        fullFingerprint: null,
+        structuralFingerprint: null
       };
-      day.fingerprint = fingerprint(day);
+      day.fullFingerprint = fullFingerprint(day, contentPack);
+      day.structuralFingerprint = structuralFingerprint(day, contentPack);
+      day.fingerprint = day.fullFingerprint;
       const errors = validateGeneratedDay(day, catalog, equipment);
       if (errors.length) throw new Error(errors.join("; "));
       state.generatedDays[key] = clone(day);
@@ -446,7 +544,7 @@
       if (day.opened) return day;
       const storedDay = state.generatedDays[String(dayNumber)];
       const rule = getDayRule(dayNumber);
-      const random = createRandom(state.campaignSeed, `day:${dayNumber}:unplanned`);
+      const random = createRandom(state.campaignSeed, `day:${dayNumber}:unplanned`, seedNamespace);
       const selected = selectNewCases(catalog, rule, storedDay.pendingUnplanned, random, {
         routineOnly: true,
         seenCaseCounts: state.seenCaseCounts
@@ -458,7 +556,9 @@
       storedDay.pendingUnplanned = 0;
       storedDay.opened = true;
       assignArrivals(storedDay.visits, rule, random, true);
-      storedDay.fingerprint = fingerprint(storedDay);
+      storedDay.fullFingerprint = fullFingerprint(storedDay, contentPack);
+      storedDay.structuralFingerprint = structuralFingerprint(storedDay, contentPack);
+      storedDay.fingerprint = storedDay.fullFingerprint;
       const errors = validateGeneratedDay(storedDay, catalog, equipment);
       if (errors.length) throw new Error(errors.join("; "));
       persist(storage, state);
@@ -473,20 +573,26 @@
         const visit = day.visits.find((candidate) => candidate.visitId === item.visitId);
         if (!visit) return;
         state.completedCases.push({ day: dayNumber, visitId: visit.visitId, caseId: visit.caseId, outcome: clone(item) });
-        if (item.followUpRequested) {
+        const clinicalFollowUp = item.followUpRequested || item.deteriorated;
+        const declinedRoutineFollowUp = item.ownerDeclinedFollowUp && !item.deteriorated;
+        const referralWithoutLocalControl = item.referred && !item.localFollowUpRequired && !item.deteriorated;
+        if (clinicalFollowUp && !declinedRoutineFollowUp && !referralWithoutLocalControl) {
           state.pendingFollowUps.push({
             id: `FU-${visit.visitId}`,
             caseId: visit.caseId,
             originalVisitId: visit.visitId,
             patient: clone(visit.patient),
             owner: clone(visit.owner),
+            reason: item.followUpReason || (item.deteriorated ? "deterioration" : "planned_control"),
             eligibleDay: Math.min(7, dayNumber + Math.max(1, Number(item.followUpAfterDays || 1)))
           });
         }
       });
       day.closed = true;
       day.outcomes = clone(outcomes);
-      day.fingerprint = fingerprint(day);
+      day.fullFingerprint = fullFingerprint(day, contentPack);
+      day.structuralFingerprint = structuralFingerprint(day, contentPack);
+      day.fingerprint = day.fullFingerprint;
       persist(storage, state);
       return clone(day);
     }
@@ -512,10 +618,13 @@
       return {
         saveVersion: SAVE_VERSION,
         generatorVersion: GENERATOR_VERSION,
+        ...contentPack,
         campaignSeed: state.campaignSeed,
         generatedDays: Object.keys(state.generatedDays).map(Number).sort((a, b) => a - b),
         pendingFollowUps: state.pendingFollowUps.length,
-        fingerprint: day?.fingerprint || null
+        fingerprint: day?.fingerprint || null,
+        fullFingerprint: day?.fullFingerprint || null,
+        structuralFingerprint: day?.structuralFingerprint || null
       };
     }
 
@@ -532,6 +641,8 @@
     createMemoryStorage,
     validateGeneratedDay,
     fingerprint,
+    fullFingerprint,
+    structuralFingerprint,
     hashString,
     migrateState
   };

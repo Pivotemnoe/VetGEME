@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "bundleId": "DUAL_CAT_URI_CONJUNCTIVITIS",
+  "status": "pending_content",
+  "trueDiagnosisIds": ["RESP_CAT_URI", "EYE_CONJUNCTIVITIS"],
+  "diagnosisMode": "multiple",
+  "maximumDiagnosisSelections": 2,
+  "safetyClass": "standard",
+  "approvedClinicalContent": null
+}

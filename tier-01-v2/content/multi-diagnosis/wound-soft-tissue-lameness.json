@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "bundleId": "DUAL_WOUND_SOFT_TISSUE_LAMENESS",
+  "status": "pending_content",
+  "trueDiagnosisIds": ["TRAUMA_SUPERFICIAL_WOUND", "TRAUMA_SOFT_TISSUE_LAMENESS"],
+  "diagnosisMode": "multiple",
+  "maximumDiagnosisSelections": 2,
+  "safetyClass": "standard",
+  "approvedClinicalContent": null
+}

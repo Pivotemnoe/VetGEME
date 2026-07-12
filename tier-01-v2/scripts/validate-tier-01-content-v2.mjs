@@ -8,6 +8,7 @@ const manifestPath = path.join(clinicalRoot, "manifest.json");
 const campaignPath = path.join(root, "content/campaign/tier-01/seven-day-plan.json");
 const tutorialPath = path.join(root, "content/ui/tutorial-texts.json");
 const ownersRoot = path.join(root, "content/owners/tier-01");
+const multiDiagnosisRoot = path.join(root, "content/multi-diagnosis");
 const errors = [];
 const warnings = [];
 const stats = { jsonParsed: 0, clinicalFiles: 0, questions: 0, answers: 0, uniqueAnswerTexts: 0, homeActions: 0, urgentCases: 0 };
@@ -56,6 +57,9 @@ for (const file of allJsonFiles(path.join(root, "content"))) {
 
 const manifest = readJson(manifestPath);
 assert(manifest?.schemaVersion === 2, manifestPath, "manifest schemaVersion must be 2");
+assert(manifest?.contentPackId === "tier-01-v2", manifestPath, "contentPackId must identify tier-01-v2");
+assert(typeof manifest?.contentPackVersion === "string" && manifest.contentPackVersion.length > 0, manifestPath, "contentPackVersion is required");
+assert(/^[a-f0-9]{64}$/.test(manifest?.contentPackHash || ""), manifestPath, "contentPackHash must be a SHA-256 string");
 assert(manifest?.integrationStatus === "not_connected", manifestPath, "review package must stay not_connected by default");
 assert(manifest?.contentPolicy?.runtimeGenerationOfMedicalText === false, manifestPath, "runtime medical text generation must be disabled");
 const caseFiles = allJsonFiles(clinicalRoot).filter((file) => file !== manifestPath);
@@ -158,6 +162,24 @@ for (const file of caseFiles) {
 stats.uniqueAnswerTexts = answerTexts.size;
 assert(stats.uniqueAnswerTexts >= 450, manifestPath, `answer diversity too low: ${stats.uniqueAnswerTexts}`);
 
+const multiManifestPath = path.join(multiDiagnosisRoot, "manifest.json");
+const multiManifest = readJson(multiManifestPath);
+assert(multiManifest?.automaticPairingAllowed === false, multiManifestPath, "automatic diagnosis pairing must stay disabled");
+assert(multiManifest?.bundles?.length === 10, multiManifestPath, "exactly ten approved bundle shells are required");
+const bundleIds = new Set();
+for (const entry of multiManifest?.bundles ?? []) {
+  const file = path.join(multiDiagnosisRoot, entry.file);
+  const bundle = readJson(file);
+  assert(bundle?.bundleId === entry.bundleId, file, "bundleId must match manifest");
+  assert(!bundleIds.has(bundle?.bundleId), file, `duplicate bundleId ${bundle?.bundleId}`);
+  bundleIds.add(bundle?.bundleId);
+  assert(bundle?.status === "pending_content", file, "bundle must stay pending_content until medical text is approved");
+  assert(bundle?.diagnosisMode === "multiple" && bundle?.maximumDiagnosisSelections === 2, file, "bundle must use two-slot diagnosis mode");
+  assert(bundle?.trueDiagnosisIds?.length === 2 && new Set(bundle.trueDiagnosisIds).size === 2, file, "bundle needs two different diagnoses");
+  for (const diagnosisId of bundle?.trueDiagnosisIds ?? []) assert(ids.has(diagnosisId), file, `unknown diagnosis ${diagnosisId}`);
+  assert(bundle?.approvedClinicalContent === null, file, "pending bundle cannot contain unapproved clinical text");
+}
+
 const campaign = readJson(campaignPath);
 assert(campaign?.schemaVersion === 2, campaignPath, "campaign schemaVersion must be 2");
 assert(campaign?.status === "not_connected", campaignPath, "review campaign must remain not_connected");
@@ -167,6 +189,17 @@ for (const day of campaign?.days ?? []) {
   const maxSum = day.bookedNew.max + day.followUps.max + day.unplannedNew.max;
   assert(minSum <= day.visitsTotal.max && maxSum >= day.visitsTotal.min, campaignPath, `day ${day.day} component ranges cannot reach total`);
   assert(day.urgentSubset.max <= day.visitsTotal.max, campaignPath, `day ${day.day} urgent subset exceeds total`);
+  assert(Number.isInteger(day.followUpTarget) && day.followUpTarget >= 0, campaignPath, `day ${day.day} followUpTarget is required`);
+  assert(Number.isInteger(day.followUpMaximum) && day.followUpMaximum >= day.followUpTarget, campaignPath, `day ${day.day} followUpMaximum is invalid`);
+  assert(day.fillMissingWithNewBookedVisits === true, campaignPath, `day ${day.day} must fill unavailable follow-ups with booked visits`);
+}
+const expectedUnplannedProbability = { 4: 0.45, 5: 0.6, 6: 0.65, 7: 0.5 };
+const dayThree = campaign?.days?.find((day) => day.day === 3);
+assert(dayThree?.unplannedNew?.min === 1 && dayThree?.unplannedNew?.max === 1, campaignPath, "day 3 must guarantee one tutorial walk-in");
+for (const [dayNumber, probability] of Object.entries(expectedUnplannedProbability)) {
+  const day = campaign?.days?.find((item) => item.day === Number(dayNumber));
+  assert(day?.unplannedNew?.min === 0 && day?.unplannedNew?.max === 1, campaignPath, `day ${dayNumber} walk-in range must be 0-1`);
+  assert(day?.unplannedProbability === probability, campaignPath, `day ${dayNumber} walk-in probability must be ${probability}`);
 }
 assert(campaign?.preliminaryScheduleRules?.showBookedOnly === true, campaignPath, "only booked visits may be shown before opening");
 assert(campaign?.preliminaryScheduleRules?.generateUnplannedAfterOpening === true, campaignPath, "unplanned visits must be generated after opening");

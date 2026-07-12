@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "bundleId": "DUAL_FLEA_ALLERGY_PYODERMA",
+  "status": "pending_content",
+  "trueDiagnosisIds": ["SKIN_FLEA_ALLERGY", "SKIN_SUPERFICIAL_PYODERMA"],
+  "diagnosisMode": "multiple",
+  "maximumDiagnosisSelections": 2,
+  "safetyClass": "standard",
+  "approvedClinicalContent": null
+}

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "bundleId": "DUAL_CONJUNCTIVITIS_CORNEAL_ULCER",
+  "status": "pending_content",
+  "trueDiagnosisIds": ["EYE_CONJUNCTIVITIS", "EYE_CORNEAL_ULCER"],
+  "diagnosisMode": "multiple",
+  "maximumDiagnosisSelections": 2,
+  "safetyClass": "unsafe",
+  "approvedClinicalContent": null
+}

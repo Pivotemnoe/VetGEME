@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "bundleId": "DUAL_WOUND_FRACTURE",
+  "status": "pending_content",
+  "trueDiagnosisIds": ["TRAUMA_SUPERFICIAL_WOUND", "TRAUMA_SUSPECTED_FRACTURE"],
+  "diagnosisMode": "multiple",
+  "maximumDiagnosisSelections": 2,
+  "safetyClass": "unsafe",
+  "approvedClinicalContent": null
+}

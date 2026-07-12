@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "bundleId": "DUAL_CANINE_COUGH_PNEUMONIA",
+  "status": "pending_content",
+  "trueDiagnosisIds": ["RESP_CANINE_COUGH", "RESP_SUSPECTED_PNEUMONIA"],
+  "diagnosisMode": "multiple",
+  "maximumDiagnosisSelections": 2,
+  "safetyClass": "unsafe",
+  "approvedClinicalContent": null
+}

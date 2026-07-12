@@ -31,6 +31,7 @@
     const clinicalRoot = joinPath(rootPath, "clinical/tier-01");
     const ownerRoot = joinPath(rootPath, "owners/tier-01");
     const campaignRoot = joinPath(rootPath, "campaign/tier-01");
+    const multiDiagnosisRoot = joinPath(rootPath, "multi-diagnosis");
     const manifest = await readJson(joinPath(clinicalRoot, "manifest.json"));
     const cases = await Promise.all(manifest.cases.map(async (entry) => {
       const caseData = await readJson(joinPath(clinicalRoot, entry.file));
@@ -40,13 +41,17 @@
       file.replace(/\.json$/, ""),
       await readJson(joinPath(ownerRoot, file))
     ]));
-    const [dayPlan, dayGoals, doctorShifts, labels, tutorial] = await Promise.all([
+    const [dayPlan, dayGoals, doctorShifts, labels, tutorial, multiDiagnosisManifest] = await Promise.all([
       readJson(joinPath(campaignRoot, "seven-day-plan.json")),
       readJson(joinPath(campaignRoot, "day-goals.json")),
       readJson(joinPath(campaignRoot, "doctor-shifts.json")),
       readJson(joinPath(rootPath, "ui/clinical-labels.json")),
-      readJson(joinPath(rootPath, "ui/tutorial-texts.json"))
+      readJson(joinPath(rootPath, "ui/tutorial-texts.json")),
+      readJson(joinPath(multiDiagnosisRoot, "manifest.json"))
     ]);
+    const multiDiagnosisBundles = await Promise.all(multiDiagnosisManifest.bundles.map((entry) => (
+      readJson(joinPath(multiDiagnosisRoot, entry.file))
+    )));
 
     return {
       schemaVersion: 2,
@@ -59,7 +64,12 @@
       dayGoals,
       doctorShifts,
       labels,
-      tutorial
+      tutorial,
+      multiDiagnosis: {
+        manifest: multiDiagnosisManifest,
+        bundles: multiDiagnosisBundles,
+        bundlesById: Object.fromEntries(multiDiagnosisBundles.map((item) => [item.bundleId, item]))
+      }
     };
   }
 

@@ -7,6 +7,7 @@
     "test:generator:v2": "node scripts/simulate-generator-v2.js 1000",
     "test:generator:v2:full": "node scripts/simulate-generator-v2.js 10000",
     "test:adapter:v2": "node scripts/test-v2-adapter.js",
+    "test:followups:v2": "node scripts/test-v2-followups.js",
     "validate:tier-01-content": "node scripts/validate-tier-01-content.mjs",
     "validate:tier-01-v2": "node tier-01-v2/scripts/validate-tier-01-content-v2.mjs"
   }
