@@ -149,10 +149,10 @@
       fee: 420
     },
     {
-      id: "antiInflammatoryDrops",
-      label: "Противовоспалительные ушные капли",
-      note: "Уходовая схема без антибиотика.",
-      fee: 180
+      id: "antifungalDrops",
+      label: "Противогрибковые ушные капли + очистка",
+      note: "Местное лечение грибкового отита с контролем воспаления.",
+      fee: 240
     },
     {
       id: "antiparasitic",
@@ -205,9 +205,9 @@
       note: "Ухо, запах, воспаление, длительность важна."
     },
     {
-      id: "inflammatoryOtitis",
-      label: "Воспалительный отит",
-      note: "Легкое воспаление без явной бактериальной или клещевой картины."
+      id: "fungalOtitis",
+      label: "Грибковый отит",
+      note: "Зуд, восковидные выделения и грибковые клетки при микроскопии."
     },
     {
       id: "miteOtitis",
@@ -342,22 +342,22 @@
         return outcome("wrong", 0.25, "Причина похожа на бактериальный отит, выбранное лечение ее плохо закрывает.");
       }
     },
-    inflammatoryOtitis: {
-      name: "Воспалительный отит",
-      short: "легкое воспаление уха",
+    fungalOtitis: {
+      name: "Грибковый отит",
+      short: "зуд и восковидные выделения из уха",
       species: ["dog", "cat", "rabbit"],
       baseFee: 110,
       complaints: [
         "чешет ухо",
-        "после купания стало хуже",
+        "из уха пахнет сильнее обычного",
         "ухо немного красное",
-        "запаха почти нет",
-        "выделений почти нет",
+        "в ухе коричневатые выделения",
+        "ухо быстро снова пачкается",
         "ест нормально",
         "не любит, когда трогают ухо"
       ],
       makeFlags() {
-        return { trigger: pick(["купание", "домашняя чистка", "прогулка под дождем"]) };
+        return { trigger: pick(["купание", "домашняя чистка", "недавний курс ушных капель"]) };
       },
       anamnesis(patient) {
         return [
@@ -368,8 +368,8 @@
           },
           {
             id: "odor",
-            label: "Есть запах и гнойные выделения?",
-            answer: "Сильного запаха нет, выделений мало."
+            label: "Есть запах и какие выделения видны?",
+            answer: "Запах заметный, выделения коричневатые и восковидные, выраженного гноя нет."
           },
           {
             id: "contact",
@@ -395,19 +395,19 @@
         return "Слизистые розовые, влажные.";
       },
       local: {
-        ears: "Умеренное покраснение, немного серы, гноя и сильного запаха нет.",
+        ears: "Слуховой проход умеренно красный, есть коричневатые восковидные выделения и заметный запах.",
         abdomen: "Живот мягкий, безболезненный.",
         skin: "Кожа без распространенного зуда, есть легкий расчес около уха.",
         gait: "Походка обычная.",
         head: "Легкая болезненность около уха, травмы нет."
       },
       microscopy() {
-        return "Микроскопия: клещи не обнаружены, выраженной бактериальной картины нет.";
+        return "Микроскопия: клещи не обнаружены, видны многочисленные грибковые клетки; выраженной бактериальной картины нет.";
       },
       evaluate(patient, treatmentId) {
-        if (treatmentId === "antiInflammatoryDrops") return outcome("correct", 0.03, "Легкое воспаление закрыто местной уходовой схемой.");
-        if (treatmentId === "antibacterialDrops" || treatmentId === "dropsAntibiotic") return outcome("partial", 0.08, "Антибиотик здесь избыточен, но воспаление может временно стихнуть.");
-        return outcome("wrong", 0.18, "Лечение не подходит легкому воспалительному отиту.");
+        if (treatmentId === "antifungalDrops") return outcome("correct", 0.04, "Грибковый отит получает местное противогрибковое лечение и очистку уха.");
+        if (treatmentId === "antibacterialDrops" || treatmentId === "dropsAntibiotic") return outcome("partial", 0.14, "Антибактериальная схема не устраняет грибковую причину, хотя воспаление может временно измениться.");
+        return outcome("wrong", 0.2, "Лечение не закрывает грибковый отит.");
       }
     },
     miteOtitis: {
@@ -478,7 +478,7 @@
       },
       evaluate(patient, treatmentId) {
         if (treatmentId === "antiparasitic") return outcome("correct", 0.04, "Клещевой отит получает противопаразитарную обработку.");
-        if (treatmentId === "antibacterialDrops" || treatmentId === "antiInflammatoryDrops") return outcome("partial", 0.22, "Воспаление может стихнуть, но причина останется.");
+        if (treatmentId === "antibacterialDrops" || treatmentId === "antifungalDrops") return outcome("partial", 0.22, "Воспаление может измениться, но клещевая причина останется.");
         return outcome("wrong", 0.28, "Без противопаразитарной обработки клещевой отит вернется.");
       }
     },
@@ -774,6 +774,7 @@
   };
 
   const diseaseIds = Object.keys(diseases);
+  const scenarioGenerator = window.PET_CLINIC_GENERATOR.createGenerator({ campaign });
 
   const state = {
     day: 1,
@@ -821,7 +822,8 @@
     lostToday: 0,
     goalStats: {},
     shiftExtended: false,
-    chapterComplete: false
+    chapterComplete: false,
+    firstArrivalPaused: false
   };
 
   const canvas = document.getElementById("clinicCanvas");
@@ -895,6 +897,8 @@
     shiftWindow: document.getElementById("shiftWindow"),
     shiftTitle: document.getElementById("shiftTitle"),
     shiftBriefing: document.getElementById("shiftBriefing"),
+    shiftForecast: document.getElementById("shiftForecast"),
+    standardHoursLabel: document.getElementById("standardHoursLabel"),
     doctorOptions: document.getElementById("doctorOptions"),
     startShiftBtn: document.getElementById("startShiftBtn"),
     closeShiftWindow: document.getElementById("closeShiftWindow"),
@@ -938,6 +942,17 @@
     return `${String(hour).padStart(2, "0")}:${String(min).padStart(2, "0")}`;
   }
 
+  function formatClinicTime(minute) {
+    if (minute <= state.dayEnd) return formatTime(minute);
+    const overtime = Math.max(0, Math.floor(minute - state.dayEnd));
+    const hours = Math.floor(overtime / 60);
+    const minutes = overtime % 60;
+    const parts = [];
+    if (hours) parts.push(`${hours} ч`);
+    if (minutes || !parts.length) parts.push(`${minutes} мин`);
+    return `${formatTime(state.dayEnd)} + ${parts.join(" ")}`;
+  }
+
   function formatMoney(value) {
     return Math.round(value).toLocaleString("ru-RU");
   }
@@ -961,7 +976,7 @@
   }
 
   function currentPlan() {
-    return campaign.days.find((plan) => plan.day === state.day) || null;
+    return scenarioGenerator.getOrGenerateDay(state.day, { caseJournal: state.caseJournal });
   }
 
   function currentDoctor() {
@@ -972,6 +987,26 @@
     const doctor = currentDoctor();
     const multiplier = 1 + doctor.fatigue / 180;
     return Math.max(1, Math.round(minutes * multiplier));
+  }
+
+  function maxAllowedSpeed() {
+    if (state.day === 1 && state.treatedToday === 0) return 1;
+    if (state.day <= 5 && state.queue.length > 0) return 2;
+    return 4;
+  }
+
+  function cycleSpeed() {
+    const maxSpeed = maxAllowedSpeed();
+    if (maxSpeed === 1) {
+      state.speed = 1;
+      setLog("На первом обучающем приеме доступна только скорость 1x.");
+      renderHud();
+      return;
+    }
+    const candidates = maxSpeed === 2 ? [1, 2] : [1, 2, 4];
+    const currentIndex = candidates.indexOf(state.speed);
+    state.speed = candidates[(currentIndex + 1) % candidates.length];
+    renderHud();
   }
 
   function addDoctorFatigue(amount) {
@@ -1010,6 +1045,37 @@
 
   function waitingMood(patient) {
     return clamp(100 - (patient.age / patient.patience) * 100, 0, 100);
+  }
+
+  function waitingObservation(patient) {
+    if (patient.waitingStage >= 4) return "Владелец собирается уйти — требуется реакция";
+    if (patient.waitingStage === 3) return "Владелец недоволен задержкой";
+    if (patient.waitingStage === 2) return "Владелец заметно теряет терпение";
+    if (patient.waitingStage === 1) return patient.anxiety > patient.irritation
+      ? "Владелец беспокоится о животном"
+      : "Владелец начинает смотреть на часы";
+    return "Владелец ожидает спокойно";
+  }
+
+  function updateWaitingState(patient, minutes) {
+    if (patient.age > patient.patience * 0.35) {
+      adjustOwnerState(patient, minutes * 0.18, minutes * 0.28);
+    }
+    const ratio = patient.age / patient.patience;
+    const nextStage = ratio >= 0.92 ? 4 : ratio >= 0.75 ? 3 : ratio >= 0.58 ? 2 : ratio >= 0.4 ? 1 : 0;
+    if (nextStage <= patient.waitingStage) return;
+    patient.waitingStage = nextStage;
+    const messages = {
+      1: `${patient.owner} начинает беспокоиться во время ожидания.`,
+      2: `${patient.animal} ждет уже ${Math.round(patient.age)} минут. Владелец теряет терпение.`,
+      3: `${patient.owner} недоволен задержкой и ждет объяснения.`,
+      4: `${patient.owner} собирается уйти. Требуется немедленная реакция.`
+    };
+    setLog(messages[nextStage]);
+    if (nextStage >= 4) {
+      state.speed = 1;
+      state.paused = true;
+    }
   }
 
   function adjustTrust(patient, delta) {
@@ -1067,7 +1133,7 @@
       urgency: overrides.urgency || "routine",
       selectedUrgency: null,
       age: 0,
-      patience: 82 + Math.random() * 34,
+      patience: clamp(30 + profile.visitLimit * 0.35 + (Math.random() - 0.5) * 8, 34, 58),
       mood: 100,
       trust: clamp(profile.trust + Math.round((Math.random() - 0.5) * 10), 12, 95),
       anxiety: clamp(profile.anxiety + Math.round((Math.random() - 0.5) * 8), 8, 96),
@@ -1091,6 +1157,10 @@
       selectedCommunicationId: null,
       returnVisit: Boolean(isReturn || overrides.returnVisit),
       eventLabel: overrides.eventLabel || "",
+      bookingLabel: overrides.bookingLabel || disease.short,
+      source: overrides.source || "booked",
+      waitingStage: 0,
+      protectedFromLeaving: false,
       completeExamCredited: false,
       screenX: 932,
       screenY: 675,
@@ -1107,11 +1177,18 @@
 
   function spawnPatient(forcedDiseaseId, isReturn, overrides = {}) {
     if (state.queue.length >= 12 && !isReturn) return;
+    const isFirstArrival = state.arrivalsToday === 0;
     const patient = createPatient(forcedDiseaseId, isReturn, overrides);
+    patient.protectedFromLeaving = state.day === 1 && isFirstArrival;
     state.queue.push(patient);
     state.arrivalsToday += 1;
     if (patient.eventLabel) state.specialEventsToday += 1;
     if (!state.activeId) state.activeId = patient.id;
+    if (state.day <= 5) state.speed = 1;
+    if ((state.day === 1 && isFirstArrival) || patient.urgency === "urgent" || patient.eventLabel) {
+      state.paused = true;
+      state.firstArrivalPaused = state.firstArrivalPaused || isFirstArrival;
+    }
     setLog(patient.eventLabel
       ? `Событие: ${patient.eventLabel}. Привезли пациента ${patient.animal}.`
       : isReturn
@@ -1121,49 +1198,12 @@
   }
 
   function buildArrivalSchedule(plan) {
-    const schedule = [];
-    const scripted = plan ? plan.patients.slice() : [];
-    scripted.slice(2).forEach((template, index) => {
-      schedule.push({ minute: DAY_START + 65 + index * 55, template });
-    });
-    const eventByDay = {
-      2: { diseaseId: "miteOtitis", animal: "Найда", species: "cat", eventLabel: "Кошка из приюта", flags: { contact: "недавно поступила в приют" } },
-      3: { diseaseId: "dermatitis", animal: "Шанс", species: "dog", eventLabel: "Подопечный приюта с зудом", flags: { trigger: "после старой подстилки" } },
-      4: { diseaseId: "gastroenteritis", animal: "Ириска", species: "dog", eventLabel: "Найденыш с рвотой", flags: { trigger: "ел возле мусорных баков", vomitCount: 2 } },
-      5: { diseaseId: "urinaryObstruction", animal: "Малыш", species: "cat", eventLabel: "Экстренный пациент из приюта", flags: { lastUrineHours: 12 } }
-    };
-    const eventData = eventByDay[state.day];
-    const specialEvent = eventData ? {
-      minute: DAY_START + 305,
-      template: {
-        ...eventData,
-        profileId: "budget",
-        owner: "приют «Лапа»",
-        sex: "самец",
-        ageYears: 3,
-        urgency: state.day === 5 ? "urgent" : "routine",
-      }
-    } : null;
-    if (specialEvent) schedule.push(specialEvent);
-    const plannedTotal = 4 + state.day + (state.hoursMode === "extended" ? 2 : 0) + state.returnsToday;
-    const routineCount = Math.max(0, plannedTotal - state.returnsToday - 2 - scripted.slice(2).length - (specialEvent ? 1 : 0));
-    const firstRoutineMinute = DAY_START + 145;
-    const usableMinutes = state.dayEnd - firstRoutineMinute - 45;
-    const diseasePools = {
-      1: ["bacterialOtitis", "inflammatoryOtitis"],
-      2: ["bacterialOtitis", "inflammatoryOtitis", "miteOtitis"],
-      3: ["dermatitis"],
-      4: ["pancreatitis", "gastroenteritis"],
-      5: ["bacterialOtitis", "miteOtitis", "dermatitis", "pancreatitis", "gastroenteritis", "urinaryObstruction"]
-    };
-    const diseasePool = diseasePools[state.day] || diseaseIds;
-    for (let index = 0; index < routineCount; index += 1) {
-      schedule.push({
-        minute: Math.round(firstRoutineMinute + (usableMinutes * index) / Math.max(1, routineCount - 1)),
-        diseaseId: pick(diseasePool)
-      });
-    }
-    state.plannedArrivalsToday = plannedTotal;
+    if (!plan) return [];
+    const schedule = plan.patients.filter((template) => !template.disabledInStandard).map((template, index) => ({
+      minute: template.arrivalMinute || DAY_START + 20 + index * 65,
+      template
+    }));
+    state.plannedArrivalsToday = schedule.length;
     return schedule.sort((left, right) => left.minute - right.minute);
   }
 
@@ -1181,7 +1221,7 @@
       if (isPatientInConsult(patient)) return;
       patient.age += adjusted;
       patient.mood = waitingMood(patient);
-      adjustOwnerState(patient, adjusted * 0.06, adjusted * 0.08);
+      updateWaitingState(patient, adjusted);
     });
     removeLostPatients();
     maybeSpawn();
@@ -1194,6 +1234,8 @@
   function maybeSpawn() {
     if (state.day <= 5) {
       while (state.arrivalSchedule.length && state.arrivalSchedule[0].minute <= state.minute) {
+        const plan = currentPlan();
+        if (plan && state.queue.length >= plan.maxWaiting) break;
         const arrival = state.arrivalSchedule.shift();
         const template = arrival.template || {};
         spawnPatient(arrival.diseaseId || template.diseaseId, Boolean(template.returnVisit), template);
@@ -1210,7 +1252,7 @@
   function removeLostPatients() {
     const before = state.queue.length;
     state.queue = state.queue.filter((patient) => {
-      const lost = patient.age > patient.patience;
+      const lost = !patient.protectedFromLeaving && patient.age > patient.patience;
       if (lost) {
         changeReputation(-3, "владелец ушел из очереди");
         state.lostToday += 1;
@@ -1235,6 +1277,7 @@
       patient.budgetAsked = true;
       incrementGoal("budget");
     }
+    if (question.id === "medications" && patient.flags.oldDrops) incrementGoal("hiddenFact");
     patient.dxPoints += 1;
     patient.findings.push(question.answer);
     setLog("Анамнез собран: +1 диагностическое очко.");
@@ -1374,6 +1417,7 @@
     state.money += total;
     state.revenueToday += total;
     state.treatedToday += 1;
+    if (patient.selectedCommunicationId) incrementGoal("dischargePlan");
     if (patient.eventLabel) state.handledSpecialEventsToday += 1;
     incrementGoal("treated");
     if (patient.returnVisit) incrementGoal("returns");
@@ -1455,6 +1499,9 @@
       day: state.day,
       animal: patient.animal,
       species: patient.species,
+      sex: patient.sex,
+      ageYears: patient.ageYears,
+      diseaseId: patient.diseaseId,
       owner: patient.owner,
       doctor: currentDoctor().name,
       ownerType: patient.ownerProfile.label,
@@ -1493,7 +1540,7 @@
   function correctTreatmentId(patient) {
     const map = {
       bacterialOtitis: patient.flags.durationDays > 14 ? "dropsAntibiotic" : "antibacterialDrops",
-      inflammatoryOtitis: "antiInflammatoryDrops",
+      fungalOtitis: "antifungalDrops",
       miteOtitis: "antiparasitic",
       pancreatitis: "pancreatitisSupport",
       gastroenteritis: "giSupport",
@@ -1552,6 +1599,12 @@
     el.shiftBriefing.textContent = plan
       ? plan.briefing
       : "Сюжетная глава завершена. Клиника продолжает работу в свободном режиме.";
+    renderShiftForecast(plan);
+    if (el.standardHoursLabel) {
+      el.standardHoursLabel.textContent = plan
+        ? `08:00–${formatTime(plan.endMinute)} · по плану дня`
+        : "08:00–18:00 · свободная смена";
+    }
     el.doctorOptions.textContent = "";
     state.doctors.forEach((doctor) => {
       const unavailable = doctor.consecutiveShifts >= MAX_CONSECUTIVE_SHIFTS;
@@ -1580,6 +1633,33 @@
     });
     const selectedMode = document.querySelector(`input[name="hoursMode"][value="${state.hoursMode}"]`);
     if (selectedMode) selectedMode.checked = true;
+    const extendedMode = document.querySelector('input[name="hoursMode"][value="extended"]');
+    if (extendedMode) extendedMode.disabled = state.day <= 5;
+  }
+
+  function renderShiftForecast(plan) {
+    if (!el.shiftForecast) return;
+    if (!plan) {
+      el.shiftForecast.innerHTML = "<h3>Запись на сегодня</h3><p>Свободный режим: поток формируется после открытия.</p>";
+      return;
+    }
+    const returns = plan.patients.filter((patient) => patient.returnVisit).length;
+    const walkIns = plan.patients.filter((patient) => patient.source === "walkIn").length;
+    const rows = plan.patients.map((patient) => `
+      <div class="shift-forecast-row">
+        <strong>${formatTime(patient.arrivalMinute)}</strong>
+        <span>${patient.bookingLabel}${patient.returnVisit ? " · контроль" : ""}</span>
+      </div>`).join("");
+    el.shiftForecast.innerHTML = `
+      <h3>Запись на сегодня</h3>
+      <div class="shift-forecast-summary">
+        <span>Записано: <b>${plan.patients.length - walkIns}</b></span>
+        <span>Повторных: <b>${returns}</b></span>
+        <span>Walk-in: <b>${walkIns ? `0–${walkIns}` : "0"}</b></span>
+        <span>Нагрузка: <b>${plan.loadLabel}</b></span>
+        <span>Закрытие: <b>${formatTime(plan.endMinute)}</b></span>
+      </div>
+      <div class="shift-forecast-list">${rows}</div>`;
   }
 
   function openShiftPlanning() {
@@ -1595,6 +1675,8 @@
       .filter((doctor) => doctor.consecutiveShifts < MAX_CONSECUTIVE_SHIFTS)
       .sort((left, right) => left.fatigue - right.fatigue);
     if (availableDoctors.length) state.selectedDoctorId = availableDoctors[0].id;
+    const plan = currentPlan();
+    state.dayEnd = plan && plan.endMinute ? plan.endMinute : STANDARD_DAY_END;
     renderShiftPlanning();
     renderAll();
   }
@@ -1622,6 +1704,8 @@
     state.lostToday = 0;
     state.goalStats = { noLost: 1 };
     state.shiftExtended = false;
+    state.firstArrivalPaused = false;
+    state.speed = 1;
     state.queue = [];
     state.activeId = null;
   }
@@ -1634,8 +1718,11 @@
       return;
     }
     const selectedMode = document.querySelector('input[name="hoursMode"]:checked');
-    state.hoursMode = selectedMode ? selectedMode.value : "standard";
-    state.dayEnd = state.hoursMode === "extended" ? EXTENDED_DAY_END : STANDARD_DAY_END;
+    state.hoursMode = state.day <= 5 ? "standard" : selectedMode ? selectedMode.value : "standard";
+    const plan = currentPlan();
+    state.dayEnd = plan && plan.endMinute
+      ? plan.endMinute
+      : state.hoursMode === "extended" ? EXTENDED_DAY_END : STANDARD_DAY_END;
     state.dayStarted = true;
     state.modalOpen = false;
     state.paused = false;
@@ -1645,15 +1732,13 @@
     if (state.hoursMode === "extended") addDoctorFatigue(5);
     el.shiftWindow.classList.add("hidden");
 
-    const plan = currentPlan();
-    const returns = state.pendingReturns.filter((item) => item.day === state.day);
-    state.pendingReturns = state.pendingReturns.filter((item) => item.day !== state.day);
+    const returns = state.day <= 5 ? [] : state.pendingReturns.filter((item) => item.day === state.day);
+    if (state.day > 5) state.pendingReturns = state.pendingReturns.filter((item) => item.day !== state.day);
     returns.forEach((item) => {
       state.returnsToday += 1;
-      spawnPatient(item.diseaseId, true);
+      spawnPatient(item.diseaseId, true, item);
     });
     if (plan) {
-      plan.patients.slice(0, 2).forEach((template) => spawnPatient(template.diseaseId, template.returnVisit, template));
       state.arrivalSchedule = buildArrivalSchedule(plan);
     } else {
       while (state.queue.length < (state.hoursMode === "extended" ? 5 : 3)) spawnPatient();
@@ -1676,7 +1761,7 @@
       `<b>Срочных:</b> ${urgent}.`,
       `<b>Непросмотренных результатов:</b> 0.`,
       `<b>Усталость ${currentDoctor().shortName}:</b> ${Math.round(currentDoctor().fatigue)}%.`,
-      `<b>Текущее время:</b> ${formatTime(state.minute)}.`
+      `<b>Текущее время:</b> ${formatClinicTime(state.minute)}.`
     ].join("<br>");
     el.extendShiftBtn.disabled = state.shiftExtended;
     el.finishShiftBtn.disabled = urgent > 0;
@@ -1969,12 +2054,15 @@
       const owner = document.createElement("span");
       owner.className = "queue-complaint";
       owner.textContent = `Жалоба: ${patient.complaints[0]}`;
+      const observation = document.createElement("span");
+      observation.className = `queue-observation stage-${patient.waitingStage}`;
+      observation.textContent = waitingObservation(patient);
       const bar = document.createElement("div");
       bar.className = "patience-bar";
       const fill = document.createElement("i");
       fill.style.width = `${patient.mood}%`;
       bar.appendChild(fill);
-      copy.append(title, note, owner);
+      copy.append(title, note, owner, observation);
       button.append(portrait, copy, bar);
       button.addEventListener("click", () => openCase(patient.id));
       if (index === 0) {
@@ -2074,7 +2162,11 @@
           : patient.generalExamDone || patient.localUsed ? "exam"
             : Object.keys(patient.asked).length ? "anamnesis" : "complaint";
     document.querySelector(`.stage-tabs button[data-stage="${stage}"]`)?.classList.add("active");
+    const generatorMeta = scenarioGenerator.metadata(state.day);
     el.developerData.textContent = [
+      `Seed кампании: ${generatorMeta.campaignSeed}`,
+      `Генератор: ${generatorMeta.generatorVersion}`,
+      `Fingerprint дня: ${generatorMeta.fingerprint || "не создан"}`,
       `Истинный диагноз: ${diseaseFor(patient).name}`,
       `Истинная срочность: ${patient.urgency === "urgent" ? "высокая" : "обычная"}`,
       `Тип владельца: ${patient.ownerProfile.label}`,
@@ -2114,7 +2206,7 @@
     el.moneyValue.textContent = formatMoney(state.money);
     el.todayRevenue.textContent = `+${formatMoney(state.revenueToday)} V`;
     el.dateValue.textContent = `День ${state.day}/30`;
-    el.timeValue.textContent = formatTime(state.minute);
+    el.timeValue.textContent = formatClinicTime(state.minute);
     el.closingTime.textContent = `${Math.max(0, Math.ceil((state.dayEnd - state.minute) / 60))} ч.`;
     el.reputationMeter.style.width = `${state.reputation}%`;
     el.reputationValue.textContent = `${state.reputation.toFixed(1)} / 100`;
@@ -2129,7 +2221,10 @@
     el.doctorFatigueMeter.style.width = `${doctor.fatigue}%`;
     el.pauseBtn.textContent = state.paused ? "▶" : "II";
     el.speedBtn.textContent = `${state.speed}x`;
-    el.messageLog.textContent = `${formatTime(state.minute)} · ${state.log}`;
+    el.speedBtn.title = maxAllowedSpeed() < 4
+      ? `Скорость ограничена до ${maxAllowedSpeed()}x условиями обучения и очереди`
+      : "Скорость";
+    el.messageLog.textContent = `${formatClinicTime(state.minute)} · ${state.log}`;
   }
 
   function renderAll() {
@@ -2902,10 +2997,7 @@
       state.paused = !state.paused;
       renderHud();
     });
-    el.speedBtn.addEventListener("click", () => {
-      state.speed = state.speed === 1 ? 2 : state.speed === 2 ? 4 : 1;
-      renderHud();
-    });
+    el.speedBtn.addEventListener("click", cycleSpeed);
     el.nextPatientBtn.addEventListener("click", cyclePatient);
     el.nextDayBtn.addEventListener("click", startNextDay);
     el.startShiftBtn.addEventListener("click", startShift);
@@ -2950,7 +3042,7 @@
       if (isPatientInConsult(patient)) return;
       patient.age += minutes;
       patient.mood = waitingMood(patient);
-      adjustOwnerState(patient, minutes * 0.06, minutes * 0.08);
+      updateWaitingState(patient, minutes);
       });
       removeLostPatients();
       maybeSpawn();

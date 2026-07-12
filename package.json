@@ -1,0 +1,8 @@
+{
+  "name": "vetgeme-pet-clinic",
+  "private": true,
+  "scripts": {
+    "test:generator": "node scripts/simulate-generator.js 1000",
+    "test:generator:full": "node scripts/simulate-generator.js 10000"
+  }
+}
