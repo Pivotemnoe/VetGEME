@@ -1,0 +1,806 @@
+{
+  "schemaVersion": 2,
+  "id": "EAR_BACTERIAL_OTITIS",
+  "family": "ear",
+  "titleForDeveloper": "Бактериальный наружный отит",
+  "preliminaryDiagnosisLabel": "Бактериальный наружный отит",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 2,
+  "severity": "priority",
+  "species": [
+    "dog"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "otoscope",
+    "microscope"
+  ],
+  "requiredActions": [
+    "triage",
+    "general_exam",
+    "otoscopy",
+    "sample",
+    "microscopy"
+  ],
+  "safeAlternatives": [
+    "staged_plan",
+    "scheduled_recheck"
+  ],
+  "workload": 1.25,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«Ухо сильно болит, появился резкий запах и влажные выделения»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Собака не даёт дотронуться до головы и скулит, когда трясёт ушами»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Из уха идут густые выделения. Владелец просит сразу назначить самый сильный антибиотик»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_onset",
+      "buttonText": "Когда началась боль и как быстро усилилась?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_progressive_pain"
+      ],
+      "answers": [
+        {
+          "id": "question_onset_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Первые выделения заметили четыре дня назад, а выраженная боль появилась вчера».",
+          "revealsFactIds": [
+            "fact_progressive_pain"
+          ]
+        },
+        {
+          "id": "question_onset_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Первые выделения заметили четыре дня назад, а выраженная боль появилась вчера».",
+          "revealsFactIds": [
+            "fact_progressive_pain"
+          ]
+        },
+        {
+          "id": "question_onset_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Несколько дней назад. Когда именно стало больно, не заметил».",
+          "revealsFactIds": [
+            "fact_progressive_pain"
+          ]
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Выделения были несколько дней, но со вчерашнего вечера боль резко усилилась. Я боюсь, что он потеряет слух».",
+          "revealsFactIds": [
+            "fact_progressive_pain"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_laterality",
+      "buttonText": "Одно ухо беспокоит или оба?",
+      "category": "ear",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_unilateral"
+      ],
+      "answers": [
+        {
+          "id": "question_laterality_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Правое ухо болит сильно, левое внешне обычное».",
+          "revealsFactIds": [
+            "fact_unilateral"
+          ]
+        },
+        {
+          "id": "question_laterality_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Правое ухо болит сильно, левое внешне обычное».",
+          "revealsFactIds": [
+            "fact_unilateral"
+          ]
+        },
+        {
+          "id": "question_laterality_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кажется, правое. Он не даёт нормально проверить».",
+          "revealsFactIds": [
+            "fact_unilateral"
+          ]
+        },
+        {
+          "id": "question_laterality_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Правое точно, но я переживаю, что процесс может перейти на второе».",
+          "revealsFactIds": [
+            "fact_unilateral"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_discharge",
+      "buttonText": "Как выглядят и пахнут выделения?",
+      "category": "ear",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_purulent_discharge",
+        "fact_strong_odor"
+      ],
+      "answers": [
+        {
+          "id": "question_discharge_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Они влажные, желтовато-коричневые, с резким неприятным запахом».",
+          "revealsFactIds": [
+            "fact_purulent_discharge",
+            "fact_strong_odor"
+          ]
+        },
+        {
+          "id": "question_discharge_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Они влажные, желтовато-коричневые, с резким неприятным запахом».",
+          "revealsFactIds": [
+            "fact_purulent_discharge",
+            "fact_strong_odor"
+          ]
+        },
+        {
+          "id": "question_discharge_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Влажные и тёмные. Запах сильный, но цвет точно не назову».",
+          "revealsFactIds": [
+            "fact_purulent_discharge",
+            "fact_strong_odor"
+          ]
+        },
+        {
+          "id": "question_discharge_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Выделения густые и пахнут очень резко. Сегодня их стало больше».",
+          "revealsFactIds": [
+            "fact_purulent_discharge",
+            "fact_strong_odor"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Есть ли вялость, отказ от еды, наклон головы или нарушение равновесия?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_neurologic_signs",
+        "fact_mild_appetite_change"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ест хуже из-за боли, но ходит нормально, голову не наклоняет».",
+          "revealsFactIds": [
+            "fact_no_neurologic_signs",
+            "fact_mild_appetite_change"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ест хуже из-за боли, но ходит нормально, голову не наклоняет».",
+          "revealsFactIds": [
+            "fact_no_neurologic_signs",
+            "fact_mild_appetite_change"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит вроде снизился. Про равновесие ничего необычного не видел».",
+          "revealsFactIds": [
+            "fact_no_neurologic_signs",
+            "fact_mild_appetite_change"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Ест хуже, но не падает и голову не наклоняет. Я всё равно очень переживаю».",
+          "revealsFactIds": [
+            "fact_no_neurologic_signs",
+            "fact_mild_appetite_change"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_previous_episodes",
+      "buttonText": "Раньше были отиты или хронические проблемы с кожей?",
+      "category": "history",
+      "required": false,
+      "condition": "opened_by_previous_treatment",
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_recurrent_history"
+      ],
+      "answers": [
+        {
+          "id": "question_previous_episodes_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Два раза лечили уши за последний год, оба раза симптомы возвращались».",
+          "revealsFactIds": [
+            "fact_recurrent_history"
+          ]
+        },
+        {
+          "id": "question_previous_episodes_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Два раза лечили уши за последний год, оба раза симптомы возвращались».",
+          "revealsFactIds": [
+            "fact_recurrent_history"
+          ]
+        },
+        {
+          "id": "question_previous_episodes_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Уши уже лечили, но сколько раз и когда, не помню».",
+          "revealsFactIds": [
+            "fact_recurrent_history"
+          ]
+        },
+        {
+          "id": "question_previous_episodes_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Да, проблема возвращается, и меня пугает, что лечение каждый раз помогает ненадолго».",
+          "revealsFactIds": [
+            "fact_recurrent_history"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_water",
+      "buttonText": "Были купание, плавание или груминг перед началом симптомов?",
+      "category": "exposure",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_water_exposure"
+      ],
+      "answers": [
+        {
+          "id": "question_water_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Три дня до начала симптомов собака плавала в пруду».",
+          "revealsFactIds": [
+            "fact_water_exposure"
+          ]
+        },
+        {
+          "id": "question_water_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Три дня до начала симптомов собака плавала в пруду».",
+          "revealsFactIds": [
+            "fact_water_exposure"
+          ]
+        },
+        {
+          "id": "question_water_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Недавно купали, но точную дату не вспомню».",
+          "revealsFactIds": [
+            "fact_water_exposure"
+          ]
+        },
+        {
+          "id": "question_water_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«После плавания прошло несколько дней, и теперь я переживаю, что вода осталась в ухе».",
+          "revealsFactIds": [
+            "fact_water_exposure"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Какие препараты уже применяли дома?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не применяли: из-за боли решили сначала показать врачу».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не применяли: из-за боли решили сначала показать врачу».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кто-то дома один раз что-то закапал, но название я не знаю».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел помочь, но побоялся капать неизвестное средство в болезненное ухо».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "old_ear_drops",
+        "hydrogen_peroxide_in_ear",
+        "leftover_antibiotic"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Животное напряжено из-за боли, но остаётся в сознании и реагирует на владельца."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела не повышена."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Слизистые оболочки розовые и влажные."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Наклона головы и явного нарушения равновесия на момент осмотра нет."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Правый наружный слуховой проход ярко покрасневший и болезненный."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Имеются влажные желтовато-коричневые выделения с резким запахом."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Слуховой проход умеренно отёчен, но остаётся доступным для осторожной отоскопии."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Инородное тело не визуализируется."
+      },
+      {
+        "id": "target_5",
+        "source": "physical_exam",
+        "text": "Барабанная перепонка полностью оценивается не во всех участках из-за выделений и боли."
+      }
+    ]
+  },
+  "sampleActions": [
+    {
+      "id": "ear_swab",
+      "label": "Взять материал из болезненного уха",
+      "source": "doctor_interpretation",
+      "requires": [
+        "otoscopy"
+      ],
+      "result": {
+        "source": "diagnostic_test",
+        "text": "Получен мазок выделений для цитологического исследования."
+      }
+    }
+  ],
+  "diagnosticTests": [
+    {
+      "id": "ear_cytology",
+      "label": "Микроскопия ушных выделений",
+      "type": "laboratory",
+      "source": "diagnostic_test",
+      "text": "В препарате обнаружено большое количество бактерий и воспалительных клеток. Ушные клещи не выявлены; грибковые клетки присутствуют единично.",
+      "requires": [
+        "sample"
+      ],
+      "costVetcoins": 100,
+      "durationMinutes": 7
+    }
+  ],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "bacterial_otitis",
+      "source": "doctor_interpretation",
+      "label": "Бактериальный наружный отит",
+      "requires": [
+        "triage",
+        "general_exam",
+        "otoscopy",
+        "sample",
+        "microscopy"
+      ],
+      "feedback": "Выраженная боль, характер выделений и цитология поддерживают бактериальный наружный отит.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "fungal_otitis",
+      "source": "doctor_interpretation",
+      "label": "Грибковый наружный отит",
+      "requires": [
+        "general_exam",
+        "otoscopy",
+        "sample",
+        "microscopy"
+      ],
+      "feedback": "Единичные грибковые клетки не объясняют преобладающую бактериальную и воспалительную картину.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "ear_mites",
+      "source": "doctor_interpretation",
+      "label": "Ушной клещ",
+      "requires": [
+        "general_exam",
+        "otoscopy",
+        "sample",
+        "microscopy"
+      ],
+      "feedback": "Клещи не обнаружены, а характер выделений и боли нетипичен для неосложнённого паразитарного поражения.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "otitis_media_risk",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на поражение среднего уха",
+      "requires": [
+        "triage",
+        "general_exam",
+        "otoscopy"
+      ],
+      "feedback": "Такой риск нужно учитывать при неврологических признаках или невозможности оценить барабанную перепонку; в этом варианте явных неврологических признаков нет.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "recommended_plan",
+      "source": "doctor_interpretation",
+      "label": "План при бактериальном наружном отите",
+      "steps": [
+        "Обсудить безопасную очистку слухового прохода в пределах переносимости.",
+        "Начать обоснованный местный противомикробный и противовоспалительный план по результату цитологии.",
+        "Предусмотреть контроль боли.",
+        "Назначить ранний контроль из-за выраженной болезненности."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контрольный осмотр через 3–5 игровых дней, затем повторная оценка до полного разрешения."
+      },
+      "worseningSigns": [
+        {
+          "id": "recommended_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "наклон головы"
+        },
+        {
+          "id": "recommended_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "потеря равновесия"
+        },
+        {
+          "id": "recommended_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "резкое усиление боли"
+        },
+        {
+          "id": "recommended_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "отказ от еды"
+        },
+        {
+          "id": "recommended_plan_w5",
+          "source": "doctor_interpretation",
+          "text": "полное закрытие слухового прохода"
+        }
+      ]
+    },
+    {
+      "id": "culture_escalation",
+      "source": "doctor_interpretation",
+      "label": "Расширенный план при рецидиве или плохом ответе",
+      "steps": [
+        "Начать безопасный первичный план по текущей цитологии.",
+        "При рецидиве или отсутствии ответа обсудить дополнительное исследование и поиск фоновой причины.",
+        "Не назначать «самый сильный антибиотик» без оценки показаний."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Ранний контроль обязателен; при отсутствии улучшения план пересматривается."
+      },
+      "worseningSigns": [
+        {
+          "id": "culture_escalation_w1",
+          "source": "doctor_interpretation",
+          "text": "ухудшение за первые сутки"
+        },
+        {
+          "id": "culture_escalation_w2",
+          "source": "doctor_interpretation",
+          "text": "неврологические признаки"
+        },
+        {
+          "id": "culture_escalation_w3",
+          "source": "doctor_interpretation",
+          "text": "лихорадка"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "В слуховом проходе выраженное болезненное воспаление, а в мазке преобладают бактерии и воспалительные клетки.",
+    "uncertain": "Без контроля нельзя заранее гарантировать, что первичный план полностью устранит проблему или что нет фоновой причины рецидивов.",
+    "plan": "Объяснить местный план, контроль боли, ранний повторный осмотр и признаки возможного поражения более глубоких структур.",
+    "checkUnderstanding": "«Какие признаки заставят вас обратиться срочно и почему нельзя использовать оставшийся антибиотик самостоятельно?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "наклон головы"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "нарушение равновесия"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "резкое усиление боли"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "лихорадка и вялость"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "полное сужение слухового прохода"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_neurologic",
+      "source": "doctor_interpretation",
+      "text": "Неврологические признаки меняют срочность и требуют расширенной оценки.",
+      "discoveryPaths": [
+        "question_general_state",
+        "general_exam"
+      ]
+    },
+    {
+      "id": "critical_pain",
+      "source": "doctor_interpretation",
+      "text": "Выраженная боль требует осторожного осмотра и контроля боли.",
+      "discoveryPaths": [
+        "question_onset",
+        "otoscopy"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "internet_confident",
+    "demanding"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "internet_diagnosis",
+    "past_bad_experience"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Нам нужен самый сильный антибиотик. Желательно такой, чтобы ухо испугалось и сразу прошло»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Прошлые капли назывались как-то на букву “О”. Или это был производитель»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

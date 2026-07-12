@@ -1,0 +1,773 @@
+{
+  "schemaVersion": 2,
+  "id": "SKIN_FUNGAL_DERMATITIS",
+  "family": "skin",
+  "titleForDeveloper": "Грибковый дерматит",
+  "preliminaryDiagnosisLabel": "Грибковый дерматит",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 3,
+  "severity": "routine",
+  "species": [
+    "dog"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "microscope",
+    "skin_sampling_kit"
+  ],
+  "requiredActions": [
+    "general_exam",
+    "skin_exam",
+    "sample",
+    "cytology"
+  ],
+  "safeAlternatives": [
+    "staged_plan",
+    "scheduled_recheck"
+  ],
+  "workload": 1.5,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«Кожа стала жирной, появился выраженный запах, а собака постоянно лижет лапы и складки»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Зуд и запах возвращаются уже не первый раз, особенно в тёплую погоду»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«На коже появились тёмные участки и жирные чешуйки, хотя питомца недавно мыли»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_onset",
+      "buttonText": "Когда появились запах и жирность кожи?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_chronic_onset"
+      ],
+      "answers": [
+        {
+          "id": "question_onset_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Первые изменения заметили около трёх недель назад».",
+          "revealsFactIds": [
+            "fact_chronic_onset"
+          ]
+        },
+        {
+          "id": "question_onset_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Первые изменения заметили около трёх недель назад».",
+          "revealsFactIds": [
+            "fact_chronic_onset"
+          ]
+        },
+        {
+          "id": "question_onset_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Уже несколько недель, точнее не вспомню».",
+          "revealsFactIds": [
+            "fact_chronic_onset"
+          ]
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Три недели назад, а запах становится заметно сильнее. Я боюсь, что кожа серьёзно воспалена».",
+          "revealsFactIds": [
+            "fact_chronic_onset"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_location",
+      "buttonText": "Какие участки поражены сильнее всего?",
+      "category": "skin",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_typical_locations"
+      ],
+      "answers": [
+        {
+          "id": "question_location_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Лапы, подмышки, пах и складки на шее».",
+          "revealsFactIds": [
+            "fact_typical_locations"
+          ]
+        },
+        {
+          "id": "question_location_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Лапы, подмышки, пах и складки на шее».",
+          "revealsFactIds": [
+            "fact_typical_locations"
+          ]
+        },
+        {
+          "id": "question_location_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«В основном лапы и живот, но точно не сравнивал».",
+          "revealsFactIds": [
+            "fact_typical_locations"
+          ]
+        },
+        {
+          "id": "question_location_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Сильнее всего лапы и складки; он постоянно их лижет».",
+          "revealsFactIds": [
+            "fact_typical_locations"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_recurrence",
+      "buttonText": "Бывали ли похожие эпизоды раньше?",
+      "category": "history",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_recurrent"
+      ],
+      "answers": [
+        {
+          "id": "question_recurrence_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Да, дважды за последний год, оба раза временно помогал лечебный шампунь».",
+          "revealsFactIds": [
+            "fact_recurrent"
+          ]
+        },
+        {
+          "id": "question_recurrence_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Да, дважды за последний год, оба раза временно помогал лечебный шампунь».",
+          "revealsFactIds": [
+            "fact_recurrent"
+          ]
+        },
+        {
+          "id": "question_recurrence_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Что-то похожее уже было, но сколько раз — не помню».",
+          "revealsFactIds": [
+            "fact_recurrent"
+          ]
+        },
+        {
+          "id": "question_recurrence_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Да, проблема возвращается, и я переживаю, что мы каждый раз лечим только запах».",
+          "revealsFactIds": [
+            "fact_recurrent"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Есть ли вялость, отказ от еды или повышение температуры?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_systemically_stable"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, общее состояние и аппетит обычные».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, общее состояние и аппетит обычные».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Вроде всё нормально, кроме кожи».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Ест и активен, но из-за зуда хуже спит».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_ears",
+      "buttonText": "Есть ли одновременно проблемы с ушами?",
+      "category": "ear",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_ear_involvement"
+      ],
+      "answers": [
+        {
+          "id": "question_ears_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Периодически уши тоже пахнут и быстро загрязняются».",
+          "revealsFactIds": [
+            "fact_ear_involvement"
+          ]
+        },
+        {
+          "id": "question_ears_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Периодически уши тоже пахнут и быстро загрязняются».",
+          "revealsFactIds": [
+            "fact_ear_involvement"
+          ]
+        },
+        {
+          "id": "question_ears_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Иногда чешет уши, но я не следил за связью».",
+          "revealsFactIds": [
+            "fact_ear_involvement"
+          ]
+        },
+        {
+          "id": "question_ears_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Да, уши тоже беспокоят, и я боюсь общей аллергической проблемы».",
+          "revealsFactIds": [
+            "fact_ear_involvement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_seasonality",
+      "buttonText": "Есть ли связь с сезоном или влажной погодой?",
+      "category": "history",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_seasonality"
+      ],
+      "answers": [
+        {
+          "id": "question_seasonality_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Хуже летом и после длительной сырой погоды».",
+          "revealsFactIds": [
+            "fact_seasonality"
+          ]
+        },
+        {
+          "id": "question_seasonality_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Хуже летом и после длительной сырой погоды».",
+          "revealsFactIds": [
+            "fact_seasonality"
+          ]
+        },
+        {
+          "id": "question_seasonality_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«В тёплое время, кажется, хуже, но не уверен».",
+          "revealsFactIds": [
+            "fact_seasonality"
+          ]
+        },
+        {
+          "id": "question_seasonality_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Каждое лето запах усиливается, и я уже заранее этого жду».",
+          "revealsFactIds": [
+            "fact_seasonality"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Чем уже мыли или обрабатывали кожу?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Использовали обычный шампунь, который был дома».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Использовали обычный шампунь, который был дома».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Мыли каким-то лечебным шампунем, название не помню».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Купали чаще обычного, потому что боялись, что запах означает грязь».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "washed_with_new_shampoo",
+        "unknown_human_ointment",
+        "stopped_after_improvement"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Аппетит и активность сохранены."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Основная проблема ограничена кожей и зудом."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Кожа в подмышках, паху и межпальцевых пространствах покрасневшая и жирная."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Имеются коричневатые чешуйки, умеренное утолщение и участки гиперпигментации."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "От кожи исходит характерный выраженный запах."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Глубоких ран и гнойных свищей нет."
+      }
+    ]
+  },
+  "sampleActions": [
+    {
+      "id": "skin_tape_sample",
+      "label": "Взять материал с поверхности кожи",
+      "source": "doctor_interpretation",
+      "requires": [
+        "skin_exam"
+      ],
+      "result": {
+        "source": "diagnostic_test",
+        "text": "Получен материал с жирного покрасневшего участка для цитологии."
+      }
+    }
+  ],
+  "diagnosticTests": [
+    {
+      "id": "skin_cytology",
+      "label": "Поверхностная цитология кожи",
+      "type": "laboratory",
+      "source": "diagnostic_test",
+      "text": "В препарате обнаружено повышенное количество грибковых клеток. Бактериальный компонент не преобладает.",
+      "requires": [
+        "sample"
+      ],
+      "costVetcoins": 80,
+      "durationMinutes": 7
+    }
+  ],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "fungal_dermatitis",
+      "source": "doctor_interpretation",
+      "label": "Грибковый дерматит",
+      "requires": [
+        "general_exam",
+        "skin_exam",
+        "sample",
+        "cytology"
+      ],
+      "feedback": "Клиническая картина и цитология поддерживают грибковое воспаление кожи.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "superficial_pyoderma",
+      "source": "doctor_interpretation",
+      "label": "Поверхностная пиодермия",
+      "requires": [
+        "general_exam",
+        "skin_exam",
+        "sample",
+        "cytology"
+      ],
+      "feedback": "Бактериальный компонент не преобладает, а характер поражений и цитология поддерживают грибковую причину.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "contact_irritation",
+      "source": "doctor_interpretation",
+      "label": "Контактное раздражение после шампуня",
+      "requires": [
+        "general_exam",
+        "skin_exam"
+      ],
+      "feedback": "Шампунь мог усиливать раздражение, но рецидивирующая картина и цитология указывают на более устойчивый процесс.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "allergy_confirmed",
+      "source": "doctor_interpretation",
+      "label": "Подтверждённая аллергия",
+      "requires": [
+        "general_exam",
+        "history"
+      ],
+      "feedback": "Аллергия возможна как фон, но не подтверждена на этом приёме.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "fungal_skin_plan",
+      "source": "doctor_interpretation",
+      "label": "План при грибковом дерматите",
+      "steps": [
+        "Начать согласованный местный противогрибковый уход.",
+        "Объяснить регулярность и длительность обработки.",
+        "Контролировать уши и другие участки кожи.",
+        "При рецидивах отдельно исследовать фоновые причины хронического зуда."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль через 2–3 игровые недели или раньше при ухудшении."
+      },
+      "worseningSigns": [
+        {
+          "id": "fungal_skin_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "гнойные поражения"
+        },
+        {
+          "id": "fungal_skin_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "резкая болезненность"
+        },
+        {
+          "id": "fungal_skin_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "лихорадка"
+        },
+        {
+          "id": "fungal_skin_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "быстрое распространение"
+        }
+      ]
+    },
+    {
+      "id": "wash_until_smell_gone",
+      "source": "doctor_interpretation",
+      "label": "Мыть только до исчезновения запаха",
+      "steps": [
+        "Прекратить уход сразу после временного уменьшения запаха без контрольной оценки."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Высок риск неполного ответа и повторного эпизода."
+      },
+      "worseningSigns": [
+        {
+          "id": "wash_until_smell_gone_w1",
+          "source": "doctor_interpretation",
+          "text": "возврат запаха"
+        },
+        {
+          "id": "wash_until_smell_gone_w2",
+          "source": "doctor_interpretation",
+          "text": "усиление зуда"
+        },
+        {
+          "id": "wash_until_smell_gone_w3",
+          "source": "doctor_interpretation",
+          "text": "новые поражения"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "На поражённых участках обнаружено повышенное количество грибковых клеток, что соответствует грибковому дерматиту.",
+    "uncertain": "Почему проблема повторяется, пока не установлено; аллергический или другой фон требует отдельной оценки при рецидивах.",
+    "plan": "Объяснить длительный местный уход, контроль ушей и необходимость повторной оценки.",
+    "checkUnderstanding": "«Как долго вы будете проводить обработку и почему нельзя прекращать её сразу после исчезновения запаха?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "гнойные или мокнущие поражения"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "лихорадка и вялость"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "резкая болезненность"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "быстрое распространение"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_recurrence",
+      "source": "doctor_interpretation",
+      "text": "Рецидивы требуют поиска фоновой причины.",
+      "discoveryPaths": [
+        "question_recurrence",
+        "question_seasonality"
+      ]
+    },
+    {
+      "id": "critical_secondary",
+      "source": "doctor_interpretation",
+      "text": "Гнойные поражения могут означать вторичную бактериальную инфекцию.",
+      "discoveryPaths": [
+        "skin_exam",
+        "general_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "budget_limited"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "past_bad_experience",
+    "internet_diagnosis"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Запах такой, будто собака сама нашла сыр и решила его носить»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Мы мыли чаще, потому что думали: если пахнет, значит, недостаточно чисто»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

@@ -1,0 +1,710 @@
+{
+  "schemaVersion": 2,
+  "id": "TRAUMA_SUSPECTED_DISLOCATION",
+  "family": "trauma",
+  "titleForDeveloper": "Подозрение на вывих",
+  "preliminaryDiagnosisLabel": "Подозрение на вывих",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 6,
+  "severity": "urgent",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [],
+  "requiredActions": [
+    "triage",
+    "general_exam",
+    "minimal_joint_exam",
+    "urgent_referral"
+  ],
+  "safeAlternatives": [
+    "urgent_referral"
+  ],
+  "workload": 2.0,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«После резкого рывка конечность выглядит необычно, сустав словно сместился»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Животное совсем не опирается на лапу, а положение сустава изменилось»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«После падения лапа кажется короче и повернута не так, как обычно»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_mechanism",
+      "buttonText": "Что произошло перед травмой?",
+      "category": "trauma",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_joint_trauma"
+      ],
+      "answers": [
+        {
+          "id": "question_mechanism_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Собака резко повернулась на скорости и упала на бок».",
+          "revealsFactIds": [
+            "fact_joint_trauma"
+          ]
+        },
+        {
+          "id": "question_mechanism_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Собака резко повернулась на скорости и упала на бок».",
+          "revealsFactIds": [
+            "fact_joint_trauma"
+          ]
+        },
+        {
+          "id": "question_mechanism_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Был прыжок и падение, точный момент не видел».",
+          "revealsFactIds": [
+            "fact_joint_trauma"
+          ]
+        },
+        {
+          "id": "question_mechanism_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«После резкого поворота она закричала и сразу перестала опираться».",
+          "revealsFactIds": [
+            "fact_joint_trauma"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_weight_bearing",
+      "buttonText": "Опирается ли животное на лапу?",
+      "category": "trauma",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_non_weight_bearing"
+      ],
+      "answers": [
+        {
+          "id": "question_weight_bearing_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, конечность постоянно держит на весу».",
+          "revealsFactIds": [
+            "fact_non_weight_bearing"
+          ]
+        },
+        {
+          "id": "question_weight_bearing_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, конечность постоянно держит на весу».",
+          "revealsFactIds": [
+            "fact_non_weight_bearing"
+          ]
+        },
+        {
+          "id": "question_weight_bearing_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Почти не ставит, только иногда касается пола».",
+          "revealsFactIds": [
+            "fact_non_weight_bearing"
+          ]
+        },
+        {
+          "id": "question_weight_bearing_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Совсем не опирается, и я боюсь повреждения сустава».",
+          "revealsFactIds": [
+            "fact_non_weight_bearing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_position",
+      "buttonText": "Что изменилось во внешнем положении конечности?",
+      "category": "trauma",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_abnormal_joint_position"
+      ],
+      "answers": [
+        {
+          "id": "question_position_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Лапа выглядит повернутой наружу, а конечность кажется короче».",
+          "revealsFactIds": [
+            "fact_abnormal_joint_position"
+          ]
+        },
+        {
+          "id": "question_position_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Лапа выглядит повернутой наружу, а конечность кажется короче».",
+          "revealsFactIds": [
+            "fact_abnormal_joint_position"
+          ]
+        },
+        {
+          "id": "question_position_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Положение явно необычное, но описать трудно».",
+          "revealsFactIds": [
+            "fact_abnormal_joint_position"
+          ]
+        },
+        {
+          "id": "question_position_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Конечность будто укоротилась и повернулась, это выглядит очень неестественно».",
+          "revealsFactIds": [
+            "fact_abnormal_joint_position"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_other_injuries",
+      "buttonText": "Есть ли кровотечение, одышка или потеря сознания?",
+      "category": "triage",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_major_systemic_trauma"
+      ],
+      "answers": [
+        {
+          "id": "question_other_injuries_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, других явных травм не заметили».",
+          "revealsFactIds": [
+            "fact_no_major_systemic_trauma"
+          ]
+        },
+        {
+          "id": "question_other_injuries_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, других явных травм не заметили».",
+          "revealsFactIds": [
+            "fact_no_major_systemic_trauma"
+          ]
+        },
+        {
+          "id": "question_other_injuries_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кроме лапы ничего очевидного».",
+          "revealsFactIds": [
+            "fact_no_major_systemic_trauma"
+          ]
+        },
+        {
+          "id": "question_other_injuries_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Дышит нормально и в сознании, но я переживаю за скрытые повреждения».",
+          "revealsFactIds": [
+            "fact_no_major_systemic_trauma"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_previous",
+      "buttonText": "Были ли проблемы с этим суставом раньше?",
+      "category": "history",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_previous_joint_issue"
+      ],
+      "answers": [
+        {
+          "id": "question_previous_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, сустав раньше не беспокоил».",
+          "revealsFactIds": [
+            "fact_no_previous_joint_issue"
+          ]
+        },
+        {
+          "id": "question_previous_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, сустав раньше не беспокоил».",
+          "revealsFactIds": [
+            "fact_no_previous_joint_issue"
+          ]
+        },
+        {
+          "id": "question_previous_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Не помню прежних проблем».",
+          "revealsFactIds": [
+            "fact_no_previous_joint_issue"
+          ]
+        },
+        {
+          "id": "question_previous_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, это первая травма, поэтому изменение положения особенно пугает».",
+          "revealsFactIds": [
+            "fact_no_previous_joint_issue"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_distal",
+      "buttonText": "Сохраняется ли чувствительность ниже травмы?",
+      "category": "neurovascular",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_distal_function_present"
+      ],
+      "answers": [
+        {
+          "id": "question_distal_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«На лёгкое касание реагирует, пальцами немного двигает».",
+          "revealsFactIds": [
+            "fact_distal_function_present"
+          ]
+        },
+        {
+          "id": "question_distal_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«На лёгкое касание реагирует, пальцами немного двигает».",
+          "revealsFactIds": [
+            "fact_distal_function_present"
+          ]
+        },
+        {
+          "id": "question_distal_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Не проверяли специально из-за боли».",
+          "revealsFactIds": [
+            "fact_distal_function_present"
+          ]
+        },
+        {
+          "id": "question_distal_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Реагирует на касание, но я стараюсь не трогать лишний раз».",
+          "revealsFactIds": [
+            "fact_distal_function_present"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Пытались ли вправить или вытянуть конечность?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, ограничили движение и перенесли на подстилке».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, ограничили движение и перенесли на подстилке».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Один раз потянули лапу, но сразу остановились».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел вернуть сустав на место, но понял, что могу повредить сосуды или кость».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "attempted_reduction",
+        "home_splint",
+        "human_painkiller"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Животное испытывает выраженную боль."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Сознание сохранено, дыхание и кровообращение стабильны."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Сначала исключены очевидные угрожающие жизни последствия травмы."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Состояние конечности требует срочной визуальной диагностики."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Сустав и конечность находятся в неестественном положении."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Животное полностью избегает опоры."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Выраженная болезненность не позволяет проводить грубую проверку объёма движений."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Явной открытой раны нет."
+      },
+      {
+        "id": "target_5",
+        "source": "physical_exam",
+        "text": "Без рентгенографии нельзя надёжно отличить вывих от перелома или сочетанного повреждения."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "suspected_dislocation",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на вывих",
+      "requires": [
+        "triage",
+        "general_exam",
+        "minimal_joint_exam"
+      ],
+      "feedback": "Неестественное положение сустава и полный отказ от опоры после травмы поддерживают вывих, но требуют подтверждения снимком.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "fracture",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на перелом",
+      "requires": [
+        "triage",
+        "general_exam",
+        "minimal_joint_exam"
+      ],
+      "feedback": "Перелом остаётся важным дифференциальным вариантом; маршрутизация на срочный рентген одинакова.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "soft_tissue_injury",
+      "source": "doctor_interpretation",
+      "label": "Травма мягких тканей",
+      "requires": [
+        "general_exam",
+        "minimal_joint_exam"
+      ],
+      "feedback": "Неестественное положение конечности не соответствует простой травме мягких тканей.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "home_reduction",
+      "source": "doctor_interpretation",
+      "label": "Вправить сустав без снимка и обезболивания",
+      "requires": [
+        "minimal_joint_exam"
+      ],
+      "feedback": "Попытка вправления без визуализации и условий может повредить кость, сосуды или нервы.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": true
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "urgent_referral",
+      "source": "doctor_interpretation",
+      "label": "Обезболивание и срочное направление на рентген",
+      "steps": [
+        "Минимизировать движение конечности.",
+        "Обеспечить доступное обезболивание.",
+        "Не пытаться вправлять сустав до визуализации и оценки сопутствующего перелома.",
+        "Направить на рентгенографию и ортопедическую помощь."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": false,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль определяется после вправления или хирургического лечения."
+      },
+      "worseningSigns": [
+        {
+          "id": "urgent_referral_w1",
+          "source": "doctor_interpretation",
+          "text": "похолодание лапы"
+        },
+        {
+          "id": "urgent_referral_w2",
+          "source": "doctor_interpretation",
+          "text": "изменение цвета"
+        },
+        {
+          "id": "urgent_referral_w3",
+          "source": "doctor_interpretation",
+          "text": "потеря чувствительности"
+        },
+        {
+          "id": "urgent_referral_w4",
+          "source": "doctor_interpretation",
+          "text": "усиление боли"
+        },
+        {
+          "id": "urgent_referral_w5",
+          "source": "doctor_interpretation",
+          "text": "коллапс"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Положение сустава изменено и опора отсутствует; это серьёзное повреждение, которое нельзя безопасно уточнить без снимка.",
+    "uncertain": "Вывих, перелом или их сочетание различаются по рентгену.",
+    "plan": "Объяснить обезболивание, ограничение движения и запрет на домашнее вправление.",
+    "checkUnderstanding": "«Почему нельзя пытаться вправить сустав до снимка и куда вы едете сейчас?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "похолодание или изменение цвета лапы"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "потеря чувствительности"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "открытая рана"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "признаки шока"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "другие травмы после сильного удара"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_position",
+      "source": "doctor_interpretation",
+      "text": "Неестественное положение сустава требует срочной визуализации.",
+      "discoveryPaths": [
+        "question_position",
+        "minimal_joint_exam"
+      ]
+    },
+    {
+      "id": "critical_neurovascular",
+      "source": "doctor_interpretation",
+      "text": "Состояние тканей ниже травмы нужно оценить до транспортировки.",
+      "discoveryPaths": [
+        "question_distal",
+        "minimal_joint_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "first_pet",
+    "accident_shock"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": false,
+    "maximumLevel": 0,
+    "lines": []
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": true,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

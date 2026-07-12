@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "date": "2026-07-12",
+  "generatorVersion": "tier-01-v2.0.0",
+  "runs": 10000,
+  "uniqueWeeks": 10000,
+  "casesCovered": 30,
+  "followUpVisits": 75044,
+  "unplannedVisits": 50000,
+  "sameSeedStable": true,
+  "differentSeedDifferent": true,
+  "reloadStable": true,
+  "migrationGuard": true,
+  "browserModesChecked": [
+    "current",
+    "legacy-v1",
+    "tier-01-v2"
+  ],
+  "defaultMode": "current"
+}

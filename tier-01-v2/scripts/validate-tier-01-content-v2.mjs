@@ -1,0 +1,194 @@
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const clinicalRoot = path.join(root, "content/clinical/tier-01");
+const manifestPath = path.join(clinicalRoot, "manifest.json");
+const campaignPath = path.join(root, "content/campaign/tier-01/seven-day-plan.json");
+const tutorialPath = path.join(root, "content/ui/tutorial-texts.json");
+const ownersRoot = path.join(root, "content/owners/tier-01");
+const errors = [];
+const warnings = [];
+const stats = { jsonParsed: 0, clinicalFiles: 0, questions: 0, answers: 0, uniqueAnswerTexts: 0, homeActions: 0, urgentCases: 0 };
+const prohibitedPhrases = [
+  "дрожжевой отит", "дрожжевой наружный отит", "рабочая версия", "простой дерматит",
+  "владелец называет точное наблюдение", "владелец не уверен в деталях",
+  "владелец описывает наблюдение точно", "после спокойного уточнения владелец сообщает",
+  "общее состояние оценено до локального решения", "требует оценки срочности",
+  "использует бытовую формулировку, не заменяющую медицинский факт",
+  "requires_case_specific_review"
+];
+const allowedSources = new Set(["initial_complaint", "owner_history", "physical_exam", "diagnostic_test", "doctor_interpretation", "follow_up"]);
+const allowedSpecies = new Set(["dog", "cat"]);
+const parsed = new Map();
+
+function readJson(file) {
+  if (parsed.has(file)) return parsed.get(file);
+  try {
+    const value = JSON.parse(fs.readFileSync(file, "utf8"));
+    parsed.set(file, value);
+    stats.jsonParsed += 1;
+    return value;
+  } catch (error) {
+    errors.push(`${path.relative(root, file)}: JSON parse failed: ${error.message}`);
+    return null;
+  }
+}
+function assert(condition, file, message) { if (!condition) errors.push(`${path.relative(root, file)}: ${message}`); }
+function allJsonFiles(directory) {
+  return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const target = path.join(directory, entry.name);
+    if (entry.isDirectory()) return allJsonFiles(target);
+    return entry.name.endsWith(".json") ? [target] : [];
+  });
+}
+function checkSource(item, expected, file, location) {
+  assert(item && allowedSources.has(item.source), file, `${location} has invalid or missing source`);
+  if (expected) assert(item?.source === expected, file, `${location} must use source ${expected}`);
+}
+
+for (const file of allJsonFiles(path.join(root, "content"))) {
+  readJson(file);
+  const raw = fs.readFileSync(file, "utf8").toLowerCase();
+  for (const phrase of prohibitedPhrases) assert(!raw.includes(phrase), file, `prohibited or placeholder phrase: ${phrase}`);
+}
+
+const manifest = readJson(manifestPath);
+assert(manifest?.schemaVersion === 2, manifestPath, "manifest schemaVersion must be 2");
+assert(manifest?.integrationStatus === "not_connected", manifestPath, "review package must stay not_connected by default");
+assert(manifest?.contentPolicy?.runtimeGenerationOfMedicalText === false, manifestPath, "runtime medical text generation must be disabled");
+const caseFiles = allJsonFiles(clinicalRoot).filter((file) => file !== manifestPath);
+stats.clinicalFiles = caseFiles.length;
+assert(caseFiles.length === 30, manifestPath, "tier 01 must contain exactly 30 cases");
+assert(manifest?.caseCount === 30, manifestPath, "manifest caseCount must be 30");
+
+const ids = new Set();
+const answerTexts = new Set();
+const homeActionFile = path.join(ownersRoot, "home-treatment-actions.json");
+const homeActionLibrary = readJson(homeActionFile);
+const homeActionIds = new Set(homeActionLibrary?.actions?.map((x) => x.id) ?? []);
+stats.homeActions = homeActionIds.size;
+assert(stats.homeActions >= 25, homeActionFile, "expanded tier needs at least 25 exact home actions");
+
+for (const file of caseFiles) {
+  const data = readJson(file);
+  if (!data) continue;
+  assert(data.schemaVersion === 2, file, "case schemaVersion must be 2");
+  assert(data.editorialStatus === "complete_ru_v1", file, "case must be editorially complete");
+  assert(data.validation?.noGeneratedMedicalText === true, file, "case must forbid generated medical text");
+  assert(!ids.has(data.id), file, `duplicate id ${data.id}`);
+  ids.add(data.id);
+  for (const species of data.species ?? []) assert(allowedSpecies.has(species), file, `unsupported tier-01 species: ${species}`);
+  assert(Array.isArray(data.initialComplaintVariants) && data.initialComplaintVariants.length >= 3, file, "at least three complaints are required");
+  for (const [i, item] of (data.initialComplaintVariants ?? []).entries()) {
+    checkSource(item, "initial_complaint", file, `initialComplaintVariants[${i}]`);
+    assert(item.text?.length >= 25, file, `complaint ${item.id} is too short`);
+  }
+  const questions = data.historyQuestions ?? [];
+  stats.questions += questions.length;
+  const required = questions.filter((x) => x.required);
+  const optional = questions.filter((x) => !x.required && !x.condition);
+  const conditional = questions.filter((x) => x.condition);
+  assert(required.length >= 4 && required.length <= 8, file, "required questions must be 4-8");
+  assert(optional.length >= 2 && optional.length <= 5, file, "optional questions must be 2-5");
+  assert(conditional.length <= 3, file, "conditional questions must be 0-3");
+  const questionIds = new Set(questions.map((x) => x.id));
+  for (const question of questions) {
+    checkSource(question, "owner_history", file, `question ${question.id}`);
+    assert(Array.isArray(question.revealsFactIds) && question.revealsFactIds.length > 0, file, `question ${question.id} needs revealsFactIds`);
+    assert(Array.isArray(question.answers) && question.answers.length >= 4, file, `question ${question.id} needs four exact style answers`);
+    const tags = new Set();
+    for (const answer of question.answers ?? []) {
+      stats.answers += 1;
+      checkSource(answer, "owner_history", file, `answer ${answer.id}`);
+      assert(answer.text?.length >= 18, file, `answer ${answer.id} is too short`);
+      answerTexts.add(answer.text);
+      for (const tag of answer.ownerTags ?? []) tags.add(tag);
+    }
+    for (const requiredTag of ["calm", "observant", "inattentive", "anxious"]) {
+      assert(tags.has(requiredTag), file, `question ${question.id} lacks ${requiredTag} answer`);
+    }
+    if (question.allowsHiddenHomeTreatment) {
+      assert(question.category === "home_treatment", file, `only home_treatment question may load home actions`);
+      assert(Array.isArray(question.homeActionIds) && question.homeActionIds.length > 0, file, `question ${question.id} needs homeActionIds`);
+      for (const actionId of question.homeActionIds ?? []) assert(homeActionIds.has(actionId), file, `unknown home action ${actionId}`);
+    }
+  }
+  const actionIds = new Set([...(data.requiredActions ?? []), ...questionIds]);
+  for (const item of data.diagnosticTests ?? []) actionIds.add(item.id);
+  for (const [i, item] of (data.generalExam?.findings ?? []).entries()) checkSource(item, "physical_exam", file, `generalExam[${i}]`);
+  for (const [i, item] of (data.targetExam?.findings ?? []).entries()) checkSource(item, "physical_exam", file, `targetExam[${i}]`);
+  assert((data.generalExam?.findings ?? []).length >= 4, file, "general exam needs concrete findings");
+  assert((data.targetExam?.findings ?? []).length >= 3, file, "target exam needs concrete findings");
+  for (const [i, item] of (data.diagnosticTests ?? []).entries()) checkSource(item, "diagnostic_test", file, `diagnosticTests[${i}]`);
+  const diagnoses = data.preliminaryDiagnosisOptions ?? [];
+  assert(diagnoses.length >= 4, file, "at least four diagnostic options are required");
+  assert(diagnoses.some((x) => x.isCorrectForTemplate), file, "one diagnostic option must be marked correct for template testing");
+  for (const item of diagnoses) {
+    checkSource(item, "doctor_interpretation", file, `diagnosis ${item.id}`);
+    assert(Array.isArray(item.requires) && item.requires.length > 0, file, `diagnosis ${item.id} needs requires`);
+    assert(item.feedback?.length >= 25, file, `diagnosis ${item.id} needs exact feedback`);
+  }
+  assert((data.planOptions ?? []).length >= 1, file, "at least one plan is required");
+  for (const item of data.planOptions ?? []) {
+    checkSource(item, "doctor_interpretation", file, `plan ${item.id}`);
+    checkSource(item.followUp, "follow_up", file, `plan ${item.id}.followUp`);
+    assert(Array.isArray(item.steps) && item.steps.length > 0, file, `plan ${item.id} needs exact steps`);
+    assert(Array.isArray(item.worseningSigns) && item.worseningSigns.length > 0, file, `plan ${item.id} needs worsening signs`);
+  }
+  assert(data.ownerExplanation?.known?.length >= 25, file, "ownerExplanation.known is incomplete");
+  assert(data.ownerExplanation?.uncertain?.length >= 25, file, "ownerExplanation.uncertain is incomplete");
+  assert(data.ownerExplanation?.plan?.length >= 25, file, "ownerExplanation.plan is incomplete");
+  assert(data.ownerExplanation?.checkUnderstanding?.length >= 25, file, "ownerExplanation.checkUnderstanding is incomplete");
+  assert(Array.isArray(data.redFlags) && data.redFlags.length >= 3, file, "at least three red flags are required");
+  for (const fact of data.criticalFacts ?? []) {
+    assert(Array.isArray(fact.discoveryPaths) && fact.discoveryPaths.length > 0, file, `critical fact ${fact.id} needs discovery paths`);
+    for (const discovery of fact.discoveryPaths) assert(actionIds.has(discovery), file, `critical fact ${fact.id} references unavailable discovery path ${discovery}`);
+  }
+  const urgent = ["urgent", "emergency"].includes(data.severity);
+  if (urgent) {
+    stats.urgentCases += 1;
+    assert(data.safeAlternatives?.includes("urgent_referral"), file, "urgent case needs urgent_referral alternative");
+    assert((data.planOptions ?? []).some((x) => x.id === "urgent_referral"), file, "urgent case needs urgent_referral plan");
+    assert(!(data.planOptions ?? []).some((x) => x.allowsRoutineObservation), file, "urgent case cannot allow routine observation");
+  }
+}
+
+stats.uniqueAnswerTexts = answerTexts.size;
+assert(stats.uniqueAnswerTexts >= 450, manifestPath, `answer diversity too low: ${stats.uniqueAnswerTexts}`);
+
+const campaign = readJson(campaignPath);
+assert(campaign?.schemaVersion === 2, campaignPath, "campaign schemaVersion must be 2");
+assert(campaign?.status === "not_connected", campaignPath, "review campaign must remain not_connected");
+assert(campaign?.days?.length === 7, campaignPath, "seven days are required");
+for (const day of campaign?.days ?? []) {
+  const minSum = day.bookedNew.min + day.followUps.min + day.unplannedNew.min;
+  const maxSum = day.bookedNew.max + day.followUps.max + day.unplannedNew.max;
+  assert(minSum <= day.visitsTotal.max && maxSum >= day.visitsTotal.min, campaignPath, `day ${day.day} component ranges cannot reach total`);
+  assert(day.urgentSubset.max <= day.visitsTotal.max, campaignPath, `day ${day.day} urgent subset exceeds total`);
+}
+assert(campaign?.preliminaryScheduleRules?.showBookedOnly === true, campaignPath, "only booked visits may be shown before opening");
+assert(campaign?.preliminaryScheduleRules?.generateUnplannedAfterOpening === true, campaignPath, "unplanned visits must be generated after opening");
+
+const tutorial = readJson(tutorialPath);
+assert(tutorial?.schemaVersion === 2, tutorialPath, "tutorial schemaVersion must be 2");
+assert(tutorial?.pauseGameTime === true, tutorialPath, "tutorial must pause game time");
+assert(tutorial?.steps?.length >= 9, tutorialPath, "tutorial needs full guided sequence");
+for (const step of tutorial?.steps ?? []) {
+  assert(step.enabledActions?.length > 0, tutorialPath, `tutorial step ${step.id} needs enabledActions`);
+  assert(step.blockedActions, tutorialPath, `tutorial step ${step.id} needs blockedActions`);
+  assert(step.completeWhen, tutorialPath, `tutorial step ${step.id} needs completion condition`);
+}
+
+const report = { status: errors.length ? "failed" : "passed", ...stats, warnings, errors };
+const reportDirectory = path.join(root, "reports");
+fs.mkdirSync(reportDirectory, { recursive: true });
+fs.writeFileSync(path.join(reportDirectory, "tier-01-validation-v2.json"), `${JSON.stringify(report, null, 2)}\n`);
+if (errors.length) {
+  console.error(`Tier 01 v2 validation failed with ${errors.length} error(s):`);
+  for (const error of errors) console.error(`- ${error}`);
+  process.exitCode = 1;
+} else {
+  console.log(JSON.stringify(report, null, 2));
+}

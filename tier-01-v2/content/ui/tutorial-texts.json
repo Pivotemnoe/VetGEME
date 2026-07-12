@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 2,
+  "id": "FIRST_VISIT_GUIDED",
+  "eligibleCaseIds": [
+    "EAR_FUNGAL_OTITIS",
+    "EAR_MITES",
+    "SKIN_FLEA_INFESTATION"
+  ],
+  "selectionRule": "seeded_random_from_eligible_cases",
+  "randomizePatientIdentity": true,
+  "randomizeOwnerIdentity": true,
+  "pauseGameTime": true,
+  "disableOwnerIrritation": true,
+  "disablePatientLeaving": true,
+  "disableFastForward": true,
+  "steps": [
+    {
+      "id": "intro",
+      "title": "Жалоба — не диагноз",
+      "text": "Владелец описывает проблему своими словами. Рассказ может быть неполным или ошибочным. Сначала соберите анамнез.",
+      "enabledActions": [
+        "history"
+      ],
+      "blockedActions": "all_others",
+      "highlight": "pulse_and_arrow",
+      "completeWhen": "history_panel_opened"
+    },
+    {
+      "id": "history",
+      "title": "Соберите анамнез",
+      "text": "Задайте обязательные вопросы о сроках, развитии симптомов, общем состоянии и домашних действиях. Ответы владельца пока не являются результатами осмотра.",
+      "enabledActions": [
+        "history_questions_required"
+      ],
+      "blockedActions": "all_clinical_actions",
+      "highlight": "current_required_question",
+      "completeWhen": "all_required_history_questions_answered"
+    },
+    {
+      "id": "general_exam",
+      "title": "Оцените пациента целиком",
+      "text": "Общий осмотр нужен, чтобы не пропустить системное ухудшение и правильно определить срочность.",
+      "enabledActions": [
+        "general_exam"
+      ],
+      "blockedActions": "all_others",
+      "highlight": "pulse_and_arrow",
+      "completeWhen": "general_exam_completed"
+    },
+    {
+      "id": "target_exam",
+      "title": "Осмотрите область жалобы",
+      "text": "Теперь проведите конкретный целевой осмотр. Здесь появляются объективные признаки, которых не было в словах владельца.",
+      "enabledActions": [
+        "target_exam"
+      ],
+      "blockedActions": "all_others",
+      "highlight": "pulse_and_arrow",
+      "completeWhen": "target_exam_completed"
+    },
+    {
+      "id": "sample",
+      "title": "Возьмите материал",
+      "text": "Осмотр показывает, что изменено, но не всегда определяет причину. Возьмите материал, предусмотренный этим случаем.",
+      "enabledActions": [
+        "sample"
+      ],
+      "blockedActions": "all_others",
+      "highlight": "pulse_and_arrow",
+      "completeWhen": "required_sample_collected"
+    },
+    {
+      "id": "test",
+      "title": "Проведите исследование",
+      "text": "Исследование расходует время и деньги, но в этом случае его результат изменяет выбор предварительного диагноза.",
+      "enabledActions": [
+        "diagnostic_test"
+      ],
+      "blockedActions": "all_others",
+      "highlight": "pulse_and_arrow",
+      "completeWhen": "required_test_completed"
+    },
+    {
+      "id": "preliminary_diagnosis",
+      "title": "Сформулируйте предварительный диагноз",
+      "text": "Выберите вариант, который соответствует анамнезу, осмотру и исследованию. Это клинический вывод, а не новая реплика владельца.",
+      "enabledActions": [
+        "preliminary_diagnosis"
+      ],
+      "blockedActions": "all_others",
+      "highlight": "pulse_and_arrow",
+      "completeWhen": "diagnosis_selected"
+    },
+    {
+      "id": "explanation",
+      "title": "Объясните результат владельцу",
+      "text": "Разделите подтверждённые данные, остающуюся неопределённость и дальнейшие действия.",
+      "enabledActions": [
+        "explanation"
+      ],
+      "blockedActions": "all_others",
+      "highlight": "pulse_and_arrow",
+      "completeWhen": "explanation_completed"
+    },
+    {
+      "id": "plan",
+      "title": "Согласуйте план помощи",
+      "text": "План должен включать действия дома, контрольный срок и признаки, при которых нужно обратиться раньше.",
+      "enabledActions": [
+        "plan"
+      ],
+      "blockedActions": "all_others",
+      "highlight": "pulse_and_arrow",
+      "completeWhen": "plan_selected_and_understanding_checked"
+    },
+    {
+      "id": "finish",
+      "title": "Завершите приём",
+      "text": "После выписки результат станет известен позже — через сообщение, контрольный визит или ухудшение.",
+      "enabledActions": [
+        "finish"
+      ],
+      "blockedActions": "all_others",
+      "highlight": "pulse_and_arrow",
+      "completeWhen": "visit_finished"
+    }
+  ]
+}

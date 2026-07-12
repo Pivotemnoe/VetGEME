@@ -2,8 +2,12 @@
   "name": "vetgeme-pet-clinic",
   "private": true,
   "scripts": {
-    "test:generator": "node scripts/simulate-generator.js 1000",
-    "test:generator:full": "node scripts/simulate-generator.js 10000",
-    "validate:tier-01-content": "node scripts/validate-tier-01-content.mjs"
+    "test:generator": "node scripts/simulate-generator-v1.js 1000",
+    "test:generator:legacy": "node scripts/simulate-generator-v1.js 1000",
+    "test:generator:v2": "node scripts/simulate-generator-v2.js 1000",
+    "test:generator:v2:full": "node scripts/simulate-generator-v2.js 10000",
+    "test:adapter:v2": "node scripts/test-v2-adapter.js",
+    "validate:tier-01-content": "node scripts/validate-tier-01-content.mjs",
+    "validate:tier-01-v2": "node tier-01-v2/scripts/validate-tier-01-content-v2.mjs"
   }
 }

@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 2,
+  "reviewStatus": "editorial_complete_pending_balance_review",
+  "modifiers": [
+    {
+      "id": "limited_budget",
+      "label": "ограниченный бюджет",
+      "unlockDay": 2,
+      "weight": 12,
+      "adjustments": {
+        "patience": -3,
+        "anxiety": 8
+      },
+      "visibleRule": "Бюджет становится известен только после вопроса или инициативы владельца."
+    },
+    {
+      "id": "hidden_home_treatment",
+      "label": "скрывает домашнее лечение",
+      "unlockDay": 2,
+      "weight": 10,
+      "adjustments": {
+        "trust": -5
+      },
+      "visibleRule": "Факт раскрывается только через неосуждающий вопрос о домашних действиях."
+    },
+    {
+      "id": "multi_pet_household",
+      "label": "несколько животных дома",
+      "unlockDay": 1,
+      "weight": 10,
+      "adjustments": {},
+      "visibleRule": "Добавляет вопросы о контактах и совместной обработке."
+    },
+    {
+      "id": "internet_diagnosis",
+      "label": "готовая интернет-версия",
+      "unlockDay": 3,
+      "weight": 8,
+      "adjustments": {
+        "trust": -8,
+        "conflict": 8
+      },
+      "visibleRule": "Владелец сообщает версию как предположение, а не как факт."
+    },
+    {
+      "id": "past_bad_experience",
+      "label": "плохой прошлый опыт",
+      "unlockDay": 2,
+      "weight": 7,
+      "adjustments": {
+        "trust": -12,
+        "anxiety": 8
+      },
+      "visibleRule": "Лучше реагирует на прозрачное объяснение и предварительную стоимость."
+    },
+    {
+      "id": "first_pet",
+      "label": "первое животное",
+      "unlockDay": 1,
+      "weight": 8,
+      "adjustments": {
+        "anxiety": 10,
+        "comprehension": -5
+      },
+      "visibleRule": "Задаёт больше бытовых вопросов и нуждается в проверке понимания."
+    },
+    {
+      "id": "shelter_origin",
+      "label": "животное из приюта",
+      "unlockDay": 3,
+      "weight": 6,
+      "adjustments": {},
+      "visibleRule": "История профилактики и контактов может быть неполной."
+    },
+    {
+      "id": "group_contact",
+      "label": "групповой контакт",
+      "unlockDay": 3,
+      "weight": 7,
+      "adjustments": {},
+      "visibleRule": "Добавляет гостиницу, площадку, выставку или передержку."
+    },
+    {
+      "id": "recent_household_change",
+      "label": "недавние изменения дома",
+      "unlockDay": 3,
+      "weight": 6,
+      "adjustments": {
+        "anxiety": 4
+      },
+      "visibleRule": "Добавляет переезд, нового питомца, лоток или ремонт как возможный фактор."
+    },
+    {
+      "id": "delayed_presentation",
+      "label": "обратился с задержкой",
+      "unlockDay": 4,
+      "weight": 5,
+      "adjustments": {
+        "anxiety": 8,
+        "trust": -2
+      },
+      "visibleRule": "Причина задержки должна быть названа: недооценка, график, деньги или надежда на улучшение."
+    },
+    {
+      "id": "owner_video_available",
+      "label": "есть видеозапись симптома",
+      "unlockDay": 2,
+      "weight": 5,
+      "adjustments": {
+        "observation": 8
+      },
+      "visibleRule": "Открывает действие просмотра видео, но не заменяет осмотр."
+    },
+    {
+      "id": "accident_shock",
+      "label": "владелец после несчастного случая",
+      "unlockDay": 4,
+      "weight": 4,
+      "adjustments": {
+        "anxiety": 18,
+        "comprehension": -8
+      },
+      "visibleRule": "Требует коротких инструкций и повторения маршрута."
+    },
+    {
+      "id": "outdoor_cat",
+      "label": "кошка гуляет на улице",
+      "unlockDay": 5,
+      "weight": 5,
+      "adjustments": {},
+      "visibleRule": "Повышает вероятность укусов и неполного анамнеза травмы."
+    },
+    {
+      "id": "athletic_owner",
+      "label": "владелец склонен проверять нагрузкой",
+      "unlockDay": 3,
+      "weight": 4,
+      "adjustments": {
+        "adherence": -6
+      },
+      "visibleRule": "Может предлагать “проверить лапу прогулкой”; врач должен объяснить ограничение нагрузки."
+    }
+  ]
+}

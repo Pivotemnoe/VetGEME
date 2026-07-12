@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 2,
+  "lines": [
+    {
+      "id": "ask_worst",
+      "source": "owner_history",
+      "state": "anxious",
+      "text": "«Скажите прямо: какой самый опасный вариант вы сейчас исключаете?»"
+    },
+    {
+      "id": "repeat_plan",
+      "source": "owner_history",
+      "state": "anxious",
+      "text": "«Можно я повторю план своими словами, чтобы ничего не перепутать?»"
+    },
+    {
+      "id": "fear_delay",
+      "source": "owner_history",
+      "state": "anxious",
+      "text": "«Я боюсь потерять время. Как понять, что ждать уже нельзя?»"
+    },
+    {
+      "id": "needs_number",
+      "source": "owner_history",
+      "state": "anxious",
+      "text": "«Назовите, пожалуйста, конкретный срок контроля, иначе я буду проверять его каждый час»."
+    }
+  ]
+}

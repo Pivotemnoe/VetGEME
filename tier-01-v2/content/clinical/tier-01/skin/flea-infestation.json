@@ -1,0 +1,768 @@
+{
+  "schemaVersion": 2,
+  "id": "SKIN_FLEA_INFESTATION",
+  "family": "skin",
+  "titleForDeveloper": "Блошиная инвазия",
+  "preliminaryDiagnosisLabel": "Блошиная инвазия",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 1,
+  "severity": "routine",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "flea_comb"
+  ],
+  "requiredActions": [
+    "general_exam",
+    "skin_exam",
+    "flea_comb_test"
+  ],
+  "safeAlternatives": [
+    "scheduled_recheck"
+  ],
+  "workload": 1.0,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«Питомец постоянно чешется, а в шерсти появились мелкие чёрные точки»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Последнюю неделю животное беспокоится и кусает себя в области спины»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Он живёт дома, поэтому владелец уверен, что блох быть не может»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_onset",
+      "buttonText": "Когда начался зуд?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_itch_duration"
+      ],
+      "answers": [
+        {
+          "id": "question_onset_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Около недели назад, постепенно стал сильнее».",
+          "revealsFactIds": [
+            "fact_itch_duration"
+          ]
+        },
+        {
+          "id": "question_onset_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Около недели назад, постепенно стал сильнее».",
+          "revealsFactIds": [
+            "fact_itch_duration"
+          ]
+        },
+        {
+          "id": "question_onset_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Несколько дней назад, точнее не скажу».",
+          "revealsFactIds": [
+            "fact_itch_duration"
+          ]
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Неделю назад, а сейчас он чешется даже ночью. Я боюсь, что кожа вся воспалится».",
+          "revealsFactIds": [
+            "fact_itch_duration"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_location",
+      "buttonText": "Где животное чешется сильнее всего?",
+      "category": "skin",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_caudal_itch"
+      ],
+      "answers": [
+        {
+          "id": "question_location_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Больше всего на спине, около основания хвоста и на задних лапах».",
+          "revealsFactIds": [
+            "fact_caudal_itch"
+          ]
+        },
+        {
+          "id": "question_location_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Больше всего на спине, около основания хвоста и на задних лапах».",
+          "revealsFactIds": [
+            "fact_caudal_itch"
+          ]
+        },
+        {
+          "id": "question_location_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Вроде спина и задняя часть тела, но чешется понемногу везде».",
+          "revealsFactIds": [
+            "fact_caudal_itch"
+          ]
+        },
+        {
+          "id": "question_location_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Особенно сильно у хвоста, и я уже переживаю из-за расчёсов».",
+          "revealsFactIds": [
+            "fact_caudal_itch"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_prevention",
+      "buttonText": "Когда проводили последнюю обработку от блох и клещей?",
+      "category": "prevention",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_prevention_overdue"
+      ],
+      "answers": [
+        {
+          "id": "question_prevention_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Четыре месяца назад. Срок следующей обработки пропустили».",
+          "revealsFactIds": [
+            "fact_prevention_overdue"
+          ]
+        },
+        {
+          "id": "question_prevention_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Четыре месяца назад. Срок следующей обработки пропустили».",
+          "revealsFactIds": [
+            "fact_prevention_overdue"
+          ]
+        },
+        {
+          "id": "question_prevention_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Давно, возможно ещё весной. Название средства не помню».",
+          "revealsFactIds": [
+            "fact_prevention_overdue"
+          ]
+        },
+        {
+          "id": "question_prevention_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Мы просрочили обработку, и теперь я переживаю, что сами допустили проблему».",
+          "revealsFactIds": [
+            "fact_prevention_overdue"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Изменились ли аппетит, активность или сон?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_systemically_stable"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит и активность обычные, но из-за зуда хуже спит».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит и активность обычные, но из-за зуда хуже спит».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Ест нормально. Ночью, кажется, чешется чаще».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Ест, но почти не отдыхает из-за зуда, и это меня тревожит».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_other_animals",
+      "buttonText": "Есть ли дома другие животные и обработаны ли они?",
+      "category": "contacts",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_contact_animals"
+      ],
+      "answers": [
+        {
+          "id": "question_other_animals_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Есть ещё кошка, её в этот сезон не обрабатывали».",
+          "revealsFactIds": [
+            "fact_contact_animals"
+          ]
+        },
+        {
+          "id": "question_other_animals_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Есть ещё кошка, её в этот сезон не обрабатывали».",
+          "revealsFactIds": [
+            "fact_contact_animals"
+          ]
+        },
+        {
+          "id": "question_other_animals_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Есть второе животное. Когда его обрабатывали, не помню».",
+          "revealsFactIds": [
+            "fact_contact_animals"
+          ]
+        },
+        {
+          "id": "question_other_animals_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Есть ещё собака, и я боюсь, что придётся лечить сразу всех».",
+          "revealsFactIds": [
+            "fact_contact_animals"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_environment",
+      "buttonText": "Где животное бывает кроме квартиры?",
+      "category": "exposure",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_environment_exposure"
+      ],
+      "answers": [
+        {
+          "id": "question_environment_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ежедневно гуляет во дворе и недавно был на даче».",
+          "revealsFactIds": [
+            "fact_environment_exposure"
+          ]
+        },
+        {
+          "id": "question_environment_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ежедневно гуляет во дворе и недавно был на даче».",
+          "revealsFactIds": [
+            "fact_environment_exposure"
+          ]
+        },
+        {
+          "id": "question_environment_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Иногда выходит в подъезд и ездит на дачу».",
+          "revealsFactIds": [
+            "fact_environment_exposure"
+          ]
+        },
+        {
+          "id": "question_environment_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«На улицу почти не выходит, но недавно мы были на даче, и я теперь переживаю из-за этого».",
+          "revealsFactIds": [
+            "fact_environment_exposure"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже предпринимали дома?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничем не лечили, только вычесали шерсть обычной расчёской».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничем не лечили, только вычесали шерсть обычной расчёской».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кажется, мыли шампунем, но каким — не помню».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел срочно обработать, но решил сначала уточнить, какое средство подходит».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "treated_only_one_pet",
+        "washed_with_new_shampoo",
+        "double_dose"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Слизистые оболочки розовые и влажные."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Выраженного системного ухудшения нет; основная проблема — зуд."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "В шерсти обнаружены живые блохи и мелкие тёмные частицы."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "В области поясницы и основания хвоста имеются поверхностные расчёсы."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Глубоких мокнущих поражений и выраженного гнойного воспаления нет."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Кожа умеренно раздражена вследствие расчёсывания."
+      }
+    ]
+  },
+  "sampleActions": [
+    {
+      "id": "flea_comb_sample",
+      "label": "Провести вычёсывание блошиным гребнем",
+      "source": "doctor_interpretation",
+      "requires": [
+        "skin_exam"
+      ],
+      "result": {
+        "source": "diagnostic_test",
+        "text": "С шерсти собраны тёмные частицы и обнаружены живые блохи."
+      }
+    }
+  ],
+  "diagnosticTests": [
+    {
+      "id": "flea_dirt_test",
+      "label": "Проверка блошиных загрязнений",
+      "type": "bedside",
+      "source": "diagnostic_test",
+      "text": "После увлажнения тёмные частицы оставляют красновато-коричневый след, соответствующий переваренной крови.",
+      "requires": [
+        "flea_comb_test"
+      ],
+      "costVetcoins": 20,
+      "durationMinutes": 2
+    }
+  ],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "flea_infestation",
+      "source": "doctor_interpretation",
+      "label": "Блошиная инвазия",
+      "requires": [
+        "general_exam",
+        "skin_exam",
+        "flea_comb_test"
+      ],
+      "feedback": "Живые блохи и характерные загрязнения обнаружены при осмотре и вычёсывании.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "flea_allergy",
+      "source": "doctor_interpretation",
+      "label": "Блошиный аллергический дерматит",
+      "requires": [
+        "general_exam",
+        "skin_exam",
+        "flea_comb_test"
+      ],
+      "feedback": "Аллергическая реакция возможна, но в этом варианте преобладает обычная инвазия без выраженной аллергической картины.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "food_allergy",
+      "source": "doctor_interpretation",
+      "label": "Пищевая аллергия",
+      "requires": [
+        "general_exam",
+        "skin_exam"
+      ],
+      "feedback": "Найденные блохи дают более прямое объяснение текущего зуда.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "fungal_dermatitis",
+      "source": "doctor_interpretation",
+      "label": "Грибковый дерматит",
+      "requires": [
+        "general_exam",
+        "skin_exam"
+      ],
+      "feedback": "Нет характерной жирности, запаха и цитологического подтверждения грибкового поражения.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "full_flea_control",
+      "source": "doctor_interpretation",
+      "label": "Комплексный контроль блох",
+      "steps": [
+        "Провести подходящую обработку пациента по схеме клиники.",
+        "Одновременно обсудить обработку всех животных в доме.",
+        "Объяснить необходимость уборки мест отдыха и регулярного контроля.",
+        "Не удваивать дозу и не смешивать препараты без согласования."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль при сохранении зуда или появлении новых поражений кожи."
+      },
+      "worseningSigns": [
+        {
+          "id": "full_flea_control_w1",
+          "source": "doctor_interpretation",
+          "text": "вялость после обработки"
+        },
+        {
+          "id": "full_flea_control_w2",
+          "source": "doctor_interpretation",
+          "text": "рвота или неврологические симптомы после препарата"
+        },
+        {
+          "id": "full_flea_control_w3",
+          "source": "doctor_interpretation",
+          "text": "мокнущие или гнойные поражения кожи"
+        }
+      ]
+    },
+    {
+      "id": "patient_only",
+      "source": "doctor_interpretation",
+      "label": "Обработать только приведённое животное",
+      "steps": [
+        "Провести обработку только одного питомца без оценки остальных животных и среды."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Высок риск повторного заражения и повторного визита."
+      },
+      "worseningSigns": [
+        {
+          "id": "patient_only_w1",
+          "source": "doctor_interpretation",
+          "text": "продолжающийся зуд"
+        },
+        {
+          "id": "patient_only_w2",
+          "source": "doctor_interpretation",
+          "text": "появление симптомов у других животных"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "При осмотре обнаружены живые блохи и характерные блошиные загрязнения.",
+    "uncertain": "По одному визиту нельзя предсказать, насколько быстро исчезнет зуд и разовьётся ли вторичное воспаление кожи.",
+    "plan": "Объяснить обработку всех животных, домашней среды и контроль за состоянием кожи.",
+    "checkUnderstanding": "«Каких животных нужно обработать и почему одной обработки только этого питомца может быть недостаточно?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "резкое ухудшение после противопаразитарного средства"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "выраженная вялость"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "мокнущие или гнойные поражения кожи"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "бледность слизистых у маленького или ослабленного животного"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_contacts",
+      "source": "doctor_interpretation",
+      "text": "Другие необработанные животные поддерживают инвазию.",
+      "discoveryPaths": [
+        "question_other_animals"
+      ]
+    },
+    {
+      "id": "critical_product_safety",
+      "source": "doctor_interpretation",
+      "text": "Неправильное смешивание или удвоение средств может быть опасно.",
+      "discoveryPaths": [
+        "question_home_actions"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "budget_limited"
+  ],
+  "compatibleOwnerModifiers": [
+    "multi_pet_household",
+    "hidden_home_treatment",
+    "internet_diagnosis"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Он домашний. Блохи, видимо, пришли к нему сами, без записи»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Чёрные точки мы сначала приняли за крошки. Но крошки почему-то убегали»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": true,
+  "tutorialSequence": [
+    "history",
+    "general_exam",
+    "target_exam",
+    "sample",
+    "diagnostic_test",
+    "preliminary_diagnosis",
+    "explanation",
+    "plan",
+    "finish"
+  ]
+}

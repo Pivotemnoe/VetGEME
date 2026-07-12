@@ -1,0 +1,750 @@
+{
+  "schemaVersion": 2,
+  "id": "URINARY_LOWER_SIGNS",
+  "family": "urinary",
+  "titleForDeveloper": "Симптомы заболевания нижних мочевыводящих путей у кошки",
+  "preliminaryDiagnosisLabel": "Симптомы заболевания нижних мочевыводящих путей у кошки; обструкция не выявлена",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 3,
+  "severity": "priority",
+  "species": [
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [],
+  "requiredActions": [
+    "triage",
+    "general_exam",
+    "bladder_assessment",
+    "urination_history"
+  ],
+  "safeAlternatives": [
+    "staged_plan",
+    "scheduled_recheck"
+  ],
+  "workload": 1.5,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«Кошка часто садится в лоток и мочится маленькими порциями»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Кот начал мочиться мимо лотка, а владелец думает, что это поведение»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«В моче заметили розоватый оттенок, но животное остаётся активным»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_urine_amount",
+      "buttonText": "Выходит ли моча и в каком количестве?",
+      "category": "urinary",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_urine_present"
+      ],
+      "answers": [
+        {
+          "id": "question_urine_amount_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Моча выходит каждый раз, но небольшими порциями».",
+          "revealsFactIds": [
+            "fact_urine_present"
+          ]
+        },
+        {
+          "id": "question_urine_amount_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Моча выходит каждый раз, но небольшими порциями».",
+          "revealsFactIds": [
+            "fact_urine_present"
+          ]
+        },
+        {
+          "id": "question_urine_amount_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Что-то выходит, но точный объём не знаю».",
+          "revealsFactIds": [
+            "fact_urine_present"
+          ]
+        },
+        {
+          "id": "question_urine_amount_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Моча есть, пусть и по чуть-чуть. Я специально проверял лоток после каждого похода».",
+          "revealsFactIds": [
+            "fact_urine_present"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_last_normal",
+      "buttonText": "Когда было последнее нормальное мочеиспускание?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_recent_normal_urination"
+      ],
+      "answers": [
+        {
+          "id": "question_last_normal_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Сегодня утром был обычный по размеру комок, после этого порции стали меньше».",
+          "revealsFactIds": [
+            "fact_recent_normal_urination"
+          ]
+        },
+        {
+          "id": "question_last_normal_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Сегодня утром был обычный по размеру комок, после этого порции стали меньше».",
+          "revealsFactIds": [
+            "fact_recent_normal_urination"
+          ]
+        },
+        {
+          "id": "question_last_normal_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Наверное, утром. Точно не отслеживал».",
+          "revealsFactIds": [
+            "fact_recent_normal_urination"
+          ]
+        },
+        {
+          "id": "question_last_normal_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Утром ещё мочилась нормально, а затем стала ходить чаще».",
+          "revealsFactIds": [
+            "fact_recent_normal_urination"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_pain",
+      "buttonText": "Есть ли мяуканье, напряжение или болезненность в лотке?",
+      "category": "urinary",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_dysuria"
+      ],
+      "answers": [
+        {
+          "id": "question_pain_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Иногда мяукает и дольше обычного сидит в лотке».",
+          "revealsFactIds": [
+            "fact_dysuria"
+          ]
+        },
+        {
+          "id": "question_pain_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Иногда мяукает и дольше обычного сидит в лотке».",
+          "revealsFactIds": [
+            "fact_dysuria"
+          ]
+        },
+        {
+          "id": "question_pain_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Сидит долго, но мяукает не каждый раз».",
+          "revealsFactIds": [
+            "fact_dysuria"
+          ]
+        },
+        {
+          "id": "question_pain_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Иногда жалобно мяукает, и я боюсь, что ей очень больно».",
+          "revealsFactIds": [
+            "fact_dysuria"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Изменились ли аппетит, активность или появилась рвота?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_systemically_stable"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит и активность сохранены, рвоты нет».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит и активность сохранены, рвоты нет».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Вроде ведёт себя обычно, рвоту не видел».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Ест и двигается нормально, но я боюсь быстрого ухудшения».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_blood",
+      "buttonText": "Замечали ли кровь или розовый оттенок мочи?",
+      "category": "urinary",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_possible_hematuria"
+      ],
+      "answers": [
+        {
+          "id": "question_blood_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Один раз моча выглядела розоватой».",
+          "revealsFactIds": [
+            "fact_possible_hematuria"
+          ]
+        },
+        {
+          "id": "question_blood_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Один раз моча выглядела розоватой».",
+          "revealsFactIds": [
+            "fact_possible_hematuria"
+          ]
+        },
+        {
+          "id": "question_blood_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Возможно, был розовый оттенок, но наполнитель цветной».",
+          "revealsFactIds": [
+            "fact_possible_hematuria"
+          ]
+        },
+        {
+          "id": "question_blood_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Да, один маленький комок был розоватым, и это меня очень напугало».",
+          "revealsFactIds": [
+            "fact_possible_hematuria"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_environment",
+      "buttonText": "Были ли изменения дома, новый лоток, корм или стресс?",
+      "category": "environment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_recent_stress"
+      ],
+      "answers": [
+        {
+          "id": "question_environment_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Неделю назад переставили лоток и в доме появился новый кот».",
+          "revealsFactIds": [
+            "fact_recent_stress"
+          ]
+        },
+        {
+          "id": "question_environment_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Неделю назад переставили лоток и в доме появился новый кот».",
+          "revealsFactIds": [
+            "fact_recent_stress"
+          ]
+        },
+        {
+          "id": "question_environment_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Что-то менялось дома, кажется, наполнитель».",
+          "revealsFactIds": [
+            "fact_recent_stress"
+          ]
+        },
+        {
+          "id": "question_environment_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Появился новый кот, и я переживаю, что стресс вызвал проблему».",
+          "revealsFactIds": [
+            "fact_recent_stress"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже давали или меняли дома?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не давали, только поставили дополнительную миску с водой».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не давали, только поставили дополнительную миску с водой».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Дали половину человеческой таблетки от спазма, название не помню».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел дать лекарство из домашней аптечки, но решил сначала убедиться, что это безопасно».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "human_painkiller",
+        "unknown_human_medicine",
+        "changed_food_without_exam"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Кошка активна и контактна."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Слизистые оболочки розовые и влажные."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Рвоты, выраженной слабости и тяжёлого обезвоживания нет."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Мочевой пузырь небольшой или умеренно наполненный и не напряжённый."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "При осторожной пальпации отмечается умеренный дискомфорт, без выраженной реакции на сильно переполненный пузырь."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Признаков полной обструкции на момент осмотра не выявлено."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Для уточнения причины требуется поэтапная диагностика мочи и факторов среды, доступная на следующем этапе клиники или по направлению."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "lower_urinary_signs",
+      "source": "doctor_interpretation",
+      "label": "Симптомы заболевания нижних мочевыводящих путей у кошки; обструкция не выявлена",
+      "requires": [
+        "triage",
+        "general_exam",
+        "bladder_assessment",
+        "urination_history"
+      ],
+      "feedback": "Моча продолжает выделяться, общее состояние стабильное, а мочевой пузырь не переполнен и не напряжён.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "urethral_obstruction",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на обструкцию мочеиспускательного канала",
+      "requires": [
+        "triage",
+        "general_exam",
+        "bladder_assessment"
+      ],
+      "feedback": "Обструкцию всегда нужно исключать, но в этом варианте моча есть, недавно было нормальное мочеиспускание, а пузырь не напряжён.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "behavior_only",
+      "source": "doctor_interpretation",
+      "label": "Только поведенческое мочеиспускание вне лотка",
+      "requires": [
+        "general_exam",
+        "history"
+      ],
+      "feedback": "Частые попытки, малые порции и дискомфорт не позволяют объяснить всё только поведением.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "bacterial_cystitis_confirmed",
+      "source": "doctor_interpretation",
+      "label": "Подтверждённый бактериальный цистит",
+      "requires": [
+        "general_exam",
+        "history"
+      ],
+      "feedback": "Без исследования мочи бактериальную причину нельзя считать подтверждённой.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "staged_urinary_plan",
+      "source": "doctor_interpretation",
+      "label": "Поэтапный план при симптомах нижних мочевыводящих путей",
+      "steps": [
+        "Обсудить дальнейшее исследование мочи и причин симптомов.",
+        "Увеличить доступность воды и снизить управляемые стрессовые факторы.",
+        "Дать владельцу точную инструкцию по контролю объёма мочи.",
+        "Назначить ранний контроль, если симптомы сохраняются."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль в ближайшие 1–3 игровых дня; немедленно при исчезновении мочи или ухудшении."
+      },
+      "worseningSigns": [
+        {
+          "id": "staged_urinary_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "моча перестала выделяться"
+        },
+        {
+          "id": "staged_urinary_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "рвота"
+        },
+        {
+          "id": "staged_urinary_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "резкая вялость"
+        },
+        {
+          "id": "staged_urinary_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "напряжённый болезненный живот"
+        },
+        {
+          "id": "staged_urinary_plan_w5",
+          "source": "doctor_interpretation",
+          "text": "отказ от еды"
+        }
+      ]
+    },
+    {
+      "id": "behavior_only_plan",
+      "source": "doctor_interpretation",
+      "label": "Считать проблему только поведенческой",
+      "steps": [
+        "Изменить лоток, не оценивая мочеиспускание и не объясняя риск обструкции."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Существует риск пропустить ухудшение или обструкцию."
+      },
+      "worseningSigns": [
+        {
+          "id": "behavior_only_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "исчезновение мочи"
+        },
+        {
+          "id": "behavior_only_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "усиление боли"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Мочеиспускание болезненное и учащённое, но моча всё ещё выделяется, а пузырь не переполнен — признаков полной обструкции сейчас нет.",
+    "uncertain": "Причина симптомов без дальнейшего исследования не установлена; это не следует автоматически называть инфекцией или поведением.",
+    "plan": "Объяснить поэтапную диагностику, контроль объёма мочи, воду, стресс и признаки немедленного обращения.",
+    "checkUnderstanding": "«Как вы будете проверять, что моча действительно выходит, и при каком изменении сразу вернётесь?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "полное отсутствие мочи"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "повторная рвота"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "резкая вялость"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "напряжённый болезненный мочевой пузырь"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "отказ от еды"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_urine_present",
+      "source": "doctor_interpretation",
+      "text": "Наличие реальной мочи отличает этот вариант от полной обструкции.",
+      "discoveryPaths": [
+        "question_urine_amount",
+        "question_last_normal",
+        "bladder_assessment"
+      ]
+    },
+    {
+      "id": "critical_general",
+      "source": "doctor_interpretation",
+      "text": "Рвота и вялость повышают срочность.",
+      "discoveryPaths": [
+        "question_general_state",
+        "general_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "internet_confident",
+    "budget_limited"
+  ],
+  "compatibleOwnerModifiers": [
+    "first_pet",
+    "hidden_home_treatment",
+    "recent_household_change"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Мы решили, что он мстит за новый наполнитель. Теперь наполнитель оправдан, кот под подозрением меньше»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Комки в лотке я теперь фотографирую чаще, чем самого кота»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

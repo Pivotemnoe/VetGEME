@@ -1,0 +1,770 @@
+{
+  "schemaVersion": 2,
+  "id": "GI_REGURGITATION",
+  "family": "gastrointestinal",
+  "titleForDeveloper": "Подозрение на регургитацию",
+  "preliminaryDiagnosisLabel": "Подозрение на регургитацию",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 2,
+  "severity": "routine",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [],
+  "requiredActions": [
+    "general_exam",
+    "history",
+    "video_review",
+    "swallowing_assessment"
+  ],
+  "safeAlternatives": [
+    "staged_plan",
+    "referral_if_persistent"
+  ],
+  "workload": 1.25,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«Питомца рвёт почти сразу после еды, но владелец не замечает выраженных рвотных позывов»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Непереваренная еда выходит через несколько минут после кормления»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Владелец говорит, что это рвота, но на видео содержимое выходит пассивно»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_effort",
+      "buttonText": "Есть ли перед эпизодом тошнота, слюнотечение и сокращения живота?",
+      "category": "gastrointestinal",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_passive_expulsion"
+      ],
+      "answers": [
+        {
+          "id": "question_effort_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет. Содержимое выходит внезапно, без заметных сокращений живота».",
+          "revealsFactIds": [
+            "fact_passive_expulsion"
+          ]
+        },
+        {
+          "id": "question_effort_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет. Содержимое выходит внезапно, без заметных сокращений живота».",
+          "revealsFactIds": [
+            "fact_passive_expulsion"
+          ]
+        },
+        {
+          "id": "question_effort_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кажется, просто выходит. Я не замечал сильных позывов».",
+          "revealsFactIds": [
+            "fact_passive_expulsion"
+          ]
+        },
+        {
+          "id": "question_effort_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, он просто наклоняет голову, и еда выходит. Именно это меня пугает».",
+          "revealsFactIds": [
+            "fact_passive_expulsion"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_timing",
+      "buttonText": "Через сколько времени после еды это происходит?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_short_postprandial_interval"
+      ],
+      "answers": [
+        {
+          "id": "question_timing_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Обычно через пять-десять минут после кормления».",
+          "revealsFactIds": [
+            "fact_short_postprandial_interval"
+          ]
+        },
+        {
+          "id": "question_timing_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Обычно через пять-десять минут после кормления».",
+          "revealsFactIds": [
+            "fact_short_postprandial_interval"
+          ]
+        },
+        {
+          "id": "question_timing_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Почти сразу, наверное в течение пятнадцати минут».",
+          "revealsFactIds": [
+            "fact_short_postprandial_interval"
+          ]
+        },
+        {
+          "id": "question_timing_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Через несколько минут, поэтому я боюсь кормить его снова».",
+          "revealsFactIds": [
+            "fact_short_postprandial_interval"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_content",
+      "buttonText": "Как выглядит содержимое?",
+      "category": "gastrointestinal",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_undigested_food"
+      ],
+      "answers": [
+        {
+          "id": "question_content_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Непереваренная еда, иногда в форме вытянутого комка».",
+          "revealsFactIds": [
+            "fact_undigested_food"
+          ]
+        },
+        {
+          "id": "question_content_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Непереваренная еда, иногда в форме вытянутого комка».",
+          "revealsFactIds": [
+            "fact_undigested_food"
+          ]
+        },
+        {
+          "id": "question_content_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Похоже на почти целый корм, без жёлтой жидкости».",
+          "revealsFactIds": [
+            "fact_undigested_food"
+          ]
+        },
+        {
+          "id": "question_content_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Еда выглядит почти непереваренной, и это кажется очень ненормальным».",
+          "revealsFactIds": [
+            "fact_undigested_food"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_frequency",
+      "buttonText": "Как часто повторяются эпизоды?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_recurrent_regurgitation"
+      ],
+      "answers": [
+        {
+          "id": "question_frequency_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Три раза за последние два дня».",
+          "revealsFactIds": [
+            "fact_recurrent_regurgitation"
+          ]
+        },
+        {
+          "id": "question_frequency_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Три раза за последние два дня».",
+          "revealsFactIds": [
+            "fact_recurrent_regurgitation"
+          ]
+        },
+        {
+          "id": "question_frequency_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Несколько раз за пару дней».",
+          "revealsFactIds": [
+            "fact_recurrent_regurgitation"
+          ]
+        },
+        {
+          "id": "question_frequency_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Три раза за два дня, и я переживаю, что он начнёт худеть».",
+          "revealsFactIds": [
+            "fact_recurrent_regurgitation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_cough",
+      "buttonText": "Есть ли кашель, затруднение дыхания или выделения из носа?",
+      "category": "respiratory",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_respiratory_signs"
+      ],
+      "answers": [
+        {
+          "id": "question_cough_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Кашля и затруднённого дыхания нет».",
+          "revealsFactIds": [
+            "fact_no_respiratory_signs"
+          ]
+        },
+        {
+          "id": "question_cough_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Кашля и затруднённого дыхания нет».",
+          "revealsFactIds": [
+            "fact_no_respiratory_signs"
+          ]
+        },
+        {
+          "id": "question_cough_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кашля вроде не слышал».",
+          "revealsFactIds": [
+            "fact_no_respiratory_signs"
+          ]
+        },
+        {
+          "id": "question_cough_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Не кашляет, но я слежу, чтобы еда не попала в дыхательные пути».",
+          "revealsFactIds": [
+            "fact_no_respiratory_signs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_swallowing",
+      "buttonText": "Есть ли трудности при глотании воды или пищи?",
+      "category": "swallowing",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_swallowing_history"
+      ],
+      "answers": [
+        {
+          "id": "question_swallowing_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Глотает охотно, но часть пищи возвращается вскоре после еды».",
+          "revealsFactIds": [
+            "fact_swallowing_history"
+          ]
+        },
+        {
+          "id": "question_swallowing_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Глотает охотно, но часть пищи возвращается вскоре после еды».",
+          "revealsFactIds": [
+            "fact_swallowing_history"
+          ]
+        },
+        {
+          "id": "question_swallowing_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Ест быстро, про трудность глотания не скажу».",
+          "revealsFactIds": [
+            "fact_swallowing_history"
+          ]
+        },
+        {
+          "id": "question_swallowing_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Ест с аппетитом, но я боюсь, что пища не проходит нормально».",
+          "revealsFactIds": [
+            "fact_swallowing_history"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже меняли дома?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Начали давать меньшие порции, других действий не предпринимали».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Начали давать меньшие порции, других действий не предпринимали».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Пробовали кормить реже, но точного режима не было».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел резко ограничить воду и еду, но решил сначала получить план».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "restricted_water",
+        "changed_food_without_exam",
+        "human_painkiller"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Слизистые оболочки розовые и влажные."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Выраженного обезвоживания нет."
+      },
+      {
+        "id": "general_5",
+        "source": "physical_exam",
+        "text": "Дыхание спокойное, явных признаков аспирационного осложнения нет."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "В ротовой полости не обнаружено очевидного инородного тела."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Глотание небольшого количества воды во время наблюдения возможно."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Болезненности живота не выявлено."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Ключевое различие между рвотой и регургитацией устанавливается по анамнезу и видеозаписи эпизода."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [
+    {
+      "id": "owner_video_review",
+      "label": "Просмотр видеозаписи эпизода",
+      "type": "media_review",
+      "source": "diagnostic_test",
+      "text": "На видео видно пассивное выхождение непереваренной пищи без выраженных рвотных движений живота.",
+      "requires": [
+        "history"
+      ],
+      "durationMinutes": 2
+    }
+  ],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "regurgitation",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на регургитацию",
+      "requires": [
+        "general_exam",
+        "history",
+        "video_review",
+        "swallowing_assessment"
+      ],
+      "feedback": "Пассивный характер, короткий интервал после еды и видеозапись поддерживают регургитацию.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "vomiting",
+      "source": "doctor_interpretation",
+      "label": "Рвота",
+      "requires": [
+        "general_exam",
+        "history"
+      ],
+      "feedback": "Нет характерных рвотных позывов и сокращений живота, а содержимое непереваренное и выходит пассивно.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "cough",
+      "source": "doctor_interpretation",
+      "label": "Кашель с отхаркиванием",
+      "requires": [
+        "general_exam",
+        "history"
+      ],
+      "feedback": "Владелец и видео не описывают кашлевого толчка или респираторного события.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "dietary_indiscretion",
+      "source": "doctor_interpretation",
+      "label": "Пищевая погрешность",
+      "requires": [
+        "general_exam",
+        "history"
+      ],
+      "feedback": "Пищевая погрешность не объясняет повторное пассивное возвращение непереваренной пищи сразу после еды.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "staged_regurgitation_plan",
+      "source": "doctor_interpretation",
+      "label": "Поэтапная оценка регургитации",
+      "steps": [
+        "Зафиксировать частоту и видеозаписи эпизодов.",
+        "Согласовать временный безопасный режим кормления до следующего этапа диагностики.",
+        "При повторении обсудить визуальную диагностику пищевода и грудной клетки.",
+        "Контролировать кашель, температуру и дыхание из-за риска аспирационного осложнения."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Повторный визит в ближайший установленный срок; раньше при кашле или нарушении дыхания."
+      },
+      "worseningSigns": [
+        {
+          "id": "staged_regurgitation_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "кашель после эпизода"
+        },
+        {
+          "id": "staged_regurgitation_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "учащённое или затруднённое дыхание"
+        },
+        {
+          "id": "staged_regurgitation_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "лихорадка"
+        },
+        {
+          "id": "staged_regurgitation_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "невозможность удерживать воду"
+        },
+        {
+          "id": "staged_regurgitation_plan_w5",
+          "source": "doctor_interpretation",
+          "text": "слабость"
+        }
+      ]
+    },
+    {
+      "id": "treat_as_vomiting",
+      "source": "doctor_interpretation",
+      "label": "Лечить как обычную рвоту без уточнения механизма",
+      "steps": [
+        "Игнорировать пассивный характер эпизода и не планировать дальнейшую оценку пищевода."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Вероятен возврат без решения основной проблемы."
+      },
+      "worseningSigns": [
+        {
+          "id": "treat_as_vomiting_w1",
+          "source": "doctor_interpretation",
+          "text": "сохранение эпизодов"
+        },
+        {
+          "id": "treat_as_vomiting_w2",
+          "source": "doctor_interpretation",
+          "text": "потеря массы"
+        },
+        {
+          "id": "treat_as_vomiting_w3",
+          "source": "doctor_interpretation",
+          "text": "кашель"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "По описанию и видео пища выходит пассивно, без типичных рвотных движений, поэтому это больше похоже на регургитацию.",
+    "uncertain": "На первом приёме причина регургитации не установлена; при повторении требуется дальнейшая диагностика.",
+    "plan": "Объяснить наблюдение, безопасный временный режим и признаки возможного попадания содержимого в дыхательные пути.",
+    "checkUnderstanding": "«Чем увиденный эпизод отличается от рвоты и какие дыхательные признаки потребуют срочного обращения?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "кашель после эпизода"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "учащённое или затруднённое дыхание"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "лихорадка"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "невозможность удерживать воду"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "быстрая потеря массы"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_passive",
+      "source": "doctor_interpretation",
+      "text": "Пассивный характер эпизода отличает регургитацию от рвоты.",
+      "discoveryPaths": [
+        "question_effort",
+        "video_review"
+      ]
+    },
+    {
+      "id": "critical_aspiration",
+      "source": "doctor_interpretation",
+      "text": "Кашель и нарушение дыхания могут означать аспирационное осложнение.",
+      "discoveryPaths": [
+        "question_cough",
+        "general_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "internet_confident"
+  ],
+  "compatibleOwnerModifiers": [
+    "owner_video_available",
+    "hidden_home_treatment",
+    "first_pet"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Он не рвёт — он как будто возвращает корм по гарантии»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Еда выходит почти в том же виде. Можно узнать каждую гранулу лично»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

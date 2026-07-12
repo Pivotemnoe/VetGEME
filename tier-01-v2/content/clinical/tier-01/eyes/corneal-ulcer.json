@@ -1,0 +1,749 @@
+{
+  "schemaVersion": 2,
+  "id": "EYE_CORNEAL_ULCER",
+  "family": "eyes",
+  "titleForDeveloper": "Подозрение на язву роговицы",
+  "preliminaryDiagnosisLabel": "Подозрение на язву роговицы",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 4,
+  "severity": "urgent",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "fluorescein"
+  ],
+  "requiredActions": [
+    "triage",
+    "general_exam",
+    "eye_exam",
+    "fluorescein_test",
+    "urgent_plan"
+  ],
+  "safeAlternatives": [
+    "urgent_referral"
+  ],
+  "workload": 1.75,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«Животное держит глаз закрытым, избегает света и постоянно трёт морду»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«После драки или прогулки глаз резко заболел и начал сильно слезиться»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«На роговице заметили мутное пятно, питомец не даёт открыть глаз»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_onset",
+      "buttonText": "Когда началась боль и насколько внезапно?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_sudden_pain"
+      ],
+      "answers": [
+        {
+          "id": "question_onset_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Началась резко вчера вечером после прогулки».",
+          "revealsFactIds": [
+            "fact_sudden_pain"
+          ]
+        },
+        {
+          "id": "question_onset_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Началась резко вчера вечером после прогулки».",
+          "revealsFactIds": [
+            "fact_sudden_pain"
+          ]
+        },
+        {
+          "id": "question_onset_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Вчера уже щурился, точное начало не знаю».",
+          "revealsFactIds": [
+            "fact_sudden_pain"
+          ]
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Резко начал закрывать глаз вчера, и сегодня боль явно сильнее».",
+          "revealsFactIds": [
+            "fact_sudden_pain"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_trauma",
+      "buttonText": "Могли быть ветка, коготь, драка или инородное тело?",
+      "category": "risk",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_possible_trauma"
+      ],
+      "answers": [
+        {
+          "id": "question_trauma_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Перед этим пробежал через кусты и вскрикнул».",
+          "revealsFactIds": [
+            "fact_possible_trauma"
+          ]
+        },
+        {
+          "id": "question_trauma_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Перед этим пробежал через кусты и вскрикнул».",
+          "revealsFactIds": [
+            "fact_possible_trauma"
+          ]
+        },
+        {
+          "id": "question_trauma_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Мог задеть ветку, я не видел точно».",
+          "revealsFactIds": [
+            "fact_possible_trauma"
+          ]
+        },
+        {
+          "id": "question_trauma_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Он нырнул в кусты, и сразу после этого начал тереть глаз».",
+          "revealsFactIds": [
+            "fact_possible_trauma"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_pain",
+      "buttonText": "Постоянно ли щурится и избегает света?",
+      "category": "eyes",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_severe_ocular_pain"
+      ],
+      "answers": [
+        {
+          "id": "question_pain_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Да, глаз почти постоянно закрыт, на свет реагирует болезненно».",
+          "revealsFactIds": [
+            "fact_severe_ocular_pain"
+          ]
+        },
+        {
+          "id": "question_pain_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Да, глаз почти постоянно закрыт, на свет реагирует болезненно».",
+          "revealsFactIds": [
+            "fact_severe_ocular_pain"
+          ]
+        },
+        {
+          "id": "question_pain_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Часто держит закрытым, особенно при ярком свете».",
+          "revealsFactIds": [
+            "fact_severe_ocular_pain"
+          ]
+        },
+        {
+          "id": "question_pain_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Почти не открывает глаз и прячется от света, я боюсь потери зрения».",
+          "revealsFactIds": [
+            "fact_severe_ocular_pain"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_vision",
+      "buttonText": "Ориентируется ли животное и замечает ли предметы этой стороной?",
+      "category": "eyes",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_vision_not_reliably_assessed"
+      ],
+      "answers": [
+        {
+          "id": "question_vision_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ориентируется, но боль мешает нормально оценить зрение».",
+          "revealsFactIds": [
+            "fact_vision_not_reliably_assessed"
+          ]
+        },
+        {
+          "id": "question_vision_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ориентируется, но боль мешает нормально оценить зрение».",
+          "revealsFactIds": [
+            "fact_vision_not_reliably_assessed"
+          ]
+        },
+        {
+          "id": "question_vision_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Ходит нормально, но глаз почти закрыт».",
+          "revealsFactIds": [
+            "fact_vision_not_reliably_assessed"
+          ]
+        },
+        {
+          "id": "question_vision_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Не сталкивается с предметами, но я не могу понять, видит ли больным глазом».",
+          "revealsFactIds": [
+            "fact_vision_not_reliably_assessed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_discharge",
+      "buttonText": "Какие выделения появились?",
+      "category": "eyes",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_lacrimation"
+      ],
+      "answers": [
+        {
+          "id": "question_discharge_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Сильное слезотечение, немного слизистых выделений».",
+          "revealsFactIds": [
+            "fact_lacrimation"
+          ]
+        },
+        {
+          "id": "question_discharge_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Сильное слезотечение, немного слизистых выделений».",
+          "revealsFactIds": [
+            "fact_lacrimation"
+          ]
+        },
+        {
+          "id": "question_discharge_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Глаз мокрый, выделения в основном прозрачные».",
+          "revealsFactIds": [
+            "fact_lacrimation"
+          ]
+        },
+        {
+          "id": "question_discharge_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Слёзы текут постоянно, гноя пока не видел».",
+          "revealsFactIds": [
+            "fact_lacrimation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_previous_eye",
+      "buttonText": "Были ли болезни или операции на этом глазу?",
+      "category": "history",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_previous_eye_history"
+      ],
+      "answers": [
+        {
+          "id": "question_previous_eye_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Раньше проблем с глазами не было».",
+          "revealsFactIds": [
+            "fact_no_previous_eye_history"
+          ]
+        },
+        {
+          "id": "question_previous_eye_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Раньше проблем с глазами не было».",
+          "revealsFactIds": [
+            "fact_no_previous_eye_history"
+          ]
+        },
+        {
+          "id": "question_previous_eye_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Не помню серьёзных проблем».",
+          "revealsFactIds": [
+            "fact_no_previous_eye_history"
+          ]
+        },
+        {
+          "id": "question_previous_eye_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, поэтому резкая боль особенно пугает».",
+          "revealsFactIds": [
+            "fact_no_previous_eye_history"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже капали или промывали?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не капали, не давали тереть глаз».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не капали, не давали тереть глаз».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Один раз промыли водой».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел использовать старые глазные капли, но побоялся ухудшить повреждение».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "human_eye_drops",
+        "old_eye_drops",
+        "tea_eye_wash"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное, но животное испытывает выраженную глазную боль."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Слизистые оболочки розовые и влажные."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Состояние требует приоритетного осмотра глаза без ожидания обычной очереди."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Поражённый глаз выраженно прищурен, присутствует сильное слезотечение."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "На поверхности роговицы виден локальный участок помутнения и неровности."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Конъюнктива покрасневшая."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Грубое давление и длительные манипуляции следует ограничить из-за боли."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [
+    {
+      "id": "fluorescein_test",
+      "label": "Флуоресцеиновая проба",
+      "type": "bedside",
+      "source": "diagnostic_test",
+      "text": "Краситель фиксируется на ограниченном участке роговицы, что соответствует поверхностному дефекту эпителия.",
+      "requires": [
+        "eye_exam"
+      ],
+      "costVetcoins": 50,
+      "durationMinutes": 3
+    }
+  ],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "corneal_ulcer",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на язву роговицы",
+      "requires": [
+        "triage",
+        "general_exam",
+        "eye_exam",
+        "fluorescein_test"
+      ],
+      "feedback": "Выраженная боль и положительная флуоресцеиновая проба подтверждают дефект роговицы.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "conjunctivitis",
+      "source": "doctor_interpretation",
+      "label": "Неосложнённый конъюнктивит",
+      "requires": [
+        "general_exam",
+        "eye_exam"
+      ],
+      "feedback": "Сильная боль и положительная флуоресцеиновая проба не позволяют ограничиться диагнозом конъюнктивита.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "allergic_eye",
+      "source": "doctor_interpretation",
+      "label": "Аллергическое раздражение глаза",
+      "requires": [
+        "general_exam",
+        "eye_exam"
+      ],
+      "feedback": "Аллергия не объясняет локальный дефект роговицы.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "observe_only",
+      "source": "doctor_interpretation",
+      "label": "Наблюдать дома без защиты глаза",
+      "requires": [
+        "eye_exam"
+      ],
+      "feedback": "Оставлять болезненный дефект роговицы без целевого плана небезопасно.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": true
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "urgent_eye_plan",
+      "source": "doctor_interpretation",
+      "label": "Срочный план при язве роговицы",
+      "steps": [
+        "Защитить глаз от расчёсывания.",
+        "Начать согласованный местный план, безопасный при дефекте роговицы.",
+        "Оценить глубину и необходимость срочного направления к офтальмологу.",
+        "Назначить ранний контроль заживления."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": false,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль в ближайшие 24–48 игровых часов или раньше при ухудшении."
+      },
+      "worseningSigns": [
+        {
+          "id": "urgent_eye_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "усиление боли"
+        },
+        {
+          "id": "urgent_eye_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "увеличение помутнения"
+        },
+        {
+          "id": "urgent_eye_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "углубление дефекта"
+        },
+        {
+          "id": "urgent_eye_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "резкое снижение зрения"
+        },
+        {
+          "id": "urgent_eye_plan_w5",
+          "source": "doctor_interpretation",
+          "text": "выделение густого гноя"
+        }
+      ]
+    },
+    {
+      "id": "urgent_referral",
+      "source": "doctor_interpretation",
+      "label": "Срочное направление при глубоком или осложнённом дефекте",
+      "steps": [
+        "Не задерживать пациента ради необязательных действий.",
+        "Связаться с клиникой, имеющей офтальмологические возможности.",
+        "Передать результат флуоресцеиновой пробы и сведения о травме."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": false,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль определяется принимающей клиникой."
+      },
+      "worseningSigns": [
+        {
+          "id": "urgent_referral_w1",
+          "source": "doctor_interpretation",
+          "text": "быстрое ухудшение"
+        },
+        {
+          "id": "urgent_referral_w2",
+          "source": "doctor_interpretation",
+          "text": "признаки угрозы целостности глаза"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "На роговице есть болезненный поверхностный дефект, который окрашивается флуоресцеином.",
+    "uncertain": "Глубину и скорость заживления нужно оценивать в динамике; некоторые язвы могут быстро осложняться.",
+    "plan": "Объяснить защиту глаза, срочный план, запрет на случайные старые капли и ранний контроль.",
+    "checkUnderstanding": "«Почему глаз нужно контролировать быстро и какие изменения потребуют немедленного повторного обращения?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "усиление боли"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "увеличение помутнения"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "углубление или расширение дефекта"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "резкое снижение зрения"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "признаки нарушения целостности глаза"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_fluorescein",
+      "source": "doctor_interpretation",
+      "text": "Положительная проба подтверждает дефект роговицы.",
+      "discoveryPaths": [
+        "fluorescein_test"
+      ]
+    },
+    {
+      "id": "critical_pain",
+      "source": "doctor_interpretation",
+      "text": "Выраженная боль делает случай приоритетным.",
+      "discoveryPaths": [
+        "question_pain",
+        "eye_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "first_pet",
+    "past_bad_experience"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": false,
+    "maximumLevel": 0,
+    "lines": []
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": true,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

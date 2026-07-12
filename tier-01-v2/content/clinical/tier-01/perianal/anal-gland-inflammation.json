@@ -1,0 +1,735 @@
+{
+  "schemaVersion": 2,
+  "id": "PERIANAL_INFLAMMATION",
+  "family": "perianal",
+  "titleForDeveloper": "Воспаление параанальной железы",
+  "preliminaryDiagnosisLabel": "Воспаление параанальной железы; возможен абсцесс",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 5,
+  "severity": "priority",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [],
+  "requiredActions": [
+    "triage",
+    "general_exam",
+    "perianal_exam",
+    "pain_assessment"
+  ],
+  "safeAlternatives": [
+    "procedural_plan",
+    "urgent_referral"
+  ],
+  "workload": 1.5,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«Под хвостом появилась болезненная припухлость, питомец не даёт садиться и вылизывает эту область»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Из области рядом с анусом появились кровянистые или гнойные выделения»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«После нескольких дней “езды” по полу животное стало вялым и болезненным»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_onset",
+      "buttonText": "Когда появилась припухлость и как быстро выросла?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_progressive_swelling"
+      ],
+      "answers": [
+        {
+          "id": "question_onset_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Небольшую припухлость заметили два дня назад, сегодня она стала больше».",
+          "revealsFactIds": [
+            "fact_progressive_swelling"
+          ]
+        },
+        {
+          "id": "question_onset_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Небольшую припухлость заметили два дня назад, сегодня она стала больше».",
+          "revealsFactIds": [
+            "fact_progressive_swelling"
+          ]
+        },
+        {
+          "id": "question_onset_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Пару дней назад, сейчас выглядит крупнее».",
+          "revealsFactIds": [
+            "fact_progressive_swelling"
+          ]
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«За два дня припухлость заметно увеличилась, и я боюсь, что она прорвётся».",
+          "revealsFactIds": [
+            "fact_progressive_swelling"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_pain",
+      "buttonText": "Насколько выражена боль?",
+      "category": "perianal",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_severe_local_pain"
+      ],
+      "answers": [
+        {
+          "id": "question_pain_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Скулит при попытке сесть и резко реагирует на прикосновение».",
+          "revealsFactIds": [
+            "fact_severe_local_pain"
+          ]
+        },
+        {
+          "id": "question_pain_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Скулит при попытке сесть и резко реагирует на прикосновение».",
+          "revealsFactIds": [
+            "fact_severe_local_pain"
+          ]
+        },
+        {
+          "id": "question_pain_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Садится осторожно и не даёт трогать».",
+          "revealsFactIds": [
+            "fact_severe_local_pain"
+          ]
+        },
+        {
+          "id": "question_pain_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Он почти не садится и вздрагивает от любого прикосновения».",
+          "revealsFactIds": [
+            "fact_severe_local_pain"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_discharge",
+      "buttonText": "Есть ли кровь, гной или отверстие в коже?",
+      "category": "red_flags",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_purulent_discharge"
+      ],
+      "answers": [
+        {
+          "id": "question_discharge_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Сегодня появилось небольшое отверстие с кровянисто-гнойными выделениями».",
+          "revealsFactIds": [
+            "fact_purulent_discharge"
+          ]
+        },
+        {
+          "id": "question_discharge_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Сегодня появилось небольшое отверстие с кровянисто-гнойными выделениями».",
+          "revealsFactIds": [
+            "fact_purulent_discharge"
+          ]
+        },
+        {
+          "id": "question_discharge_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Есть влажное пятно и неприятный запах, состав не рассматривал».",
+          "revealsFactIds": [
+            "fact_purulent_discharge"
+          ]
+        },
+        {
+          "id": "question_discharge_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Появились гнойные выделения, и я сразу приехал».",
+          "revealsFactIds": [
+            "fact_purulent_discharge"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Есть ли вялость, отказ от еды или температура?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_systemic_change"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Стал тише и ест хуже, но воду пьёт».",
+          "revealsFactIds": [
+            "fact_systemic_change"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Стал тише и ест хуже, но воду пьёт».",
+          "revealsFactIds": [
+            "fact_systemic_change"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Немного вялый, аппетит снизился».",
+          "revealsFactIds": [
+            "fact_systemic_change"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Почти не ест и лежит, я боюсь распространения инфекции».",
+          "revealsFactIds": [
+            "fact_systemic_change"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_stool",
+      "buttonText": "Была ли боль при дефекации или изменение стула?",
+      "category": "gastrointestinal",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_pain_defecation"
+      ],
+      "answers": [
+        {
+          "id": "question_stool_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«При дефекации скулит, стул мягкий».",
+          "revealsFactIds": [
+            "fact_pain_defecation"
+          ]
+        },
+        {
+          "id": "question_stool_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«При дефекации скулит, стул мягкий».",
+          "revealsFactIds": [
+            "fact_pain_defecation"
+          ]
+        },
+        {
+          "id": "question_stool_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Ходит в туалет осторожнее, стул вроде обычный».",
+          "revealsFactIds": [
+            "fact_pain_defecation"
+          ]
+        },
+        {
+          "id": "question_stool_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Боится дефекации, и я переживаю, что будет терпеть».",
+          "revealsFactIds": [
+            "fact_pain_defecation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_previous",
+      "buttonText": "Были ли раньше проблемы с железами?",
+      "category": "history",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_recurrence"
+      ],
+      "answers": [
+        {
+          "id": "question_previous_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Переполнение было дважды, но воспаления раньше не было».",
+          "revealsFactIds": [
+            "fact_recurrence"
+          ]
+        },
+        {
+          "id": "question_previous_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Переполнение было дважды, но воспаления раньше не было».",
+          "revealsFactIds": [
+            "fact_recurrence"
+          ]
+        },
+        {
+          "id": "question_previous_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Что-то опорожняли в клинике, когда — не помню».",
+          "revealsFactIds": [
+            "fact_recurrence"
+          ]
+        },
+        {
+          "id": "question_previous_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Да, проблемы повторяются, и я боюсь нового абсцесса».",
+          "revealsFactIds": [
+            "fact_recurrence"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что пытались делать дома?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не выдавливали, только не даём разлизывать».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не выдавливали, только не даём разлизывать».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Пытались надавить, после этого стало больнее».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел выдавить железу сам, но он закричал, и я остановился».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "home_anal_gland_expression",
+        "unknown_human_ointment",
+        "vodka_on_wound"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Животное испытывает выраженную локальную боль."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела умеренно повышена или находится на верхней границе нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Аппетит снижен, активность уменьшена."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Состояние требует приоритетного лечения, а не обычной косметической процедуры."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Рядом с анусом имеется болезненная припухлость одной параанальной железы."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Кожа покрасневшая и горячая; возможно небольшое отверстие с гнойно-кровянистыми выделениями."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Пальпация вызывает резкую боль."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Картина соответствует воспалению и возможному формированию или вскрытию абсцесса."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "anal_gland_inflammation",
+      "source": "doctor_interpretation",
+      "label": "Воспаление параанальной железы; возможен абсцесс",
+      "requires": [
+        "triage",
+        "general_exam",
+        "perianal_exam",
+        "pain_assessment"
+      ],
+      "feedback": "Болезненная припухлость, воспаление и гнойные выделения соответствуют воспалению или абсцессу железы.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "impaction",
+      "source": "doctor_interpretation",
+      "label": "Простое переполнение параанальных желёз",
+      "requires": [
+        "general_exam",
+        "perianal_exam"
+      ],
+      "feedback": "Сильная боль, отёк и гнойные выделения выходят за рамки простого переполнения.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "superficial_wound",
+      "source": "doctor_interpretation",
+      "label": "Поверхностная рана кожи",
+      "requires": [
+        "general_exam",
+        "perianal_exam"
+      ],
+      "feedback": "Локализация и связь с увеличенной железой поддерживают воспаление параанальной железы.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "observe_home",
+      "source": "doctor_interpretation",
+      "label": "Домашнее наблюдение без лечения",
+      "requires": [
+        "triage"
+      ],
+      "feedback": "Оставлять болезненное гнойное воспаление без помощи небезопасно.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": true
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "procedural_plan",
+      "source": "doctor_interpretation",
+      "label": "Лечение воспалённой железы и контроль боли",
+      "steps": [
+        "Провести необходимую обработку, дренирование или опорожнение в пределах возможностей клиники.",
+        "Обеспечить контроль боли и обоснованный противомикробный план при показаниях.",
+        "Защитить область от разлизывания.",
+        "Назначить ранний контроль за заживлением."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Ранний контроль через 2–3 игровых дня или по состоянию."
+      },
+      "worseningSigns": [
+        {
+          "id": "procedural_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "увеличение припухлости"
+        },
+        {
+          "id": "procedural_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "лихорадка"
+        },
+        {
+          "id": "procedural_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "распространение отёка"
+        },
+        {
+          "id": "procedural_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "выраженная вялость"
+        },
+        {
+          "id": "procedural_plan_w5",
+          "source": "doctor_interpretation",
+          "text": "невозможность дефекации"
+        }
+      ]
+    },
+    {
+      "id": "urgent_referral",
+      "source": "doctor_interpretation",
+      "label": "Направление при глубоком абсцессе или невозможности безопасной обработки",
+      "steps": [
+        "Не выполнять болезненную процедуру без достаточных условий.",
+        "Связаться с клиникой, где доступны обезболивание, седация и хирургическая обработка.",
+        "Передать сведения о выделениях и домашних попытках."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": false,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль определяется после процедуры."
+      },
+      "worseningSigns": [
+        {
+          "id": "urgent_referral_w1",
+          "source": "doctor_interpretation",
+          "text": "системное ухудшение"
+        },
+        {
+          "id": "urgent_referral_w2",
+          "source": "doctor_interpretation",
+          "text": "распространение инфекции"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Железа воспалена, болезненна и выделяет гнойное содержимое; это не простое переполнение.",
+    "uncertain": "Глубину полости и необходимость более сложной процедуры окончательно оценивают при обработке.",
+    "plan": "Объяснить контроль боли, обработку, защиту от разлизывания и ранний контроль.",
+    "checkUnderstanding": "«Почему дома нельзя выдавливать припухлость и какие признаки означают распространение воспаления?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "лихорадка и вялость"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "быстро растущая припухлость"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "распространение отёка"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "невозможность дефекации"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "сильная неконтролируемая боль"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_pus",
+      "source": "doctor_interpretation",
+      "text": "Гнойные выделения отличают воспаление от простого переполнения.",
+      "discoveryPaths": [
+        "question_discharge",
+        "perianal_exam"
+      ]
+    },
+    {
+      "id": "critical_systemic",
+      "source": "doctor_interpretation",
+      "text": "Системное ухудшение повышает срочность.",
+      "discoveryPaths": [
+        "question_general_state",
+        "general_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "delayed_presentation",
+    "past_bad_experience"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": false,
+    "maximumLevel": 0,
+    "lines": []
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 2,
+  "selectAfterSchedule": true,
+  "goalsByDay": [
+    {
+      "day": 1,
+      "required": [
+        "finish_guided_visit"
+      ],
+      "candidates": [
+        "complete_two_full_visits",
+        "include_control_in_discharge"
+      ]
+    },
+    {
+      "day": 2,
+      "required": [
+        "discover_one_hidden_noncritical_fact"
+      ],
+      "candidates": [
+        "discuss_budget_before_tests",
+        "complete_real_followup_if_present",
+        "check_owner_understanding_twice"
+      ]
+    },
+    {
+      "day": 3,
+      "required": [
+        "separate_owner_theory_from_observation"
+      ],
+      "candidates": [
+        "identify_misnamed_symptom",
+        "warn_one_waiting_owner_about_delay",
+        "finish_real_followup_if_present"
+      ]
+    },
+    {
+      "day": 4,
+      "required": [
+        "triage_urgent_within_10_game_minutes"
+      ],
+      "candidates": [
+        "explain_priority_to_waiting_clients",
+        "refer_without_unnecessary_delay",
+        "leave_no_critical_result_unreviewed"
+      ]
+    },
+    {
+      "day": 5,
+      "required": [
+        "discover_home_action_nonjudgmentally"
+      ],
+      "candidates": [
+        "avoid_blame_response",
+        "identify_home_action_that_is_distractor",
+        "document_exact_product_when_relevant"
+      ]
+    },
+    {
+      "day": 6,
+      "required": [
+        "refuse_one_unsafe_demand_safely"
+      ],
+      "candidates": [
+        "offer_minimum_safe_budget_plan",
+        "resolve_conflict_without_false_guarantee",
+        "delegate_one_waiting_room_conversation"
+      ]
+    },
+    {
+      "day": 7,
+      "required": [
+        "close_all_critical_cases"
+      ],
+      "candidates": [
+        "finish_two_followups",
+        "end_shift_without_unreviewed_urgent_tasks",
+        "maintain_team_fatigue_below_critical"
+      ]
+    }
+  ],
+  "compatibilityRule": "A goal can be selected only when the generated schedule contains at least one visit capable of satisfying it."
+}

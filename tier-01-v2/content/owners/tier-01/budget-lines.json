@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 2,
+  "lines": [
+    {
+      "id": "minimum_safe",
+      "source": "owner_history",
+      "state": "budget",
+      "text": "«Скажите, что обязательно сделать сегодня, а что безопасно перенести на следующий этап»."
+    },
+    {
+      "id": "price_before",
+      "source": "owner_history",
+      "state": "budget",
+      "text": "«Мне нужно знать стоимость до исследования, а не после»."
+    },
+    {
+      "id": "not_refusal",
+      "source": "owner_history",
+      "state": "budget",
+      "text": "«Я не отказываюсь помогать. Мне нужен план, который я реально смогу выполнить»."
+    },
+    {
+      "id": "staged",
+      "source": "owner_history",
+      "state": "budget",
+      "text": "«Можно начать с того, что сильнее всего изменит решение врача?»"
+    }
+  ]
+}

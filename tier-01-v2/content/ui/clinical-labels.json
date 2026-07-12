@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "labels": {
+    "complaint": "Жалоба владельца",
+    "history": "Собрать анамнез",
+    "generalExam": "Общий осмотр",
+    "targetExam": "Целевой осмотр",
+    "sample": "Взять материал",
+    "test": "Провести исследование",
+    "preliminaryDiagnosis": "Предварительный диагноз",
+    "explanation": "Объяснить результат и план",
+    "plan": "Согласовать план помощи",
+    "finish": "Завершить приём",
+    "ownerReport": "Со слов владельца",
+    "historyFact": "Уточнено в анамнезе",
+    "examFact": "Подтверждено осмотром",
+    "testFact": "Результаты исследований",
+    "doctorInterpretation": "Клиническая оценка",
+    "notAssessed": "Ещё не оценено",
+    "urgencyNotAssessed": "Срочность пока не оценена"
+  }
+}

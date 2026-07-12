@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 2,
+  "reviewStatus": "editorial_complete_pending_balance_review",
+  "profiles": [
+    {
+      "id": "calm",
+      "label": "спокойный и сотрудничающий",
+      "unlockDay": 1,
+      "weight": 18,
+      "highConflict": false,
+      "traits": {
+        "patience": 78,
+        "anxiety": 22,
+        "observation": 68,
+        "trust": 68,
+        "conflict": 8,
+        "comprehension": 72,
+        "adherence": 80
+      },
+      "visibleCues": [
+        "сидит спокойно",
+        "следит за животным",
+        "задаёт вопросы по существу"
+      ]
+    },
+    {
+      "id": "observant",
+      "label": "наблюдательный",
+      "unlockDay": 1,
+      "weight": 16,
+      "highConflict": false,
+      "traits": {
+        "patience": 70,
+        "anxiety": 38,
+        "observation": 92,
+        "trust": 62,
+        "conflict": 8,
+        "comprehension": 78,
+        "adherence": 85
+      },
+      "visibleCues": [
+        "называет время и частоту",
+        "показывает фото или записи",
+        "уточняет детали плана"
+      ]
+    },
+    {
+      "id": "anxious",
+      "label": "тревожный, но сотрудничающий",
+      "unlockDay": 1,
+      "weight": 15,
+      "highConflict": false,
+      "traits": {
+        "patience": 58,
+        "anxiety": 84,
+        "observation": 76,
+        "trust": 52,
+        "conflict": 18,
+        "comprehension": 64,
+        "adherence": 78
+      },
+      "visibleCues": [
+        "часто проверяет животное",
+        "повторно спрашивает о рисках",
+        "говорит быстрее при неопределённости"
+      ]
+    },
+    {
+      "id": "inattentive",
+      "label": "невнимательный, но честный",
+      "unlockDay": 1,
+      "weight": 14,
+      "highConflict": false,
+      "traits": {
+        "patience": 62,
+        "anxiety": 35,
+        "observation": 34,
+        "trust": 57,
+        "conflict": 12,
+        "comprehension": 58,
+        "adherence": 56
+      },
+      "visibleCues": [
+        "путается в сроках",
+        "не помнит названия препаратов",
+        "лучше отвечает на конкретные вопросы"
+      ]
+    },
+    {
+      "id": "budget_limited",
+      "label": "с ограниченным бюджетом",
+      "unlockDay": 2,
+      "weight": 11,
+      "highConflict": false,
+      "traits": {
+        "patience": 66,
+        "anxiety": 58,
+        "observation": 66,
+        "trust": 54,
+        "conflict": 13,
+        "comprehension": 70,
+        "adherence": 72
+      },
+      "visibleCues": [
+        "заранее спрашивает стоимость",
+        "просит выделить обязательное",
+        "готов обсуждать поэтапный план"
+      ]
+    },
+    {
+      "id": "internet_confident",
+      "label": "уверенный в интернет-версии",
+      "unlockDay": 3,
+      "weight": 9,
+      "highConflict": false,
+      "traits": {
+        "patience": 50,
+        "anxiety": 48,
+        "observation": 62,
+        "trust": 38,
+        "conflict": 38,
+        "comprehension": 74,
+        "adherence": 57
+      },
+      "visibleCues": [
+        "приходит с готовым диагнозом",
+        "сравнивает ответ с форумом",
+        "лучше реагирует на объяснение фактов"
+      ]
+    },
+    {
+      "id": "careless",
+      "label": "непоследовательный в выполнении",
+      "unlockDay": 3,
+      "weight": 8,
+      "highConflict": false,
+      "traits": {
+        "patience": 64,
+        "anxiety": 28,
+        "observation": 46,
+        "trust": 56,
+        "conflict": 18,
+        "comprehension": 60,
+        "adherence": 36
+      },
+      "visibleCues": [
+        "раньше прекращал курс после улучшения",
+        "теряет письменные инструкции",
+        "соглашается быстрее, чем понимает"
+      ]
+    },
+    {
+      "id": "demanding",
+      "label": "требовательный и конфликтный",
+      "unlockDay": 6,
+      "weight": 4,
+      "highConflict": true,
+      "traits": {
+        "patience": 30,
+        "anxiety": 56,
+        "observation": 64,
+        "trust": 32,
+        "conflict": 72,
+        "comprehension": 70,
+        "adherence": 58
+      },
+      "visibleCues": [
+        "требует гарантий",
+        "перебивает при объяснении",
+        "угрожает отзывом при отказе в небезопасном требовании"
+      ]
+    }
+  ]
+}

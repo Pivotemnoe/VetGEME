@@ -1,0 +1,782 @@
+{
+  "schemaVersion": 2,
+  "id": "SKIN_GROOMING_IRRITATION",
+  "family": "skin",
+  "titleForDeveloper": "Раздражение кожи после груминга",
+  "preliminaryDiagnosisLabel": "Раздражение кожи после груминга",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 2,
+  "severity": "routine",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "skin_sampling_kit"
+  ],
+  "requiredActions": [
+    "general_exam",
+    "skin_exam",
+    "exposure_history",
+    "optional_cytology"
+  ],
+  "safeAlternatives": [
+    "staged_plan",
+    "scheduled_recheck"
+  ],
+  "workload": 1.0,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«После груминга питомец постоянно лижет участок кожи, а шерсть там выглядит влажной»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«На следующий день после нового шампуня появились покраснение и зуд»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«После стрижки животное стало беспокойно вылизывать бок, хотя до груминга этого не было»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_timing",
+      "buttonText": "Когда появился зуд относительно груминга?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_temporal_relation"
+      ],
+      "answers": [
+        {
+          "id": "question_timing_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Груминг был позавчера, а зуд начался вечером того же дня».",
+          "revealsFactIds": [
+            "fact_temporal_relation"
+          ]
+        },
+        {
+          "id": "question_timing_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Груминг был позавчера, а зуд начался вечером того же дня».",
+          "revealsFactIds": [
+            "fact_temporal_relation"
+          ]
+        },
+        {
+          "id": "question_timing_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Груминг был пару дней назад, зуд заметили потом, точнее не скажу».",
+          "revealsFactIds": [
+            "fact_temporal_relation"
+          ]
+        },
+        {
+          "id": "question_timing_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Зуд начался в тот же вечер, и с тех пор он усиливается. Я боюсь ожога кожи».",
+          "revealsFactIds": [
+            "fact_temporal_relation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_product",
+      "buttonText": "Использовали ли новый шампунь, спрей или средство?",
+      "category": "exposure",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_new_product"
+      ],
+      "answers": [
+        {
+          "id": "question_product_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Да, в салоне впервые использовали ароматизированный шампунь другой марки».",
+          "revealsFactIds": [
+            "fact_new_product"
+          ]
+        },
+        {
+          "id": "question_product_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Да, в салоне впервые использовали ароматизированный шампунь другой марки».",
+          "revealsFactIds": [
+            "fact_new_product"
+          ]
+        },
+        {
+          "id": "question_product_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кажется, средство было новое, название не знаю».",
+          "revealsFactIds": [
+            "fact_new_product"
+          ]
+        },
+        {
+          "id": "question_product_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Да, новый шампунь. Я переживаю, что у него сильная реакция на состав».",
+          "revealsFactIds": [
+            "fact_new_product"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_distribution",
+      "buttonText": "Где именно животное лижет или чешет кожу?",
+      "category": "skin",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_local_distribution"
+      ],
+      "answers": [
+        {
+          "id": "question_distribution_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Один участок на правом боку и немного область под ошейником».",
+          "revealsFactIds": [
+            "fact_local_distribution"
+          ]
+        },
+        {
+          "id": "question_distribution_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Один участок на правом боку и немного область под ошейником».",
+          "revealsFactIds": [
+            "fact_local_distribution"
+          ]
+        },
+        {
+          "id": "question_distribution_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«В основном бок, но иногда лижет и грудь».",
+          "revealsFactIds": [
+            "fact_local_distribution"
+          ]
+        },
+        {
+          "id": "question_distribution_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Сильнее всего один участок на боку; он почти не даёт ему высохнуть».",
+          "revealsFactIds": [
+            "fact_local_distribution"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_before",
+      "buttonText": "Был ли зуд до груминга?",
+      "category": "history",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_previous_itch"
+      ],
+      "answers": [
+        {
+          "id": "question_before_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, до процедуры кожу не чесал и не вылизывал».",
+          "revealsFactIds": [
+            "fact_no_previous_itch"
+          ]
+        },
+        {
+          "id": "question_before_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, до процедуры кожу не чесал и не вылизывал».",
+          "revealsFactIds": [
+            "fact_no_previous_itch"
+          ]
+        },
+        {
+          "id": "question_before_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«До груминга вроде не чесался».",
+          "revealsFactIds": [
+            "fact_no_previous_itch"
+          ]
+        },
+        {
+          "id": "question_before_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, поэтому я уверен, что всё началось после процедуры».",
+          "revealsFactIds": [
+            "fact_no_previous_itch"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Изменились ли аппетит, активность или дыхание?",
+      "category": "general",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_systemic_reaction"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит и активность обычные, дыхание свободное».",
+          "revealsFactIds": [
+            "fact_no_systemic_reaction"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит и активность обычные, дыхание свободное».",
+          "revealsFactIds": [
+            "fact_no_systemic_reaction"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Вроде всё нормально, кроме кожи».",
+          "revealsFactIds": [
+            "fact_no_systemic_reaction"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Ест и дышит нормально, но я слежу, не появится ли отёк или слабость».",
+          "revealsFactIds": [
+            "fact_no_systemic_reaction"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_other_animals",
+      "buttonText": "Есть ли похожая реакция у других животных после этого средства?",
+      "category": "contacts",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_comparison"
+      ],
+      "answers": [
+        {
+          "id": "question_other_animals_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Других животных этим средством не мыли».",
+          "revealsFactIds": [
+            "fact_no_comparison"
+          ]
+        },
+        {
+          "id": "question_other_animals_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Других животных этим средством не мыли».",
+          "revealsFactIds": [
+            "fact_no_comparison"
+          ]
+        },
+        {
+          "id": "question_other_animals_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«В салоне были другие животные, но о них ничего не знаю».",
+          "revealsFactIds": [
+            "fact_no_comparison"
+          ]
+        },
+        {
+          "id": "question_other_animals_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Других наших животных не мыли, поэтому сравнить не с чем».",
+          "revealsFactIds": [
+            "fact_no_comparison"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что наносили или чем смывали кожу после появления зуда?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Промыли участок чистой водой и ничего больше не наносили».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Промыли участок чистой водой и ничего больше не наносили».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кажется, протирали влажной салфеткой, какой именно — не знаю».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я смыл средство водой и не стал наносить мазь без осмотра».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "unknown_human_ointment",
+        "washed_with_new_shampoo",
+        "applied_onion_or_garlic"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Слизистые оболочки розовые, отёка морды и затруднения дыхания нет."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Системной аллергической реакции на момент осмотра не выявлено."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "На правом боку имеется локальный участок умеренного покраснения."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Шерсть влажная преимущественно из-за постоянного вылизывания."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Есть поверхностные расчёсы и небольшое поредение шерсти."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Гнойничков, глубоких ран и выраженного отёка нет."
+      },
+      {
+        "id": "target_5",
+        "source": "physical_exam",
+        "text": "Распределение поражения соответствует зоне контакта и самотравмирования."
+      }
+    ]
+  },
+  "sampleActions": [
+    {
+      "id": "optional_skin_sample",
+      "label": "Взять материал с поверхности кожи",
+      "source": "doctor_interpretation",
+      "requires": [
+        "skin_exam"
+      ],
+      "result": {
+        "source": "diagnostic_test",
+        "text": "Получен поверхностный образец для исключения выраженного вторичного микробного компонента."
+      }
+    }
+  ],
+  "diagnosticTests": [
+    {
+      "id": "optional_skin_cytology",
+      "label": "Поверхностная цитология кожи",
+      "type": "laboratory",
+      "source": "diagnostic_test",
+      "text": "Выраженного бактериального или грибкового компонента не обнаружено; преобладают клетки поверхностного воспаления.",
+      "requires": [
+        "sample"
+      ],
+      "costVetcoins": 60,
+      "durationMinutes": 6
+    }
+  ],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "grooming_irritation",
+      "source": "doctor_interpretation",
+      "label": "Раздражение кожи после груминга",
+      "requires": [
+        "general_exam",
+        "exposure_history",
+        "skin_exam"
+      ],
+      "feedback": "Временная связь, локальное распределение и отсутствие выраженной инфекции поддерживают этот предварительный диагноз.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "superficial_pyoderma",
+      "source": "doctor_interpretation",
+      "label": "Поверхностная пиодермия",
+      "requires": [
+        "general_exam",
+        "skin_exam",
+        "optional_cytology"
+      ],
+      "feedback": "Цитология не показывает выраженного бактериального компонента, а типичных пустул и корочек нет.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "fungal_dermatitis",
+      "source": "doctor_interpretation",
+      "label": "Грибковый дерматит",
+      "requires": [
+        "general_exam",
+        "skin_exam",
+        "optional_cytology"
+      ],
+      "feedback": "Нет характерной хронической жирности, запаха и грибкового компонента.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "flea_allergy",
+      "source": "doctor_interpretation",
+      "label": "Блошиный аллергический дерматит",
+      "requires": [
+        "general_exam",
+        "skin_exam"
+      ],
+      "feedback": "Локальная связь с новым средством и отсутствие типичного распределения делают эту версию менее вероятной.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "irritation_plan",
+      "source": "doctor_interpretation",
+      "label": "План при локальном раздражении после груминга",
+      "steps": [
+        "Исключить повторный контакт с подозрительным средством.",
+        "Провести мягкий местный уход по схеме клиники.",
+        "Предотвращать постоянное вылизывание и расчёсывание.",
+        "Наблюдать за расширением очага и признаками вторичной инфекции."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль через 3–5 игровых дней при сохранении симптомов."
+      },
+      "worseningSigns": [
+        {
+          "id": "irritation_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "отёк морды"
+        },
+        {
+          "id": "irritation_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "затруднение дыхания"
+        },
+        {
+          "id": "irritation_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "быстрое распространение покраснения"
+        },
+        {
+          "id": "irritation_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "гнойные или мокнущие поражения"
+        }
+      ]
+    },
+    {
+      "id": "observe_without_protection",
+      "source": "doctor_interpretation",
+      "label": "Только наблюдать, не ограничивая вылизывание",
+      "steps": [
+        "Не устранять самотравмирование и не контролировать участок."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Возможно увеличение очага из-за постоянного вылизывания."
+      },
+      "worseningSigns": [
+        {
+          "id": "observe_without_protection_w1",
+          "source": "doctor_interpretation",
+          "text": "расширение очага"
+        },
+        {
+          "id": "observe_without_protection_w2",
+          "source": "doctor_interpretation",
+          "text": "появление мокнутия"
+        },
+        {
+          "id": "observe_without_protection_w3",
+          "source": "doctor_interpretation",
+          "text": "усиление боли"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Раздражение появилось вскоре после нового средства и ограничено зоной контакта и вылизывания; признаков выраженной инфекции сейчас нет.",
+    "uncertain": "Нельзя с полной уверенностью доказать конкретный компонент средства без дальнейшего наблюдения; важно оценить ответ после прекращения контакта.",
+    "plan": "Исключить средство, защитить кожу от вылизывания, проводить мягкий уход и контролировать признаки осложнения.",
+    "checkUnderstanding": "«Что вы больше не будете использовать и какие изменения кожи будут поводом прийти раньше?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "отёк морды или языка"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "затруднение дыхания"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "быстрое распространение покраснения"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "гнойные или мокнущие поражения"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "выраженная болезненность"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_systemic_reaction",
+      "source": "doctor_interpretation",
+      "text": "Отёк морды или нарушение дыхания меняют ситуацию на экстренную.",
+      "discoveryPaths": [
+        "question_general_state",
+        "general_exam"
+      ]
+    },
+    {
+      "id": "critical_timing",
+      "source": "doctor_interpretation",
+      "text": "Временная связь с новым средством должна быть получена из анамнеза, а не из осмотра.",
+      "discoveryPaths": [
+        "question_timing",
+        "question_product"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "budget_limited"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "first_pet",
+    "past_bad_experience"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Шампунь назывался “Тропический шторм”. Похоже, шторм пришёл прямо на кожу»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«После груминга он пах как кокос. Теперь кокос ненавидит вся семья»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

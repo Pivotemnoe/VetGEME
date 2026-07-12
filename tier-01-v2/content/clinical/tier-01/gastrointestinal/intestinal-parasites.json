@@ -1,0 +1,782 @@
+{
+  "schemaVersion": 2,
+  "id": "GI_INTESTINAL_PARASITES",
+  "family": "gastrointestinal",
+  "titleForDeveloper": "Подозрение на кишечный паразитоз",
+  "preliminaryDiagnosisLabel": "Подозрение на кишечный паразитоз",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 3,
+  "severity": "routine",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "microscope",
+    "fecal_kit"
+  ],
+  "requiredActions": [
+    "general_exam",
+    "body_condition",
+    "fecal_sample",
+    "fecal_microscopy"
+  ],
+  "safeAlternatives": [
+    "staged_plan",
+    "scheduled_recheck"
+  ],
+  "workload": 1.5,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«У молодого животного периодически жидкий стул и плохо прибавляется вес»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«У щенка нестабильный стул, вздутый живот и неизвестная история обработок»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Котёнка недавно подобрали, аппетит хороший, но стул меняется почти каждый день»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_origin",
+      "buttonText": "Откуда животное и как давно оно у владельца?",
+      "category": "history",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_unknown_background"
+      ],
+      "answers": [
+        {
+          "id": "question_origin_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Щенка взяли из приюта три недели назад».",
+          "revealsFactIds": [
+            "fact_unknown_background"
+          ]
+        },
+        {
+          "id": "question_origin_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Щенка взяли из приюта три недели назад».",
+          "revealsFactIds": [
+            "fact_unknown_background"
+          ]
+        },
+        {
+          "id": "question_origin_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Недавно забрали у знакомых, точную историю не знаем».",
+          "revealsFactIds": [
+            "fact_unknown_background"
+          ]
+        },
+        {
+          "id": "question_origin_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Взяли из приюта три недели назад, и я переживаю, что у него было много контактов».",
+          "revealsFactIds": [
+            "fact_unknown_background"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_stool",
+      "buttonText": "Как меняется стул?",
+      "category": "gastrointestinal",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_intermittent_diarrhea"
+      ],
+      "answers": [
+        {
+          "id": "question_stool_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«То оформленный, то жидкий, иногда со слизью, без видимой крови».",
+          "revealsFactIds": [
+            "fact_intermittent_diarrhea"
+          ]
+        },
+        {
+          "id": "question_stool_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«То оформленный, то жидкий, иногда со слизью, без видимой крови».",
+          "revealsFactIds": [
+            "fact_intermittent_diarrhea"
+          ]
+        },
+        {
+          "id": "question_stool_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Стул разный: иногда нормальный, иногда жидкий».",
+          "revealsFactIds": [
+            "fact_intermittent_diarrhea"
+          ]
+        },
+        {
+          "id": "question_stool_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Почти каждый день меняется, и я записываю, когда появляется слизь».",
+          "revealsFactIds": [
+            "fact_intermittent_diarrhea"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_weight",
+      "buttonText": "Как менялись масса и аппетит?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_poor_weight_gain"
+      ],
+      "answers": [
+        {
+          "id": "question_weight_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит хороший, но прибавка массы меньше ожидаемой».",
+          "revealsFactIds": [
+            "fact_poor_weight_gain"
+          ]
+        },
+        {
+          "id": "question_weight_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит хороший, но прибавка массы меньше ожидаемой».",
+          "revealsFactIds": [
+            "fact_poor_weight_gain"
+          ]
+        },
+        {
+          "id": "question_weight_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Ест хорошо, а вес вроде стоит на месте».",
+          "revealsFactIds": [
+            "fact_poor_weight_gain"
+          ]
+        },
+        {
+          "id": "question_weight_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Ест с аппетитом, но почти не прибавляет, и это меня пугает».",
+          "revealsFactIds": [
+            "fact_poor_weight_gain"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_deworming",
+      "buttonText": "Когда и чем проводили последнюю обработку от внутренних паразитов?",
+      "category": "prevention",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_unknown_deworming"
+      ],
+      "answers": [
+        {
+          "id": "question_deworming_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«История неизвестна; после появления у нас обработку ещё не проводили».",
+          "revealsFactIds": [
+            "fact_unknown_deworming"
+          ]
+        },
+        {
+          "id": "question_deworming_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«История неизвестна; после появления у нас обработку ещё не проводили».",
+          "revealsFactIds": [
+            "fact_unknown_deworming"
+          ]
+        },
+        {
+          "id": "question_deworming_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Что-то могли давать раньше, но документов нет».",
+          "revealsFactIds": [
+            "fact_unknown_deworming"
+          ]
+        },
+        {
+          "id": "question_deworming_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Мы не знаем, обрабатывали ли его раньше, и боимся дать неподходящее средство».",
+          "revealsFactIds": [
+            "fact_unknown_deworming"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_other_animals",
+      "buttonText": "Есть ли другие животные и похожие симптомы?",
+      "category": "contacts",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_contact_animals"
+      ],
+      "answers": [
+        {
+          "id": "question_other_animals_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Есть взрослая собака без симптомов, миски и место отдыха общие».",
+          "revealsFactIds": [
+            "fact_contact_animals"
+          ]
+        },
+        {
+          "id": "question_other_animals_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Есть взрослая собака без симптомов, миски и место отдыха общие».",
+          "revealsFactIds": [
+            "fact_contact_animals"
+          ]
+        },
+        {
+          "id": "question_other_animals_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Есть ещё питомец, стул у него не проверяли».",
+          "revealsFactIds": [
+            "fact_contact_animals"
+          ]
+        },
+        {
+          "id": "question_other_animals_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Есть другая собака, и я переживаю, что ей тоже нужна проверка».",
+          "revealsFactIds": [
+            "fact_contact_animals"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_environment",
+      "buttonText": "Есть ли доступ к улице, земле, фекалиям или охоте?",
+      "category": "exposure",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_exposure"
+      ],
+      "answers": [
+        {
+          "id": "question_environment_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Гуляет во дворе и часто тянется к чужим фекалиям».",
+          "revealsFactIds": [
+            "fact_exposure"
+          ]
+        },
+        {
+          "id": "question_environment_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Гуляет во дворе и часто тянется к чужим фекалиям».",
+          "revealsFactIds": [
+            "fact_exposure"
+          ]
+        },
+        {
+          "id": "question_environment_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«На улице что-то нюхает и подбирает, не всегда успеваем остановить».",
+          "revealsFactIds": [
+            "fact_exposure"
+          ]
+        },
+        {
+          "id": "question_environment_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Он постоянно исследует землю, и я боюсь новых заражений».",
+          "revealsFactIds": [
+            "fact_exposure"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже давали дома?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не давали до исследования».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не давали до исследования».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Дали половину таблетки, оставшейся от взрослой собаки».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел дать старое средство, но не был уверен в дозе и остановился».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "leftover_dewormer",
+        "half_tablet_other_pet",
+        "double_dose"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Животное активно, аппетит сохранён."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Упитанность ниже ожидаемой для возраста, без тяжёлого истощения."
+      },
+      {
+        "id": "general_5",
+        "source": "physical_exam",
+        "text": "Живот умеренно округлый, без выраженной болезненности."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Выраженного обезвоживания нет."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Болезненности живота не выявлено."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Перианальная область без свежей крови и тяжёлого воспаления."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Для уточнения причины необходим свежий образец кала."
+      }
+    ]
+  },
+  "sampleActions": [
+    {
+      "id": "fecal_sample",
+      "label": "Получить образец кала",
+      "source": "doctor_interpretation",
+      "requires": [
+        "history"
+      ],
+      "result": {
+        "source": "diagnostic_test",
+        "text": "Получен свежий образец кала, пригодный для исследования."
+      }
+    }
+  ],
+  "diagnosticTests": [
+    {
+      "id": "fecal_microscopy",
+      "label": "Микроскопическое исследование кала",
+      "type": "laboratory",
+      "source": "diagnostic_test",
+      "text": "В образце обнаружены яйца кишечных гельминтов. Выраженной примеси крови не выявлено.",
+      "requires": [
+        "fecal_sample"
+      ],
+      "costVetcoins": 80,
+      "durationMinutes": 8
+    }
+  ],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "intestinal_parasites",
+      "source": "doctor_interpretation",
+      "label": "Кишечный паразитоз",
+      "requires": [
+        "general_exam",
+        "body_condition",
+        "fecal_sample",
+        "fecal_microscopy"
+      ],
+      "feedback": "Яйца паразитов обнаружены в кале, а анамнез и состояние соответствуют паразитарной инвазии.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "giardia",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на лямблиоз",
+      "requires": [
+        "general_exam",
+        "history",
+        "fecal_sample"
+      ],
+      "feedback": "Лямблиоз может вызывать похожую диарею, но в этом образце обнаружены яйца гельминтов.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "food_intolerance",
+      "source": "doctor_interpretation",
+      "label": "Пищевая непереносимость",
+      "requires": [
+        "general_exam",
+        "history"
+      ],
+      "feedback": "Изменение питания не объясняет обнаруженные яйца паразитов.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "acute_gi_upset",
+      "source": "doctor_interpretation",
+      "label": "Острое ЖКТ-расстройство",
+      "requires": [
+        "general_exam",
+        "history"
+      ],
+      "feedback": "Хроническое перемежающееся течение и плохая прибавка массы делают острый самоограничивающийся эпизод менее вероятным.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "parasite_plan",
+      "source": "doctor_interpretation",
+      "label": "План при кишечном паразитозе",
+      "steps": [
+        "Провести противопаразитарный план по виду и возрасту пациента.",
+        "Не использовать случайные остатки препаратов от другого животного.",
+        "Обсудить уборку фекалий и гигиену среды.",
+        "Запланировать контроль результата в установленный срок."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контрольный анализ или повторная оценка по схеме клиники."
+      },
+      "worseningSigns": [
+        {
+          "id": "parasite_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "кровь в стуле"
+        },
+        {
+          "id": "parasite_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "повторная рвота"
+        },
+        {
+          "id": "parasite_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "выраженная слабость"
+        },
+        {
+          "id": "parasite_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "быстрая потеря массы"
+        },
+        {
+          "id": "parasite_plan_w5",
+          "source": "doctor_interpretation",
+          "text": "тяжёлое обезвоживание"
+        }
+      ]
+    },
+    {
+      "id": "single_unverified_dose",
+      "source": "doctor_interpretation",
+      "label": "Одна случайная доза без контроля",
+      "steps": [
+        "Использовать остаток препарата неизвестной дозы и не оценивать результат."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Вероятны неполное лечение и повторный визит."
+      },
+      "worseningSigns": [
+        {
+          "id": "single_unverified_dose_w1",
+          "source": "doctor_interpretation",
+          "text": "сохранение диареи"
+        },
+        {
+          "id": "single_unverified_dose_w2",
+          "source": "doctor_interpretation",
+          "text": "плохая прибавка массы"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "В кале обнаружены яйца кишечных паразитов, что объясняет нестабильный стул и плохую прибавку массы.",
+    "uncertain": "Наличие других кишечных причин полностью не исключено; результат оценивается по динамике и контролю.",
+    "plan": "Объяснить подходящую обработку, гигиену среды и необходимость контрольной оценки.",
+    "checkUnderstanding": "«Почему нельзя использовать половину таблетки от другого животного и когда нужно проверить результат?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "кровь в стуле"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "выраженная слабость"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "тяжёлое обезвоживание"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "повторная рвота"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "быстрая потеря массы"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_age_weight",
+      "source": "doctor_interpretation",
+      "text": "Возраст и плохая прибавка массы повышают значимость паразитарного риска.",
+      "discoveryPaths": [
+        "question_weight",
+        "body_condition"
+      ]
+    },
+    {
+      "id": "critical_medication",
+      "source": "doctor_interpretation",
+      "text": "Препарат от другого животного может быть неподходящим по дозе и спектру.",
+      "discoveryPaths": [
+        "question_home_actions"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "budget_limited"
+  ],
+  "compatibleOwnerModifiers": [
+    "multi_pet_household",
+    "hidden_home_treatment",
+    "shelter_origin"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Таблетку дали коту, кот выплюнул, а собака съела. В итоге обработали не того пациента»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Аппетит отличный. Вес считает, что это необязательное условие»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

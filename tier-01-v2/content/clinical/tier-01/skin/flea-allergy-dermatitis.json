@@ -1,0 +1,762 @@
+{
+  "schemaVersion": 2,
+  "id": "SKIN_FLEA_ALLERGY",
+  "family": "skin",
+  "titleForDeveloper": "Блошиный аллергический дерматит",
+  "preliminaryDiagnosisLabel": "Подозрение на блошиный аллергический дерматит",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 2,
+  "severity": "routine",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "flea_comb"
+  ],
+  "requiredActions": [
+    "general_exam",
+    "skin_exam",
+    "flea_comb_test",
+    "differential_plan"
+  ],
+  "safeAlternatives": [
+    "staged_plan",
+    "scheduled_recheck"
+  ],
+  "workload": 1.25,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«Животное сильно чешет спину и основание хвоста. Владелец уверен, что виноват новый корм»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Питомец кусает себя около хвоста, появились корочки и поредение шерсти»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Блох никто не видел, но зуд очень сильный и возвращается каждый тёплый сезон»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_onset",
+      "buttonText": "Когда начался зуд и как он менялся?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_progressive_itch"
+      ],
+      "answers": [
+        {
+          "id": "question_onset_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Начался около двух недель назад и постепенно усиливался».",
+          "revealsFactIds": [
+            "fact_progressive_itch"
+          ]
+        },
+        {
+          "id": "question_onset_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Начался около двух недель назад и постепенно усиливался».",
+          "revealsFactIds": [
+            "fact_progressive_itch"
+          ]
+        },
+        {
+          "id": "question_onset_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Чешется уже какое-то время, возможно неделю или две».",
+          "revealsFactIds": [
+            "fact_progressive_itch"
+          ]
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Две недели назад, а сейчас он почти не отдыхает из-за зуда».",
+          "revealsFactIds": [
+            "fact_progressive_itch"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_location",
+      "buttonText": "Где зуд выражен сильнее всего?",
+      "category": "skin",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_typical_distribution"
+      ],
+      "answers": [
+        {
+          "id": "question_location_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«На пояснице, у основания хвоста и по задней поверхности бёдер».",
+          "revealsFactIds": [
+            "fact_typical_distribution"
+          ]
+        },
+        {
+          "id": "question_location_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«На пояснице, у основания хвоста и по задней поверхности бёдер».",
+          "revealsFactIds": [
+            "fact_typical_distribution"
+          ]
+        },
+        {
+          "id": "question_location_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Больше сзади, около хвоста, но иногда чешет и бока».",
+          "revealsFactIds": [
+            "fact_typical_distribution"
+          ]
+        },
+        {
+          "id": "question_location_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Сильнее всего около хвоста, там уже появились корочки».",
+          "revealsFactIds": [
+            "fact_typical_distribution"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_prevention",
+      "buttonText": "Как регулярно проводилась защита от блох?",
+      "category": "prevention",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_inadequate_prevention"
+      ],
+      "answers": [
+        {
+          "id": "question_prevention_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Обработки нерегулярные: последняя была больше трёх месяцев назад».",
+          "revealsFactIds": [
+            "fact_inadequate_prevention"
+          ]
+        },
+        {
+          "id": "question_prevention_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Обработки нерегулярные: последняя была больше трёх месяцев назад».",
+          "revealsFactIds": [
+            "fact_inadequate_prevention"
+          ]
+        },
+        {
+          "id": "question_prevention_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Капли иногда используем, но дату последней обработки не помню».",
+          "revealsFactIds": [
+            "fact_inadequate_prevention"
+          ]
+        },
+        {
+          "id": "question_prevention_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Мы считали, что зимой обработка не нужна, и теперь я переживаю, что пропустили момент».",
+          "revealsFactIds": [
+            "fact_inadequate_prevention"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_food_timing",
+      "buttonText": "Когда сменили корм относительно появления зуда?",
+      "category": "diet",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_food_change_after_onset"
+      ],
+      "answers": [
+        {
+          "id": "question_food_timing_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Корм поменяли через несколько дней после начала зуда».",
+          "revealsFactIds": [
+            "fact_food_change_after_onset"
+          ]
+        },
+        {
+          "id": "question_food_timing_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Корм поменяли через несколько дней после начала зуда».",
+          "revealsFactIds": [
+            "fact_food_change_after_onset"
+          ]
+        },
+        {
+          "id": "question_food_timing_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Корм меняли примерно тогда же, точную последовательность не помню».",
+          "revealsFactIds": [
+            "fact_food_change_after_onset"
+          ]
+        },
+        {
+          "id": "question_food_timing_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Зуд начался раньше, но я всё равно боюсь, что новый корм его усилил».",
+          "revealsFactIds": [
+            "fact_food_change_after_onset"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_other_animals",
+      "buttonText": "Есть ли другие животные и обработаны ли они?",
+      "category": "contacts",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_contact_animals"
+      ],
+      "answers": [
+        {
+          "id": "question_other_animals_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Есть кошка, её не обрабатывали последние месяцы».",
+          "revealsFactIds": [
+            "fact_contact_animals"
+          ]
+        },
+        {
+          "id": "question_other_animals_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Есть кошка, её не обрабатывали последние месяцы».",
+          "revealsFactIds": [
+            "fact_contact_animals"
+          ]
+        },
+        {
+          "id": "question_other_animals_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Есть ещё одно животное, про его обработку не уверен».",
+          "revealsFactIds": [
+            "fact_contact_animals"
+          ]
+        },
+        {
+          "id": "question_other_animals_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Есть вторая собака, симптомов пока нет, но я боюсь повторного заражения».",
+          "revealsFactIds": [
+            "fact_contact_animals"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_seasonality",
+      "buttonText": "Бывали ли похожие эпизоды раньше и в какое время года?",
+      "category": "history",
+      "required": false,
+      "condition": "opened_by_recurrence_clue",
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_seasonal_pattern"
+      ],
+      "answers": [
+        {
+          "id": "question_seasonality_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Похожий зуд был прошлым летом и исчез после регулярных обработок».",
+          "revealsFactIds": [
+            "fact_seasonal_pattern"
+          ]
+        },
+        {
+          "id": "question_seasonality_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Похожий зуд был прошлым летом и исчез после регулярных обработок».",
+          "revealsFactIds": [
+            "fact_seasonal_pattern"
+          ]
+        },
+        {
+          "id": "question_seasonality_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Летом вроде чесался сильнее, но точно не сравнивал».",
+          "revealsFactIds": [
+            "fact_seasonal_pattern"
+          ]
+        },
+        {
+          "id": "question_seasonality_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Каждое лето хуже, и я боюсь, что проблема становится хронической».",
+          "revealsFactIds": [
+            "fact_seasonal_pattern"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже пробовали дома?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Сменили корм, но от блох пока не обрабатывали».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Сменили корм, но от блох пока не обрабатывали».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кажется, дали средство от зуда, но название не помню».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Мы срочно перевели на другой корм, потому что боялись аллергии, но зуд не уменьшился».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "changed_food_without_exam",
+        "treated_only_one_pet",
+        "leftover_antibiotic"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Аппетит и активность сохранены."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Основная проблема — выраженный зуд и самотравмирование кожи."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Поражения наиболее выражены в области поясницы и основания хвоста."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Имеются папулы, корочки, поверхностные расчёсы и локальное поредение шерсти."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "При вычёсывании обнаружено небольшое количество блошиных загрязнений; живых блох может не быть видно."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Выраженного глубокого или гнойного поражения кожи нет."
+      }
+    ]
+  },
+  "sampleActions": [
+    {
+      "id": "flea_comb_sample",
+      "label": "Провести вычёсывание блошиным гребнем",
+      "source": "doctor_interpretation",
+      "requires": [
+        "skin_exam"
+      ],
+      "result": {
+        "source": "diagnostic_test",
+        "text": "Получены тёмные частицы из шерсти для проверки."
+      }
+    }
+  ],
+  "diagnosticTests": [
+    {
+      "id": "flea_dirt_test",
+      "label": "Проверка блошиных загрязнений",
+      "type": "bedside",
+      "source": "diagnostic_test",
+      "text": "Часть тёмных частиц при увлажнении даёт красновато-коричневый след, что подтверждает контакт с блохами.",
+      "requires": [
+        "flea_comb_test"
+      ],
+      "costVetcoins": 20,
+      "durationMinutes": 2
+    }
+  ],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "flea_allergy",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на блошиный аллергический дерматит",
+      "requires": [
+        "general_exam",
+        "skin_exam",
+        "flea_comb_test"
+      ],
+      "feedback": "Типичная локализация, выраженный зуд и подтверждение контакта с блохами поддерживают этот предварительный диагноз.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "food_allergy",
+      "source": "doctor_interpretation",
+      "label": "Пищевая аллергия",
+      "requires": [
+        "general_exam",
+        "history",
+        "skin_exam"
+      ],
+      "feedback": "Смена корма произошла после начала зуда, поэтому текущие данные не подтверждают её как основную причину.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "flea_infestation_only",
+      "source": "doctor_interpretation",
+      "label": "Только блошиная инвазия без аллергической реакции",
+      "requires": [
+        "general_exam",
+        "skin_exam",
+        "flea_comb_test"
+      ],
+      "feedback": "Малое количество паразитов при непропорционально сильном зуде и типичных поражениях поддерживает аллергический компонент.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "fungal_dermatitis",
+      "source": "doctor_interpretation",
+      "label": "Грибковый дерматит",
+      "requires": [
+        "general_exam",
+        "skin_exam"
+      ],
+      "feedback": "Нет типичной жирности и запаха, а блошиный контакт подтверждён.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "comprehensive_flea_allergy_plan",
+      "source": "doctor_interpretation",
+      "label": "Комплексный план при подозрении на блошиный аллергический дерматит",
+      "steps": [
+        "Провести надёжный контроль блох у пациента и всех контактных животных.",
+        "Обсудить обработку среды и регулярность профилактики.",
+        "Контролировать воспаление и зуд безопасным планом клиники.",
+        "Не оценивать результат по одному дню: требуется время и контроль выполнения."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль через 2–4 игровые недели или раньше при осложнении кожи."
+      },
+      "worseningSigns": [
+        {
+          "id": "comprehensive_flea_allergy_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "мокнущие поражения"
+        },
+        {
+          "id": "comprehensive_flea_allergy_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "гнойнички и запах"
+        },
+        {
+          "id": "comprehensive_flea_allergy_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "резкое ухудшение общего состояния"
+        }
+      ]
+    },
+    {
+      "id": "food_change_only",
+      "source": "doctor_interpretation",
+      "label": "Только сменить корм",
+      "steps": [
+        "Игнорировать подтверждённый блошиный контакт и ограничиться сменой корма."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Вероятен сохраняющийся зуд и повторный визит."
+      },
+      "worseningSigns": [
+        {
+          "id": "food_change_only_w1",
+          "source": "doctor_interpretation",
+          "text": "усиление зуда"
+        },
+        {
+          "id": "food_change_only_w2",
+          "source": "doctor_interpretation",
+          "text": "появление вторичной инфекции"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Локализация поражений и найденные блошиные загрязнения подтверждают контакт с блохами.",
+    "uncertain": "Аллергический компонент оценивается по совокупности признаков и ответу на полноценный контроль паразитов; отдельного мгновенного теста в этом приёме нет.",
+    "plan": "Объяснить обработку всех животных и среды, контроль зуда и срок повторной оценки.",
+    "checkUnderstanding": "«Почему сейчас недостаточно только сменить корм и какие животные дома должны получить обработку?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "мокнущие болезненные поражения"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "гнойнички и резкий запах кожи"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "лихорадка или вялость"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "необычная реакция на противопаразитарный препарат"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_distribution",
+      "source": "doctor_interpretation",
+      "text": "Локализация зуда помогает отличить версию владельца от более вероятной причины.",
+      "discoveryPaths": [
+        "question_location",
+        "skin_exam"
+      ]
+    },
+    {
+      "id": "critical_contacts",
+      "source": "doctor_interpretation",
+      "text": "Необработанные контактные животные могут поддерживать проблему.",
+      "discoveryPaths": [
+        "question_other_animals"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "internet_confident",
+    "budget_limited"
+  ],
+  "compatibleOwnerModifiers": [
+    "internet_diagnosis",
+    "multi_pet_household",
+    "hidden_home_treatment"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Блох не видели, значит, это корм. Блохи же не могут работать тайно»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Корм поменяли три раза. Собака уже ест лучше нас, а чешется по-прежнему»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

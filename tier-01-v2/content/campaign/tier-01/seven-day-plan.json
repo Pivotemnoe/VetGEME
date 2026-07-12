@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 2,
+  "status": "not_connected",
+  "countingRule": "visitsTotal = bookedNew + followUps + unplannedNew; urgent is a subset of visitsTotal and is not added again",
+  "days": [
+    {
+      "day": 1,
+      "title": "Первый приём",
+      "start": "08:00",
+      "end": "13:00",
+      "visitsTotal": {
+        "min": 3,
+        "max": 3
+      },
+      "bookedNew": {
+        "min": 3,
+        "max": 3
+      },
+      "followUps": {
+        "min": 0,
+        "max": 0
+      },
+      "unplannedNew": {
+        "min": 0,
+        "max": 0
+      },
+      "urgentSubset": {
+        "min": 0,
+        "max": 0
+      },
+      "minimumFamilies": 3,
+      "tutorial": "full",
+      "themeTags": [
+        "basic_flow"
+      ],
+      "fallbackRules": []
+    },
+    {
+      "day": 2,
+      "title": "Неполный анамнез",
+      "start": "08:00",
+      "end": "15:00",
+      "visitsTotal": {
+        "min": 4,
+        "max": 4
+      },
+      "bookedNew": {
+        "min": 3,
+        "max": 4
+      },
+      "followUps": {
+        "min": 0,
+        "max": 1
+      },
+      "unplannedNew": {
+        "min": 0,
+        "max": 0
+      },
+      "urgentSubset": {
+        "min": 0,
+        "max": 0
+      },
+      "minimumFamilies": 3,
+      "tutorial": "partial",
+      "themeTags": [
+        "hidden_noncritical_fact",
+        "budget"
+      ],
+      "fallbackRules": [
+        "if_no_followup_fill_with_new_case_tagged_history_gap"
+      ]
+    },
+    {
+      "day": 3,
+      "title": "Версия владельца",
+      "start": "08:00",
+      "end": "16:00",
+      "visitsTotal": {
+        "min": 5,
+        "max": 5
+      },
+      "bookedNew": {
+        "min": 3,
+        "max": 3
+      },
+      "followUps": {
+        "min": 1,
+        "max": 1
+      },
+      "unplannedNew": {
+        "min": 1,
+        "max": 1
+      },
+      "urgentSubset": {
+        "min": 0,
+        "max": 0
+      },
+      "minimumFamilies": 4,
+      "tutorial": "contextual",
+      "themeTags": [
+        "owner_theory",
+        "misnamed_symptom"
+      ],
+      "fallbackRules": [
+        "if_no_followup_fill_with_new_case_tagged_owner_theory"
+      ]
+    },
+    {
+      "day": 4,
+      "title": "Срочность",
+      "start": "08:00",
+      "end": "17:00",
+      "visitsTotal": {
+        "min": 5,
+        "max": 6
+      },
+      "bookedNew": {
+        "min": 3,
+        "max": 4
+      },
+      "followUps": {
+        "min": 1,
+        "max": 1
+      },
+      "unplannedNew": {
+        "min": 1,
+        "max": 1
+      },
+      "urgentSubset": {
+        "min": 1,
+        "max": 1
+      },
+      "minimumFamilies": 4,
+      "tutorial": "warning_only",
+      "themeTags": [
+        "triage"
+      ],
+      "fallbackRules": [
+        "if_no_followup_fill_with_new_routine_case"
+      ],
+      "urgentPool": [
+        "URINARY_OBSTRUCTION",
+        "GI_FOREIGN_BODY",
+        "EYE_CORNEAL_ULCER",
+        "TRAUMA_SUSPECTED_FRACTURE"
+      ]
+    },
+    {
+      "day": 5,
+      "title": "Домашнее лечение",
+      "start": "08:00",
+      "end": "18:00",
+      "visitsTotal": {
+        "min": 6,
+        "max": 6
+      },
+      "bookedNew": {
+        "min": 4,
+        "max": 4
+      },
+      "followUps": {
+        "min": 1,
+        "max": 1
+      },
+      "unplannedNew": {
+        "min": 1,
+        "max": 1
+      },
+      "urgentSubset": {
+        "min": 0,
+        "max": 1
+      },
+      "minimumFamilies": 4,
+      "tutorial": "warning_only",
+      "themeTags": [
+        "home_treatment",
+        "nonjudgmental_question"
+      ],
+      "fallbackRules": [
+        "if_no_followup_fill_with_new_case_tagged_home_treatment"
+      ]
+    },
+    {
+      "day": 6,
+      "title": "Конфликт и границы",
+      "start": "08:00",
+      "end": "18:00",
+      "visitsTotal": {
+        "min": 6,
+        "max": 7
+      },
+      "bookedNew": {
+        "min": 4,
+        "max": 4
+      },
+      "followUps": {
+        "min": 1,
+        "max": 2
+      },
+      "unplannedNew": {
+        "min": 1,
+        "max": 1
+      },
+      "urgentSubset": {
+        "min": 0,
+        "max": 1
+      },
+      "minimumFamilies": 4,
+      "tutorial": "warning_only",
+      "themeTags": [
+        "conflict",
+        "refusal",
+        "budget_compromise"
+      ],
+      "fallbackRules": [
+        "missing_followups_are_replaced_by_new_conflict_compatible_cases"
+      ]
+    },
+    {
+      "day": 7,
+      "title": "Итог недели",
+      "start": "08:00",
+      "end": "18:00",
+      "visitsTotal": {
+        "min": 6,
+        "max": 8
+      },
+      "bookedNew": {
+        "min": 3,
+        "max": 4
+      },
+      "followUps": {
+        "min": 2,
+        "max": 3
+      },
+      "unplannedNew": {
+        "min": 1,
+        "max": 1
+      },
+      "urgentSubset": {
+        "min": 0,
+        "max": 1
+      },
+      "minimumFamilies": 5,
+      "tutorial": "off",
+      "themeTags": [
+        "mixed_review",
+        "consequences"
+      ],
+      "fallbackRules": [
+        "missing_followups_are_replaced_by_new_cases_but_week_report_marks_low_followup_generation"
+      ]
+    }
+  ],
+  "preliminaryScheduleRules": {
+    "showBookedOnly": true,
+    "showNameSpeciesAndShortBookedReason": true,
+    "hideTrueDiagnosis": true,
+    "hideDetailedHistory": true,
+    "hideOwnerProfile": true,
+    "unplannedShownOnlyAsRangeBeforeOpening": true,
+    "generateUnplannedAfterOpening": true
+  }
+}

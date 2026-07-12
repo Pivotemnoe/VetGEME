@@ -1,0 +1,773 @@
+{
+  "schemaVersion": 2,
+  "id": "SKIN_SUPERFICIAL_PYODERMA",
+  "family": "skin",
+  "titleForDeveloper": "Поверхностная пиодермия",
+  "preliminaryDiagnosisLabel": "Поверхностная пиодермия",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 3,
+  "severity": "routine",
+  "species": [
+    "dog"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "microscope",
+    "skin_sampling_kit"
+  ],
+  "requiredActions": [
+    "general_exam",
+    "skin_exam",
+    "sample",
+    "cytology"
+  ],
+  "safeAlternatives": [
+    "staged_plan",
+    "scheduled_recheck"
+  ],
+  "workload": 1.5,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«На животе появились красные прыщики, корочки и участки поредения шерсти»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Кожа пахнет, собака чешется, а вокруг отдельных волосков появились небольшие гнойнички»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Сначала было одно пятно, а теперь рядом появились новые корочки»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_onset",
+      "buttonText": "Когда появились первые поражения?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_spreading_lesions"
+      ],
+      "answers": [
+        {
+          "id": "question_onset_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Первый участок заметили шесть дней назад, затем появились ещё два».",
+          "revealsFactIds": [
+            "fact_spreading_lesions"
+          ]
+        },
+        {
+          "id": "question_onset_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Первый участок заметили шесть дней назад, затем появились ещё два».",
+          "revealsFactIds": [
+            "fact_spreading_lesions"
+          ]
+        },
+        {
+          "id": "question_onset_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Около недели назад, но сначала не придали значения».",
+          "revealsFactIds": [
+            "fact_spreading_lesions"
+          ]
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Почти неделю назад, и теперь очагов стало больше. Я боюсь, что инфекция распространяется».",
+          "revealsFactIds": [
+            "fact_spreading_lesions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_itch",
+      "buttonText": "Насколько выражен зуд?",
+      "category": "skin",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_moderate_pruritus"
+      ],
+      "answers": [
+        {
+          "id": "question_itch_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Зуд умеренный: собака чешет живот несколько раз в день».",
+          "revealsFactIds": [
+            "fact_moderate_pruritus"
+          ]
+        },
+        {
+          "id": "question_itch_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Зуд умеренный: собака чешет живот несколько раз в день».",
+          "revealsFactIds": [
+            "fact_moderate_pruritus"
+          ]
+        },
+        {
+          "id": "question_itch_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Иногда чешется, насколько часто — не следил».",
+          "revealsFactIds": [
+            "fact_moderate_pruritus"
+          ]
+        },
+        {
+          "id": "question_itch_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Чешется чаще, чем обычно, и я боюсь, что расчешет кожу до крови».",
+          "revealsFactIds": [
+            "fact_moderate_pruritus"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Изменились ли аппетит, активность или температура дома?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_systemically_stable"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит и активность сохранены, вялости не было».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит и активность сохранены, вялости не было».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Вроде ведёт себя нормально, температуру дома не измеряли».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Ест и играет, но я переживаю, что кожная инфекция может дать температуру».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_recurrence",
+      "buttonText": "Бывали ли похожие поражения раньше?",
+      "category": "history",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_previous_skin_episode"
+      ],
+      "answers": [
+        {
+          "id": "question_recurrence_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Похожий эпизод был прошлой весной после сильного зуда».",
+          "revealsFactIds": [
+            "fact_previous_skin_episode"
+          ]
+        },
+        {
+          "id": "question_recurrence_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Похожий эпизод был прошлой весной после сильного зуда».",
+          "revealsFactIds": [
+            "fact_previous_skin_episode"
+          ]
+        },
+        {
+          "id": "question_recurrence_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Что-то похожее уже встречалось, но точно не помню».",
+          "revealsFactIds": [
+            "fact_previous_skin_episode"
+          ]
+        },
+        {
+          "id": "question_recurrence_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Да, один раз было, и теперь я боюсь, что это хроническая проблема».",
+          "revealsFactIds": [
+            "fact_previous_skin_episode"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_parasites",
+      "buttonText": "Регулярно ли проводится защита от наружных паразитов?",
+      "category": "prevention",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_parasite_control"
+      ],
+      "answers": [
+        {
+          "id": "question_parasites_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Последняя обработка была месяц назад по графику».",
+          "revealsFactIds": [
+            "fact_parasite_control"
+          ]
+        },
+        {
+          "id": "question_parasites_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Последняя обработка была месяц назад по графику».",
+          "revealsFactIds": [
+            "fact_parasite_control"
+          ]
+        },
+        {
+          "id": "question_parasites_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Обрабатываем время от времени, дату не помню».",
+          "revealsFactIds": [
+            "fact_parasite_control"
+          ]
+        },
+        {
+          "id": "question_parasites_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Обработку делали, но я переживаю, что препарат мог не сработать».",
+          "revealsFactIds": [
+            "fact_parasite_control"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_bathing",
+      "buttonText": "Были ли недавно купание, груминг или новый шампунь?",
+      "category": "exposure",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_bathing_history"
+      ],
+      "answers": [
+        {
+          "id": "question_bathing_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Неделю назад купали обычным шампунем, который использовали раньше».",
+          "revealsFactIds": [
+            "fact_bathing_history"
+          ]
+        },
+        {
+          "id": "question_bathing_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Неделю назад купали обычным шампунем, который использовали раньше».",
+          "revealsFactIds": [
+            "fact_bathing_history"
+          ]
+        },
+        {
+          "id": "question_bathing_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Недавно мыли, каким средством — не вспомню».",
+          "revealsFactIds": [
+            "fact_bathing_history"
+          ]
+        },
+        {
+          "id": "question_bathing_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Купали недавно, и я боюсь, что шампунь мог ухудшить кожу».",
+          "revealsFactIds": [
+            "fact_bathing_history"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Чем уже обрабатывали кожу?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не наносили, только не даём разлизывать участок».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не наносили, только не даём разлизывать участок».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кто-то помазал домашней мазью, название не знаю».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел обработать всё сразу, но решил сначала понять, что это за поражение».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "unknown_human_ointment",
+        "leftover_antibiotic",
+        "vodka_on_wound"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Слизистые оболочки розовые и влажные."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Признаков системной инфекции на момент осмотра нет."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "На вентральной поверхности живота и в паху имеются папулы, небольшие пустулы и корочки."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "В нескольких местах видны поверхностные округлые участки шелушения и поредения шерсти."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Глубоких свищей, выраженного отёка или некроза нет."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Зуд умеренный; кожа местами повреждена расчёсами."
+      }
+    ]
+  },
+  "sampleActions": [
+    {
+      "id": "skin_cytology_sample",
+      "label": "Взять материал с поверхности поражения",
+      "source": "doctor_interpretation",
+      "requires": [
+        "skin_exam"
+      ],
+      "result": {
+        "source": "diagnostic_test",
+        "text": "Получен материал с неповреждённой пустулы и края свежего очага."
+      }
+    }
+  ],
+  "diagnosticTests": [
+    {
+      "id": "skin_cytology",
+      "label": "Поверхностная цитология кожи",
+      "type": "laboratory",
+      "source": "diagnostic_test",
+      "text": "В препарате обнаружены кокковидные бактерии и воспалительные клетки; грибковые клетки не преобладают.",
+      "requires": [
+        "sample"
+      ],
+      "costVetcoins": 80,
+      "durationMinutes": 7
+    }
+  ],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "superficial_pyoderma",
+      "source": "doctor_interpretation",
+      "label": "Поверхностная пиодермия",
+      "requires": [
+        "general_exam",
+        "skin_exam",
+        "sample",
+        "cytology"
+      ],
+      "feedback": "Клиническая картина и цитология соответствуют поверхностной бактериальной инфекции кожи.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "fungal_dermatitis",
+      "source": "doctor_interpretation",
+      "label": "Грибковый дерматит",
+      "requires": [
+        "general_exam",
+        "skin_exam",
+        "sample",
+        "cytology"
+      ],
+      "feedback": "Грибковые клетки не преобладают, а обнаружены бактерии и воспалительные клетки.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "flea_allergy",
+      "source": "doctor_interpretation",
+      "label": "Блошиный аллергический дерматит",
+      "requires": [
+        "general_exam",
+        "skin_exam"
+      ],
+      "feedback": "Паразитарная или аллергическая причина может быть фоновой, но не заменяет диагноз текущего вторичного бактериального поражения.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "deep_infection",
+      "source": "doctor_interpretation",
+      "label": "Глубокая бактериальная инфекция кожи",
+      "requires": [
+        "general_exam",
+        "skin_exam"
+      ],
+      "feedback": "Глубоких узлов, свищей и выраженного системного ухудшения в этом варианте нет.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "pyoderma_plan",
+      "source": "doctor_interpretation",
+      "label": "План при поверхностной пиодермии",
+      "steps": [
+        "Начать обоснованный местный противомикробный уход по схеме клиники.",
+        "Предотвращать разлизывание и дальнейшую травматизацию кожи.",
+        "Оценить и контролировать возможную первичную причину зуда.",
+        "Не использовать случайные человеческие мази или остатки антибиотиков."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль через 7–14 игровых дней или раньше при распространении поражений."
+      },
+      "worseningSigns": [
+        {
+          "id": "pyoderma_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "лихорадка"
+        },
+        {
+          "id": "pyoderma_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "болезненные глубокие узлы"
+        },
+        {
+          "id": "pyoderma_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "быстрое распространение"
+        },
+        {
+          "id": "pyoderma_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "вялость"
+        }
+      ]
+    },
+    {
+      "id": "topical_only_no_cause",
+      "source": "doctor_interpretation",
+      "label": "Обработать только видимые очаги без оценки причины",
+      "steps": [
+        "Уменьшить внешние проявления, не оценивая фактор, который поддерживает зуд и повторение инфекции."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Вероятен рецидив после временного улучшения."
+      },
+      "worseningSigns": [
+        {
+          "id": "topical_only_no_cause_w1",
+          "source": "doctor_interpretation",
+          "text": "новые очаги"
+        },
+        {
+          "id": "topical_only_no_cause_w2",
+          "source": "doctor_interpretation",
+          "text": "усиление зуда"
+        },
+        {
+          "id": "topical_only_no_cause_w3",
+          "source": "doctor_interpretation",
+          "text": "появление глубоких поражений"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "На коже есть поверхностная бактериальная инфекция, подтверждённая цитологией.",
+    "uncertain": "Почему инфекция возникла, пока окончательно не установлено; возможен фон в виде зуда, паразитов или аллергии.",
+    "plan": "Объяснить местный уход, защиту от разлизывания, контроль и необходимость искать причину при повторении.",
+    "checkUnderstanding": "«Что вы будете наносить на кожу, чего наносить нельзя и когда нужно прийти раньше контроля?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "лихорадка и вялость"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "быстрое распространение поражений"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "болезненные узлы или свищи"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "выраженный отёк"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_systemic",
+      "source": "doctor_interpretation",
+      "text": "Системные признаки меняют срочность и предполагаемую глубину инфекции.",
+      "discoveryPaths": [
+        "question_general_state",
+        "general_exam"
+      ]
+    },
+    {
+      "id": "critical_depth",
+      "source": "doctor_interpretation",
+      "text": "Наличие глубоких узлов или свищей исключает неосложнённую поверхностную форму.",
+      "discoveryPaths": [
+        "skin_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "budget_limited",
+    "internet_confident"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "internet_diagnosis",
+    "past_bad_experience"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 2,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Прыщики сначала решили не трогать. Они, видимо, восприняли это как разрешение размножаться»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 2,
+        "text": "«Намазали мазью из домашней аптечки. Название не читается, но тюбик очень уверенный»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

@@ -1,0 +1,752 @@
+{
+  "schemaVersion": 2,
+  "id": "TRAUMA_SOFT_TISSUE_LAMENESS",
+  "family": "trauma",
+  "titleForDeveloper": "Подозрение на травму мягких тканей",
+  "preliminaryDiagnosisLabel": "Подозрение на травму мягких тканей",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 3,
+  "severity": "routine",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [],
+  "requiredActions": [
+    "triage",
+    "general_exam",
+    "gait_exam",
+    "limb_palpation"
+  ],
+  "safeAlternatives": [
+    "rest_and_recheck",
+    "imaging_if_persistent"
+  ],
+  "workload": 1.25,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«После активной прогулки собака начала прихрамывать, но частично опирается на лапу»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Питомец неудачно спрыгнул с дивана и теперь бережёт конечность»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Хромота появляется после нагрузки и уменьшается в покое»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_onset",
+      "buttonText": "Когда и после какого события появилась хромота?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_activity_related_onset"
+      ],
+      "answers": [
+        {
+          "id": "question_onset_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Началась вчера сразу после резкого поворота во время игры».",
+          "revealsFactIds": [
+            "fact_activity_related_onset"
+          ]
+        },
+        {
+          "id": "question_onset_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Началась вчера сразу после резкого поворота во время игры».",
+          "revealsFactIds": [
+            "fact_activity_related_onset"
+          ]
+        },
+        {
+          "id": "question_onset_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«После прогулки, точный момент травмы не видел».",
+          "revealsFactIds": [
+            "fact_activity_related_onset"
+          ]
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«После резкого прыжка вчера, и я боюсь скрытого перелома».",
+          "revealsFactIds": [
+            "fact_activity_related_onset"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_weight_bearing",
+      "buttonText": "Опирается ли животное на лапу?",
+      "category": "trauma",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_partial_weight_bearing"
+      ],
+      "answers": [
+        {
+          "id": "question_weight_bearing_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Да, опирается, но заметно сокращает нагрузку».",
+          "revealsFactIds": [
+            "fact_partial_weight_bearing"
+          ]
+        },
+        {
+          "id": "question_weight_bearing_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Да, опирается, но заметно сокращает нагрузку».",
+          "revealsFactIds": [
+            "fact_partial_weight_bearing"
+          ]
+        },
+        {
+          "id": "question_weight_bearing_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Иногда ставит лапу, иногда держит на весу».",
+          "revealsFactIds": [
+            "fact_partial_weight_bearing"
+          ]
+        },
+        {
+          "id": "question_weight_bearing_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Опирается осторожно, но я переживаю, что боль усиливается».",
+          "revealsFactIds": [
+            "fact_partial_weight_bearing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_progression",
+      "buttonText": "Хромота уменьшается или усиливается?",
+      "category": "progression",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_load_related"
+      ],
+      "answers": [
+        {
+          "id": "question_progression_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«После отдыха становится меньше, после прогулки возвращается».",
+          "revealsFactIds": [
+            "fact_load_related"
+          ]
+        },
+        {
+          "id": "question_progression_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«После отдыха становится меньше, после прогулки возвращается».",
+          "revealsFactIds": [
+            "fact_load_related"
+          ]
+        },
+        {
+          "id": "question_progression_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«То лучше, то хуже, с нагрузкой, кажется, сильнее».",
+          "revealsFactIds": [
+            "fact_load_related"
+          ]
+        },
+        {
+          "id": "question_progression_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«В покое лучше, но после нескольких шагов снова хромает».",
+          "revealsFactIds": [
+            "fact_load_related"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Изменились ли аппетит, активность или температура?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_systemically_stable"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит обычный, хочет играть, но лапу бережёт».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит обычный, хочет играть, но лапу бережёт».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«В остальном ведёт себя нормально».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Ест и активен, но я ограничиваю движения, чтобы не ухудшить травму».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_swelling",
+      "buttonText": "Есть ли отёк, деформация или рана?",
+      "category": "trauma",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_mild_swelling_no_deformity"
+      ],
+      "answers": [
+        {
+          "id": "question_swelling_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Небольшой отёк есть, деформации и раны нет».",
+          "revealsFactIds": [
+            "fact_mild_swelling_no_deformity"
+          ]
+        },
+        {
+          "id": "question_swelling_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Небольшой отёк есть, деформации и раны нет».",
+          "revealsFactIds": [
+            "fact_mild_swelling_no_deformity"
+          ]
+        },
+        {
+          "id": "question_swelling_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Лапа немного припухла, явной кривизны не вижу».",
+          "revealsFactIds": [
+            "fact_mild_swelling_no_deformity"
+          ]
+        },
+        {
+          "id": "question_swelling_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Есть небольшая припухлость, но форма конечности сохранена».",
+          "revealsFactIds": [
+            "fact_mild_swelling_no_deformity"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_previous",
+      "buttonText": "Были ли проблемы с этой конечностью раньше?",
+      "category": "history",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_previous_lameness"
+      ],
+      "answers": [
+        {
+          "id": "question_previous_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, раньше не хромал».",
+          "revealsFactIds": [
+            "fact_no_previous_lameness"
+          ]
+        },
+        {
+          "id": "question_previous_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, раньше не хромал».",
+          "revealsFactIds": [
+            "fact_no_previous_lameness"
+          ]
+        },
+        {
+          "id": "question_previous_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Не помню прежних травм».",
+          "revealsFactIds": [
+            "fact_no_previous_lameness"
+          ]
+        },
+        {
+          "id": "question_previous_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, это первый эпизод, поэтому я особенно переживаю».",
+          "revealsFactIds": [
+            "fact_no_previous_lameness"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже давали или делали дома?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ограничили нагрузку, лекарств не давали».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ограничили нагрузку, лекарств не давали».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Дали половину человеческого обезболивающего, название не помню».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел дать нашу таблетку от боли, но решил не рисковать».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "human_painkiller",
+        "massage_injury",
+        "forced_exercise_test"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Аппетит и интерес к окружающему сохранены."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Признаков шока или системной травмы нет."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Животное частично опирается на поражённую конечность."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Выраженной деформации, патологической подвижности или крепитации нет."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Есть умеренная болезненность мягких тканей и небольшой отёк."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Основные суставы двигаются в допустимом объёме без резкой нестабильности."
+      },
+      {
+        "id": "target_5",
+        "source": "physical_exam",
+        "text": "Неврологический дефицит не выявлен."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "soft_tissue_injury",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на травму мягких тканей",
+      "requires": [
+        "triage",
+        "general_exam",
+        "gait_exam",
+        "limb_palpation"
+      ],
+      "feedback": "Частичная опора, отсутствие деформации и локальная болезненность мягких тканей поддерживают этот предварительный диагноз.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "fracture",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на перелом",
+      "requires": [
+        "triage",
+        "limb_palpation"
+      ],
+      "feedback": "Перелом нельзя исключить абсолютно без визуализации, но в этом варианте нет отказа от опоры, деформации или патологической подвижности.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "dislocation",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на вывих",
+      "requires": [
+        "triage",
+        "limb_palpation"
+      ],
+      "feedback": "Положение сустава сохранено, выраженной нестабильности нет.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "no_problem",
+      "source": "doctor_interpretation",
+      "label": "Поведенческая хромота",
+      "requires": [
+        "gait_exam"
+      ],
+      "feedback": "Объективная локальная болезненность и отёк подтверждают физическую проблему.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "rest_and_recheck",
+      "source": "doctor_interpretation",
+      "label": "Ограничение нагрузки и контроль",
+      "steps": [
+        "Ограничить бег, прыжки и активные игры.",
+        "Использовать только согласованный обезболивающий план.",
+        "Контролировать опору, отёк и болезненность.",
+        "Перейти к визуальной диагностике при отсутствии ожидаемого улучшения."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль через 3–5 игровых дней или раньше при ухудшении."
+      },
+      "worseningSigns": [
+        {
+          "id": "rest_and_recheck_w1",
+          "source": "doctor_interpretation",
+          "text": "полный отказ от опоры"
+        },
+        {
+          "id": "rest_and_recheck_w2",
+          "source": "doctor_interpretation",
+          "text": "нарастающий отёк"
+        },
+        {
+          "id": "rest_and_recheck_w3",
+          "source": "doctor_interpretation",
+          "text": "деформация"
+        },
+        {
+          "id": "rest_and_recheck_w4",
+          "source": "doctor_interpretation",
+          "text": "резкая боль"
+        },
+        {
+          "id": "rest_and_recheck_w5",
+          "source": "doctor_interpretation",
+          "text": "вялость"
+        }
+      ]
+    },
+    {
+      "id": "forced_exercise",
+      "source": "doctor_interpretation",
+      "label": "Проверить лапу активной прогулкой",
+      "steps": [
+        "Увеличить нагрузку, чтобы увидеть, «настоящая» ли хромота."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Такое действие может ухудшить повреждение."
+      },
+      "worseningSigns": [
+        {
+          "id": "forced_exercise_w1",
+          "source": "doctor_interpretation",
+          "text": "усиление хромоты"
+        },
+        {
+          "id": "forced_exercise_w2",
+          "source": "doctor_interpretation",
+          "text": "полный отказ от опоры"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Сейчас есть локальная болезненность и небольшой отёк, но нет явных признаков перелома или вывиха.",
+    "uncertain": "Небольшой перелом или повреждение сустава полностью исключаются только визуальной диагностикой, если динамика не соответствует ожиданиям.",
+    "plan": "Объяснить ограничение нагрузки, безопасное обезболивание и критерии для рентгена.",
+    "checkUnderstanding": "«Какие нагрузки нужно исключить и какое изменение опоры будет поводом сделать снимок раньше?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "полный отказ от опоры"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "деформация конечности"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "быстро растущий отёк"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "резкая боль"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "нарушение чувствительности или движения"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_weight_bearing",
+      "source": "doctor_interpretation",
+      "text": "Полный отказ от опоры повышает риск перелома или тяжёлого повреждения.",
+      "discoveryPaths": [
+        "question_weight_bearing",
+        "gait_exam"
+      ]
+    },
+    {
+      "id": "critical_deformity",
+      "source": "doctor_interpretation",
+      "text": "Деформация меняет случай на срочный.",
+      "discoveryPaths": [
+        "question_swelling",
+        "limb_palpation"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "internet_confident"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "first_pet",
+    "athletic_owner"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Дома он хромает только при нас. Но на кухню за сыром почему-то добегает ровно»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Мы хотели проверить лапу долгой прогулкой. Лапа отказалась участвовать в эксперименте»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

@@ -9,7 +9,16 @@
   const MICROSCOPY_FEE = 90;
   const MAX_CONSECUTIVE_SHIFTS = 3;
   const CLINIC_VIEW = { x: 28, y: 42, scale: 0.88 };
-  const campaign = window.PET_CLINIC_CAMPAIGN;
+  let campaign = window.PET_CLINIC_CAMPAIGN;
+  let generatorRuntime = { mode: "current", catalog: null, generator: null };
+
+  function campaignDayCount() {
+    return generatorRuntime.mode === "tier-01-v2" ? 7 : 5;
+  }
+
+  function isTier01V2() {
+    return generatorRuntime.mode === "tier-01-v2";
+  }
 
   const speciesLabels = {
     dog: "собака",
@@ -822,7 +831,10 @@
     goalStats: {},
     shiftExtended: false,
     chapterComplete: false,
-    firstArrivalPaused: false
+    firstArrivalPaused: false,
+    tutorialVisitId: null,
+    tutorialStepIndex: 0,
+    tutorialComplete: false
   };
 
   const canvas = document.getElementById("clinicCanvas");
@@ -910,7 +922,10 @@
     doctorFatigue: document.getElementById("doctorFatigue"),
     doctorFatigueMeter: document.getElementById("doctorFatigueMeter"),
     devResolvePatientBtn: document.getElementById("devResolvePatientBtn"),
-    devFinishDayBtn: document.getElementById("devFinishDayBtn")
+    devFinishDayBtn: document.getElementById("devFinishDayBtn"),
+    tutorialGuide: document.getElementById("tutorialGuide"),
+    tutorialTitle: document.getElementById("tutorialTitle"),
+    tutorialText: document.getElementById("tutorialText")
   };
 
   function outcome(quality, returnRisk, note) {
@@ -957,12 +972,18 @@
   }
 
   function diseaseFor(patient) {
+    if (patient?.v2Visit) return window.PET_CLINIC_GAME_ADAPTER_V2.diseaseForVisit(patient.v2Visit);
     return diseases[patient.diseaseId];
   }
 
   function diagnosisLabel(id) {
     const diagnosis = diagnosisOptions.find((item) => item.id === id);
-    return diagnosis ? diagnosis.label : "";
+    if (diagnosis) return diagnosis.label;
+    if (generatorRuntime.catalog) {
+      if (id?.startsWith("distractor:")) return generatorRuntime.catalog.casesById[id.slice(11)]?.preliminaryDiagnosisLabel || "";
+      return generatorRuntime.catalog.casesById[id]?.preliminaryDiagnosisLabel || "";
+    }
+    return "";
   }
 
   function communicationLabel(id) {
@@ -974,7 +995,58 @@
     return state.queue.find((patient) => patient.id === state.activeId) || null;
   }
 
+  function tutorialDefinition() {
+    return isTier01V2() ? generatorRuntime.catalog.tutorial : null;
+  }
+
+  function tutorialPatient(patient = activePatient()) {
+    return Boolean(patient && state.tutorialVisitId === patient.v2Visit?.visitId && !state.tutorialComplete);
+  }
+
+  function currentTutorialStep() {
+    return tutorialDefinition()?.steps[state.tutorialStepIndex] || null;
+  }
+
+  function activateTutorial(patient) {
+    const tutorial = tutorialDefinition();
+    if (!tutorial || state.day !== 1 || state.tutorialComplete || state.tutorialVisitId) return;
+    if (!tutorial.eligibleCaseIds.includes(patient.v2Visit?.caseId)) return;
+    state.tutorialVisitId = patient.v2Visit.visitId;
+    state.tutorialStepIndex = 0;
+    patient.protectedFromLeaving = true;
+    state.speed = 1;
+  }
+
+  function tutorialAllows(action) {
+    const step = currentTutorialStep();
+    if (!step) return true;
+    const map = {
+      history: ["history", "history_questions_required"],
+      general_exam: ["general_exam"],
+      target_exam: ["target_exam"],
+      sample: ["sample"],
+      diagnostic_test: ["diagnostic_test"],
+      preliminary_diagnosis: ["preliminary_diagnosis"],
+      explanation: ["explanation"],
+      plan: ["plan", "finish"]
+    };
+    return (map[action] || []).some((id) => step.enabledActions.includes(id));
+  }
+
+  function advanceTutorial(expectedStepId) {
+    if (currentTutorialStep()?.id !== expectedStepId) return;
+    state.tutorialStepIndex += 1;
+    renderCase();
+  }
+
   function currentPlan() {
+    if (generatorRuntime.mode === "legacy-v1") {
+      return generatorRuntime.generator.getOrGenerateDay(state.day, { caseJournal: state.caseJournal });
+    }
+    if (isTier01V2()) {
+      const day = generatorRuntime.generator.getOrGenerateDay(state.day);
+      return day ? window.PET_CLINIC_GAME_ADAPTER_V2.planFromDay(day, generatorRuntime.catalog) : null;
+    }
     const basePlan = campaign.days.find((plan) => plan.day === state.day) || null;
     if (!basePlan || state.day !== 2) return basePlan;
     const completedDayOne = state.caseJournal.filter((item) => item.day === 1);
@@ -1026,7 +1098,7 @@
 
   function maxAllowedSpeed() {
     if (state.day === 1 && state.treatedToday === 0) return 1;
-    if (state.day <= 5 && state.queue.length > 0) return 2;
+    if (state.day <= campaignDayCount() && state.queue.length > 0) return 2;
     return 4;
   }
 
@@ -1147,11 +1219,13 @@
 
   function createPatient(forcedDiseaseId, isReturn, overrides = {}) {
     const diseaseId = forcedDiseaseId || pick(diseaseIds);
-    const disease = diseases[diseaseId];
+    const disease = overrides.v2Visit
+      ? window.PET_CLINIC_GAME_ADAPTER_V2.diseaseForVisit(overrides.v2Visit)
+      : diseases[diseaseId];
     const species = overrides.species || pick(disease.species);
     const flags = { ...(disease.makeFlags ? disease.makeFlags() : {}), ...(overrides.flags || {}) };
     const complaints = overrides.complaints || sample(disease.complaints, 3);
-    const profile = ownerProfiles.find((item) => item.id === overrides.profileId) || pick(ownerProfiles);
+    const profile = overrides.ownerProfile || ownerProfiles.find((item) => item.id === overrides.profileId) || pick(ownerProfiles);
     const patient = {
       id: state.nextPatientId,
       owner: overrides.owner || pick(owners),
@@ -1162,6 +1236,7 @@
       ageYears: overrides.ageYears || (species === "rabbit" ? pick([1, 2, 3, 4, 5]) : pick([1, 2, 3, 4, 6, 8, 10])),
       sex: overrides.sex || pick(["самец", "самка"]),
       diseaseId,
+      v2Visit: overrides.v2Visit || null,
       flags,
       complaints,
       ownerLead: overrides.ownerLead || "",
@@ -1219,7 +1294,7 @@
     state.arrivalsToday += 1;
     if (patient.eventLabel) state.specialEventsToday += 1;
     if (!state.activeId) state.activeId = patient.id;
-    if (state.day <= 5) state.speed = 1;
+    if (state.day <= campaignDayCount()) state.speed = 1;
     if ((state.day === 1 && isFirstArrival) || patient.urgency === "urgent" || patient.eventLabel) {
       state.paused = true;
       state.firstArrivalPaused = state.firstArrivalPaused || isFirstArrival;
@@ -1267,7 +1342,7 @@
   }
 
   function maybeSpawn() {
-    if (state.day <= 5) {
+    if (state.day <= campaignDayCount()) {
       while (state.arrivalSchedule.length && state.arrivalSchedule[0].minute <= state.minute) {
         const plan = currentPlan();
         if (plan && state.queue.length >= plan.maxWaiting) break;
@@ -1315,6 +1390,10 @@
     if (question.id === "medications" && patient.flags.oldDrops) incrementGoal("hiddenFact");
     patient.dxPoints += 1;
     patient.findings.push(question.answer);
+    if (tutorialPatient(patient) && currentTutorialStep()?.id === "history") {
+      const required = patient.v2Visit.medicalContent.historyQuestions.filter((item) => item.required);
+      if (required.every((item) => patient.asked[item.id])) advanceTutorial("history");
+    }
     setLog("Анамнез собран: +1 диагностическое очко.");
     passTime(question.id === "budget" ? 1 : 2);
   }
@@ -1330,6 +1409,7 @@
     patient.findings.push(`Общий осмотр: ${diseaseFor(patient).temperature(patient)} ${diseaseFor(patient).mucous(patient)}`);
     setLog("Проведен общий осмотр: состояние, температура, слизистые и дыхание.");
     creditCompleteExam(patient);
+    if (tutorialPatient(patient)) advanceTutorial("general_exam");
     passTime(3);
   }
 
@@ -1367,6 +1447,7 @@
     setLog(`Локальный осмотр: ${option.label}.`);
     closeChoice();
     creditCompleteExam(patient);
+    if (tutorialPatient(patient)) advanceTutorial("target_exam");
     passTime(option.time);
   }
 
@@ -1382,15 +1463,23 @@
     if (!patient || patient.sampleTaken) return;
     patient.sampleTaken = true;
     patient.stress = clamp(patient.stress + 4, 0, 100);
-    patient.findings.push("Материал для микроскопии взят и промаркирован.");
+    const approvedResult = patient.v2Visit
+      ? window.PET_CLINIC_GAME_ADAPTER_V2.sampleResultFor(patient)
+      : null;
+    patient.findings.push(approvedResult || "Материал для микроскопии взят и промаркирован.");
     setLog("Взят материал для исследования.");
+    if (tutorialPatient(patient)) advanceTutorial("sample");
     passTime(2);
   }
 
   function doMicroscopy() {
     const patient = activePatient();
     if (!patient || patient.microscopyDone) return;
-    if (!patient.sampleTaken) {
+    const approvedTest = patient.v2Visit
+      ? window.PET_CLINIC_GAME_ADAPTER_V2.diagnosticTestFor(patient)
+      : null;
+    const requiresSample = !patient.v2Visit || approvedTest?.requires?.includes("sample");
+    if (requiresSample && !patient.sampleTaken) {
       setLog("Сначала нужно взять материал для исследования.");
       return;
     }
@@ -1398,16 +1487,19 @@
       setLog("Для микроскопии нужно минимум 2 диагностических очка.");
       return;
     }
+    const testFee = approvedTest?.costVetcoins ?? MICROSCOPY_FEE;
+    const testMinutes = approvedTest?.durationMinutes ?? 7;
     patient.dxPoints -= MICROSCOPY_COST;
     patient.microscopyDone = true;
-    patient.findings.push(`${diseaseFor(patient).microscopy(patient)} Стоимость исследования: ${MICROSCOPY_FEE} V.`);
-    state.money += MICROSCOPY_FEE;
-    state.revenueToday += MICROSCOPY_FEE;
-    state.diagnosticRevenueToday += MICROSCOPY_FEE;
+    patient.findings.push(`${diseaseFor(patient).microscopy(patient)} Стоимость исследования: ${testFee} V.`);
+    state.money += testFee;
+    state.revenueToday += testFee;
+    state.diagnosticRevenueToday += testFee;
     state.microscopyToday += 1;
     startDoctorLabTrip();
-    setLog(`Микроскопия выполнена и оплачена: +${MICROSCOPY_FEE} V.`);
-    passTime(7);
+    setLog(`Исследование выполнено и оплачено: +${testFee} V.`);
+    if (tutorialPatient(patient)) advanceTutorial("test");
+    passTime(testMinutes);
   }
 
   function selectDiagnosis(diagnosis) {
@@ -1417,6 +1509,7 @@
     patient.findings.push(`Предварительный диагноз: ${diagnosis.label}.`);
     setLog(`Выбран диагноз: ${diagnosis.label}. Теперь можно назначать лечение.`);
     closeChoice();
+    if (tutorialPatient(patient)) advanceTutorial("preliminary_diagnosis");
     passTime(3);
   }
 
@@ -1436,6 +1529,7 @@
     incrementGoal("explained");
     setLog(`План объяснен: ${option.label.toLowerCase()}. Реакция владельца отражена в шкале доверия.`);
     closeChoice();
+    if (tutorialPatient(patient)) advanceTutorial("explanation");
     passTime(4);
   }
 
@@ -1443,6 +1537,8 @@
     const patient = activePatient();
     if (!patient) return;
     const disease = diseaseFor(patient);
+    const guidedVisit = tutorialPatient(patient);
+    if (guidedVisit) advanceTutorial("plan");
     const result = disease.evaluate(patient, treatment.id);
     const diagnosisCorrect = patient.selectedDiagnosisId === patient.diseaseId;
     const diagnosticsScore = diagnosticScore(patient);
@@ -1532,6 +1628,7 @@
 
     state.caseJournal.push({
       day: state.day,
+      visitId: patient.v2Visit?.visitId || null,
       animal: patient.animal,
       species: patient.species,
       sex: patient.sex,
@@ -1548,8 +1645,15 @@
       visitTime: patient.visitTimeUsed,
       trust: patient.trust,
       quality: effectiveQuality,
-      risk: Math.round(risk * 100)
+      risk: Math.round(risk * 100),
+      followUpRequested: Boolean(patient.v2Visit?.medicalContent.planOptions.find((plan) => plan.id === treatment.id)?.followUp)
     });
+
+    if (guidedVisit) {
+      advanceTutorial("finish");
+      state.tutorialComplete = true;
+      incrementGoal("finish_guided_visit");
+    }
 
     setLog(`${patient.animal}: лечение назначено. Результат станет понятен после наблюдения или повторного обращения.`);
     patient.motion = "leaving";
@@ -1573,6 +1677,7 @@
   }
 
   function correctTreatmentId(patient) {
+    if (patient.v2Visit) return patient.v2Visit.medicalContent.planOptions[0]?.id || null;
     const map = {
       bacterialOtitis: patient.flags.durationDays > 14 ? "dropsAntibiotic" : "antibacterialDrops",
       inflammatoryOtitis: "antiInflammatoryDrops",
@@ -1593,22 +1698,31 @@
     if (!patient.selectedUrgency) selectUrgency(patient.urgency);
     if (!patient.generalExamDone) doGeneralExam();
     if (patient.localUsed === 0) {
-      const localId = patient.diseaseId.includes("Otitis") ? "ears"
-        : patient.diseaseId === "dermatitis" ? "skin"
-          : patient.diseaseId === "trauma" ? "gait" : "abdomen";
-      doLocalExam(localExamOptions.find((option) => option.id === localId));
+      const localOption = patient.v2Visit
+        ? window.PET_CLINIC_GAME_ADAPTER_V2.targetExamOptionFor(patient)
+        : localExamOptions.find((option) => option.id === (patient.diseaseId.includes("Otitis") ? "ears"
+          : patient.diseaseId === "dermatitis" ? "skin"
+            : patient.diseaseId === "trauma" ? "gait" : "abdomen"));
+      doLocalExam(localOption);
     }
     if (!patient.budgetAsked) {
       patient.budgetAsked = true;
       incrementGoal("budget");
     }
-    if (patient.diseaseId.includes("Otitis") && !patient.microscopyDone) {
-      if (!patient.sampleTaken) doSample();
+    if ((patient.diseaseId.includes("Otitis") || patient.v2Visit?.medicalContent.diagnosticTests.length) && !patient.microscopyDone) {
+      const test = patient.v2Visit ? window.PET_CLINIC_GAME_ADAPTER_V2.diagnosticTestFor(patient) : null;
+      if ((!patient.v2Visit || test?.requires?.includes("sample")) && !patient.sampleTaken) doSample();
       doMicroscopy();
     }
-    selectDiagnosis(diagnosisOptions.find((diagnosis) => diagnosis.id === patient.diseaseId));
-    selectCommunication(communicationOptions.find((option) => option.id === patient.ownerProfile.prefers));
-    treatPatient(treatmentOptions.find((treatment) => treatment.id === correctTreatmentId(patient)));
+    const diagnosis = patient.v2Visit
+      ? window.PET_CLINIC_GAME_ADAPTER_V2.diagnosisOptionsFor(patient, generatorRuntime.catalog).find((item) => item.id === patient.diseaseId)
+      : diagnosisOptions.find((item) => item.id === patient.diseaseId);
+    selectDiagnosis(diagnosis);
+    selectCommunication(communicationOptions.find((option) => option.id === patient.ownerProfile.prefers) || communicationOptions[0]);
+    const treatment = patient.v2Visit
+      ? window.PET_CLINIC_GAME_ADAPTER_V2.treatmentOptionsFor(patient).find((item) => item.id === correctTreatmentId(patient))
+      : treatmentOptions.find((item) => item.id === correctTreatmentId(patient));
+    treatPatient(treatment);
   }
 
   function debugFinishDay() {
@@ -1669,7 +1783,7 @@
     const selectedMode = document.querySelector(`input[name="hoursMode"][value="${state.hoursMode}"]`);
     if (selectedMode) selectedMode.checked = true;
     const extendedMode = document.querySelector('input[name="hoursMode"][value="extended"]');
-    if (extendedMode) extendedMode.disabled = state.day <= 5;
+    if (extendedMode) extendedMode.disabled = state.day <= campaignDayCount();
   }
 
   function renderShiftForecast(plan) {
@@ -1680,6 +1794,9 @@
     }
     const returns = plan.patients.filter((patient) => patient.returnVisit).length;
     const walkIns = plan.patients.filter((patient) => patient.source === "walkIn").length;
+    const walkInRange = plan.unplannedRange
+      ? `${plan.unplannedRange.min}–${plan.unplannedRange.max}`
+      : walkIns ? `0–${walkIns}` : "0";
     const rows = plan.patients.map((patient) => `
       <div class="shift-forecast-row">
         <strong>${formatTime(patient.arrivalMinute)}</strong>
@@ -1690,7 +1807,7 @@
       <div class="shift-forecast-summary">
         <span>Записано: <b>${plan.patients.length - walkIns}</b></span>
         <span>Повторных: <b>${returns}</b></span>
-        <span>Walk-in: <b>${walkIns ? `0–${walkIns}` : "0"}</b></span>
+        <span>Без записи: <b>${walkInRange}</b></span>
         <span>Нагрузка: <b>${plan.loadLabel}</b></span>
         <span>Закрытие: <b>${formatTime(plan.endMinute)}</b></span>
       </div>
@@ -1751,7 +1868,8 @@
       return;
     }
     const selectedMode = document.querySelector('input[name="hoursMode"]:checked');
-    state.hoursMode = state.day <= 5 ? "standard" : selectedMode ? selectedMode.value : "standard";
+    state.hoursMode = state.day <= campaignDayCount() ? "standard" : selectedMode ? selectedMode.value : "standard";
+    if (isTier01V2()) generatorRuntime.generator.openDay(state.day);
     const plan = currentPlan();
     state.dayEnd = plan && plan.endMinute
       ? plan.endMinute
@@ -1765,8 +1883,8 @@
     if (state.hoursMode === "extended") addDoctorFatigue(5);
     el.shiftWindow.classList.add("hidden");
 
-    const returns = state.day <= 5 ? [] : state.pendingReturns.filter((item) => item.day === state.day);
-    if (state.day > 5) state.pendingReturns = state.pendingReturns.filter((item) => item.day !== state.day);
+    const returns = state.day <= campaignDayCount() ? [] : state.pendingReturns.filter((item) => item.day === state.day);
+    if (state.day > campaignDayCount()) state.pendingReturns = state.pendingReturns.filter((item) => item.day !== state.day);
     returns.forEach((item) => {
       state.returnsToday += 1;
       spawnPatient(item.diseaseId, true, item);
@@ -1843,6 +1961,15 @@
     const goals = plan ? plan.goals : [];
     const completedGoals = goals.filter(goalComplete).length;
     const todayCases = state.caseJournal.filter((item) => item.day === state.day);
+    if (isTier01V2()) {
+      generatorRuntime.generator.closeDay(state.day, todayCases.map((item) => ({
+        visitId: item.visitId,
+        completed: Boolean(item.visitId),
+        followUpRequested: item.followUpRequested,
+        followUpAfterDays: 1,
+        quality: item.quality
+      })));
+    }
     const doctor = currentDoctor();
     const payroll = state.hoursMode === "extended" ? 430 : 360;
     const rentAndUtilities = state.hoursMode === "extended" ? 150 : 110;
@@ -1868,7 +1995,7 @@
     const reputationReasons = Object.keys(reputationByReason).length
       ? Object.entries(reputationByReason).map(([reason, delta]) => `${delta > 0 ? "+" : ""}${delta.toFixed(1)} — ${reason}`).join("<br>")
       : "Изменений не было.";
-    state.chapterComplete = state.day === 5;
+    state.chapterComplete = state.day === campaignDayCount();
     el.summaryTitle.textContent = state.chapterComplete ? "Первая глава завершена" : `День ${state.day} завершен`;
     el.summaryText.innerHTML = [
       `<b>${plan ? plan.title : "Свободная смена"}</b>`,
@@ -1897,6 +2024,7 @@
   function openCase(patientId) {
     state.activeId = patientId;
     const patient = activePatient();
+    if (patient) activateTutorial(patient);
     if (patient && patient.motion !== "inCabinet") {
       patient.motion = "toCabinet";
       patient.routeIndex = 0;
@@ -1935,12 +2063,17 @@
     const patient = activePatient();
     if (!patient) return;
     const disease = diseaseFor(patient);
+    if (tutorialPatient(patient)) advanceTutorial("intro");
     const budgetQuestion = {
       id: "budget",
       label: "Есть ограничения по бюджету?",
       answer: `Владелец просит по возможности уложиться примерно в ${Math.max(100, Math.floor((patient.budget - 60) / 50) * 50)}–${Math.ceil((patient.budget + 60) / 50) * 50} веткоинов.`
     };
-    const questions = [...disease.anamnesis(patient), budgetQuestion].map((question) => ({
+    const anamnesisQuestions = disease.anamnesis(patient);
+    const availableQuestions = tutorialPatient(patient) && currentTutorialStep()?.id === "history"
+      ? anamnesisQuestions.filter((question) => patient.v2Visit.medicalContent.historyQuestions.find((item) => item.id === question.id)?.required)
+      : [...anamnesisQuestions, budgetQuestion];
+    const questions = availableQuestions.map((question) => ({
       label: question.label,
       note: patient.asked[question.id] ? "Уже спросили." : `Спросить владельца. Потратит ${question.id === "budget" ? 1 : 2} мин. приема.`,
       disabled: patient.asked[question.id],
@@ -1955,7 +2088,10 @@
   function openLocalExam() {
     const patient = activePatient();
     if (!patient) return;
-    const items = localExamOptions.map((option) => ({
+    const availableOptions = patient.v2Visit
+      ? [window.PET_CLINIC_GAME_ADAPTER_V2.targetExamOptionFor(patient)]
+      : localExamOptions;
+    const items = availableOptions.map((option) => ({
       label: option.label,
       note: patient.localDone[option.id]
         ? "Уже осмотрено."
@@ -1998,7 +2134,10 @@
   function openDiagnosis() {
     const patient = activePatient();
     if (!patient) return;
-    const items = diagnosisOptions.map((diagnosis) => ({
+    const availableDiagnoses = patient.v2Visit
+      ? window.PET_CLINIC_GAME_ADAPTER_V2.diagnosisOptionsFor(patient, generatorRuntime.catalog)
+      : diagnosisOptions;
+    const items = availableDiagnoses.map((diagnosis) => ({
       label: diagnosis.label,
       note: patient.selectedDiagnosisId === diagnosis.id
         ? "Сейчас выбран этот диагноз."
@@ -2029,7 +2168,10 @@
       openDiagnosis();
       return;
     }
-    const items = treatmentOptions.map((treatment) => ({
+    const availableTreatments = patient.v2Visit
+      ? window.PET_CLINIC_GAME_ADAPTER_V2.treatmentOptionsFor(patient)
+      : treatmentOptions;
+    const items = availableTreatments.map((treatment) => ({
       label: `${treatment.label} (+${treatment.fee} вет.)`,
       note: `${treatment.note} ${patient.budgetAsked
         ? diseaseFor(patient).baseFee + treatment.fee > patient.budget
@@ -2131,6 +2273,7 @@
     const patient = activePatient();
     if (!patient) {
       el.caseWindow.classList.add("hidden");
+      el.tutorialGuide.classList.add("hidden");
       return;
     }
     el.caseStage.textContent = patient.returnVisit ? "Повторный прием" : "Кабинет врача";
@@ -2141,7 +2284,9 @@
       : patient.selectedUrgency === "routine" ? "Срочность: обычная" : "Срочность: не определена";
     el.caseUrgencyBtn.classList.toggle("urgent", patient.selectedUrgency === "urgent");
     el.caseDuration.textContent = `Прием длится: ${patient.visitTimeUsed} мин.`;
-    el.ownerComplaint.textContent = patient.returnVisit
+    el.ownerComplaint.textContent = patient.v2Visit
+      ? patient.v2Visit.complaint.text
+      : patient.returnVisit
       ? `«После прошлого лечения не стало нормально. ${patient.complaints.join(", ")}.»`
       : `«${patient.ownerLead ? `${patient.ownerLead}. ` : ""}${patient.complaints.join(", ")}.»`;
     el.findingsList.textContent = "";
@@ -2155,11 +2300,15 @@
       li.textContent = "Осмотр еще не проводился.";
       el.findingsList.appendChild(li);
     }
-    const unknown = [];
-    if (!patient.asked.duration && !patient.asked.start) unknown.push("Когда точно начались симптомы");
-    if (!patient.asked.previous) unknown.push("Были ли подобные эпизоды");
-    if (!patient.asked.parasite) unknown.push("Проводились ли обработки");
-    if (patient.flags.oldDrops && !patient.asked.medications) unknown.push("Какие препараты уже применяли дома");
+    const unknown = patient.v2Visit
+      ? patient.v2Visit.medicalContent.historyQuestions
+        .filter((question) => question.required && !patient.asked[question.id])
+        .map((question) => question.buttonText)
+      : [];
+    if (!patient.v2Visit && !patient.asked.duration && !patient.asked.start) unknown.push("Когда точно начались симптомы");
+    if (!patient.v2Visit && !patient.asked.previous) unknown.push("Были ли подобные эпизоды");
+    if (!patient.v2Visit && !patient.asked.parasite) unknown.push("Проводились ли обработки");
+    if (!patient.v2Visit && patient.flags.oldDrops && !patient.asked.medications) unknown.push("Какие препараты уже применяли дома");
     if (!patient.budgetAsked) unknown.push("Есть ли ограничения по бюджету");
     el.unknownList.textContent = "";
     (unknown.length ? unknown : ["Основные сведения уточнены"]).forEach((item) => {
@@ -2179,15 +2328,59 @@
       ? `${Math.max(100, Math.floor((patient.budget - 60) / 50) * 50)}–${Math.ceil((patient.budget + 60) / 50) * 50} V`
       : "не обсуждался";
     el.ownerConsent.textContent = patient.sampleTaken ? "на исследование получено" : "нужно уточнить";
-    const selectedDiagnosis = diagnosisOptions.find((diagnosis) => diagnosis.id === patient.selectedDiagnosisId);
+    const selectedDiagnosis = diagnosisLabel(patient.selectedDiagnosisId);
     el.diagnosisChip.textContent = selectedDiagnosis
-      ? `Рабочая версия: ${selectedDiagnosis.label}`
+      ? `Рабочая версия: ${selectedDiagnosis}`
       : "Рабочая версия не выбрана";
     el.generalExamBtn.disabled = patient.generalExamDone;
     el.localExamBtn.disabled = patient.localUsed >= MAX_LOCAL_EXAMS;
-    el.sampleBtn.disabled = patient.sampleTaken;
-    el.microscopyBtn.disabled = patient.microscopyDone || !patient.sampleTaken;
+    const supportsSample = !patient.v2Visit || patient.v2Visit.medicalContent.sampleActions.length > 0;
+    const supportsTest = !patient.v2Visit || patient.v2Visit.medicalContent.diagnosticTests.length > 0;
+    if (patient.v2Visit) {
+      const sampleAction = patient.v2Visit.medicalContent.sampleActions[0];
+      const diagnosticTest = window.PET_CLINIC_GAME_ADAPTER_V2.diagnosticTestFor(patient);
+      el.sampleBtn.querySelector("span").textContent = sampleAction?.label || "Материал не требуется";
+      el.microscopyBtn.querySelector("span").textContent = diagnosticTest?.label || "Исследование не требуется";
+      el.microscopyBtn.querySelector("small").textContent = diagnosticTest
+        ? `${diagnosticTest.durationMinutes} мин. · доход ${diagnosticTest.costVetcoins} V`
+        : "нет показаний";
+    } else {
+      el.sampleBtn.querySelector("span").textContent = "Взять материал";
+      el.microscopyBtn.querySelector("span").textContent = "Микроскопия";
+      el.microscopyBtn.querySelector("small").textContent = "7 мин. · доход 90 V";
+    }
+    el.sampleBtn.disabled = patient.sampleTaken || !supportsSample;
+    const testRequiresSample = !patient.v2Visit
+      || window.PET_CLINIC_GAME_ADAPTER_V2.diagnosticTestFor(patient)?.requires?.includes("sample");
+    el.microscopyBtn.disabled = patient.microscopyDone || (testRequiresSample && !patient.sampleTaken) || !supportsTest;
     el.treatmentBtn.disabled = !patient.selectedDiagnosisId;
+    const guided = tutorialPatient(patient);
+    const tutorialStep = guided ? currentTutorialStep() : null;
+    const tutorialActions = [
+      [el.anamnesisBtn, "history"],
+      [el.generalExamBtn, "general_exam"],
+      [el.localExamBtn, "target_exam"],
+      [el.sampleBtn, "sample"],
+      [el.microscopyBtn, "diagnostic_test"],
+      [el.diagnosisBtn, "preliminary_diagnosis"],
+      [el.communicationBtn, "explanation"],
+      [el.treatmentBtn, "plan"]
+    ];
+    if (tutorialStep) {
+      el.tutorialTitle.textContent = tutorialStep.title;
+      el.tutorialText.textContent = tutorialStep.text;
+      el.tutorialGuide.classList.remove("hidden");
+      el.caseUrgencyBtn.disabled = true;
+      tutorialActions.forEach(([button, action]) => {
+        const allowed = tutorialAllows(action);
+        button.disabled = button.disabled || !allowed;
+        button.classList.toggle("tutorial-focus", allowed);
+      });
+    } else {
+      el.tutorialGuide.classList.add("hidden");
+      el.caseUrgencyBtn.disabled = false;
+      tutorialActions.forEach(([button]) => button.classList.remove("tutorial-focus"));
+    }
     document.querySelectorAll(".stage-tabs button").forEach((button) => button.classList.remove("active"));
     const stage = patient.selectedCommunicationId ? "discharge"
       : patient.selectedDiagnosisId ? "decision"
@@ -2210,7 +2403,7 @@
   function renderCampaign() {
     const plan = currentPlan();
     el.campaignProgress.textContent = plan
-      ? `Глава 1 · день ${plan.chapterDay}/5 · кампания ${state.day}/30`
+      ? `Глава 1 · день ${plan.chapterDay}/${campaignDayCount()} · кампания ${state.day}/30`
       : `Свободный режим · день ${state.day}`;
     el.dayTitle.textContent = plan ? plan.title : "Клиника продолжает работу";
     el.dayGoalsList.textContent = "";
@@ -3093,5 +3286,16 @@
     window.requestAnimationFrame(tick);
   }
 
-  init();
+  window.PET_CLINIC_GENERATOR_READY
+    .then((runtime) => {
+      generatorRuntime = runtime;
+      window.__PET_CLINIC_RUNTIME__ = generatorRuntime;
+      init();
+    })
+    .catch((error) => {
+      console.error("Generator mode initialization failed; current mode retained.", error);
+      generatorRuntime = { mode: "current", catalog: null, generator: null };
+      window.__PET_CLINIC_RUNTIME__ = generatorRuntime;
+      init();
+    });
 })();

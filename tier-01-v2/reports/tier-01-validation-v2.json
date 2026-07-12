@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "jsonParsed": 44,
+  "clinicalFiles": 30,
+  "questions": 210,
+  "answers": 840,
+  "uniqueAnswerTexts": 626,
+  "homeActions": 33,
+  "urgentCases": 6,
+  "warnings": [],
+  "errors": []
+}

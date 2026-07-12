@@ -1,0 +1,853 @@
+{
+  "schemaVersion": 2,
+  "reviewStatus": "editorial_complete_pending_medical_review",
+  "actions": [
+    {
+      "id": "old_ear_drops",
+      "compatibleFamilies": [
+        "ear"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "old_ear_drops_line_1",
+          "source": "owner_history",
+          "text": "«Один раз закапали старые капли с прошлого лечения. Название уже не читается»."
+        },
+        {
+          "id": "old_ear_drops_line_2",
+          "source": "owner_history",
+          "text": "«Использовали то, что осталось в холодильнике после прошлого отита»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может изменить количество выделений и затруднить оценку; не считается адекватным новым планом.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": false
+    },
+    {
+      "id": "hydrogen_peroxide_in_ear",
+      "compatibleFamilies": [
+        "ear"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "hydrogen_peroxide_in_ear_line_1",
+          "source": "owner_history",
+          "text": "«Промыли ухо перекисью: решили, что она всё обеззаразит»."
+        },
+        {
+          "id": "hydrogen_peroxide_in_ear_line_2",
+          "source": "owner_history",
+          "text": "«Налили немного перекиси, после этого он стал трясти головой ещё сильнее»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может усилить раздражение слухового прохода.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "stopped_after_improvement",
+      "compatibleFamilies": [
+        "ear",
+        "skin"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "stopped_after_improvement_line_1",
+          "source": "owner_history",
+          "text": "«Перестали обрабатывать, когда исчез запах и стало меньше зуда»."
+        },
+        {
+          "id": "stopped_after_improvement_line_2",
+          "source": "owner_history",
+          "text": "«Курс не закончили: решили, что раз стало лучше, организм дальше справится сам»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Повышает риск неполного ответа и рецидива.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": false
+    },
+    {
+      "id": "treated_only_one_pet",
+      "compatibleFamilies": [
+        "ear",
+        "skin",
+        "gastrointestinal"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "treated_only_one_pet_line_1",
+          "source": "owner_history",
+          "text": "«Обработали только того, кто чешется. Остальные же пока выглядят нормально»."
+        },
+        {
+          "id": "treated_only_one_pet_line_2",
+          "source": "owner_history",
+          "text": "«Второе животное не лечили: решили не беспокоить без симптомов»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может поддерживать повторное заражение в многопитомном доме.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": false
+    },
+    {
+      "id": "leftover_antibiotic",
+      "compatibleFamilies": [
+        "ear",
+        "skin",
+        "gastrointestinal",
+        "respiratory"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "leftover_antibiotic_line_1",
+          "source": "owner_history",
+          "text": "«Дали одну дозу антибиотика, оставшегося после другого животного»."
+        },
+        {
+          "id": "leftover_antibiotic_line_2",
+          "source": "owner_history",
+          "text": "«Начали старый антибиотик, потому что он уже однажды помог кому-то дома»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может изменить картину и представляет необоснованное применение препарата.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "double_dose",
+      "compatibleFamilies": [
+        "ear",
+        "skin",
+        "gastrointestinal"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "double_dose_line_1",
+          "source": "owner_history",
+          "text": "«Дали двойную дозу, чтобы подействовало быстрее»."
+        },
+        {
+          "id": "double_dose_line_2",
+          "source": "owner_history",
+          "text": "«Первую дозу пропустили и потом решили компенсировать двумя сразу»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Создаёт риск нежелательной реакции.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "rare",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "cotton_swab_in_ear",
+      "compatibleFamilies": [
+        "ear"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "cotton_swab_in_ear_line_1",
+          "source": "owner_history",
+          "text": "«Пытались достать что-то ватной палочкой, но собака дёрнулась»."
+        },
+        {
+          "id": "cotton_swab_in_ear_line_2",
+          "source": "owner_history",
+          "text": "«Залезли палочкой чуть глубже, чем обычно, потому что выделения были далеко»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может протолкнуть инородное тело глубже или травмировать слуховой проход.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "unknown_human_ointment",
+      "compatibleFamilies": [
+        "skin",
+        "trauma",
+        "perianal"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "unknown_human_ointment_line_1",
+          "source": "owner_history",
+          "text": "«Намазали мазью из домашней аптечки. Название на тюбике уже не видно»."
+        },
+        {
+          "id": "unknown_human_ointment_line_2",
+          "source": "owner_history",
+          "text": "«Использовали человеческую мазь “от всего”, потому что она была под рукой»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может раздражать кожу и изменять внешний вид поражения.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "vodka_on_wound",
+      "compatibleFamilies": [
+        "trauma",
+        "perianal"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "vodka_on_wound_line_1",
+          "source": "owner_history",
+          "text": "«Рану обработали водкой. Спирта дома не оказалось»."
+        },
+        {
+          "id": "vodka_on_wound_line_2",
+          "source": "owner_history",
+          "text": "«Протёрли водкой: дед всегда говорил, что это надёжнее воды»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может повреждать ткани и усиливать боль.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 3,
+      "rarity": "rare",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "washed_with_new_shampoo",
+      "compatibleFamilies": [
+        "skin"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "washed_with_new_shampoo_line_1",
+          "source": "owner_history",
+          "text": "«Вымыли ещё раз новым шампунем, чтобы смыть раздражение»."
+        },
+        {
+          "id": "washed_with_new_shampoo_line_2",
+          "source": "owner_history",
+          "text": "«Решили, что запах означает грязь, и стали мыть чаще»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Повторный контакт может усиливать раздражение.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": false
+    },
+    {
+      "id": "applied_onion_or_garlic",
+      "compatibleFamilies": [
+        "skin",
+        "trauma"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "applied_onion_or_garlic_line_1",
+          "source": "owner_history",
+          "text": "«Приложили кашицу из чеснока: в интернете писали, что это натуральный антисептик»."
+        },
+        {
+          "id": "applied_onion_or_garlic_line_2",
+          "source": "owner_history",
+          "text": "«Натёрли участок луком, потому что хотелось обойтись без химии»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может раздражать кожу; не является безопасной универсальной обработкой.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 3,
+      "rarity": "rare",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "human_painkiller",
+      "compatibleFamilies": [
+        "gastrointestinal",
+        "urinary",
+        "trauma"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "human_painkiller_line_1",
+          "source": "owner_history",
+          "text": "«Дали половину человеческой таблетки от боли. Название не помню»."
+        },
+        {
+          "id": "human_painkiller_line_2",
+          "source": "owner_history",
+          "text": "«Использовали наше обезболивающее, потому что животному явно было больно»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может быть токсично или скрывать важные признаки; требует уточнения названия, дозы и времени.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "unknown_human_medicine",
+      "compatibleFamilies": [
+        "gastrointestinal",
+        "urinary",
+        "respiratory"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "unknown_human_medicine_line_1",
+          "source": "owner_history",
+          "text": "«Дали таблетку из домашней аптечки, упаковку не сохранили»."
+        },
+        {
+          "id": "unknown_human_medicine_line_2",
+          "source": "owner_history",
+          "text": "«Использовали человеческое средство по совету знакомого»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Требует немедленного уточнения препарата и возможного токсического риска.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "restricted_water",
+      "compatibleFamilies": [
+        "gastrointestinal"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "restricted_water_line_1",
+          "source": "owner_history",
+          "text": "«Убрали воду, чтобы ему было нечем рвать»."
+        },
+        {
+          "id": "restricted_water_line_2",
+          "source": "owner_history",
+          "text": "«Давали воду только по чайной ложке и надолго убрали миску»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может усугубить обезвоживание.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "leftover_dewormer",
+      "compatibleFamilies": [
+        "gastrointestinal"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "leftover_dewormer_line_1",
+          "source": "owner_history",
+          "text": "«Дали остаток средства от глистов, который лежал после прошлой собаки»."
+        },
+        {
+          "id": "leftover_dewormer_line_2",
+          "source": "owner_history",
+          "text": "«Использовали старую таблетку без упаковки, потому что она была “тоже от паразитов”»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Доза и спектр могут не соответствовать пациенту и паразиту.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "half_tablet_other_pet",
+      "compatibleFamilies": [
+        "gastrointestinal"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "half_tablet_other_pet_line_1",
+          "source": "owner_history",
+          "text": "«Дали половину таблетки взрослой собаки молодому животному»."
+        },
+        {
+          "id": "half_tablet_other_pet_line_2",
+          "source": "owner_history",
+          "text": "«Разделили препарат второго питомца пополам на глаз»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Создаёт риск неправильной дозы и неполного лечения.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "oil_for_foreign_body",
+      "compatibleFamilies": [
+        "gastrointestinal"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "oil_for_foreign_body_line_1",
+          "source": "owner_history",
+          "text": "«Дали растительное масло, чтобы предмет проскользнул»."
+        },
+        {
+          "id": "oil_for_foreign_body_line_2",
+          "source": "owner_history",
+          "text": "«Налили немного масла в еду, надеясь протолкнуть игрушку»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может задержать обращение и не устраняет механическую обструкцию.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "rare",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "induced_vomiting_attempt",
+      "compatibleFamilies": [
+        "gastrointestinal"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "induced_vomiting_attempt_line_1",
+          "source": "owner_history",
+          "text": "«Пытались вызвать рвоту дома по совету из интернета»."
+        },
+        {
+          "id": "induced_vomiting_attempt_line_2",
+          "source": "owner_history",
+          "text": "«Дали средство, чтобы его вырвало, но результата не было»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может быть опасно в зависимости от предмета и состояния.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 3,
+      "rarity": "rare",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "changed_food_without_exam",
+      "compatibleFamilies": [
+        "skin",
+        "gastrointestinal"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "changed_food_without_exam_line_1",
+          "source": "owner_history",
+          "text": "«Сразу сменили корм, потому что решили, что это аллергия»."
+        },
+        {
+          "id": "changed_food_without_exam_line_2",
+          "source": "owner_history",
+          "text": "«Купили самый гипоаллергенный корм, который нашли, ещё до осмотра»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может запутать временную связь и не устраняет подтверждённую другую причину.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": false
+    },
+    {
+      "id": "human_eye_drops",
+      "compatibleFamilies": [
+        "eyes"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "human_eye_drops_line_1",
+          "source": "owner_history",
+          "text": "«Закапали наши капли от красных глаз»."
+        },
+        {
+          "id": "human_eye_drops_line_2",
+          "source": "owner_history",
+          "text": "«Использовали человеческие сосудосуживающие капли один раз»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Некоторые человеческие глазные средства непригодны для животного и могут мешать оценке.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "tea_eye_wash",
+      "compatibleFamilies": [
+        "eyes"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "tea_eye_wash_line_1",
+          "source": "owner_history",
+          "text": "«Промыли глаз чаем: так советовали дома всегда»."
+        },
+        {
+          "id": "tea_eye_wash_line_2",
+          "source": "owner_history",
+          "text": "«Приложили чайный пакетик, потому что глаз был красный»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Не является стерильным или диагностическим методом и может раздражать глаз.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "old_eye_drops",
+      "compatibleFamilies": [
+        "eyes"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "old_eye_drops_line_1",
+          "source": "owner_history",
+          "text": "«Нашли старые глазные капли после прошлого питомца и один раз закапали»."
+        },
+        {
+          "id": "old_eye_drops_line_2",
+          "source": "owner_history",
+          "text": "«Использовали остаток капель без упаковки»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Состав может быть небезопасным при дефекте роговицы.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "rare",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "human_cold_medicine",
+      "compatibleFamilies": [
+        "respiratory"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "human_cold_medicine_line_1",
+          "source": "owner_history",
+          "text": "«Хотели дать человеческий порошок от простуды, но успели только одну маленькую дозу»."
+        },
+        {
+          "id": "human_cold_medicine_line_2",
+          "source": "owner_history",
+          "text": "«Дали средство “от температуры и простуды” из домашней аптечки»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может содержать опасные для животного компоненты.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 3,
+      "rarity": "rare",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "essential_oils_inhalation",
+      "compatibleFamilies": [
+        "respiratory"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "essential_oils_inhalation_line_1",
+          "source": "owner_history",
+          "text": "«Устроили ингаляцию с эфирным маслом, чтобы нос лучше дышал»."
+        },
+        {
+          "id": "essential_oils_inhalation_line_2",
+          "source": "owner_history",
+          "text": "«Капнули масло в горячую воду и посадили рядом с паром»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может раздражать дыхательные пути и быть небезопасным.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 3,
+      "rarity": "rare",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "human_cough_syrup",
+      "compatibleFamilies": [
+        "respiratory"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "human_cough_syrup_line_1",
+          "source": "owner_history",
+          "text": "«Дали чайную ложку человеческого сиропа от кашля»."
+        },
+        {
+          "id": "human_cough_syrup_line_2",
+          "source": "owner_history",
+          "text": "«Использовали сироп ребёнка, потому что кашель звучал одинаково»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Состав и дозировка могут быть опасными; требуется точное название.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "hydrogen_peroxide_on_skin",
+      "compatibleFamilies": [
+        "skin",
+        "trauma",
+        "perianal"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "hydrogen_peroxide_on_skin_line_1",
+          "source": "owner_history",
+          "text": "«Каждый день заливали участок перекисью до пены»."
+        },
+        {
+          "id": "hydrogen_peroxide_on_skin_line_2",
+          "source": "owner_history",
+          "text": "«Обрабатывали перекисью несколько раз, потому что она шипела и казалась эффективной»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Частое применение может повреждать заживающие ткани.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "home_anal_gland_expression",
+      "compatibleFamilies": [
+        "perianal"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "home_anal_gland_expression_line_1",
+          "source": "owner_history",
+          "text": "«Посмотрели видео и попробовали выдавить железы дома»."
+        },
+        {
+          "id": "home_anal_gland_expression_line_2",
+          "source": "owner_history",
+          "text": "«Надавили рядом с анусом, после этого стало болезненнее»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может травмировать воспалённые ткани и усилить боль.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "punctured_abscess_at_home",
+      "compatibleFamilies": [
+        "trauma"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "punctured_abscess_at_home_line_1",
+          "source": "owner_history",
+          "text": "«Попытались проколоть припухлость иглой, но почти ничего не вышло»."
+        },
+        {
+          "id": "punctured_abscess_at_home_line_2",
+          "source": "owner_history",
+          "text": "«Сделали маленькое отверстие дома, чтобы “выпустить гной”»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Создаёт дополнительную травму и риск распространения инфекции.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 3,
+      "rarity": "rare",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "massage_injury",
+      "compatibleFamilies": [
+        "trauma"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "massage_injury_line_1",
+          "source": "owner_history",
+          "text": "«Разминали болезненное место, чтобы “разогнать ушиб”»."
+        },
+        {
+          "id": "massage_injury_line_2",
+          "source": "owner_history",
+          "text": "«Массировали лапу несколько раз в день, хотя питомец отдёргивал её»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может усиливать боль и повреждение тканей.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "forced_exercise_test",
+      "compatibleFamilies": [
+        "trauma"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "forced_exercise_test_line_1",
+          "source": "owner_history",
+          "text": "«Повели на длинную прогулку, чтобы проверить, настоящая ли хромота»."
+        },
+        {
+          "id": "forced_exercise_test_line_2",
+          "source": "owner_history",
+          "text": "«Попросили побегать за мячом: хотели понять, насколько всё серьёзно»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может ухудшить травму.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "home_splint",
+      "compatibleFamilies": [
+        "trauma"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "home_splint_line_1",
+          "source": "owner_history",
+          "text": "«Привязали к лапе линейку и туго замотали бинтом»."
+        },
+        {
+          "id": "home_splint_line_2",
+          "source": "owner_history",
+          "text": "«Сделали шину из картона, но лапа начала отекать»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Неправильная шина может нарушить кровообращение.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 3,
+      "rarity": "rare",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "attempted_reduction",
+      "compatibleFamilies": [
+        "trauma"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "attempted_reduction_line_1",
+          "source": "owner_history",
+          "text": "«Попытались потянуть лапу и вернуть сустав на место»."
+        },
+        {
+          "id": "attempted_reduction_line_2",
+          "source": "owner_history",
+          "text": "«Сосед посоветовал резко выпрямить конечность, мы попробовали один раз»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Может ухудшить перелом, повредить сосуды или нервы.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 3,
+      "rarity": "rare",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "ignored_until_weekend",
+      "compatibleFamilies": [
+        "urinary",
+        "gastrointestinal",
+        "respiratory",
+        "trauma"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "id": "ignored_until_weekend_line_1",
+          "source": "owner_history",
+          "text": "«Симптомы начались раньше, но мы надеялись дождаться выходных и посмотреть, пройдёт ли само»."
+        },
+        {
+          "id": "ignored_until_weekend_line_2",
+          "source": "owner_history",
+          "text": "«Вчера уже было плохо, но решили подождать до утра, потому что клиника рядом должна была открыться»."
+        }
+      ],
+      "discoveryQuestionCategory": "home_treatment",
+      "clinicalEffect": "Задержка обращения может увеличить тяжесть состояния и меняет оценку срочности.",
+      "trustEffect": "neutral_or_positive_if_asked_without_judgment",
+      "humorLevel": 0,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    }
+  ]
+}

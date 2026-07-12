@@ -33,3 +33,22 @@ python3 -m http.server 5174
 node --check game.js
 node --check campaign.js
 ```
+
+## Режимы генератора
+
+По умолчанию запускается текущий стабильный режим. Контрольные режимы доступны отдельными URL:
+
+- `http://127.0.0.1:5174/?generatorMode=current`
+- `http://127.0.0.1:5174/?generatorMode=legacy-v1`
+- `http://127.0.0.1:5174/?generatorMode=tier-01-v2`
+
+Проверки генераторов и утвержденного пакета:
+
+```bash
+npm run test:generator:legacy
+npm run validate:tier-01-v2
+npm run test:generator:v2
+npm run test:adapter:v2
+```
+
+Аудит и план миграции сохранений: `docs/GENERATOR_AUDIT_2026-07-12.md`.

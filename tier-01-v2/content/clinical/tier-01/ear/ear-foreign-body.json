@@ -1,0 +1,737 @@
+{
+  "schemaVersion": 2,
+  "id": "EAR_FOREIGN_BODY",
+  "family": "ear",
+  "titleForDeveloper": "Подозрение на инородное тело слухового прохода",
+  "preliminaryDiagnosisLabel": "Подозрение на инородное тело слухового прохода",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 5,
+  "severity": "priority",
+  "species": [
+    "dog"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "otoscope"
+  ],
+  "requiredActions": [
+    "triage",
+    "general_exam",
+    "otoscopy",
+    "foreign_body_decision"
+  ],
+  "safeAlternatives": [
+    "urgent_referral",
+    "procedural_referral"
+  ],
+  "workload": 1.5,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«После прогулки собака резко начала трясти правым ухом и не даёт к нему прикасаться»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«До прогулки всё было нормально, а теперь питомец постоянно наклоняет голову в одну сторону»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«В траве что-то попало в ухо. Владелец попытался посмотреть, но собака резко дёргается»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_onset",
+      "buttonText": "Насколько внезапно начались симптомы?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_sudden_onset"
+      ],
+      "answers": [
+        {
+          "id": "question_onset_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Начались сразу после прогулки, буквально в течение нескольких минут».",
+          "revealsFactIds": [
+            "fact_sudden_onset"
+          ]
+        },
+        {
+          "id": "question_onset_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Начались сразу после прогулки, буквально в течение нескольких минут».",
+          "revealsFactIds": [
+            "fact_sudden_onset"
+          ]
+        },
+        {
+          "id": "question_onset_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«После прогулки точно уже тряс головой. Было ли это сразу — не уверен».",
+          "revealsFactIds": [
+            "fact_sudden_onset"
+          ]
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Сразу после прогулки резко заскулил и начал трясти головой. Я испугался, что что-то глубоко застряло».",
+          "revealsFactIds": [
+            "fact_sudden_onset"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_laterality",
+      "buttonText": "Какое ухо беспокоит?",
+      "category": "ear",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_unilateral"
+      ],
+      "answers": [
+        {
+          "id": "question_laterality_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Только правое. Левое не чешет».",
+          "revealsFactIds": [
+            "fact_unilateral"
+          ]
+        },
+        {
+          "id": "question_laterality_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Только правое. Левое не чешет».",
+          "revealsFactIds": [
+            "fact_unilateral"
+          ]
+        },
+        {
+          "id": "question_laterality_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кажется, правое. Он так быстро двигается, что трудно проверить».",
+          "revealsFactIds": [
+            "fact_unilateral"
+          ]
+        },
+        {
+          "id": "question_laterality_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Правое, и он постоянно наклоняет голову именно туда».",
+          "revealsFactIds": [
+            "fact_unilateral"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_exposure",
+      "buttonText": "Где гуляли перед началом симптомов?",
+      "category": "exposure",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_grass_exposure"
+      ],
+      "answers": [
+        {
+          "id": "question_exposure_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Бегал по высокой сухой траве и кустам».",
+          "revealsFactIds": [
+            "fact_grass_exposure"
+          ]
+        },
+        {
+          "id": "question_exposure_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Бегал по высокой сухой траве и кустам».",
+          "revealsFactIds": [
+            "fact_grass_exposure"
+          ]
+        },
+        {
+          "id": "question_exposure_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Во дворе и где-то в траве, точнее не следил».",
+          "revealsFactIds": [
+            "fact_grass_exposure"
+          ]
+        },
+        {
+          "id": "question_exposure_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Он забежал в сухую траву, а через минуту уже начал трясти ухом».",
+          "revealsFactIds": [
+            "fact_grass_exposure"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_neurologic",
+      "buttonText": "Есть ли потеря равновесия, вращение или падения?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_balance_loss"
+      ],
+      "answers": [
+        {
+          "id": "question_neurologic_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, ходит ровно. Только наклоняет голову и трясёт ухом».",
+          "revealsFactIds": [
+            "fact_no_balance_loss"
+          ]
+        },
+        {
+          "id": "question_neurologic_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, ходит ровно. Только наклоняет голову и трясёт ухом».",
+          "revealsFactIds": [
+            "fact_no_balance_loss"
+          ]
+        },
+        {
+          "id": "question_neurologic_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Не падал. Про равновесие ничего необычного не заметил».",
+          "revealsFactIds": [
+            "fact_no_balance_loss"
+          ]
+        },
+        {
+          "id": "question_neurologic_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Не падает, но я внимательно слежу, потому что боюсь повреждения внутри уха».",
+          "revealsFactIds": [
+            "fact_no_balance_loss"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_discharge",
+      "buttonText": "Были ли выделения или запах до прогулки?",
+      "category": "ear",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_previous_discharge"
+      ],
+      "answers": [
+        {
+          "id": "question_discharge_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, до прогулки ухо выглядело и пахло обычно».",
+          "revealsFactIds": [
+            "fact_no_previous_discharge"
+          ]
+        },
+        {
+          "id": "question_discharge_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, до прогулки ухо выглядело и пахло обычно».",
+          "revealsFactIds": [
+            "fact_no_previous_discharge"
+          ]
+        },
+        {
+          "id": "question_discharge_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Раньше ничего такого не замечал».",
+          "revealsFactIds": [
+            "fact_no_previous_discharge"
+          ]
+        },
+        {
+          "id": "question_discharge_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, всё началось резко, поэтому я и думаю, что туда что-то попало».",
+          "revealsFactIds": [
+            "fact_no_previous_discharge"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_previous_ear",
+      "buttonText": "Были ли хронические проблемы с этим ухом?",
+      "category": "history",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_chronic_history"
+      ],
+      "answers": [
+        {
+          "id": "question_previous_ear_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, отитов раньше не было».",
+          "revealsFactIds": [
+            "fact_no_chronic_history"
+          ]
+        },
+        {
+          "id": "question_previous_ear_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, отитов раньше не было».",
+          "revealsFactIds": [
+            "fact_no_chronic_history"
+          ]
+        },
+        {
+          "id": "question_previous_ear_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Не помню серьёзных проблем с ушами».",
+          "revealsFactIds": [
+            "fact_no_chronic_history"
+          ]
+        },
+        {
+          "id": "question_previous_ear_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, уши всегда были здоровыми, поэтому резкое начало особенно пугает».",
+          "revealsFactIds": [
+            "fact_no_chronic_history"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Пытались ли что-то достать или закапать?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет. Только посветили телефоном снаружи и сразу приехали».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет. Только посветили телефоном снаружи и сразу приехали».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кто-то пытался посмотреть ватной палочкой, но глубоко не лезли».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел помочь, но он резко дёрнулся, и я остановился, чтобы не протолкнуть предмет глубже».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "cotton_swab_in_ear",
+        "hydrogen_peroxide_in_ear",
+        "old_ear_drops"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Животное в сознании, общее состояние стабильное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Отмечается выраженное беспокойство при попытке осмотреть правое ухо."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Явного нарушения равновесия или координации не наблюдается."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Правое ухо резко болезненно при манипуляции."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "В глубине наружного слухового прохода визуализируется фрагмент растительного материала."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Вокруг предмета имеется локальное покраснение, но обильных хронических выделений нет."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Из-за боли безопасное удаление без дополнительной фиксации или седации сомнительно."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "ear_foreign_body",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на инородное тело слухового прохода",
+      "requires": [
+        "triage",
+        "general_exam",
+        "otoscopy"
+      ],
+      "feedback": "Внезапное одностороннее начало после прогулки и визуализация растительного материала поддерживают этот диагноз.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "bacterial_otitis",
+      "source": "doctor_interpretation",
+      "label": "Бактериальный наружный отит",
+      "requires": [
+        "general_exam",
+        "otoscopy"
+      ],
+      "feedback": "Бактериальный отит может осложнить ситуацию, но не объясняет резкое начало и видимый предмет.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "fungal_otitis",
+      "source": "doctor_interpretation",
+      "label": "Грибковый наружный отит",
+      "requires": [
+        "general_exam",
+        "otoscopy"
+      ],
+      "feedback": "Грибковый отит обычно не начинается настолько внезапно сразу после прогулки.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "ear_mites",
+      "source": "doctor_interpretation",
+      "label": "Ушной клещ",
+      "requires": [
+        "general_exam",
+        "otoscopy"
+      ],
+      "feedback": "Паразитарное поражение обычно не вызывает внезапную выраженную одностороннюю боль после контакта с травой.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "procedural_referral",
+      "source": "doctor_interpretation",
+      "label": "Удаление в подходящих условиях или направление",
+      "steps": [
+        "Не пытаться извлекать предмет вслепую.",
+        "Оценить возможность безопасного удаления с адекватной фиксацией и обезболиванием.",
+        "При глубоком расположении, сильной боли или отсутствии условий направить пациента.",
+        "После удаления повторно осмотреть слуховой проход и барабанную перепонку."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": false,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль после удаления или по рекомендации принимающей клиники."
+      },
+      "worseningSigns": [
+        {
+          "id": "procedural_referral_w1",
+          "source": "doctor_interpretation",
+          "text": "нарушение равновесия"
+        },
+        {
+          "id": "procedural_referral_w2",
+          "source": "doctor_interpretation",
+          "text": "кровотечение"
+        },
+        {
+          "id": "procedural_referral_w3",
+          "source": "doctor_interpretation",
+          "text": "усиление боли"
+        },
+        {
+          "id": "procedural_referral_w4",
+          "source": "doctor_interpretation",
+          "text": "гнойные выделения"
+        }
+      ]
+    },
+    {
+      "id": "urgent_referral",
+      "source": "doctor_interpretation",
+      "label": "Срочное направление при невозможности безопасного осмотра",
+      "steps": [
+        "Прекратить болезненные попытки осмотра.",
+        "Связаться с клиникой, где возможно обезболивание, седация и безопасное удаление.",
+        "Передать сведения о времени начала и домашних попытках удаления."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": false,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Дальнейший контроль определяется после удаления предмета."
+      },
+      "worseningSigns": [
+        {
+          "id": "urgent_referral_w1",
+          "source": "doctor_interpretation",
+          "text": "падения"
+        },
+        {
+          "id": "urgent_referral_w2",
+          "source": "doctor_interpretation",
+          "text": "наклон головы с потерей равновесия"
+        },
+        {
+          "id": "urgent_referral_w3",
+          "source": "doctor_interpretation",
+          "text": "кровотечение"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "В слуховом проходе виден растительный фрагмент, который соответствует внезапному началу симптомов после прогулки.",
+    "uncertain": "До полного безопасного удаления нельзя оценить глубину повреждения и состояние тканей за предметом.",
+    "plan": "Объяснить, почему нельзя доставать предмет ватной палочкой или промывать ухо вслепую, и согласовать удаление либо направление.",
+    "checkUnderstanding": "«Почему дома нельзя продолжать попытки достать предмет и куда вы поедете, если безопасное удаление здесь невозможно?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "нарушение равновесия"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "кровотечение из слухового прохода"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "резкая неуправляемая боль"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "потеря ориентации"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_balance",
+      "source": "doctor_interpretation",
+      "text": "Нарушение равновесия повышает срочность.",
+      "discoveryPaths": [
+        "question_neurologic",
+        "general_exam"
+      ]
+    },
+    {
+      "id": "critical_home_attempt",
+      "source": "doctor_interpretation",
+      "text": "Попытки извлечения могли протолкнуть предмет глубже.",
+      "discoveryPaths": [
+        "question_home_actions"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "first_pet",
+    "past_bad_experience"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Мы уже вытащили одну травинку. Похоже, у неё в ухе осталась родственница»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

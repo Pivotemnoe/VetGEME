@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 2,
+  "tier": 1,
+  "status": "editorial_complete_pending_medical_review",
+  "integrationStatus": "not_connected",
+  "caseCount": 30,
+  "cases": [
+    {
+      "id": "EAR_FUNGAL_OTITIS",
+      "family": "ear",
+      "file": "ear/fungal-otitis.json",
+      "unlockDay": 1,
+      "severity": "routine"
+    },
+    {
+      "id": "EAR_MITES",
+      "family": "ear",
+      "file": "ear/ear-mites.json",
+      "unlockDay": 1,
+      "severity": "routine"
+    },
+    {
+      "id": "EAR_BACTERIAL_OTITIS",
+      "family": "ear",
+      "file": "ear/bacterial-otitis.json",
+      "unlockDay": 2,
+      "severity": "priority"
+    },
+    {
+      "id": "EAR_FOREIGN_BODY",
+      "family": "ear",
+      "file": "ear/ear-foreign-body.json",
+      "unlockDay": 5,
+      "severity": "priority"
+    },
+    {
+      "id": "EAR_RECURRENT_OTITIS",
+      "family": "ear",
+      "file": "ear/recurrent-otitis.json",
+      "unlockDay": 6,
+      "severity": "priority"
+    },
+    {
+      "id": "SKIN_FLEA_INFESTATION",
+      "family": "skin",
+      "file": "skin/flea-infestation.json",
+      "unlockDay": 1,
+      "severity": "routine"
+    },
+    {
+      "id": "SKIN_FLEA_ALLERGY",
+      "family": "skin",
+      "file": "skin/flea-allergy-dermatitis.json",
+      "unlockDay": 2,
+      "severity": "routine"
+    },
+    {
+      "id": "SKIN_SUPERFICIAL_PYODERMA",
+      "family": "skin",
+      "file": "skin/superficial-pyoderma.json",
+      "unlockDay": 3,
+      "severity": "routine"
+    },
+    {
+      "id": "SKIN_FUNGAL_DERMATITIS",
+      "family": "skin",
+      "file": "skin/fungal-dermatitis.json",
+      "unlockDay": 3,
+      "severity": "routine"
+    },
+    {
+      "id": "SKIN_GROOMING_IRRITATION",
+      "family": "skin",
+      "file": "skin/grooming-irritation.json",
+      "unlockDay": 2,
+      "severity": "routine"
+    },
+    {
+      "id": "GI_DIETARY_INDISCRETION",
+      "family": "gastrointestinal",
+      "file": "gastrointestinal/dietary-indiscretion.json",
+      "unlockDay": 1,
+      "severity": "routine"
+    },
+    {
+      "id": "GI_ACUTE_UPSET",
+      "family": "gastrointestinal",
+      "file": "gastrointestinal/acute-gi-upset.json",
+      "unlockDay": 2,
+      "severity": "routine"
+    },
+    {
+      "id": "GI_REGURGITATION",
+      "family": "gastrointestinal",
+      "file": "gastrointestinal/regurgitation.json",
+      "unlockDay": 2,
+      "severity": "routine"
+    },
+    {
+      "id": "GI_INTESTINAL_PARASITES",
+      "family": "gastrointestinal",
+      "file": "gastrointestinal/intestinal-parasites.json",
+      "unlockDay": 3,
+      "severity": "routine"
+    },
+    {
+      "id": "GI_GIARDIA",
+      "family": "gastrointestinal",
+      "file": "gastrointestinal/giardia.json",
+      "unlockDay": 5,
+      "severity": "routine"
+    },
+    {
+      "id": "GI_FOREIGN_BODY",
+      "family": "gastrointestinal",
+      "file": "gastrointestinal/suspected-foreign-body.json",
+      "unlockDay": 4,
+      "severity": "urgent"
+    },
+    {
+      "id": "URINARY_LOWER_SIGNS",
+      "family": "urinary",
+      "file": "urinary/feline-lower-urinary-signs.json",
+      "unlockDay": 3,
+      "severity": "priority"
+    },
+    {
+      "id": "URINARY_OBSTRUCTION",
+      "family": "urinary",
+      "file": "urinary/feline-urethral-obstruction.json",
+      "unlockDay": 4,
+      "severity": "emergency"
+    },
+    {
+      "id": "EYE_CONJUNCTIVITIS",
+      "family": "eyes",
+      "file": "eyes/uncomplicated-conjunctivitis.json",
+      "unlockDay": 3,
+      "severity": "routine"
+    },
+    {
+      "id": "EYE_CORNEAL_ULCER",
+      "family": "eyes",
+      "file": "eyes/corneal-ulcer.json",
+      "unlockDay": 4,
+      "severity": "urgent"
+    },
+    {
+      "id": "RESP_CAT_URI",
+      "family": "respiratory",
+      "file": "respiratory/feline-upper-respiratory-infection.json",
+      "unlockDay": 5,
+      "severity": "routine"
+    },
+    {
+      "id": "RESP_CANINE_COUGH",
+      "family": "respiratory",
+      "file": "respiratory/canine-infectious-cough.json",
+      "unlockDay": 3,
+      "severity": "routine"
+    },
+    {
+      "id": "RESP_SUSPECTED_PNEUMONIA",
+      "family": "respiratory",
+      "file": "respiratory/suspected-pneumonia.json",
+      "unlockDay": 6,
+      "severity": "urgent"
+    },
+    {
+      "id": "PERIANAL_IMPACTION",
+      "family": "perianal",
+      "file": "perianal/anal-gland-impaction.json",
+      "unlockDay": 2,
+      "severity": "routine"
+    },
+    {
+      "id": "PERIANAL_INFLAMMATION",
+      "family": "perianal",
+      "file": "perianal/anal-gland-inflammation.json",
+      "unlockDay": 5,
+      "severity": "priority"
+    },
+    {
+      "id": "TRAUMA_SUPERFICIAL_WOUND",
+      "family": "trauma",
+      "file": "trauma/superficial-wound.json",
+      "unlockDay": 1,
+      "severity": "routine"
+    },
+    {
+      "id": "TRAUMA_BITE_ABSCESS",
+      "family": "trauma",
+      "file": "trauma/bite-wound-abscess.json",
+      "unlockDay": 5,
+      "severity": "priority"
+    },
+    {
+      "id": "TRAUMA_SOFT_TISSUE_LAMENESS",
+      "family": "trauma",
+      "file": "trauma/soft-tissue-lameness.json",
+      "unlockDay": 3,
+      "severity": "routine"
+    },
+    {
+      "id": "TRAUMA_SUSPECTED_FRACTURE",
+      "family": "trauma",
+      "file": "trauma/suspected-fracture.json",
+      "unlockDay": 4,
+      "severity": "urgent"
+    },
+    {
+      "id": "TRAUMA_SUSPECTED_DISLOCATION",
+      "family": "trauma",
+      "file": "trauma/suspected-dislocation.json",
+      "unlockDay": 6,
+      "severity": "urgent"
+    }
+  ],
+  "contentPolicy": {
+    "medicalTextSource": "prewritten_only",
+    "runtimeGenerationOfMedicalText": false,
+    "allowedSpeciesTier01": [
+      "dog",
+      "cat"
+    ],
+    "terminology": {
+      "preferred": "грибковый отит",
+      "policy": "use approved player-facing terminology from case files"
+    }
+  }
+}

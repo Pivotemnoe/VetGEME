@@ -1,0 +1,699 @@
+{
+  "schemaVersion": 2,
+  "id": "RESP_SUSPECTED_PNEUMONIA",
+  "family": "respiratory",
+  "titleForDeveloper": "Подозрение на пневмонию",
+  "preliminaryDiagnosisLabel": "Подозрение на пневмонию",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 6,
+  "severity": "urgent",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [],
+  "requiredActions": [
+    "triage",
+    "general_exam",
+    "respiratory_exam",
+    "urgent_referral"
+  ],
+  "safeAlternatives": [
+    "urgent_referral"
+  ],
+  "workload": 2.0,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«Животное кашляет, стало вялым и дышит заметно чаще даже в покое»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«После нескольких дней кашля появилась температура и отказ от еды»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Питомец тяжело дышит и не хочет ложиться, обычный кашель резко ухудшился»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_breathing",
+      "buttonText": "Как дышит животное в покое?",
+      "category": "triage",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_resting_tachypnea"
+      ],
+      "answers": [
+        {
+          "id": "question_breathing_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Дышит часто, с заметным усилием, даже когда лежит».",
+          "revealsFactIds": [
+            "fact_resting_tachypnea"
+          ]
+        },
+        {
+          "id": "question_breathing_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Дышит часто, с заметным усилием, даже когда лежит».",
+          "revealsFactIds": [
+            "fact_resting_tachypnea"
+          ]
+        },
+        {
+          "id": "question_breathing_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Дыхание явно быстрее обычного, иногда тяжёлое».",
+          "revealsFactIds": [
+            "fact_resting_tachypnea"
+          ]
+        },
+        {
+          "id": "question_breathing_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«В покое дышит часто и напрягает живот, я боюсь, что ему не хватает воздуха».",
+          "revealsFactIds": [
+            "fact_resting_tachypnea"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_onset",
+      "buttonText": "Как развивались кашель и общее состояние?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_worsening_course"
+      ],
+      "answers": [
+        {
+          "id": "question_onset_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Кашель начался пять дней назад, а за последние сутки появилась вялость и учащённое дыхание».",
+          "revealsFactIds": [
+            "fact_worsening_course"
+          ]
+        },
+        {
+          "id": "question_onset_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Кашель начался пять дней назад, а за последние сутки появилась вялость и учащённое дыхание».",
+          "revealsFactIds": [
+            "fact_worsening_course"
+          ]
+        },
+        {
+          "id": "question_onset_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кашляет несколько дней, вчера стало заметно хуже».",
+          "revealsFactIds": [
+            "fact_worsening_course"
+          ]
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Пять дней кашлял, а за ночь резко ослаб и стал тяжело дышать».",
+          "revealsFactIds": [
+            "fact_worsening_course"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_appetite",
+      "buttonText": "Ест и пьёт ли животное?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_anorexia"
+      ],
+      "answers": [
+        {
+          "id": "question_appetite_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«От еды почти отказался, пьёт мало».",
+          "revealsFactIds": [
+            "fact_anorexia"
+          ]
+        },
+        {
+          "id": "question_appetite_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«От еды почти отказался, пьёт мало».",
+          "revealsFactIds": [
+            "fact_anorexia"
+          ]
+        },
+        {
+          "id": "question_appetite_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Ест очень плохо, воду пьёт понемногу».",
+          "revealsFactIds": [
+            "fact_anorexia"
+          ]
+        },
+        {
+          "id": "question_appetite_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Почти не ест и мало пьёт, это совсем не похоже на него».",
+          "revealsFactIds": [
+            "fact_anorexia"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_temperature",
+      "buttonText": "Измеряли ли температуру или замечали озноб?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_fever_history"
+      ],
+      "answers": [
+        {
+          "id": "question_temperature_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Дома измерили повышенную температуру».",
+          "revealsFactIds": [
+            "fact_fever_history"
+          ]
+        },
+        {
+          "id": "question_temperature_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Дома измерили повышенную температуру».",
+          "revealsFactIds": [
+            "fact_fever_history"
+          ]
+        },
+        {
+          "id": "question_temperature_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Казался горячим, точное значение не записали».",
+          "revealsFactIds": [
+            "fact_fever_history"
+          ]
+        },
+        {
+          "id": "question_temperature_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Температура была выше обычной, и я боюсь серьёзной инфекции».",
+          "revealsFactIds": [
+            "fact_fever_history"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_aspiration",
+      "buttonText": "Были ли рвота, регургитация, наркоз или кормление из шприца перед ухудшением?",
+      "category": "risk",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_aspiration_risk"
+      ],
+      "answers": [
+        {
+          "id": "question_aspiration_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Два дня назад была регургитация после кормления».",
+          "revealsFactIds": [
+            "fact_aspiration_risk"
+          ]
+        },
+        {
+          "id": "question_aspiration_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Два дня назад была регургитация после кормления».",
+          "revealsFactIds": [
+            "fact_aspiration_risk"
+          ]
+        },
+        {
+          "id": "question_aspiration_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Недавно тошнило, но я не уверен, связано ли это».",
+          "revealsFactIds": [
+            "fact_aspiration_risk"
+          ]
+        },
+        {
+          "id": "question_aspiration_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«После эпизода регургитации начался влажный кашель, и я переживаю, что содержимое попало в лёгкие».",
+          "revealsFactIds": [
+            "fact_aspiration_risk"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_contacts",
+      "buttonText": "Были ли контакты с больными животными?",
+      "category": "contacts",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_infectious_contact"
+      ],
+      "answers": [
+        {
+          "id": "question_contacts_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Недавно был в гостинице, где несколько собак кашляли».",
+          "revealsFactIds": [
+            "fact_infectious_contact"
+          ]
+        },
+        {
+          "id": "question_contacts_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Недавно был в гостинице, где несколько собак кашляли».",
+          "revealsFactIds": [
+            "fact_infectious_contact"
+          ]
+        },
+        {
+          "id": "question_contacts_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Контакты с собаками были, подробностей не знаю».",
+          "revealsFactIds": [
+            "fact_infectious_contact"
+          ]
+        },
+        {
+          "id": "question_contacts_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Был на площадке среди кашляющих собак, и теперь я виню себя, что не уехал раньше».",
+          "revealsFactIds": [
+            "fact_infectious_contact"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже давали дома?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не давали и сразу приехали после ухудшения дыхания».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не давали и сразу приехали после ухудшения дыхания».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Дали остаток антибиотика, название и дозу не помню».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я дал одну старую таблетку, но дыхание не улучшилось, поэтому приехал срочно».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "leftover_antibiotic",
+        "human_cough_syrup",
+        "essential_oils_inhalation"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Животное вялое и испытывает дыхательный дискомфорт."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела повышена."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Дыхание учащённое и требует усилия."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Слизистые оболочки требуют внимательной оценки; состояние не подходит для обычного ожидания."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "При аускультации в лёгких слышны патологические влажные и усиленные дыхательные шумы."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Кашель влажнее, чем при неосложнённом инфекционном кашле."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Животное не переносит длительную фиксацию из-за дыхательной нагрузки."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Требуются кислородная поддержка и визуальная диагностика в оснащённой клинике."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "suspected_pneumonia",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на пневмонию",
+      "requires": [
+        "triage",
+        "general_exam",
+        "respiratory_exam"
+      ],
+      "feedback": "Лихорадка, вялость, учащённое дыхание и патологические шумы в лёгких требуют срочно исключать пневмонию.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "infectious_cough",
+      "source": "doctor_interpretation",
+      "label": "Неосложнённый инфекционный кашель",
+      "requires": [
+        "general_exam",
+        "respiratory_exam"
+      ],
+      "feedback": "Системное ухудшение и нарушение дыхания не соответствуют неосложнённому варианту.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": true
+    },
+    {
+      "id": "upper_respiratory",
+      "source": "doctor_interpretation",
+      "label": "Инфекция верхних дыхательных путей",
+      "requires": [
+        "general_exam",
+        "respiratory_exam"
+      ],
+      "feedback": "Патологические шумы в лёгких и дыхательное усилие указывают на поражение нижних дыхательных путей.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "observe_home",
+      "source": "doctor_interpretation",
+      "label": "Домашнее наблюдение до завтра",
+      "requires": [
+        "triage"
+      ],
+      "feedback": "Откладывать диагностику и поддержку при дыхательной недостаточности небезопасно.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": true
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "urgent_referral",
+      "source": "doctor_interpretation",
+      "label": "Срочная стабилизация и направление",
+      "steps": [
+        "Минимизировать стресс и длительные манипуляции.",
+        "Начать доступную кислородную или иную стабилизацию в пределах клиники.",
+        "Связаться с принимающей клиникой для рентгенографии, анализов и интенсивного лечения.",
+        "Передать сведения о динамике, возможной аспирации и домашних препаратах."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": false,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Дальнейший контроль определяется после стабилизации и диагностики."
+      },
+      "worseningSigns": [
+        {
+          "id": "urgent_referral_w1",
+          "source": "doctor_interpretation",
+          "text": "усиление дыхательного усилия"
+        },
+        {
+          "id": "urgent_referral_w2",
+          "source": "doctor_interpretation",
+          "text": "синюшность"
+        },
+        {
+          "id": "urgent_referral_w3",
+          "source": "doctor_interpretation",
+          "text": "коллапс"
+        },
+        {
+          "id": "urgent_referral_w4",
+          "source": "doctor_interpretation",
+          "text": "нарушение сознания"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Есть лихорадка, вялость, учащённое затруднённое дыхание и патологические шумы в лёгких.",
+    "uncertain": "Точную причину и объём поражения нужно определить визуальной диагностикой и анализами, но откладывать помощь нельзя.",
+    "plan": "Объяснить срочную стабилизацию и направление, не перегружая пациента лишними действиями.",
+    "checkUnderstanding": "«Куда вы едете сейчас и почему обычный план при кашле в этой ситуации недостаточен?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "дыхание с выраженным усилием"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "синюшность слизистых"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "коллапс"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "нарушение сознания"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "невозможность спокойно лежать из-за одышки"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_breathing",
+      "source": "doctor_interpretation",
+      "text": "Дыхательное усилие в покое делает случай срочным.",
+      "discoveryPaths": [
+        "question_breathing",
+        "respiratory_exam"
+      ]
+    },
+    {
+      "id": "critical_fever",
+      "source": "doctor_interpretation",
+      "text": "Лихорадка и системное ухудшение отличают осложнённый процесс.",
+      "discoveryPaths": [
+        "question_temperature",
+        "general_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "past_bad_experience",
+    "delayed_presentation"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": false,
+    "maximumLevel": 0,
+    "lines": []
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": true,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

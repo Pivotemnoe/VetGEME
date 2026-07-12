@@ -1,0 +1,748 @@
+{
+  "schemaVersion": 2,
+  "id": "TRAUMA_BITE_ABSCESS",
+  "family": "trauma",
+  "titleForDeveloper": "Укушенная рана с подозрением на абсцесс",
+  "preliminaryDiagnosisLabel": "Укушенная рана с формирующимся абсцессом",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 5,
+  "severity": "priority",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "wound_kit"
+  ],
+  "requiredActions": [
+    "triage",
+    "general_exam",
+    "wound_exam",
+    "abscess_assessment"
+  ],
+  "safeAlternatives": [
+    "procedural_plan",
+    "urgent_referral"
+  ],
+  "workload": 1.5,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«После драки несколько дней назад появилась болезненная припухлость»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Сначала на коже была маленькая точка, а теперь участок горячий и мягкий»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Кошка прячется, хуже ест, а под шерстью обнаружили припухлость с неприятным запахом»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_fight",
+      "buttonText": "Была ли драка или контакт с другим животным?",
+      "category": "trauma",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_bite_history"
+      ],
+      "answers": [
+        {
+          "id": "question_fight_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Четыре дня назад подрался с соседским котом».",
+          "revealsFactIds": [
+            "fact_bite_history"
+          ]
+        },
+        {
+          "id": "question_fight_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Четыре дня назад подрался с соседским котом».",
+          "revealsFactIds": [
+            "fact_bite_history"
+          ]
+        },
+        {
+          "id": "question_fight_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Недавно была драка, точную дату не помню».",
+          "revealsFactIds": [
+            "fact_bite_history"
+          ]
+        },
+        {
+          "id": "question_fight_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Четыре дня назад его укусили, и я боялся, что маленькая ранка обманчива».",
+          "revealsFactIds": [
+            "fact_bite_history"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_progression",
+      "buttonText": "Как менялась припухлость?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_progressive_swelling"
+      ],
+      "answers": [
+        {
+          "id": "question_progression_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Сначала была точка, за два дня выросла мягкая болезненная шишка».",
+          "revealsFactIds": [
+            "fact_progressive_swelling"
+          ]
+        },
+        {
+          "id": "question_progression_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Сначала была точка, за два дня выросла мягкая болезненная шишка».",
+          "revealsFactIds": [
+            "fact_progressive_swelling"
+          ]
+        },
+        {
+          "id": "question_progression_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Становилась больше, когда именно — не отслеживал».",
+          "revealsFactIds": [
+            "fact_progressive_swelling"
+          ]
+        },
+        {
+          "id": "question_progression_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Припухлость выросла очень быстро и стала горячей».",
+          "revealsFactIds": [
+            "fact_progressive_swelling"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_discharge",
+      "buttonText": "Есть ли отверстие, кровь, гной или запах?",
+      "category": "trauma",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_purulent_discharge"
+      ],
+      "answers": [
+        {
+          "id": "question_discharge_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Сегодня появилось маленькое отверстие и густые выделения с запахом».",
+          "revealsFactIds": [
+            "fact_purulent_discharge"
+          ]
+        },
+        {
+          "id": "question_discharge_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Сегодня появилось маленькое отверстие и густые выделения с запахом».",
+          "revealsFactIds": [
+            "fact_purulent_discharge"
+          ]
+        },
+        {
+          "id": "question_discharge_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Участок влажный и пахнет, состав не рассматривал».",
+          "revealsFactIds": [
+            "fact_purulent_discharge"
+          ]
+        },
+        {
+          "id": "question_discharge_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Появился гной, и я сразу приехал».",
+          "revealsFactIds": [
+            "fact_purulent_discharge"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Изменились ли аппетит, активность или температура?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_systemic_change"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Стал тише, ест хуже, дома казался горячим».",
+          "revealsFactIds": [
+            "fact_systemic_change"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Стал тише, ест хуже, дома казался горячим».",
+          "revealsFactIds": [
+            "fact_systemic_change"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Немного вялый и хуже ест».",
+          "revealsFactIds": [
+            "fact_systemic_change"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Почти не играет и ест мало, я боюсь распространения инфекции».",
+          "revealsFactIds": [
+            "fact_systemic_change"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_location",
+      "buttonText": "Где находится рана и не ограничивает ли движение?",
+      "category": "trauma",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_location_mobility"
+      ],
+      "answers": [
+        {
+          "id": "question_location_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«На бедре, ходит осторожно из-за боли».",
+          "revealsFactIds": [
+            "fact_location_mobility"
+          ]
+        },
+        {
+          "id": "question_location_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«На бедре, ходит осторожно из-за боли».",
+          "revealsFactIds": [
+            "fact_location_mobility"
+          ]
+        },
+        {
+          "id": "question_location_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«На боку или бедре, немного бережёт лапу».",
+          "revealsFactIds": [
+            "fact_location_mobility"
+          ]
+        },
+        {
+          "id": "question_location_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Припухлость на бедре, и он уже хуже опирается на лапу».",
+          "revealsFactIds": [
+            "fact_location_mobility"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_previous",
+      "buttonText": "Были ли похожие абсцессы раньше?",
+      "category": "history",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_previous_abscess"
+      ],
+      "answers": [
+        {
+          "id": "question_previous_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, это первый такой эпизод».",
+          "revealsFactIds": [
+            "fact_no_previous_abscess"
+          ]
+        },
+        {
+          "id": "question_previous_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, это первый такой эпизод».",
+          "revealsFactIds": [
+            "fact_no_previous_abscess"
+          ]
+        },
+        {
+          "id": "question_previous_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Не помню прежних абсцессов».",
+          "revealsFactIds": [
+            "fact_no_previous_abscess"
+          ]
+        },
+        {
+          "id": "question_previous_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, поэтому я не ожидал, что маленький укус так изменится».",
+          "revealsFactIds": [
+            "fact_no_previous_abscess"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже делали с припухлостью?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не выдавливали, только не даём лизать».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не выдавливали, только не даём лизать».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Пытались проколоть стерильной иглой, но почти ничего не вышло».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел выдавить шишку, но остановился, потому что ему было очень больно».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "punctured_abscess_at_home",
+        "vodka_on_wound",
+        "unknown_human_ointment"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Животное вялое и болезненное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела умеренно повышена."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Аппетит снижен."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Признаков шока нет, но состояние требует приоритетной обработки."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "На месте укуса имеется тёплая болезненная припухлость с размягчением в центре."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Виден небольшой прокол или отверстие с гнойными выделениями."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Окружающие ткани покрасневшие и отёчные."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Глубина полости полностью не оценивается без обработки и дренирования."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "bite_abscess",
+      "source": "doctor_interpretation",
+      "label": "Укушенная рана с формирующимся абсцессом",
+      "requires": [
+        "triage",
+        "general_exam",
+        "wound_exam",
+        "abscess_assessment"
+      ],
+      "feedback": "Анамнез драки, растущая болезненная припухлость, лихорадка и гной соответствуют абсцессу после укуса.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "superficial_wound",
+      "source": "doctor_interpretation",
+      "label": "Поверхностная рана",
+      "requires": [
+        "general_exam",
+        "wound_exam"
+      ],
+      "feedback": "Гнойная полость, системные признаки и выраженная болезненность не соответствуют простой поверхностной ране.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "soft_tissue_trauma",
+      "source": "doctor_interpretation",
+      "label": "Травма мягких тканей без инфекции",
+      "requires": [
+        "general_exam",
+        "wound_exam"
+      ],
+      "feedback": "Гнойные выделения и лихорадка подтверждают инфекционное осложнение.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "observe_home",
+      "source": "doctor_interpretation",
+      "label": "Домашнее наблюдение без обработки",
+      "requires": [
+        "triage"
+      ],
+      "feedback": "Абсцесс и системные признаки требуют лечения.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": true
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "abscess_procedural_plan",
+      "source": "doctor_interpretation",
+      "label": "Обработка и дренирование абсцесса",
+      "steps": [
+        "Обеспечить подходящее обезболивание и обработку полости.",
+        "Дренировать и промыть поражение в безопасных условиях.",
+        "Назначить обоснованный противомикробный план при показаниях.",
+        "Защитить рану и назначить ранний контроль."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль через 1–3 игровых дня и далее по заживлению."
+      },
+      "worseningSigns": [
+        {
+          "id": "abscess_procedural_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "нарастающая вялость"
+        },
+        {
+          "id": "abscess_procedural_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "распространение отёка"
+        },
+        {
+          "id": "abscess_procedural_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "лихорадка"
+        },
+        {
+          "id": "abscess_procedural_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "резкое ухудшение движения"
+        },
+        {
+          "id": "abscess_procedural_plan_w5",
+          "source": "doctor_interpretation",
+          "text": "неприятный запах и некроз"
+        }
+      ]
+    },
+    {
+      "id": "urgent_referral",
+      "source": "doctor_interpretation",
+      "label": "Направление при глубоком или сложном абсцессе",
+      "steps": [
+        "Не выполнять болезненную обработку без достаточных условий.",
+        "Направить при подозрении на глубокое распространение, вовлечение сустава или тяжёлое состояние.",
+        "Передать сведения о драке и домашних попытках."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": false,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль определяется после процедуры."
+      },
+      "worseningSigns": [
+        {
+          "id": "urgent_referral_w1",
+          "source": "doctor_interpretation",
+          "text": "коллапс"
+        },
+        {
+          "id": "urgent_referral_w2",
+          "source": "doctor_interpretation",
+          "text": "распространённое воспаление"
+        },
+        {
+          "id": "urgent_referral_w3",
+          "source": "doctor_interpretation",
+          "text": "сильная боль"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Маленькая укушенная рана закрылась снаружи, но под кожей сформировалась инфицированная полость с гноем.",
+    "uncertain": "Полную глубину и распространение можно оценить только при обработке.",
+    "plan": "Объяснить необходимость дренирования, контроля боли, защиты раны и раннего повторного осмотра.",
+    "checkUnderstanding": "«Почему маленькое отверстие нельзя считать маленькой проблемой и зачем нужен ранний контроль после обработки?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "нарастающая вялость"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "высокая температура"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "распространение отёка"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "вовлечение сустава"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "некроз и резкий запах"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_bite",
+      "source": "doctor_interpretation",
+      "text": "История укуса объясняет глубину при небольшом наружном отверстии.",
+      "discoveryPaths": [
+        "question_fight"
+      ]
+    },
+    {
+      "id": "critical_systemic",
+      "source": "doctor_interpretation",
+      "text": "Лихорадка и вялость повышают срочность.",
+      "discoveryPaths": [
+        "question_general_state",
+        "general_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "delayed_presentation",
+    "outdoor_cat"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Снаружи была точка размером с запятую. Внутри, похоже, вырос целый абзац»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

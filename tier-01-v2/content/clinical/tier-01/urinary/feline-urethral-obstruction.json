@@ -1,0 +1,706 @@
+{
+  "schemaVersion": 2,
+  "id": "URINARY_OBSTRUCTION",
+  "family": "urinary",
+  "titleForDeveloper": "Подозрение на обструкцию мочеиспускательного канала",
+  "preliminaryDiagnosisLabel": "Подозрение на обструкцию мочеиспускательного канала",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 4,
+  "severity": "emergency",
+  "species": [
+    "cat"
+  ],
+  "allowedSex": [
+    "male"
+  ],
+  "requiredEquipment": [],
+  "requiredActions": [
+    "triage",
+    "general_exam",
+    "bladder_assessment",
+    "urgent_referral"
+  ],
+  "safeAlternatives": [
+    "urgent_referral"
+  ],
+  "workload": 2.0,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«Кажется, у кота запор: он постоянно сидит в лотке, но почти ничего не выходит»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Кот часто бегает в лоток, мяукает и вылизывает себя под хвостом»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Сегодня кот почти не встаёт, а нормальной мочи в лотке не было с вечера»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_urine_or_stool",
+      "buttonText": "Вы уверены, что проблема связана со стулом, а не с мочой?",
+      "category": "triage",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_urinary_not_constipation"
+      ],
+      "answers": [
+        {
+          "id": "question_urine_or_stool_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Теперь вижу, что он пытается мочиться: в лотке только несколько капель».",
+          "revealsFactIds": [
+            "fact_urinary_not_constipation"
+          ]
+        },
+        {
+          "id": "question_urine_or_stool_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Теперь вижу, что он пытается мочиться: в лотке только несколько капель».",
+          "revealsFactIds": [
+            "fact_urinary_not_constipation"
+          ]
+        },
+        {
+          "id": "question_urine_or_stool_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Мы думали про запор, но мочевых комков сегодня почти нет».",
+          "revealsFactIds": [
+            "fact_urinary_not_constipation"
+          ]
+        },
+        {
+          "id": "question_urine_or_stool_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Похоже, он пытается именно мочиться, и почти ничего не выходит».",
+          "revealsFactIds": [
+            "fact_urinary_not_constipation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_last_normal",
+      "buttonText": "Когда было последнее нормальное мочеиспускание?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_prolonged_no_urination"
+      ],
+      "answers": [
+        {
+          "id": "question_last_normal_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Последний обычный комок был вчера вечером, около четырнадцати часов назад».",
+          "revealsFactIds": [
+            "fact_prolonged_no_urination"
+          ]
+        },
+        {
+          "id": "question_last_normal_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Последний обычный комок был вчера вечером, около четырнадцати часов назад».",
+          "revealsFactIds": [
+            "fact_prolonged_no_urination"
+          ]
+        },
+        {
+          "id": "question_last_normal_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Вчера что-то было, сегодня нормального комка не видел».",
+          "revealsFactIds": [
+            "fact_prolonged_no_urination"
+          ]
+        },
+        {
+          "id": "question_last_normal_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Со вчерашнего вечера нормальной мочи нет, я уже всё пересчитал».",
+          "revealsFactIds": [
+            "fact_prolonged_no_urination"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_amount",
+      "buttonText": "Выходит ли моча сейчас?",
+      "category": "urinary",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_minimal_urine"
+      ],
+      "answers": [
+        {
+          "id": "question_amount_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Только несколько капель, полноценной порции нет».",
+          "revealsFactIds": [
+            "fact_minimal_urine"
+          ]
+        },
+        {
+          "id": "question_amount_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Только несколько капель, полноценной порции нет».",
+          "revealsFactIds": [
+            "fact_minimal_urine"
+          ]
+        },
+        {
+          "id": "question_amount_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кажется, почти ничего не выходит».",
+          "revealsFactIds": [
+            "fact_minimal_urine"
+          ]
+        },
+        {
+          "id": "question_amount_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Только капли, и при каждой попытке он мяукает».",
+          "revealsFactIds": [
+            "fact_minimal_urine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Есть ли вялость, рвота или отказ от еды?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_systemic_deterioration"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Стал вялым, от еды отказался, утром один раз вырвало».",
+          "revealsFactIds": [
+            "fact_systemic_deterioration"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Стал вялым, от еды отказался, утром один раз вырвало».",
+          "revealsFactIds": [
+            "fact_systemic_deterioration"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Не ест и лежит, рвота вроде была один раз».",
+          "revealsFactIds": [
+            "fact_systemic_deterioration"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Он совсем не ест, лежит и утром его вырвало. Я боюсь, что мы слишком долго ждали».",
+          "revealsFactIds": [
+            "fact_systemic_deterioration"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_previous",
+      "buttonText": "Были ли раньше частые походы в лоток или эпизоды задержки мочи?",
+      "category": "history",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_previous_urinary_signs"
+      ],
+      "answers": [
+        {
+          "id": "question_previous_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Несколько месяцев назад часто ходил в лоток, но тогда моча выходила».",
+          "revealsFactIds": [
+            "fact_previous_urinary_signs"
+          ]
+        },
+        {
+          "id": "question_previous_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Несколько месяцев назад часто ходил в лоток, но тогда моча выходила».",
+          "revealsFactIds": [
+            "fact_previous_urinary_signs"
+          ]
+        },
+        {
+          "id": "question_previous_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Что-то похожее было, но быстро прошло».",
+          "revealsFactIds": [
+            "fact_previous_urinary_signs"
+          ]
+        },
+        {
+          "id": "question_previous_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Раньше были лёгкие симптомы, и теперь я боюсь, что это их осложнение».",
+          "revealsFactIds": [
+            "fact_previous_urinary_signs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_duration_attempts",
+      "buttonText": "Как долго он безуспешно сидит в лотке?",
+      "category": "triage",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_frequent_straining"
+      ],
+      "answers": [
+        {
+          "id": "question_duration_attempts_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«С ночи каждые двадцать-тридцать минут».",
+          "revealsFactIds": [
+            "fact_frequent_straining"
+          ]
+        },
+        {
+          "id": "question_duration_attempts_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«С ночи каждые двадцать-тридцать минут».",
+          "revealsFactIds": [
+            "fact_frequent_straining"
+          ]
+        },
+        {
+          "id": "question_duration_attempts_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Очень часто с утра, точное число не знаю».",
+          "revealsFactIds": [
+            "fact_frequent_straining"
+          ]
+        },
+        {
+          "id": "question_duration_attempts_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Почти всю ночь и утро, и каждая попытка выглядит болезненной».",
+          "revealsFactIds": [
+            "fact_frequent_straining"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже давали или пытались сделать дома?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не давали, сразу приехали после ухудшения».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не давали, сразу приехали после ухудшения».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Дали половину человеческой таблетки от спазма, название не помню».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел дать обезболивающее, но решил не терять время и приехал».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "human_painkiller",
+        "unknown_human_medicine",
+        "ignored_until_weekend"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Кот вялый, напряжённый и болезненно реагирует на манипуляции."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Слизистые оболочки требуют внимания; общее состояние ухудшено."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Есть признаки обезвоживания."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Сочетание вялости, отказа от еды и рвоты повышает срочность."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Мочевой пузырь увеличен, напряжён и болезнен при осторожной пальпации."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Полноценного мочеиспускания по анамнезу не было много часов."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Состояние соответствует вероятной обструкции мочеиспускательного канала."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Продолжать обычную очередь или домашнее наблюдение небезопасно."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "urethral_obstruction",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на обструкцию мочеиспускательного канала",
+      "requires": [
+        "triage",
+        "general_exam",
+        "bladder_assessment"
+      ],
+      "feedback": "Отсутствие нормальной мочи, системное ухудшение и большой напряжённый пузырь требуют экстренного действия.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "constipation",
+      "source": "doctor_interpretation",
+      "label": "Запор",
+      "requires": [
+        "general_exam",
+        "history"
+      ],
+      "feedback": "Уточнение показывает, что кот пытается мочиться, а не дефецировать.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "behavioral",
+      "source": "doctor_interpretation",
+      "label": "Поведенческая проблема с лотком",
+      "requires": [
+        "general_exam",
+        "history"
+      ],
+      "feedback": "Боль, отсутствие мочи, вялость и переполненный пузырь исключают безопасную поведенческую трактовку.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": true
+    },
+    {
+      "id": "uncomplicated_lower_urinary",
+      "source": "doctor_interpretation",
+      "label": "Неосложнённые симптомы нижних мочевыводящих путей",
+      "requires": [
+        "triage",
+        "general_exam",
+        "bladder_assessment"
+      ],
+      "feedback": "Переполненный напряжённый пузырь и системные признаки не соответствуют неосложнённому варианту.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": true
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "urgent_referral",
+      "source": "doctor_interpretation",
+      "label": "Немедленная экстренная помощь или направление",
+      "steps": [
+        "Прервать обычный поток и не откладывать помощь.",
+        "Начать доступную стабилизацию в пределах возможностей клиники.",
+        "Связаться с оснащённой клиникой и передать время последнего нормального мочеиспускания.",
+        "Не отправлять пациента домой для наблюдения."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": false,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Дальнейший контроль определяется после экстренного лечения."
+      },
+      "worseningSigns": [
+        {
+          "id": "urgent_referral_w1",
+          "source": "doctor_interpretation",
+          "text": "коллапс"
+        },
+        {
+          "id": "urgent_referral_w2",
+          "source": "doctor_interpretation",
+          "text": "усиление рвоты"
+        },
+        {
+          "id": "urgent_referral_w3",
+          "source": "doctor_interpretation",
+          "text": "нарастающая слабость"
+        },
+        {
+          "id": "urgent_referral_w4",
+          "source": "doctor_interpretation",
+          "text": "нарушение сознания"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Мочевой пузырь сильно переполнен и болезнен, а нормального мочеиспускания не было много часов. Это похоже на закупорку мочеиспускательного канала.",
+    "uncertain": "Точная причина закупорки и состояние анализов определяются в ходе экстренной помощи, но ждать их дома нельзя.",
+    "plan": "Объяснить немедленную маршрутизацию и то, что домашнее наблюдение или лечение «запора» опасно.",
+    "checkUnderstanding": "«Почему нельзя ждать до завтра и куда вы едете сразу после этого кабинета?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "полное отсутствие мочи"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "повторная рвота"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "коллапс или резкая слабость"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "нарушение сознания"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "большой напряжённый мочевой пузырь"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_last_urine",
+      "source": "doctor_interpretation",
+      "text": "Время последнего нормального мочеиспускания определяет срочность.",
+      "discoveryPaths": [
+        "question_last_normal"
+      ]
+    },
+    {
+      "id": "critical_bladder",
+      "source": "doctor_interpretation",
+      "text": "Большой напряжённый пузырь поддерживает обструкцию.",
+      "discoveryPaths": [
+        "bladder_assessment"
+      ]
+    },
+    {
+      "id": "critical_systemic",
+      "source": "doctor_interpretation",
+      "text": "Рвота и вялость означают системное ухудшение.",
+      "discoveryPaths": [
+        "question_general_state",
+        "general_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "first_pet",
+    "delayed_presentation"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": false,
+    "maximumLevel": 0,
+    "lines": []
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": true,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

@@ -1,0 +1,789 @@
+{
+  "schemaVersion": 2,
+  "id": "EAR_RECURRENT_OTITIS",
+  "family": "ear",
+  "titleForDeveloper": "Рецидивирующий наружный отит",
+  "preliminaryDiagnosisLabel": "Рецидивирующий наружный отит; требуется поиск фоновой причины",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 6,
+  "severity": "priority",
+  "species": [
+    "dog"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "otoscope",
+    "microscope"
+  ],
+  "requiredActions": [
+    "general_exam",
+    "otoscopy",
+    "sample",
+    "microscopy",
+    "differential_plan"
+  ],
+  "safeAlternatives": [
+    "staged_plan",
+    "scheduled_recheck"
+  ],
+  "workload": 1.75,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«Уши снова воспалились через месяц после лечения. Владелец просит повторить прошлые капли»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Проблема с обоими ушами возвращается несколько раз в год, иногда одновременно с зудом лап»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Лечение помогает, но только на короткое время. Запах и выделения появляются снова»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_frequency",
+      "buttonText": "Сколько эпизодов было за последний год?",
+      "category": "history",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_multiple_episodes"
+      ],
+      "answers": [
+        {
+          "id": "question_frequency_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Это уже четвёртый эпизод за восемь месяцев».",
+          "revealsFactIds": [
+            "fact_multiple_episodes"
+          ]
+        },
+        {
+          "id": "question_frequency_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Это уже четвёртый эпизод за восемь месяцев».",
+          "revealsFactIds": [
+            "fact_multiple_episodes"
+          ]
+        },
+        {
+          "id": "question_frequency_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Несколько раз точно было, возможно три или четыре».",
+          "revealsFactIds": [
+            "fact_multiple_episodes"
+          ]
+        },
+        {
+          "id": "question_frequency_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Проблема возвращается почти каждые два месяца, и я боюсь, что мы лечим не причину».",
+          "revealsFactIds": [
+            "fact_multiple_episodes"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_response",
+      "buttonText": "Как быстро помогало прошлое лечение и когда симптомы возвращались?",
+      "category": "progression",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_temporary_response"
+      ],
+      "answers": [
+        {
+          "id": "question_response_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Запах и зуд уменьшались за несколько дней, но через три-четыре недели возвращались».",
+          "revealsFactIds": [
+            "fact_temporary_response"
+          ]
+        },
+        {
+          "id": "question_response_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Запах и зуд уменьшались за несколько дней, но через три-четыре недели возвращались».",
+          "revealsFactIds": [
+            "fact_temporary_response"
+          ]
+        },
+        {
+          "id": "question_response_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Становилось лучше, потом опять хуже. Срок точно не помню».",
+          "revealsFactIds": [
+            "fact_temporary_response"
+          ]
+        },
+        {
+          "id": "question_response_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Капли помогали быстро, но улучшение каждый раз было короче, и это меня тревожит».",
+          "revealsFactIds": [
+            "fact_temporary_response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_bilateral",
+      "buttonText": "Одно ухо болеет или оба?",
+      "category": "ear",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_bilateral_recurrence"
+      ],
+      "answers": [
+        {
+          "id": "question_bilateral_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Обычно оба, но правое почти всегда хуже».",
+          "revealsFactIds": [
+            "fact_bilateral_recurrence"
+          ]
+        },
+        {
+          "id": "question_bilateral_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Обычно оба, но правое почти всегда хуже».",
+          "revealsFactIds": [
+            "fact_bilateral_recurrence"
+          ]
+        },
+        {
+          "id": "question_bilateral_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кажется, оба. Иногда лечили только то, которое выглядело хуже».",
+          "revealsFactIds": [
+            "fact_bilateral_recurrence"
+          ]
+        },
+        {
+          "id": "question_bilateral_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Оба уха, и я боюсь, что воспаление уже хроническое».",
+          "revealsFactIds": [
+            "fact_bilateral_recurrence"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_skin",
+      "buttonText": "Есть ли зуд лап, живота, подмышек или сезонное ухудшение?",
+      "category": "skin",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_generalized_pruritus",
+        "fact_seasonality"
+      ],
+      "answers": [
+        {
+          "id": "question_skin_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Да, одновременно лижет лапы и чешет подмышки, особенно весной и летом».",
+          "revealsFactIds": [
+            "fact_generalized_pruritus",
+            "fact_seasonality"
+          ]
+        },
+        {
+          "id": "question_skin_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Да, одновременно лижет лапы и чешет подмышки, особенно весной и летом».",
+          "revealsFactIds": [
+            "fact_generalized_pruritus",
+            "fact_seasonality"
+          ]
+        },
+        {
+          "id": "question_skin_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Лапы иногда лижет, но с сезоном не связывал».",
+          "revealsFactIds": [
+            "fact_generalized_pruritus",
+            "fact_seasonality"
+          ]
+        },
+        {
+          "id": "question_skin_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Да, зудит не только ухо. Я переживаю, что это аллергия на всё сразу».",
+          "revealsFactIds": [
+            "fact_generalized_pruritus",
+            "fact_seasonality"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_prior_tests",
+      "buttonText": "Проводили ли раньше микроскопию выделений или искали основную причину?",
+      "category": "history",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_previous_workup"
+      ],
+      "answers": [
+        {
+          "id": "question_prior_tests_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, раньше просто назначали капли по внешнему виду».",
+          "revealsFactIds": [
+            "fact_no_previous_workup"
+          ]
+        },
+        {
+          "id": "question_prior_tests_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, раньше просто назначали капли по внешнему виду».",
+          "revealsFactIds": [
+            "fact_no_previous_workup"
+          ]
+        },
+        {
+          "id": "question_prior_tests_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Не знаю. Какие-то анализы могли делать, но результатов у меня нет».",
+          "revealsFactIds": [
+            "fact_no_previous_workup"
+          ]
+        },
+        {
+          "id": "question_prior_tests_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Каждый раз давали новые капли, но никто подробно не объяснял, почему проблема возвращается».",
+          "revealsFactIds": [
+            "fact_no_previous_workup"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_adherence",
+      "buttonText": "Как точно выполняли прошлые назначения?",
+      "category": "adherence",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_adherence"
+      ],
+      "answers": [
+        {
+          "id": "question_adherence_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Капали по схеме семь дней и пришли на один контроль».",
+          "revealsFactIds": [
+            "fact_adherence"
+          ]
+        },
+        {
+          "id": "question_adherence_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Капали по схеме семь дней и пришли на один контроль».",
+          "revealsFactIds": [
+            "fact_adherence"
+          ]
+        },
+        {
+          "id": "question_adherence_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Капали, пока запах не исчез, потом перестали».",
+          "revealsFactIds": [
+            "fact_adherence"
+          ]
+        },
+        {
+          "id": "question_adherence_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Сначала выполняли всё точно, но когда стало лучше, решили не мучить собаку лишними обработками».",
+          "revealsFactIds": [
+            "fact_adherence"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что применяли при этом эпизоде до визита?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не применяли, чтобы не изменить картину перед осмотром».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не применяли, чтобы не изменить картину перед осмотром».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Один раз закапали то, что осталось с прошлого раза».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел повторить старую схему, но решил сначала уточнить, почему всё возвращается».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "old_ear_drops",
+        "stopped_after_improvement",
+        "double_dose"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "На лапах и в подмышечных областях заметны лёгкие признаки хронического зуда."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Системных признаков тяжёлого заболевания не выявлено."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Оба наружных слуховых прохода покрасневшие; правый поражён сильнее."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Кожа слуховых проходов умеренно утолщена, что соответствует повторным эпизодам воспаления."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Имеются восковидные выделения и запах."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Выраженного неврологического дефицита нет."
+      }
+    ]
+  },
+  "sampleActions": [
+    {
+      "id": "bilateral_ear_swabs",
+      "label": "Взять материал из обоих ушей",
+      "source": "doctor_interpretation",
+      "requires": [
+        "otoscopy"
+      ],
+      "result": {
+        "source": "diagnostic_test",
+        "text": "Получены отдельные мазки из правого и левого уха."
+      }
+    }
+  ],
+  "diagnosticTests": [
+    {
+      "id": "bilateral_cytology",
+      "label": "Микроскопия выделений из обоих ушей",
+      "type": "laboratory",
+      "source": "diagnostic_test",
+      "text": "В обоих мазках обнаружены грибковые клетки; в правом ухе также присутствует умеренный бактериальный компонент и больше воспалительных клеток.",
+      "requires": [
+        "sample"
+      ],
+      "costVetcoins": 130,
+      "durationMinutes": 9
+    }
+  ],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "recurrent_otitis",
+      "source": "doctor_interpretation",
+      "label": "Рецидивирующий наружный отит; требуется поиск фоновой причины",
+      "requires": [
+        "general_exam",
+        "otoscopy",
+        "sample",
+        "microscopy"
+      ],
+      "feedback": "Повторные двусторонние эпизоды, временный ответ на лечение и сопутствующий зуд кожи требуют рассматривать отит как часть более широкой проблемы.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "fungal_otitis_only",
+      "source": "doctor_interpretation",
+      "label": "Только грибковый наружный отит",
+      "requires": [
+        "general_exam",
+        "otoscopy",
+        "sample",
+        "microscopy"
+      ],
+      "feedback": "Грибковый компонент есть, но такая формулировка не объясняет частые рецидивы и кожный зуд.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "bacterial_otitis_only",
+      "source": "doctor_interpretation",
+      "label": "Только бактериальный наружный отит",
+      "requires": [
+        "general_exam",
+        "otoscopy",
+        "sample",
+        "microscopy"
+      ],
+      "feedback": "Бактериальный компонент выражен преимущественно справа и не объясняет всю хроническую картину.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "food_allergy_confirmed",
+      "source": "doctor_interpretation",
+      "label": "Подтверждённая пищевая аллергия",
+      "requires": [
+        "general_exam",
+        "history"
+      ],
+      "feedback": "Аллергическая причина возможна, но на текущем приёме она не подтверждена и требует отдельного диагностического плана.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "current_episode_plus_workup",
+      "source": "doctor_interpretation",
+      "label": "Лечение текущего эпизода и поиск фоновой причины",
+      "steps": [
+        "Составить местный план отдельно для каждого уха по результатам цитологии.",
+        "Назначить контроль до полного разрешения воспаления.",
+        "После стабилизации обсудить поэтапный поиск причин хронического зуда и рецидивов.",
+        "Не повторять прошлые капли автоматически без оценки текущего состава выделений."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Ранний контроль текущего эпизода и отдельный плановый визит для фоновой проблемы."
+      },
+      "worseningSigns": [
+        {
+          "id": "current_episode_plus_workup_w1",
+          "source": "doctor_interpretation",
+          "text": "усиление боли"
+        },
+        {
+          "id": "current_episode_plus_workup_w2",
+          "source": "doctor_interpretation",
+          "text": "неврологические признаки"
+        },
+        {
+          "id": "current_episode_plus_workup_w3",
+          "source": "doctor_interpretation",
+          "text": "резкое сужение слухового прохода"
+        },
+        {
+          "id": "current_episode_plus_workup_w4",
+          "source": "doctor_interpretation",
+          "text": "ухудшение кожного зуда"
+        }
+      ]
+    },
+    {
+      "id": "repeat_old_drops",
+      "source": "doctor_interpretation",
+      "label": "Повторить старые капли без исследования",
+      "steps": [
+        "Использовать прошлую схему без учёта текущей цитологии и фоновой причины."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Высокий риск временного улучшения и нового рецидива."
+      },
+      "worseningSigns": [
+        {
+          "id": "repeat_old_drops_w1",
+          "source": "doctor_interpretation",
+          "text": "отсутствие улучшения"
+        },
+        {
+          "id": "repeat_old_drops_w2",
+          "source": "doctor_interpretation",
+          "text": "усиление боли"
+        },
+        {
+          "id": "repeat_old_drops_w3",
+          "source": "doctor_interpretation",
+          "text": "новый рецидив"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Сейчас воспалены оба уха, а состав микрофлоры отличается по сторонам. Проблема повторяется и сопровождается зудом кожи.",
+    "uncertain": "Аллергическое или другое основное заболевание вероятно, но не подтверждается одним ушным мазком.",
+    "plan": "Лечить текущий эпизод по результатам исследования и отдельно согласовать поэтапный поиск фоновой причины.",
+    "checkUnderstanding": "«Почему нельзя просто повторять старые капли при каждом рецидиве и зачем нужен контроль после исчезновения запаха?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "нарастающая боль"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "неврологические признаки"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "резкое сужение слухового прохода"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "лихорадка"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "отсутствие ответа на обоснованный план"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_recurrence",
+      "source": "doctor_interpretation",
+      "text": "Частота рецидивов меняет цель приёма: нужно искать фон, а не только лечить эпизод.",
+      "discoveryPaths": [
+        "question_frequency",
+        "question_response"
+      ]
+    },
+    {
+      "id": "critical_skin",
+      "source": "doctor_interpretation",
+      "text": "Сопутствующий зуд кожи поддерживает системную первичную причину.",
+      "discoveryPaths": [
+        "question_skin",
+        "general_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "internet_confident",
+    "budget_limited",
+    "demanding"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "internet_diagnosis",
+    "past_bad_experience",
+    "limited_budget"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Капли работают прекрасно — ровно до того дня, когда мы перестаём их капать»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«У нас уже целая коллекция ушных флаконов. Можно открывать аптечный музей»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

@@ -1,0 +1,745 @@
+{
+  "schemaVersion": 2,
+  "id": "GI_DIETARY_INDISCRETION",
+  "family": "gastrointestinal",
+  "titleForDeveloper": "Пищевая погрешность",
+  "preliminaryDiagnosisLabel": "Пищевая погрешность без выявленных тревожных признаков",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 1,
+  "severity": "routine",
+  "species": [
+    "dog"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [],
+  "requiredActions": [
+    "general_exam",
+    "abdominal_exam",
+    "risk_assessment"
+  ],
+  "safeAlternatives": [
+    "supportive_monitoring",
+    "scheduled_recheck"
+  ],
+  "workload": 1.0,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«С утра собаку два раза вырвало. Вчера она могла что-то подобрать на прогулке»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«После семейного ужина появилась рвота и мягкий стул, но сейчас питомец выглядит обычно»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Он ничего необычного не ел. Только котлету, кусок колбасы и немного плова»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_food",
+      "buttonText": "Что животное ело за последние сутки?",
+      "category": "diet",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_unusual_food"
+      ],
+      "answers": [
+        {
+          "id": "question_food_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Обычный корм, а вечером получил несколько жирных кусочков мяса со стола».",
+          "revealsFactIds": [
+            "fact_unusual_food"
+          ]
+        },
+        {
+          "id": "question_food_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Обычный корм, а вечером получил несколько жирных кусочков мяса со стола».",
+          "revealsFactIds": [
+            "fact_unusual_food"
+          ]
+        },
+        {
+          "id": "question_food_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Ел корм и что-то со стола. Сколько именно, не знаю».",
+          "revealsFactIds": [
+            "fact_unusual_food"
+          ]
+        },
+        {
+          "id": "question_food_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Кроме корма ему дали котлету и колбасу. Я теперь переживаю, что мы сами спровоцировали рвоту».",
+          "revealsFactIds": [
+            "fact_unusual_food"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_vomiting",
+      "buttonText": "Сколько было эпизодов рвоты и когда был последний?",
+      "category": "gastrointestinal",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_limited_vomiting"
+      ],
+      "answers": [
+        {
+          "id": "question_vomiting_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Два эпизода: ночью и утром. Последний был четыре часа назад».",
+          "revealsFactIds": [
+            "fact_limited_vomiting"
+          ]
+        },
+        {
+          "id": "question_vomiting_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Два эпизода: ночью и утром. Последний был четыре часа назад».",
+          "revealsFactIds": [
+            "fact_limited_vomiting"
+          ]
+        },
+        {
+          "id": "question_vomiting_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Два или три раза, последний — утром».",
+          "revealsFactIds": [
+            "fact_limited_vomiting"
+          ]
+        },
+        {
+          "id": "question_vomiting_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Точно два раза, последний четыре часа назад. Я боюсь, что рвота повторится».",
+          "revealsFactIds": [
+            "fact_limited_vomiting"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_water",
+      "buttonText": "Пьёт ли воду и удерживает ли её?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_water_retained"
+      ],
+      "answers": [
+        {
+          "id": "question_water_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Пьёт небольшими порциями, вода остаётся».",
+          "revealsFactIds": [
+            "fact_water_retained"
+          ]
+        },
+        {
+          "id": "question_water_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Пьёт небольшими порциями, вода остаётся».",
+          "revealsFactIds": [
+            "fact_water_retained"
+          ]
+        },
+        {
+          "id": "question_water_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Пил, после этого вроде не рвало».",
+          "revealsFactIds": [
+            "fact_water_retained"
+          ]
+        },
+        {
+          "id": "question_water_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Воду удерживает, но я даю понемногу и постоянно слежу».",
+          "revealsFactIds": [
+            "fact_water_retained"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_blood",
+      "buttonText": "Была ли кровь в рвоте или стуле?",
+      "category": "red_flags",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_blood"
+      ],
+      "answers": [
+        {
+          "id": "question_blood_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, крови не видели».",
+          "revealsFactIds": [
+            "fact_no_blood"
+          ]
+        },
+        {
+          "id": "question_blood_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нет, крови не видели».",
+          "revealsFactIds": [
+            "fact_no_blood"
+          ]
+        },
+        {
+          "id": "question_blood_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Не заметил, но специально не рассматривал».",
+          "revealsFactIds": [
+            "fact_no_blood"
+          ]
+        },
+        {
+          "id": "question_blood_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Крови не было, я проверил оба раза».",
+          "revealsFactIds": [
+            "fact_no_blood"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_objects",
+      "buttonText": "Мог ли проглотить игрушку, носок, кость или другой предмет?",
+      "category": "risk",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_foreign_body_risk_low"
+      ],
+      "answers": [
+        {
+          "id": "question_objects_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Игрушки целы, носки на месте, кости не давали».",
+          "revealsFactIds": [
+            "fact_foreign_body_risk_low"
+          ]
+        },
+        {
+          "id": "question_objects_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Игрушки целы, носки на месте, кости не давали».",
+          "revealsFactIds": [
+            "fact_foreign_body_risk_low"
+          ]
+        },
+        {
+          "id": "question_objects_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Не видел, чтобы что-то проглотил, но он любит подбирать».",
+          "revealsFactIds": [
+            "fact_foreign_body_risk_low"
+          ]
+        },
+        {
+          "id": "question_objects_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я всё пересчитал, ничего не пропало, но всё равно боюсь инородного тела».",
+          "revealsFactIds": [
+            "fact_foreign_body_risk_low"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Есть ли вялость, боль, вздутие или отказ от движения?",
+      "category": "general",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_major_red_flags"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Активность почти обычная, живот не выглядит болезненным или вздутым».",
+          "revealsFactIds": [
+            "fact_no_major_red_flags"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Активность почти обычная, живот не выглядит болезненным или вздутым».",
+          "revealsFactIds": [
+            "fact_no_major_red_flags"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Немного тише обычного, но ходит и реагирует».",
+          "revealsFactIds": [
+            "fact_no_major_red_flags"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Чуть спокойнее, но ходит нормально. Я боюсь пропустить боль».",
+          "revealsFactIds": [
+            "fact_no_major_red_flags"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже давали дома?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не давали, только убрали еду со стола».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не давали, только убрали еду со стола».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Дали какой-то сорбент, название не помню».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел дать человеческую таблетку от желудка, но решил сначала позвонить в клинику».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "human_painkiller",
+        "unknown_human_medicine",
+        "restricted_water"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное, животное контактное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Слизистые оболочки розовые и влажные."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Признаков выраженного обезвоживания нет."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Живот мягкий, выраженного напряжения нет."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "При осторожной пальпации явной болезненности не выявлено."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Вздутия живота нет."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Повторной рвоты во время приёма не наблюдается."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "dietary_indiscretion",
+      "source": "doctor_interpretation",
+      "label": "Пищевая погрешность без выявленных тревожных признаков",
+      "requires": [
+        "general_exam",
+        "abdominal_exam",
+        "risk_assessment"
+      ],
+      "feedback": "Временная связь с непривычной жирной пищей и отсутствие тревожных признаков поддерживают этот предварительный вывод.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "gi_foreign_body",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на инородное тело ЖКТ",
+      "requires": [
+        "general_exam",
+        "abdominal_exam",
+        "risk_assessment"
+      ],
+      "feedback": "Риск нельзя считать нулевым, но в текущем варианте нет пропавшего предмета, многократной рвоты, боли или ухудшения.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "poisoning",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на отравление",
+      "requires": [
+        "general_exam",
+        "history"
+      ],
+      "feedback": "Подтверждённого токсического воздействия в анамнезе нет.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "acute_gi_upset",
+      "source": "doctor_interpretation",
+      "label": "Острое желудочно-кишечное расстройство",
+      "requires": [
+        "general_exam",
+        "abdominal_exam"
+      ],
+      "feedback": "Эта общая формулировка допустима, но собранный анамнез позволяет указать вероятную пищевую погрешность.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "supportive_monitoring",
+      "source": "doctor_interpretation",
+      "label": "Поддерживающий план и домашнее наблюдение",
+      "steps": [
+        "Исключить жирную и непривычную пищу.",
+        "Следовать согласованному режиму кормления и воды.",
+        "Не давать человеческие препараты без согласования.",
+        "Наблюдать за рвотой, стулом, водой, болью и активностью."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Повторный контакт при отсутствии улучшения; срочно — при появлении тревожных признаков."
+      },
+      "worseningSigns": [
+        {
+          "id": "supportive_monitoring_w1",
+          "source": "doctor_interpretation",
+          "text": "многократная рвота"
+        },
+        {
+          "id": "supportive_monitoring_w2",
+          "source": "doctor_interpretation",
+          "text": "невозможность удерживать воду"
+        },
+        {
+          "id": "supportive_monitoring_w3",
+          "source": "doctor_interpretation",
+          "text": "кровь"
+        },
+        {
+          "id": "supportive_monitoring_w4",
+          "source": "doctor_interpretation",
+          "text": "выраженная боль"
+        },
+        {
+          "id": "supportive_monitoring_w5",
+          "source": "doctor_interpretation",
+          "text": "вздутие"
+        },
+        {
+          "id": "supportive_monitoring_w6",
+          "source": "doctor_interpretation",
+          "text": "резкая вялость"
+        }
+      ]
+    },
+    {
+      "id": "maximal_tests_without_indication",
+      "source": "doctor_interpretation",
+      "label": "Максимальное обследование без текущих показаний",
+      "steps": [
+        "Назначить все доступные исследования, не учитывая стабильное состояние и отсутствие тревожных признаков."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Допустимо пересмотреть объём диагностики при ухудшении или отсутствии улучшения."
+      },
+      "worseningSigns": [
+        {
+          "id": "maximal_tests_without_indication_w1",
+          "source": "doctor_interpretation",
+          "text": "ухудшение состояния"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Сейчас нет выраженного обезвоживания, боли, вздутия или других явных признаков экстренного состояния.",
+    "uncertain": "Пищевая погрешность наиболее вероятна, но домашнее наблюдение не является гарантией, что симптомы не изменятся.",
+    "plan": "Объяснить поддерживающий режим и перечислить конкретные признаки срочного повторного обращения.",
+    "checkUnderstanding": "«Какие признаки заставят вас обратиться сегодня же, а не ждать улучшения дома?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "многократная или непрекращающаяся рвота"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "невозможность удерживать воду"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "кровь в рвоте или стуле"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "выраженная боль или вздутие"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "резкая вялость"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_water",
+      "source": "doctor_interpretation",
+      "text": "Способность удерживать воду влияет на допустимость домашнего наблюдения.",
+      "discoveryPaths": [
+        "question_water"
+      ]
+    },
+    {
+      "id": "critical_pain",
+      "source": "doctor_interpretation",
+      "text": "Боль и вздутие повышают риск обструкции или другого серьёзного состояния.",
+      "discoveryPaths": [
+        "question_general_state",
+        "abdominal_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "budget_limited"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "first_pet",
+    "internet_diagnosis"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Он ничего необычного не ел. Только котлету, сосиску и немного плова»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Рвота была один раз. Если считать ночь и утро отдельно, то три»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

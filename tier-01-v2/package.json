@@ -1,0 +1,7 @@
+{
+  "name": "vetgeme-pet-clinic",
+  "private": true,
+  "scripts": {
+    "validate:tier-01-v2": "node scripts/validate-tier-01-content-v2.mjs"
+  }
+}

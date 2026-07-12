@@ -1,0 +1,731 @@
+{
+  "schemaVersion": 2,
+  "id": "EYE_CONJUNCTIVITIS",
+  "family": "eyes",
+  "titleForDeveloper": "Конъюнктивит",
+  "preliminaryDiagnosisLabel": "Конъюнктивит после исключения поверхностного повреждения роговицы",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 3,
+  "severity": "routine",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "fluorescein"
+  ],
+  "requiredActions": [
+    "general_exam",
+    "eye_exam",
+    "fluorescein_test"
+  ],
+  "safeAlternatives": [
+    "scheduled_recheck"
+  ],
+  "workload": 1.25,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«Один глаз покраснел, появились слизистые выделения, но животное не держит его закрытым»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«С утра глаз слезится и выглядит раздражённым»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«После прогулки появилось покраснение, владелец просит использовать человеческие капли»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_onset",
+      "buttonText": "Когда появилось покраснение?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_acute_onset"
+      ],
+      "answers": [
+        {
+          "id": "question_onset_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Сегодня утром, около шести часов назад».",
+          "revealsFactIds": [
+            "fact_acute_onset"
+          ]
+        },
+        {
+          "id": "question_onset_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Сегодня утром, около шести часов назад».",
+          "revealsFactIds": [
+            "fact_acute_onset"
+          ]
+        },
+        {
+          "id": "question_onset_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Заметили сегодня, точное время не знаю».",
+          "revealsFactIds": [
+            "fact_acute_onset"
+          ]
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Сегодня утром, и к обеду выделений стало больше».",
+          "revealsFactIds": [
+            "fact_acute_onset"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_one_or_both",
+      "buttonText": "Поражён один глаз или оба?",
+      "category": "eyes",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_unilateral_primary"
+      ],
+      "answers": [
+        {
+          "id": "question_one_or_both_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Правый глаз, левый выглядит обычно».",
+          "revealsFactIds": [
+            "fact_unilateral_primary"
+          ]
+        },
+        {
+          "id": "question_one_or_both_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Правый глаз, левый выглядит обычно».",
+          "revealsFactIds": [
+            "fact_unilateral_primary"
+          ]
+        },
+        {
+          "id": "question_one_or_both_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кажется, правый сильнее, левый немного слезится».",
+          "revealsFactIds": [
+            "fact_unilateral_primary"
+          ]
+        },
+        {
+          "id": "question_one_or_both_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Сильнее правый, но я уже переживаю и за второй».",
+          "revealsFactIds": [
+            "fact_unilateral_primary"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_pain",
+      "buttonText": "Щурится ли животное, избегает ли света или трёт глаз?",
+      "category": "eyes",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_mild_discomfort_no_severe_pain"
+      ],
+      "answers": [
+        {
+          "id": "question_pain_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Не щурится постоянно, свет переносит, иногда трёт глаз лапой».",
+          "revealsFactIds": [
+            "fact_mild_discomfort_no_severe_pain"
+          ]
+        },
+        {
+          "id": "question_pain_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Не щурится постоянно, свет переносит, иногда трёт глаз лапой».",
+          "revealsFactIds": [
+            "fact_mild_discomfort_no_severe_pain"
+          ]
+        },
+        {
+          "id": "question_pain_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Иногда прищуривает, но не всё время».",
+          "revealsFactIds": [
+            "fact_mild_discomfort_no_severe_pain"
+          ]
+        },
+        {
+          "id": "question_pain_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Пару раз прищурился, и я боюсь повреждения роговицы».",
+          "revealsFactIds": [
+            "fact_mild_discomfort_no_severe_pain"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_discharge",
+      "buttonText": "Как выглядят выделения?",
+      "category": "eyes",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_mucoid_discharge"
+      ],
+      "answers": [
+        {
+          "id": "question_discharge_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Слизистые, светлые, без крови».",
+          "revealsFactIds": [
+            "fact_mucoid_discharge"
+          ]
+        },
+        {
+          "id": "question_discharge_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Слизистые, светлые, без крови».",
+          "revealsFactIds": [
+            "fact_mucoid_discharge"
+          ]
+        },
+        {
+          "id": "question_discharge_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Светлые и немного липкие».",
+          "revealsFactIds": [
+            "fact_mucoid_discharge"
+          ]
+        },
+        {
+          "id": "question_discharge_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Слизистые, их стало больше за несколько часов».",
+          "revealsFactIds": [
+            "fact_mucoid_discharge"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_trauma",
+      "buttonText": "Мог ли глаз быть травмирован веткой, когтем или шампунем?",
+      "category": "risk",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_possible_minor_exposure"
+      ],
+      "answers": [
+        {
+          "id": "question_trauma_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Явной травмы не видели, но гулял в кустах».",
+          "revealsFactIds": [
+            "fact_possible_minor_exposure"
+          ]
+        },
+        {
+          "id": "question_trauma_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Явной травмы не видели, но гулял в кустах».",
+          "revealsFactIds": [
+            "fact_possible_minor_exposure"
+          ]
+        },
+        {
+          "id": "question_trauma_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Не знаю, мог задеть что-то на прогулке».",
+          "revealsFactIds": [
+            "fact_possible_minor_exposure"
+          ]
+        },
+        {
+          "id": "question_trauma_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Он бегал в кустах, и я боюсь царапины».",
+          "revealsFactIds": [
+            "fact_possible_minor_exposure"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_resp",
+      "buttonText": "Есть ли чихание, выделения из носа или симптомы у других животных?",
+      "category": "respiratory",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_respiratory_signs"
+      ],
+      "answers": [
+        {
+          "id": "question_resp_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Чихания и выделений из носа нет».",
+          "revealsFactIds": [
+            "fact_no_respiratory_signs"
+          ]
+        },
+        {
+          "id": "question_resp_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Чихания и выделений из носа нет».",
+          "revealsFactIds": [
+            "fact_no_respiratory_signs"
+          ]
+        },
+        {
+          "id": "question_resp_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Вроде не чихает».",
+          "revealsFactIds": [
+            "fact_no_respiratory_signs"
+          ]
+        },
+        {
+          "id": "question_resp_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Других симптомов нет, но я слежу, не начнётся ли инфекция».",
+          "revealsFactIds": [
+            "fact_no_respiratory_signs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Какие капли или промывания уже использовали?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не капали, только убрали выделения чистым влажным диском».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не капали, только убрали выделения чистым влажным диском».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Один раз промыли тем, что было дома, название не помню».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел использовать человеческие капли от красноты, но решил сначала показать глаз».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "human_eye_drops",
+        "tea_eye_wash",
+        "unknown_human_medicine"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Аппетит и активность сохранены."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Системных признаков тяжёлого заболевания нет."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Конъюнктива правого глаза умеренно покрасневшая."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Имеются слизистые выделения."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Выраженного помутнения роговицы нет."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Зрачки симметричны, постоянного сильного прищуривания нет."
+      },
+      {
+        "id": "target_5",
+        "source": "physical_exam",
+        "text": "Инородное тело при доступном осмотре не обнаружено."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [
+    {
+      "id": "fluorescein_test",
+      "label": "Флуоресцеиновая проба",
+      "type": "bedside",
+      "source": "diagnostic_test",
+      "text": "Краситель не фиксируется на поверхности роговицы; явного эпителиального дефекта не выявлено.",
+      "requires": [
+        "eye_exam"
+      ],
+      "costVetcoins": 50,
+      "durationMinutes": 3
+    }
+  ],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "conjunctivitis",
+      "source": "doctor_interpretation",
+      "label": "Конъюнктивит после исключения поверхностного повреждения роговицы",
+      "requires": [
+        "general_exam",
+        "eye_exam",
+        "fluorescein_test"
+      ],
+      "feedback": "Покраснение и слизистые выделения при отрицательной флуоресцеиновой пробе поддерживают конъюнктивит.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "corneal_ulcer",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на язву роговицы",
+      "requires": [
+        "general_exam",
+        "eye_exam",
+        "fluorescein_test"
+      ],
+      "feedback": "Флуоресцеиновая проба отрицательная, выраженной боли и дефекта роговицы не выявлено.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "glaucoma",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на глаукому",
+      "requires": [
+        "general_exam",
+        "eye_exam"
+      ],
+      "feedback": "Нет выраженного увеличения глаза, фиксированного зрачка или сильной боли; при таких признаках потребовалась бы срочная специализированная оценка.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "human_drops_solution",
+      "source": "doctor_interpretation",
+      "label": "Раздражение, которое можно лечить человеческими каплями от красноты",
+      "requires": [
+        "eye_exam"
+      ],
+      "feedback": "Человеческие сосудосуживающие капли не являются безопасным универсальным планом для животного.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": true
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "conjunctivitis_plan",
+      "source": "doctor_interpretation",
+      "label": "План при неосложнённом конъюнктивите",
+      "steps": [
+        "Проводить мягкую гигиену выделений.",
+        "Использовать согласованный местный план по результатам осмотра.",
+        "Не применять человеческие капли без назначения.",
+        "Контролировать боль, прищуривание и прозрачность роговицы."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль при отсутствии улучшения в установленный срок или раньше при боли."
+      },
+      "worseningSigns": [
+        {
+          "id": "conjunctivitis_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "усиление прищуривания"
+        },
+        {
+          "id": "conjunctivitis_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "помутнение роговицы"
+        },
+        {
+          "id": "conjunctivitis_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "резкая боль"
+        },
+        {
+          "id": "conjunctivitis_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "снижение зрения"
+        },
+        {
+          "id": "conjunctivitis_plan_w5",
+          "source": "doctor_interpretation",
+          "text": "обильные гнойные выделения"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Конъюнктива воспалена, но флуоресцеиновая проба не показала поверхностного повреждения роговицы.",
+    "uncertain": "Причина воспаления может быть раздражающей, инфекционной или связанной с другим фактором; она оценивается по динамике.",
+    "plan": "Объяснить местный уход, запрет на случайные человеческие капли и признаки срочного повторного осмотра.",
+    "checkUnderstanding": "«Какие изменения глаза заставят вас обратиться раньше и почему нельзя использовать капли “от красноты” без назначения?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "сильное прищуривание"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "помутнение роговицы"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "резкая боль"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "неравные зрачки"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "снижение зрения"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_pain",
+      "source": "doctor_interpretation",
+      "text": "Выраженная боль повышает риск поражения роговицы или более глубоких структур.",
+      "discoveryPaths": [
+        "question_pain",
+        "eye_exam"
+      ]
+    },
+    {
+      "id": "critical_ulcer",
+      "source": "doctor_interpretation",
+      "text": "Поверхностный дефект должен быть исключён до некоторых местных планов.",
+      "discoveryPaths": [
+        "fluorescein_test"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "budget_limited"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "first_pet",
+    "past_bad_experience"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Хотели закапать наши капли от красных глаз. Глаз же тоже красный — логика казалась железной»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

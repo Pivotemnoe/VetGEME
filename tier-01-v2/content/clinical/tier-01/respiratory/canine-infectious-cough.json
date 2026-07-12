@@ -1,0 +1,744 @@
+{
+  "schemaVersion": 2,
+  "id": "RESP_CANINE_COUGH",
+  "family": "respiratory",
+  "titleForDeveloper": "Инфекционное респираторное заболевание у собаки",
+  "preliminaryDiagnosisLabel": "Инфекционное респираторное заболевание у собаки",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 3,
+  "severity": "routine",
+  "species": [
+    "dog"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [],
+  "requiredActions": [
+    "triage",
+    "general_exam",
+    "respiratory_exam",
+    "contact_history"
+  ],
+  "safeAlternatives": [
+    "supportive_monitoring",
+    "scheduled_recheck"
+  ],
+  "workload": 1.25,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«После гостиницы у собаки появился сухой приступообразный кашель, но она остаётся активной»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Питомец кашляет после возбуждения и натяжения поводка, иногда будто пытается что-то отхаркнуть»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Владелец думает, что собака подавилась, хотя приступы повторяются уже несколько дней»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_onset",
+      "buttonText": "Когда начался кашель?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_post_contact_onset"
+      ],
+      "answers": [
+        {
+          "id": "question_onset_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Три дня назад, через пять дней после возвращения из гостиницы».",
+          "revealsFactIds": [
+            "fact_post_contact_onset"
+          ]
+        },
+        {
+          "id": "question_onset_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Три дня назад, через пять дней после возвращения из гостиницы».",
+          "revealsFactIds": [
+            "fact_post_contact_onset"
+          ]
+        },
+        {
+          "id": "question_onset_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Несколько дней назад, вскоре после гостиницы».",
+          "revealsFactIds": [
+            "fact_post_contact_onset"
+          ]
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Три дня назад, и сегодня приступов стало больше».",
+          "revealsFactIds": [
+            "fact_post_contact_onset"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_character",
+      "buttonText": "Как выглядит приступ кашля?",
+      "category": "respiratory",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_dry_paroxysmal_cough"
+      ],
+      "answers": [
+        {
+          "id": "question_character_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Сухой резкий кашель сериями, после него иногда выходит немного пены».",
+          "revealsFactIds": [
+            "fact_dry_paroxysmal_cough"
+          ]
+        },
+        {
+          "id": "question_character_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Сухой резкий кашель сериями, после него иногда выходит немного пены».",
+          "revealsFactIds": [
+            "fact_dry_paroxysmal_cough"
+          ]
+        },
+        {
+          "id": "question_character_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кашляет несколько раз подряд, иногда будто давится».",
+          "revealsFactIds": [
+            "fact_dry_paroxysmal_cough"
+          ]
+        },
+        {
+          "id": "question_character_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Приступы сухие и резкие, мне каждый раз кажется, что он задыхается».",
+          "revealsFactIds": [
+            "fact_dry_paroxysmal_cough"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_breathing",
+      "buttonText": "Есть ли затруднение дыхания между приступами?",
+      "category": "triage",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_resting_distress"
+      ],
+      "answers": [
+        {
+          "id": "question_breathing_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Между приступами дышит спокойно и не устаёт быстрее обычного».",
+          "revealsFactIds": [
+            "fact_no_resting_distress"
+          ]
+        },
+        {
+          "id": "question_breathing_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Между приступами дышит спокойно и не устаёт быстрее обычного».",
+          "revealsFactIds": [
+            "fact_no_resting_distress"
+          ]
+        },
+        {
+          "id": "question_breathing_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«В покое вроде дышит нормально».",
+          "revealsFactIds": [
+            "fact_no_resting_distress"
+          ]
+        },
+        {
+          "id": "question_breathing_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Между приступами дыхание обычное, но я боюсь внезапного ухудшения».",
+          "revealsFactIds": [
+            "fact_no_resting_distress"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Есть ли температура, вялость или снижение аппетита?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_systemically_well"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит и активность сохранены, вялости не было».",
+          "revealsFactIds": [
+            "fact_systemically_well"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Аппетит и активность сохранены, вялости не было».",
+          "revealsFactIds": [
+            "fact_systemically_well"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Ест и гуляет, немного тише обычного».",
+          "revealsFactIds": [
+            "fact_systemically_well"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Ест нормально, но я постоянно проверяю, не стал ли он вялым».",
+          "revealsFactIds": [
+            "fact_systemically_well"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_contacts",
+      "buttonText": "Были ли гостиница, площадка, выставка или тесный контакт с собаками?",
+      "category": "contacts",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_dog_contact"
+      ],
+      "answers": [
+        {
+          "id": "question_contacts_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Неделю назад был три дня в гостинице для собак».",
+          "revealsFactIds": [
+            "fact_dog_contact"
+          ]
+        },
+        {
+          "id": "question_contacts_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Неделю назад был три дня в гостинице для собак».",
+          "revealsFactIds": [
+            "fact_dog_contact"
+          ]
+        },
+        {
+          "id": "question_contacts_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Недавно играл с большой группой собак на площадке».",
+          "revealsFactIds": [
+            "fact_dog_contact"
+          ]
+        },
+        {
+          "id": "question_contacts_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Был в гостинице, и теперь я переживаю за всех собак, с которыми он виделся после».",
+          "revealsFactIds": [
+            "fact_dog_contact"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_nasal",
+      "buttonText": "Есть ли выделения из носа или влажный кашель?",
+      "category": "respiratory",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_no_pneumonia_clues"
+      ],
+      "answers": [
+        {
+          "id": "question_nasal_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Нос чистый, кашель сухой».",
+          "revealsFactIds": [
+            "fact_no_pneumonia_clues"
+          ]
+        },
+        {
+          "id": "question_nasal_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Нос чистый, кашель сухой».",
+          "revealsFactIds": [
+            "fact_no_pneumonia_clues"
+          ]
+        },
+        {
+          "id": "question_nasal_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Выделений не заметил, кашель скорее сухой».",
+          "revealsFactIds": [
+            "fact_no_pneumonia_clues"
+          ]
+        },
+        {
+          "id": "question_nasal_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Густых выделений нет, и кашель пока сухой».",
+          "revealsFactIds": [
+            "fact_no_pneumonia_clues"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже давали дома?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не давали, только временно исключили площадку».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ничего не давали, только временно исключили площадку».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Дали немного человеческого сиропа, название не помню».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я хотел дать сироп от кашля, но решил проверить, безопасен ли он для собаки».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "human_cough_syrup",
+        "leftover_antibiotic",
+        "essential_oils_inhalation"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Собака активна и контактна."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Слизистые оболочки розовые и влажные."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Дыхание в покое спокойное, выраженного усилия нет."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Кашель сухой и приступообразный, может провоцироваться лёгким раздражением области трахеи."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Между приступами дыхание свободное."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "При аускультации лёгких выраженных влажных шумов не выявлено."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "Густых носовых выделений нет."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "infectious_cough",
+      "source": "doctor_interpretation",
+      "label": "Инфекционное респираторное заболевание у собаки",
+      "requires": [
+        "triage",
+        "general_exam",
+        "respiratory_exam",
+        "contact_history"
+      ],
+      "feedback": "Характер кашля, недавний групповой контакт и сохранное общее состояние поддерживают этот предварительный диагноз.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "pneumonia",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на пневмонию",
+      "requires": [
+        "triage",
+        "general_exam",
+        "respiratory_exam"
+      ],
+      "feedback": "Нет лихорадки, выраженной вялости, нарушения дыхания или патологических шумов в лёгких.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "foreign_body_airway",
+      "source": "doctor_interpretation",
+      "label": "Инородное тело дыхательных путей",
+      "requires": [
+        "triage",
+        "history",
+        "respiratory_exam"
+      ],
+      "feedback": "Повторные приступы после группового контакта и отсутствие внезапного постоянного удушья делают инфекционный процесс вероятнее.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "heart_failure",
+      "source": "doctor_interpretation",
+      "label": "Сердечная недостаточность",
+      "requires": [
+        "general_exam",
+        "respiratory_exam"
+      ],
+      "feedback": "В этом учебном варианте нет типичных признаков непереносимости нагрузки, одышки в покое или других данных за сердечную причину.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "infectious_cough_plan",
+      "source": "doctor_interpretation",
+      "label": "План при неосложнённом инфекционном кашле",
+      "steps": [
+        "Временно ограничить контакты с другими собаками.",
+        "Снизить нагрузку и использовать шлейку вместо давления на шею при необходимости.",
+        "Контролировать температуру, аппетит, дыхание и характер кашля.",
+        "Не давать человеческие сиропы или антибиотики без показаний."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль при отсутствии улучшения в установленный срок или раньше при ухудшении."
+      },
+      "worseningSigns": [
+        {
+          "id": "infectious_cough_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "затруднённое дыхание"
+        },
+        {
+          "id": "infectious_cough_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "лихорадка"
+        },
+        {
+          "id": "infectious_cough_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "влажный кашель"
+        },
+        {
+          "id": "infectious_cough_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "выраженная вялость"
+        },
+        {
+          "id": "infectious_cough_plan_w5",
+          "source": "doctor_interpretation",
+          "text": "отказ от еды"
+        }
+      ]
+    },
+    {
+      "id": "antibiotic_request",
+      "source": "doctor_interpretation",
+      "label": "Антибиотик по требованию без признаков осложнения",
+      "steps": [
+        "Назначить противомикробный препарат без клинических признаков бактериального осложнения."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "План должен пересматриваться по динамике, а не по желанию получить «сильное лекарство»."
+      },
+      "worseningSigns": [
+        {
+          "id": "antibiotic_request_w1",
+          "source": "doctor_interpretation",
+          "text": "ухудшение"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Кашель сухой, появился после тесного контакта с собаками, а общее состояние и дыхание сейчас стабильны.",
+    "uncertain": "Без дополнительных исследований конкретный возбудитель не определяется; важно наблюдать, не появляются ли признаки поражения нижних дыхательных путей.",
+    "plan": "Объяснить временную изоляцию, контроль дыхания и причины не использовать человеческие сиропы.",
+    "checkUnderstanding": "«Какие изменения кашля или дыхания будут поводом приехать раньше?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "затруднённое дыхание"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "лихорадка и вялость"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "влажный кашель"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "синюшность слизистых"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "отказ от еды"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_distress",
+      "source": "doctor_interpretation",
+      "text": "Нарушение дыхания между приступами меняет срочность.",
+      "discoveryPaths": [
+        "question_breathing",
+        "respiratory_exam"
+      ]
+    },
+    {
+      "id": "critical_systemic",
+      "source": "doctor_interpretation",
+      "text": "Лихорадка и вялость требуют исключать осложнение.",
+      "discoveryPaths": [
+        "question_general_state",
+        "general_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "internet_confident"
+  ],
+  "compatibleOwnerModifiers": [
+    "group_contact",
+    "hidden_home_treatment",
+    "first_pet"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Он кашляет так, будто сейчас расскажет важную новость, но каждый раз передумывает»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Мы думали, что подавился. Потом он “подавился” ещё двенадцать раз за два дня»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

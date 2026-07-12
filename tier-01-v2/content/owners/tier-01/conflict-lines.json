@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 2,
+  "lines": [
+    {
+      "id": "guarantee",
+      "source": "owner_history",
+      "state": "demanding",
+      "text": "«Мне нужна гарантия, что после этого лечения всё пройдёт»."
+    },
+    {
+      "id": "antibiotic",
+      "source": "owner_history",
+      "state": "demanding",
+      "text": "«Просто назначьте сильный антибиотик, анализы мне не нужны»."
+    },
+    {
+      "id": "review_threat",
+      "source": "owner_history",
+      "state": "demanding",
+      "text": "«Если вы откажетесь лечить без анализов, я напишу, что вы не захотели помочь»."
+    },
+    {
+      "id": "pay_after",
+      "source": "owner_history",
+      "state": "demanding",
+      "text": "«Вы сначала вылечите, а потом мы решим, насколько это было нужно»."
+    }
+  ]
+}

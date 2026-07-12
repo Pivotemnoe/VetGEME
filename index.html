@@ -57,6 +57,11 @@
           <button class="window-close" id="closeCaseBtn" type="button" title="Закрыть" aria-label="Закрыть окно приема">×</button>
         </header>
 
+        <div class="tutorial-guide hidden" id="tutorialGuide" aria-live="polite">
+          <strong id="tutorialTitle"></strong>
+          <span id="tutorialText"></span>
+        </div>
+
         <div class="case-workspace">
           <section class="patient-column">
             <canvas id="portraitCanvas" width="192" height="192" aria-label="Портрет пациента"></canvas>
@@ -186,6 +191,10 @@
       </section>
     </main>
     <script src="campaign.js?v=20260712k" defer></script>
+    <script src="generator/content-loader-v2.js?v=20260712a" defer></script>
+    <script src="generator/generator-v2.js?v=20260712a" defer></script>
+    <script src="generator/game-adapter-v2.js?v=20260712a" defer></script>
+    <script src="generator/generator-mode.js?v=20260712a" defer></script>
     <script src="game.js?v=20260712k" defer></script>
   </body>
 </html>

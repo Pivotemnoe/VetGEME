@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 2,
+  "lines": [
+    {
+      "id": "food_nothing",
+      "source": "owner_history",
+      "level": 1,
+      "tags": [
+        "gastrointestinal"
+      ],
+      "text": "«Ничего необычного не ел. Только котлету, сосиску и немного плова»."
+    },
+    {
+      "id": "cold_nose",
+      "source": "owner_history",
+      "level": 1,
+      "tags": [
+        "general"
+      ],
+      "text": "«Температуру не измеряли, но нос был прохладный»."
+    },
+    {
+      "id": "medicine_color",
+      "source": "owner_history",
+      "level": 1,
+      "tags": [
+        "home_treatment"
+      ],
+      "text": "«Название лекарства не помню. Таблетка была белая и очень убедительная»."
+    },
+    {
+      "id": "not_fat",
+      "source": "owner_history",
+      "level": 1,
+      "tags": [
+        "weight"
+      ],
+      "text": "«Он не толстый. Он крупный, пушистый и тяжёлый одновременно»."
+    },
+    {
+      "id": "flies",
+      "source": "owner_history",
+      "level": 3,
+      "tags": [
+        "diet_history"
+      ],
+      "text": "«Он мух любит. Я ему иногда ловлю — это же натуральный белок»."
+    },
+    {
+      "id": "revenge_litter",
+      "source": "owner_history",
+      "level": 2,
+      "tags": [
+        "urinary"
+      ],
+      "text": "«Мы думали, что кот мстит за новый наполнитель. Наполнитель теперь оправдан»."
+    }
+  ]
+}

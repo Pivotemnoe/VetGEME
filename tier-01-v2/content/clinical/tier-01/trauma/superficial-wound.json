@@ -1,0 +1,725 @@
+{
+  "schemaVersion": 2,
+  "id": "TRAUMA_SUPERFICIAL_WOUND",
+  "family": "trauma",
+  "titleForDeveloper": "Поверхностная рана",
+  "preliminaryDiagnosisLabel": "Поверхностная рана без признаков глубокого повреждения",
+  "reviewStatus": "pending_medical_review",
+  "editorialStatus": "complete_ru_v1",
+  "tier": 1,
+  "unlockDay": 1,
+  "severity": "routine",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [
+    "wound_kit"
+  ],
+  "requiredActions": [
+    "triage",
+    "general_exam",
+    "wound_exam",
+    "wound_cleaning"
+  ],
+  "safeAlternatives": [
+    "scheduled_recheck"
+  ],
+  "workload": 1.0,
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "«После прогулки на коже обнаружили неглубокую рану, кровотечение уже остановилось»."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "«Кошка зацепилась за острый предмет, теперь лижет небольшой порез»."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "«Владелец уже обработал рану домашним средством и хочет понять, нужна ли дополнительная помощь»."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_time",
+      "buttonText": "Когда и как появилась рана?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_recent_known_trauma"
+      ],
+      "answers": [
+        {
+          "id": "question_time_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Около трёх часов назад зацепился боком за металлическую сетку».",
+          "revealsFactIds": [
+            "fact_recent_known_trauma"
+          ]
+        },
+        {
+          "id": "question_time_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Около трёх часов назад зацепился боком за металлическую сетку».",
+          "revealsFactIds": [
+            "fact_recent_known_trauma"
+          ]
+        },
+        {
+          "id": "question_time_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Сегодня на прогулке, точный момент не видел».",
+          "revealsFactIds": [
+            "fact_recent_known_trauma"
+          ]
+        },
+        {
+          "id": "question_time_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Три часа назад, я сразу заметил кровь и испугался глубины раны».",
+          "revealsFactIds": [
+            "fact_recent_known_trauma"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_bleeding",
+      "buttonText": "Как долго и насколько сильно шла кровь?",
+      "category": "trauma",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_bleeding_controlled"
+      ],
+      "answers": [
+        {
+          "id": "question_bleeding_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Кровь шла тонкой струйкой меньше пяти минут и остановилась после давления салфеткой».",
+          "revealsFactIds": [
+            "fact_bleeding_controlled"
+          ]
+        },
+        {
+          "id": "question_bleeding_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Кровь шла тонкой струйкой меньше пяти минут и остановилась после давления салфеткой».",
+          "revealsFactIds": [
+            "fact_bleeding_controlled"
+          ]
+        },
+        {
+          "id": "question_bleeding_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Кровило недолго, сейчас уже не идёт».",
+          "revealsFactIds": [
+            "fact_bleeding_controlled"
+          ]
+        },
+        {
+          "id": "question_bleeding_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Кровь остановилась быстро, но я всё равно боялся внутреннего повреждения».",
+          "revealsFactIds": [
+            "fact_bleeding_controlled"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_bite",
+      "buttonText": "Могла ли это быть укушенная рана?",
+      "category": "risk",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_not_bite"
+      ],
+      "answers": [
+        {
+          "id": "question_bite_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Контакта с животными не было, рана появилась от сетки».",
+          "revealsFactIds": [
+            "fact_not_bite"
+          ]
+        },
+        {
+          "id": "question_bite_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Контакта с животными не было, рана появилась от сетки».",
+          "revealsFactIds": [
+            "fact_not_bite"
+          ]
+        },
+        {
+          "id": "question_bite_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Драки не видел, скорее зацепился за предмет».",
+          "revealsFactIds": [
+            "fact_not_bite"
+          ]
+        },
+        {
+          "id": "question_bite_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Других животных рядом не было, поэтому укус маловероятен».",
+          "revealsFactIds": [
+            "fact_not_bite"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Изменились ли активность, аппетит или дыхание?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_systemically_stable"
+      ],
+      "answers": [
+        {
+          "id": "question_general_state_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Ведёт себя обычно, ест и двигается нормально».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Ведёт себя обычно, ест и двигается нормально».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Вроде всё как обычно».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Активен и ест, но я слежу, не появится ли слабость».",
+          "revealsFactIds": [
+            "fact_systemically_stable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_contamination",
+      "buttonText": "С чем соприкасалась рана: земля, грязная вода, металл?",
+      "category": "exposure",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_contaminated_surface"
+      ],
+      "answers": [
+        {
+          "id": "question_contamination_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Край сетки был уличный и грязный».",
+          "revealsFactIds": [
+            "fact_contaminated_surface"
+          ]
+        },
+        {
+          "id": "question_contamination_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Край сетки был уличный и грязный».",
+          "revealsFactIds": [
+            "fact_contaminated_surface"
+          ]
+        },
+        {
+          "id": "question_contamination_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Мог коснуться земли, точно не знаю».",
+          "revealsFactIds": [
+            "fact_contaminated_surface"
+          ]
+        },
+        {
+          "id": "question_contamination_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Сетка была грязная, поэтому я боюсь инфекции».",
+          "revealsFactIds": [
+            "fact_contaminated_surface"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_licking",
+      "buttonText": "Лижет ли животное рану?",
+      "category": "behavior",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_licking"
+      ],
+      "answers": [
+        {
+          "id": "question_licking_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Пытается лизать, поэтому надели защитный воротник».",
+          "revealsFactIds": [
+            "fact_licking"
+          ]
+        },
+        {
+          "id": "question_licking_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Пытается лизать, поэтому надели защитный воротник».",
+          "revealsFactIds": [
+            "fact_licking"
+          ]
+        },
+        {
+          "id": "question_licking_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Иногда лижет, не всегда успеваем остановить».",
+          "revealsFactIds": [
+            "fact_licking"
+          ]
+        },
+        {
+          "id": "question_licking_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Постоянно тянется к ране, я боюсь, что разлижет её глубже».",
+          "revealsFactIds": [
+            "fact_licking"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Чем уже обработали рану?",
+      "category": "home_treatment",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "revealsFactIds": [
+        "fact_home_actions"
+      ],
+      "answers": [
+        {
+          "id": "question_home_actions_calm",
+          "ownerTags": [
+            "calm"
+          ],
+          "source": "owner_history",
+          "text": "«Промыли чистой водой и закрыли чистой салфеткой».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_observant",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "«Промыли чистой водой и закрыли чистой салфеткой».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_inattentive",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "«Протёрли тем, что было дома, название не помню».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "«Я промыл водой, но не стал лить агрессивный раствор, чтобы не повредить ткани».",
+          "revealsFactIds": [
+            "fact_home_actions"
+          ]
+        }
+      ],
+      "allowsHiddenHomeTreatment": true,
+      "homeActionIds": [
+        "vodka_on_wound",
+        "hydrogen_peroxide_on_skin",
+        "unknown_human_ointment"
+      ],
+      "dynamicAnswerSource": "content/owners/tier-01/home-treatment-actions.json"
+    }
+  ],
+  "generalExam": {
+    "label": "Общий осмотр",
+    "findings": [
+      {
+        "id": "general_1",
+        "source": "physical_exam",
+        "text": "Общее состояние стабильное."
+      },
+      {
+        "id": "general_2",
+        "source": "physical_exam",
+        "text": "Температура тела в пределах нормы."
+      },
+      {
+        "id": "general_3",
+        "source": "physical_exam",
+        "text": "Слизистые оболочки розовые и влажные."
+      },
+      {
+        "id": "general_4",
+        "source": "physical_exam",
+        "text": "Признаков значимой кровопотери или шока нет."
+      }
+    ]
+  },
+  "targetExam": {
+    "label": "Целевой осмотр",
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Рана поверхностная, края расходятся минимально."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Активного кровотечения нет."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "Глубокие ткани, сустав, сухожилие и полость тела не вовлечены по доступному осмотру."
+      },
+      {
+        "id": "target_4",
+        "source": "physical_exam",
+        "text": "В ране есть небольшое загрязнение, которое удаляется при промывании."
+      },
+      {
+        "id": "target_5",
+        "source": "physical_exam",
+        "text": "Выраженного отёка, гноя и некроза нет."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "superficial_wound",
+      "source": "doctor_interpretation",
+      "label": "Поверхностная рана без признаков глубокого повреждения",
+      "requires": [
+        "triage",
+        "general_exam",
+        "wound_exam"
+      ],
+      "feedback": "Осмотр показывает неглубокую рану без продолжающегося кровотечения и вовлечения глубоких структур.",
+      "isCorrectForTemplate": true,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "bite_wound",
+      "source": "doctor_interpretation",
+      "label": "Укушенная рана",
+      "requires": [
+        "general_exam",
+        "wound_exam",
+        "history"
+      ],
+      "feedback": "Нет анамнеза драки и характерных глубоких проколов.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "deep_laceration",
+      "source": "doctor_interpretation",
+      "label": "Глубокая рваная рана",
+      "requires": [
+        "general_exam",
+        "wound_exam"
+      ],
+      "feedback": "Глубокие структуры не видны и края расходятся минимально.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": false
+    },
+    {
+      "id": "observe_dirty",
+      "source": "doctor_interpretation",
+      "label": "Оставить загрязнённую рану без обработки",
+      "requires": [
+        "wound_exam"
+      ],
+      "feedback": "Даже поверхностная загрязнённая рана требует очистки и защиты от разлизывания.",
+      "isCorrectForTemplate": false,
+      "isUnsafeChoice": true
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "superficial_wound_plan",
+      "source": "doctor_interpretation",
+      "label": "Очистка и домашний уход за поверхностной раной",
+      "steps": [
+        "Тщательно промыть и очистить рану безопасным способом.",
+        "Защитить участок от разлизывания и загрязнения.",
+        "Использовать только согласованные местные средства.",
+        "Ежедневно контролировать отёк, боль и выделения."
+      ],
+      "requires": [],
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": false,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль при ухудшении или в установленный срок, если рана не закрывается."
+      },
+      "worseningSigns": [
+        {
+          "id": "superficial_wound_plan_w1",
+          "source": "doctor_interpretation",
+          "text": "возобновление кровотечения"
+        },
+        {
+          "id": "superficial_wound_plan_w2",
+          "source": "doctor_interpretation",
+          "text": "растущий отёк"
+        },
+        {
+          "id": "superficial_wound_plan_w3",
+          "source": "doctor_interpretation",
+          "text": "гнойные выделения"
+        },
+        {
+          "id": "superficial_wound_plan_w4",
+          "source": "doctor_interpretation",
+          "text": "лихорадка"
+        },
+        {
+          "id": "superficial_wound_plan_w5",
+          "source": "doctor_interpretation",
+          "text": "сильная боль"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Рана поверхностная, активного кровотечения и признаков повреждения глубоких структур нет.",
+    "uncertain": "Даже неглубокая загрязнённая рана может воспалиться, поэтому результат зависит от ухода и контроля.",
+    "plan": "Объяснить очистку, защиту от разлизывания и признаки инфекции.",
+    "checkUnderstanding": "«Чем вы будете обрабатывать рану, что использовать нельзя и какие изменения покажут воспаление?»"
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "возобновление сильного кровотечения"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "растущий отёк"
+    },
+    {
+      "id": "red_flag_3",
+      "source": "doctor_interpretation",
+      "text": "гнойные выделения"
+    },
+    {
+      "id": "red_flag_4",
+      "source": "doctor_interpretation",
+      "text": "лихорадка"
+    },
+    {
+      "id": "red_flag_5",
+      "source": "doctor_interpretation",
+      "text": "сильная боль или нарушение движения"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_bleeding",
+      "source": "doctor_interpretation",
+      "text": "Продолжающееся кровотечение меняет срочность.",
+      "discoveryPaths": [
+        "question_bleeding",
+        "wound_exam"
+      ]
+    },
+    {
+      "id": "critical_depth",
+      "source": "doctor_interpretation",
+      "text": "Вовлечение глубоких структур исключает поверхностный вариант.",
+      "discoveryPaths": [
+        "wound_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "follow_up_rule",
+      "source": "follow_up",
+      "condition": "plan_or_clinical_need",
+      "result": "Контрольный визит создаётся только при выбранном плане или сохраняющихся симптомах."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход рассчитывается после выписки с учётом выбранного плана, понимания и выполнения рекомендаций."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "budget_limited"
+  ],
+  "compatibleOwnerModifiers": [
+    "hidden_home_treatment",
+    "first_pet",
+    "past_bad_experience"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor",
+    "unsupported_species",
+    "hidden_fact_without_discovery_path"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 2,
+    "lines": [
+      {
+        "id": "humor_1",
+        "source": "owner_history",
+        "level": 2,
+        "text": "«Рану обработали водкой. Спирта дома не было, а водка выглядела медицински настроенной»."
+      },
+      {
+        "id": "humor_2",
+        "source": "owner_history",
+        "level": 1,
+        "text": "«Он считает воротник личным оскорблением и пытается снять его силой мысли»."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "editoriallyComplete": true,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false,
+    "noGeneratedMedicalText": true
+  },
+  "tutorialEligible": false
+}

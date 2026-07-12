@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 2,
+  "clinicOpenDays": 7,
+  "oneDoctorPerShift": true,
+  "hardLockChoice": false,
+  "doctors": [
+    {
+      "id": "morozov",
+      "name": "Алексей Морозов",
+      "strengths": [
+        "fast_history",
+        "fast_simple_visits",
+        "clear_short_plan"
+      ],
+      "weaknesses": [
+        "conflict_fatigue",
+        "emotional_conversation_fatigue"
+      ]
+    },
+    {
+      "id": "sokolova",
+      "name": "Вера Соколова",
+      "strengths": [
+        "anxious_owners",
+        "low_communication_stress",
+        "find_contradictions"
+      ],
+      "weaknesses": [
+        "slower_visit",
+        "slower_queue_recovery"
+      ]
+    }
+  ],
+  "rules": [
+    "fatigue_persists_between_days",
+    "recommend_less_tired_doctor",
+    "do_not_force_fixed_schedule",
+    "parallel_visits_require_second_room"
+  ],
+  "fatigueRules": {
+    "persistsBetweenDays": true,
+    "oneDoctorPerShiftUntilSecondRoom": true,
+    "selectionRemainsPlayerChoice": true,
+    "recommendLessTiredDoctor": true,
+    "noDoctorMayWorkSevenLongShiftsWithoutConsequences": true
+  }
+}
