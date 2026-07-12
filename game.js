@@ -8,6 +8,7 @@
   const MICROSCOPY_COST = 2;
   const MICROSCOPY_FEE = 90;
   const MAX_CONSECUTIVE_SHIFTS = 3;
+  const CLINIC_VIEW = { x: 28, y: 42, scale: 0.88 };
   const campaign = window.PET_CLINIC_CAMPAIGN;
 
   const speciesLabels = {
@@ -801,6 +802,10 @@
     departures: [],
     doctorScreenX: 440,
     doctorScreenY: 190,
+    doctorRoute: [],
+    doctorRouteIndex: 0,
+    doctorMotion: "idle",
+    doctorHoldUntil: 0,
     reputationStartToday: 74,
     reputationEvents: [],
     returnsToday: 0,
@@ -847,6 +852,7 @@
     stressMeter: document.getElementById("stressMeter"),
     trustMeter: document.getElementById("trustMeter"),
     tensionMeter: document.getElementById("tensionMeter"),
+    irritationMeter: document.getElementById("irritationMeter"),
     visitTimeMeter: document.getElementById("visitTimeMeter"),
     diagnosisChip: document.getElementById("diagnosisChip"),
     ownerName: document.getElementById("ownerName"),
@@ -1010,6 +1016,11 @@
     patient.trust = clamp(patient.trust + delta, 0, 100);
   }
 
+  function adjustOwnerState(patient, anxietyDelta = 0, irritationDelta = 0) {
+    patient.anxiety = clamp(patient.anxiety + anxietyDelta, 0, 100);
+    patient.irritation = clamp(patient.irritation + irritationDelta, 0, 100);
+  }
+
   function changeReputation(delta, reason) {
     const before = state.reputation;
     state.reputation = clamp(state.reputation + delta, 0, 100);
@@ -1028,6 +1039,7 @@
     if (!patient.overtimeWarned && patient.visitTimeUsed > patient.visitTimeLimit) {
       patient.overtimeWarned = true;
       adjustTrust(patient, -6);
+      adjustOwnerState(patient, 7, 11);
       patient.findings.push("Прием затянулся: владелец начинает уставать от долгого процесса.");
     }
   }
@@ -1058,6 +1070,8 @@
       patience: 82 + Math.random() * 34,
       mood: 100,
       trust: clamp(profile.trust + Math.round((Math.random() - 0.5) * 10), 12, 95),
+      anxiety: clamp(profile.anxiety + Math.round((Math.random() - 0.5) * 8), 8, 96),
+      irritation: clamp((profile.id === "conflict" ? 58 : profile.id === "internet" ? 42 : 16) + Math.round((Math.random() - 0.5) * 8), 4, 90),
       visitTimeUsed: 0,
       visitTimeLimit: profile.visitLimit,
       overtimeWarned: false,
@@ -1167,6 +1181,7 @@
       if (isPatientInConsult(patient)) return;
       patient.age += adjusted;
       patient.mood = waitingMood(patient);
+      adjustOwnerState(patient, adjusted * 0.06, adjusted * 0.08);
     });
     removeLostPatients();
     maybeSpawn();
@@ -1312,6 +1327,7 @@
     state.revenueToday += MICROSCOPY_FEE;
     state.diagnosticRevenueToday += MICROSCOPY_FEE;
     state.microscopyToday += 1;
+    startDoctorLabTrip();
     setLog(`Микроскопия выполнена и оплачена: +${MICROSCOPY_FEE} V.`);
     passTime(7);
   }
@@ -1337,6 +1353,8 @@
     if (option.id === "budgetPlan" && patient.ownerProfile.id === "budget") trustDelta = 10;
     if (currentDoctor().fatigue >= 70) trustDelta -= 2;
     adjustTrust(patient, trustDelta);
+    if (preferred) adjustOwnerState(patient, -10, -8);
+    else adjustOwnerState(patient, 3, 6);
     incrementGoal("explained");
     setLog(`План объяснен: ${option.label.toLowerCase()}. Реакция владельца отражена в шкале доверия.`);
     closeChoice();
@@ -1931,9 +1949,17 @@
       const button = document.createElement("button");
       button.type = "button";
       button.className = `queue-card${patient.id === state.activeId ? " active" : ""}`;
+      const portrait = document.createElement("canvas");
+      portrait.className = "queue-card-portrait";
+      portrait.width = 48;
+      portrait.height = 48;
+      drawQueuePortrait(portrait, patient.species);
+      const copy = document.createElement("div");
+      copy.className = "queue-card-copy";
       const title = document.createElement("strong");
       title.textContent = `${patient.animal} • ${speciesLabels[patient.species]}`;
       const note = document.createElement("span");
+      note.className = "queue-urgency";
       note.textContent = patient.eventLabel
         ? `СОБЫТИЕ · ${patient.eventLabel}`
         : patient.selectedUrgency === "urgent"
@@ -1941,15 +1967,21 @@
         : patient.returnVisit ? "повторное обращение" : `Ждет ${Math.max(1, Math.round(patient.age))} мин.`;
       if (patient.selectedUrgency === "urgent") button.classList.add("urgent");
       const owner = document.createElement("span");
+      owner.className = "queue-complaint";
       owner.textContent = `Жалоба: ${patient.complaints[0]}`;
       const bar = document.createElement("div");
       bar.className = "patience-bar";
       const fill = document.createElement("i");
       fill.style.width = `${patient.mood}%`;
       bar.appendChild(fill);
-      button.append(title, note, owner, bar);
+      copy.append(title, note, owner);
+      button.append(portrait, copy, bar);
       button.addEventListener("click", () => openCase(patient.id));
-      if (index === 0) el.nextPatientCard.appendChild(button.cloneNode(true));
+      if (index === 0) {
+        const nextClone = button.cloneNode(true);
+        drawQueuePortrait(nextClone.querySelector("canvas"), patient.species);
+        el.nextPatientCard.appendChild(nextClone);
+      }
       el.queueStrip.appendChild(button);
     });
     const nextButton = el.nextPatientCard.querySelector(".queue-card");
@@ -1960,6 +1992,18 @@
       empty.textContent = "Очередь пуста";
       el.nextPatientCard.appendChild(empty);
     }
+  }
+
+  function drawQueuePortrait(targetCanvas, species) {
+    if (!targetCanvas) return;
+    const targetContext = targetCanvas.getContext("2d");
+    targetContext.imageSmoothingEnabled = false;
+    targetContext.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+    targetContext.save();
+    targetContext.translate(12, 11);
+    targetContext.scale(0.9, 0.9);
+    drawAnimalOnContext(targetContext, species);
+    targetContext.restore();
   }
 
   function renderCase() {
@@ -2004,7 +2048,8 @@
     });
     const visitPercent = clamp((patient.visitTimeUsed / patient.visitTimeLimit) * 100, 0, 100);
     el.trustMeter.style.width = `${patient.trust}%`;
-    el.tensionMeter.style.width = `${patient.ownerProfile.anxiety}%`;
+    el.tensionMeter.style.width = `${patient.anxiety}%`;
+    el.irritationMeter.style.width = `${patient.irritation}%`;
     el.stressMeter.style.width = `${patient.stress}%`;
     el.visitTimeMeter.style.width = `${visitPercent}%`;
     el.patientFacts.innerHTML = `<strong>${patient.animal}</strong><span>${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.</span><span>Состояние: ${patient.selectedUrgency === "urgent" ? "требует срочной помощи" : "требует оценки"}</span>`;
@@ -2099,9 +2144,13 @@
     ctx.imageSmoothingEnabled = false;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBackground();
+    ctx.save();
+    ctx.translate(CLINIC_VIEW.x, CLINIC_VIEW.y);
+    ctx.scale(CLINIC_VIEW.scale, CLINIC_VIEW.scale);
     drawClinicShell();
     drawCharacters();
     drawFloatingLabels();
+    ctx.restore();
   }
 
   function drawBackground() {
@@ -2120,14 +2169,15 @@
       ctx.fillRect(x, 20, 50, 54);
       ctx.fillRect(x - 10, 38, 70, 22);
     }
+    const pathX = CLINIC_VIEW.x + 885 * CLINIC_VIEW.scale;
+    const pathY = CLINIC_VIEW.y + 620 * CLINIC_VIEW.scale;
+    const pathWidth = 94 * CLINIC_VIEW.scale;
     ctx.fillStyle = "#6f7d84";
-    ctx.fillRect(885, 620, 94, 100);
+    ctx.fillRect(pathX, pathY, pathWidth, canvas.height - pathY);
     ctx.fillStyle = "#86949b";
-    ctx.fillRect(900, 620, 64, 100);
+    ctx.fillRect(pathX + 14, pathY, pathWidth - 28, canvas.height - pathY);
     ctx.fillStyle = "#b8c3c8";
-    ctx.fillRect(900, 620, 64, 5);
-    drawFlowerBed(110, 640, 210);
-    drawFlowerBed(1030, 640, 150);
+    ctx.fillRect(pathX + 14, pathY, pathWidth - 28, 5);
   }
 
   function drawFlowerBed(x, y, width) {
@@ -2146,7 +2196,7 @@
     ctx.fillStyle = "rgba(7,20,18,.42)";
     ctx.fillRect(43, 83, 1182, 568);
     drawRoom(70, 90, 560, 240, "#d8a4a5", "Кабинет врача");
-    drawRoom(630, 90, 570, 240, "#b9a5d2", "Микроскопия");
+    drawRoom(630, 90, 570, 240, "#b9a5d2", "Лаборатория");
     ctx.fillStyle = "#aeb8bd";
     ctx.fillRect(70, 330, 1130, 55);
     drawTiles(70, 330, 1130, 55, "#aeb8bd", "#9faab0");
@@ -2163,6 +2213,8 @@
     drawPlants();
     drawDoors();
     drawEntrance();
+    drawFlowerBed(110, 640, 210);
+    drawFlowerBed(1030, 640, 150);
   }
 
   function drawRoom(x, y, w, h, floor, label) {
@@ -2491,25 +2543,43 @@
   }
 
   function drawDoors() {
-    drawDoorOpening(500, 315);
-    drawDoorOpening(850, 315);
-    drawDoorOpening(610, 370);
-    drawDoorOpening(760, 370);
+    drawDoorOpening(500, 315, 1);
+    drawDoorOpening(850, 315, -1);
+    drawDoorOpening(610, 370, -1);
+    drawDoorOpening(760, 370, 1);
   }
 
-  function drawDoorOpening(x, y) {
+  function drawDoorOpening(x, y, direction) {
     ctx.fillStyle = "#243743";
-    ctx.fillRect(x, y, 54, 22);
+    ctx.fillRect(x, y, 58, 18);
     ctx.fillStyle = "#dce6eb";
-    ctx.fillRect(x + 5, y + 3, 44, 16);
-    ctx.fillStyle = "#9d6b45";
+    ctx.fillRect(x + 3, y + 2, 4, 16);
+    ctx.fillRect(x + 51, y + 2, 4, 16);
+    const hingeX = direction > 0 ? x + 7 : x + 51;
+    const farX = hingeX + direction * 28;
+    ctx.fillStyle = "#6d442c";
     ctx.beginPath();
-    ctx.moveTo(x + 5, y + 19);
-    ctx.lineTo(x + 43, y + 4);
-    ctx.lineTo(x + 49, y + 9);
-    ctx.lineTo(x + 14, y + 21);
+    ctx.moveTo(hingeX, y + 9);
+    ctx.lineTo(farX, y - 5);
+    ctx.lineTo(farX, y - 55);
+    ctx.lineTo(hingeX, y - 43);
     ctx.closePath();
     ctx.fill();
+    ctx.fillStyle = "#a66a3d";
+    ctx.beginPath();
+    ctx.moveTo(hingeX + direction * 4, y + 4);
+    ctx.lineTo(farX - direction * 4, y - 7);
+    ctx.lineTo(farX - direction * 4, y - 49);
+    ctx.lineTo(hingeX + direction * 4, y - 39);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = "#f0cf62";
+    ctx.fillRect(farX - direction * 7 - 2, y - 29, 4, 4);
+    ctx.strokeStyle = "rgba(56,39,31,.55)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(direction > 0 ? x + 10 : x + 48, y + 8, 39, direction > 0 ? -Math.PI / 2 : Math.PI, direction > 0 ? 0 : Math.PI * 1.5);
+    ctx.stroke();
   }
 
   function drawEntrance() {
@@ -2539,10 +2609,7 @@
   function drawCharacters() {
     const idle = Math.round(Math.sin(state.animationTime / 380) * 1.5);
     const doctor = currentDoctor();
-    const doctorTargetX = !el.caseWindow.classList.contains("hidden") ? 430 : 440;
-    const doctorTargetY = !el.caseWindow.classList.contains("hidden") ? 240 : 190;
-    state.doctorScreenX += (doctorTargetX - state.doctorScreenX) * 0.07;
-    state.doctorScreenY += (doctorTargetY - state.doctorScreenY) * 0.07;
+    advanceDoctorMotion();
     drawPerson(Math.round(state.doctorScreenX), Math.round(state.doctorScreenY + idle), { shirt: doctor.color, pants: "#253c65", hair: doctor.hair, coat: true });
 
     state.queue.forEach((patient, index) => {
@@ -2563,6 +2630,50 @@
       drawAnimal(patient.species, x + 22, y + 17, false);
     });
     state.departures = state.departures.filter((patient) => patient.motion !== "gone");
+  }
+
+  function startDoctorLabTrip() {
+    state.doctorMotion = "toLab";
+    state.doctorRouteIndex = 0;
+    state.doctorRoute = [[500, 300], [525, 350], [825, 350], [850, 300], [875, 225]];
+  }
+
+  function advanceDoctorMotion() {
+    if (state.doctorMotion === "labWorking" && state.animationTime >= state.doctorHoldUntil) {
+      state.doctorMotion = "returning";
+      state.doctorRouteIndex = 0;
+      state.doctorRoute = [[850, 300], [825, 350], [525, 350], [500, 300], [430, 240]];
+    }
+    if (state.doctorRouteIndex < state.doctorRoute.length) {
+      const [targetX, targetY] = state.doctorRoute[state.doctorRouteIndex];
+      const dx = targetX - state.doctorScreenX;
+      const dy = targetY - state.doctorScreenY;
+      const distance = Math.hypot(dx, dy);
+      if (distance <= 3.5) {
+        state.doctorScreenX = targetX;
+        state.doctorScreenY = targetY;
+        state.doctorRouteIndex += 1;
+        if (state.doctorRouteIndex >= state.doctorRoute.length) {
+          if (state.doctorMotion === "toLab") {
+            state.doctorMotion = "labWorking";
+            state.doctorHoldUntil = state.animationTime + 3000;
+          } else if (state.doctorMotion === "returning") {
+            state.doctorMotion = "idle";
+            state.doctorRoute = [];
+          }
+        }
+      } else {
+        const step = Math.min(3, distance);
+        state.doctorScreenX += (dx / distance) * step;
+        state.doctorScreenY += (dy / distance) * step;
+      }
+      return;
+    }
+    if (state.doctorMotion === "labWorking") return;
+    const doctorTargetX = !el.caseWindow.classList.contains("hidden") ? 430 : 440;
+    const doctorTargetY = !el.caseWindow.classList.contains("hidden") ? 240 : 190;
+    state.doctorScreenX += (doctorTargetX - state.doctorScreenX) * 0.07;
+    state.doctorScreenY += (doctorTargetY - state.doctorScreenY) * 0.07;
   }
 
   function advancePatientMotion(patient, index) {
@@ -2836,9 +2947,10 @@
       state.spawnMeter += minutes;
       addDoctorFatigue(minutes * 0.002);
       state.queue.forEach((patient) => {
-        if (isPatientInConsult(patient)) return;
-        patient.age += minutes;
-        patient.mood = waitingMood(patient);
+      if (isPatientInConsult(patient)) return;
+      patient.age += minutes;
+      patient.mood = waitingMood(patient);
+      adjustOwnerState(patient, minutes * 0.06, minutes * 0.08);
       });
       removeLostPatients();
       maybeSpawn();
