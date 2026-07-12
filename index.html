@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pet Clinic: ветеринарная клиника</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eaf6ff'/%3E%3Cpath d='M13 5h6v22h-6zM5 13h22v6H5z' fill='%231976d2'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="styles.css?v=20260712k">
+    <link rel="stylesheet" href="styles.css?v=20260712l">
   </head>
   <body>
     <main class="game-shell" aria-label="Pet Clinic: ветеринарная стратегия">
@@ -57,11 +57,6 @@
           <button class="window-close" id="closeCaseBtn" type="button" title="Закрыть" aria-label="Закрыть окно приема">×</button>
         </header>
 
-        <div class="tutorial-guide hidden" id="tutorialGuide" aria-live="polite">
-          <strong id="tutorialTitle"></strong>
-          <span id="tutorialText"></span>
-        </div>
-
         <div class="case-workspace">
           <section class="patient-column">
             <canvas id="portraitCanvas" width="192" height="192" aria-label="Портрет пациента"></canvas>
@@ -83,6 +78,10 @@
           </nav>
 
           <section class="clinical-column">
+            <div class="tutorial-guide hidden" id="tutorialGuide" aria-live="polite">
+              <strong id="tutorialTitle"></strong>
+              <span id="tutorialText"></span>
+            </div>
             <div class="clinical-block">
               <h2>Что говорит владелец</h2>
               <p id="ownerComplaint"></p>
@@ -195,6 +194,6 @@
     <script src="generator/generator-v2.js?v=20260712a" defer></script>
     <script src="generator/game-adapter-v2.js?v=20260712a" defer></script>
     <script src="generator/generator-mode.js?v=20260712a" defer></script>
-    <script src="game.js?v=20260712k" defer></script>
+    <script src="game.js?v=20260712l" defer></script>
   </body>
 </html>

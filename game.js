@@ -8,6 +8,10 @@
   const MICROSCOPY_COST = 2;
   const MICROSCOPY_FEE = 90;
   const MAX_CONSECUTIVE_SHIFTS = 3;
+  const SIMULATION_MINUTES_PER_REAL_SECOND = 2;
+  const PATIENT_ROUTE_SPEED = 4;
+  const DOCTOR_ROUTE_SPEED = 5.2;
+  const LAB_HOLD_MS = 1200;
   const CLINIC_VIEW = { x: 28, y: 42, scale: 0.88 };
   let campaign = window.PET_CLINIC_CAMPAIGN;
   let generatorRuntime = { mode: "current", catalog: null, generator: null };
@@ -2332,8 +2336,11 @@
     el.diagnosisChip.textContent = selectedDiagnosis
       ? `Рабочая версия: ${selectedDiagnosis}`
       : "Рабочая версия не выбрана";
+    el.anamnesisBtn.disabled = false;
     el.generalExamBtn.disabled = patient.generalExamDone;
     el.localExamBtn.disabled = patient.localUsed >= MAX_LOCAL_EXAMS;
+    el.diagnosisBtn.disabled = false;
+    el.communicationBtn.disabled = false;
     const supportsSample = !patient.v2Visit || patient.v2Visit.medicalContent.sampleActions.length > 0;
     const supportsTest = !patient.v2Visit || patient.v2Visit.medicalContent.diagnosticTests.length > 0;
     if (patient.v2Visit) {
@@ -2381,7 +2388,10 @@
       el.caseUrgencyBtn.disabled = false;
       tutorialActions.forEach(([button]) => button.classList.remove("tutorial-focus"));
     }
-    document.querySelectorAll(".stage-tabs button").forEach((button) => button.classList.remove("active"));
+    document.querySelectorAll(".stage-tabs button").forEach((button) => {
+      button.classList.remove("active");
+      button.disabled = guided;
+    });
     const stage = patient.selectedCommunicationId ? "discharge"
       : patient.selectedDiagnosisId ? "decision"
         : patient.microscopyDone || patient.sampleTaken ? "research"
@@ -2973,14 +2983,14 @@
         if (state.doctorRouteIndex >= state.doctorRoute.length) {
           if (state.doctorMotion === "toLab") {
             state.doctorMotion = "labWorking";
-            state.doctorHoldUntil = state.animationTime + 3000;
+            state.doctorHoldUntil = state.animationTime + LAB_HOLD_MS;
           } else if (state.doctorMotion === "returning") {
             state.doctorMotion = "idle";
             state.doctorRoute = [];
           }
         }
       } else {
-        const step = Math.min(3, distance);
+        const step = Math.min(DOCTOR_ROUTE_SPEED, distance);
         state.doctorScreenX += (dx / distance) * step;
         state.doctorScreenY += (dy / distance) * step;
       }
@@ -2989,8 +2999,8 @@
     if (state.doctorMotion === "labWorking") return;
     const doctorTargetX = !el.caseWindow.classList.contains("hidden") ? 430 : 440;
     const doctorTargetY = !el.caseWindow.classList.contains("hidden") ? 240 : 190;
-    state.doctorScreenX += (doctorTargetX - state.doctorScreenX) * 0.07;
-    state.doctorScreenY += (doctorTargetY - state.doctorScreenY) * 0.07;
+    state.doctorScreenX += (doctorTargetX - state.doctorScreenX) * 0.12;
+    state.doctorScreenY += (doctorTargetY - state.doctorScreenY) * 0.12;
   }
 
   function advancePatientMotion(patient, index) {
@@ -2999,7 +3009,7 @@
       const dx = targetX - patient.screenX;
       const dy = targetY - patient.screenY;
       const distance = Math.hypot(dx, dy);
-      const step = Math.min(2.2, distance);
+      const step = Math.min(PATIENT_ROUTE_SPEED, distance);
       if (distance <= 3.3) {
         patient.screenX = targetX;
         patient.screenY = targetY;
@@ -3018,8 +3028,8 @@
     if (patient.motion === "waiting") {
       const waitingSpots = [[215, 510], [460, 510], [215, 592], [460, 592], [575, 510], [575, 585]];
       const [targetX, targetY] = waitingSpots[index % waitingSpots.length];
-      patient.screenX += (targetX - patient.screenX) * 0.08;
-      patient.screenY += (targetY - patient.screenY) * 0.08;
+      patient.screenX += (targetX - patient.screenX) * 0.14;
+      patient.screenY += (targetY - patient.screenY) * 0.14;
     }
   }
 
@@ -3256,7 +3266,7 @@
     const delta = timestamp - state.lastTick;
     state.lastTick = timestamp;
     if (state.dayStarted && !state.paused && !state.modalOpen && !isReadingInterfaceOpen()) {
-      const minutes = (delta / 1000) * state.speed * 0.5;
+      const minutes = (delta / 1000) * state.speed * SIMULATION_MINUTES_PER_REAL_SECOND;
       state.minute += minutes;
       state.spawnMeter += minutes;
       addDoctorFatigue(minutes * 0.002);
