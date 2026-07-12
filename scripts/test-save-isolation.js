@@ -13,5 +13,5 @@ console.log(JSON.stringify({
   status: "passed",
   gameSaveKeys: namespaces.GAME_SAVE_KEYS,
   generatorSaveKeys: { legacy: legacy.SAVE_KEY, tier01v2: v2.SAVE_KEY },
-  note: "The current static prototype does not yet persist the full game state; these namespaces reserve isolated keys for that implementation."
+  note: "Generator state and versioned full game state use separate keys for current, legacy-v1 and tier-01-v2."
 }, null, 2));

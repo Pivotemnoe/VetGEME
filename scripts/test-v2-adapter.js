@@ -52,12 +52,58 @@ async function main() {
     if (diagnoses.length !== caseData.preliminaryDiagnosisOptions.length) throw new Error(`${caseId}: adapter added global diagnoses`);
     if (!diagnoses.some((item) => item.id === caseId)) throw new Error(`${caseId}: correct contextual diagnosis missing`);
   }
+  const familyRepresentatives = new Map();
+  for (let campaignIndex = 0; campaignIndex < 20 && familyRepresentatives.size < 8; campaignIndex += 1) {
+    const familyGenerator = generatorApi.createGenerator({
+      catalog,
+      seed: `all-family-pipeline-smoke-${campaignIndex}`,
+      storage: generatorApi.createMemoryStorage()
+    });
+    for (let day = 1; day <= 7; day += 1) {
+      const generatedDay = familyGenerator.openDay(day);
+      generatedDay.visits.forEach((visit) => {
+        if (!familyRepresentatives.has(visit.family)) familyRepresentatives.set(visit.family, visit);
+      });
+      familyGenerator.closeDay(day, generatedDay.visits.map((visit) => ({
+        visitId: visit.visitId,
+        completed: true,
+        followUpRequested: true,
+        followUpAfterDays: 1
+      })));
+    }
+  }
+  const expectedFamilies = ["ear", "skin", "gastrointestinal", "urinary", "eyes", "respiratory", "trauma", "perianal"];
+  for (const family of expectedFamilies) {
+    const visit = familyRepresentatives.get(family);
+    if (!visit) throw new Error(`${family}: no representative generated for pipeline smoke`);
+    if (visit.patient.species === "rabbit") throw new Error(`${family}: rabbit exposed in tier-01-v2`);
+    const patient = { diseaseId: visit.caseId, v2Visit: visit };
+    const disease = adapter.diseaseForVisit(visit);
+    const history = disease.anamnesis(patient);
+    const sourceHistory = visit.medicalContent.historyQuestions;
+    if (history.length !== sourceHistory.length) throw new Error(`${family}: history question count changed`);
+    history.forEach((answer, index) => {
+      if (answer.label !== sourceHistory[index].buttonText) throw new Error(`${family}: history question was rewritten`);
+      const approvedAnswers = sourceHistory[index].answers.map((item) => item.text);
+      const homeLines = visit.owner.homeAction?.ownerLines?.map((item) => item.text) || [];
+      if (![...approvedAnswers, ...homeLines].includes(answer.answer)) throw new Error(`${family}: history answer is not approved content`);
+    });
+    const targetText = visit.medicalContent.targetExam.findings.map((item) => item.text).join(" ");
+    if (disease.local.target !== targetText) throw new Error(`${family}: target exam mixed another stage`);
+    const testText = visit.medicalContent.diagnosticTests[0]?.text;
+    if (testText && disease.microscopy(patient) !== testText) throw new Error(`${family}: diagnostic result mixed another stage`);
+    const contextual = adapter.diagnosisOptionsFor(patient, catalog);
+    if (contextual.length !== visit.medicalContent.preliminaryDiagnosisOptions.length) {
+      throw new Error(`${family}: global diagnoses were added`);
+    }
+  }
   const twoVisitGoal = previewPlan.goals.find((goal) => goal.id === "complete_two_full_visits");
   if (!twoVisitGoal || twoVisitGoal.target !== 2) throw new Error("two-visit goal denominator is not 2");
   console.log(JSON.stringify({
     status: "passed",
     adaptedVisits: plan.patients.length,
     contextualDiagnosisCases: requiredContextCases.length,
+    familyPipelineCases: Object.fromEntries([...familyRepresentatives].map(([family, visit]) => [family, visit.caseId])),
     approvedTextPreserved: true
   }, null, 2));
 }

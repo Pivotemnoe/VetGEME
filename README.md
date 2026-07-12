@@ -4,7 +4,8 @@
 
 ## Текущий статус
 
-- рабочая пятидневная петля;
+- рабочая стабильная пятидневная петля в режиме `current`;
+- изолированная семидневная первая неделя и 30 одиночных клинических карточек в тестовом режиме `tier-01-v2`;
 - два врача и смены;
 - очередь, время, усталость, экономика и репутация;
 - механическая ревизия и переход к детерминированному генератору клинических сценариев;
@@ -49,6 +50,9 @@ npm run test:generator:legacy
 npm run validate:tier-01-v2
 npm run test:generator:v2
 npm run test:adapter:v2
+npm run test:multi-diagnosis-v2
+npm run test:game-state-save
+npm run test:save-isolation
 ```
 
-Аудит и план миграции сохранений: `docs/GENERATOR_AUDIT_2026-07-12.md`.
+Аудит генератора: `docs/GENERATOR_AUDIT_2026-07-12.md`. Версия и границы игрового сохранения: `docs/GAME_STATE_SAVE.md`.

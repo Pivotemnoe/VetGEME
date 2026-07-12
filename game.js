@@ -15,6 +15,8 @@
   const CLINIC_VIEW = { x: 28, y: 42, scale: 0.88 };
   let campaign = window.PET_CLINIC_CAMPAIGN;
   let generatorRuntime = { mode: "current", catalog: null, generator: null };
+  let gameSaveBlocked = false;
+  let lastGameSaveAt = 0;
 
   function campaignDayCount() {
     return generatorRuntime.mode === "tier-01-v2" ? 7 : 5;
@@ -789,6 +791,7 @@
   const diseaseIds = Object.keys(diseases);
 
   const state = {
+    phase: "planning",
     day: 1,
     minute: DAY_START,
     dayEnd: STANDARD_DAY_END,
@@ -838,8 +841,50 @@
     firstArrivalPaused: false,
     tutorialVisitId: null,
     tutorialStepIndex: 0,
-    tutorialComplete: false
+    tutorialComplete: false,
+    summaryTitle: "",
+    summaryHtml: ""
   };
+
+  function persistGameState(force = false) {
+    if (gameSaveBlocked || !window.PET_CLINIC_GAME_STATE_SAVE || !window.localStorage) return;
+    const now = Date.now();
+    if (!force && now - lastGameSaveAt < 5000) return;
+    try {
+      window.PET_CLINIC_GAME_STATE_SAVE.save(window.localStorage, generatorRuntime.mode, state);
+      lastGameSaveAt = now;
+    } catch (error) {
+      gameSaveBlocked = true;
+      console.error("Game state save failed and has been disabled for this session.", error);
+    }
+  }
+
+  function restoreGameState() {
+    if (!window.PET_CLINIC_GAME_STATE_SAVE || !window.localStorage) return false;
+    try {
+      const snapshot = window.PET_CLINIC_GAME_STATE_SAVE.load(window.localStorage, generatorRuntime.mode);
+      if (!snapshot) return "empty";
+      Object.assign(state, snapshot.state);
+      state.queue = Array.isArray(state.queue) ? state.queue : [];
+      state.queue.forEach((patient) => {
+        patient.selectedDiagnosisIds = Array.isArray(patient.selectedDiagnosisIds)
+          ? patient.selectedDiagnosisIds
+          : patient.selectedDiagnosisId ? [patient.selectedDiagnosisId] : [];
+      });
+      state.departures = [];
+      state.doctorRoute = [];
+      state.doctorRouteIndex = 0;
+      state.doctorMotion = "idle";
+      state.doctorHoldUntil = 0;
+      state.lastTick = 0;
+      return "restored";
+    } catch (error) {
+      gameSaveBlocked = true;
+      console.error("Incompatible game state was not loaded or overwritten.", error);
+      state.log = "Сохранение этого режима несовместимо с текущей версией и не было перезаписано.";
+      return "blocked";
+    }
+  }
 
   const canvas = document.getElementById("clinicCanvas");
   let ctx = canvas.getContext("2d");
@@ -1268,6 +1313,9 @@
       mucousDone: false,
       microscopyDone: false,
       selectedDiagnosisId: null,
+      selectedDiagnosisIds: Array.isArray(overrides.v2Visit?.selectedDiagnosisIds)
+        ? [...overrides.v2Visit.selectedDiagnosisIds]
+        : [],
       selectedCommunicationId: null,
       returnVisit: Boolean(isReturn || overrides.returnVisit),
       eventLabel: overrides.eventLabel || "",
@@ -1309,6 +1357,7 @@
         ? `${patient.owner} вернулся с ${patient.animal}: прошлое лечение не помогло.`
         : `Новый пациент: ${patient.animal}, ${speciesLabels[patient.species]}.`);
     renderAll();
+    persistGameState(true);
   }
 
   function buildArrivalSchedule(plan) {
@@ -1343,6 +1392,7 @@
       requestShiftClose(true);
     }
     renderAll();
+    persistGameState(true);
   }
 
   function maybeSpawn() {
@@ -1509,9 +1559,33 @@
   function selectDiagnosis(diagnosis) {
     const patient = activePatient();
     if (!patient) return;
-    patient.selectedDiagnosisId = diagnosis.id;
-    patient.findings.push(`Предварительный диагноз: ${diagnosis.label}.`);
-    setLog(`Выбран диагноз: ${diagnosis.label}. Теперь можно назначать лечение.`);
+    const schema = patient.v2Visit && window.PET_CLINIC_MULTI_DIAGNOSIS_V2
+      ? window.PET_CLINIC_MULTI_DIAGNOSIS_V2.normalizeVisitSchema(patient.v2Visit)
+      : { diagnosisMode: "single", maximumDiagnosisSelections: 1 };
+    const selected = Array.isArray(patient.selectedDiagnosisIds)
+      ? [...patient.selectedDiagnosisIds]
+      : patient.selectedDiagnosisId ? [patient.selectedDiagnosisId] : [];
+
+    if (schema.diagnosisMode === "multiple") {
+      if (selected.includes(diagnosis.id)) {
+        setLog("Этот диагноз уже выбран и не может занимать второй слот.");
+        return;
+      }
+      if (selected.length >= schema.maximumDiagnosisSelections) {
+        setLog("Можно выбрать не более двух предварительных диагнозов.");
+        return;
+      }
+      selected.push(diagnosis.id);
+    } else {
+      selected.splice(0, selected.length, diagnosis.id);
+    }
+
+    patient.selectedDiagnosisIds = selected;
+    patient.selectedDiagnosisId = selected[0] || null;
+    if (patient.v2Visit) patient.v2Visit.selectedDiagnosisIds = [...selected];
+    const slotLabel = selected.length === 1 ? "Основной диагноз" : "Дополнительный диагноз или осложнение";
+    patient.findings.push(`${slotLabel}: ${diagnosis.label}.`);
+    setLog(`Выбран диагноз: ${diagnosis.label}.${schema.diagnosisMode === "multiple" && selected.length < 2 ? " Второй слот остается необязательным." : " Теперь можно назначать лечение."}`);
     closeChoice();
     if (tutorialPatient(patient)) advanceTutorial("preliminary_diagnosis");
     passTime(3);
@@ -1822,6 +1896,7 @@
   }
 
   function openShiftPlanning() {
+    state.phase = "planning";
     state.modalOpen = true;
     state.paused = true;
     state.dayStarted = false;
@@ -1836,6 +1911,7 @@
     if (availableDoctors.length) state.selectedDoctorId = availableDoctors[0].id;
     renderShiftPlanning();
     renderAll();
+    persistGameState(true);
   }
 
   function resetDayState() {
@@ -1882,6 +1958,7 @@
       ? plan.endMinute
       : state.hoursMode === "extended" ? EXTENDED_DAY_END : STANDARD_DAY_END;
     state.dayStarted = true;
+    state.phase = "running";
     state.modalOpen = false;
     state.paused = false;
     doctor.shiftsWorked += 1;
@@ -1903,6 +1980,7 @@
     }
     setLog(`${doctor.name} начал${doctor.name.endsWith("а") ? "а" : ""} смену. ${plan ? plan.briefing : "Клиника работает в свободном режиме."}`);
     renderAll();
+    persistGameState(true);
   }
 
   function requestShiftClose(forced = false) {
@@ -1912,6 +1990,7 @@
       return;
     }
     state.modalOpen = true;
+    state.phase = "closing";
     state.paused = true;
     const urgent = state.queue.filter((patient) => patient.selectedUrgency === "urgent").length;
     el.closeShiftSummary.innerHTML = [
@@ -1924,6 +2003,7 @@
     el.extendShiftBtn.disabled = state.shiftExtended;
     el.finishShiftBtn.disabled = urgent > 0;
     el.closeShiftWindow.classList.remove("hidden");
+    persistGameState(true);
   }
 
   function extendShift() {
@@ -1931,10 +2011,12 @@
     state.shiftExtended = true;
     addDoctorFatigue(8);
     state.modalOpen = false;
+    state.phase = "running";
     state.paused = false;
     el.closeShiftWindow.classList.add("hidden");
     setLog("Смена продлена на 60 минут. Дополнительные часы увеличат зарплату и усталость.");
     renderAll();
+    persistGameState(true);
   }
 
   function transferAndClose() {
@@ -1963,6 +2045,7 @@
     state.modalOpen = true;
     state.paused = true;
     state.dayStarted = false;
+    state.phase = "summary";
     el.closeShiftWindow.classList.add("hidden");
     const plan = currentPlan();
     const goals = plan ? plan.goals : [];
@@ -2003,8 +2086,8 @@
       ? Object.entries(reputationByReason).map(([reason, delta]) => `${delta > 0 ? "+" : ""}${delta.toFixed(1)} — ${reason}`).join("<br>")
       : "Изменений не было.";
     state.chapterComplete = state.day === campaignDayCount();
-    el.summaryTitle.textContent = state.chapterComplete ? "Первая глава завершена" : `День ${state.day} завершен`;
-    el.summaryText.innerHTML = [
+    state.summaryTitle = state.chapterComplete ? "Первая глава завершена" : `День ${state.day} завершен`;
+    state.summaryHtml = [
       `<b>${plan ? plan.title : "Свободная смена"}</b>`,
       `Врач: <b>${doctor.name}</b>. Усталость после смены: <b>${Math.round(doctor.fatigue)}%</b>.`,
       `Посетителей пришло: <b>${state.arrivalsToday} из ${state.plannedArrivalsToday}</b>. Принято: <b>${state.treatedToday}</b>. Ушло без приема: <b>${state.lostToday}</b>.`,
@@ -2014,13 +2097,17 @@
       `Репутация: <b>${state.reputation.toFixed(1)}/100</b> (${reputationDelta >= 0 ? "+" : ""}${reputationDelta.toFixed(1)} за день).<br>${reputationReasons}`,
       `Цели: <b>${completedGoals}/${goals.length}</b>.<br>${goalsHtml}`
     ].filter(Boolean).join("<br>");
+    el.summaryTitle.textContent = state.summaryTitle;
+    el.summaryText.innerHTML = state.summaryHtml;
     el.nextDayBtn.textContent = state.chapterComplete ? "Продолжить после главы" : "Планировать следующий день";
     el.summaryWindow.classList.remove("hidden");
     renderAll();
+    persistGameState(true);
   }
 
   function startNextDay() {
     state.day += 1;
+    state.phase = "planning";
     resetDayState();
     setLog("Выберите врача и режим работы перед открытием клиники.");
     el.developerPanel.classList.add("hidden");
@@ -2144,14 +2231,27 @@
     const availableDiagnoses = patient.v2Visit
       ? window.PET_CLINIC_GAME_ADAPTER_V2.diagnosisOptionsFor(patient, generatorRuntime.catalog)
       : diagnosisOptions;
+    const schema = patient.v2Visit && window.PET_CLINIC_MULTI_DIAGNOSIS_V2
+      ? window.PET_CLINIC_MULTI_DIAGNOSIS_V2.normalizeVisitSchema(patient.v2Visit)
+      : { diagnosisMode: "single", maximumDiagnosisSelections: 1 };
+    const selectedIds = Array.isArray(patient.selectedDiagnosisIds)
+      ? patient.selectedDiagnosisIds
+      : patient.selectedDiagnosisId ? [patient.selectedDiagnosisId] : [];
     const items = availableDiagnoses.map((diagnosis) => ({
       label: diagnosis.label,
-      note: patient.selectedDiagnosisId === diagnosis.id
-        ? "Сейчас выбран этот диагноз."
-        : `${diagnosis.note} Потратит 3 минуты приема.`,
+      note: selectedIds.includes(diagnosis.id)
+        ? "Этот диагноз уже выбран."
+        : schema.diagnosisMode === "multiple" && selectedIds.length >= schema.maximumDiagnosisSelections
+          ? "Оба диагностических слота уже заняты."
+          : `${diagnosis.note} Потратит 3 минуты приема.`,
+      disabled: selectedIds.includes(diagnosis.id)
+        || (schema.diagnosisMode === "multiple" && selectedIds.length >= schema.maximumDiagnosisSelections),
       onClick: () => selectDiagnosis(diagnosis)
     }));
-    openChoice("Предварительный диагноз", `Выберите один из ${availableDiagnoses.length} вариантов`, items);
+    const title = schema.diagnosisMode === "multiple"
+      ? `Основной и дополнительный диагноз: выбрано ${selectedIds.length} из 2`
+      : `Выберите один из ${availableDiagnoses.length} вариантов`;
+    openChoice(schema.diagnosisMode === "multiple" ? "Предварительные диагнозы" : "Предварительный диагноз", title, items);
   }
 
   function openCommunication() {
@@ -2335,9 +2435,12 @@
       ? `${Math.max(100, Math.floor((patient.budget - 60) / 50) * 50)}–${Math.ceil((patient.budget + 60) / 50) * 50} V`
       : "не обсуждался";
     el.ownerConsent.textContent = patient.sampleTaken ? "на исследование получено" : "нужно уточнить";
-    const selectedDiagnosis = diagnosisLabel(patient.selectedDiagnosisId);
+    const selectedDiagnosisIds = Array.isArray(patient.selectedDiagnosisIds) && patient.selectedDiagnosisIds.length
+      ? patient.selectedDiagnosisIds
+      : patient.selectedDiagnosisId ? [patient.selectedDiagnosisId] : [];
+    const selectedDiagnosis = selectedDiagnosisIds.map(diagnosisLabel).filter(Boolean).join(" + ");
     el.diagnosisChip.textContent = selectedDiagnosis
-      ? `Предварительный диагноз: ${selectedDiagnosis}`
+      ? `${selectedDiagnosisIds.length > 1 ? "Предварительные диагнозы" : "Предварительный диагноз"}: ${selectedDiagnosis}`
       : "Предварительный диагноз не выбран";
     const diagnosisButtonLabel = el.diagnosisBtn.querySelector("span");
     const diagnosisCount = el.diagnosisBtn.querySelector("small");
@@ -2369,7 +2472,7 @@
     const testRequiresSample = !patient.v2Visit
       || window.PET_CLINIC_GAME_ADAPTER_V2.diagnosticTestFor(patient)?.requires?.includes("sample");
     el.microscopyBtn.disabled = patient.microscopyDone || (testRequiresSample && !patient.sampleTaken) || !supportsTest;
-    el.treatmentBtn.disabled = !patient.selectedDiagnosisId;
+    el.treatmentBtn.disabled = selectedDiagnosisIds.length === 0;
     const guided = tutorialPatient(patient);
     const tutorialStep = guided ? currentTutorialStep() : null;
     const tutorialActions = [
@@ -3291,17 +3394,61 @@
         requestShiftClose(true);
       }
       renderAll();
+      persistGameState(false);
     } else {
       drawClinic();
     }
     window.requestAnimationFrame(tick);
   }
 
+  function resumeRestoredGame() {
+    el.shiftWindow.classList.add("hidden");
+    el.summaryWindow.classList.add("hidden");
+    el.closeShiftWindow.classList.add("hidden");
+    el.caseWindow.classList.add("hidden");
+    el.choiceWindow.classList.add("hidden");
+
+    if (state.phase === "summary") {
+      state.modalOpen = true;
+      state.paused = true;
+      state.dayStarted = false;
+      el.summaryTitle.textContent = state.summaryTitle || `День ${state.day} завершен`;
+      el.summaryText.innerHTML = state.summaryHtml || "Смена завершена.";
+      el.nextDayBtn.textContent = state.chapterComplete ? "Продолжить после главы" : "Планировать следующий день";
+      el.summaryWindow.classList.remove("hidden");
+      renderAll();
+      return;
+    }
+
+    if (state.phase === "closing") {
+      state.modalOpen = false;
+      state.paused = false;
+      requestShiftClose(true);
+      renderAll();
+      return;
+    }
+
+    if (state.phase === "running" && state.dayStarted) {
+      state.modalOpen = false;
+      renderAll();
+      return;
+    }
+
+    openShiftPlanning();
+  }
+
   function init() {
     bindEvents();
-    resetDayState();
-    setLog("Выберите врача и режим работы перед открытием клиники.");
-    openShiftPlanning();
+    const restoreStatus = restoreGameState();
+    if (restoreStatus === "restored") {
+      resumeRestoredGame();
+    } else {
+      resetDayState();
+      setLog(restoreStatus === "blocked"
+        ? "Несовместимое сохранение этого режима не загружено и не перезаписано. Начата временная новая сессия."
+        : "Выберите врача и режим работы перед открытием клиники.");
+      openShiftPlanning();
+    }
     window.requestAnimationFrame(tick);
   }
 
