@@ -149,10 +149,10 @@
       fee: 420
     },
     {
-      id: "antifungalDrops",
-      label: "Противогрибковые ушные капли + очистка",
-      note: "Местное лечение грибкового отита с контролем воспаления.",
-      fee: 240
+      id: "antiInflammatoryDrops",
+      label: "Противовоспалительные ушные капли",
+      note: "Уходовая схема без антибиотика.",
+      fee: 180
     },
     {
       id: "antiparasitic",
@@ -205,9 +205,9 @@
       note: "Ухо, запах, воспаление, длительность важна."
     },
     {
-      id: "fungalOtitis",
-      label: "Грибковый отит",
-      note: "Зуд, восковидные выделения и грибковые клетки при микроскопии."
+      id: "inflammatoryOtitis",
+      label: "Воспалительный отит",
+      note: "Легкое воспаление без явной бактериальной или клещевой картины."
     },
     {
       id: "miteOtitis",
@@ -342,22 +342,22 @@
         return outcome("wrong", 0.25, "Причина похожа на бактериальный отит, выбранное лечение ее плохо закрывает.");
       }
     },
-    fungalOtitis: {
-      name: "Грибковый отит",
-      short: "зуд и восковидные выделения из уха",
+    inflammatoryOtitis: {
+      name: "Воспалительный отит",
+      short: "легкое воспаление уха",
       species: ["dog", "cat", "rabbit"],
       baseFee: 110,
       complaints: [
         "чешет ухо",
-        "из уха пахнет сильнее обычного",
+        "после купания стало хуже",
         "ухо немного красное",
-        "в ухе коричневатые выделения",
-        "ухо быстро снова пачкается",
+        "запаха почти нет",
+        "выделений почти нет",
         "ест нормально",
         "не любит, когда трогают ухо"
       ],
       makeFlags() {
-        return { trigger: pick(["купание", "домашняя чистка", "недавний курс ушных капель"]) };
+        return { trigger: pick(["купание", "домашняя чистка", "прогулка под дождем"]) };
       },
       anamnesis(patient) {
         return [
@@ -368,8 +368,8 @@
           },
           {
             id: "odor",
-            label: "Есть запах и какие выделения видны?",
-            answer: "Запах заметный, выделения коричневатые и восковидные, выраженного гноя нет."
+            label: "Есть запах и гнойные выделения?",
+            answer: "Сильного запаха нет, выделений мало."
           },
           {
             id: "contact",
@@ -395,19 +395,19 @@
         return "Слизистые розовые, влажные.";
       },
       local: {
-        ears: "Слуховой проход умеренно красный, есть коричневатые восковидные выделения и заметный запах.",
+        ears: "Умеренное покраснение, немного серы, гноя и сильного запаха нет.",
         abdomen: "Живот мягкий, безболезненный.",
         skin: "Кожа без распространенного зуда, есть легкий расчес около уха.",
         gait: "Походка обычная.",
         head: "Легкая болезненность около уха, травмы нет."
       },
       microscopy() {
-        return "Микроскопия: клещи не обнаружены, видны многочисленные грибковые клетки; выраженной бактериальной картины нет.";
+        return "Микроскопия: клещи не обнаружены, выраженной бактериальной картины нет.";
       },
       evaluate(patient, treatmentId) {
-        if (treatmentId === "antifungalDrops") return outcome("correct", 0.04, "Грибковый отит получает местное противогрибковое лечение и очистку уха.");
-        if (treatmentId === "antibacterialDrops" || treatmentId === "dropsAntibiotic") return outcome("partial", 0.14, "Антибактериальная схема не устраняет грибковую причину, хотя воспаление может временно измениться.");
-        return outcome("wrong", 0.2, "Лечение не закрывает грибковый отит.");
+        if (treatmentId === "antiInflammatoryDrops") return outcome("correct", 0.03, "Легкое воспаление закрыто местной уходовой схемой.");
+        if (treatmentId === "antibacterialDrops" || treatmentId === "dropsAntibiotic") return outcome("partial", 0.08, "Антибиотик здесь избыточен, но воспаление может временно стихнуть.");
+        return outcome("wrong", 0.18, "Лечение не подходит легкому воспалительному отиту.");
       }
     },
     miteOtitis: {
@@ -478,7 +478,7 @@
       },
       evaluate(patient, treatmentId) {
         if (treatmentId === "antiparasitic") return outcome("correct", 0.04, "Клещевой отит получает противопаразитарную обработку.");
-        if (treatmentId === "antibacterialDrops" || treatmentId === "antifungalDrops") return outcome("partial", 0.22, "Воспаление может измениться, но клещевая причина останется.");
+        if (treatmentId === "antibacterialDrops" || treatmentId === "antiInflammatoryDrops") return outcome("partial", 0.22, "Воспаление может стихнуть, но причина останется.");
         return outcome("wrong", 0.28, "Без противопаразитарной обработки клещевой отит вернется.");
       }
     },
@@ -774,7 +774,6 @@
   };
 
   const diseaseIds = Object.keys(diseases);
-  const scenarioGenerator = window.PET_CLINIC_GENERATOR.createGenerator({ campaign });
 
   const state = {
     day: 1,
@@ -976,7 +975,43 @@
   }
 
   function currentPlan() {
-    return scenarioGenerator.getOrGenerateDay(state.day, { caseJournal: state.caseJournal });
+    const basePlan = campaign.days.find((plan) => plan.day === state.day) || null;
+    if (!basePlan || state.day !== 2) return basePlan;
+    const completedDayOne = state.caseJournal.filter((item) => item.day === 1);
+    if (!completedDayOne.length) {
+      const fallbackPatient = {
+        ...basePlan.patients[0],
+        source: "story",
+        bookingLabel: "скрытые подробности",
+        returnVisit: false,
+        animal: "Рекс",
+        owner: "Лебедев",
+        profileId: "careless"
+      };
+      return {
+        ...basePlan,
+        title: basePlan.fallbackTitle,
+        briefing: basePlan.fallbackBriefing,
+        goals: [
+          { id: "hiddenFact", label: "Выяснить скрытый факт", target: 1 },
+          ...basePlan.goals.filter((goal) => goal.id !== "returns")
+        ],
+        patients: [fallbackPatient, ...basePlan.patients.slice(1)]
+      };
+    }
+    const previous = completedDayOne[0];
+    return {
+      ...basePlan,
+      patients: [{
+        ...basePlan.patients[0],
+        diseaseId: previous.diseaseId || basePlan.patients[0].diseaseId,
+        animal: previous.animal,
+        owner: previous.owner,
+        species: previous.species,
+        sex: previous.sex || basePlan.patients[0].sex,
+        ageYears: previous.ageYears || basePlan.patients[0].ageYears
+      }, ...basePlan.patients.slice(1)]
+    };
   }
 
   function currentDoctor() {
@@ -1199,7 +1234,7 @@
 
   function buildArrivalSchedule(plan) {
     if (!plan) return [];
-    const schedule = plan.patients.filter((template) => !template.disabledInStandard).map((template, index) => ({
+    const schedule = plan.patients.map((template, index) => ({
       minute: template.arrivalMinute || DAY_START + 20 + index * 65,
       template
     }));
@@ -1540,7 +1575,7 @@
   function correctTreatmentId(patient) {
     const map = {
       bacterialOtitis: patient.flags.durationDays > 14 ? "dropsAntibiotic" : "antibacterialDrops",
-      fungalOtitis: "antifungalDrops",
+      inflammatoryOtitis: "antiInflammatoryDrops",
       miteOtitis: "antiparasitic",
       pancreatitis: "pancreatitisSupport",
       gastroenteritis: "giSupport",
@@ -1675,8 +1710,6 @@
       .filter((doctor) => doctor.consecutiveShifts < MAX_CONSECUTIVE_SHIFTS)
       .sort((left, right) => left.fatigue - right.fatigue);
     if (availableDoctors.length) state.selectedDoctorId = availableDoctors[0].id;
-    const plan = currentPlan();
-    state.dayEnd = plan && plan.endMinute ? plan.endMinute : STANDARD_DAY_END;
     renderShiftPlanning();
     renderAll();
   }
@@ -2162,11 +2195,7 @@
           : patient.generalExamDone || patient.localUsed ? "exam"
             : Object.keys(patient.asked).length ? "anamnesis" : "complaint";
     document.querySelector(`.stage-tabs button[data-stage="${stage}"]`)?.classList.add("active");
-    const generatorMeta = scenarioGenerator.metadata(state.day);
     el.developerData.textContent = [
-      `Seed кампании: ${generatorMeta.campaignSeed}`,
-      `Генератор: ${generatorMeta.generatorVersion}`,
-      `Fingerprint дня: ${generatorMeta.fingerprint || "не создан"}`,
       `Истинный диагноз: ${diseaseFor(patient).name}`,
       `Истинная срочность: ${patient.urgency === "urgent" ? "высокая" : "обычная"}`,
       `Тип владельца: ${patient.ownerProfile.label}`,

@@ -61,7 +61,7 @@
         patients: [
           { arrivalMinute: 8 * 60 + 20, source: "return", bookingLabel: "повторный контроль", diseaseId: "bacterialOtitis", profileId: "careless", animal: "Бакс", owner: "Зайцева", species: "dog", sex: "самец", ageYears: 4, flags: { durationDays: 18, oldDrops: true }, returnVisit: true },
           { arrivalMinute: 9 * 60 + 40, source: "booked", bookingLabel: "чешет уши", diseaseId: "miteOtitis", profileId: "anxious", animal: "Клевер", owner: "Петрова", species: "rabbit", sex: "самка", ageYears: 2, flags: { contact: "новый кролик" } },
-          { arrivalMinute: 11 * 60 + 20, source: "booked", bookingLabel: "ухо покраснело и пахнет", diseaseId: "fungalOtitis", profileId: "budget", animal: "Ричи", owner: "Макаров", species: "dog", sex: "самец", ageYears: 6, flags: { trigger: "домашняя чистка" } },
+          { arrivalMinute: 11 * 60 + 20, source: "booked", bookingLabel: "ухо покраснело", diseaseId: "inflammatoryOtitis", profileId: "budget", animal: "Ричи", owner: "Макаров", species: "dog", sex: "самец", ageYears: 6, flags: { trigger: "домашняя чистка" } },
           { arrivalMinute: 13 * 60 + 10, source: "walkIn", bookingLabel: "внезапный зуд", diseaseId: "dermatitis", profileId: "careless", animal: "Найда", owner: "приют «Лапа»", species: "cat", sex: "самка", ageYears: 3, eventLabel: "Незапланированный посетитель", flags: { trigger: "после старой подстилки" } }
         ]
       },
@@ -81,7 +81,7 @@
           { arrivalMinute: 8 * 60 + 20, source: "return", bookingLabel: "контроль лечения", diseaseId: "bacterialOtitis", profileId: "calm", animal: "Бакс", owner: "Зайцева", species: "dog", sex: "самец", ageYears: 4, returnVisit: true, flags: { durationDays: 10 } },
           { arrivalMinute: 9 * 60 + 15, source: "booked", bookingLabel: "кожный зуд", diseaseId: "dermatitis", profileId: "internet", animal: "Тайга", owner: "Лебедев", species: "dog", sex: "самка", ageYears: 5, ownerLead: "Это точно аллергия на корм", flags: { trigger: "после прогулки" } },
           { arrivalMinute: 10 * 60 + 35, source: "booked", bookingLabel: "рвота после еды", diseaseId: "gastroenteritis", profileId: "anxious", animal: "Буся", owner: "Ким", species: "cat", sex: "самка", ageYears: 1, flags: { trigger: "после смены корма", vomitCount: 1 } },
-          { arrivalMinute: 12 * 60 + 10, source: "walkIn", bookingLabel: "трясет головой, ухо пахнет", diseaseId: "fungalOtitis", profileId: "careless", animal: "Лада", owner: "Алиева", species: "dog", sex: "самка", ageYears: 8, flags: { trigger: "после купания" } },
+          { arrivalMinute: 12 * 60 + 10, source: "walkIn", bookingLabel: "трясет головой", diseaseId: "inflammatoryOtitis", profileId: "careless", animal: "Лада", owner: "Алиева", species: "dog", sex: "самка", ageYears: 8, flags: { trigger: "после купания" } },
           { arrivalMinute: 14 * 60, source: "booked", bookingLabel: "расчесы на коже", diseaseId: "dermatitis", profileId: "budget", animal: "Пончик", owner: "Смирнов", species: "rabbit", sex: "самец", ageYears: 2, flags: { trigger: "после новой подстилки" } }
         ]
       },
@@ -104,7 +104,7 @@
           { arrivalMinute: 10 * 60 + 30, source: "booked", bookingLabel: "кожный зуд", diseaseId: "dermatitis", profileId: "budget", animal: "Рич", owner: "Орлова", species: "dog", sex: "самец", ageYears: 2, flags: { trigger: "после прогулки" } },
           { arrivalMinute: 11 * 60 + 40, source: "return", bookingLabel: "повторный контроль", diseaseId: "gastroenteritis", profileId: "careless", animal: "Ириска", owner: "Алиева", species: "dog", sex: "самка", ageYears: 4, returnVisit: true, flags: { trigger: "пищевая погрешность", vomitCount: 1 } },
           { arrivalMinute: 12 * 60 + 35, source: "walkIn", bookingLabel: "не может сходить в туалет", diseaseId: "urinaryObstruction", profileId: "anxious", animal: "Рыжик", owner: "Петрова", species: "cat", sex: "самец", ageYears: 6, urgency: "urgent", eventLabel: "Срочный пациент", flags: { lastUrineHours: 14 } },
-          { arrivalMinute: 14 * 60 + 30, source: "reserve", bookingLabel: "резервное окно", diseaseId: "gastroenteritis", profileId: "internet", animal: "Тучка", owner: "Ким", species: "cat", sex: "самка", ageYears: 2, flags: { trigger: "украла еду со стола", vomitCount: 1 }, disabledInStandard: true }
+          { arrivalMinute: 14 * 60 + 30, source: "booked", bookingLabel: "однократная рвота", diseaseId: "gastroenteritis", profileId: "internet", animal: "Тучка", owner: "Ким", species: "cat", sex: "самка", ageYears: 2, flags: { trigger: "украла еду со стола", vomitCount: 1 } }
         ]
       },
       {
@@ -122,11 +122,12 @@
         ],
         patients: [
           { arrivalMinute: 8 * 60 + 15, source: "return", bookingLabel: "повторный контроль", diseaseId: "bacterialOtitis", profileId: "careless", animal: "Бакс", owner: "Зайцева", species: "dog", sex: "самец", ageYears: 4, returnVisit: true, flags: { durationDays: 18, oldDrops: true } },
+          { arrivalMinute: 9 * 60, source: "booked", bookingLabel: "ухо покраснело", diseaseId: "inflammatoryOtitis", profileId: "calm", animal: "Марс", owner: "Макаров", species: "dog", sex: "самец", ageYears: 4, flags: { trigger: "после чистки" } },
           { arrivalMinute: 10 * 60 + 10, source: "booked", bookingLabel: "кожный зуд", diseaseId: "dermatitis", profileId: "budget", animal: "Мята", owner: "Иванова", species: "rabbit", sex: "самка", ageYears: 2, flags: { trigger: "после новой подстилки" } },
           { arrivalMinute: 11 * 60 + 20, source: "booked", bookingLabel: "повторная рвота", diseaseId: "pancreatitis", profileId: "anxious", animal: "Нора", owner: "Орлова", species: "dog", sex: "самка", ageYears: 9, flags: { trigger: "дали жирный кусочек", vomitCount: 3 } },
           { arrivalMinute: 12 * 60 + 35, source: "walkIn", bookingLabel: "чешет уши", diseaseId: "miteOtitis", profileId: "internet", animal: "Клевер", owner: "Петрова", species: "rabbit", sex: "самец", ageYears: 3, eventLabel: "Без записи", flags: { contact: "дома есть другие животные" } },
           { arrivalMinute: 14 * 60, source: "booked", bookingLabel: "однократная рвота", diseaseId: "gastroenteritis", profileId: "calm", animal: "Тучка", owner: "Ким", species: "cat", sex: "самка", ageYears: 2, flags: { trigger: "украла еду со стола", vomitCount: 1 } },
-          { arrivalMinute: 15 * 60 + 20, source: "walkIn", bookingLabel: "не может сходить в туалет", diseaseId: "urinaryObstruction", profileId: "conflict", animal: "Малыш", owner: "Лебедев", species: "cat", sex: "самец", ageYears: 5, urgency: "urgent", eventLabel: "Срочный пациент", flags: { lastUrineHours: 10 } }
+          { arrivalMinute: 15 * 60 + 20, source: "booked", bookingLabel: "расчесы на коже", diseaseId: "dermatitis", profileId: "conflict", animal: "Тайга", owner: "Лебедев", species: "dog", sex: "самка", ageYears: 5, flags: { trigger: "после прогулки" } }
         ]
       }
     ]

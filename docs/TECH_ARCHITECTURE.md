@@ -2,7 +2,7 @@
 
 ## Current Runtime
 
-The playable prototype is intentionally dependency-free: `index.html`, `styles.css`, `campaign.js`, `generator.js` and `game.js`. The Node-only adapter `campaign-node.js` lets the same content run in generator simulations. This static runtime remains the protected baseline while mechanics are validated.
+The playable prototype is intentionally dependency-free: `index.html`, `styles.css`, `campaign.js` and `game.js`. It remains the protected baseline while mechanics are validated.
 
 ## Target Boundaries
 
