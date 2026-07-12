@@ -286,6 +286,13 @@
             answer: "Обработки были нерегулярно, но других животных с зудом дома нет."
           },
           {
+            id: "medications",
+            label: "Что уже применяли дома?",
+            answer: patient.flags.oldDrops
+              ? "После уточнения владелец вспоминает: несколько дней капал оставшиеся с прошлого раза ушные капли, название и срок годности не проверял."
+              : "До приема ушные препараты и антибиотики не применяли."
+          },
+          {
             id: "discharge",
             label: "Есть запах или выделения?",
             answer: "Запах заметный, выделения влажные, ухо пачкается быстро."
@@ -792,8 +799,8 @@
     handledSpecialEventsToday: 0,
     arrivalSchedule: [],
     departures: [],
-    doctorScreenX: 390,
-    doctorScreenY: 235,
+    doctorScreenX: 440,
+    doctorScreenY: 190,
     reputationStartToday: 74,
     reputationEvents: [],
     returnsToday: 0,
@@ -1071,11 +1078,11 @@
       returnVisit: Boolean(isReturn || overrides.returnVisit),
       eventLabel: overrides.eventLabel || "",
       completeExamCredited: false,
-      screenX: 731,
+      screenX: 932,
       screenY: 675,
       motion: "arriving",
       routeIndex: 0,
-      route: [[731, 620], [731, 355], [620, 355], [620, 410]]
+      route: [[932, 620], [932, 410], [760, 410], [760, 360], [610, 360], [610, 410]]
     };
     state.nextPatientId += 1;
     patient.findings.push(isReturn
@@ -1105,19 +1112,22 @@
     scripted.slice(2).forEach((template, index) => {
       schedule.push({ minute: DAY_START + 65 + index * 55, template });
     });
-    const specialEvent = state.day >= 2 ? {
+    const eventByDay = {
+      2: { diseaseId: "miteOtitis", animal: "Найда", species: "cat", eventLabel: "Кошка из приюта", flags: { contact: "недавно поступила в приют" } },
+      3: { diseaseId: "dermatitis", animal: "Шанс", species: "dog", eventLabel: "Подопечный приюта с зудом", flags: { trigger: "после старой подстилки" } },
+      4: { diseaseId: "gastroenteritis", animal: "Ириска", species: "dog", eventLabel: "Найденыш с рвотой", flags: { trigger: "ел возле мусорных баков", vomitCount: 2 } },
+      5: { diseaseId: "urinaryObstruction", animal: "Малыш", species: "cat", eventLabel: "Экстренный пациент из приюта", flags: { lastUrineHours: 12 } }
+    };
+    const eventData = eventByDay[state.day];
+    const specialEvent = eventData ? {
       minute: DAY_START + 305,
       template: {
-        diseaseId: state.day === 5 ? "urinaryObstruction" : "trauma",
+        ...eventData,
         profileId: "budget",
-        animal: state.day === 2 ? "Найда" : pick(["Шанс", "Ириска", "Малыш"]),
         owner: "приют «Лапа»",
-        species: state.day === 5 ? "cat" : "dog",
         sex: "самец",
         ageYears: 3,
         urgency: state.day === 5 ? "urgent" : "routine",
-        eventLabel: state.day === 2 ? "Животное из приюта" : "Неожиданный случай",
-        flags: state.day === 5 ? { lastUrineHours: 12 } : { place: "передняя лапа" }
       }
     } : null;
     if (specialEvent) schedule.push(specialEvent);
@@ -1125,10 +1135,18 @@
     const routineCount = Math.max(0, plannedTotal - state.returnsToday - 2 - scripted.slice(2).length - (specialEvent ? 1 : 0));
     const firstRoutineMinute = DAY_START + 145;
     const usableMinutes = state.dayEnd - firstRoutineMinute - 45;
+    const diseasePools = {
+      1: ["bacterialOtitis", "inflammatoryOtitis"],
+      2: ["bacterialOtitis", "inflammatoryOtitis", "miteOtitis"],
+      3: ["dermatitis"],
+      4: ["pancreatitis", "gastroenteritis"],
+      5: ["bacterialOtitis", "miteOtitis", "dermatitis", "pancreatitis", "gastroenteritis", "urinaryObstruction"]
+    };
+    const diseasePool = diseasePools[state.day] || diseaseIds;
     for (let index = 0; index < routineCount; index += 1) {
       schedule.push({
         minute: Math.round(firstRoutineMinute + (usableMinutes * index) / Math.max(1, routineCount - 1)),
-        diseaseId: pick(["bacterialOtitis", "inflammatoryOtitis", "miteOtitis", "dermatitis", "trauma", "gastroenteritis"])
+        diseaseId: pick(diseasePool)
       });
     }
     state.plannedArrivalsToday = plannedTotal;
@@ -1184,7 +1202,7 @@
         state.goalStats.noLost = 0;
         patient.motion = "leaving";
         patient.routeIndex = 0;
-        patient.route = [[620, 410], [620, 355], [731, 355], [731, 675]];
+        patient.route = [[610, 410], [610, 360], [760, 360], [760, 410], [932, 570], [932, 675]];
         state.departures.push(patient);
       }
       return !lost;
@@ -1436,7 +1454,7 @@
     setLog(`${patient.animal}: лечение назначено. Результат станет понятен после наблюдения или повторного обращения.`);
     patient.motion = "leaving";
     patient.routeIndex = 0;
-    patient.route = [[410, 280], [445, 320], [445, 355], [731, 355], [731, 675]];
+    patient.route = [[420, 280], [500, 315], [500, 360], [760, 360], [760, 410], [932, 570], [932, 675]];
     state.departures.push(patient);
     state.queue = state.queue.filter((item) => item.id !== patient.id);
     state.activeId = state.queue[0] ? state.queue[0].id : null;
@@ -1746,7 +1764,7 @@
     if (patient && patient.motion !== "inCabinet") {
       patient.motion = "toCabinet";
       patient.routeIndex = 0;
-      patient.route = [[620, 410], [620, 355], [445, 355], [445, 320], [410, 280], [270, 250]];
+      patient.route = [[610, 410], [610, 360], [500, 360], [500, 315], [420, 280], [350, 245]];
     }
     el.caseWindow.classList.remove("hidden");
     closeChoice();
@@ -1976,6 +1994,7 @@
     if (!patient.asked.duration && !patient.asked.start) unknown.push("Когда точно начались симптомы");
     if (!patient.asked.previous) unknown.push("Были ли подобные эпизоды");
     if (!patient.asked.parasite) unknown.push("Проводились ли обработки");
+    if (patient.flags.oldDrops && !patient.asked.medications) unknown.push("Какие препараты уже применяли дома");
     if (!patient.budgetAsked) unknown.push("Есть ли ограничения по бюджету");
     el.unknownList.textContent = "";
     (unknown.length ? unknown : ["Основные сведения уточнены"]).forEach((item) => {
@@ -2086,155 +2105,241 @@
   }
 
   function drawBackground() {
-    ctx.fillStyle = "#173a29";
+    ctx.fillStyle = "#1e4932";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#24523a";
-    ctx.fillRect(0, 610, canvas.width, 110);
-    ctx.fillStyle = "#345c4c";
-    ctx.fillRect(650, 640, 120, 80);
-    ctx.fillStyle = "#73808a";
-    ctx.fillRect(674, 638, 72, 82);
-    for (let x = 10; x < canvas.width; x += 64) {
-      ctx.fillStyle = x % 128 ? "#2b6543" : "#31714a";
-      ctx.fillRect(x, 30, 36, 60);
-      ctx.fillRect(x - 10, 48, 56, 22);
+    for (let y = 0; y < canvas.height; y += 24) {
+      for (let x = 0; x < canvas.width; x += 24) {
+        ctx.fillStyle = (x / 24 + y / 24) % 2 ? "#23543a" : "#275b3e";
+        ctx.fillRect(x, y, 24, 24);
+      }
+    }
+    ctx.fillStyle = "#173b29";
+    ctx.fillRect(0, 0, canvas.width, 88);
+    for (let x = 18; x < canvas.width; x += 78) {
+      ctx.fillStyle = "#2d6844";
+      ctx.fillRect(x, 20, 50, 54);
+      ctx.fillRect(x - 10, 38, 70, 22);
+    }
+    ctx.fillStyle = "#6f7d84";
+    ctx.fillRect(885, 620, 94, 100);
+    ctx.fillStyle = "#86949b";
+    ctx.fillRect(900, 620, 64, 100);
+    ctx.fillStyle = "#b8c3c8";
+    ctx.fillRect(900, 620, 64, 5);
+    drawFlowerBed(110, 640, 210);
+    drawFlowerBed(1030, 640, 150);
+  }
+
+  function drawFlowerBed(x, y, width) {
+    ctx.fillStyle = "#163b28";
+    ctx.fillRect(x, y, width, 34);
+    ctx.fillStyle = "#32714a";
+    for (let dx = 8; dx < width - 8; dx += 20) {
+      ctx.fillRect(x + dx, y + 8 + (dx % 3), 12, 18);
+      ctx.fillStyle = ["#f4cf58", "#ed7b7b", "#91cce0"][Math.floor(dx / 20) % 3];
+      ctx.fillRect(x + dx + 3, y + 5, 6, 6);
+      ctx.fillStyle = "#32714a";
     }
   }
 
   function drawClinicShell() {
-    ctx.fillStyle = "rgba(0,0,0,.35)";
-    ctx.fillRect(54, 100, 1168, 540);
-    drawRoom(70, 95, 430, 225, "#d9b6b7", "Кабинет врача");
-    drawRoom(500, 95, 310, 225, "#c9b7df", "Лабораторный уголок");
-    drawRoom(810, 95, 390, 225, "#5b646b", "Расширение клиники");
-    drawRoom(70, 390, 590, 230, "#b8d2b7", "Зона ожидания");
-    drawRoom(660, 390, 540, 230, "#d8d5c3", "Регистратура и вход");
-    ctx.fillStyle = "#9aa6ad";
-    ctx.fillRect(70, 320, 1130, 70);
-    drawTiles(70, 320, 1130, 70);
-    ctx.fillStyle = "#3c4e5a";
-    ctx.font = "bold 14px Trebuchet MS";
-    ctx.fillText("ОБЩИЙ КОРИДОР", 560, 360);
-    drawReception(865, 445);
-    drawExamDesk(205, 182);
-    drawMicroscope(615, 190);
+    ctx.fillStyle = "rgba(7,20,18,.42)";
+    ctx.fillRect(43, 83, 1182, 568);
+    drawRoom(70, 90, 560, 240, "#d8a4a5", "Кабинет врача");
+    drawRoom(630, 90, 570, 240, "#b9a5d2", "Микроскопия");
+    ctx.fillStyle = "#aeb8bd";
+    ctx.fillRect(70, 330, 1130, 55);
+    drawTiles(70, 330, 1130, 55, "#aeb8bd", "#9faab0");
+    ctx.fillStyle = "#53616a";
+    ctx.font = "bold 11px Trebuchet MS";
+    ctx.fillText("КОРИДОР", 602, 362);
+    drawRoom(70, 385, 620, 235, "#a9c8a8", "Ожидание");
+    drawRoom(690, 385, 510, 235, "#c8c5b7", "Вход и запись");
+    drawReception(915, 455);
+    drawExamDesk(225, 185);
+    drawMicroscope(880, 180);
     drawClinicFixtures();
     drawBenches();
     drawPlants();
     drawDoors();
-    drawLockedRibbon(902, 188);
     drawEntrance();
   }
 
   function drawRoom(x, y, w, h, floor, label) {
-    ctx.fillStyle = "#dce6eb";
-    ctx.fillRect(x - 8, y - 10, w + 16, h + 18);
-    ctx.fillStyle = "#74828b";
-    ctx.fillRect(x - 8, y - 10, w + 16, 13);
-    ctx.fillRect(x - 8, y - 10, 13, h + 18);
+    ctx.fillStyle = "#485963";
+    ctx.fillRect(x - 12, y - 18, w + 26, h + 32);
+    ctx.fillStyle = "#dfe8eb";
+    ctx.fillRect(x - 7, y - 13, w + 14, h + 20);
     ctx.fillStyle = floor;
     ctx.fillRect(x, y, w, h);
-    drawTiles(x, y, w, h);
-    ctx.lineWidth = 4;
-    ctx.strokeStyle = "#eaf1f4";
-    ctx.strokeRect(x, y, w, h);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "#687784";
-    ctx.strokeRect(x + 5, y + 5, w - 10, h - 10);
-    const labelWidth = Math.max(130, label.length * 8 + 20);
-    ctx.fillStyle = "rgba(16,36,59,.86)";
-    ctx.fillRect(x + 12, y + 11, labelWidth, 25);
+    drawTiles(x, y, w, h, floor, shadeColor(floor, -10));
+    ctx.fillStyle = "#edf3f5";
+    ctx.fillRect(x, y, w, 13);
+    ctx.fillStyle = "#c8d5da";
+    ctx.fillRect(x, y + 13, w, 5);
+    ctx.fillStyle = "#f5f8f9";
+    ctx.fillRect(x, y, 8, h);
+    ctx.fillStyle = "#40515b";
+    ctx.fillRect(x + w - 5, y, 5, h);
+    const labelWidth = Math.max(132, label.length * 8 + 22);
+    ctx.fillStyle = "rgba(20,43,61,.92)";
+    ctx.fillRect(x + 18, y + 20, labelWidth, 28);
+    ctx.fillStyle = "#91a8b5";
+    ctx.fillRect(x + 18, y + 45, labelWidth, 3);
     ctx.fillStyle = "#f4fbff";
-    ctx.font = "bold 15px Trebuchet MS";
-    ctx.fillText(label, x + 22, y + 29);
+    ctx.font = "bold 14px Trebuchet MS";
+    ctx.fillText(label, x + 28, y + 39);
   }
 
-  function drawTiles(x, y, w, h) {
-    ctx.strokeStyle = "rgba(255,255,255,.28)";
-    ctx.lineWidth = 1;
-    for (let tx = x; tx <= x + w; tx += 36) {
-      ctx.beginPath();
-      ctx.moveTo(tx, y);
-      ctx.lineTo(tx, y + h);
-      ctx.stroke();
-    }
-    for (let ty = y; ty <= y + h; ty += 28) {
-      ctx.beginPath();
-      ctx.moveTo(x, ty);
-      ctx.lineTo(x + w, ty);
-      ctx.stroke();
+  function shadeColor(hex, amount) {
+    const value = Number.parseInt(hex.slice(1), 16);
+    const red = clamp((value >> 16) + amount, 0, 255);
+    const green = clamp(((value >> 8) & 255) + amount, 0, 255);
+    const blue = clamp((value & 255) + amount, 0, 255);
+    return `rgb(${red},${green},${blue})`;
+  }
+
+  function drawTiles(x, y, w, h, colorA = "#aeb8bd", colorB = "#9faab0") {
+    const tileW = 32;
+    const tileH = 24;
+    for (let ty = y; ty < y + h; ty += tileH) {
+      for (let tx = x; tx < x + w; tx += tileW) {
+        ctx.fillStyle = ((tx - x) / tileW + (ty - y) / tileH) % 2 ? colorA : colorB;
+        ctx.fillRect(tx, ty, Math.min(tileW, x + w - tx), Math.min(tileH, y + h - ty));
+        ctx.strokeStyle = "rgba(255,255,255,.24)";
+        ctx.strokeRect(tx, ty, Math.min(tileW, x + w - tx), Math.min(tileH, y + h - ty));
+      }
     }
   }
 
   function drawExamDesk(x, y) {
-    drawFurniture(x, y + 35, 165, 60, "#80b9c7", "#477987");
+    drawFurniture(x, y + 32, 190, 54, "#75afbd", "#477987");
     ctx.fillStyle = "#dff7fb";
-    ctx.fillRect(x + 14, y + 45, 137, 12);
-    drawFurniture(x + 205, y, 120, 58, "#6d4730", "#3a2518");
-    ctx.fillStyle = "#e8f5f8";
-    ctx.fillRect(x + 225, y + 12, 32, 22);
-    ctx.fillStyle = "#26384a";
-    ctx.fillRect(x + 222, y + 8, 38, 8);
-    ctx.fillStyle = "#eef7fa";
-    ctx.fillRect(x + 335, y + 25, 42, 55);
-    ctx.fillStyle = "#6aa9bd";
-    ctx.fillRect(x + 340, y + 42, 32, 9);
+    ctx.fillRect(x + 14, y + 43, 162, 10);
+    ctx.fillStyle = "#5f8f9d";
+    ctx.fillRect(x + 22, y + 86, 12, 25);
+    ctx.fillRect(x + 156, y + 86, 12, 25);
+    drawFurniture(x + 250, y - 28, 118, 54, "#81593f", "#523824");
+    ctx.fillStyle = "#d5edf4";
+    ctx.fillRect(x + 274, y - 20, 36, 24);
+    ctx.fillStyle = "#203746";
+    ctx.fillRect(x + 270, y - 24, 44, 7);
+    ctx.fillStyle = "#f2f6f7";
+    ctx.fillRect(x + 328, y - 12, 22, 29);
   }
 
   function drawMicroscope(x, y) {
-    drawFurniture(x - 54, y + 36, 145, 38, "#d8f9ff", "#71bfd8");
-    ctx.fillStyle = "#252e3d";
-    ctx.fillRect(x, y, 16, 50);
-    ctx.fillRect(x - 8, y + 42, 38, 10);
-    ctx.fillStyle = "#f4fcff";
-    ctx.fillRect(x + 12, y + 6, 30, 18);
-    ctx.fillStyle = "#75cbe5";
-    ctx.fillRect(x + 34, y + 12, 12, 28);
+    drawFurniture(x - 165, y + 35, 330, 54, "#d7e4e7", "#8b9da5");
+    ctx.fillStyle = "#263744";
+    ctx.fillRect(x - 18, y - 8, 16, 56);
+    ctx.fillRect(x - 32, y + 39, 54, 11);
+    ctx.fillStyle = "#edf8fa";
+    ctx.fillRect(x - 4, y - 1, 31, 20);
+    ctx.fillStyle = "#55b8d0";
+    ctx.fillRect(x + 20, y + 8, 11, 30);
+    ctx.fillStyle = "#677c86";
+    ctx.fillRect(x + 55, y + 50, 72, 22);
+    ctx.fillStyle = "#e9f1f3";
+    ctx.fillRect(x + 61, y + 54, 60, 14);
   }
 
   function drawReception(x, y) {
-    drawFurniture(x, y, 190, 68, "#8f694c", "#60442f");
-    ctx.fillStyle = "#f6fbff";
-    ctx.fillRect(x + 115, y - 28, 34, 28);
-    ctx.fillStyle = "#0f2641";
-    ctx.fillRect(x + 121, y - 22, 22, 14);
-    ctx.fillStyle = "#f4d47e";
-    ctx.fillRect(x + 20, y + 13, 30, 16);
+    drawFurniture(x, y, 104, 58, "#8a684f", "#594532");
+    ctx.fillStyle = "#edf6f8";
+    ctx.fillRect(x + 32, y - 31, 42, 31);
+    ctx.fillStyle = "#18364c";
+    ctx.fillRect(x + 38, y - 25, 30, 18);
+    ctx.fillStyle = "#f2cc69";
+    ctx.fillRect(x + 12, y + 14, 26, 13);
+    ctx.fillStyle = "#eef7f9";
+    ctx.font = "bold 8px Trebuchet MS";
+    ctx.fillText("ЗАПИСЬ", x + 51, y + 27);
   }
 
   function drawClinicFixtures() {
-    // Cabinet: fixed clinical equipment and wall details.
-    drawWallCabinet(92, 148, 84, 42, "ПЕРВАЯ ПОМОЩЬ");
-    drawPoster(406, 119, "УХО", "ОСМОТР");
-    drawSink(102, 248);
-    drawScale(370, 288);
-
-    // Laboratory corner: storage and recognizable bench supplies.
-    drawWallCabinet(520, 122, 76, 38, "МАТЕРИАЛ");
-    drawShelf(690, 128);
+    drawWindow(260, 105, 128);
+    drawWindow(860, 105, 150);
+    drawWallCabinet(92, 150, 90, 44, "ПЕРВАЯ ПОМОЩЬ");
+    drawPoster(535, 142, "УХО", "ОСМОТР");
+    drawSink(105, 258);
+    drawScale(485, 282);
+    drawInstrumentTrolley(470, 225);
+    drawStool(430, 285, "#4d91aa");
+    drawWallCabinet(660, 145, 92, 42, "МАТЕРИАЛ");
+    drawShelf(1080, 135);
+    drawTallStorage(655, 208);
+    drawStool(1030, 275, "#8d78aa");
     [0, 1, 2, 3].forEach((index) => {
       ctx.fillStyle = ["#e95d67", "#f2cc56", "#62b985", "#6caed1"][index];
-      ctx.fillRect(552 + index * 14, 264 - index * 3, 8, 18 + index * 3);
+      ctx.fillRect(735 + index * 18, 260 - index * 3, 10, 18 + index * 3);
       ctx.fillStyle = "#eef9fc";
-      ctx.fillRect(551 + index * 14, 260 - index * 3, 10, 5);
+      ctx.fillRect(734 + index * 18, 256 - index * 3, 12, 5);
     });
+    drawPoster(560, 415, "ПРИЕМ", "ПО ОЧЕРЕДИ");
+    drawWaterCooler(620, 480);
+    drawClock(1150, 425);
+    drawNoticeBoard(735, 430);
+    drawWallCabinet(1060, 480, 82, 44, "ДОКУМЕНТЫ");
+    ctx.fillStyle = "#52646d";
+    ctx.fillRect(855, 590, 155, 18);
+    ctx.fillStyle = "#70838c";
+    ctx.fillRect(865, 594, 135, 10);
+  }
 
-    // Waiting room and entrance are intentionally static scenery.
-    drawPoster(525, 415, "ПРИЕМ", "ПО ОЧЕРЕДИ");
-    drawWaterCooler(585, 452);
-    drawClock(1135, 418);
-    drawNoticeBoard(755, 430);
-    ctx.fillStyle = "#eef8fb";
-    ctx.fillRect(1080, 525, 72, 45);
-    ctx.strokeStyle = "#405a6c";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(1080, 525, 72, 45);
-    ctx.fillStyle = "#2b78a8";
-    ctx.font = "bold 10px Trebuchet MS";
-    ctx.fillText("PET CLINIC", 1087, 544);
-    ctx.fillStyle = "#5f7686";
-    ctx.font = "9px Trebuchet MS";
-    ctx.fillText("ветеринарная", 1087, 558);
+  function drawWindow(x, y, width) {
+    ctx.fillStyle = "#314954";
+    ctx.fillRect(x, y, width, 34);
+    ctx.fillStyle = "#bfe2eb";
+    ctx.fillRect(x + 5, y + 5, width - 10, 23);
+    ctx.fillStyle = "#eaf7fa";
+    ctx.fillRect(x + 10, y + 8, width - 20, 5);
+    ctx.fillStyle = "#66828d";
+    ctx.fillRect(x + width / 2 - 2, y + 5, 4, 23);
+  }
+
+  function drawInstrumentTrolley(x, y) {
+    ctx.fillStyle = "#8499a2";
+    ctx.fillRect(x, y, 56, 7);
+    ctx.fillRect(x, y + 28, 56, 7);
+    ctx.fillRect(x + 4, y + 6, 5, 40);
+    ctx.fillRect(x + 47, y + 6, 5, 40);
+    ctx.fillStyle = "#dcecef";
+    ctx.fillRect(x + 7, y + 9, 42, 17);
+    ctx.fillStyle = "#d85e63";
+    ctx.fillRect(x + 12, y + 13, 7, 9);
+    ctx.fillStyle = "#67b8ce";
+    ctx.fillRect(x + 24, y + 13, 7, 9);
+    ctx.fillStyle = "#293d49";
+    ctx.fillRect(x + 2, y + 44, 10, 5);
+    ctx.fillRect(x + 44, y + 44, 10, 5);
+  }
+
+  function drawTallStorage(x, y) {
+    ctx.fillStyle = "#536973";
+    ctx.fillRect(x, y, 58, 78);
+    ctx.fillStyle = "#dce9ec";
+    ctx.fillRect(x + 5, y + 5, 48, 68);
+    ctx.fillStyle = "#9eb1b8";
+    ctx.fillRect(x + 8, y + 27, 42, 4);
+    ctx.fillRect(x + 8, y + 49, 42, 4);
+    ["#6eb7cf", "#efca65", "#8ac595", "#d88182", "#b49bd0", "#7c9eab"].forEach((color, index) => {
+      ctx.fillStyle = color;
+      const row = Math.floor(index / 3);
+      const col = index % 3;
+      ctx.fillRect(x + 11 + col * 13, y + 10 + row * 23, 8, 13);
+    });
+  }
+
+  function drawStool(x, y, color) {
+    ctx.fillStyle = "rgba(20,35,40,.18)";
+    ctx.fillRect(x - 13, y + 12, 32, 6);
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y, 12, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#546872";
+    ctx.fillRect(x - 2, y + 10, 4, 15);
+    ctx.fillRect(x - 12, y + 23, 24, 3);
   }
 
   function drawWallCabinet(x, y, w, h, label) {
@@ -2352,21 +2457,23 @@
 
   function drawBenches() {
     const benches = [
-      [135, 455],
-      [315, 455],
-      [135, 548],
-      [315, 548]
+      [145, 470],
+      [390, 470],
+      [145, 555],
+      [390, 555]
     ];
     benches.forEach(([x, y]) => {
-      drawFurniture(x, y, 94, 18, "#7ce26f", "#47a94b");
+      drawFurniture(x, y, 135, 18, "#6fcf70", "#3e914b");
+      ctx.fillStyle = "#a8bcc5";
+      ctx.fillRect(x + 5, y - 15, 125, 13);
       ctx.fillStyle = "#8a99aa";
       ctx.fillRect(x + 4, y + 18, 6, 18);
-      ctx.fillRect(x + 82, y + 18, 6, 18);
+      ctx.fillRect(x + 124, y + 18, 6, 18);
     });
   }
 
   function drawPlants() {
-    [[92, 515], [595, 525], [1140, 525], [465, 270], [780, 530]].forEach(([x, y]) => {
+    [[600, 255], [1170, 272], [104, 548], [1160, 548]].forEach(([x, y]) => {
       ctx.fillStyle = "#8d6547";
       ctx.fillRect(x - 10, y + 25, 25, 18);
       ctx.fillStyle = "#68452f";
@@ -2384,11 +2491,10 @@
   }
 
   function drawDoors() {
-    drawDoorOpening(420, 300);
-    drawDoorOpening(690, 300);
-    drawDoorOpening(1075, 300);
-    drawDoorOpening(585, 370);
-    drawDoorOpening(705, 370);
+    drawDoorOpening(500, 315);
+    drawDoorOpening(850, 315);
+    drawDoorOpening(610, 370);
+    drawDoorOpening(760, 370);
   }
 
   function drawDoorOpening(x, y) {
@@ -2408,26 +2514,16 @@
 
   function drawEntrance() {
     ctx.fillStyle = "#96d3e3";
-    ctx.fillRect(685, 570, 92, 50);
+    ctx.fillRect(885, 570, 94, 50);
     ctx.strokeStyle = "#27465a";
     ctx.lineWidth = 4;
-    ctx.strokeRect(685, 570, 92, 50);
+    ctx.strokeRect(885, 570, 94, 50);
     ctx.beginPath();
-    ctx.moveTo(731, 570);
-    ctx.lineTo(731, 620);
+    ctx.moveTo(932, 570);
+    ctx.lineTo(932, 620);
     ctx.stroke();
     ctx.fillStyle = "#465963";
-    ctx.fillRect(674, 620, 114, 16);
-  }
-
-  function drawLockedRibbon(x, y) {
-    ctx.fillStyle = "rgba(16, 47, 91, 0.82)";
-    ctx.fillRect(x, y, 172, 36);
-    ctx.strokeStyle = "#ffffff";
-    ctx.strokeRect(x + 4, y + 4, 164, 28);
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 14px Trebuchet MS";
-    ctx.fillText("будущий кабинет", x + 18, y + 23);
+    ctx.fillRect(874, 620, 116, 16);
   }
 
   function drawFurniture(x, y, w, h, top, side) {
@@ -2443,8 +2539,8 @@
   function drawCharacters() {
     const idle = Math.round(Math.sin(state.animationTime / 380) * 1.5);
     const doctor = currentDoctor();
-    const doctorTargetX = !el.caseWindow.classList.contains("hidden") ? 330 : 390;
-    const doctorTargetY = !el.caseWindow.classList.contains("hidden") ? 250 : 235;
+    const doctorTargetX = !el.caseWindow.classList.contains("hidden") ? 430 : 440;
+    const doctorTargetY = !el.caseWindow.classList.contains("hidden") ? 240 : 190;
     state.doctorScreenX += (doctorTargetX - state.doctorScreenX) * 0.07;
     state.doctorScreenY += (doctorTargetY - state.doctorScreenY) * 0.07;
     drawPerson(Math.round(state.doctorScreenX), Math.round(state.doctorScreenY + idle), { shirt: doctor.color, pants: "#253c65", hair: doctor.hair, coat: true });
@@ -2456,7 +2552,7 @@
       const y = Math.round(patient.screenY + bob);
       const color = ownerColor(index);
       drawPerson(x, y, color);
-      drawAnimal(patient.species, x + 27, y + 18, patient.id === state.activeId);
+      drawAnimal(patient.species, x + 22, y + 17, patient.id === state.activeId);
       if (patient.returnVisit) drawBubble(x + 20, y - 42, "!");
     });
     state.departures.forEach((patient, index) => {
@@ -2464,7 +2560,7 @@
       const x = Math.round(patient.screenX);
       const y = Math.round(patient.screenY);
       drawPerson(x, y, ownerColor(patient.id));
-      drawAnimal(patient.species, x + 27, y + 18, false);
+      drawAnimal(patient.species, x + 22, y + 17, false);
     });
     state.departures = state.departures.filter((patient) => patient.motion !== "gone");
   }
@@ -2492,8 +2588,8 @@
       return;
     }
     if (patient.motion === "waiting") {
-      const targetX = 175 + (index % 3) * 155;
-      const targetY = 505 + Math.floor(index / 3) * 72;
+      const waitingSpots = [[215, 510], [460, 510], [215, 592], [460, 592], [575, 510], [575, 585]];
+      const [targetX, targetY] = waitingSpots[index % waitingSpots.length];
       patient.screenX += (targetX - patient.screenX) * 0.08;
       patient.screenY += (targetY - patient.screenY) * 0.08;
     }
@@ -2530,6 +2626,11 @@
   }
 
   function drawPerson(x, y, options) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(0.8, 0.8);
+    x = 0;
+    y = 0;
     const skin = options.skin || "#e2a184";
     ctx.fillStyle = "rgba(0, 0, 0, 0.18)";
     ctx.fillRect(x - 10, y + 31, 32, 7);
@@ -2560,6 +2661,7 @@
     ctx.fillStyle = skin;
     ctx.fillRect(x - 12, y + 8, 6, 15);
     ctx.fillRect(x + 21, y + 8, 6, 15);
+    ctx.restore();
   }
 
   function drawAnimal(species, x, y, active) {
@@ -2669,7 +2771,7 @@
       if (patient && (patient.motion === "inCabinet" || patient.motion === "toCabinet")) {
         patient.motion = "arriving";
         patient.routeIndex = 0;
-        patient.route = [[410, 280], [445, 320], [445, 355], [620, 355], [620, 410]];
+        patient.route = [[420, 280], [500, 315], [500, 360], [610, 360], [610, 410]];
       }
       el.caseWindow.classList.add("hidden");
       closeChoice();

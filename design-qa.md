@@ -1,52 +1,44 @@
-# Design QA: Pet Clinic MVP 1
+# Design QA: Pet Clinic, redraw of chapter 1
 
-- Source visual truth: `docs/references/pet-clinic-ui-reference.png`
-- Implementation main screen: `docs/references/pet-clinic-implementation-start.png`
-- Implementation consult state: `docs/references/pet-clinic-implementation-case.png`
-- Side-by-side comparison: `docs/references/design-qa-comparison.png`
-- Viewport: 1536 x 900 implementation; 1536 x 1024 source reference
-- State: clinic open, one active patient, consult window open
+- Source visual truth: `docs/references/pet-clinic-ui-reference.png` and the annotated clinic reference supplied by the user.
+- Current implementation: `docs/references/mvp-clinic-redraw.png`.
+- Consult state: `docs/references/mvp-readable-case.png`.
+- State: day 1, clinic open, two owners with animals moving through the clinic.
 
-## Full-view comparison evidence
+## Scope decision
 
-The first-stage implementation reproduces the reference's structural hierarchy: clinic is the primary surface, fixed rooms occupy the center, the patient rail stays on the right, the operational HUD stays at the bottom, and the consult window opens over the lower part of the clinic while preserving world context.
+The reference defines the visual language: a detailed pseudo-isometric 2D clinic, visible rooms, animated people and animals, right-side queue and bottom operational HUD. The current chapter intentionally omits the dark expansion room shown in the old reference. The active product direction and the user's July 12 review require only one consult room, a microscopy corner, waiting and entry until expansion has real gameplay.
 
-The reference is treated as a product-layout and information-architecture target, not as a final pixel-art asset sheet. Detailed room art, character sprites, and environmental props remain a later art pass.
+## Visual comparison
 
-## Focused region comparison evidence
+- The clinic remains the primary screen rather than a dashboard.
+- Four functional zones have distinct floors, wall depth, signs and fixed equipment.
+- Furniture is anchored to working areas and walls; plants occupy free corners and do not overlap cabinets or devices.
+- The microscopy corner is a small first-stage diagnostic workspace, not a full unlocked laboratory.
+- The empty staffed reception desk was replaced by a self check-in terminal, matching the first-stage rule that no administrator is required.
+- Owners, animals and the active doctor use the same smaller-pixel visual scale and move through explicit door routes.
+- The right queue and bottom HUD preserve the reference hierarchy.
 
-The consult region was checked separately. It contains the same functional regions as the source: patient summary, six visit stages, owner-reported complaint, unknown information, confirmed findings, owner state, and action costs. The diagnosis selector was verified with ten choices.
+## Findings resolved
 
-## Findings
+- P1 resolved: the premature second/expansion room was removed.
+- P1 resolved: flowers and cabinets no longer overlap.
+- P1 resolved: day-specific diagnoses now follow the canonical five-day teaching sequence.
+- P2 resolved: room doors align with character paths.
+- P2 resolved: the clinic received a full environment pass with windows, storage, clinical furniture, laboratory equipment, seating, check-in and exterior landscaping.
+- P2 resolved: oversized character blocks were reduced and movement remains readable.
 
-- No P0, P1, or P2 issues remain within the agreed first-stage structural scope.
-- P3: clinic furniture and character sprites are materially simpler than the visual reference. This is accepted for the current functional MVP and should be addressed through a dedicated sprite and environment asset pass.
-- P3: characters currently have idle movement only. Room-to-room path animation remains the next world-simulation layer.
+## Remaining polish
 
-## Required fidelity surfaces
-
-- Fonts and typography: compact game UI hierarchy is consistent and readable at the tested desktop viewport; the current system font is intentionally temporary.
-- Spacing and layout rhythm: clinic, right rail, consult window, and HUD remain separated without overlap at 1536 x 900.
-- Colors and visual tokens: white, blue, cyan, black, muted clinic-room colors, warning yellow, and state green/red are centralized in CSS variables.
-- Image quality and asset fidelity: the implementation uses the existing canvas pixel-art runtime. Asset richness is below the reference and explicitly deferred as P3 for this MVP stage.
-- Copy and content: hidden diagnosis, owner archetype, exact budget, reliability, and internal diagnostic score are absent from normal play and available only in developer mode.
+- P3: final production art can replace the procedural Canvas sprites with a dedicated authored sprite atlas without changing the simulation.
+- P3: a later unlocked second cabinet will need its own art and route only when its management mechanic is implemented.
 
 ## Interaction verification
 
-- Selected a patient from the right rail.
-- Asked an anamnesis question.
-- Completed general and targeted examination.
-- Confirmed microscopy is disabled before sampling and enabled after sampling.
-- Confirmed ten diagnostic choices plus one close control.
-- Selected a working diagnosis, communication style, and treatment.
-- Confirmed treatment closes the completed case and does not reveal correctness immediately.
-- Confirmed developer mode contains hidden simulation data.
-- Browser console: no warnings or errors.
-
-## Comparison history
-
-1. Initial pass found plant silhouettes resembling medical crosses and doors resembling cabinets.
-2. Plants were redrawn as potted foliage and doors as open framed doorways.
-3. Post-fix screenshots show the room boundaries and circulation path without the misleading cross symbols.
+- Day 1 opens with two of five scheduled patients and only otitis-family cases.
+- Later arrivals use the current day's disease pool.
+- Patient routes use entry, corridor, waiting and consult-room doors.
+- The consult panel remains readable and retains all medical actions.
+- Day 2 remains the repeat-otitis and old-drops lesson; the shelter event uses mite otitis rather than an unrelated trauma.
 
 final result: passed

@@ -37,7 +37,7 @@
         patients: [
           { diseaseId: "bacterialOtitis", profileId: "calm", animal: "Бакс", owner: "Зайцева", species: "dog", sex: "самец", ageYears: 4, flags: { durationDays: 7 } },
           { diseaseId: "inflammatoryOtitis", profileId: "calm", animal: "Мурка", owner: "Орлова", species: "cat", sex: "самка", ageYears: 3, flags: { trigger: "купание" } },
-          { diseaseId: "trauma", profileId: "budget", animal: "Фунтик", owner: "Иванова", species: "rabbit", sex: "самец", ageYears: 2, flags: { place: "задняя лапа" } }
+          { diseaseId: "bacterialOtitis", profileId: "budget", animal: "Фунтик", owner: "Иванова", species: "rabbit", sex: "самец", ageYears: 2, flags: { durationDays: 3 } }
         ]
       },
       {
@@ -66,23 +66,23 @@
         ],
         patients: [
           { diseaseId: "dermatitis", profileId: "internet", animal: "Тайга", owner: "Лебедев", species: "dog", sex: "самка", ageYears: 5, ownerLead: "Это точно аллергия на корм", flags: { trigger: "после прогулки" } },
-          { diseaseId: "miteOtitis", profileId: "budget", animal: "Буся", owner: "Ким", species: "cat", sex: "самка", ageYears: 1, flags: { contact: "котенок из приюта" } },
-          { diseaseId: "trauma", profileId: "calm", animal: "Лада", owner: "Алиева", species: "dog", sex: "самка", ageYears: 8, flags: { place: "передняя лапа" } }
+          { diseaseId: "dermatitis", profileId: "budget", animal: "Буся", owner: "Ким", species: "cat", sex: "самка", ageYears: 1, flags: { trigger: "после новой лежанки" } },
+          { diseaseId: "dermatitis", profileId: "calm", animal: "Лада", owner: "Алиева", species: "dog", sex: "самка", ageYears: 8, flags: { trigger: "после прогулки" } }
         ]
       },
       {
         day: 4,
         chapterDay: 4,
-        title: "Желудочно-кишечная жалоба",
-        briefing: "Нужно отличить неосложненное расстройство от опасных причин рвоты и боли.",
+        title: "Рвота и боль в животе",
+        briefing: "Основная задача дня — оценить тяжесть рвоты и распознать подозрение на панкреатит без полноценной лаборатории.",
         goals: [
           { id: "completeExam", label: "Провести полный осмотр минимум 2 пациентам", target: 2 },
           { id: "explained", label: "Дать понятный план минимум 2 владельцам", target: 2 }
         ],
         patients: [
-          { diseaseId: "gastroenteritis", profileId: "anxious", animal: "Сема", owner: "Смирнов", species: "cat", sex: "самец", ageYears: 3, flags: { trigger: "резко сменили корм", vomitCount: 2 } },
+          { diseaseId: "pancreatitis", profileId: "anxious", animal: "Сема", owner: "Смирнов", species: "cat", sex: "самец", ageYears: 3, flags: { trigger: "резко сменили корм", vomitCount: 2 } },
           { diseaseId: "pancreatitis", profileId: "calm", animal: "Нора", owner: "Иванова", species: "dog", sex: "самка", ageYears: 9, flags: { trigger: "дали жирный кусочек" } },
-          { diseaseId: "dermatitis", profileId: "careless", animal: "Мята", owner: "Орлова", species: "rabbit", sex: "самка", ageYears: 2, flags: { trigger: "после новой лежанки" } }
+          { diseaseId: "gastroenteritis", profileId: "careless", animal: "Рич", owner: "Орлова", species: "dog", sex: "самец", ageYears: 2, flags: { trigger: "украл еду со стола", vomitCount: 1 } }
         ]
       },
       {
