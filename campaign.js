@@ -38,8 +38,7 @@
           { diseaseId: "bacterialOtitis", profileId: "calm", animal: "Бакс", owner: "Зайцева", species: "dog", sex: "самец", ageYears: 4, flags: { durationDays: 7 } },
           { diseaseId: "inflammatoryOtitis", profileId: "calm", animal: "Мурка", owner: "Орлова", species: "cat", sex: "самка", ageYears: 3, flags: { trigger: "купание" } },
           { diseaseId: "trauma", profileId: "budget", animal: "Фунтик", owner: "Иванова", species: "rabbit", sex: "самец", ageYears: 2, flags: { place: "задняя лапа" } }
-        ],
-        tomorrow: "Завтра Бакс вернется на контроль, а владелец вспомнит про старые капли."
+        ]
       },
       {
         day: 2,
@@ -54,8 +53,7 @@
           { diseaseId: "bacterialOtitis", profileId: "careless", animal: "Бакс", owner: "Зайцева", species: "dog", sex: "самец", ageYears: 4, flags: { durationDays: 18, oldDrops: true }, returnVisit: true },
           { diseaseId: "miteOtitis", profileId: "anxious", animal: "Клевер", owner: "Петрова", species: "rabbit", sex: "самка", ageYears: 2, flags: { contact: "новый кролик" } },
           { diseaseId: "inflammatoryOtitis", profileId: "internet", animal: "Ричи", owner: "Макаров", species: "dog", sex: "самец", ageYears: 6, flags: { trigger: "домашняя чистка" } }
-        ],
-        tomorrow: "Завтра появится кожный случай, где уверенность владельца не равна диагнозу."
+        ]
       },
       {
         day: 3,
@@ -70,8 +68,7 @@
           { diseaseId: "dermatitis", profileId: "internet", animal: "Тайга", owner: "Лебедев", species: "dog", sex: "самка", ageYears: 5, ownerLead: "Это точно аллергия на корм", flags: { trigger: "после прогулки" } },
           { diseaseId: "miteOtitis", profileId: "budget", animal: "Буся", owner: "Ким", species: "cat", sex: "самка", ageYears: 1, flags: { contact: "котенок из приюта" } },
           { diseaseId: "trauma", profileId: "calm", animal: "Лада", owner: "Алиева", species: "dog", sex: "самка", ageYears: 8, flags: { place: "передняя лапа" } }
-        ],
-        tomorrow: "Завтра очередь начнется с рвоты и боли в животе."
+        ]
       },
       {
         day: 4,
@@ -86,8 +83,7 @@
           { diseaseId: "gastroenteritis", profileId: "anxious", animal: "Сема", owner: "Смирнов", species: "cat", sex: "самец", ageYears: 3, flags: { trigger: "резко сменили корм", vomitCount: 2 } },
           { diseaseId: "pancreatitis", profileId: "calm", animal: "Нора", owner: "Иванова", species: "dog", sex: "самка", ageYears: 9, flags: { trigger: "дали жирный кусочек" } },
           { diseaseId: "dermatitis", profileId: "careless", animal: "Мята", owner: "Орлова", species: "rabbit", sex: "самка", ageYears: 2, flags: { trigger: "после новой лежанки" } }
-        ],
-        tomorrow: "Завтра владелец назовет задержку мочи запором. Это первый обязательный триаж."
+        ]
       },
       {
         day: 5,
@@ -102,8 +98,7 @@
           { diseaseId: "urinaryObstruction", profileId: "anxious", animal: "Рыжик", owner: "Петрова", species: "cat", sex: "самец", ageYears: 6, urgency: "urgent", flags: { lastUrineHours: 14 } },
           { diseaseId: "bacterialOtitis", profileId: "budget", animal: "Марс", owner: "Макаров", species: "dog", sex: "самец", ageYears: 4, flags: { durationDays: 4 } },
           { diseaseId: "gastroenteritis", profileId: "calm", animal: "Тучка", owner: "Ким", species: "cat", sex: "самка", ageYears: 2, flags: { trigger: "украла еду со стола", vomitCount: 1 } }
-        ],
-        tomorrow: "Первая глава завершена. Дальше открываются организация потока и развитие команды."
+        ]
       }
     ]
   };

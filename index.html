@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pet Clinic: ветеринарная клиника</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eaf6ff'/%3E%3Cpath d='M13 5h6v22h-6zM5 13h22v6H5z' fill='%231976d2'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260712e">
   </head>
   <body>
     <main class="game-shell" aria-label="Pet Clinic: ветеринарная стратегия">
@@ -35,7 +35,7 @@
             <span id="queueCountLabel">0 пациентов</span>
           </header>
           <div class="queue-strip" id="queueStrip"></div>
-          <div class="queue-locked">Место появится после расширения</div>
+          <div class="queue-locked" id="queueForecast">Поток появится после открытия клиники</div>
         </section>
         <section class="day-goals" aria-label="Цели дня">
           <header><strong>Цели дня</strong><span id="goalScore">0/2</span></header>
@@ -112,7 +112,7 @@
           <button id="generalExamBtn" type="button"><span>Общий осмотр</span><small>3 мин. · стресс</small></button>
           <button id="localExamBtn" type="button"><span>Целевой осмотр</span><small>3–5 мин.</small></button>
           <button id="sampleBtn" type="button"><span>Взять материал</span><small>2 мин.</small></button>
-          <button id="microscopyBtn" type="button"><span>Микроскопия</span><small>7 мин. · 90 V</small></button>
+          <button id="microscopyBtn" type="button"><span>Микроскопия</span><small>7 мин. · доход 90 V</small></button>
           <button id="diagnosisBtn" type="button"><span>Рабочая версия</span><small>10 диагнозов</small></button>
           <button id="communicationBtn" type="button"><span>Объяснение и план</span><small>4 мин.</small></button>
           <button class="primary" id="treatmentBtn" type="button"><span>Назначить лечение</span><small>завершить прием</small></button>
@@ -183,7 +183,7 @@
         <button class="settings-button" id="developerBtn" type="button" title="Режим разработчика" aria-label="Режим разработчика">⚙</button>
       </section>
     </main>
-    <script src="campaign.js" defer></script>
-    <script src="game.js" defer></script>
+    <script src="campaign.js?v=20260712e" defer></script>
+    <script src="game.js?v=20260712e" defer></script>
   </body>
 </html>

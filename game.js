@@ -6,6 +6,8 @@
   const EXTENDED_DAY_END = 20 * 60;
   const MAX_LOCAL_EXAMS = 2;
   const MICROSCOPY_COST = 2;
+  const MICROSCOPY_FEE = 90;
+  const MAX_CONSECUTIVE_SHIFTS = 3;
   const campaign = window.PET_CLINIC_CAMPAIGN;
 
   const speciesLabels = {
@@ -782,6 +784,18 @@
     treatedToday: 0,
     revenueToday: 0,
     expensesToday: 0,
+    diagnosticRevenueToday: 0,
+    microscopyToday: 0,
+    arrivalsToday: 0,
+    plannedArrivalsToday: 0,
+    specialEventsToday: 0,
+    handledSpecialEventsToday: 0,
+    arrivalSchedule: [],
+    departures: [],
+    doctorScreenX: 390,
+    doctorScreenY: 235,
+    reputationStartToday: 74,
+    reputationEvents: [],
     returnsToday: 0,
     mistakesToday: 0,
     pendingReturns: [],
@@ -811,6 +825,7 @@
     nextPatientCard: document.getElementById("nextPatientCard"),
     queueStrip: document.getElementById("queueStrip"),
     queueCountLabel: document.getElementById("queueCountLabel"),
+    queueForecast: document.getElementById("queueForecast"),
     caseWindow: document.getElementById("caseWindow"),
     caseStage: document.getElementById("caseStage"),
     caseTitle: document.getElementById("caseTitle"),
@@ -988,6 +1003,18 @@
     patient.trust = clamp(patient.trust + delta, 0, 100);
   }
 
+  function changeReputation(delta, reason) {
+    const before = state.reputation;
+    state.reputation = clamp(state.reputation + delta, 0, 100);
+    const applied = state.reputation - before;
+    if (Math.abs(applied) < 0.01) return;
+    state.reputationEvents.push({ delta: applied, reason });
+  }
+
+  function reputationDeltaToday() {
+    return state.reputation - state.reputationStartToday;
+  }
+
   function spendVisitTime(patient, minutes) {
     if (!patient) return;
     patient.visitTimeUsed += minutes;
@@ -1042,9 +1069,13 @@
       selectedDiagnosisId: null,
       selectedCommunicationId: null,
       returnVisit: Boolean(isReturn || overrides.returnVisit),
+      eventLabel: overrides.eventLabel || "",
       completeExamCredited: false,
-      screenX: 730,
-      screenY: 590
+      screenX: 731,
+      screenY: 675,
+      motion: "arriving",
+      routeIndex: 0,
+      route: [[731, 620], [731, 355], [620, 355], [620, 410]]
     };
     state.nextPatientId += 1;
     patient.findings.push(isReturn
@@ -1057,11 +1088,51 @@
     if (state.queue.length >= 12 && !isReturn) return;
     const patient = createPatient(forcedDiseaseId, isReturn, overrides);
     state.queue.push(patient);
+    state.arrivalsToday += 1;
+    if (patient.eventLabel) state.specialEventsToday += 1;
     if (!state.activeId) state.activeId = patient.id;
-    setLog(isReturn
-      ? `${patient.owner} вернулся с ${patient.animal}: прошлое лечение не помогло.`
-      : `Новый пациент: ${patient.animal}, ${speciesLabels[patient.species]}.`);
+    setLog(patient.eventLabel
+      ? `Событие: ${patient.eventLabel}. Привезли пациента ${patient.animal}.`
+      : isReturn
+        ? `${patient.owner} вернулся с ${patient.animal}: прошлое лечение не помогло.`
+        : `Новый пациент: ${patient.animal}, ${speciesLabels[patient.species]}.`);
     renderAll();
+  }
+
+  function buildArrivalSchedule(plan) {
+    const schedule = [];
+    const scripted = plan ? plan.patients.slice() : [];
+    scripted.slice(2).forEach((template, index) => {
+      schedule.push({ minute: DAY_START + 65 + index * 55, template });
+    });
+    const specialEvent = state.day >= 2 ? {
+      minute: DAY_START + 305,
+      template: {
+        diseaseId: state.day === 5 ? "urinaryObstruction" : "trauma",
+        profileId: "budget",
+        animal: state.day === 2 ? "Найда" : pick(["Шанс", "Ириска", "Малыш"]),
+        owner: "приют «Лапа»",
+        species: state.day === 5 ? "cat" : "dog",
+        sex: "самец",
+        ageYears: 3,
+        urgency: state.day === 5 ? "urgent" : "routine",
+        eventLabel: state.day === 2 ? "Животное из приюта" : "Неожиданный случай",
+        flags: state.day === 5 ? { lastUrineHours: 12 } : { place: "передняя лапа" }
+      }
+    } : null;
+    if (specialEvent) schedule.push(specialEvent);
+    const plannedTotal = 4 + state.day + (state.hoursMode === "extended" ? 2 : 0) + state.returnsToday;
+    const routineCount = Math.max(0, plannedTotal - state.returnsToday - 2 - scripted.slice(2).length - (specialEvent ? 1 : 0));
+    const firstRoutineMinute = DAY_START + 145;
+    const usableMinutes = state.dayEnd - firstRoutineMinute - 45;
+    for (let index = 0; index < routineCount; index += 1) {
+      schedule.push({
+        minute: Math.round(firstRoutineMinute + (usableMinutes * index) / Math.max(1, routineCount - 1)),
+        diseaseId: pick(["bacterialOtitis", "inflammatoryOtitis", "miteOtitis", "dermatitis", "trauma", "gastroenteritis"])
+      });
+    }
+    state.plannedArrivalsToday = plannedTotal;
+    return schedule.sort((left, right) => left.minute - right.minute);
   }
 
   function passTime(minutes, options = {}) {
@@ -1071,7 +1142,7 @@
     if (options.trackVisit !== false && isPatientInConsult(patientInConsult)) {
       spendVisitTime(patientInConsult, adjusted);
     }
-    if (options.doctorWork !== false) addDoctorFatigue(adjusted * 0.12);
+    if (options.doctorWork !== false) addDoctorFatigue(adjusted * 0.08);
     state.minute += adjusted;
     state.spawnMeter += adjusted;
     state.queue.forEach((patient) => {
@@ -1088,7 +1159,14 @@
   }
 
   function maybeSpawn() {
-    if (state.day <= 5) return;
+    if (state.day <= 5) {
+      while (state.arrivalSchedule.length && state.arrivalSchedule[0].minute <= state.minute) {
+        const arrival = state.arrivalSchedule.shift();
+        const template = arrival.template || {};
+        spawnPatient(arrival.diseaseId || template.diseaseId, Boolean(template.returnVisit), template);
+      }
+      return;
+    }
     const interval = clamp(72 - state.day * 4 - state.reputation * 0.16, 36, 78);
     while (state.spawnMeter >= interval) {
       state.spawnMeter -= interval;
@@ -1101,9 +1179,13 @@
     state.queue = state.queue.filter((patient) => {
       const lost = patient.age > patient.patience;
       if (lost) {
-        state.reputation = clamp(state.reputation - 3, 0, 100);
+        changeReputation(-3, "владелец ушел из очереди");
         state.lostToday += 1;
         state.goalStats.noLost = 0;
+        patient.motion = "leaving";
+        patient.routeIndex = 0;
+        patient.route = [[620, 410], [620, 355], [731, 355], [731, 675]];
+        state.departures.push(patient);
       }
       return !lost;
     });
@@ -1207,10 +1289,12 @@
     }
     patient.dxPoints -= MICROSCOPY_COST;
     patient.microscopyDone = true;
-    patient.findings.push(diseaseFor(patient).microscopy(patient));
-    state.money += 90;
-    state.revenueToday += 90;
-    setLog("Микроскопия выполнена: владелец оплатил исследование.");
+    patient.findings.push(`${diseaseFor(patient).microscopy(patient)} Стоимость исследования: ${MICROSCOPY_FEE} V.`);
+    state.money += MICROSCOPY_FEE;
+    state.revenueToday += MICROSCOPY_FEE;
+    state.diagnosticRevenueToday += MICROSCOPY_FEE;
+    state.microscopyToday += 1;
+    setLog(`Микроскопия выполнена и оплачена: +${MICROSCOPY_FEE} V.`);
     passTime(7);
   }
 
@@ -1254,6 +1338,7 @@
     state.money += total;
     state.revenueToday += total;
     state.treatedToday += 1;
+    if (patient.eventLabel) state.handledSpecialEventsToday += 1;
     incrementGoal("treated");
     if (patient.returnVisit) incrementGoal("returns");
     let reputationChange = 0;
@@ -1315,13 +1400,16 @@
       reputationChange -= patient.returnVisit ? 4 : 1;
     }
 
-    state.reputation = clamp(state.reputation + reputationChange, 0, 100);
+    const reputationReason = effectiveQuality === "correct"
+      ? "корректно завершенный прием"
+      : effectiveQuality === "partial" ? "неполный результат лечения" : "ошибка в лечении";
+    changeReputation(reputationChange, reputationReason);
     if (patient.diseaseId === "urinaryObstruction"
       && patient.selectedUrgency === "urgent"
       && diagnosisCorrect
       && treatment.id === "urgentReferral") {
       incrementGoal("urgent");
-      state.reputation = clamp(state.reputation + 2, 0, 100);
+      changeReputation(2, "срочный пациент безопасно направлен");
     }
     if (Math.random() < risk) {
       state.pendingReturns.push({ diseaseId: patient.diseaseId, day: state.day + 1 });
@@ -1346,6 +1434,10 @@
     });
 
     setLog(`${patient.animal}: лечение назначено. Результат станет понятен после наблюдения или повторного обращения.`);
+    patient.motion = "leaving";
+    patient.routeIndex = 0;
+    patient.route = [[410, 280], [445, 320], [445, 355], [731, 355], [731, 675]];
+    state.departures.push(patient);
     state.queue = state.queue.filter((item) => item.id !== patient.id);
     state.activeId = state.queue[0] ? state.queue[0].id : null;
     closeChoice();
@@ -1402,6 +1494,11 @@
   }
 
   function debugFinishDay() {
+    while (state.arrivalSchedule.length) {
+      const arrival = state.arrivalSchedule.shift();
+      const template = arrival.template || {};
+      spawnPatient(arrival.diseaseId || template.diseaseId, Boolean(template.returnVisit), template);
+    }
     state.queue.forEach((patient) => { patient.patience = 999; });
     let safety = 20;
     while (state.queue.length && safety > 0) {
@@ -1421,7 +1518,7 @@
       : "Сюжетная глава завершена. Клиника продолжает работу в свободном режиме.";
     el.doctorOptions.textContent = "";
     state.doctors.forEach((doctor) => {
-      const unavailable = doctor.lastShiftDay === state.day - 1;
+      const unavailable = doctor.consecutiveShifts >= MAX_CONSECUTIVE_SHIFTS;
       const button = document.createElement("button");
       button.type = "button";
       button.className = `doctor-option${doctor.id === state.selectedDoctorId ? " selected" : ""}`;
@@ -1434,9 +1531,9 @@
       const name = document.createElement("strong");
       name.textContent = doctor.name;
       const fatigue = document.createElement("span");
-      fatigue.textContent = `Усталость: ${Math.round(doctor.fatigue)}% · смен подряд: ${doctor.consecutiveShifts}`;
+      fatigue.textContent = `Усталость: ${Math.round(doctor.fatigue)}% · серия: ${doctor.consecutiveShifts}/${MAX_CONSECUTIVE_SHIFTS}`;
       const note = document.createElement("small");
-      note.textContent = unavailable ? "Обязательный выходной после вчерашней смены." : doctor.note;
+      note.textContent = unavailable ? "После трех смен подряд врачу нужен выходной." : doctor.note;
       copy.append(name, fatigue, note);
       button.append(avatar, copy);
       button.addEventListener("click", () => {
@@ -1459,7 +1556,7 @@
     el.closeShiftWindow.classList.add("hidden");
     el.shiftWindow.classList.remove("hidden");
     const availableDoctors = state.doctors
-      .filter((doctor) => doctor.lastShiftDay !== state.day - 1)
+      .filter((doctor) => doctor.consecutiveShifts < MAX_CONSECUTIVE_SHIFTS)
       .sort((left, right) => left.fatigue - right.fatigue);
     if (availableDoctors.length) state.selectedDoctorId = availableDoctors[0].id;
     renderShiftPlanning();
@@ -1474,6 +1571,16 @@
     state.treatedToday = 0;
     state.revenueToday = 0;
     state.expensesToday = 0;
+    state.diagnosticRevenueToday = 0;
+    state.microscopyToday = 0;
+    state.arrivalsToday = 0;
+    state.plannedArrivalsToday = 0;
+    state.specialEventsToday = 0;
+    state.handledSpecialEventsToday = 0;
+    state.arrivalSchedule = [];
+    state.departures = [];
+    state.reputationStartToday = state.reputation;
+    state.reputationEvents = [];
     state.returnsToday = 0;
     state.mistakesToday = 0;
     state.lostToday = 0;
@@ -1485,8 +1592,8 @@
 
   function startShift() {
     const doctor = currentDoctor();
-    if (doctor.lastShiftDay === state.day - 1) {
-      setLog(`${doctor.name} отдыхает после предыдущей смены. Выберите второго врача.`);
+    if (doctor.consecutiveShifts >= MAX_CONSECUTIVE_SHIFTS) {
+      setLog(`${doctor.name} отработал три смены подряд и должен отдохнуть.`);
       renderShiftPlanning();
       return;
     }
@@ -1497,7 +1604,7 @@
     state.modalOpen = false;
     state.paused = false;
     doctor.shiftsWorked += 1;
-    doctor.consecutiveShifts += 1;
+    doctor.consecutiveShifts = doctor.lastShiftDay === state.day - 1 ? doctor.consecutiveShifts + 1 : 1;
     doctor.lastShiftDay = state.day;
     if (state.hoursMode === "extended") addDoctorFatigue(5);
     el.shiftWindow.classList.add("hidden");
@@ -1510,8 +1617,8 @@
       spawnPatient(item.diseaseId, true);
     });
     if (plan) {
-      plan.patients.forEach((template) => spawnPatient(template.diseaseId, template.returnVisit, template));
-      if (state.hoursMode === "extended") spawnPatient(pick(["inflammatoryOtitis", "dermatitis", "trauma", "gastroenteritis"]), false);
+      plan.patients.slice(0, 2).forEach((template) => spawnPatient(template.diseaseId, template.returnVisit, template));
+      state.arrivalSchedule = buildArrivalSchedule(plan);
     } else {
       while (state.queue.length < (state.hoursMode === "extended" ? 5 : 3)) spawnPatient();
     }
@@ -1554,8 +1661,8 @@
   function transferAndClose() {
     const routine = state.queue.filter((patient) => patient.selectedUrgency !== "urgent").length;
     const urgent = state.queue.length - routine;
-    if (routine > 0) state.reputation = clamp(state.reputation - Math.min(3, routine), 0, 100);
-    if (urgent > 0) state.reputation = clamp(state.reputation + 1, 0, 100);
+    if (routine > 0) changeReputation(-Math.min(3, routine), "пациенты перенесены на другой день");
+    if (urgent > 0) changeReputation(1, "срочные пациенты безопасно направлены");
     state.queue = [];
     state.activeId = null;
     setLog(`Обычные пациенты перенесены: ${routine}. Срочные направлены: ${urgent}.`);
@@ -1566,7 +1673,7 @@
     if (state.queue.length > 0) {
       state.lostToday += state.queue.length;
       state.goalStats.noLost = 0;
-      state.reputation = clamp(state.reputation - Math.min(5, state.queue.length * 2), 0, 100);
+      changeReputation(-Math.min(5, state.queue.length * 2), "клиника закрылась с незавершенной очередью");
       state.queue = [];
       state.activeId = null;
     }
@@ -1589,7 +1696,7 @@
     state.expensesToday = payroll + rentAndUtilities + supplies;
     state.money -= state.expensesToday;
     const net = state.revenueToday - state.expensesToday;
-    addDoctorFatigue(6 + (state.hoursMode === "extended" ? 8 : 0) + (state.shiftExtended ? 6 : 0));
+    addDoctorFatigue(12 + (state.hoursMode === "extended" ? 10 : 0) + (state.shiftExtended ? 8 : 0) + Math.max(0, doctor.consecutiveShifts - 1) * 5);
     state.doctors.forEach((item) => {
       if (item.id !== doctor.id) {
         item.fatigue = clamp(item.fatigue - 16, 0, 100);
@@ -1599,17 +1706,26 @@
     const goalsHtml = goals.length
       ? goals.map((goal) => `${goalComplete(goal) ? "Выполнено" : "Не выполнено"}: ${goal.label} (${goalProgress(goal)}/${goal.target})`).join("<br>")
       : "Свободный режим без сюжетных целей.";
+    const reputationDelta = reputationDeltaToday();
+    const reputationByReason = state.reputationEvents.reduce((totals, event) => {
+      totals[event.reason] = (totals[event.reason] || 0) + event.delta;
+      return totals;
+    }, {});
+    const reputationReasons = Object.keys(reputationByReason).length
+      ? Object.entries(reputationByReason).map(([reason, delta]) => `${delta > 0 ? "+" : ""}${delta.toFixed(1)} — ${reason}`).join("<br>")
+      : "Изменений не было.";
     state.chapterComplete = state.day === 5;
     el.summaryTitle.textContent = state.chapterComplete ? "Первая глава завершена" : `День ${state.day} завершен`;
     el.summaryText.innerHTML = [
       `<b>${plan ? plan.title : "Свободная смена"}</b>`,
       `Врач: <b>${doctor.name}</b>. Усталость после смены: <b>${Math.round(doctor.fatigue)}%</b>.`,
-      `Пациентов принято: <b>${state.treatedToday}</b>. Потеряно: <b>${state.lostToday}</b>.`,
+      `Посетителей пришло: <b>${state.arrivalsToday} из ${state.plannedArrivalsToday}</b>. Принято: <b>${state.treatedToday}</b>. Ушло без приема: <b>${state.lostToday}</b>.`,
+      state.specialEventsToday ? `Особые события: <b>${state.handledSpecialEventsToday}/${state.specialEventsToday}</b> обработано.` : "",
       `Доход: <b>${formatMoney(state.revenueToday)} V</b>. Расходы: <b>${formatMoney(state.expensesToday)} V</b>. Итог: <b>${net >= 0 ? "+" : ""}${formatMoney(net)} V</b>.`,
-      `Репутация: <b>${Math.round(state.reputation)}/100</b>.`,
-      `Цели: <b>${completedGoals}/${goals.length}</b>.<br>${goalsHtml}`,
-      plan ? `<br><b>Завтра:</b> ${plan.tomorrow}` : ""
-    ].join("<br>");
+      `Исследования: <b>${state.microscopyToday}</b>, доход от них: <b>${formatMoney(state.diagnosticRevenueToday)} V</b>.`,
+      `Репутация: <b>${state.reputation.toFixed(1)}/100</b> (${reputationDelta >= 0 ? "+" : ""}${reputationDelta.toFixed(1)} за день).<br>${reputationReasons}`,
+      `Цели: <b>${completedGoals}/${goals.length}</b>.<br>${goalsHtml}`
+    ].filter(Boolean).join("<br>");
     el.nextDayBtn.textContent = state.chapterComplete ? "Продолжить после главы" : "Планировать следующий день";
     el.summaryWindow.classList.remove("hidden");
     renderAll();
@@ -1618,12 +1734,20 @@
   function startNextDay() {
     state.day += 1;
     resetDayState();
+    setLog("Выберите врача и режим работы перед открытием клиники.");
+    el.developerPanel.classList.add("hidden");
     el.summaryWindow.classList.add("hidden");
     openShiftPlanning();
   }
 
   function openCase(patientId) {
     state.activeId = patientId;
+    const patient = activePatient();
+    if (patient && patient.motion !== "inCabinet") {
+      patient.motion = "toCabinet";
+      patient.routeIndex = 0;
+      patient.route = [[620, 410], [620, 355], [445, 355], [445, 320], [410, 280], [270, 250]];
+    }
     el.caseWindow.classList.remove("hidden");
     closeChoice();
     renderAll();
@@ -1773,7 +1897,18 @@
   function renderQueue() {
     el.nextPatientCard.textContent = "";
     el.queueStrip.textContent = "";
-    el.queueCountLabel.textContent = `${state.queue.length} из 12`;
+    el.queueCountLabel.textContent = state.dayStarted
+      ? `${state.queue.length} ждут · ${state.arrivalsToday}/${state.plannedArrivalsToday} пришло`
+      : `${state.queue.length} ждут · ${state.arrivalsToday} пришло`;
+    if (!state.dayStarted) {
+      el.queueForecast.textContent = state.arrivalsToday > 0
+        ? `Дневной поток завершен: ${state.arrivalsToday} из ${state.plannedArrivalsToday} пришло`
+        : "Поток появится после открытия клиники";
+    } else if (state.arrivalSchedule.length) {
+      el.queueForecast.textContent = `Еще ожидается: ${state.arrivalSchedule.length} · следующий около ${formatTime(state.arrivalSchedule[0].minute)}`;
+    } else {
+      el.queueForecast.textContent = "Все запланированные пациенты уже пришли";
+    }
     state.queue.forEach((patient, index) => {
       const button = document.createElement("button");
       button.type = "button";
@@ -1781,7 +1916,9 @@
       const title = document.createElement("strong");
       title.textContent = `${patient.animal} • ${speciesLabels[patient.species]}`;
       const note = document.createElement("span");
-      note.textContent = patient.selectedUrgency === "urgent"
+      note.textContent = patient.eventLabel
+        ? `СОБЫТИЕ · ${patient.eventLabel}`
+        : patient.selectedUrgency === "urgent"
         ? `СРОЧНО · ждет ${Math.max(1, Math.round(patient.age))} мин.`
         : patient.returnVisit ? "повторное обращение" : `Ждет ${Math.max(1, Math.round(patient.age))} мин.`;
       if (patient.selectedUrgency === "urgent") button.classList.add("urgent");
@@ -1916,8 +2053,12 @@
     el.timeValue.textContent = formatTime(state.minute);
     el.closingTime.textContent = `${Math.max(0, Math.ceil((state.dayEnd - state.minute) / 60))} ч.`;
     el.reputationMeter.style.width = `${state.reputation}%`;
-    el.reputationValue.textContent = `${Math.round(state.reputation)} / 100`;
-    el.reputationLabel.textContent = state.reputation >= 80 ? "Известная клиника" : state.reputation >= 55 ? "Новая клиника" : "Клиника под наблюдением";
+    el.reputationValue.textContent = `${state.reputation.toFixed(1)} / 100`;
+    const reputationDelta = reputationDeltaToday();
+    const lastReputationEvent = state.reputationEvents[state.reputationEvents.length - 1];
+    el.reputationLabel.textContent = lastReputationEvent
+      ? `${reputationDelta >= 0 ? "+" : ""}${reputationDelta.toFixed(1)} сегодня · ${lastReputationEvent.reason}`
+      : "Сегодня без изменений";
     el.queueValue.textContent = `${state.queue.length} / 12`;
     el.doctorHudName.textContent = state.dayStarted ? doctor.shortName : "Смена не открыта";
     el.doctorFatigue.textContent = `${Math.round(doctor.fatigue)}%`;
@@ -2243,22 +2384,26 @@
   }
 
   function drawDoors() {
-    [[445, 250], [745, 250], [835, 250], [610, 410], [710, 410]].forEach(([x, y]) => {
-      ctx.fillStyle = "#31424d";
-      ctx.fillRect(x, y, 44, 70);
-      ctx.fillStyle = "#182832";
-      ctx.fillRect(x + 5, y + 5, 34, 65);
-      ctx.fillStyle = "#9d6b45";
-      ctx.beginPath();
-      ctx.moveTo(x + 5, y + 5);
-      ctx.lineTo(x + 31, y + 14);
-      ctx.lineTo(x + 31, y + 70);
-      ctx.lineTo(x + 5, y + 70);
-      ctx.closePath();
-      ctx.fill();
-      ctx.fillStyle = "#f3d76d";
-      ctx.fillRect(x + 25, y + 40, 4, 4);
-    });
+    drawDoorOpening(420, 300);
+    drawDoorOpening(690, 300);
+    drawDoorOpening(1075, 300);
+    drawDoorOpening(585, 370);
+    drawDoorOpening(705, 370);
+  }
+
+  function drawDoorOpening(x, y) {
+    ctx.fillStyle = "#243743";
+    ctx.fillRect(x, y, 54, 22);
+    ctx.fillStyle = "#dce6eb";
+    ctx.fillRect(x + 5, y + 3, 44, 16);
+    ctx.fillStyle = "#9d6b45";
+    ctx.beginPath();
+    ctx.moveTo(x + 5, y + 19);
+    ctx.lineTo(x + 43, y + 4);
+    ctx.lineTo(x + 49, y + 9);
+    ctx.lineTo(x + 14, y + 21);
+    ctx.closePath();
+    ctx.fill();
   }
 
   function drawEntrance() {
@@ -2298,18 +2443,15 @@
   function drawCharacters() {
     const idle = Math.round(Math.sin(state.animationTime / 380) * 1.5);
     const doctor = currentDoctor();
-    drawPerson(390, 235 + idle, { shirt: doctor.color, pants: "#253c65", hair: doctor.hair, coat: true });
-    ctx.fillStyle = "#0f2641";
-    ctx.font = "bold 12px Trebuchet MS";
-    ctx.fillText(state.dayStarted ? doctor.shortName : "кабинет закрыт", 354, 282 + idle);
+    const doctorTargetX = !el.caseWindow.classList.contains("hidden") ? 330 : 390;
+    const doctorTargetY = !el.caseWindow.classList.contains("hidden") ? 250 : 235;
+    state.doctorScreenX += (doctorTargetX - state.doctorScreenX) * 0.07;
+    state.doctorScreenY += (doctorTargetY - state.doctorScreenY) * 0.07;
+    drawPerson(Math.round(state.doctorScreenX), Math.round(state.doctorScreenY + idle), { shirt: doctor.color, pants: "#253c65", hair: doctor.hair, coat: true });
 
     state.queue.forEach((patient, index) => {
-      const inCabinet = patient.id === state.activeId && el.caseWindow.classList.contains("hidden") === false;
       const bob = Math.round(Math.sin(state.animationTime / 420 + index) * 1.5);
-      const targetX = inCabinet ? 270 : 175 + (index % 3) * 155;
-      const targetY = inCabinet ? 250 : 505 + Math.floor(index / 3) * 72;
-      patient.screenX += (targetX - patient.screenX) * 0.08;
-      patient.screenY += (targetY - patient.screenY) * 0.08;
+      advancePatientMotion(patient, index);
       const x = Math.round(patient.screenX);
       const y = Math.round(patient.screenY + bob);
       const color = ownerColor(index);
@@ -2317,12 +2459,50 @@
       drawAnimal(patient.species, x + 27, y + 18, patient.id === state.activeId);
       if (patient.returnVisit) drawBubble(x + 20, y - 42, "!");
     });
+    state.departures.forEach((patient, index) => {
+      advancePatientMotion(patient, index);
+      const x = Math.round(patient.screenX);
+      const y = Math.round(patient.screenY);
+      drawPerson(x, y, ownerColor(patient.id));
+      drawAnimal(patient.species, x + 27, y + 18, false);
+    });
+    state.departures = state.departures.filter((patient) => patient.motion !== "gone");
+  }
+
+  function advancePatientMotion(patient, index) {
+    if (patient.route && patient.routeIndex < patient.route.length) {
+      const [targetX, targetY] = patient.route[patient.routeIndex];
+      const dx = targetX - patient.screenX;
+      const dy = targetY - patient.screenY;
+      const distance = Math.hypot(dx, dy);
+      const step = Math.min(2.2, distance);
+      if (distance <= 3.3) {
+        patient.screenX = targetX;
+        patient.screenY = targetY;
+        patient.routeIndex += 1;
+        if (patient.routeIndex >= patient.route.length) {
+          if (patient.motion === "arriving") patient.motion = "waiting";
+          else if (patient.motion === "toCabinet") patient.motion = "inCabinet";
+          else if (patient.motion === "leaving") patient.motion = "gone";
+        }
+      } else {
+        patient.screenX += (dx / distance) * step;
+        patient.screenY += (dy / distance) * step;
+      }
+      return;
+    }
+    if (patient.motion === "waiting") {
+      const targetX = 175 + (index % 3) * 155;
+      const targetY = 505 + Math.floor(index / 3) * 72;
+      patient.screenX += (targetX - patient.screenX) * 0.08;
+      patient.screenY += (targetY - patient.screenY) * 0.08;
+    }
   }
 
   function drawFloatingLabels() {
     state.queue.forEach((patient, index) => {
       if (patient.id === state.activeId && !el.caseWindow.classList.contains("hidden")) return;
-      if (patient.mood < 38) drawBubble(190 + (index % 3) * 155, 445 + Math.floor(index / 3) * 72, "ждет долго");
+      if (patient.motion === "waiting" && patient.mood < 38) drawBubble(patient.screenX + 18, patient.screenY - 42, "ждет долго");
     });
   }
 
@@ -2485,6 +2665,12 @@
 
   function bindEvents() {
     el.closeCaseBtn.addEventListener("click", () => {
+      const patient = activePatient();
+      if (patient && (patient.motion === "inCabinet" || patient.motion === "toCabinet")) {
+        patient.motion = "arriving";
+        patient.routeIndex = 0;
+        patient.route = [[410, 280], [445, 320], [445, 355], [620, 355], [620, 410]];
+      }
       el.caseWindow.classList.add("hidden");
       closeChoice();
       renderAll();
@@ -2532,8 +2718,7 @@
     });
     canvas.addEventListener("click", () => {
       if (activePatient()) {
-        el.caseWindow.classList.remove("hidden");
-        renderAll();
+        openCase(state.activeId);
       }
     });
   }
