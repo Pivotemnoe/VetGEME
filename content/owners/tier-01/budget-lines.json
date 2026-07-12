@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "lines": [
+    {
+      "id": "budget-lines_1",
+      "source": "owner_history",
+      "text": "Скажите, что обязательно сделать сегодня, а что можно отложить."
+    },
+    {
+      "id": "budget-lines_2",
+      "source": "owner_history",
+      "text": "Какой безопасный минимум мы можем позволить сейчас?"
+    },
+    {
+      "id": "budget-lines_3",
+      "source": "owner_history",
+      "text": "Можно ли разделить диагностику на этапы?"
+    }
+  ]
+}

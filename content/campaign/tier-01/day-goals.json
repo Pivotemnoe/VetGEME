@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "goals": [
+    {
+      "day": 1,
+      "selectAfterSchedule": true,
+      "candidates": [
+        "complete_required_actions",
+        "explain_plan",
+        "avoid_unsafe_discharge"
+      ]
+    },
+    {
+      "day": 2,
+      "selectAfterSchedule": true,
+      "candidates": [
+        "complete_required_actions",
+        "explain_plan",
+        "avoid_unsafe_discharge"
+      ]
+    },
+    {
+      "day": 3,
+      "selectAfterSchedule": true,
+      "candidates": [
+        "complete_required_actions",
+        "explain_plan",
+        "avoid_unsafe_discharge"
+      ]
+    },
+    {
+      "day": 4,
+      "selectAfterSchedule": true,
+      "candidates": [
+        "complete_required_actions",
+        "explain_plan",
+        "avoid_unsafe_discharge"
+      ]
+    },
+    {
+      "day": 5,
+      "selectAfterSchedule": true,
+      "candidates": [
+        "complete_required_actions",
+        "explain_plan",
+        "avoid_unsafe_discharge"
+      ]
+    },
+    {
+      "day": 6,
+      "selectAfterSchedule": true,
+      "candidates": [
+        "complete_required_actions",
+        "explain_plan",
+        "avoid_unsafe_discharge"
+      ]
+    },
+    {
+      "day": 7,
+      "selectAfterSchedule": true,
+      "candidates": [
+        "complete_required_actions",
+        "explain_plan",
+        "avoid_unsafe_discharge"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,315 @@
+{
+  "schemaVersion": 1,
+  "actions": [
+    {
+      "id": "old_ear_drops",
+      "compatibleFamilies": [
+        "ear"
+      ],
+      "incompatibleFamilies": [
+        "eyes"
+      ],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "hydrogen_peroxide_in_ear",
+      "compatibleFamilies": [
+        "ear"
+      ],
+      "incompatibleFamilies": [
+        "eyes"
+      ],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "vodka_on_wound",
+      "compatibleFamilies": [
+        "trauma",
+        "skin"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "unknown_human_ointment",
+      "compatibleFamilies": [
+        "trauma",
+        "skin"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "human_painkiller",
+      "compatibleFamilies": [
+        "all"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "leftover_antibiotic",
+      "compatibleFamilies": [
+        "all"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "double_dose",
+      "compatibleFamilies": [
+        "all"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "stopped_after_improvement",
+      "compatibleFamilies": [
+        "all"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "treated_only_one_pet",
+      "compatibleFamilies": [
+        "all"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "changed_food_without_exam",
+      "compatibleFamilies": [
+        "all"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "washed_with_new_shampoo",
+      "compatibleFamilies": [
+        "all"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "restricted_water",
+      "compatibleFamilies": [
+        "all"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "fed_greasy_food",
+      "compatibleFamilies": [
+        "all"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "fed_flies",
+      "compatibleFamilies": [
+        "all"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "applied_onion_or_garlic",
+      "compatibleFamilies": [
+        "all"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 1,
+      "rarity": "common",
+      "forbiddenInFirstTutorial": true
+    },
+    {
+      "id": "ignored_until_weekend",
+      "compatibleFamilies": [
+        "all"
+      ],
+      "incompatibleFamilies": [],
+      "ownerLines": [
+        {
+          "source": "owner_history",
+          "text": "Владелец сообщает о домашнем действии только после соответствующего вопроса."
+        }
+      ],
+      "discoveryQuestionId": "question_home_actions",
+      "clinicalEffect": "requires_case_specific_review",
+      "trustEffect": "neutral_if_asked_without_judgment",
+      "humorLevel": 2,
+      "rarity": "uncommon",
+      "forbiddenInFirstTutorial": true
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "status": "not_connected",
+  "days": [
+    {
+      "day": 1,
+      "title": "Первый приём",
+      "start": "08:00",
+      "end": "13:00",
+      "visits": {
+        "min": 3,
+        "max": 3
+      },
+      "newPatients": {
+        "min": 3,
+        "max": 3
+      },
+      "followUps": {
+        "min": 0,
+        "max": 0
+      },
+      "unplanned": {
+        "min": 0,
+        "max": 0
+      },
+      "urgent": {
+        "min": 0,
+        "max": 0
+      },
+      "unlockFamilies": [
+        "ear",
+        "skin",
+        "gastrointestinal",
+        "trauma"
+      ],
+      "tutorial": "full",
+      "preliminaryScheduleRules": {
+        "showBookedOnly": true,
+        "showNameSpeciesReason": true,
+        "hideTrueDiagnosis": true,
+        "hideOwnerProfile": true,
+        "unplannedShownAsRangeOnly": true
+      }
+    },
+    {
+      "day": 2,
+      "title": "Неполный анамнез",
+      "start": "08:00",
+      "end": "15:00",
+      "visits": {
+        "min": 4,
+        "max": 4
+      },
+      "newPatients": {
+        "min": 3,
+        "max": 4
+      },
+      "followUps": {
+        "min": 0,
+        "max": 1
+      },
+      "unplanned": {
+        "min": 0,
+        "max": 0
+      },
+      "urgent": {
+        "min": 0,
+        "max": 0
+      },
+      "tutorial": "partial",
+      "preliminaryScheduleRules": {
+        "showBookedOnly": true,
+        "showNameSpeciesReason": true,
+        "hideTrueDiagnosis": true,
+        "hideOwnerProfile": true,
+        "unplannedShownAsRangeOnly": true
+      }
+    },
+    {
+      "day": 3,
+      "title": "Версия владельца",
+      "start": "08:00",
+      "end": "16:00",
+      "visits": {
+        "min": 5,
+        "max": 5
+      },
+      "newPatients": {
+        "min": 4,
+        "max": 4
+      },
+      "followUps": {
+        "min": 1,
+        "max": 1
+      },
+      "unplanned": {
+        "min": 1,
+        "max": 1
+      },
+      "urgent": {
+        "min": 0,
+        "max": 0
+      },
+      "tutorial": "contextual",
+      "preliminaryScheduleRules": {
+        "showBookedOnly": true,
+        "showNameSpeciesReason": true,
+        "hideTrueDiagnosis": true,
+        "hideOwnerProfile": true,
+        "unplannedShownAsRangeOnly": true
+      }
+    },
+    {
+      "day": 4,
+      "title": "Срочность",
+      "start": "08:00",
+      "end": "17:00",
+      "visits": {
+        "min": 5,
+        "max": 6
+      },
+      "newPatients": {
+        "min": 3,
+        "max": 4
+      },
+      "followUps": {
+        "min": 1,
+        "max": 2
+      },
+      "unplanned": {
+        "min": 0,
+        "max": 1
+      },
+      "urgent": {
+        "min": 1,
+        "max": 1
+      },
+      "tutorial": "warning_only",
+      "preliminaryScheduleRules": {
+        "showBookedOnly": true,
+        "showNameSpeciesReason": true,
+        "hideTrueDiagnosis": true,
+        "hideOwnerProfile": true,
+        "unplannedShownAsRangeOnly": true
+      }
+    },
+    {
+      "day": 5,
+      "title": "Домашнее лечение",
+      "start": "08:00",
+      "end": "18:00",
+      "visits": {
+        "min": 6,
+        "max": 6
+      },
+      "newPatients": {
+        "min": 4,
+        "max": 5
+      },
+      "followUps": {
+        "min": 1,
+        "max": 2
+      },
+      "unplanned": {
+        "min": 0,
+        "max": 1
+      },
+      "urgent": {
+        "min": 0,
+        "max": 1
+      },
+      "tutorial": "warning_only",
+      "preliminaryScheduleRules": {
+        "showBookedOnly": true,
+        "showNameSpeciesReason": true,
+        "hideTrueDiagnosis": true,
+        "hideOwnerProfile": true,
+        "unplannedShownAsRangeOnly": true
+      }
+    },
+    {
+      "day": 6,
+      "title": "Конфликт и границы",
+      "start": "08:00",
+      "end": "18:00",
+      "visits": {
+        "min": 6,
+        "max": 7
+      },
+      "newPatients": {
+        "min": 4,
+        "max": 6
+      },
+      "followUps": {
+        "min": 1,
+        "max": 2
+      },
+      "unplanned": {
+        "min": 0,
+        "max": 1
+      },
+      "urgent": {
+        "min": 0,
+        "max": 1
+      },
+      "tutorial": "warning_only",
+      "preliminaryScheduleRules": {
+        "showBookedOnly": true,
+        "showNameSpeciesReason": true,
+        "hideTrueDiagnosis": true,
+        "hideOwnerProfile": true,
+        "unplannedShownAsRangeOnly": true
+      }
+    },
+    {
+      "day": 7,
+      "title": "Итог недели",
+      "start": "08:00",
+      "end": "18:00",
+      "visits": {
+        "min": 6,
+        "max": 8
+      },
+      "newPatients": {
+        "min": 3,
+        "max": 4
+      },
+      "followUps": {
+        "min": 2,
+        "max": 3
+      },
+      "unplanned": {
+        "min": 0,
+        "max": 1
+      },
+      "urgent": {
+        "min": 0,
+        "max": 1
+      },
+      "minimumFamilies": 5,
+      "tutorial": "off",
+      "preliminaryScheduleRules": {
+        "showBookedOnly": true,
+        "showNameSpeciesReason": true,
+        "hideTrueDiagnosis": true,
+        "hideOwnerProfile": true,
+        "unplannedShownAsRangeOnly": true
+      }
+    }
+  ]
+}

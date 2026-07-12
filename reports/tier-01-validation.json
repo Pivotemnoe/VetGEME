@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "jsonParsed": 44,
+  "clinicalFiles": 30,
+  "duplicateIds": 0,
+  "sourceChecks": 1584,
+  "urgentCases": 6,
+  "ownerProfiles": 8,
+  "ownerModifiers": 8,
+  "homeActions": 16,
+  "ownerLines": 15,
+  "errors": []
+}

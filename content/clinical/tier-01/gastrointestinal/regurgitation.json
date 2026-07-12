@@ -1,0 +1,530 @@
+{
+  "schemaVersion": 1,
+  "id": "GI_REGURGITATION",
+  "family": "gastrointestinal",
+  "titleForDeveloper": "Подозрение на регургитацию",
+  "preliminaryDiagnosisLabel": "Подозрение на регургитацию",
+  "reviewStatus": "pending_medical_review",
+  "tier": 1,
+  "unlockDay": 2,
+  "severity": "routine",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "allowedSex": [
+    "male",
+    "female"
+  ],
+  "requiredEquipment": [],
+  "requiredActions": [
+    "general_exam",
+    "abdominal_exam",
+    "review_video"
+  ],
+  "safeAlternatives": [
+    "staged_plan",
+    "scheduled_recheck"
+  ],
+  "initialComplaintVariants": [
+    {
+      "id": "complaint_1",
+      "source": "initial_complaint",
+      "text": "Владелец говорит, что питомца рвет сразу после еды."
+    },
+    {
+      "id": "complaint_2",
+      "source": "initial_complaint",
+      "text": "Еда выходит без заметных рвотных позывов."
+    },
+    {
+      "id": "complaint_3",
+      "source": "initial_complaint",
+      "text": "Эпизод тесно связан с проглатыванием корма."
+    }
+  ],
+  "historyQuestions": [
+    {
+      "id": "question_onset",
+      "buttonText": "Когда появились первые симптомы?",
+      "category": "timeline",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "answers": [
+        {
+          "id": "question_onset_accurate",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "Владелец называет точное наблюдение и примерный срок."
+        },
+        {
+          "id": "question_onset_uncertain",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "Владелец не уверен в деталях и указывает приблизительный срок."
+        },
+        {
+          "id": "question_onset_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "Владелец описывает наблюдение точно, но тревожно оценивает его изменение."
+        },
+        {
+          "id": "question_onset_hidden_home_action",
+          "ownerTags": [
+            "hidden_home_treatment"
+          ],
+          "source": "owner_history",
+          "text": "После спокойного уточнения владелец сообщает о домашнем действии."
+        }
+      ]
+    },
+    {
+      "id": "question_progression",
+      "buttonText": "Как состояние менялось с момента появления?",
+      "category": "progression",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "answers": [
+        {
+          "id": "question_progression_accurate",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "Владелец называет точное наблюдение и примерный срок."
+        },
+        {
+          "id": "question_progression_uncertain",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "Владелец не уверен в деталях и указывает приблизительный срок."
+        },
+        {
+          "id": "question_progression_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "Владелец описывает наблюдение точно, но тревожно оценивает его изменение."
+        },
+        {
+          "id": "question_progression_hidden_home_action",
+          "ownerTags": [
+            "hidden_home_treatment"
+          ],
+          "source": "owner_history",
+          "text": "После спокойного уточнения владелец сообщает о домашнем действии."
+        }
+      ]
+    },
+    {
+      "id": "question_general_state",
+      "buttonText": "Изменились ли аппетит, вода и общее поведение?",
+      "category": "general",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "answers": [
+        {
+          "id": "question_general_state_accurate",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "Владелец называет точное наблюдение и примерный срок."
+        },
+        {
+          "id": "question_general_state_uncertain",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "Владелец не уверен в деталях и указывает приблизительный срок."
+        },
+        {
+          "id": "question_general_state_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "Владелец описывает наблюдение точно, но тревожно оценивает его изменение."
+        },
+        {
+          "id": "question_general_state_hidden_home_action",
+          "ownerTags": [
+            "hidden_home_treatment"
+          ],
+          "source": "owner_history",
+          "text": "После спокойного уточнения владелец сообщает о домашнем действии."
+        }
+      ]
+    },
+    {
+      "id": "question_home_actions",
+      "buttonText": "Что уже применяли или меняли дома?",
+      "category": "home_treatment",
+      "required": true,
+      "condition": null,
+      "source": "owner_history",
+      "answers": [
+        {
+          "id": "question_home_actions_accurate",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "Владелец называет точное наблюдение и примерный срок."
+        },
+        {
+          "id": "question_home_actions_uncertain",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "Владелец не уверен в деталях и указывает приблизительный срок."
+        },
+        {
+          "id": "question_home_actions_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "Владелец описывает наблюдение точно, но тревожно оценивает его изменение."
+        },
+        {
+          "id": "question_home_actions_hidden_home_action",
+          "ownerTags": [
+            "hidden_home_treatment"
+          ],
+          "source": "owner_history",
+          "text": "После спокойного уточнения владелец сообщает о домашнем действии."
+        }
+      ]
+    },
+    {
+      "id": "question_gastrointestinal_1",
+      "buttonText": "Сколько было эпизодов и когда относительно еды?",
+      "category": "gastrointestinal",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "answers": [
+        {
+          "id": "question_gastrointestinal_1_accurate",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "Владелец называет точное наблюдение и примерный срок."
+        },
+        {
+          "id": "question_gastrointestinal_1_uncertain",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "Владелец не уверен в деталях и указывает приблизительный срок."
+        },
+        {
+          "id": "question_gastrointestinal_1_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "Владелец описывает наблюдение точно, но тревожно оценивает его изменение."
+        },
+        {
+          "id": "question_gastrointestinal_1_hidden_home_action",
+          "ownerTags": [
+            "hidden_home_treatment"
+          ],
+          "source": "owner_history",
+          "text": "После спокойного уточнения владелец сообщает о домашнем действии."
+        }
+      ]
+    },
+    {
+      "id": "question_gastrointestinal_2",
+      "buttonText": "Удерживает ли питомец воду?",
+      "category": "gastrointestinal",
+      "required": false,
+      "condition": null,
+      "source": "owner_history",
+      "answers": [
+        {
+          "id": "question_gastrointestinal_2_accurate",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "Владелец называет точное наблюдение и примерный срок."
+        },
+        {
+          "id": "question_gastrointestinal_2_uncertain",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "Владелец не уверен в деталях и указывает приблизительный срок."
+        },
+        {
+          "id": "question_gastrointestinal_2_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "Владелец описывает наблюдение точно, но тревожно оценивает его изменение."
+        },
+        {
+          "id": "question_gastrointestinal_2_hidden_home_action",
+          "ownerTags": [
+            "hidden_home_treatment"
+          ],
+          "source": "owner_history",
+          "text": "После спокойного уточнения владелец сообщает о домашнем действии."
+        }
+      ]
+    },
+    {
+      "id": "question_gastrointestinal_conditional",
+      "buttonText": "Есть ли кровь, боль или доступ к посторонним предметам?",
+      "category": "gastrointestinal",
+      "required": false,
+      "condition": "opened_by_relevant_answer",
+      "source": "owner_history",
+      "answers": [
+        {
+          "id": "question_gastrointestinal_conditional_accurate",
+          "ownerTags": [
+            "observant"
+          ],
+          "source": "owner_history",
+          "text": "Владелец называет точное наблюдение и примерный срок."
+        },
+        {
+          "id": "question_gastrointestinal_conditional_uncertain",
+          "ownerTags": [
+            "inattentive"
+          ],
+          "source": "owner_history",
+          "text": "Владелец не уверен в деталях и указывает приблизительный срок."
+        },
+        {
+          "id": "question_gastrointestinal_conditional_anxious",
+          "ownerTags": [
+            "anxious"
+          ],
+          "source": "owner_history",
+          "text": "Владелец описывает наблюдение точно, но тревожно оценивает его изменение."
+        },
+        {
+          "id": "question_gastrointestinal_conditional_hidden_home_action",
+          "ownerTags": [
+            "hidden_home_treatment"
+          ],
+          "source": "owner_history",
+          "text": "После спокойного уточнения владелец сообщает о домашнем действии."
+        }
+      ]
+    }
+  ],
+  "generalExam": {
+    "findings": [
+      {
+        "id": "general_stability",
+        "source": "physical_exam",
+        "text": "Общее состояние оценено до локального решения."
+      }
+    ]
+  },
+  "targetExam": {
+    "findings": [
+      {
+        "id": "target_1",
+        "source": "physical_exam",
+        "text": "Общее состояние между эпизодами стабильное."
+      },
+      {
+        "id": "target_2",
+        "source": "physical_exam",
+        "text": "Живот без выраженной болезненности."
+      },
+      {
+        "id": "target_3",
+        "source": "physical_exam",
+        "text": "По описанию отсутствуют типичные выраженные рвотные позывы."
+      }
+    ]
+  },
+  "sampleActions": [],
+  "diagnosticTests": [
+    {
+      "id": "test_1",
+      "source": "diagnostic_test",
+      "text": "Видео владельца и уточняющие ответы поддерживают предварительную версию регургитации."
+    }
+  ],
+  "preliminaryDiagnosisOptions": [
+    {
+      "id": "primary",
+      "source": "doctor_interpretation",
+      "label": "Подозрение на регургитацию",
+      "requires": [
+        "general_exam",
+        "abdominal_exam",
+        "review_video"
+      ]
+    },
+    {
+      "id": "insufficient",
+      "source": "doctor_interpretation",
+      "label": "Данных недостаточно для безопасного окончательного решения",
+      "requires": [
+        "general_exam"
+      ]
+    }
+  ],
+  "planOptions": [
+    {
+      "id": "recommended_plan",
+      "source": "doctor_interpretation",
+      "label": "Коррекция кормления, наблюдение и направление при повторении или красных флагах.",
+      "allowsRoutineObservation": true,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Контроль в установленный для случая срок."
+      },
+      "worseningSigns": [
+        {
+          "id": "red_flag_1",
+          "source": "doctor_interpretation",
+          "text": "затрудненное глотание"
+        },
+        {
+          "id": "red_flag_2",
+          "source": "doctor_interpretation",
+          "text": "повторные эпизоды с ухудшением"
+        }
+      ]
+    },
+    {
+      "id": "unsafe_observation",
+      "source": "doctor_interpretation",
+      "label": "Только домашнее наблюдение",
+      "allowsRoutineObservation": true,
+      "disabledWhenRedFlags": true,
+      "followUp": {
+        "source": "follow_up",
+        "text": "Повторная оценка при отсутствии улучшения."
+      },
+      "worseningSigns": [
+        {
+          "id": "red_flag_1",
+          "source": "doctor_interpretation",
+          "text": "затрудненное глотание"
+        },
+        {
+          "id": "red_flag_2",
+          "source": "doctor_interpretation",
+          "text": "повторные эпизоды с ухудшением"
+        }
+      ]
+    }
+  ],
+  "ownerExplanation": {
+    "source": "doctor_interpretation",
+    "known": "Объяснить подтвержденные данные.",
+    "uncertain": "Отдельно назвать то, что пока остается предположением.",
+    "plan": "Согласовать действия, контроль и признаки ухудшения."
+  },
+  "redFlags": [
+    {
+      "id": "red_flag_1",
+      "source": "doctor_interpretation",
+      "text": "затрудненное глотание"
+    },
+    {
+      "id": "red_flag_2",
+      "source": "doctor_interpretation",
+      "text": "повторные эпизоды с ухудшением"
+    }
+  ],
+  "criticalFacts": [
+    {
+      "id": "critical_1",
+      "source": "doctor_interpretation",
+      "text": "затрудненное глотание",
+      "discoveryPaths": [
+        "general_exam",
+        "abdominal_exam"
+      ]
+    },
+    {
+      "id": "critical_2",
+      "source": "doctor_interpretation",
+      "text": "повторные эпизоды с ухудшением",
+      "discoveryPaths": [
+        "general_exam",
+        "abdominal_exam"
+      ]
+    }
+  ],
+  "followUpRules": [
+    {
+      "id": "scheduled_control",
+      "source": "follow_up",
+      "condition": "plan_completed",
+      "result": "Контрольный визит сохраняет пациента и владельца."
+    }
+  ],
+  "outcomeRules": [
+    {
+      "id": "delayed_outcome",
+      "source": "follow_up",
+      "condition": "after_discharge",
+      "result": "Исход оценивается позднее, а не сразу после выбора плана."
+    }
+  ],
+  "compatibleOwnerProfiles": [
+    "calm",
+    "observant",
+    "anxious",
+    "inattentive",
+    "budget_limited"
+  ],
+  "compatibleOwnerModifiers": [
+    "none",
+    "internet_diagnosis",
+    "hidden_home_treatment"
+  ],
+  "forbiddenCombinations": [
+    "critical_fact_only_in_humor"
+  ],
+  "humor": {
+    "allowed": true,
+    "maximumLevel": 1,
+    "lines": [
+      {
+        "source": "owner_history",
+        "level": 1,
+        "text": "Владелец использует бытовую формулировку, не заменяющую медицинский факт."
+      }
+    ]
+  },
+  "validation": {
+    "medicallyReviewed": false,
+    "sourceSeparationRequired": true,
+    "urgentSafeActionRequired": false
+  }
+}

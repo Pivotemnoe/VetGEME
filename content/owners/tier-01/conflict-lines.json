@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "lines": [
+    {
+      "id": "conflict-lines_1",
+      "source": "owner_history",
+      "text": "Я хочу сначала понять, зачем нужно это исследование."
+    },
+    {
+      "id": "conflict-lines_2",
+      "source": "owner_history",
+      "text": "Вы можете предложить безопасный минимальный вариант?"
+    },
+    {
+      "id": "conflict-lines_3",
+      "source": "owner_history",
+      "text": "Я не согласен на процедуру без объяснения рисков."
+    }
+  ]
+}

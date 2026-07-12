@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "lines": [
+    {
+      "id": "follow-up-lines_1",
+      "source": "follow_up",
+      "text": "Мы пришли на контроль в назначенный срок."
+    },
+    {
+      "id": "follow-up-lines_2",
+      "source": "follow_up",
+      "text": "Сначала стало лучше, но потом симптом вернулся."
+    },
+    {
+      "id": "follow-up-lines_3",
+      "source": "follow_up",
+      "text": "План выполняли не полностью, хочу уточнить, что делать дальше."
+    }
+  ]
+}

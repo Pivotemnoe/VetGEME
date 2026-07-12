@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "lines": [
+    {
+      "id": "humorous-lines_1",
+      "source": "owner_history",
+      "text": "Он ничего необычного не ел. Только котлету, сосиску и немного плова."
+    },
+    {
+      "id": "humorous-lines_2",
+      "source": "owner_history",
+      "text": "Название капель не помню. Флакон был маленький, а этикетка синяя."
+    },
+    {
+      "id": "humorous-lines_3",
+      "source": "owner_history",
+      "text": "Температуру не мерили, но нос вроде прохладный."
+    }
+  ]
+}

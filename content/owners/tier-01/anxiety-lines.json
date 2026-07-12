@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "lines": [
+    {
+      "id": "anxiety-lines_1",
+      "source": "owner_history",
+      "text": "Мне кажется, ему становится хуже каждый час."
+    },
+    {
+      "id": "anxiety-lines_2",
+      "source": "owner_history",
+      "text": "Скажите сначала, есть ли опасность прямо сейчас."
+    },
+    {
+      "id": "anxiety-lines_3",
+      "source": "owner_history",
+      "text": "Я переживаю, что мы слишком долго ждали."
+    }
+  ]
+}

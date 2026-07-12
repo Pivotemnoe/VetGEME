@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "reviewStatus": "pending_review",
+  "profiles": [
+    {
+      "id": "calm",
+      "label": "спокойный",
+      "traits": {
+        "anxiety": 25,
+        "observation": 70,
+        "trust": 65,
+        "conflict": 10,
+        "adherence": 80
+      }
+    },
+    {
+      "id": "observant",
+      "label": "наблюдательный",
+      "traits": {
+        "anxiety": 40,
+        "observation": 90,
+        "trust": 60,
+        "conflict": 10,
+        "adherence": 85
+      }
+    },
+    {
+      "id": "anxious",
+      "label": "тревожный",
+      "traits": {
+        "anxiety": 80,
+        "observation": 75,
+        "trust": 50,
+        "conflict": 20,
+        "adherence": 75
+      }
+    },
+    {
+      "id": "inattentive",
+      "label": "невнимательный",
+      "traits": {
+        "anxiety": 35,
+        "observation": 35,
+        "trust": 55,
+        "conflict": 15,
+        "adherence": 55
+      }
+    },
+    {
+      "id": "budget_limited",
+      "label": "с ограниченным бюджетом",
+      "traits": {
+        "anxiety": 55,
+        "observation": 65,
+        "trust": 55,
+        "conflict": 10,
+        "adherence": 70
+      }
+    },
+    {
+      "id": "internet_confident",
+      "label": "уверенный в интернет-версии",
+      "traits": {
+        "anxiety": 50,
+        "observation": 60,
+        "trust": 40,
+        "conflict": 35,
+        "adherence": 55
+      }
+    },
+    {
+      "id": "careless",
+      "label": "непоследовательный",
+      "traits": {
+        "anxiety": 30,
+        "observation": 45,
+        "trust": 55,
+        "conflict": 20,
+        "adherence": 40
+      }
+    },
+    {
+      "id": "demanding",
+      "label": "требовательный",
+      "traits": {
+        "anxiety": 55,
+        "observation": 65,
+        "trust": 35,
+        "conflict": 65,
+        "adherence": 60
+      }
+    }
+  ]
+}

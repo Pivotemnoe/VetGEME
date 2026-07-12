@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "modifiers": [
+    {
+      "id": "none",
+      "compatibleTags": [
+        "all"
+      ]
+    },
+    {
+      "id": "internet_diagnosis",
+      "compatibleTags": [
+        "routine",
+        "priority"
+      ]
+    },
+    {
+      "id": "hidden_home_treatment",
+      "compatibleTags": [
+        "routine",
+        "priority"
+      ]
+    },
+    {
+      "id": "financial_refusal",
+      "compatibleTags": [
+        "routine",
+        "priority"
+      ]
+    },
+    {
+      "id": "diagnostic_refusal",
+      "compatibleTags": [
+        "routine",
+        "priority"
+      ]
+    },
+    {
+      "id": "poor_adherence",
+      "compatibleTags": [
+        "follow_up"
+      ]
+    },
+    {
+      "id": "misnamed_symptom",
+      "compatibleTags": [
+        "gastrointestinal",
+        "urinary"
+      ]
+    },
+    {
+      "id": "shelter_representative",
+      "compatibleTags": [
+        "multi_animal",
+        "infectious"
+      ]
+    }
+  ]
+}
