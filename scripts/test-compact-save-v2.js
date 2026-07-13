@@ -248,6 +248,17 @@ async function main() {
     sampleTaken: true,
     microscopyDone: false,
     selectedDiagnosisIds: [],
+    diagnosticDecisions: [{
+      decision: "accepted",
+      offeredTestIds: ["ear_cytology"],
+      acceptedTestIds: ["ear_cytology"],
+      declinedTestIds: [],
+      noResult: false,
+      noPayment: false,
+      resultStatus: "owner_accepted_pending_execution"
+    }],
+    pendingDiagnosticTestId: "ear_cytology",
+    diagnosticUncertainty: null,
     communicationResult: { optionId: "calmDetailed", reactionId: "understood", comprehension: 76 },
     ownerComprehension: 76,
     prescriptionComponents: [{ id: "approved-plan", approvedTextId: "approved-plan" }],
@@ -270,12 +281,47 @@ async function main() {
   const partialReload = gameSaveApi.load(partialStorage, "tier-01-v2", { catalog });
   assert.deepEqual(partialReload.state.queue[0].asked, partialPatient.asked);
   assert.deepEqual(partialReload.state.queue[0].clinicalRecord, partialPatient.clinicalRecord);
+  assert.deepEqual(partialReload.state.queue[0].diagnosticDecisions, partialPatient.diagnosticDecisions);
+  assert.equal(partialReload.state.queue[0].pendingDiagnosticTestId, partialPatient.pendingDiagnosticTestId);
   assert.deepEqual(partialReload.state.queue[0].communicationResult, partialPatient.communicationResult);
   assert.deepEqual(partialReload.state.queue[0].prescriptionComponents, partialPatient.prescriptionComponents);
   assert.deepEqual(partialReload.state.queue[0].ownerPlanDecision, partialPatient.ownerPlanDecision);
   assert.deepEqual(partialReload.state.queue[0].immediateDecisionReview, partialPatient.immediateDecisionReview);
   assert.equal(partialReload.state.queue[0].v2Visit.complaint.text, partialPatient.v2Visit.complaint.text);
   assert.ok(partialReload.state.arrivalSchedule[0].template.v2Visit.medicalContent);
+
+  const diagnosticReloadStates = [
+    { decision: "asks_cost", noResult: true, noPayment: true, diagnosticUncertainty: false },
+    { decision: "refused", noResult: true, noPayment: true, diagnosticUncertainty: true },
+    { decision: "requests_cheaper_option", noResult: true, noPayment: true, diagnosticUncertainty: true },
+    { decision: "delayed", noResult: true, noPayment: true, diagnosticUncertainty: true },
+    { decision: "partially_accepted", noResult: false, noPayment: false, diagnosticUncertainty: false }
+  ];
+  for (const diagnosticState of diagnosticReloadStates) {
+    const stateStorage = memoryStorage();
+    const statePatient = compactApi.clone(partialPatient);
+    statePatient.pendingDiagnosticTestId = null;
+    statePatient.diagnosticDecisions = [{
+      ...diagnosticState,
+      offeredTestIds: ["ear_cytology"],
+      acceptedTestIds: diagnosticState.decision === "partially_accepted" ? ["ear_cytology"] : [],
+      declinedTestIds: diagnosticState.decision === "partially_accepted" ? [] : ["ear_cytology"]
+    }];
+    statePatient.diagnosticUncertainty = diagnosticState.diagnosticUncertainty
+      ? { testId: "ear_cytology", reason: diagnosticState.decision }
+      : null;
+    gameSaveApi.save(stateStorage, "tier-01-v2", {
+      phase: "running",
+      day: 1,
+      queue: [statePatient],
+      arrivalSchedule: [],
+      activeId: statePatient.id,
+      caseJournal: []
+    }, { catalog });
+    const restored = gameSaveApi.load(stateStorage, "tier-01-v2", { catalog }).state.queue[0];
+    assert.deepEqual(restored.diagnosticDecisions, statePatient.diagnosticDecisions);
+    assert.deepEqual(restored.diagnosticUncertainty, statePatient.diagnosticUncertainty);
+  }
 
   const oldGameSnapshot = {
     gameStateSaveVersion: 1,

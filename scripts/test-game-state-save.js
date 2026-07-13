@@ -20,7 +20,19 @@ const base = {
   money: 2040,
   reputation: 78.5,
   doctors: [{ id: "doctor-a", fatigue: 42 }],
-  queue: [{ id: 7, animal: "Бакс", selectedDiagnosisIds: ["EAR_FUNGAL_OTITIS"] }],
+  queue: [{
+    id: 7,
+    animal: "Бакс",
+    selectedDiagnosisIds: ["EAR_FUNGAL_OTITIS"],
+    diagnosticDecisions: [{
+      decision: "refused",
+      offeredTestIds: ["ear_cytology"],
+      acceptedTestIds: [],
+      noResult: true,
+      noPayment: true
+    }],
+    diagnosticUncertainty: { testId: "ear_cytology", reason: "refused" }
+  }],
   caseJournal: [{ day: 3, visitId: "visit-3-1" }],
   pendingReturns: [{ visitId: "visit-3-1", day: 5 }],
   transientDomReference: { shouldNotPersist: true }
@@ -28,6 +40,8 @@ const base = {
 
 saveApi.save(storage, "tier-01-v2", base);
 assert.equal(saveApi.load(storage, "tier-01-v2").state.money, 2040);
+assert.equal(saveApi.load(storage, "tier-01-v2").state.queue[0].diagnosticDecisions[0].noResult, true);
+assert.equal(saveApi.load(storage, "tier-01-v2").state.queue[0].diagnosticUncertainty.reason, "refused");
 assert.equal(saveApi.load(storage, "current"), null);
 assert.equal(saveApi.load(storage, "legacy-v1"), null);
 assert.equal(saveApi.load(storage, "tier-01-v2").state.transientDomReference, undefined);

@@ -14,6 +14,7 @@
     "test:multi-diagnosis-v2": "node scripts/test-multi-diagnosis-v2.js",
     "test:clinical-visit": "node scripts/test-clinical-visit-state.js",
     "test:clinical-decisions:v2": "node scripts/test-clinical-decisions-v2.js",
+    "test:diagnostic-decisions:v2": "node scripts/test-diagnostic-decisions-v2.js",
     "test:introductory-cases:v2": "node scripts/test-introductory-cases-v2.js",
     "test:guided-ui": "node scripts/test-guided-consultation-ui.js",
     "test:diagnostic-feedback-ui": "node scripts/test-diagnostic-feedback-ui.js",

@@ -33,7 +33,7 @@ async function bootMode(browser, mode) {
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(`console: ${message.text()}`);
   });
-  page.on("pageerror", (error) => errors.push(`pageerror: ${error.message}`));
+  page.on("pageerror", (error) => errors.push(`pageerror: ${error.stack || error.message}`));
   await page.goto(`http://127.0.0.1:5174/?generatorMode=${mode}`, { waitUntil: "networkidle" });
   const shiftVisible = await page.locator("#shiftWindow").isVisible();
   await page.locator("#startShiftBtn").click();
@@ -41,24 +41,59 @@ async function bootMode(browser, mode) {
   await page.locator(".next-patient .queue-card").click();
   await page.locator("#developerBtn").click();
   await page.locator("#devResolvePatientBtn").click();
-  await page.locator("#caseWindow").waitFor({ state: "hidden", timeout: 15000 });
+  try {
+    await page.locator("#caseWindow").waitFor({ state: "hidden", timeout: 15000 });
+  } catch (error) {
+    const diagnostic = {
+      mode,
+      errors,
+      log: await page.locator("#messageLog").textContent(),
+      choiceVisible: await page.locator("#choiceWindow").isVisible(),
+      choiceTitle: await page.locator("#choiceTitle").textContent(),
+      finishVisible: await page.locator("#finishVisitBtn").isVisible(),
+      finishDisabled: await page.locator("#finishVisitBtn").isDisabled(),
+      treatmentDisabled: await page.locator("#treatmentBtn").isDisabled()
+    };
+    await context.close();
+    throw new Error(`Developer completion failed: ${JSON.stringify(diagnostic)}\n${error.message}`);
+  }
   await context.close();
   return { mode, shiftVisible, errors };
 }
 
 async function main() {
   const browser = await chromium.launch({ headless: true, executablePath: chromiumPath });
+  if (process.env.PLAYTEST_BOOT_MODE) {
+    const result = await bootMode(browser, process.env.PLAYTEST_BOOT_MODE);
+    await browser.close();
+    console.log(JSON.stringify({ status: "passed", bootOnly: result }, null, 2));
+    return;
+  }
   const context = await browser.newContext({ viewport: { width: 1920, height: 1200 }, deviceScaleFactor: 1 });
   const page = await context.newPage();
   const errors = [];
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(`console: ${message.text()}`);
   });
-  page.on("pageerror", (error) => errors.push(`pageerror: ${error.message}`));
+  page.on("pageerror", (error) => errors.push(`pageerror: ${error.stack || error.message}`));
 
   await page.goto("http://127.0.0.1:5174/?generatorMode=tier-01-v2", { waitUntil: "networkidle" });
   await page.locator("#startShiftBtn").click();
-  await page.locator(".next-patient .queue-card").waitFor({ state: "visible", timeout: 30000 });
+  try {
+    await page.locator(".next-patient .queue-card").waitFor({ state: "visible", timeout: 30000 });
+  } catch (error) {
+    await page.screenshot({ path: path.join(screenshots, "00-boot-timeout.png"), fullPage: true });
+    const diagnostic = {
+      errors,
+      shiftVisible: await page.locator("#shiftWindow").isVisible(),
+      startDisabled: await page.locator("#startShiftBtn").isDisabled(),
+      saveError: await page.locator("body").getAttribute("data-save-error"),
+      message: await page.locator("#messageLog").textContent(),
+      time: await page.locator("#timeValue").textContent()
+    };
+    await browser.close();
+    throw new Error(`First patient did not arrive: ${JSON.stringify(diagnostic)}\n${error.message}`);
+  }
   await page.locator(".next-patient .queue-card").click();
   await page.locator("#caseWindow").waitFor({ state: "visible" });
 
@@ -79,8 +114,15 @@ async function main() {
   await page.screenshot({ path: path.join(screenshots, "03-after-exams.png"), fullPage: true });
   await reloadInConsultation(page, patientTitle);
 
-  if (await page.locator("#sampleBtn").isEnabled()) await page.locator("#sampleBtn").click();
-  if (await page.locator("#microscopyBtn").isEnabled()) await page.locator("#microscopyBtn").click();
+  if (await page.locator("#sampleBtn").isEnabled()) {
+    await page.locator("#sampleBtn").click();
+    if (await page.locator("#choiceWindow").isVisible()) await page.locator(".choice-item:not(:disabled)").first().click();
+    if (await page.locator("#sampleBtn").isEnabled()) await page.locator("#sampleBtn").click();
+  }
+  if (await page.locator("#microscopyBtn").isEnabled()) {
+    await page.locator("#microscopyBtn").click();
+    if (await page.locator("#choiceWindow").isVisible()) await page.locator(".choice-item:not(:disabled)").first().click();
+  }
   await page.locator("#diagnosisBtn").click();
   await page.locator(".choice-item:not(:disabled)").first().click();
   await page.locator("#communicationBtn").click();

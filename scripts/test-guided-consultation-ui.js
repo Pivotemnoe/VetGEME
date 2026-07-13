@@ -29,7 +29,7 @@ for (const label of [
   "Провести общий осмотр",
   "Осмотреть уши",
   "Взять материал",
-  "Провести микроскопию",
+  "Предложить микроскопию",
   "Выбрать предварительный диагноз",
   "Объяснить результат",
   "Сделать назначения",
@@ -42,6 +42,8 @@ const activeRuntimeText = `${html}\n${game}\n${JSON.stringify(tutorial)}`;
 assert.equal(activeRuntimeText.includes("Согласовать план помощи"), false, "obsolete care-plan action is still player-facing");
 assert.equal(activeRuntimeText.includes("Что согласовать с владельцем?"), false, "obsolete agreement wording is still player-facing");
 assert.ok(tutorial.steps.find((step) => step.id === "preliminary_diagnosis")?.text.startsWith("Сначала выберите состояние"));
+assert.equal(game.includes("Исследование не требуется"), false, "obsolete diagnostic label is still player-facing");
+assert.ok(game.includes("Дополнительное исследование не обязательно"));
 
 console.log(JSON.stringify({
   status: "passed",
