@@ -39,6 +39,23 @@ async function main() {
       throw new Error(`${template.diseaseId}: approved primary plan missing`);
     }
   }
+  const earMites = catalog.casesById.EAR_MITES;
+  const catOnlyComplaint = earMites.initialComplaintVariants.find((item) => item.species?.includes("cat"));
+  const dogVisitWithCatComplaint = {
+    ...opened.visits[0],
+    caseId: earMites.id,
+    diseaseId: earMites.id,
+    patient: { ...opened.visits[0].patient, species: "dog", animal: "Тайга" },
+    complaint: catOnlyComplaint,
+    medicalContent: earMites
+  };
+  const compatiblePatient = adapter.patientFromVisit(dogVisitWithCatComplaint);
+  if (compatiblePatient.v2Visit.complaint.species?.includes("cat")) {
+    throw new Error("adapter exposed a cat-only complaint for a dog");
+  }
+  if (compatiblePatient.complaints[0] !== compatiblePatient.v2Visit.complaint.text) {
+    throw new Error("adapter did not persist the compatible complaint in the runtime visit");
+  }
   const requiredContextCases = [
     "EAR_FUNGAL_OTITIS",
     "SKIN_GROOMING_IRRITATION",
@@ -104,6 +121,7 @@ async function main() {
     adaptedVisits: plan.patients.length,
     contextualDiagnosisCases: requiredContextCases.length,
     familyPipelineCases: Object.fromEntries([...familyRepresentatives].map(([family, visit]) => [family, visit.caseId])),
+    complaintSpeciesGuard: true,
     approvedTextPreserved: true
   }, null, 2));
 }

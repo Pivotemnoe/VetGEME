@@ -96,6 +96,15 @@
       || question.answers[0];
   }
 
+  function compatibleComplaintForVisit(visit) {
+    const species = visit.patient.species;
+    const isCompatible = (variant) => !Array.isArray(variant.species) || variant.species.includes(species);
+    if (isCompatible(visit.complaint)) return visit.complaint;
+    const replacement = visit.medicalContent.initialComplaintVariants.find(isCompatible);
+    if (!replacement) throw new Error(`No complaint variant for ${visit.caseId}/${species}`);
+    return replacement;
+  }
+
   function diseaseForVisit(visit) {
     const caseData = visit.medicalContent;
     const general = caseData.generalExam.findings.map((item) => item.text);
@@ -129,6 +138,8 @@
   }
 
   function patientFromVisit(visit) {
+    const adaptedVisit = clone(visit);
+    adaptedVisit.complaint = clone(compatibleComplaintForVisit(visit));
     return {
       arrivalMinute: visit.arrivalMinute,
       source: visit.source === "unplanned" ? "walkIn" : visit.source,
@@ -144,8 +155,8 @@
       returnVisit: visit.returnVisit,
       urgency: visit.urgency === "urgent" ? "urgent" : "routine",
       eventLabel: visit.source === "unplanned" ? "Незапланированный пациент" : "",
-      complaints: [visit.complaint.text],
-      v2Visit: clone(visit)
+      complaints: [adaptedVisit.complaint.text],
+      v2Visit: adaptedVisit
     };
   }
 
@@ -178,7 +189,12 @@
       id: option.isCorrectForTemplate ? caseData.id : option.id,
       label: option.label,
       note: option.feedback,
-      unsafe: option.isUnsafeChoice
+      unsafe: option.isUnsafeChoice,
+      assessment: option.decisionAssessment || (option.isCorrectForTemplate ? "justified" : option.isUnsafeChoice ? "unsafe" : "insufficient"),
+      supportingEvidence: clone(option.supportingEvidence || []),
+      missingEvidence: clone(option.missingEvidence || []),
+      contradictingEvidence: clone(option.contradictingEvidence || []),
+      uncertainEvidence: clone(option.uncertainEvidence || [])
     }));
     return primary;
   }
@@ -208,6 +224,7 @@
 
   return {
     ownerProfileForVisit,
+    compatibleComplaintForVisit,
     diseaseForVisit,
     patientFromVisit,
     planFromDay,

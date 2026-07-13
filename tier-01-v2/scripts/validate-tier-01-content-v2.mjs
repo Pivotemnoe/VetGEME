@@ -22,6 +22,10 @@ const prohibitedPhrases = [
 ];
 const allowedSources = new Set(["initial_complaint", "owner_history", "physical_exam", "diagnostic_test", "doctor_interpretation", "follow_up"]);
 const allowedSpecies = new Set(["dog", "cat"]);
+const fixedSpeciesTerms = {
+  dog: /(?:^|[^\p{L}])(?:собак\p{L}*|пёс\p{L}*|пса|щен\p{L}*)(?=$|[^\p{L}])/iu,
+  cat: /(?:^|[^\p{L}])(?:кошк\p{L}*|кота|коту|котён\p{L}*|котен\p{L}*)(?=$|[^\p{L}])/iu
+};
 const parsed = new Map();
 
 function readJson(file) {
@@ -88,6 +92,25 @@ for (const file of caseFiles) {
   for (const [i, item] of (data.initialComplaintVariants ?? []).entries()) {
     checkSource(item, "initial_complaint", file, `initialComplaintVariants[${i}]`);
     assert(item.text?.length >= 25, file, `complaint ${item.id} is too short`);
+    const compatibleSpecies = Array.isArray(item.species) ? item.species : data.species;
+    assert(Array.isArray(compatibleSpecies) && compatibleSpecies.length > 0, file, `complaint ${item.id} needs species compatibility`);
+    for (const species of compatibleSpecies ?? []) {
+      assert(data.species?.includes(species), file, `complaint ${item.id} uses species outside the case: ${species}`);
+    }
+    const fixedSpecies = Object.entries(fixedSpeciesTerms)
+      .filter(([, pattern]) => pattern.test(item.text || ""))
+      .map(([species]) => species);
+    if (fixedSpecies.length) {
+      if ((data.species ?? []).length > 1) {
+        assert(Array.isArray(item.species), file, `complaint ${item.id} with fixed species wording needs an explicit species list`);
+      }
+      for (const species of compatibleSpecies ?? []) {
+        assert(fixedSpecies.includes(species), file, `complaint ${item.id} wording is incompatible with ${species}`);
+      }
+    }
+  }
+  for (const species of data.species ?? []) {
+    assert(data.initialComplaintVariants?.some((item) => !Array.isArray(item.species) || item.species.includes(species)), file, `no complaint variant is compatible with ${species}`);
   }
   const questions = data.historyQuestions ?? [];
   stats.questions += questions.length;
@@ -133,6 +156,14 @@ for (const file of caseFiles) {
     checkSource(item, "doctor_interpretation", file, `diagnosis ${item.id}`);
     assert(Array.isArray(item.requires) && item.requires.length > 0, file, `diagnosis ${item.id} needs requires`);
     assert(item.feedback?.length >= 25, file, `diagnosis ${item.id} needs exact feedback`);
+  }
+  if (data.id === "SKIN_FLEA_INFESTATION") {
+    for (const item of diagnoses) {
+      assert(["justified", "acceptable", "insufficient", "contradictory", "unsafe"].includes(item.decisionAssessment), file, `diagnosis ${item.id} needs a decision assessment`);
+      const evidenceCount = (item.supportingEvidence?.length || 0) + (item.contradictingEvidence?.length || 0);
+      assert(evidenceCount > 0, file, `diagnosis ${item.id} needs supporting or contradicting evidence`);
+      assert(!/(в этом варианте|в данном случае преобладает)/iu.test(item.feedback || ""), file, `diagnosis ${item.id} exposes author meta text`);
+    }
   }
   assert((data.planOptions ?? []).length >= 1, file, "at least one plan is required");
   for (const item of data.planOptions ?? []) {

@@ -543,6 +543,15 @@
         "flea_comb_test"
       ],
       "feedback": "Живые блохи и характерные загрязнения обнаружены при осмотре и вычёсывании.",
+      "decisionAssessment": "justified",
+      "supportingEvidence": [
+        "Обнаружены живые блохи.",
+        "Обнаружены блошиные загрязнения."
+      ],
+      "missingEvidence": [],
+      "uncertainEvidence": [
+        "Наличие аллергического компонента остаётся неопределённым."
+      ],
       "isCorrectForTemplate": true,
       "isUnsafeChoice": false
     },
@@ -555,7 +564,16 @@
         "skin_exam",
         "flea_comb_test"
       ],
-      "feedback": "Аллергическая реакция возможна, но в этом варианте преобладает обычная инвазия без выраженной аллергической картины.",
+      "feedback": "Выраженный зуд и локализация расчёсов допускают аллергический компонент, но не подтверждают его.",
+      "decisionAssessment": "acceptable",
+      "supportingEvidence": [
+        "Выраженный зуд.",
+        "Расчёсы в области поясницы и основания хвоста."
+      ],
+      "missingEvidence": [
+        "Аллергический компонент пока не подтверждён."
+      ],
+      "uncertainEvidence": [],
       "isCorrectForTemplate": false,
       "isUnsafeChoice": false
     },
@@ -568,6 +586,15 @@
         "skin_exam"
       ],
       "feedback": "Найденные блохи дают более прямое объяснение текущего зуда.",
+      "decisionAssessment": "insufficient",
+      "supportingEvidence": [],
+      "missingEvidence": [
+        "Данных, подтверждающих пищевую аллергию, не получено."
+      ],
+      "contradictingEvidence": [
+        "Живые блохи и блошиные загрязнения непосредственно подтверждают блошиную инвазию."
+      ],
+      "uncertainEvidence": [],
       "isCorrectForTemplate": false,
       "isUnsafeChoice": false
     },
@@ -579,7 +606,16 @@
         "general_exam",
         "skin_exam"
       ],
-      "feedback": "Нет характерной жирности, запаха и цитологического подтверждения грибкового поражения.",
+      "feedback": "Исследований, подтверждающих грибковое поражение, не проводилось.",
+      "decisionAssessment": "insufficient",
+      "supportingEvidence": [],
+      "missingEvidence": [
+        "Цитологическое исследование кожи не проводилось."
+      ],
+      "contradictingEvidence": [
+        "Живые блохи и блошиные загрязнения непосредственно подтверждают блошиную инвазию."
+      ],
+      "uncertainEvidence": [],
       "isCorrectForTemplate": false,
       "isUnsafeChoice": false
     }

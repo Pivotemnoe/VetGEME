@@ -39,6 +39,9 @@
     {
       "id": "complaint_2",
       "source": "initial_complaint",
+      "species": [
+        "cat"
+      ],
       "text": "«Кошка зацепилась за острый предмет, теперь лижет небольшой порез»."
     },
     {
