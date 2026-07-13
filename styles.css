@@ -217,6 +217,7 @@ button:disabled { cursor: not-allowed; opacity: .5; filter: saturate(.45); }
   line-height: 1.3;
 }
 .tutorial-guide strong { font-size: 14px; }
+.tutorial-result { padding-top: 4px; border-top: 1px solid #b49a45; color: #31576f; font-weight: 700; }
 .case-actions button.tutorial-focus { outline: 4px solid #ffd65a; outline-offset: -4px; }
 
 .case-workspace {
@@ -245,9 +246,10 @@ button:disabled { cursor: not-allowed; opacity: .5; filter: saturate(.45); }
 
 .clinical-column { display: grid; grid-template-rows: auto 1fr; gap: 7px; overflow: hidden; background: #f6fbfd; }
 .clinical-column:has(.tutorial-guide:not(.hidden)) { grid-template-rows: auto auto minmax(0, 1fr); }
-.clinical-split { display: grid; grid-template-columns: minmax(150px,.72fr) minmax(210px,1.28fr); gap: 7px; min-height: 0; }
+.clinical-record { display: grid; grid-template-columns: repeat(2, minmax(210px, 1fr)); gap: 7px; min-height: 0; overflow: auto; align-content: start; }
 .clinical-block { min-height: 0; overflow: auto; padding: 7px 8px; border: 1px solid #9cb3c0; background: #fff; }
 .clinical-block h2, .owner-column h2 { margin: 0 0 7px; color: var(--blue-900); font-size: 14px; }
+.clinical-block h3 { margin: 9px 0 5px; color: #536778; font-size: 11px; }
 .clinical-block p, .clinical-block ul { margin: 0; font-size: 13px; line-height: 1.4; }
 .clinical-block ul { padding-left: 16px; }
 .unknown-block { background: #f5f8fa; color: #526577; }
@@ -261,7 +263,7 @@ button:disabled { cursor: not-allowed; opacity: .5; filter: saturate(.45); }
 
 .case-actions {
   display: grid;
-  grid-template-columns: repeat(8, minmax(0,1fr));
+  grid-template-columns: repeat(9, minmax(0,1fr));
   gap: 5px;
   height: 84px;
   padding: 7px;
@@ -272,6 +274,7 @@ button:disabled { cursor: not-allowed; opacity: .5; filter: saturate(.45); }
 .case-actions button span, .case-actions button small { display: block; }
 .case-actions button span { font-size: 12px; }
 .case-actions button small { margin-top: 4px; color: #36546b; font-size: 10px; font-weight: 400; }
+.case-window:not(.staged-completion) .case-actions { grid-template-columns: repeat(8, minmax(0, 1fr)); }
 button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, #b98310); }
 
 .choice-window { position: absolute; z-index: 20; right: 242px; top: 76px; width: min(410px, calc(100vw - 260px)); max-height: calc(100vh - 210px); border: 4px solid var(--line); background: linear-gradient(#41bddb, #1489b5); padding: 10px; box-shadow: 0 8px 0 rgba(8,21,34,.42); }
@@ -381,7 +384,8 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
   .case-workspace { grid-template-columns: 150px 92px minmax(0,1fr); height: calc(100% - 172px); }
   .patient-column, .stage-tabs, .clinical-column { padding: 6px; }
   .owner-column { display: none; }
-  .case-actions { grid-template-columns: repeat(4,minmax(0,1fr)); height: 116px; }
+  .case-actions { grid-template-columns: repeat(5,minmax(0,1fr)); height: 116px; }
+  .case-window:not(.staged-completion) .case-actions { grid-template-columns: repeat(4,minmax(0,1fr)); }
   .choice-window { right: 14px; width: min(410px,calc(100vw - 28px)); }
   .bottom-hud { grid-template-columns: 150px 110px 140px 140px 125px minmax(170px,1fr) 40px; gap: 5px; }
   .queue-summary { display: none; }

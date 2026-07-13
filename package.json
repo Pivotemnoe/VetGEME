@@ -11,6 +11,7 @@
     "test:save-isolation": "node scripts/test-save-isolation.js",
     "test:game-state-save": "node scripts/test-game-state-save.js",
     "test:multi-diagnosis-v2": "node scripts/test-multi-diagnosis-v2.js",
+    "test:clinical-visit": "node scripts/test-clinical-visit-state.js",
     "validate:tier-01-content": "node scripts/validate-tier-01-content.mjs",
     "validate:tier-01-v2": "node tier-01-v2/scripts/validate-tier-01-content-v2.mjs"
   }

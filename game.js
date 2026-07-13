@@ -15,6 +15,7 @@
   const CLINIC_VIEW = { x: 28, y: 42, scale: 0.88 };
   let campaign = window.PET_CLINIC_CAMPAIGN;
   let generatorRuntime = { mode: "current", catalog: null, generator: null };
+  const visitState = window.PET_CLINIC_VISIT_STATE;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
 
@@ -867,6 +868,7 @@
       Object.assign(state, snapshot.state);
       state.queue = Array.isArray(state.queue) ? state.queue : [];
       state.queue.forEach((patient) => {
+        normalizeVisitPatient(patient);
         patient.selectedDiagnosisIds = Array.isArray(patient.selectedDiagnosisIds)
           ? patient.selectedDiagnosisIds
           : patient.selectedDiagnosisId ? [patient.selectedDiagnosisId] : [];
@@ -908,8 +910,13 @@
     caseDuration: document.getElementById("caseDuration"),
     closeCaseBtn: document.getElementById("closeCaseBtn"),
     ownerComplaint: document.getElementById("ownerComplaint"),
-    findingsList: document.getElementById("findingsList"),
     unknownList: document.getElementById("unknownList"),
+    optionalUnknownList: document.getElementById("optionalUnknownList"),
+    historyList: document.getElementById("historyList"),
+    examList: document.getElementById("examList"),
+    testList: document.getElementById("testList"),
+    assessmentList: document.getElementById("assessmentList"),
+    planList: document.getElementById("planList"),
     patientFacts: document.getElementById("patientFacts"),
     stressMeter: document.getElementById("stressMeter"),
     trustMeter: document.getElementById("trustMeter"),
@@ -928,6 +935,7 @@
     diagnosisBtn: document.getElementById("diagnosisBtn"),
     communicationBtn: document.getElementById("communicationBtn"),
     treatmentBtn: document.getElementById("treatmentBtn"),
+    finishVisitBtn: document.getElementById("finishVisitBtn"),
     choiceWindow: document.getElementById("choiceWindow"),
     choiceKicker: document.getElementById("choiceKicker"),
     choiceTitle: document.getElementById("choiceTitle"),
@@ -974,7 +982,8 @@
     devFinishDayBtn: document.getElementById("devFinishDayBtn"),
     tutorialGuide: document.getElementById("tutorialGuide"),
     tutorialTitle: document.getElementById("tutorialTitle"),
-    tutorialText: document.getElementById("tutorialText")
+    tutorialText: document.getElementById("tutorialText"),
+    tutorialResult: document.getElementById("tutorialResult")
   };
 
   function outcome(quality, returnRisk, note) {
@@ -1044,6 +1053,95 @@
     return state.queue.find((patient) => patient.id === state.activeId) || null;
   }
 
+  function normalizeVisitPatient(patient) {
+    if (!patient || !visitState) return patient;
+    const needsClinicalRecord = !patient.clinicalRecord;
+    const inConsultation = patient.id === state.activeId
+      && (patient.motion === "inCabinet" || patient.motion === "toCabinet");
+    visitState.normalizePatient(patient, { inConsultation });
+    if (needsClinicalRecord) rebuildClinicalRecord(patient);
+    return patient;
+  }
+
+  function rebuildClinicalRecord(patient) {
+    const disease = diseaseFor(patient);
+    disease.anamnesis(patient)
+      .filter((question) => patient.asked?.[question.id])
+      .forEach((question) => recordClinical(patient, "history", question.answer));
+    if (patient.generalExamDone) {
+      recordClinical(patient, "physicalExam", patient.v2Visit
+        ? patient.v2Visit.medicalContent.generalExam.findings.map((item) => item.text)
+        : [disease.temperature(patient), disease.mucous(patient)]);
+      assessClinicalUrgency(patient);
+    }
+    if (patient.localUsed > 0) {
+      recordClinical(patient, "physicalExam", patient.v2Visit
+        ? patient.v2Visit.medicalContent.targetExam.findings.map((item) => item.text)
+        : Object.keys(patient.localDone || {}).map((id) => {
+          const finding = disease.local[id];
+          return typeof finding === "function" ? finding(patient) : finding;
+        }).filter(Boolean));
+    }
+    if (patient.sampleTaken) {
+      recordClinical(patient, "diagnosticTests", patient.v2Visit
+        ? window.PET_CLINIC_GAME_ADAPTER_V2.sampleResultFor(patient)
+        : "Материал для исследования взят и промаркирован.");
+    }
+    if (patient.microscopyDone) recordClinical(patient, "diagnosticTests", disease.microscopy(patient));
+    if (patient.selectedDiagnosisId) {
+      recordClinical(patient, "clinicalInterpretation", `Основной диагноз: ${diagnosisLabel(patient.selectedDiagnosisId)}.`);
+    }
+    if (patient.selectedCommunicationId) {
+      recordClinical(patient, "carePlan", patient.v2Visit
+        ? patient.v2Visit.medicalContent.ownerExplanation.plan
+        : communicationLabel(patient.selectedCommunicationId));
+    }
+  }
+
+  function waitingPatients() {
+    return visitState ? visitState.waitingPatients(state.queue) : state.queue.slice();
+  }
+
+  function recordClinical(patient, section, value) {
+    if (visitState) visitState.record(patient, section, value);
+  }
+
+  function clinicalAssessmentFor(patient) {
+    const severity = patient.v2Visit?.medicalContent?.severity || patient.urgency;
+    if (severity === "emergency") return "emergency";
+    if (severity === "urgent") return "urgent";
+    if (severity === "priority") return "priority";
+    return "routine";
+  }
+
+  function assessClinicalUrgency(patient) {
+    if (!patient?.generalExamDone || !visitState) return;
+    const urgency = visitState.assessUrgency(patient, clinicalAssessmentFor(patient));
+    patient.selectedUrgency = urgency === "urgent" || urgency === "emergency" ? "urgent" : "routine";
+  }
+
+  function clinicalUrgencyLabel(patient) {
+    const labels = {
+      not_assessed: "не оценена",
+      routine: "обычная",
+      priority: "приоритетная",
+      urgent: "срочная",
+      emergency: "экстренная"
+    };
+    return labels[patient.clinicalUrgency || "not_assessed"];
+  }
+
+  function patientStateLabel(patient) {
+    const labels = {
+      requires_assessment: "требует оценки",
+      stable: "стабильное",
+      requires_attention: "требует внимания",
+      urgent: "требует срочной помощи",
+      critical: "критическое"
+    };
+    return labels[patient.patientState || "requires_assessment"];
+  }
+
   function tutorialDefinition() {
     return isTier01V2() ? generatorRuntime.catalog.tutorial : null;
   }
@@ -1054,6 +1152,18 @@
 
   function currentTutorialStep() {
     return tutorialDefinition()?.steps[state.tutorialStepIndex] || null;
+  }
+
+  function tutorialStepCopy(patient, step) {
+    if (!step) return null;
+    if (step.id === "sample") {
+      const action = patient.v2Visit?.medicalContent?.sampleActions?.[0];
+      return {
+        title: action?.label || "Возьмите материал",
+        text: "Осмотр показывает, какие изменения есть, но не всегда позволяет определить их причину. Выполните предусмотренное случаем действие."
+      };
+    }
+    return { title: step.title, text: step.text };
   }
 
   function activateTutorial(patient) {
@@ -1077,13 +1187,16 @@
       diagnostic_test: ["diagnostic_test"],
       preliminary_diagnosis: ["preliminary_diagnosis"],
       explanation: ["explanation"],
-      plan: ["plan", "finish"]
+      plan: ["plan"],
+      finish: ["finish"]
     };
     return (map[action] || []).some((id) => step.enabledActions.includes(id));
   }
 
-  function advanceTutorial(expectedStepId) {
+  function advanceTutorial(expectedStepId, result = "") {
     if (currentTutorialStep()?.id !== expectedStepId) return;
+    const patient = activePatient();
+    if (patient && result) patient.tutorialResult = result;
     state.tutorialStepIndex += 1;
     renderCase();
   }
@@ -1147,7 +1260,7 @@
 
   function maxAllowedSpeed() {
     if (state.day === 1 && state.treatedToday === 0) return 1;
-    if (state.day <= campaignDayCount() && state.queue.length > 0) return 2;
+    if (state.day <= campaignDayCount() && waitingPatients().length > 0) return 2;
     return 4;
   }
 
@@ -1188,7 +1301,7 @@
   }
 
   function isPatientInConsult(patient) {
-    return Boolean(patient && patient.id === state.activeId && !el.caseWindow.classList.contains("hidden"));
+    return Boolean(patient && patient.flowState === "in_consultation");
   }
 
   function isReadingInterfaceOpen() {
@@ -1291,6 +1404,9 @@
       ownerLead: overrides.ownerLead || "",
       urgency: overrides.urgency || "routine",
       selectedUrgency: null,
+      clinicalUrgency: "not_assessed",
+      patientState: "requires_assessment",
+      flowState: "waiting",
       age: 0,
       patience: clamp(30 + profile.visitLimit * 0.35 + (Math.random() - 0.5) * 8, 34, 58),
       mood: 100,
@@ -1304,6 +1420,7 @@
       dxPoints: 0,
       localUsed: 0,
       findings: [],
+      clinicalRecord: visitState.createClinicalRecord(),
       asked: {},
       localDone: {},
       generalExamDone: false,
@@ -1317,6 +1434,12 @@
         ? [...overrides.v2Visit.selectedDiagnosisIds]
         : [],
       selectedCommunicationId: null,
+      explanationDone: false,
+      selectedTreatmentId: null,
+      selectedTreatment: null,
+      carePlanAgreed: false,
+      controlGoalCredited: false,
+      tutorialResult: "",
       returnVisit: Boolean(isReturn || overrides.returnVisit),
       eventLabel: overrides.eventLabel || "",
       bookingLabel: overrides.bookingLabel || disease.short,
@@ -1334,6 +1457,7 @@
     patient.findings.push(isReturn
       ? "Повторное обращение: владелец говорит, что прошлое лечение не помогло."
       : `Жалобы владельца: ${complaints.join(", ")}.`);
+    normalizeVisitPatient(patient);
     return patient;
   }
 
@@ -1399,7 +1523,7 @@
     if (state.day <= campaignDayCount()) {
       while (state.arrivalSchedule.length && state.arrivalSchedule[0].minute <= state.minute) {
         const plan = currentPlan();
-        if (plan && state.queue.length >= plan.maxWaiting) break;
+        if (plan && waitingPatients().length >= plan.maxWaiting) break;
         const arrival = state.arrivalSchedule.shift();
         const template = arrival.template || {};
         spawnPatient(arrival.diseaseId || template.diseaseId, Boolean(template.returnVisit), template);
@@ -1416,8 +1540,11 @@
   function removeLostPatients() {
     const before = state.queue.length;
     state.queue = state.queue.filter((patient) => {
-      const lost = !patient.protectedFromLeaving && patient.age > patient.patience;
+      const lost = visitState.WAITING_STATES.has(patient.flowState || "waiting")
+        && !patient.protectedFromLeaving
+        && patient.age > patient.patience;
       if (lost) {
+        patient.flowState = "left";
         changeReputation(-3, "владелец ушел из очереди");
         state.lostToday += 1;
         state.goalStats.noLost = 0;
@@ -1444,9 +1571,12 @@
     if (question.id === "medications" && patient.flags.oldDrops) incrementGoal("hiddenFact");
     patient.dxPoints += 1;
     patient.findings.push(question.answer);
+    recordClinical(patient, "history", question.answer);
     if (tutorialPatient(patient) && currentTutorialStep()?.id === "history") {
       const required = patient.v2Visit.medicalContent.historyQuestions.filter((item) => item.required);
-      if (required.every((item) => patient.asked[item.id])) advanceTutorial("history");
+      if (required.every((item) => patient.asked[item.id])) {
+        advanceTutorial("history", "Обязательные сведения анамнеза уточнены.");
+      }
     }
     setLog("Анамнез собран: +1 диагностическое очко.");
     passTime(question.id === "budget" ? 1 : 2);
@@ -1460,10 +1590,15 @@
     patient.mucousDone = true;
     patient.dxPoints += 2;
     patient.stress = clamp(patient.stress + 6, 0, 100);
-    patient.findings.push(`Общий осмотр: ${diseaseFor(patient).temperature(patient)} ${diseaseFor(patient).mucous(patient)}`);
+    const findings = patient.v2Visit
+      ? patient.v2Visit.medicalContent.generalExam.findings.map((item) => item.text)
+      : [diseaseFor(patient).temperature(patient), diseaseFor(patient).mucous(patient)];
+    patient.findings.push(`Общий осмотр: ${findings.join(" ")}`);
+    recordClinical(patient, "physicalExam", findings);
+    assessClinicalUrgency(patient);
     setLog("Проведен общий осмотр: состояние, температура, слизистые и дыхание.");
     creditCompleteExam(patient);
-    if (tutorialPatient(patient)) advanceTutorial("general_exam");
+    if (tutorialPatient(patient)) advanceTutorial("general_exam", `Общее состояние оценено. Срочность: ${clinicalUrgencyLabel(patient)}.`);
     passTime(3);
   }
 
@@ -1472,7 +1607,9 @@
     if (!patient || patient.temperatureDone) return;
     patient.temperatureDone = true;
     patient.dxPoints += 1;
-    patient.findings.push(diseaseFor(patient).temperature(patient));
+    const result = diseaseFor(patient).temperature(patient);
+    patient.findings.push(result);
+    recordClinical(patient, "physicalExam", result);
     setLog("Температура измерена: +1 диагностическое очко.");
     passTime(6);
   }
@@ -1482,7 +1619,9 @@
     if (!patient || patient.mucousDone) return;
     patient.mucousDone = true;
     patient.dxPoints += 1;
-    patient.findings.push(diseaseFor(patient).mucous(patient));
+    const result = diseaseFor(patient).mucous(patient);
+    patient.findings.push(result);
+    recordClinical(patient, "physicalExam", result);
     setLog("Слизистые осмотрены: +1 диагностическое очко.");
     passTime(5);
   }
@@ -1496,12 +1635,18 @@
     patient.localUsed += 1;
     patient.dxPoints += 1;
     patient.stress = clamp(patient.stress + 5, 0, 100);
-    patient.findings.push(typeof result === "function" ? result(patient) : result);
+    const resultText = typeof result === "function" ? result(patient) : result;
+    const resultItems = patient.v2Visit
+      ? patient.v2Visit.medicalContent.targetExam.findings.map((item) => item.text)
+      : [resultText];
+    patient.findings.push(resultText);
+    recordClinical(patient, "physicalExam", resultItems);
+    assessClinicalUrgency(patient);
     incrementGoal("targetExam");
     setLog(`Локальный осмотр: ${option.label}.`);
     closeChoice();
     creditCompleteExam(patient);
-    if (tutorialPatient(patient)) advanceTutorial("target_exam");
+    if (tutorialPatient(patient)) advanceTutorial("target_exam", `${option.label} выполнен: объективные признаки добавлены в карту случая.`);
     passTime(option.time);
   }
 
@@ -1520,9 +1665,11 @@
     const approvedResult = patient.v2Visit
       ? window.PET_CLINIC_GAME_ADAPTER_V2.sampleResultFor(patient)
       : null;
-    patient.findings.push(approvedResult || "Материал для микроскопии взят и промаркирован.");
+    const result = approvedResult || "Материал для микроскопии взят и промаркирован.";
+    patient.findings.push(result);
+    recordClinical(patient, "diagnosticTests", result);
     setLog("Взят материал для исследования.");
-    if (tutorialPatient(patient)) advanceTutorial("sample");
+    if (tutorialPatient(patient)) advanceTutorial("sample", result);
     passTime(2);
   }
 
@@ -1545,14 +1692,17 @@
     const testMinutes = approvedTest?.durationMinutes ?? 7;
     patient.dxPoints -= MICROSCOPY_COST;
     patient.microscopyDone = true;
-    patient.findings.push(`${diseaseFor(patient).microscopy(patient)} Стоимость исследования: ${testFee} V.`);
+    const result = diseaseFor(patient).microscopy(patient);
+    patient.findings.push(`${result} Стоимость исследования: ${testFee} V.`);
+    recordClinical(patient, "diagnosticTests", result);
+    assessClinicalUrgency(patient);
     state.money += testFee;
     state.revenueToday += testFee;
     state.diagnosticRevenueToday += testFee;
     state.microscopyToday += 1;
     startDoctorLabTrip();
     setLog(`Исследование выполнено и оплачено: +${testFee} V.`);
-    if (tutorialPatient(patient)) advanceTutorial("test");
+    if (tutorialPatient(patient)) advanceTutorial("test", `${approvedTest?.label || "Исследование"}: результат получен.`);
     passTime(testMinutes);
   }
 
@@ -1585,9 +1735,10 @@
     if (patient.v2Visit) patient.v2Visit.selectedDiagnosisIds = [...selected];
     const slotLabel = selected.length === 1 ? "Основной диагноз" : "Дополнительный диагноз или осложнение";
     patient.findings.push(`${slotLabel}: ${diagnosis.label}.`);
-    setLog(`Выбран диагноз: ${diagnosis.label}.${schema.diagnosisMode === "multiple" && selected.length < 2 ? " Второй слот остается необязательным." : " Теперь можно назначать лечение."}`);
+    recordClinical(patient, "clinicalInterpretation", `${slotLabel}: ${diagnosis.label}.`);
+    setLog(`Предварительный диагноз сформулирован: ${diagnosis.label}. Теперь объясните владельцу результат и дальнейшие действия.`);
     closeChoice();
-    if (tutorialPatient(patient)) advanceTutorial("preliminary_diagnosis");
+    if (tutorialPatient(patient)) advanceTutorial("preliminary_diagnosis", `Предварительный диагноз: ${diagnosis.label}.`);
     passTime(3);
   }
 
@@ -1595,7 +1746,11 @@
     const patient = activePatient();
     if (!patient) return;
     patient.selectedCommunicationId = option.id;
-    patient.findings.push(`Объяснение владельцу: ${option.label}.`);
+    patient.explanationDone = true;
+    const explanation = patient.v2Visit
+      ? `${patient.v2Visit.medicalContent.ownerExplanation.known} ${patient.v2Visit.medicalContent.ownerExplanation.uncertain}`
+      : option.note;
+    recordClinical(patient, "carePlan", `Результат объяснён владельцу: ${explanation}`);
     const preferred = option.id === patient.ownerProfile.prefers;
     let trustDelta = preferred ? 8 : 2;
     if (option.id === "strict" && patient.ownerProfile.id === "anxious") trustDelta = -4;
@@ -1605,10 +1760,55 @@
     if (preferred) adjustOwnerState(patient, -10, -8);
     else adjustOwnerState(patient, 3, 6);
     incrementGoal("explained");
-    setLog(`План объяснен: ${option.label.toLowerCase()}. Реакция владельца отражена в шкале доверия.`);
+    setLog("Результат объяснен владельцу. Реакция отражена в шкале доверия.");
     closeChoice();
-    if (tutorialPatient(patient)) advanceTutorial("explanation");
+    if (tutorialPatient(patient)) advanceTutorial("explanation", "Подтверждённые данные и оставшаяся неопределённость объяснены владельцу.");
     passTime(4);
+  }
+
+  function planTypeFor(treatment) {
+    const value = `${treatment.id} ${treatment.label}`.toLowerCase();
+    if (/refer|направ|urgentreferral/.test(value)) return "referral";
+    if (/stabili|стабилиз/.test(value)) return "stabilization";
+    if (/monitor|наблюд/.test(value)) return "monitoring";
+    if (/recheck|контрол|повтор/.test(value)) return "recheck";
+    if (/refusal|отказ/.test(value)) return "owner_refusal";
+    return "treatment";
+  }
+
+  function selectCarePlan(treatment) {
+    const patient = activePatient();
+    if (!patient) return;
+    patient.selectedTreatmentId = treatment.id;
+    patient.selectedTreatment = { ...treatment, planType: planTypeFor(treatment) };
+    patient.carePlanAgreed = true;
+    const planText = patient.v2Visit
+      ? patient.v2Visit.medicalContent.planOptions.find((plan) => plan.id === treatment.id)
+      : null;
+    recordClinical(patient, "carePlan", [
+      `Согласованный план: ${treatment.label}.`,
+      ...(planText?.steps || []),
+      planText?.followUp?.text || ""
+    ]);
+    incrementGoal("dischargePlan");
+    if (planText?.followUp?.text && !patient.controlGoalCredited) {
+      patient.controlGoalCredited = true;
+      incrementGoal("include_control_in_discharge");
+    }
+    closeChoice();
+    setLog("План помощи согласован. Приём можно завершить после оформления выписки.");
+    if (tutorialPatient(patient)) advanceTutorial("plan", `План помощи согласован: ${treatment.label}.`);
+    passTime(2);
+  }
+
+  function finishVisit() {
+    const patient = activePatient();
+    if (!patient?.selectedTreatment) {
+      setLog("Сначала согласуйте с владельцем план помощи.");
+      openTreatment();
+      return;
+    }
+    treatPatient(patient.selectedTreatment);
   }
 
   function treatPatient(treatment) {
@@ -1616,7 +1816,6 @@
     if (!patient) return;
     const disease = diseaseFor(patient);
     const guidedVisit = tutorialPatient(patient);
-    if (guidedVisit) advanceTutorial("plan");
     const result = disease.evaluate(patient, treatment.id);
     const diagnosisCorrect = patient.selectedDiagnosisId === patient.diseaseId;
     const diagnosticsScore = diagnosticScore(patient);
@@ -1626,9 +1825,7 @@
     state.money += total;
     state.revenueToday += total;
     state.treatedToday += 1;
-    if (patient.selectedCommunicationId) incrementGoal("dischargePlan");
     if (patient.eventLabel) state.handledSpecialEventsToday += 1;
-    incrementGoal("treated");
     if (patient.returnVisit) incrementGoal("returns");
     let reputationChange = 0;
     let risk = result.returnRisk;
@@ -1719,6 +1916,7 @@
       trueDiagnosis: disease.name,
       selectedDiagnosis: diagnosisLabel(patient.selectedDiagnosisId) || "не выбран",
       treatment: treatment.label,
+      planType: treatment.planType || planTypeFor(treatment),
       communication: communicationLabel(patient.selectedCommunicationId) || "без объяснения",
       visitTime: patient.visitTimeUsed,
       trust: patient.trust,
@@ -1727,21 +1925,26 @@
       followUpRequested: Boolean(patient.v2Visit?.medicalContent.planOptions.find((plan) => plan.id === treatment.id)?.followUp)
     });
 
+    const completionGoals = ["treated"];
+    if (isFullVisit(patient)) completionGoals.push("complete_two_full_visits");
+    if (guidedVisit) completionGoals.push("finish_guided_visit");
+    visitState.incrementCompatibleGoals(state.goalStats, completionGoals);
+
     if (guidedVisit) {
-      advanceTutorial("finish");
+      advanceTutorial("finish", "Приём завершён. Случай сохранён в журнале клиники.");
       state.tutorialComplete = true;
-      incrementGoal("finish_guided_visit");
     }
 
-    setLog(`${patient.animal}: лечение назначено. Результат станет понятен после наблюдения или повторного обращения.`);
+    setLog(`${patient.animal}: приём завершён. Результат станет понятен после наблюдения или повторного обращения.`);
     patient.motion = "leaving";
+    visitState.markCompleted(patient);
     patient.routeIndex = 0;
     patient.route = [[420, 280], [500, 315], [500, 360], [760, 360], [760, 410], [932, 570], [932, 675]];
     state.departures.push(patient);
     state.queue = state.queue.filter((item) => item.id !== patient.id);
-    state.activeId = state.queue[0] ? state.queue[0].id : null;
+    state.activeId = null;
     closeChoice();
-    if (!state.activeId) el.caseWindow.classList.add("hidden");
+    el.caseWindow.classList.add("hidden");
     passTime(12, { trackVisit: false });
   }
 
@@ -1752,6 +1955,20 @@
     if (patient.localUsed > 0) score += 12 * patient.localUsed;
     if (patient.microscopyDone) score += patient.diseaseId.includes("Otitis") ? 18 : 4;
     return clamp(score, 0, 100);
+  }
+
+  function isFullVisit(patient) {
+    const requiredHistoryComplete = patient.v2Visit
+      ? patient.v2Visit.medicalContent.historyQuestions
+        .filter((question) => question.required)
+        .every((question) => patient.asked[question.id])
+      : Object.keys(patient.asked).length > 0;
+    return requiredHistoryComplete
+      && patient.generalExamDone
+      && patient.localUsed > 0
+      && Boolean(patient.selectedDiagnosisId)
+      && patient.explanationDone
+      && patient.carePlanAgreed;
   }
 
   function correctTreatmentId(patient) {
@@ -1772,7 +1989,15 @@
   function debugResolveActivePatient() {
     const patient = activePatient();
     if (!patient) return;
+    visitState.markInConsultation(patient);
     el.caseWindow.classList.remove("hidden");
+    if (tutorialPatient(patient) && currentTutorialStep()?.id === "intro") openAnamnesis();
+    if (patient.v2Visit) {
+      const questions = diseaseFor(patient).anamnesis(patient);
+      patient.v2Visit.medicalContent.historyQuestions
+        .filter((question) => question.required && !patient.asked[question.id])
+        .forEach((question) => askQuestion(patient, questions.find((item) => item.id === question.id)));
+    }
     if (!patient.selectedUrgency) selectUrgency(patient.urgency);
     if (!patient.generalExamDone) doGeneralExam();
     if (patient.localUsed === 0) {
@@ -1800,7 +2025,8 @@
     const treatment = patient.v2Visit
       ? window.PET_CLINIC_GAME_ADAPTER_V2.treatmentOptionsFor(patient).find((item) => item.id === correctTreatmentId(patient))
       : treatmentOptions.find((item) => item.id === correctTreatmentId(patient));
-    treatPatient(treatment);
+    selectCarePlan(treatment);
+    finishVisit();
   }
 
   function debugFinishDay() {
@@ -2116,8 +2342,13 @@
   }
 
   function openCase(patientId) {
+    const previous = activePatient();
+    if (previous && previous.id !== patientId && previous.flowState === "in_consultation") {
+      visitState.markWaiting(previous);
+    }
     state.activeId = patientId;
     const patient = activePatient();
+    if (patient) visitState.markInConsultation(patient);
     if (patient) activateTutorial(patient);
     if (patient && patient.motion !== "inCabinet") {
       patient.motion = "toCabinet";
@@ -2127,6 +2358,7 @@
     el.caseWindow.classList.remove("hidden");
     closeChoice();
     renderAll();
+    persistGameState(true);
   }
 
   function openChoice(kicker, title, items) {
@@ -2161,9 +2393,18 @@
     const budgetQuestion = {
       id: "budget",
       label: "Есть ограничения по бюджету?",
-      answer: `Владелец просит по возможности уложиться примерно в ${Math.max(100, Math.floor((patient.budget - 60) / 50) * 50)}–${Math.ceil((patient.budget + 60) / 50) * 50} веткоинов.`
+      answer: `Владелец просит по возможности уложиться примерно в ${Math.max(100, Math.floor((patient.budget - 60) / 50) * 50)}–${Math.ceil((patient.budget + 60) / 50) * 50} веткоинов.`,
+      requiredForSafeDecision: false,
+      optional: true
     };
-    const anamnesisQuestions = disease.anamnesis(patient);
+    const anamnesisQuestions = disease.anamnesis(patient).map((question) => {
+      const sourceQuestion = patient.v2Visit?.medicalContent.historyQuestions.find((item) => item.id === question.id);
+      return {
+        ...question,
+        requiredForSafeDecision: patient.v2Visit ? Boolean(sourceQuestion?.required) : true,
+        optional: patient.v2Visit ? !sourceQuestion?.required : false
+      };
+    });
     const availableQuestions = tutorialPatient(patient) && currentTutorialStep()?.id === "history"
       ? anamnesisQuestions.filter((question) => patient.v2Visit.medicalContent.historyQuestions.find((item) => item.id === question.id)?.required)
       : [...anamnesisQuestions, budgetQuestion];
@@ -2220,6 +2461,7 @@
     if (!patient) return;
     patient.selectedUrgency = value;
     patient.findings.push(`Триаж: установлена ${value === "urgent" ? "высокая" : "обычная"} срочность.`);
+    recordClinical(patient, "clinicalInterpretation", `Срочность: ${value === "urgent" ? "срочная" : "обычная"}.`);
     closeChoice();
     setLog(`Срочность пациента ${patient.animal} определена.`);
     passTime(1);
@@ -2257,6 +2499,10 @@
   function openCommunication() {
     const patient = activePatient();
     if (!patient) return;
+    if (!patient.selectedDiagnosisId) {
+      setLog("Сначала сформулируйте предварительный диагноз.");
+      return;
+    }
     const items = communicationOptions.map((option) => ({
       label: option.label,
       note: patient.selectedCommunicationId === option.id
@@ -2264,7 +2510,7 @@
         : `${option.note} Потратит 4 минуты приема.`,
       onClick: () => selectCommunication(option)
     }));
-    openChoice("Объяснение", "Как объяснить владельцу план?", items);
+    openChoice("Объяснение", "Как объяснить владельцу результат?", items);
   }
 
   function openTreatment() {
@@ -2273,6 +2519,11 @@
     if (!patient.selectedDiagnosisId) {
       setLog("Сначала выберите предварительный диагноз из списка.");
       openDiagnosis();
+      return;
+    }
+    if (patient.v2Visit && !patient.explanationDone) {
+      setLog("Сначала объясните владельцу результат и дальнейшие действия.");
+      openCommunication();
       return;
     }
     const availableTreatments = patient.v2Visit
@@ -2285,34 +2536,37 @@
           ? "Выше обсужденного бюджета."
           : "В обсужденный бюджет помещается."
         : "Бюджет владельца не обсуждался."}`,
-      onClick: () => treatPatient(treatment)
+      onClick: () => patient.v2Visit ? selectCarePlan(treatment) : treatPatient(treatment)
     }));
-    openChoice("Лечение", "Назначение владельцу", items);
+    openChoice(patient.v2Visit ? "План помощи" : "Лечение", patient.v2Visit ? "Что согласовать с владельцем?" : "Назначение владельцу", items);
   }
 
   function cyclePatient() {
-    if (!state.queue.length) return;
-    const currentIndex = state.queue.findIndex((patient) => patient.id === state.activeId);
-    const next = state.queue[(currentIndex + 1 + state.queue.length) % state.queue.length];
+    const waiting = waitingPatients();
+    if (!waiting.length) return;
+    const currentIndex = waiting.findIndex((patient) => patient.id === state.activeId);
+    const next = waiting[(currentIndex + 1 + waiting.length) % waiting.length];
     openCase(next.id);
   }
 
   function renderQueue() {
     el.nextPatientCard.textContent = "";
     el.queueStrip.textContent = "";
+    const waiting = waitingPatients();
+    const inConsultation = state.queue.filter((patient) => patient.flowState === "in_consultation").length;
     el.queueCountLabel.textContent = state.dayStarted
-      ? `${state.queue.length} ждут · ${state.arrivalsToday}/${state.plannedArrivalsToday} пришло`
-      : `${state.queue.length} ждут · ${state.arrivalsToday} пришло`;
+      ? `${waiting.length} ждут · ${inConsultation} в кабинете`
+      : `${waiting.length} ждут · ${state.arrivalsToday} пришло`;
     if (!state.dayStarted) {
       el.queueForecast.textContent = state.arrivalsToday > 0
         ? `Дневной поток завершен: ${state.arrivalsToday} из ${state.plannedArrivalsToday} пришло`
         : "Поток появится после открытия клиники";
     } else if (state.arrivalSchedule.length) {
-      el.queueForecast.textContent = `Еще ожидается: ${state.arrivalSchedule.length} · следующий около ${formatTime(state.arrivalSchedule[0].minute)}`;
+      el.queueForecast.textContent = `${state.arrivalsToday}/${state.plannedArrivalsToday} пришло · ещё ${state.arrivalSchedule.length} · следующий около ${formatTime(state.arrivalSchedule[0].minute)}`;
     } else {
-      el.queueForecast.textContent = "Все запланированные пациенты уже пришли";
+      el.queueForecast.textContent = `${state.arrivalsToday}/${state.plannedArrivalsToday} пришло · все запланированные пациенты уже здесь`;
     }
-    state.queue.forEach((patient, index) => {
+    waiting.forEach((patient, index) => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = `queue-card${patient.id === state.activeId ? " active" : ""}`;
@@ -2355,11 +2609,11 @@
       el.queueStrip.appendChild(button);
     });
     const nextButton = el.nextPatientCard.querySelector(".queue-card");
-    if (nextButton && state.queue[0]) nextButton.addEventListener("click", () => openCase(state.queue[0].id));
-    if (!state.queue.length) {
+    if (nextButton && waiting[0]) nextButton.addEventListener("click", () => openCase(waiting[0].id));
+    if (!waiting.length) {
       const empty = document.createElement("div");
       empty.className = "queue-locked";
-      empty.textContent = "Очередь пуста";
+      empty.textContent = inConsultation ? "Следующий пациент пока не ожидает" : "Очередь пуста";
       el.nextPatientCard.appendChild(empty);
     }
   }
@@ -2376,6 +2630,15 @@
     targetContext.restore();
   }
 
+  function renderClinicalList(target, values, emptyText) {
+    target.textContent = "";
+    (values.length ? values : [emptyText]).forEach((value) => {
+      const li = document.createElement("li");
+      li.textContent = value;
+      target.appendChild(li);
+    });
+  }
+
   function renderCase() {
     const patient = activePatient();
     if (!patient) {
@@ -2383,53 +2646,51 @@
       el.tutorialGuide.classList.add("hidden");
       return;
     }
+    normalizeVisitPatient(patient);
+    el.caseWindow.classList.toggle("staged-completion", Boolean(patient.v2Visit));
     el.caseStage.textContent = patient.returnVisit ? "Повторный прием" : "Кабинет врача";
     el.caseTitle.textContent = `${patient.animal} · ${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.`;
     el.caseOwner.textContent = `Владелец: ${patient.owner}`;
-    el.caseUrgencyBtn.textContent = patient.selectedUrgency === "urgent"
-      ? "Срочность: высокая"
-      : patient.selectedUrgency === "routine" ? "Срочность: обычная" : "Срочность: не определена";
-    el.caseUrgencyBtn.classList.toggle("urgent", patient.selectedUrgency === "urgent");
+    el.caseUrgencyBtn.textContent = `Срочность: ${clinicalUrgencyLabel(patient)}`;
+    el.caseUrgencyBtn.classList.toggle("urgent", ["urgent", "emergency"].includes(patient.clinicalUrgency));
     el.caseDuration.textContent = `Прием длится: ${patient.visitTimeUsed} мин.`;
     el.ownerComplaint.textContent = patient.v2Visit
       ? patient.v2Visit.complaint.text
       : patient.returnVisit
       ? `«После прошлого лечения не стало нормально. ${patient.complaints.join(", ")}.»`
       : `«${patient.ownerLead ? `${patient.ownerLead}. ` : ""}${patient.complaints.join(", ")}.»`;
-    el.findingsList.textContent = "";
-    patient.findings.filter((finding) => !finding.startsWith("Жалобы владельца:")).slice(-8).forEach((finding) => {
-      const li = document.createElement("li");
-      li.textContent = finding;
-      el.findingsList.appendChild(li);
-    });
-    if (!el.findingsList.children.length) {
-      const li = document.createElement("li");
-      li.textContent = "Осмотр еще не проводился.";
-      el.findingsList.appendChild(li);
-    }
-    const unknown = patient.v2Visit
+    const requiredUnknown = patient.v2Visit
       ? patient.v2Visit.medicalContent.historyQuestions
         .filter((question) => question.required && !patient.asked[question.id])
         .map((question) => question.buttonText)
       : [];
-    if (!patient.v2Visit && !patient.asked.duration && !patient.asked.start) unknown.push("Когда точно начались симптомы");
-    if (!patient.v2Visit && !patient.asked.previous) unknown.push("Были ли подобные эпизоды");
-    if (!patient.v2Visit && !patient.asked.parasite) unknown.push("Проводились ли обработки");
-    if (!patient.v2Visit && patient.flags.oldDrops && !patient.asked.medications) unknown.push("Какие препараты уже применяли дома");
-    if (!patient.budgetAsked) unknown.push("Есть ли ограничения по бюджету");
-    el.unknownList.textContent = "";
-    (unknown.length ? unknown : ["Основные сведения уточнены"]).forEach((item) => {
-      const li = document.createElement("li");
-      li.textContent = item;
-      el.unknownList.appendChild(li);
-    });
+    const optionalUnknown = patient.v2Visit
+      ? patient.v2Visit.medicalContent.historyQuestions
+        .filter((question) => !question.required && !patient.asked[question.id])
+        .map((question) => question.buttonText)
+      : [];
+    if (!patient.v2Visit && !patient.asked.duration && !patient.asked.start) requiredUnknown.push("Когда точно начались симптомы");
+    if (!patient.v2Visit && !patient.asked.previous) requiredUnknown.push("Были ли подобные эпизоды");
+    if (!patient.v2Visit && !patient.asked.parasite) requiredUnknown.push("Проводились ли обработки");
+    if (!patient.v2Visit && patient.flags.oldDrops && !patient.asked.medications) requiredUnknown.push("Какие препараты уже применяли дома");
+    if (!patient.budgetAsked) optionalUnknown.push("Есть ли ограничения по бюджету");
+    renderClinicalList(el.unknownList, requiredUnknown, "Обязательные вопросы уточнены.");
+    renderClinicalList(el.optionalUnknownList, optionalUnknown, "Дополнительных вопросов нет.");
+    renderClinicalList(el.historyList, patient.clinicalRecord.history, "Ответы пока не получены.");
+    renderClinicalList(el.examList, patient.clinicalRecord.physicalExam, "Осмотр ещё не проводился.");
+    renderClinicalList(el.testList, patient.clinicalRecord.diagnosticTests, "Исследования ещё не проводились.");
+    const assessment = patient.generalExamDone
+      ? [`Срочность: ${clinicalUrgencyLabel(patient)}.`, ...patient.clinicalRecord.clinicalInterpretation]
+      : ["Срочность требует оценки после общего осмотра.", ...patient.clinicalRecord.clinicalInterpretation];
+    renderClinicalList(el.assessmentList, assessment, "Клиническая оценка ещё не сформирована.");
+    renderClinicalList(el.planList, patient.clinicalRecord.carePlan, "План помощи ещё не согласован.");
     const visitPercent = clamp((patient.visitTimeUsed / patient.visitTimeLimit) * 100, 0, 100);
     el.trustMeter.style.width = `${patient.trust}%`;
     el.tensionMeter.style.width = `${patient.anxiety}%`;
     el.irritationMeter.style.width = `${patient.irritation}%`;
     el.stressMeter.style.width = `${patient.stress}%`;
     el.visitTimeMeter.style.width = `${visitPercent}%`;
-    el.patientFacts.innerHTML = `<strong>${patient.animal}</strong><span>${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.</span><span>Состояние: ${patient.selectedUrgency === "urgent" ? "требует срочной помощи" : "требует оценки"}</span>`;
+    el.patientFacts.innerHTML = `<strong>${patient.animal}</strong><span>${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.</span><span>Состояние: ${patientStateLabel(patient)}</span>`;
     el.ownerName.textContent = patient.owner;
     el.ownerBudget.textContent = patient.budgetAsked
       ? `${Math.max(100, Math.floor((patient.budget - 60) / 50) * 50)}–${Math.ceil((patient.budget + 60) / 50) * 50} V`
@@ -2452,7 +2713,7 @@
     el.generalExamBtn.disabled = patient.generalExamDone;
     el.localExamBtn.disabled = patient.localUsed >= MAX_LOCAL_EXAMS;
     el.diagnosisBtn.disabled = false;
-    el.communicationBtn.disabled = false;
+    el.communicationBtn.disabled = selectedDiagnosisIds.length === 0;
     const supportsSample = !patient.v2Visit || patient.v2Visit.medicalContent.sampleActions.length > 0;
     const supportsTest = !patient.v2Visit || patient.v2Visit.medicalContent.diagnosticTests.length > 0;
     if (patient.v2Visit) {
@@ -2472,7 +2733,13 @@
     const testRequiresSample = !patient.v2Visit
       || window.PET_CLINIC_GAME_ADAPTER_V2.diagnosticTestFor(patient)?.requires?.includes("sample");
     el.microscopyBtn.disabled = patient.microscopyDone || (testRequiresSample && !patient.sampleTaken) || !supportsTest;
-    el.treatmentBtn.disabled = selectedDiagnosisIds.length === 0;
+    el.treatmentBtn.querySelector("span").textContent = patient.v2Visit ? "Согласовать план помощи" : "Назначить лечение";
+    el.treatmentBtn.querySelector("small").textContent = patient.v2Visit ? "выбрать действия" : "завершить приём";
+    el.treatmentBtn.disabled = patient.v2Visit
+      ? !patient.explanationDone || patient.carePlanAgreed
+      : selectedDiagnosisIds.length === 0;
+    el.finishVisitBtn.classList.toggle("hidden", !patient.v2Visit);
+    el.finishVisitBtn.disabled = !patient.carePlanAgreed;
     const guided = tutorialPatient(patient);
     const tutorialStep = guided ? currentTutorialStep() : null;
     const tutorialActions = [
@@ -2483,11 +2750,15 @@
       [el.microscopyBtn, "diagnostic_test"],
       [el.diagnosisBtn, "preliminary_diagnosis"],
       [el.communicationBtn, "explanation"],
-      [el.treatmentBtn, "plan"]
+      [el.treatmentBtn, "plan"],
+      [el.finishVisitBtn, "finish"]
     ];
     if (tutorialStep) {
-      el.tutorialTitle.textContent = tutorialStep.title;
-      el.tutorialText.textContent = tutorialStep.text;
+      const copy = tutorialStepCopy(patient, tutorialStep);
+      el.tutorialTitle.textContent = copy.title;
+      el.tutorialText.textContent = copy.text;
+      el.tutorialResult.textContent = patient.tutorialResult || "";
+      el.tutorialResult.classList.toggle("hidden", !patient.tutorialResult);
       el.tutorialGuide.classList.remove("hidden");
       el.caseUrgencyBtn.disabled = true;
       tutorialActions.forEach(([button, action]) => {
@@ -2497,14 +2768,15 @@
       });
     } else {
       el.tutorialGuide.classList.add("hidden");
-      el.caseUrgencyBtn.disabled = false;
+      el.tutorialResult.classList.add("hidden");
+      el.caseUrgencyBtn.disabled = Boolean(patient.v2Visit) || !patient.generalExamDone;
       tutorialActions.forEach(([button]) => button.classList.remove("tutorial-focus"));
     }
     document.querySelectorAll(".stage-tabs button").forEach((button) => {
       button.classList.remove("active");
       button.disabled = guided;
     });
-    const stage = patient.selectedCommunicationId ? "discharge"
+    const stage = patient.carePlanAgreed || patient.selectedCommunicationId ? "discharge"
       : patient.selectedDiagnosisId ? "decision"
         : patient.microscopyDone || patient.sampleTaken ? "research"
           : patient.generalExamDone || patient.localUsed ? "exam"
@@ -2559,7 +2831,7 @@
     el.reputationLabel.textContent = lastReputationEvent
       ? `${reputationDelta >= 0 ? "+" : ""}${reputationDelta.toFixed(1)} сегодня · ${lastReputationEvent.reason}`
       : "Сегодня без изменений";
-    el.queueValue.textContent = `${state.queue.length} / 12`;
+    el.queueValue.textContent = `${waitingPatients().length} / 12`;
     el.doctorHudName.textContent = state.dayStarted ? doctor.shortName : "Смена не открыта";
     el.doctorFatigue.textContent = `${Math.round(doctor.fatigue)}%`;
     el.doctorFatigueMeter.style.width = `${doctor.fatigue}%`;
@@ -3319,13 +3591,16 @@
     el.closeCaseBtn.addEventListener("click", () => {
       const patient = activePatient();
       if (patient && (patient.motion === "inCabinet" || patient.motion === "toCabinet")) {
+        visitState.markWaiting(patient);
         patient.motion = "arriving";
         patient.routeIndex = 0;
         patient.route = [[420, 280], [500, 315], [500, 360], [610, 360], [610, 410]];
       }
       el.caseWindow.classList.add("hidden");
+      state.activeId = null;
       closeChoice();
       renderAll();
+      persistGameState(true);
     });
     el.closeChoiceBtn.addEventListener("click", closeChoice);
     el.anamnesisBtn.addEventListener("click", openAnamnesis);
@@ -3337,6 +3612,7 @@
     el.caseUrgencyBtn.addEventListener("click", openTriage);
     el.communicationBtn.addEventListener("click", openCommunication);
     el.treatmentBtn.addEventListener("click", openTreatment);
+    el.finishVisitBtn.addEventListener("click", finishVisit);
     el.pauseBtn.addEventListener("click", () => {
       state.paused = !state.paused;
       renderHud();
@@ -3430,6 +3706,11 @@
 
     if (state.phase === "running" && state.dayStarted) {
       state.modalOpen = false;
+      const patient = activePatient();
+      if (patient?.flowState === "in_consultation") {
+        el.caseWindow.classList.remove("hidden");
+        patient.motion = "inCabinet";
+      }
       renderAll();
       return;
     }

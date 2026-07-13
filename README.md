@@ -53,6 +53,7 @@ npm run test:adapter:v2
 npm run test:multi-diagnosis-v2
 npm run test:game-state-save
 npm run test:save-isolation
+npm run test:clinical-visit
 ```
 
 Аудит генератора: `docs/GENERATOR_AUDIT_2026-07-12.md`. Версия и границы игрового сохранения: `docs/GAME_STATE_SAVE.md`.

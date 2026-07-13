@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pet Clinic: ветеринарная клиника</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eaf6ff'/%3E%3Cpath d='M13 5h6v22h-6zM5 13h22v6H5z' fill='%231976d2'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="styles.css?v=20260712m">
+    <link rel="stylesheet" href="styles.css?v=20260713b">
   </head>
   <body>
     <main class="game-shell" aria-label="Pet Clinic: ветеринарная стратегия">
@@ -81,20 +81,24 @@
             <div class="tutorial-guide hidden" id="tutorialGuide" aria-live="polite">
               <strong id="tutorialTitle"></strong>
               <span id="tutorialText"></span>
+              <span class="tutorial-result hidden" id="tutorialResult"></span>
             </div>
             <div class="clinical-block">
               <h2>Что говорит владелец</h2>
               <p id="ownerComplaint"></p>
             </div>
-            <div class="clinical-split">
+            <div class="clinical-record">
               <div class="clinical-block unknown-block">
-                <h2>Не уточнено</h2>
+                <h2>Не уточнено: обязательно</h2>
                 <ul id="unknownList"></ul>
+                <h3>Дополнительно</h3>
+                <ul id="optionalUnknownList"></ul>
               </div>
-              <div class="clinical-block">
-                <h2>Данные осмотра и исследований</h2>
-                <ul id="findingsList"></ul>
-              </div>
+              <div class="clinical-block"><h2>Уточнено в анамнезе</h2><ul id="historyList"></ul></div>
+              <div class="clinical-block"><h2>Подтверждено осмотром</h2><ul id="examList"></ul></div>
+              <div class="clinical-block"><h2>Результаты исследований</h2><ul id="testList"></ul></div>
+              <div class="clinical-block"><h2>Клиническая оценка</h2><ul id="assessmentList"></ul></div>
+              <div class="clinical-block"><h2>План помощи</h2><ul id="planList"></ul></div>
             </div>
           </section>
 
@@ -119,8 +123,9 @@
           <button id="sampleBtn" type="button"><span>Взять материал</span><small>2 мин.</small></button>
           <button id="microscopyBtn" type="button"><span>Микроскопия</span><small>7 мин. · доход 90 V</small></button>
           <button id="diagnosisBtn" type="button"><span>Предварительный диагноз</span><small>варианты по случаю</small></button>
-          <button id="communicationBtn" type="button"><span>Объяснение и план</span><small>4 мин.</small></button>
-          <button class="primary" id="treatmentBtn" type="button"><span>Назначить лечение</span><small>завершить прием</small></button>
+          <button id="communicationBtn" type="button"><span>Объяснить результат</span><small>4 мин.</small></button>
+          <button id="treatmentBtn" type="button"><span>Согласовать план помощи</span><small>выбрать действия</small></button>
+          <button class="primary" id="finishVisitBtn" type="button"><span>Завершить приём</span><small>оформить выписку</small></button>
         </div>
       </section>
 
@@ -192,11 +197,12 @@
     <script src="campaign.js?v=20260712k" defer></script>
     <script src="generator/save-namespaces.js?v=20260712a" defer></script>
     <script src="generator/game-state-save.js?v=20260713a" defer></script>
+    <script src="systems/clinical-visit-state.js?v=20260713a" defer></script>
     <script src="generator/content-loader-v2.js?v=20260712b" defer></script>
     <script src="generator/generator-v2.js?v=20260712e" defer></script>
     <script src="generator/game-adapter-v2.js?v=20260712c" defer></script>
     <script src="generator/multi-diagnosis-engine-v2.js?v=20260713a" defer></script>
     <script src="generator/generator-mode.js?v=20260712a" defer></script>
-    <script src="game.js?v=20260713a" defer></script>
+    <script src="game.js?v=20260713b" defer></script>
   </body>
 </html>
