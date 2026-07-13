@@ -941,6 +941,7 @@
     examSummary: document.getElementById("examSummary"),
     researchSummary: document.getElementById("researchSummary"),
     decisionSummary: document.getElementById("decisionSummary"),
+    prescriptionsSummary: document.getElementById("prescriptionsSummary"),
     dischargeSummary: document.getElementById("dischargeSummary"),
     unknownList: document.getElementById("unknownList"),
     optionalUnknownList: document.getElementById("optionalUnknownList"),
@@ -1213,7 +1214,7 @@
       stage = "decision";
       action = "explanation";
     } else if (diagnosisComplete && !prescriptionComplete) {
-      stage = "discharge";
+      stage = "prescriptions";
       action = "plan";
     } else if (prescriptionComplete) {
       stage = "discharge";
@@ -1228,7 +1229,8 @@
         exam: examComplete,
         research: researchComplete,
         decision: diagnosisComplete,
-        discharge: prescriptionComplete
+        prescriptions: prescriptionComplete,
+        discharge: patient.flowState === "completed"
       }
     };
   }
@@ -1247,8 +1249,11 @@
     el.decisionSummary.textContent = selectedDiagnosis
       ? `${patient.explanationDone ? "Результат объяснён владельцу." : "Предварительный диагноз выбран."} ${selectedDiagnosis}.`
       : "Предварительный диагноз ещё не выбран.";
-    el.dischargeSummary.textContent = compactClinicalSummary("Назначения сделаны.", patient.clinicalRecord.carePlan, "Назначения ещё не сделаны.");
-    const order = ["complaint", "anamnesis", "exam", "research", "decision", "discharge"];
+    el.prescriptionsSummary.textContent = compactClinicalSummary("Назначения сделаны.", patient.clinicalRecord.carePlan, "Назначения ещё не сделаны.");
+    el.dischargeSummary.textContent = patient.carePlanAgreed
+      ? "Карта приёма заполнена. Пациент готов к выписке."
+      : "Выписка станет доступна после назначений.";
+    const order = ["complaint", "anamnesis", "exam", "research", "decision", "prescriptions", "discharge"];
     const currentIndex = order.indexOf(position.stage);
     document.querySelectorAll(".case-stage-card").forEach((card) => {
       const stage = card.dataset.caseStage;
@@ -1512,7 +1517,7 @@
   }
 
   function isPatientInConsult(patient) {
-    return Boolean(patient && patient.flowState === "in_consultation");
+    return visitState ? visitState.isInConsultation(patient) : Boolean(patient && patient.flowState === "in_consultation");
   }
 
   function isReadingInterfaceOpen() {
@@ -1617,7 +1622,7 @@
       selectedUrgency: null,
       clinicalUrgency: "not_assessed",
       patientState: "requires_assessment",
-      flowState: "waiting",
+      flowState: overrides.flowState || "arrived",
       age: 0,
       patience: clamp(30 + profile.visitLimit * 0.35 + (Math.random() - 0.5) * 8, 34, 58),
       mood: 100,
@@ -1675,12 +1680,11 @@
   function spawnPatient(forcedDiseaseId, isReturn, overrides = {}) {
     if (state.queue.length >= 12 && !isReturn) return;
     const isFirstArrival = state.arrivalsToday === 0;
-    const patient = createPatient(forcedDiseaseId, isReturn, overrides);
+    const patient = createPatient(forcedDiseaseId, isReturn, { ...overrides, flowState: "arrived" });
     patient.protectedFromLeaving = state.day === 1 && isFirstArrival;
     state.queue.push(patient);
     state.arrivalsToday += 1;
     if (patient.eventLabel) state.specialEventsToday += 1;
-    if (!state.activeId) state.activeId = patient.id;
     if (state.day <= campaignDayCount()) state.speed = 1;
     if ((state.day === 1 && isFirstArrival) || patient.urgency === "urgent" || patient.eventLabel) {
       state.paused = true;
@@ -1699,7 +1703,7 @@
     if (!plan) return [];
     const schedule = plan.patients.map((template, index) => ({
       minute: template.arrivalMinute || DAY_START + 20 + index * 65,
-      template
+      template: { ...template, flowState: "scheduled" }
     }));
     state.plannedArrivalsToday = schedule.length;
     return schedule.sort((left, right) => left.minute - right.minute);
@@ -1993,6 +1997,7 @@
     patient.selectedTreatmentId = treatment.id;
     patient.selectedTreatment = { ...treatment, planType: planTypeFor(treatment) };
     patient.carePlanAgreed = true;
+    visitState.markReadyForDischarge(patient);
     const planText = patient.v2Visit
       ? patient.v2Visit.medicalContent.planOptions.find((plan) => plan.id === treatment.id)
       : null;
@@ -2570,12 +2575,15 @@
 
   function openCase(patientId) {
     const previous = activePatient();
-    if (previous && previous.id !== patientId && previous.flowState === "in_consultation") {
-      visitState.markWaiting(previous);
+    if (previous && previous.id !== patientId && isPatientInConsult(previous)) {
+      setLog(`${previous.animal} ещё находится в кабинете. Сначала завершите текущий приём.`);
+      el.caseWindow.classList.remove("hidden");
+      renderAll();
+      return;
     }
     state.activeId = patientId;
     const patient = activePatient();
-    if (patient) visitState.markInConsultation(patient);
+    if (patient && patient.flowState !== "ready_for_discharge") visitState.markInConsultation(patient);
     if (patient) activateTutorial(patient);
     if (patient && patient.motion !== "inCabinet") {
       patient.motion = "toCabinet";
@@ -2803,7 +2811,7 @@
     el.nextPatientCard.textContent = "";
     el.queueStrip.textContent = "";
     const waiting = waitingPatients();
-    const inConsultation = state.queue.filter((patient) => patient.flowState === "in_consultation").length;
+    const inConsultation = state.queue.filter((patient) => isPatientInConsult(patient)).length;
     el.queueCountLabel.textContent = state.dayStarted
       ? `${waiting.length} ждут · ${inConsultation} в кабинете`
       : `${waiting.length} ждут · ${state.arrivalsToday} пришло`;
@@ -3691,7 +3699,11 @@
         patient.screenY = targetY;
         patient.routeIndex += 1;
         if (patient.routeIndex >= patient.route.length) {
-          if (patient.motion === "arriving") patient.motion = "waiting";
+          if (patient.motion === "arriving") {
+            patient.motion = "waiting";
+            visitState.markWaiting(patient);
+            if (!state.activeId) state.activeId = patient.id;
+          }
           else if (patient.motion === "toCabinet") patient.motion = "inCabinet";
           else if (patient.motion === "leaving") patient.motion = "gone";
         }
@@ -3881,15 +3893,7 @@
 
   function bindEvents() {
     el.closeCaseBtn.addEventListener("click", () => {
-      const patient = activePatient();
-      if (patient && (patient.motion === "inCabinet" || patient.motion === "toCabinet")) {
-        visitState.markWaiting(patient);
-        patient.motion = "arriving";
-        patient.routeIndex = 0;
-        patient.route = [[420, 280], [500, 315], [500, 360], [610, 360], [610, 410]];
-      }
       el.caseWindow.classList.add("hidden");
-      state.activeId = null;
       closeChoice();
       renderAll();
       persistGameState(true);
@@ -3933,7 +3937,8 @@
           exam: doGeneralExam,
           research: () => activePatient()?.sampleTaken ? doMicroscopy() : doSample(),
           decision: openDiagnosis,
-          discharge: openCommunication
+          prescriptions: openCommunication,
+          discharge: finishVisit
         };
         handlers[button.dataset.stage]?.();
       });
@@ -4013,7 +4018,7 @@
     if (state.phase === "running" && state.dayStarted) {
       state.modalOpen = false;
       const patient = activePatient();
-      if (patient?.flowState === "in_consultation") {
+      if (isPatientInConsult(patient)) {
         el.caseWindow.classList.remove("hidden");
         patient.motion = "inCabinet";
       }

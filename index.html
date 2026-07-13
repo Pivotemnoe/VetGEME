@@ -73,8 +73,9 @@
             <button type="button" data-stage="anamnesis"><span>2</span> Анамнез</button>
             <button type="button" data-stage="exam"><span>3</span> Осмотр</button>
             <button type="button" data-stage="research"><span>4</span> Исследования</button>
-            <button type="button" data-stage="decision"><span>5</span> Диагноз</button>
-            <button type="button" data-stage="discharge"><span>6</span> Назначения</button>
+            <button type="button" data-stage="decision"><span>5</span> Предварительная оценка</button>
+            <button type="button" data-stage="prescriptions"><span>6</span> Назначения</button>
+            <button type="button" data-stage="discharge"><span>7</span> Выписка</button>
           </nav>
 
           <section class="clinical-column">
@@ -94,21 +95,21 @@
                 <p class="stage-summary" id="anamnesisSummary"></p>
                 <div class="stage-body">
                   <div class="clinical-block unknown-block"><h2>Осталось уточнить</h2><ul id="unknownList"></ul><h3>Дополнительно</h3><ul id="optionalUnknownList"></ul></div>
-                  <div class="clinical-block"><h2>Ответы владельца</h2><ul id="historyList"></ul></div>
+                  <div class="clinical-block"><h2>Уточнено в анамнезе</h2><ul id="historyList"></ul></div>
                 </div>
               </article>
               <article class="case-stage-card" data-case-stage="exam">
                 <header><span class="stage-index">3</span><strong>Осмотр</strong><span class="stage-state" id="examStageState"></span><button class="stage-detail" type="button" data-case-detail="exam">Показать подробно</button></header>
                 <p class="stage-summary" id="examSummary"></p>
-                <div class="stage-body clinical-block"><h2>Данные осмотра</h2><ul id="examList"></ul></div>
+                <div class="stage-body clinical-block"><h2>Подтверждено осмотром</h2><ul id="examList"></ul></div>
               </article>
               <article class="case-stage-card" data-case-stage="research">
                 <header><span class="stage-index">4</span><strong>Исследования</strong><span class="stage-state" id="researchStageState"></span><button class="stage-detail" type="button" data-case-detail="research">Показать подробно</button></header>
                 <p class="stage-summary" id="researchSummary"></p>
-                <div class="stage-body clinical-block"><h2>Полученные результаты</h2><ul id="testList"></ul></div>
+                <div class="stage-body clinical-block"><h2>Результаты исследований</h2><ul id="testList"></ul></div>
               </article>
               <article class="case-stage-card" data-case-stage="decision">
-                <header><span class="stage-index">5</span><strong>Предварительный диагноз</strong><span class="stage-state" id="decisionStageState"></span><button class="stage-detail" type="button" data-case-detail="decision">Показать подробно</button></header>
+                <header><span class="stage-index">5</span><strong>Предварительная оценка</strong><span class="stage-state" id="decisionStageState"></span><button class="stage-detail" type="button" data-case-detail="decision">Показать подробно</button></header>
                 <p class="stage-summary" id="decisionSummary"></p>
                 <div class="stage-body">
                   <div class="clinical-block"><h2>Клиническая оценка</h2><ul id="assessmentList"></ul></div>
@@ -126,10 +127,15 @@
                   </section>
                 </div>
               </article>
-              <article class="case-stage-card" data-case-stage="discharge">
-                <header><span class="stage-index">6</span><strong>Назначения</strong><span class="stage-state" id="dischargeStageState"></span><button class="stage-detail" type="button" data-case-detail="discharge">Показать подробно</button></header>
-                <p class="stage-summary" id="dischargeSummary"></p>
+              <article class="case-stage-card" data-case-stage="prescriptions">
+                <header><span class="stage-index">6</span><strong>Назначения</strong><span class="stage-state" id="prescriptionsStageState"></span><button class="stage-detail" type="button" data-case-detail="prescriptions">Показать подробно</button></header>
+                <p class="stage-summary" id="prescriptionsSummary"></p>
                 <div class="stage-body clinical-block"><h2>Назначения и контроль</h2><ul id="planList"></ul></div>
+              </article>
+              <article class="case-stage-card" data-case-stage="discharge">
+                <header><span class="stage-index">7</span><strong>Выписка</strong><span class="stage-state" id="dischargeStageState"></span><button class="stage-detail" type="button" data-case-detail="discharge">Показать подробно</button></header>
+                <p class="stage-summary" id="dischargeSummary"></p>
+                <div class="stage-body clinical-block"><h2>Завершение приёма</h2><p>Проверьте предварительную оценку, назначения и контрольный срок, затем завершите приём.</p></div>
               </article>
             </div>
           </section>

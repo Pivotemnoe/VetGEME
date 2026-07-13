@@ -7,7 +7,18 @@
 })(typeof window !== "undefined" ? window : globalThis, function () {
   "use strict";
 
-  const WAITING_STATES = new Set(["scheduled", "arrived", "waiting", "called"]);
+  const FLOW_STATES = new Set([
+    "scheduled",
+    "arrived",
+    "waiting",
+    "called",
+    "in_consultation",
+    "ready_for_discharge",
+    "completed",
+    "left"
+  ]);
+  const WAITING_STATES = new Set(["waiting", "called"]);
+  const CONSULTATION_STATES = new Set(["in_consultation", "ready_for_discharge"]);
   const CLINICAL_SECTIONS = ["history", "physicalExam", "diagnosticTests", "clinicalInterpretation", "carePlan"];
   const URGENCY_RANK = { not_assessed: 0, routine: 1, priority: 2, urgent: 3, emergency: 4 };
 
@@ -21,7 +32,7 @@
 
   function normalizePatient(patient, options = {}) {
     if (!patient || typeof patient !== "object") return patient;
-    if (!patient.flowState) {
+    if (!FLOW_STATES.has(patient.flowState)) {
       patient.flowState = options.inConsultation ? "in_consultation" : "waiting";
     }
     patient.clinicalRecord = createClinicalRecord(patient.clinicalRecord);
@@ -41,14 +52,33 @@
     return patient;
   }
 
+  function markScheduled(patient) {
+    patient.flowState = "scheduled";
+    return patient;
+  }
+
+  function markArrived(patient) {
+    patient.flowState = "arrived";
+    return patient;
+  }
+
   function markWaiting(patient) {
     patient.flowState = "waiting";
+    return patient;
+  }
+
+  function markReadyForDischarge(patient) {
+    patient.flowState = "ready_for_discharge";
     return patient;
   }
 
   function markCompleted(patient) {
     patient.flowState = "completed";
     return patient;
+  }
+
+  function isInConsultation(patient) {
+    return Boolean(patient && CONSULTATION_STATES.has(patient.flowState));
   }
 
   function record(patient, section, value) {
@@ -84,13 +114,19 @@
   }
 
   return {
+    FLOW_STATES,
     WAITING_STATES,
+    CONSULTATION_STATES,
     CLINICAL_SECTIONS,
     createClinicalRecord,
     normalizePatient,
     waitingPatients,
+    isInConsultation,
+    markScheduled,
+    markArrived,
     markInConsultation,
     markWaiting,
+    markReadyForDischarge,
     markCompleted,
     record,
     assessUrgency,

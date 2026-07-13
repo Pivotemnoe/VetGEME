@@ -3,6 +3,14 @@
 const assert = require("assert");
 const visitState = require("../systems/clinical-visit-state.js");
 
+const scheduled = visitState.normalizePatient({ id: 0, flowState: "scheduled" });
+assert.deepStrictEqual(visitState.waitingPatients([scheduled]), []);
+visitState.markArrived(scheduled);
+assert.strictEqual(scheduled.flowState, "arrived");
+assert.deepStrictEqual(visitState.waitingPatients([scheduled]), []);
+visitState.markWaiting(scheduled);
+assert.deepStrictEqual(visitState.waitingPatients([scheduled]).map((patient) => patient.id), [0]);
+
 const first = visitState.normalizePatient({ id: 1, flowState: "waiting" });
 const second = visitState.normalizePatient({ id: 2, flowState: "waiting" });
 assert.deepStrictEqual(visitState.waitingPatients([first, second]).map((patient) => patient.id), [1, 2]);
@@ -14,6 +22,7 @@ const restored = JSON.parse(JSON.stringify(first));
 visitState.normalizePatient(restored);
 assert.strictEqual(restored.flowState, "in_consultation");
 assert.deepStrictEqual(visitState.waitingPatients([restored, second]).map((patient) => patient.id), [2]);
+assert.strictEqual(visitState.isInConsultation(restored), true);
 
 visitState.record(first, "history", "Зуд начался три дня назад.");
 visitState.record(first, "physicalExam", ["Температура в норме.", "Состояние стабильное."]);
@@ -37,4 +46,13 @@ assert.deepStrictEqual(goals, {
 
 visitState.markCompleted(first);
 assert.strictEqual(first.flowState, "completed");
+assert.strictEqual(visitState.isInConsultation(first), false);
+
+visitState.markInConsultation(second);
+visitState.markReadyForDischarge(second);
+const restoredReady = JSON.parse(JSON.stringify(second));
+visitState.normalizePatient(restoredReady);
+assert.strictEqual(restoredReady.flowState, "ready_for_discharge");
+assert.strictEqual(visitState.isInConsultation(restoredReady), true);
+assert.deepStrictEqual(visitState.waitingPatients([restoredReady]), []);
 console.log("Clinical visit state test passed.");

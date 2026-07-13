@@ -10,7 +10,13 @@ const css = fs.readFileSync(path.join(root, "styles.css"), "utf8");
 const game = fs.readFileSync(path.join(root, "game.js"), "utf8");
 const tutorial = JSON.parse(fs.readFileSync(path.join(root, "tier-01-v2/content/ui/tutorial-texts.json"), "utf8"));
 
-assert.equal((html.match(/class="case-stage-card"/g) || []).length, 6, "guided map must contain six clinical stages");
+assert.equal((html.match(/class="case-stage-card"/g) || []).length, 7, "guided map must contain seven clinical stages");
+for (const label of ["Жалоба владельца", "Анамнез", "Осмотр", "Исследования", "Предварительная оценка", "Назначения", "Выписка"]) {
+  assert.ok(html.includes(label), `missing clinical stage: ${label}`);
+}
+for (const label of ["Уточнено в анамнезе", "Подтверждено осмотром", "Результаты исследований"]) {
+  assert.ok(html.includes(label), `missing clinical source heading: ${label}`);
+}
 assert.equal(html.includes("class=\"clinical-record\""), false, "legacy clinical grid is still present");
 assert.match(css, /\.clinical-column\s*\{[^}]*overflow-y:\s*auto/);
 assert.match(css, /\.case-stage-card\s+\.stage-body\s*\{[^}]*display:\s*none/);
@@ -39,7 +45,7 @@ assert.ok(tutorial.steps.find((step) => step.id === "preliminary_diagnosis")?.te
 
 console.log(JSON.stringify({
   status: "passed",
-  clinicalStages: 6,
+  clinicalStages: 7,
   singleClinicalScroll: true,
   oneGuidedPrimaryAction: true,
   obsoletePlanWordingRemoved: true
