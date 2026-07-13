@@ -45,11 +45,17 @@
   if (mode === "tier-01-v2") {
     window.PET_CLINIC_GENERATOR_READY = window.PET_CLINIC_CONTENT_V2
       .loadFromFetch()
-      .then((catalog) => ({
-        mode: "tier-01-v2",
-        catalog,
-        generator: window.PET_CLINIC_GENERATOR_V2.createGenerator({ catalog })
-      }));
+      .then((catalog) => {
+        try {
+          return {
+            mode: "tier-01-v2",
+            catalog,
+            generator: window.PET_CLINIC_GENERATOR_V2.createGenerator({ catalog })
+          };
+        } catch (error) {
+          return { mode: "tier-01-v2", catalog, generator: null, initializationError: error };
+        }
+      });
   } else if (mode === "legacy-v1") {
     window.PET_CLINIC_GENERATOR_READY = loadLegacyV1();
   } else {

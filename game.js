@@ -847,32 +847,56 @@
     summaryHtml: ""
   };
 
+  function blockGameForSaveError(error) {
+    gameSaveBlocked = true;
+    state.paused = true;
+    state.log = error?.name === "QuotaExceededError"
+      ? "Сохранение не выполнено: в браузере закончилось место. Игра поставлена на паузу; освободите место и перезагрузите страницу."
+      : "Сохранение не выполнено. Игра поставлена на паузу, чтобы не продолжать без подтвержденного сохранения.";
+    if (el?.messageLog) el.messageLog.textContent = `${formatClinicTime(state.minute)} · ${state.log}`;
+    document.body.dataset.saveError = "true";
+  }
+
   function persistGameState(force = false) {
     if (gameSaveBlocked || !window.PET_CLINIC_GAME_STATE_SAVE || !window.localStorage) return;
     const now = Date.now();
     if (!force && now - lastGameSaveAt < 5000) return;
     try {
-      window.PET_CLINIC_GAME_STATE_SAVE.save(window.localStorage, generatorRuntime.mode, state);
+      window.PET_CLINIC_GAME_STATE_SAVE.save(window.localStorage, generatorRuntime.mode, state, {
+        catalog: generatorRuntime.catalog
+      });
       lastGameSaveAt = now;
     } catch (error) {
-      gameSaveBlocked = true;
+      blockGameForSaveError(error);
       console.error("Game state save failed and has been disabled for this session.", error);
     }
+  }
+
+  function restoreRuntimePatient(patient) {
+    if (patient?.v2Visit && isTier01V2()) {
+      patient.ownerProfile = window.PET_CLINIC_GAME_ADAPTER_V2.ownerProfileForVisit(patient.v2Visit);
+    }
+    return patient;
   }
 
   function restoreGameState() {
     if (!window.PET_CLINIC_GAME_STATE_SAVE || !window.localStorage) return false;
     try {
-      const snapshot = window.PET_CLINIC_GAME_STATE_SAVE.load(window.localStorage, generatorRuntime.mode);
+      const snapshot = window.PET_CLINIC_GAME_STATE_SAVE.load(window.localStorage, generatorRuntime.mode, {
+        catalog: generatorRuntime.catalog
+      });
       if (!snapshot) return "empty";
       Object.assign(state, snapshot.state);
       state.queue = Array.isArray(state.queue) ? state.queue : [];
       state.queue.forEach((patient) => {
+        restoreRuntimePatient(patient);
         normalizeVisitPatient(patient);
         patient.selectedDiagnosisIds = Array.isArray(patient.selectedDiagnosisIds)
           ? patient.selectedDiagnosisIds
           : patient.selectedDiagnosisId ? [patient.selectedDiagnosisId] : [];
       });
+      state.arrivalSchedule = Array.isArray(state.arrivalSchedule) ? state.arrivalSchedule : [];
+      state.arrivalSchedule.forEach((arrival) => restoreRuntimePatient(arrival.template));
       state.departures = [];
       state.doctorRoute = [];
       state.doctorRouteIndex = 0;
@@ -1206,7 +1230,14 @@
       return generatorRuntime.generator.getOrGenerateDay(state.day, { caseJournal: state.caseJournal });
     }
     if (isTier01V2()) {
-      const day = generatorRuntime.generator.getOrGenerateDay(state.day);
+      let day;
+      try {
+        day = generatorRuntime.generator.getOrGenerateDay(state.day);
+      } catch (error) {
+        blockGameForSaveError(error);
+        console.error("Generator state could not be persisted.", error);
+        return null;
+      }
       return day ? window.PET_CLINIC_GAME_ADAPTER_V2.planFromDay(day, generatorRuntime.catalog) : null;
     }
     const basePlan = campaign.days.find((plan) => plan.day === state.day) || null;
@@ -1915,6 +1946,7 @@
       complaint: patient.complaints.join(", "),
       trueDiagnosis: disease.name,
       selectedDiagnosis: diagnosisLabel(patient.selectedDiagnosisId) || "не выбран",
+      selectedPlanId: patient.selectedTreatmentId,
       treatment: treatment.label,
       planType: treatment.planType || planTypeFor(treatment),
       communication: communicationLabel(patient.selectedCommunicationId) || "без объяснения",
@@ -2178,7 +2210,15 @@
     }
     const selectedMode = document.querySelector('input[name="hoursMode"]:checked');
     state.hoursMode = state.day <= campaignDayCount() ? "standard" : selectedMode ? selectedMode.value : "standard";
-    if (isTier01V2()) generatorRuntime.generator.openDay(state.day);
+    if (isTier01V2()) {
+      try {
+        generatorRuntime.generator.openDay(state.day);
+      } catch (error) {
+        blockGameForSaveError(error);
+        renderHud();
+        return;
+      }
+    }
     const plan = currentPlan();
     state.dayEnd = plan && plan.endMinute
       ? plan.endMinute
@@ -2278,13 +2318,20 @@
     const completedGoals = goals.filter(goalComplete).length;
     const todayCases = state.caseJournal.filter((item) => item.day === state.day);
     if (isTier01V2()) {
-      generatorRuntime.generator.closeDay(state.day, todayCases.map((item) => ({
-        visitId: item.visitId,
-        completed: Boolean(item.visitId),
-        followUpRequested: item.followUpRequested,
-        followUpAfterDays: 1,
-        quality: item.quality
-      })));
+      try {
+        generatorRuntime.generator.closeDay(state.day, todayCases.map((item) => ({
+          visitId: item.visitId,
+          completed: Boolean(item.visitId),
+          followUpRequested: item.followUpRequested,
+          followUpAfterDays: 1,
+          selectedPlanId: item.selectedPlanId,
+          quality: item.quality
+        })));
+      } catch (error) {
+        blockGameForSaveError(error);
+        renderHud();
+        return;
+      }
     }
     const doctor = currentDoctor();
     const payroll = state.hoursMode === "extended" ? 430 : 360;
@@ -3614,6 +3661,11 @@
     el.treatmentBtn.addEventListener("click", openTreatment);
     el.finishVisitBtn.addEventListener("click", finishVisit);
     el.pauseBtn.addEventListener("click", () => {
+      if (gameSaveBlocked) {
+        state.paused = true;
+        renderHud();
+        return;
+      }
       state.paused = !state.paused;
       renderHud();
     });
@@ -3733,10 +3785,26 @@
     window.requestAnimationFrame(tick);
   }
 
+  function initBlockedGenerator(error) {
+    bindEvents();
+    blockGameForSaveError(error);
+    state.modalOpen = true;
+    el.shiftWindow.classList.add("hidden");
+    el.messageLog.textContent = state.log;
+    renderHud();
+    drawClinic();
+    window.requestAnimationFrame(tick);
+  }
+
   window.PET_CLINIC_GENERATOR_READY
     .then((runtime) => {
       generatorRuntime = runtime;
       window.__PET_CLINIC_RUNTIME__ = generatorRuntime;
+      if (runtime.initializationError) {
+        console.error("Tier 01 v2 generator initialization failed; game remains paused.", runtime.initializationError);
+        initBlockedGenerator(runtime.initializationError);
+        return;
+      }
       init();
     })
     .catch((error) => {

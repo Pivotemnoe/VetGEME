@@ -3,13 +3,17 @@
   const namespaces = typeof module === "object" && module.exports
     ? require("./save-namespaces.js")
     : root.PET_CLINIC_SAVE_NAMESPACES;
-  const api = factory(namespaces);
+  const compactApi = typeof module === "object" && module.exports
+    ? require("./compact-visit-v2.js")
+    : root.PET_CLINIC_COMPACT_VISIT_V2;
+  const api = factory(namespaces, compactApi);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_GAME_STATE_SAVE = api;
-})(typeof window !== "undefined" ? window : globalThis, function (namespaces) {
+})(typeof window !== "undefined" ? window : globalThis, function (namespaces, compactApi) {
   "use strict";
 
   const GAME_STATE_SAVE_VERSION = 1;
+  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 2;
   const SERIALIZED_FIELDS = Object.freeze([
     "phase", "day", "minute", "dayEnd", "money", "reputation", "queue", "activeId",
     "nextPatientId", "paused", "speed", "spawnMeter", "log", "treatedToday", "revenueToday",
@@ -33,18 +37,62 @@
     return snapshot;
   }
 
-  function createSnapshot(mode, state) {
+  function saveVersionForMode(mode) {
+    return mode === "tier-01-v2" ? TIER_01_V2_GAME_STATE_SAVE_VERSION : GAME_STATE_SAVE_VERSION;
+  }
+
+  function compactPatient(patient, catalog) {
+    const compact = clone(patient);
+    if (!compact.v2Visit) return compact;
+    if (!catalog) throw new Error("Tier 01 v2 catalog is required to compact a queued visit");
+    compact.v2Visit = compactApi.compactVisit(compact.v2Visit, catalog);
+    delete compact.ownerProfile;
+    return compact;
+  }
+
+  function compactTierState(state, catalog) {
+    const compact = snapshotState(state);
+    compact.queue = (compact.queue || []).map((patient) => compactPatient(patient, catalog));
+    compact.arrivalSchedule = (compact.arrivalSchedule || []).map((arrival) => ({
+      ...arrival,
+      template: compactPatient(arrival.template, catalog)
+    }));
+    return compact;
+  }
+
+  function hydratePatient(patient, catalog) {
+    const hydrated = clone(patient);
+    if (!hydrated.v2Visit) return hydrated;
+    if (!catalog) throw new Error("Tier 01 v2 catalog is required to hydrate a queued visit");
+    hydrated.v2Visit = hydrated.v2Visit.medicalContent
+      ? clone(hydrated.v2Visit)
+      : compactApi.hydrateVisit(hydrated.v2Visit, catalog);
+    return hydrated;
+  }
+
+  function hydrateTierState(state, catalog) {
+    const hydrated = clone(state);
+    hydrated.queue = (hydrated.queue || []).map((patient) => hydratePatient(patient, catalog));
+    hydrated.arrivalSchedule = (hydrated.arrivalSchedule || []).map((arrival) => ({
+      ...arrival,
+      template: hydratePatient(arrival.template, catalog)
+    }));
+    return hydrated;
+  }
+
+  function createSnapshot(mode, state, options = {}) {
     return {
-      gameStateSaveVersion: GAME_STATE_SAVE_VERSION,
+      gameStateSaveVersion: saveVersionForMode(mode),
       generatorMode: mode,
       savedAt: new Date().toISOString(),
-      state: snapshotState(state)
+      state: mode === "tier-01-v2" ? compactTierState(state, options.catalog) : snapshotState(state)
     };
   }
 
   function validateSnapshot(snapshot, expectedMode) {
     if (!snapshot || typeof snapshot !== "object") throw new Error("Game save is not an object");
-    if (snapshot.gameStateSaveVersion !== GAME_STATE_SAVE_VERSION) {
+    const expectedVersion = saveVersionForMode(expectedMode);
+    if (snapshot.gameStateSaveVersion !== expectedVersion) {
       throw new Error(`Unsupported game save version: ${snapshot.gameStateSaveVersion ?? "missing"}`);
     }
     if (snapshot.generatorMode !== expectedMode) {
@@ -54,14 +102,34 @@
     return snapshot;
   }
 
-  function save(storage, mode, state) {
-    const snapshot = createSnapshot(mode, state);
+  function migrateTierSnapshot(snapshot, catalog) {
+    if (snapshot.generatorMode !== "tier-01-v2") {
+      throw new Error(`Game save mode mismatch: expected tier-01-v2, got ${snapshot.generatorMode}`);
+    }
+    if (snapshot.gameStateSaveVersion !== GAME_STATE_SAVE_VERSION) {
+      throw new Error(`Unsupported game save version: ${snapshot.gameStateSaveVersion ?? "missing"}`);
+    }
+    if (!catalog) throw new Error("Tier 01 v2 catalog is required to migrate game save version 1");
+    const migrated = {
+      gameStateSaveVersion: TIER_01_V2_GAME_STATE_SAVE_VERSION,
+      generatorMode: "tier-01-v2",
+      savedAt: snapshot.savedAt || new Date().toISOString(),
+      state: compactTierState(snapshot.state || {}, catalog)
+    };
+    validateSnapshot(migrated, "tier-01-v2");
+    hydrateTierState(migrated.state, catalog);
+    return migrated;
+  }
+
+  function save(storage, mode, state, options = {}) {
+    const snapshot = createSnapshot(mode, state, options);
     storage.setItem(namespaces.gameSaveKey(mode), JSON.stringify(snapshot));
     return snapshot;
   }
 
-  function load(storage, mode) {
-    const raw = storage.getItem(namespaces.gameSaveKey(mode));
+  function load(storage, mode, options = {}) {
+    const key = namespaces.gameSaveKey(mode);
+    const raw = storage.getItem(key);
     if (!raw) return null;
     let parsed;
     try {
@@ -69,7 +137,14 @@
     } catch (error) {
       throw new Error(`Game save JSON is invalid: ${error.message}`);
     }
-    return validateSnapshot(parsed, mode);
+    let compactSnapshot = parsed;
+    if (mode === "tier-01-v2" && parsed.gameStateSaveVersion === GAME_STATE_SAVE_VERSION) {
+      compactSnapshot = migrateTierSnapshot(parsed, options.catalog);
+      storage.setItem(key, JSON.stringify(compactSnapshot));
+    }
+    validateSnapshot(compactSnapshot, mode);
+    if (mode !== "tier-01-v2" || options.hydrate === false) return compactSnapshot;
+    return { ...compactSnapshot, state: hydrateTierState(compactSnapshot.state, options.catalog) };
   }
 
   function clear(storage, mode) {
@@ -78,9 +153,16 @@
 
   return {
     GAME_STATE_SAVE_VERSION,
+    TIER_01_V2_GAME_STATE_SAVE_VERSION,
     SERIALIZED_FIELDS,
+    saveVersionForMode,
+    compactPatient,
+    compactTierState,
+    hydratePatient,
+    hydrateTierState,
     createSnapshot,
     validateSnapshot,
+    migrateTierSnapshot,
     save,
     load,
     clear

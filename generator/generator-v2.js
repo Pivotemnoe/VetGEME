@@ -1,14 +1,17 @@
 (function (root, factory) {
   "use strict";
 
-  const api = factory();
+  const compactApi = typeof module === "object" && module.exports
+    ? require("./compact-visit-v2.js")
+    : root.PET_CLINIC_COMPACT_VISIT_V2;
+  const api = factory(compactApi);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_GENERATOR_V2 = api;
-})(typeof window !== "undefined" ? window : globalThis, function () {
+})(typeof window !== "undefined" ? window : globalThis, function (compactApi) {
   "use strict";
 
   const SAVE_KEY = "pet-clinic-generator-v2";
-  const SAVE_VERSION = 3;
+  const SAVE_VERSION = 4;
   const GENERATOR_VERSION = "tier-01-v2.1.0";
   const SUPPORTED_MODES = ["current", "legacy-v1", "tier-01-v2"];
   const DEFAULT_EQUIPMENT = ["otoscope", "microscope"];
@@ -116,13 +119,69 @@
       && saved.contentPackHash === contentPack.contentPackHash;
   }
 
-  function migrateState(saved, seed, contentPack = {}) {
-    if (saved && saved.saveVersion === SAVE_VERSION && saved.generatorVersion === GENERATOR_VERSION && contentPackMatches(saved, contentPack)) return saved;
+  function freshState(seed, contentPack) {
+    return {
+      saveVersion: SAVE_VERSION,
+      generatorVersion: GENERATOR_VERSION,
+      ...contentPack,
+      campaignSeed: seed || randomSeed(),
+      generatedDays: {},
+      pendingFollowUps: [],
+      completedCases: [],
+      seenCaseCounts: {},
+      nextVisitId: 1
+    };
+  }
+
+  function compactPendingFollowUp(followUp, catalog) {
+    return {
+      id: followUp.id,
+      caseId: followUp.caseId,
+      originalVisitId: followUp.originalVisitId,
+      patient: clone(followUp.patient),
+      owner: compactApi.compactOwner(followUp.owner?.profile ? followUp.owner : compactApi.hydrateOwner(followUp.owner, catalog)),
+      reason: followUp.reason,
+      eligibleDay: followUp.eligibleDay
+    };
+  }
+
+  function compactState(saved, catalog, contentPack) {
+    const migrated = clone(saved);
+    Object.assign(migrated, contentPack, { saveVersion: SAVE_VERSION, generatorVersion: GENERATOR_VERSION });
+    migrated.generatedDays = Object.fromEntries(Object.entries(saved.generatedDays || {}).map(([key, day]) => {
+      const dayWithMetadata = { ...clone(day), ...contentPack, schemaVersion: SAVE_VERSION, generatorVersion: GENERATOR_VERSION };
+      const compactDay = compactApi.compactDay(dayWithMetadata, catalog);
+      compactApi.hydrateDay(compactDay, catalog);
+      return [key, compactDay];
+    }));
+    migrated.pendingFollowUps = (saved.pendingFollowUps || []).map((item) => compactPendingFollowUp(item, catalog));
+    return migrated;
+  }
+
+  function migrateState(saved, seed, catalogOrPack = {}) {
+    const catalog = catalogOrPack?.manifest ? catalogOrPack : null;
+    const contentPack = catalog ? contentPackMetadata(catalog) : catalogOrPack;
+    if (saved && saved.saveVersion === SAVE_VERSION && saved.generatorVersion === GENERATOR_VERSION && contentPackMatches(saved, contentPack)) {
+      if (catalog) {
+        Object.values(saved.generatedDays || {}).forEach((day) => compactApi.hydrateDay(day, catalog));
+        (saved.pendingFollowUps || []).forEach((item) => compactApi.hydrateOwner(item.owner, catalog));
+      }
+      return saved;
+    }
+    if (saved && saved.saveVersion === 3 && saved.generatorVersion === GENERATOR_VERSION && contentPackMatches(saved, contentPack)) {
+      if (!catalog) throw new Error("Tier 01 v2 catalog is required to migrate generator save version 3");
+      return compactState(saved, catalog, contentPack);
+    }
     if (saved && saved.saveVersion === 2 && saved.generatorVersion === "tier-01-v2.0.0") {
       const migrated = clone(saved);
-      Object.assign(migrated, contentPack, { saveVersion: SAVE_VERSION, generatorVersion: GENERATOR_VERSION });
+      Object.assign(migrated, contentPack, { saveVersion: 3, generatorVersion: GENERATOR_VERSION });
       Object.values(migrated.generatedDays || {}).forEach((day) => {
-        Object.assign(day, contentPack, { schemaVersion: SAVE_VERSION, generatorVersion: GENERATOR_VERSION });
+        Object.assign(day, contentPack, { schemaVersion: 3, generatorVersion: GENERATOR_VERSION });
+        if (day.visits?.some((visit) => !visit.medicalContent)) {
+          const hydrated = compactApi.hydrateDay(day, catalog);
+          Object.keys(day).forEach((key) => { delete day[key]; });
+          Object.assign(day, hydrated);
+        }
         const occupied = new Set();
         (day.visits || []).forEach((visit) => {
           visit.bookingReason ||= BOOKING_REASONS[visit.family] || "Причина обращения";
@@ -146,7 +205,8 @@
         day.structuralFingerprint = structuralFingerprint(day, contentPack);
         day.fingerprint = day.fullFingerprint;
       });
-      return migrated;
+      if (!catalog) throw new Error("Tier 01 v2 catalog is required to migrate generator save version 2");
+      return compactState(migrated, catalog, contentPack);
     }
     if (saved) {
       return {
@@ -156,25 +216,19 @@
         expectedGeneratorVersion: GENERATOR_VERSION
       };
     }
-    return {
-      saveVersion: SAVE_VERSION,
-      generatorVersion: GENERATOR_VERSION,
-      ...contentPack,
-      campaignSeed: seed || randomSeed(),
-      generatedDays: {},
-      pendingFollowUps: [],
-      completedCases: [],
-      seenCaseCounts: {},
-      nextVisitId: 1
-    };
+    return freshState(seed, contentPack);
   }
 
-  function loadState(storage, seed, contentPack) {
+  function loadState(storage, seed, catalog) {
+    const raw = storage.getItem(SAVE_KEY);
+    if (!raw) return migrateState(null, seed, catalog);
+    let saved;
     try {
-      return migrateState(JSON.parse(storage.getItem(SAVE_KEY) || "null"), seed, contentPack);
+      saved = JSON.parse(raw);
     } catch (error) {
-      return migrateState(null, seed, contentPack);
+      throw new Error(`Generator save JSON is invalid: ${error.message}`);
     }
+    return migrateState(saved, seed, catalog);
   }
 
   function persist(storage, state) {
@@ -292,7 +346,7 @@
     const safeReferralAvailable = Boolean(caseData.safeAlternatives?.length || caseData.planOptions.some((plan) => (
       /referral|urgent|transfer/i.test(plan.id) || plan.disabledWhenRedFlags === false
     )));
-    return {
+    const visit = {
       visitId: `V2-${String(state.nextVisitId++).padStart(5, "0")}`,
       day: dayNumber,
       source,
@@ -321,6 +375,8 @@
       safeReferralAvailable,
       medicalContent: clone(caseData)
     };
+    visit.historyAnswerSelections = compactApi.deriveHistoryAnswerSelections(caseData, owner);
+    return visit;
   }
 
   function assignArrivals(visits, dayRule, random, includeUnplanned) {
@@ -418,7 +474,7 @@
     const seedNamespace = `${GENERATOR_VERSION}|${contentPack.contentPackId}|${contentPack.contentPackVersion}|${contentPack.contentPackHash}`;
     const storage = options.storage || (typeof localStorage !== "undefined" ? localStorage : createMemoryStorage());
     const equipment = options.availableEquipment || DEFAULT_EQUIPMENT;
-    const state = loadState(storage, options.seed, contentPack);
+    const state = loadState(storage, options.seed, catalog);
     if (state.migrationRequired) {
       throw new Error(`Generator save migration required: ${state.saveVersion || "unknown"}/${state.generatorVersion || "unknown"}/${state.contentPackVersion || "unknown"} -> ${SAVE_VERSION}/${GENERATOR_VERSION}/${contentPack.contentPackVersion}`);
     }
@@ -430,7 +486,7 @@
 
     function getOrGenerateDay(dayNumber) {
       const key = String(dayNumber);
-      if (state.generatedDays[key]) return clone(state.generatedDays[key]);
+      if (state.generatedDays[key]) return compactApi.hydrateDay(state.generatedDays[key], catalog);
       const rule = getDayRule(dayNumber);
       if (!rule) return null;
       if (dayNumber > 1 && !state.generatedDays[String(dayNumber - 1)]?.closed) {
@@ -492,7 +548,7 @@
         const line = weightedPick(followUpLines, random, () => 1);
         visits.push(createVisit(catalog.casesById[followUp.caseId], dayNumber, "follow_up", catalog, random, state, {
           identity: followUp.patient,
-          owner: followUp.owner,
+          owner: compactApi.hydrateOwner(followUp.owner, catalog),
           originalVisitId: followUp.originalVisitId,
           followUpLine: line,
           followUpReason: followUp.reason,
@@ -531,18 +587,18 @@
       day.fingerprint = day.fullFingerprint;
       const errors = validateGeneratedDay(day, catalog, equipment);
       if (errors.length) throw new Error(errors.join("; "));
-      state.generatedDays[key] = clone(day);
+      state.generatedDays[key] = compactApi.compactDay(day, catalog);
       selectedCases.forEach((caseData) => {
         state.seenCaseCounts[caseData.id] = (state.seenCaseCounts[caseData.id] || 0) + 1;
       });
       persist(storage, state);
-      return clone(day);
+      return compactApi.hydrateDay(state.generatedDays[key], catalog);
     }
 
     function openDay(dayNumber) {
       const day = getOrGenerateDay(dayNumber);
       if (day.opened) return day;
-      const storedDay = state.generatedDays[String(dayNumber)];
+      const storedDay = compactApi.hydrateDay(state.generatedDays[String(dayNumber)], catalog);
       const rule = getDayRule(dayNumber);
       const random = createRandom(state.campaignSeed, `day:${dayNumber}:unplanned`, seedNamespace);
       const selected = selectNewCases(catalog, rule, storedDay.pendingUnplanned, random, {
@@ -561,17 +617,21 @@
       storedDay.fingerprint = storedDay.fullFingerprint;
       const errors = validateGeneratedDay(storedDay, catalog, equipment);
       if (errors.length) throw new Error(errors.join("; "));
+      state.generatedDays[String(dayNumber)] = compactApi.compactDay(storedDay, catalog);
       persist(storage, state);
       return clone(storedDay);
     }
 
     function closeDay(dayNumber, outcomes = []) {
-      const day = state.generatedDays[String(dayNumber)];
+      const compactDay = state.generatedDays[String(dayNumber)];
+      const day = compactDay ? compactApi.hydrateDay(compactDay, catalog) : null;
       if (!day || !day.opened) throw new Error(`Day ${dayNumber} must be opened before it is closed`);
       if (day.closed) return clone(day);
       outcomes.filter((item) => item.completed).forEach((item) => {
         const visit = day.visits.find((candidate) => candidate.visitId === item.visitId);
         if (!visit) return;
+        visit.selectedPlanId = item.selectedPlanId ?? visit.selectedPlanId ?? null;
+        visit.outcome = clone(item);
         state.completedCases.push({ day: dayNumber, visitId: visit.visitId, caseId: visit.caseId, outcome: clone(item) });
         const clinicalFollowUp = item.followUpRequested || item.deteriorated;
         const declinedRoutineFollowUp = item.ownerDeclinedFollowUp && !item.deteriorated;
@@ -582,7 +642,7 @@
             caseId: visit.caseId,
             originalVisitId: visit.visitId,
             patient: clone(visit.patient),
-            owner: clone(visit.owner),
+            owner: compactApi.compactOwner(visit.owner),
             reason: item.followUpReason || (item.deteriorated ? "deterioration" : "planned_control"),
             eligibleDay: Math.min(7, dayNumber + Math.max(1, Number(item.followUpAfterDays || 1)))
           });
@@ -593,6 +653,7 @@
       day.fullFingerprint = fullFingerprint(day, contentPack);
       day.structuralFingerprint = structuralFingerprint(day, contentPack);
       day.fingerprint = day.fullFingerprint;
+      state.generatedDays[String(dayNumber)] = compactApi.compactDay(day, catalog);
       persist(storage, state);
       return clone(day);
     }

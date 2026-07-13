@@ -76,6 +76,18 @@
   }
 
   function answerForQuestion(question, visit) {
+    const selected = visit.historyAnswerSelections?.find((item) => item.questionId === question.id);
+    if (selected) {
+      const candidates = [
+        ...(question.answers || []),
+        ...(visit.owner.homeAction?.ownerLines || [])
+      ];
+      const answer = candidates.find((item) => item.id === selected.answerId);
+      if (answer) return answer;
+      if (Object.prototype.hasOwnProperty.call(selected, "textFallback")) {
+        return { id: null, text: selected.textFallback, source: selected.source || "persisted_text_fallback" };
+      }
+    }
     if (question.allowsHiddenHomeTreatment && visit.owner.homeAction) {
       const line = visit.owner.homeAction.ownerLines[0];
       return { id: line.id, text: line.text, source: line.source };
