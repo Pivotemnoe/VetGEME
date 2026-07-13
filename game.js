@@ -916,6 +916,7 @@
   let ctx = canvas.getContext("2d");
   const portraitCanvas = document.getElementById("portraitCanvas");
   const portraitCtx = portraitCanvas.getContext("2d");
+  const expandedClinicalStages = new Set();
 
   const el = {
     campaignProgress: document.getElementById("campaignProgress"),
@@ -934,6 +935,13 @@
     caseDuration: document.getElementById("caseDuration"),
     closeCaseBtn: document.getElementById("closeCaseBtn"),
     ownerComplaint: document.getElementById("ownerComplaint"),
+    clinicalMap: document.getElementById("clinicalMap"),
+    complaintSummary: document.getElementById("complaintSummary"),
+    anamnesisSummary: document.getElementById("anamnesisSummary"),
+    examSummary: document.getElementById("examSummary"),
+    researchSummary: document.getElementById("researchSummary"),
+    decisionSummary: document.getElementById("decisionSummary"),
+    dischargeSummary: document.getElementById("dischargeSummary"),
     unknownList: document.getElementById("unknownList"),
     optionalUnknownList: document.getElementById("optionalUnknownList"),
     historyList: document.getElementById("historyList"),
@@ -1153,6 +1161,108 @@
       emergency: "экстренная"
     };
     return labels[patient.clinicalUrgency || "not_assessed"];
+  }
+
+  function requiredHistoryComplete(patient) {
+    if (!patient?.v2Visit) return Object.keys(patient?.asked || {}).length > 0;
+    return patient.v2Visit.medicalContent.historyQuestions
+      .filter((question) => question.required)
+      .every((question) => patient.asked[question.id]);
+  }
+
+  function guidedVisitPosition(patient) {
+    const hasSample = Boolean(patient.v2Visit?.medicalContent.sampleActions.length);
+    const hasTest = Boolean(patient.v2Visit?.medicalContent.diagnosticTests.length);
+    const historyComplete = requiredHistoryComplete(patient);
+    const examComplete = patient.generalExamDone && patient.localUsed > 0;
+    const researchComplete = hasTest ? patient.microscopyDone : hasSample ? patient.sampleTaken : examComplete;
+    const diagnosisComplete = Boolean(patient.selectedDiagnosisId && patient.explanationDone);
+    const prescriptionComplete = Boolean(patient.carePlanAgreed);
+    let stage = "anamnesis";
+    let action = "history";
+    if (historyComplete && !patient.generalExamDone) {
+      stage = "exam";
+      action = "general_exam";
+    } else if (historyComplete && patient.generalExamDone && patient.localUsed === 0) {
+      stage = "exam";
+      action = "target_exam";
+    } else if (examComplete && hasSample && !patient.sampleTaken) {
+      stage = "research";
+      action = "sample";
+    } else if (examComplete && hasTest && !patient.microscopyDone) {
+      stage = "research";
+      action = "diagnostic_test";
+    } else if (researchComplete && !patient.selectedDiagnosisId) {
+      stage = "decision";
+      action = "preliminary_diagnosis";
+    } else if (patient.selectedDiagnosisId && !patient.explanationDone) {
+      stage = "decision";
+      action = "explanation";
+    } else if (diagnosisComplete && !prescriptionComplete) {
+      stage = "discharge";
+      action = "plan";
+    } else if (prescriptionComplete) {
+      stage = "discharge";
+      action = "finish";
+    }
+    return {
+      stage,
+      action,
+      complete: {
+        complaint: true,
+        anamnesis: historyComplete,
+        exam: examComplete,
+        research: researchComplete,
+        decision: diagnosisComplete,
+        discharge: prescriptionComplete
+      }
+    };
+  }
+
+  function compactClinicalSummary(prefix, values, emptyText) {
+    const clean = (values || []).filter(Boolean);
+    return clean.length ? `${prefix} ${clean.slice(0, 3).join(" ")}` : emptyText;
+  }
+
+  function renderGuidedClinicalMap(patient, position) {
+    const selectedDiagnosis = diagnosisLabel(patient.selectedDiagnosisId);
+    el.complaintSummary.textContent = patient.v2Visit.complaint.text;
+    el.anamnesisSummary.textContent = compactClinicalSummary("Анамнез собран.", patient.clinicalRecord.history, "Анамнез ещё не собран.");
+    el.examSummary.textContent = compactClinicalSummary("Осмотр выполнен.", patient.clinicalRecord.physicalExam, "Осмотр ещё не выполнен.");
+    el.researchSummary.textContent = compactClinicalSummary("Исследования выполнены.", patient.clinicalRecord.diagnosticTests, "Исследования ещё не выполнены.");
+    el.decisionSummary.textContent = selectedDiagnosis
+      ? `${patient.explanationDone ? "Результат объяснён владельцу." : "Предварительный диагноз выбран."} ${selectedDiagnosis}.`
+      : "Предварительный диагноз ещё не выбран.";
+    el.dischargeSummary.textContent = compactClinicalSummary("Назначения сделаны.", patient.clinicalRecord.carePlan, "Назначения ещё не сделаны.");
+    const order = ["complaint", "anamnesis", "exam", "research", "decision", "discharge"];
+    const currentIndex = order.indexOf(position.stage);
+    document.querySelectorAll(".case-stage-card").forEach((card) => {
+      const stage = card.dataset.caseStage;
+      const complete = Boolean(position.complete[stage]);
+      const current = stage === position.stage;
+      card.classList.toggle("complete", complete);
+      card.classList.toggle("current", current);
+      card.classList.toggle("future", order.indexOf(stage) > currentIndex && !complete);
+      card.classList.toggle("expanded", expandedClinicalStages.has(stage));
+      const status = card.querySelector(".stage-state");
+      if (status) status.textContent = current ? "Текущий этап" : complete ? "Завершено" : "Впереди";
+      const detail = card.querySelector(".stage-detail");
+      if (detail) detail.textContent = expandedClinicalStages.has(stage) ? "Свернуть" : "Показать подробно";
+    });
+  }
+
+  function guidedActionButton(action) {
+    return {
+      history: el.anamnesisBtn,
+      general_exam: el.generalExamBtn,
+      target_exam: el.localExamBtn,
+      sample: el.sampleBtn,
+      diagnostic_test: el.microscopyBtn,
+      preliminary_diagnosis: el.diagnosisBtn,
+      explanation: el.communicationBtn,
+      plan: el.treatmentBtn,
+      finish: el.finishVisitBtn
+    }[action] || null;
   }
 
   function patientStateLabel(patient) {
@@ -1817,7 +1927,7 @@
       ? patient.v2Visit.medicalContent.planOptions.find((plan) => plan.id === treatment.id)
       : null;
     recordClinical(patient, "carePlan", [
-      `Согласованный план: ${treatment.label}.`,
+      `Назначения: ${treatment.label}.`,
       ...(planText?.steps || []),
       planText?.followUp?.text || ""
     ]);
@@ -1827,15 +1937,15 @@
       incrementGoal("include_control_in_discharge");
     }
     closeChoice();
-    setLog("План помощи согласован. Приём можно завершить после оформления выписки.");
-    if (tutorialPatient(patient)) advanceTutorial("plan", `План помощи согласован: ${treatment.label}.`);
+    setLog("Назначения сделаны и объяснены владельцу. Приём можно завершить.");
+    if (tutorialPatient(patient)) advanceTutorial("plan", `Назначения сделаны: ${treatment.label}.`);
     passTime(2);
   }
 
   function finishVisit() {
     const patient = activePatient();
     if (!patient?.selectedTreatment) {
-      setLog("Сначала согласуйте с владельцем план помощи.");
+      setLog("Сначала сделайте назначения.");
       openTreatment();
       return;
     }
@@ -2585,7 +2695,7 @@
         : "Бюджет владельца не обсуждался."}`,
       onClick: () => patient.v2Visit ? selectCarePlan(treatment) : treatPatient(treatment)
     }));
-    openChoice(patient.v2Visit ? "План помощи" : "Лечение", patient.v2Visit ? "Что согласовать с владельцем?" : "Назначение владельцу", items);
+    openChoice(patient.v2Visit ? "Назначения" : "Лечение", patient.v2Visit ? "Какие назначения выдать?" : "Назначение владельцу", items);
   }
 
   function cyclePatient() {
@@ -2693,8 +2803,11 @@
       el.tutorialGuide.classList.add("hidden");
       return;
     }
+    const clinicalScrollTop = el.clinicalMap?.parentElement?.scrollTop || 0;
     normalizeVisitPatient(patient);
     el.caseWindow.classList.toggle("staged-completion", Boolean(patient.v2Visit));
+    el.caseWindow.classList.toggle("guided-map", Boolean(patient.v2Visit));
+    const guidedPosition = patient.v2Visit ? guidedVisitPosition(patient) : null;
     el.caseStage.textContent = patient.returnVisit ? "Повторный прием" : "Кабинет врача";
     el.caseTitle.textContent = `${patient.animal} · ${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.`;
     el.caseOwner.textContent = `Владелец: ${patient.owner}`;
@@ -2730,7 +2843,7 @@
       ? [`Срочность: ${clinicalUrgencyLabel(patient)}.`, ...patient.clinicalRecord.clinicalInterpretation]
       : ["Срочность требует оценки после общего осмотра.", ...patient.clinicalRecord.clinicalInterpretation];
     renderClinicalList(el.assessmentList, assessment, "Клиническая оценка ещё не сформирована.");
-    renderClinicalList(el.planList, patient.clinicalRecord.carePlan, "План помощи ещё не согласован.");
+    renderClinicalList(el.planList, patient.clinicalRecord.carePlan, "Назначения ещё не сделаны.");
     const visitPercent = clamp((patient.visitTimeUsed / patient.visitTimeLimit) * 100, 0, 100);
     el.trustMeter.style.width = `${patient.trust}%`;
     el.tensionMeter.style.width = `${patient.anxiety}%`;
@@ -2752,7 +2865,7 @@
       : "Предварительный диагноз не выбран";
     const diagnosisButtonLabel = el.diagnosisBtn.querySelector("span");
     const diagnosisCount = el.diagnosisBtn.querySelector("small");
-    if (diagnosisButtonLabel) diagnosisButtonLabel.textContent = "Предварительный диагноз";
+    if (diagnosisButtonLabel) diagnosisButtonLabel.textContent = patient.v2Visit ? "Выбрать предварительный диагноз" : "Предварительный диагноз";
     if (diagnosisCount) diagnosisCount.textContent = patient.v2Visit
       ? `${window.PET_CLINIC_GAME_ADAPTER_V2.diagnosisOptionsFor(patient, generatorRuntime.catalog).length} варианта`
       : "10 диагнозов";
@@ -2766,8 +2879,14 @@
     if (patient.v2Visit) {
       const sampleAction = patient.v2Visit.medicalContent.sampleActions[0];
       const diagnosticTest = window.PET_CLINIC_GAME_ADAPTER_V2.diagnosticTestFor(patient);
-      el.sampleBtn.querySelector("span").textContent = sampleAction?.label || "Материал не требуется";
-      el.microscopyBtn.querySelector("span").textContent = diagnosticTest?.label || "Исследование не требуется";
+      el.anamnesisBtn.querySelector("span").textContent = "Собрать анамнез";
+      el.generalExamBtn.querySelector("span").textContent = "Провести общий осмотр";
+      el.localExamBtn.querySelector("span").textContent = patient.v2Visit.family === "ear" ? "Осмотреть уши" : "Провести целевой осмотр";
+      el.sampleBtn.querySelector("span").textContent = sampleAction ? "Взять материал" : "Материал не требуется";
+      el.microscopyBtn.querySelector("span").textContent = diagnosticTest
+        ? /микроскоп/iu.test(diagnosticTest.label) ? "Провести микроскопию" : "Провести исследование"
+        : "Исследование не требуется";
+      el.communicationBtn.querySelector("span").textContent = "Объяснить результат";
       el.microscopyBtn.querySelector("small").textContent = diagnosticTest
         ? `${diagnosticTest.durationMinutes} мин. · доход ${diagnosticTest.costVetcoins} V`
         : "нет показаний";
@@ -2780,13 +2899,18 @@
     const testRequiresSample = !patient.v2Visit
       || window.PET_CLINIC_GAME_ADAPTER_V2.diagnosticTestFor(patient)?.requires?.includes("sample");
     el.microscopyBtn.disabled = patient.microscopyDone || (testRequiresSample && !patient.sampleTaken) || !supportsTest;
-    el.treatmentBtn.querySelector("span").textContent = patient.v2Visit ? "Согласовать план помощи" : "Назначить лечение";
+    el.treatmentBtn.querySelector("span").textContent = patient.v2Visit ? "Сделать назначения" : "Назначить лечение";
     el.treatmentBtn.querySelector("small").textContent = patient.v2Visit ? "выбрать действия" : "завершить приём";
     el.treatmentBtn.disabled = patient.v2Visit
       ? !patient.explanationDone || patient.carePlanAgreed
       : selectedDiagnosisIds.length === 0;
     el.finishVisitBtn.classList.toggle("hidden", !patient.v2Visit);
     el.finishVisitBtn.disabled = !patient.carePlanAgreed;
+    document.querySelectorAll(".case-actions button").forEach((button) => button.classList.remove("current-action"));
+    if (guidedPosition) {
+      renderGuidedClinicalMap(patient, guidedPosition);
+      guidedActionButton(guidedPosition.action)?.classList.add("current-action");
+    }
     const guided = tutorialPatient(patient);
     const tutorialStep = guided ? currentTutorialStep() : null;
     const tutorialActions = [
@@ -2821,13 +2945,13 @@
     }
     document.querySelectorAll(".stage-tabs button").forEach((button) => {
       button.classList.remove("active");
-      button.disabled = guided;
+      button.disabled = Boolean(patient.v2Visit);
     });
-    const stage = patient.carePlanAgreed || patient.selectedCommunicationId ? "discharge"
+    const stage = guidedPosition?.stage || (patient.carePlanAgreed || patient.selectedCommunicationId ? "discharge"
       : patient.selectedDiagnosisId ? "decision"
         : patient.microscopyDone || patient.sampleTaken ? "research"
           : patient.generalExamDone || patient.localUsed ? "exam"
-            : Object.keys(patient.asked).length ? "anamnesis" : "complaint";
+            : Object.keys(patient.asked).length ? "anamnesis" : "complaint");
     document.querySelector(`.stage-tabs button[data-stage="${stage}"]`)?.classList.add("active");
     el.developerData.textContent = [
       `Истинный диагноз: ${diseaseFor(patient).name}`,
@@ -2839,6 +2963,7 @@
       `Врач смены: ${currentDoctor().name}, усталость ${Math.round(currentDoctor().fatigue)}%`
     ].join("\n");
     drawPortrait(patient);
+    if (el.clinicalMap?.parentElement) el.clinicalMap.parentElement.scrollTop = clinicalScrollTop;
   }
 
   function renderCampaign() {
@@ -3691,6 +3816,15 @@
           discharge: openCommunication
         };
         handlers[button.dataset.stage]?.();
+      });
+    });
+    document.querySelectorAll(".stage-detail").forEach((button) => {
+      button.addEventListener("click", () => {
+        const stage = button.dataset.caseDetail;
+        if (!stage) return;
+        if (expandedClinicalStages.has(stage)) expandedClinicalStages.delete(stage);
+        else expandedClinicalStages.add(stage);
+        renderCase();
       });
     });
     canvas.addEventListener("click", () => {

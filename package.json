@@ -14,6 +14,7 @@
     "test:multi-diagnosis-v2": "node scripts/test-multi-diagnosis-v2.js",
     "test:clinical-visit": "node scripts/test-clinical-visit-state.js",
     "test:introductory-cases:v2": "node scripts/test-introductory-cases-v2.js",
+    "test:guided-ui": "node scripts/test-guided-consultation-ui.js",
     "validate:tier-01-content": "node scripts/validate-tier-01-content.mjs",
     "validate:tier-01-v2": "node tier-01-v2/scripts/validate-tier-01-content-v2.mjs"
   }
