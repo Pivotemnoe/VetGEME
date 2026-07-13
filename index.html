@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pet Clinic: ветеринарная клиника</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eaf6ff'/%3E%3Cpath d='M13 5h6v22h-6zM5 13h22v6H5z' fill='%231976d2'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="styles.css?v=20260713c">
+    <link rel="stylesheet" href="styles.css?v=20260713d">
   </head>
   <body>
     <main class="game-shell" aria-label="Pet Clinic: ветеринарная стратегия">
@@ -110,7 +110,21 @@
               <article class="case-stage-card" data-case-stage="decision">
                 <header><span class="stage-index">5</span><strong>Предварительный диагноз</strong><span class="stage-state" id="decisionStageState"></span><button class="stage-detail" type="button" data-case-detail="decision">Показать подробно</button></header>
                 <p class="stage-summary" id="decisionSummary"></p>
-                <div class="stage-body clinical-block"><h2>Клиническая оценка</h2><ul id="assessmentList"></ul></div>
+                <div class="stage-body">
+                  <div class="clinical-block"><h2>Клиническая оценка</h2><ul id="assessmentList"></ul></div>
+                  <section class="decision-review hidden" id="decisionReview" aria-live="polite">
+                    <h2>Разбор решения</h2>
+                    <dl>
+                      <dt>Вы выбрали</dt><dd id="reviewSelectedDiagnosis"></dd>
+                      <dt>Непосредственно подтверждено</dt><dd><ul id="reviewConfirmed"></ul></dd>
+                      <dt>Остаётся неопределённым</dt><dd><ul id="reviewUncertain"></ul></dd>
+                      <dt>Выбор поддерживали</dt><dd><ul id="reviewSupporting"></ul></dd>
+                      <dt>Не хватало данных</dt><dd><ul id="reviewMissing"></ul></dd>
+                      <dt>Оценка решения</dt><dd id="reviewAssessment"></dd>
+                    </dl>
+                    <p>Клинический результат появится позднее.</p>
+                  </section>
+                </div>
               </article>
               <article class="case-stage-card" data-case-stage="discharge">
                 <header><span class="stage-index">6</span><strong>Назначения</strong><span class="stage-state" id="dischargeStageState"></span><button class="stage-detail" type="button" data-case-detail="discharge">Показать подробно</button></header>
@@ -222,6 +236,6 @@
     <script src="generator/game-adapter-v2.js?v=20260713b" defer></script>
     <script src="generator/multi-diagnosis-engine-v2.js?v=20260713a" defer></script>
     <script src="generator/generator-mode.js?v=20260713a" defer></script>
-    <script src="game.js?v=20260713d" defer></script>
+    <script src="game.js?v=20260713e" defer></script>
   </body>
 </html>

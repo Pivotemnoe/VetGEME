@@ -948,6 +948,13 @@
     examList: document.getElementById("examList"),
     testList: document.getElementById("testList"),
     assessmentList: document.getElementById("assessmentList"),
+    decisionReview: document.getElementById("decisionReview"),
+    reviewSelectedDiagnosis: document.getElementById("reviewSelectedDiagnosis"),
+    reviewConfirmed: document.getElementById("reviewConfirmed"),
+    reviewUncertain: document.getElementById("reviewUncertain"),
+    reviewSupporting: document.getElementById("reviewSupporting"),
+    reviewMissing: document.getElementById("reviewMissing"),
+    reviewAssessment: document.getElementById("reviewAssessment"),
     planList: document.getElementById("planList"),
     patientFacts: document.getElementById("patientFacts"),
     stressMeter: document.getElementById("stressMeter"),
@@ -1069,6 +1076,13 @@
   function diagnosisLabel(id) {
     const diagnosis = diagnosisOptions.find((item) => item.id === id);
     if (diagnosis) return diagnosis.label;
+    const patient = activePatient();
+    if (patient?.v2Visit && generatorRuntime.catalog) {
+      const contextualDiagnosis = window.PET_CLINIC_GAME_ADAPTER_V2
+        .diagnosisOptionsFor(patient, generatorRuntime.catalog)
+        .find((item) => item.id === id);
+      if (contextualDiagnosis) return contextualDiagnosis.label;
+    }
     if (generatorRuntime.catalog) {
       if (id?.startsWith("distractor:")) return generatorRuntime.catalog.casesById[id.slice(11)]?.preliminaryDiagnosisLabel || "";
       return generatorRuntime.catalog.casesById[id]?.preliminaryDiagnosisLabel || "";
@@ -1263,6 +1277,62 @@
       plan: el.treatmentBtn,
       finish: el.finishVisitBtn
     }[action] || null;
+  }
+
+  function uniqueText(values) {
+    return [...new Set((values || []).filter(Boolean))];
+  }
+
+  function diagnosisAssessmentLabel(value) {
+    return {
+      justified: "обоснованно",
+      acceptable: "допустимо при имеющихся данных",
+      insufficient: "недостаточно данных",
+      contradictory: "противоречит полученным данным",
+      unsafe: "небезопасно"
+    }[value] || "недостаточно данных";
+  }
+
+  function diagnosisReviewFor(patient) {
+    if (!patient?.v2Visit || !patient.selectedDiagnosisId) return null;
+    const options = window.PET_CLINIC_GAME_ADAPTER_V2.diagnosisOptionsFor(patient, generatorRuntime.catalog);
+    const selectedIds = patient.selectedDiagnosisIds?.length ? patient.selectedDiagnosisIds : [patient.selectedDiagnosisId];
+    const selected = selectedIds.map((id) => options.find((option) => option.id === id)).filter(Boolean);
+    if (!selected.length) return null;
+    const rank = { justified: 0, acceptable: 1, insufficient: 2, contradictory: 3, unsafe: 4 };
+    const assessment = selected.reduce((worst, option) => (rank[option.assessment] > rank[worst] ? option.assessment : worst), "justified");
+    const supporting = uniqueText(selected.flatMap((option) => option.supportingEvidence || []));
+    const missing = uniqueText(selected.flatMap((option) => [
+      ...(option.missingEvidence || []),
+      ...(option.contradictingEvidence || []).map((value) => `Противоречит: ${value}`)
+    ]));
+    const uncertain = uniqueText(selected.flatMap((option) => (
+      option.uncertainEvidence?.length ? option.uncertainEvidence : (option.missingEvidence || [])
+    )));
+    const confirmed = uniqueText([
+      ...patient.clinicalRecord.diagnosticTests,
+      ...patient.clinicalRecord.physicalExam.slice(-1)
+    ]).slice(0, 3);
+    return {
+      selected: selected.map((option) => option.label).join(" + "),
+      confirmed,
+      uncertain,
+      supporting,
+      missing,
+      assessment: diagnosisAssessmentLabel(assessment)
+    };
+  }
+
+  function ownerStatusFor(patient) {
+    if (patient.carePlanAgreed) {
+      if (patient.selectedTreatment?.planType === "owner_refusal") return "владелец отказался";
+      const total = diseaseFor(patient).baseFee + (patient.selectedTreatment?.fee || 0);
+      if (total > patient.budget) return "принял назначения частично";
+      return "назначения выданы";
+    }
+    if (patient.explanationDone) return "результат объяснён";
+    if (patient.sampleTaken || patient.microscopyDone) return "согласие на исследование получено";
+    return "требуется уточнить";
   }
 
   function patientStateLabel(patient) {
@@ -2532,6 +2602,24 @@
       const span = document.createElement("span");
       span.textContent = item.note || "";
       button.append(strong, span);
+      if (item.sections?.some((section) => section.items?.length)) {
+        const evidence = document.createElement("div");
+        evidence.className = "choice-evidence";
+        item.sections.filter((section) => section.items?.length).forEach((section) => {
+          const row = document.createElement("section");
+          const heading = document.createElement("b");
+          heading.textContent = section.label;
+          const list = document.createElement("ul");
+          section.items.forEach((value) => {
+            const entry = document.createElement("li");
+            entry.textContent = value;
+            list.appendChild(entry);
+          });
+          row.append(heading, list);
+          evidence.appendChild(row);
+        });
+        button.appendChild(evidence);
+      }
       button.addEventListener("click", item.onClick);
       el.choiceBody.appendChild(button);
     });
@@ -2642,7 +2730,12 @@
         ? "Этот диагноз уже выбран."
         : schema.diagnosisMode === "multiple" && selectedIds.length >= schema.maximumDiagnosisSelections
           ? "Оба диагностических слота уже заняты."
-          : `${diagnosis.note} Потратит 3 минуты приема.`,
+          : `Клиническая оценка. Потратит 3 минуты приема.`,
+      sections: patient.v2Visit ? [
+        { label: "Поддерживает", items: diagnosis.supportingEvidence },
+        { label: "Не хватает данных", items: diagnosis.missingEvidence },
+        { label: "Противоречит", items: diagnosis.contradictingEvidence }
+      ] : [],
       disabled: selectedIds.includes(diagnosis.id)
         || (schema.diagnosisMode === "multiple" && selectedIds.length >= schema.maximumDiagnosisSelections),
       onClick: () => selectDiagnosis(diagnosis)
@@ -2718,8 +2811,9 @@
       el.queueForecast.textContent = state.arrivalsToday > 0
         ? `Дневной поток завершен: ${state.arrivalsToday} из ${state.plannedArrivalsToday} пришло`
         : "Поток появится после открытия клиники";
-    } else if (state.arrivalSchedule.length) {
-      el.queueForecast.textContent = `${state.arrivalsToday}/${state.plannedArrivalsToday} пришло · ещё ${state.arrivalSchedule.length} · следующий около ${formatTime(state.arrivalSchedule[0].minute)}`;
+    } else if (state.arrivalSchedule.some((arrival) => arrival.template?.source !== "walkIn")) {
+      const booked = state.arrivalSchedule.filter((arrival) => arrival.template?.source !== "walkIn");
+      el.queueForecast.textContent = `${state.arrivalsToday}/${state.plannedArrivalsToday} пришло · записано ещё ${booked.length} · следующий приём в ${formatTime(booked[0].minute)}`;
     } else {
       el.queueForecast.textContent = `${state.arrivalsToday}/${state.plannedArrivalsToday} пришло · все запланированные пациенты уже здесь`;
     }
@@ -2768,10 +2862,26 @@
     const nextButton = el.nextPatientCard.querySelector(".queue-card");
     if (nextButton && waiting[0]) nextButton.addEventListener("click", () => openCase(waiting[0].id));
     if (!waiting.length) {
-      const empty = document.createElement("div");
-      empty.className = "queue-locked";
-      empty.textContent = inConsultation ? "Следующий пациент пока не ожидает" : "Очередь пуста";
-      el.nextPatientCard.appendChild(empty);
+      const nextBooked = state.arrivalSchedule.find((arrival) => arrival.template?.source !== "walkIn");
+      if (state.dayStarted && nextBooked) {
+        const card = document.createElement("div");
+        card.className = "next-booking-card";
+        const time = document.createElement("strong");
+        time.textContent = `Следующий приём в ${formatTime(nextBooked.minute)}`;
+        const patient = document.createElement("span");
+        patient.textContent = `${nextBooked.template.animal} · ${speciesLabels[nextBooked.template.species]}`;
+        const type = document.createElement("span");
+        type.textContent = nextBooked.template.returnVisit ? "Повторный приём" : "Первичный приём";
+        const reason = document.createElement("span");
+        reason.textContent = `Причина записи: ${nextBooked.template.bookingLabel}`;
+        card.append(time, patient, type, reason);
+        el.nextPatientCard.appendChild(card);
+      } else {
+        const empty = document.createElement("div");
+        empty.className = "queue-locked";
+        empty.textContent = state.dayStarted ? "Записей больше нет" : "Очередь пуста";
+        el.nextPatientCard.appendChild(empty);
+      }
     }
   }
 
@@ -2843,6 +2953,16 @@
       ? [`Срочность: ${clinicalUrgencyLabel(patient)}.`, ...patient.clinicalRecord.clinicalInterpretation]
       : ["Срочность требует оценки после общего осмотра.", ...patient.clinicalRecord.clinicalInterpretation];
     renderClinicalList(el.assessmentList, assessment, "Клиническая оценка ещё не сформирована.");
+    const decisionReview = diagnosisReviewFor(patient);
+    el.decisionReview.classList.toggle("hidden", !decisionReview);
+    if (decisionReview) {
+      el.reviewSelectedDiagnosis.textContent = decisionReview.selected;
+      renderClinicalList(el.reviewConfirmed, decisionReview.confirmed, "Прямых подтверждений пока нет.");
+      renderClinicalList(el.reviewUncertain, decisionReview.uncertain, "Дополнительная неопределённость не отмечена.");
+      renderClinicalList(el.reviewSupporting, decisionReview.supporting, "Поддерживающие данные не выделены.");
+      renderClinicalList(el.reviewMissing, decisionReview.missing, "Недостающие данные не выделены.");
+      el.reviewAssessment.textContent = decisionReview.assessment;
+    }
     renderClinicalList(el.planList, patient.clinicalRecord.carePlan, "Назначения ещё не сделаны.");
     const visitPercent = clamp((patient.visitTimeUsed / patient.visitTimeLimit) * 100, 0, 100);
     el.trustMeter.style.width = `${patient.trust}%`;
@@ -2855,7 +2975,7 @@
     el.ownerBudget.textContent = patient.budgetAsked
       ? `${Math.max(100, Math.floor((patient.budget - 60) / 50) * 50)}–${Math.ceil((patient.budget + 60) / 50) * 50} V`
       : "не обсуждался";
-    el.ownerConsent.textContent = patient.sampleTaken ? "на исследование получено" : "нужно уточнить";
+    el.ownerConsent.textContent = ownerStatusFor(patient);
     const selectedDiagnosisIds = Array.isArray(patient.selectedDiagnosisIds) && patient.selectedDiagnosisIds.length
       ? patient.selectedDiagnosisIds
       : patient.selectedDiagnosisId ? [patient.selectedDiagnosisId] : [];
