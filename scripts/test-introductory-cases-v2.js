@@ -11,6 +11,7 @@ async function main() {
   const catalog = await loader.loadFromDirectory(path.resolve(__dirname, "../tier-01-v2/content"));
   const earMites = catalog.casesById.EAR_MITES;
   const fleaCase = catalog.casesById.SKIN_FLEA_INFESTATION;
+  const superficialWound = catalog.casesById.TRAUMA_SUPERFICIAL_WOUND;
 
   const historyText = earMites.historyQuestions.flatMap((question) => question.answers.map((answer) => answer.text)).join(" ");
   const targetText = earMites.targetExam.findings.map((finding) => finding.text).join(" ");
@@ -38,6 +39,17 @@ async function main() {
     assert.equal(/в этом варианте|в данном случае преобладает/iu.test(option.feedback), false, `${option.id} contains author meta text`);
     assert.ok((option.supportingEvidence?.length || 0) + (option.contradictingEvidence?.length || 0) > 0, `${option.id} has no evidence`);
   }
+
+  assert.equal(
+    superficialWound.preliminaryDiagnosisOptions.some((option) => /оставить\s+.*без\s+обработ/iu.test(option.label || "")),
+    false,
+    "a management action is exposed as a diagnosis"
+  );
+  assert.deepEqual(
+    superficialWound.excludedPreliminaryDiagnosisOptions,
+    [{ id: "observe_dirty", status: "pending_medical_review", reason: "management_action_not_diagnosis" }],
+    "the missing diagnosis slot is not explicitly pending medical review"
+  );
 
   let reloadChecked = false;
   for (let index = 0; index < 100 && !reloadChecked; index += 1) {
@@ -75,6 +87,7 @@ async function main() {
     earMitesDisclosureOrder: true,
     complaintSpeciesCompatibility: true,
     fleaDecisionAssessment: true,
+    woundDiagnosisSlots: true,
     reloadStable: true
   }, null, 2));
 }

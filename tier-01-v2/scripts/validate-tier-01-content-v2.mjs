@@ -150,12 +150,23 @@ for (const file of caseFiles) {
   assert((data.targetExam?.findings ?? []).length >= 3, file, "target exam needs concrete findings");
   for (const [i, item] of (data.diagnosticTests ?? []).entries()) checkSource(item, "diagnostic_test", file, `diagnosticTests[${i}]`);
   const diagnoses = data.preliminaryDiagnosisOptions ?? [];
-  assert(diagnoses.length >= 4, file, "at least four diagnostic options are required");
+  const excludedDiagnoses = data.excludedPreliminaryDiagnosisOptions ?? [];
+  assert(diagnoses.length >= 3, file, "at least three active diagnostic options are required");
+  assert(diagnoses.length + excludedDiagnoses.length >= 4, file, "four diagnostic slots are required, including medically pending exclusions");
   assert(diagnoses.some((x) => x.isCorrectForTemplate), file, "one diagnostic option must be marked correct for template testing");
   for (const item of diagnoses) {
     checkSource(item, "doctor_interpretation", file, `diagnosis ${item.id}`);
     assert(Array.isArray(item.requires) && item.requires.length > 0, file, `diagnosis ${item.id} needs requires`);
     assert(item.feedback?.length >= 25, file, `diagnosis ${item.id} needs exact feedback`);
+    assert(!/оставить\s+.*без\s+обработ/iu.test(item.label || ""), file, `diagnosis ${item.id} is a management action, not a diagnosis`);
+  }
+  const activeDiagnosisIds = new Set(diagnoses.map((item) => item.id));
+  for (const item of excludedDiagnoses) {
+    assert(typeof item.id === "string" && item.id.length > 0, file, "excluded diagnosis slot needs an id");
+    assert(item.status === "pending_medical_review", file, `excluded diagnosis ${item.id} must remain pending_medical_review`);
+    assert(item.reason === "management_action_not_diagnosis", file, `excluded diagnosis ${item.id} needs the management-action reason`);
+    assert(!Object.hasOwn(item, "label") && !Object.hasOwn(item, "feedback"), file, `excluded diagnosis ${item.id} must not contain unapproved medical text`);
+    assert(!activeDiagnosisIds.has(item.id), file, `excluded diagnosis ${item.id} is still active`);
   }
   if (data.id === "SKIN_FLEA_INFESTATION") {
     for (const item of diagnoses) {

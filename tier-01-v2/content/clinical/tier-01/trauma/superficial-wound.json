@@ -553,17 +553,13 @@
       "feedback": "Глубокие структуры не видны и края расходятся минимально.",
       "isCorrectForTemplate": false,
       "isUnsafeChoice": false
-    },
+    }
+  ],
+  "excludedPreliminaryDiagnosisOptions": [
     {
       "id": "observe_dirty",
-      "source": "doctor_interpretation",
-      "label": "Оставить загрязнённую рану без обработки",
-      "requires": [
-        "wound_exam"
-      ],
-      "feedback": "Даже поверхностная загрязнённая рана требует очистки и защиты от разлизывания.",
-      "isCorrectForTemplate": false,
-      "isUnsafeChoice": true
+      "status": "pending_medical_review",
+      "reason": "management_action_not_diagnosis"
     }
   ],
   "planOptions": [
