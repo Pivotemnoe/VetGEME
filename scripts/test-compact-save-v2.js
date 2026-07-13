@@ -94,6 +94,31 @@ function makeJournalEntry(dayNumber, visit) {
 }
 
 function saveGameSummary(storage, catalog, day, journal) {
+  const dailyLedger = Array.from({ length: day }, (_, index) => ({
+    day: index + 1,
+    status: "closed",
+    consultationRevenue: 700 + index * 10,
+    diagnosticRevenue: 90,
+    procedureCost: 105,
+    payroll: 360,
+    maintenance: 110,
+    refunds: 0,
+    freeRechecks: index % 7 === 0 ? 1 : 0,
+    freeRecheckValue: index % 7 === 0 ? 140 : 0,
+    net: 215 + index * 10,
+    ownerTrustStart: 74,
+    ownerTrustEnd: 74.5,
+    clinicalReliabilityStart: 74,
+    clinicalReliabilityEnd: 74.5,
+    ownerTrustEvents: [{ delta: 0.5, reason: "test event" }],
+    clinicalReliabilityEvents: [{ delta: 0.5, reason: "test event" }],
+    doctorId: "doctor-a",
+    fatigueStart: 20,
+    fatigueBeforeClosing: 35,
+    closingFatigueLoad: 12,
+    fatigueEnd: 47,
+    fatigueRecoveryIfResting: 16
+  }));
   gameSaveApi.save(storage, "tier-01-v2", {
     phase: "summary",
     day,
@@ -101,6 +126,14 @@ function saveGameSummary(storage, catalog, day, journal) {
     dayEnd: 1080,
     money: 1350 + journal.length * 80,
     reputation: 74,
+    ownerTrust: 74.5,
+    clinicalReliability: 74.5,
+    awareness: 30,
+    campaignFinance: { creditLimit: 2500, debt: 0, weeklyReview: null, closureRisk: "stable" },
+    dailyLedger,
+    equipmentCapabilities: {},
+    demandState: null,
+    campaignOutcome: day >= 30 ? { completed: true, success: true, freePlayAvailable: true } : null,
     queue: [],
     arrivalSchedule: [],
     caseJournal: journal,
@@ -332,7 +365,7 @@ async function main() {
   const oldGameRaw = JSON.stringify(oldGameSnapshot);
   const gameMigrationStorage = memoryStorage({ [namespaces.gameSaveKey("tier-01-v2")]: oldGameRaw });
   const migratedGame = gameSaveApi.load(gameMigrationStorage, "tier-01-v2", { catalog });
-  assert.equal(migratedGame.gameStateSaveVersion, 2);
+  assert.equal(migratedGame.gameStateSaveVersion, 3);
   assert.ok(migratedGame.state.queue[0].v2Visit.medicalContent);
   assert.equal(gameMigrationStorage.getItem(namespaces.gameSaveKey("tier-01-v2")).includes("medicalContent"), false);
 

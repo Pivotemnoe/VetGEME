@@ -392,11 +392,13 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
 .hud-buttons button { min-width: 0; padding: 0; font-size: 16px; font-weight: 900; }
 .hud-buttons button.active { outline: 3px solid #f6db63; }
 .status-block { display: grid; align-content: center; gap: 5px; padding: 8px; }
-.status-block > div:first-child { display: flex; justify-content: space-between; gap: 8px; font-size: 10px; }
+.clinic-metric-row { display: flex; justify-content: space-between; gap: 6px; font-size: 9px; }
+.clinic-metric-row strong { white-space: nowrap; }
 .status-block small { color: var(--muted); font-size: 9px; }
 .doctor-block { display: grid; align-content: center; gap: 4px; padding: 7px 8px; }
 .doctor-block strong { color: var(--blue-900); font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .doctor-block span { color: var(--muted); font-size: 9px; }
+.doctor-block small { color: var(--muted); font-size: 8px; line-height: 1.15; }
 .fatigue-meter i { background: linear-gradient(90deg,#58b877,#edb94f 60%,#d85c59); }
 .queue-summary { display: grid; place-content: center; text-align: center; }
 .queue-summary strong { color: var(--blue-900); font-size: 18px; }

@@ -13,7 +13,8 @@
   "use strict";
 
   const GAME_STATE_SAVE_VERSION = 1;
-  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 2;
+  const PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION = 2;
+  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 3;
   const SERIALIZED_FIELDS = Object.freeze([
     "phase", "day", "minute", "dayEnd", "money", "reputation", "queue", "activeId",
     "nextPatientId", "paused", "speed", "spawnMeter", "log", "treatedToday", "revenueToday",
@@ -24,14 +25,19 @@
     "shiftExtended", "chapterComplete", "firstArrivalPaused", "tutorialVisitId", "tutorialStepIndex",
     "tutorialComplete", "summaryTitle", "summaryHtml"
   ]);
+  const TIER_01_V2_SERIALIZED_FIELDS = Object.freeze([
+    ...SERIALIZED_FIELDS,
+    "ownerTrust", "clinicalReliability", "awareness", "campaignFinance", "dailyLedger",
+    "equipmentCapabilities", "demandState", "campaignOutcome"
+  ]);
 
   function clone(value) {
     return JSON.parse(JSON.stringify(value));
   }
 
-  function snapshotState(state) {
+  function snapshotState(state, fields = SERIALIZED_FIELDS) {
     const snapshot = {};
-    SERIALIZED_FIELDS.forEach((field) => {
+    fields.forEach((field) => {
       if (state[field] !== undefined) snapshot[field] = clone(state[field]);
     });
     return snapshot;
@@ -51,13 +57,41 @@
   }
 
   function compactTierState(state, catalog) {
-    const compact = snapshotState(state);
+    const compact = snapshotState(state, TIER_01_V2_SERIALIZED_FIELDS);
     compact.queue = (compact.queue || []).map((patient) => compactPatient(patient, catalog));
     compact.arrivalSchedule = (compact.arrivalSchedule || []).map((arrival) => ({
       ...arrival,
       template: compactPatient(arrival.template, catalog)
     }));
     return compact;
+  }
+
+  function campaignDefaults(state = {}) {
+    const legacyReputation = Number.isFinite(Number(state.reputation)) ? Number(state.reputation) : 74;
+    const ownerTrust = Number.isFinite(Number(state.ownerTrust)) ? Number(state.ownerTrust) : legacyReputation;
+    const clinicalReliability = Number.isFinite(Number(state.clinicalReliability))
+      ? Number(state.clinicalReliability)
+      : legacyReputation;
+    const money = Number(state.money) || 0;
+    return {
+      ownerTrust,
+      clinicalReliability,
+      awareness: Number.isFinite(Number(state.awareness)) ? Number(state.awareness) : 30,
+      campaignFinance: state.campaignFinance || {
+        creditLimit: 2500,
+        debt: Math.max(0, -money),
+        weeklyReview: null,
+        closureRisk: "stable"
+      },
+      dailyLedger: Array.isArray(state.dailyLedger) ? state.dailyLedger : [],
+      equipmentCapabilities: state.equipmentCapabilities || {},
+      demandState: state.demandState || null,
+      campaignOutcome: state.campaignOutcome || null
+    };
+  }
+
+  function addCampaignDefaults(state) {
+    return { ...clone(state || {}), ...campaignDefaults(state) };
   }
 
   function hydratePatient(patient, catalog) {
@@ -106,15 +140,18 @@
     if (snapshot.generatorMode !== "tier-01-v2") {
       throw new Error(`Game save mode mismatch: expected tier-01-v2, got ${snapshot.generatorMode}`);
     }
-    if (snapshot.gameStateSaveVersion !== GAME_STATE_SAVE_VERSION) {
+    if (![GAME_STATE_SAVE_VERSION, PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION].includes(snapshot.gameStateSaveVersion)) {
       throw new Error(`Unsupported game save version: ${snapshot.gameStateSaveVersion ?? "missing"}`);
     }
-    if (!catalog) throw new Error("Tier 01 v2 catalog is required to migrate game save version 1");
+    if (!catalog) throw new Error(`Tier 01 v2 catalog is required to migrate game save version ${snapshot.gameStateSaveVersion}`);
+    const compactState = snapshot.gameStateSaveVersion === GAME_STATE_SAVE_VERSION
+      ? compactTierState(snapshot.state || {}, catalog)
+      : clone(snapshot.state || {});
     const migrated = {
       gameStateSaveVersion: TIER_01_V2_GAME_STATE_SAVE_VERSION,
       generatorMode: "tier-01-v2",
       savedAt: snapshot.savedAt || new Date().toISOString(),
-      state: compactTierState(snapshot.state || {}, catalog)
+      state: addCampaignDefaults(compactState)
     };
     validateSnapshot(migrated, "tier-01-v2");
     hydrateTierState(migrated.state, catalog);
@@ -138,7 +175,7 @@
       throw new Error(`Game save JSON is invalid: ${error.message}`);
     }
     let compactSnapshot = parsed;
-    if (mode === "tier-01-v2" && parsed.gameStateSaveVersion === GAME_STATE_SAVE_VERSION) {
+    if (mode === "tier-01-v2" && [GAME_STATE_SAVE_VERSION, PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION].includes(parsed.gameStateSaveVersion)) {
       compactSnapshot = migrateTierSnapshot(parsed, options.catalog);
       storage.setItem(key, JSON.stringify(compactSnapshot));
     }
@@ -153,11 +190,15 @@
 
   return {
     GAME_STATE_SAVE_VERSION,
+    PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION,
     TIER_01_V2_GAME_STATE_SAVE_VERSION,
     SERIALIZED_FIELDS,
+    TIER_01_V2_SERIALIZED_FIELDS,
     saveVersionForMode,
     compactPatient,
     compactTierState,
+    campaignDefaults,
+    addCampaignDefaults,
     hydratePatient,
     hydrateTierState,
     createSnapshot,

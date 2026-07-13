@@ -230,8 +230,14 @@
         <div class="money-block"><span class="coin-icon">V</span><strong id="moneyValue">0</strong><small>сегодня: <span id="todayRevenue">+0 V</span></small></div>
         <div class="calendar-block"><strong id="dateValue">День 1</strong><span id="timeValue">08:00</span><small>до закрытия <span id="closingTime">10 ч.</span></small></div>
         <div class="hud-buttons"><button id="pauseBtn" type="button" title="Пауза">II</button><button id="speedBtn" type="button" title="Скорость">1x</button><button id="nextPatientBtn" type="button" title="Следующий пациент">▶</button><button id="closeShiftBtn" type="button" title="Закрытие смены">■</button></div>
-        <div class="status-block"><div><span>Репутация клиники</span><strong id="reputationValue">0 / 100</strong></div><div class="meter"><i id="reputationMeter"></i></div><small id="reputationLabel">Новая клиника</small></div>
-        <div class="doctor-block"><strong id="doctorHudName">Смена не выбрана</strong><span>усталость <b id="doctorFatigue">0%</b></span><div class="meter fatigue-meter"><i id="doctorFatigueMeter"></i></div></div>
+        <div class="status-block">
+          <div class="clinic-metric-row"><span id="ownerTrustTitle">Репутация клиники</span><strong id="reputationValue">0 / 100</strong></div>
+          <div class="meter"><i id="reputationMeter"></i></div>
+          <div class="clinic-metric-row hidden" id="clinicalReliabilityRow"><span>Клиническая надёжность</span><strong id="clinicalReliabilityValue">0 / 100</strong></div>
+          <div class="meter hidden" id="clinicalReliabilityMeterTrack"><i id="clinicalReliabilityMeter"></i></div>
+          <small id="reputationLabel">Новая клиника</small>
+        </div>
+        <div class="doctor-block"><strong id="doctorHudName">Смена не выбрана</strong><span>усталость <b id="doctorFatigue">0%</b></span><div class="meter fatigue-meter"><i id="doctorFatigueMeter"></i></div><small id="doctorFatigueEffect">Без штрафа</small><small id="doctorFatigueForecast"></small></div>
         <div class="queue-summary"><strong id="queueValue">0 / 12</strong><span>ожидают приема</span></div>
         <div class="message-log" id="messageLog">Клиника открыта. Ожидаем первых пациентов.</div>
         <button class="settings-button" id="developerBtn" type="button" title="Режим разработчика" aria-label="Режим разработчика">⚙</button>
@@ -244,11 +250,12 @@
     <script src="systems/clinical-visit-state.js?v=20260713a" defer></script>
     <script src="systems/clinical-decisions-v2.js?v=20260713a" defer></script>
     <script src="systems/diagnostic-decisions-v2.js?v=20260713a" defer></script>
+    <script src="systems/campaign-mechanics-v2.js?v=20260713a" defer></script>
     <script src="generator/content-loader-v2.js?v=20260712b" defer></script>
     <script src="generator/generator-v2.js?v=20260713a" defer></script>
     <script src="generator/game-adapter-v2.js?v=20260713b" defer></script>
     <script src="generator/multi-diagnosis-engine-v2.js?v=20260713a" defer></script>
     <script src="generator/generator-mode.js?v=20260713a" defer></script>
-    <script src="game.js?v=20260713f" defer></script>
+    <script src="game.js?v=20260713g" defer></script>
   </body>
 </html>

@@ -1,8 +1,18 @@
 # Game State Save
 
-## Version
+## Versions
 
-The first implemented full game-state format is `gameStateSaveVersion: 1`. Earlier builds reserved keys but did not write a full game state, so there is no preceding serialized schema to migrate.
+`current` and `legacy-v1` remain on `gameStateSaveVersion: 1`.
+
+`tier-01-v2` uses `gameStateSaveVersion: 3`. Version 3 extends the compact version-2 snapshot with campaign mechanics state:
+
+- owner trust and clinical reliability;
+- awareness and reserved demand-director state;
+- campaign finance, credit limit and weekly review;
+- per-day ledgers and campaign outcome;
+- reserved equipment capability state.
+
+Tier snapshots from versions 1 and 2 migrate atomically to version 3. The migration derives both clinic metrics from the previous `reputation`, preserves queue, schedule, journal, pending returns and partial clinical actions, hydrates the complete candidate and only then writes it. A failed migration leaves the original key byte-for-byte unchanged.
 
 Unknown, missing or future versions are not loaded and are not overwritten during that browser session. A mode mismatch is handled the same way. This prevents a campaign from being silently reset or interpreted under another generator.
 
@@ -24,7 +34,7 @@ The whitelist includes:
 
 - current day and phase (`planning`, `running`, `closing`, `summary`);
 - clinic time, schedule and queue;
-- money, revenue, expenses and reputation events;
+- money, revenue, expenses and clinic metric events;
 - selected doctor, fatigue and shift history;
 - case journal, completed visits and pending returns;
 - daily goals and counters;
@@ -37,7 +47,7 @@ DOM nodes, canvas context, animation timestamps and transient departing sprites 
 
 Any change to the whitelist meaning or stored value shape requires:
 
-1. incrementing `GAME_STATE_SAVE_VERSION`;
+1. incrementing the save version for the affected mode;
 2. adding an explicit migration from every supported previous version;
 3. tests proving that queue, money, reputation, doctors, journal and pending returns survive;
 4. a browser reload smoke test in all three generator modes.

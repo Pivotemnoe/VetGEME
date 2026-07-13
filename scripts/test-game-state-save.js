@@ -59,4 +59,45 @@ assert.throws(() => saveApi.load(storage, "tier-01-v2"), /Unsupported game save 
 storage.setItem(incompatibleKey, JSON.stringify({ gameStateSaveVersion: 1, generatorMode: "current", state: {} }));
 assert.throws(() => saveApi.load(storage, "tier-01-v2"), /mode mismatch/);
 
+const previousV2 = {
+  gameStateSaveVersion: 2,
+  generatorMode: "tier-01-v2",
+  savedAt: "2026-07-12T12:00:00.000Z",
+  state: {
+    phase: "running",
+    day: 6,
+    money: -120,
+    reputation: 68,
+    queue: [],
+    arrivalSchedule: [],
+    caseJournal: [{ day: 5, visitId: "visit-5-1" }],
+    pendingReturns: [{ visitId: "visit-5-1", day: 7 }]
+  }
+};
+storage.setItem(incompatibleKey, JSON.stringify(previousV2));
+const migrated = saveApi.load(storage, "tier-01-v2", { catalog: {} });
+assert.equal(migrated.gameStateSaveVersion, 3);
+assert.equal(migrated.state.ownerTrust, 68);
+assert.equal(migrated.state.clinicalReliability, 68);
+assert.equal(migrated.state.campaignFinance.debt, 120);
+assert.deepEqual(migrated.state.caseJournal, previousV2.state.caseJournal);
+assert.deepEqual(migrated.state.pendingReturns, previousV2.state.pendingReturns);
+assert.equal(JSON.parse(storage.getItem(incompatibleKey)).gameStateSaveVersion, 3);
+
+const impossibleV2 = {
+  gameStateSaveVersion: 2,
+  generatorMode: "tier-01-v2",
+  state: {
+    queue: [{ id: 1, v2Visit: { caseId: "MISSING_CASE", contentPackHash: "missing" } }],
+    arrivalSchedule: []
+  }
+};
+const impossibleRaw = JSON.stringify(impossibleV2);
+storage.setItem(incompatibleKey, impossibleRaw);
+assert.throws(() => saveApi.load(storage, "tier-01-v2", { catalog: {} }));
+assert.equal(storage.getItem(incompatibleKey), impossibleRaw, "failed migration overwrote the source snapshot");
+
+assert.equal(saveApi.createSnapshot("current", { ownerTrust: 90, reputation: 70 }).state.ownerTrust, undefined);
+assert.equal(saveApi.createSnapshot("legacy-v1", { clinicalReliability: 90, reputation: 70 }).state.clinicalReliability, undefined);
+
 console.log("game state save: ok");

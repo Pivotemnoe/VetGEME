@@ -18,6 +18,7 @@
   const visitState = window.PET_CLINIC_VISIT_STATE;
   const clinicalDecisions = window.PET_CLINIC_CLINICAL_DECISIONS_V2;
   const diagnosticDecisions = window.PET_CLINIC_DIAGNOSTIC_DECISIONS_V2;
+  const campaignMechanics = window.PET_CLINIC_CAMPAIGN_MECHANICS_V2;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
 
@@ -785,6 +786,14 @@
     dayEnd: STANDARD_DAY_END,
     money: 1350,
     reputation: 74,
+    ownerTrust: 74,
+    clinicalReliability: 74,
+    awareness: 30,
+    campaignFinance: { creditLimit: 2500, debt: 0, weeklyReview: null, closureRisk: "stable" },
+    dailyLedger: [],
+    equipmentCapabilities: {},
+    demandState: null,
+    campaignOutcome: null,
     queue: [],
     activeId: null,
     nextPatientId: 1,
@@ -988,6 +997,11 @@
     reputationMeter: document.getElementById("reputationMeter"),
     reputationValue: document.getElementById("reputationValue"),
     reputationLabel: document.getElementById("reputationLabel"),
+    ownerTrustTitle: document.getElementById("ownerTrustTitle"),
+    clinicalReliabilityRow: document.getElementById("clinicalReliabilityRow"),
+    clinicalReliabilityValue: document.getElementById("clinicalReliabilityValue"),
+    clinicalReliabilityMeterTrack: document.getElementById("clinicalReliabilityMeterTrack"),
+    clinicalReliabilityMeter: document.getElementById("clinicalReliabilityMeter"),
     queueValue: document.getElementById("queueValue"),
     messageLog: document.getElementById("messageLog"),
     developerBtn: document.getElementById("developerBtn"),
@@ -1010,6 +1024,8 @@
     doctorHudName: document.getElementById("doctorHudName"),
     doctorFatigue: document.getElementById("doctorFatigue"),
     doctorFatigueMeter: document.getElementById("doctorFatigueMeter"),
+    doctorFatigueEffect: document.getElementById("doctorFatigueEffect"),
+    doctorFatigueForecast: document.getElementById("doctorFatigueForecast"),
     devResolvePatientBtn: document.getElementById("devResolvePatientBtn"),
     devFinishDayBtn: document.getElementById("devFinishDayBtn"),
     tutorialGuide: document.getElementById("tutorialGuide"),
@@ -1473,10 +1489,49 @@
     return state.doctors.find((doctor) => doctor.id === state.selectedDoctorId) || state.doctors[0];
   }
 
+  function currentDailyLedger(create = false) {
+    if (!isTier01V2()) return null;
+    let ledger = state.dailyLedger.find((item) => item.day === state.day);
+    if (!ledger && create) {
+      const doctor = currentDoctor();
+      ledger = campaignMechanics.createDailyLedger({
+        day: state.day,
+        ownerTrust: state.ownerTrust,
+        clinicalReliability: state.clinicalReliability,
+        doctorId: doctor?.id,
+        fatigue: doctor?.fatigue
+      });
+      state.dailyLedger.push(ledger);
+    }
+    return ledger || null;
+  }
+
   function adjustedActionMinutes(minutes) {
     const doctor = currentDoctor();
+    if (isTier01V2() && campaignMechanics) {
+      return campaignMechanics.adjustedActionMinutes(minutes, doctor.fatigue);
+    }
     const multiplier = 1 + doctor.fatigue / 180;
     return Math.max(1, Math.round(minutes * multiplier));
+  }
+
+  function fatigueForecastFor(doctor = currentDoctor(), plan = currentPlan()) {
+    if (!isTier01V2() || !campaignMechanics) return null;
+    const remainingShiftMinutes = Math.max(0, state.dayEnd - state.minute);
+    const waitingWork = waitingPatients().length * 24;
+    const scheduledWork = state.dayStarted
+      ? state.arrivalSchedule.length * 24
+      : (plan?.patients?.length || 0) * 24;
+    const closingLoad = 12
+      + (state.hoursMode === "extended" ? 10 : 0)
+      + (state.shiftExtended ? 8 : 0)
+      + Math.max(0, doctor.consecutiveShifts - 1) * 5;
+    return campaignMechanics.forecastFatigue({
+      fatigue: doctor.fatigue,
+      remainingShiftMinutes,
+      expectedActiveWorkMinutes: waitingWork + scheduledWork,
+      closingLoad
+    });
   }
 
   function maxAllowedSpeed() {
@@ -1578,6 +1633,10 @@
   }
 
   function changeReputation(delta, reason) {
+    if (isTier01V2()) {
+      changeOwnerTrust(delta, reason);
+      return;
+    }
     const before = state.reputation;
     state.reputation = clamp(state.reputation + delta, 0, 100);
     const applied = state.reputation - before;
@@ -1586,7 +1645,36 @@
   }
 
   function reputationDeltaToday() {
+    if (isTier01V2()) {
+      const ledger = currentDailyLedger();
+      return state.ownerTrust - (ledger?.ownerTrustStart ?? state.ownerTrust);
+    }
     return state.reputation - state.reputationStartToday;
+  }
+
+  function changeOwnerTrust(delta, reason) {
+    const before = state.ownerTrust;
+    state.ownerTrust = clamp(state.ownerTrust + delta, 0, 100);
+    state.reputation = state.ownerTrust;
+    const applied = state.ownerTrust - before;
+    if (Math.abs(applied) < 0.01) return;
+    const ledger = currentDailyLedger(true);
+    ledger.ownerTrustEnd = state.ownerTrust;
+    ledger.ownerTrustEvents.push({ delta: applied, reason });
+  }
+
+  function changeClinicalReliability(delta, reason) {
+    if (!isTier01V2()) {
+      changeReputation(delta, reason);
+      return;
+    }
+    const before = state.clinicalReliability;
+    state.clinicalReliability = clamp(state.clinicalReliability + delta, 0, 100);
+    const applied = state.clinicalReliability - before;
+    if (Math.abs(applied) < 0.01) return;
+    const ledger = currentDailyLedger(true);
+    ledger.clinicalReliabilityEnd = state.clinicalReliability;
+    ledger.clinicalReliabilityEvents.push({ delta: applied, reason });
   }
 
   function spendVisitTime(patient, minutes) {
@@ -1631,7 +1719,13 @@
       age: 0,
       patience: clamp(30 + profile.visitLimit * 0.35 + (Math.random() - 0.5) * 8, 34, 58),
       mood: 100,
-      trust: clamp(profile.trust + Math.round((Math.random() - 0.5) * 10), 12, 95),
+      trust: clamp(
+        profile.trust
+          + (isTier01V2() ? (state.ownerTrust - 74) * 0.25 : 0)
+          + Math.round((Math.random() - 0.5) * 10),
+        12,
+        95
+      ),
       anxiety: clamp(profile.anxiety + Math.round((Math.random() - 0.5) * 8), 8, 96),
       irritation: clamp((profile.id === "conflict" ? 58 : profile.id === "internet" ? 42 : 16) + Math.round((Math.random() - 0.5) * 8), 4, 90),
       visitTimeUsed: 0,
@@ -2081,6 +2175,8 @@
     state.money += testFee;
     state.revenueToday += testFee;
     state.diagnosticRevenueToday += testFee;
+    const ledger = currentDailyLedger(true);
+    if (ledger) ledger.diagnosticRevenue += testFee;
     state.microscopyToday += 1;
     const decisionRecord = options.decisionRecord || [...(patient.diagnosticDecisions || [])]
       .reverse().find((record) => record.acceptedTestIds?.includes(approvedTest?.id) && record.resultStatus !== "completed");
@@ -2089,7 +2185,10 @@
       decisionRecord.chargedVetcoins = testFee;
       decisionRecord.resultRefId = approvedTest?.id || null;
     }
-    if (approvedTest?.classification === "low_value") adjustTrust(patient, -3);
+    if (approvedTest?.classification === "low_value") {
+      adjustTrust(patient, -3);
+      if (isTier01V2()) changeOwnerTrust(-0.25, "малоценное исследование не изменило решение");
+    }
     if (!patient.v2Visit || ["laboratory", "system_low_value"].includes(approvedTest?.type)) startDoctorLabTrip();
     setLog(`Исследование выполнено и оплачено: +${testFee} V.`);
     if (tutorialPatient(patient)) advanceTutorial("test", `${approvedTest?.label || "Исследование"}: результат получен.`);
@@ -2295,10 +2394,13 @@
       : patient.selectedCommunicationId === patient.ownerProfile.prefers;
     state.money += total;
     state.revenueToday += total;
+    const ledger = currentDailyLedger(true);
+    if (ledger) ledger.consultationRevenue += total;
     state.treatedToday += 1;
     if (patient.eventLabel) state.handledSpecialEventsToday += 1;
     if (patient.returnVisit) incrementGoal("returns");
-    let reputationChange = 0;
+    let ownerTrustChange = 0;
+    let clinicalReliabilityChange = 0;
     let risk = result.returnRisk;
     let effectiveQuality = result.quality;
 
@@ -2308,65 +2410,70 @@
 
     if (patient.urgency === "urgent" && patient.selectedUrgency !== "urgent") {
       risk += 0.2;
-      reputationChange -= 2;
+      clinicalReliabilityChange -= 2;
     }
 
     const overtime = Math.max(0, patient.visitTimeUsed - patient.visitTimeLimit);
     if (overtime > 0) {
       risk += Math.min(0.12, overtime / 100);
-      if (overtime >= 12) reputationChange -= 1;
+      if (overtime >= 12) ownerTrustChange -= 1;
       patient.findings.push(`Прием занял ${patient.visitTimeUsed} минут при комфортном лимите ${patient.visitTimeLimit} минут.`);
     }
 
     if (!patient.selectedDiagnosisId) {
       risk += 0.14;
       state.mistakesToday += 1;
-      reputationChange -= 1;
+      clinicalReliabilityChange -= 1;
       effectiveQuality = "wrong";
     } else if (!diagnosisCorrect) {
       risk += 0.18;
       state.mistakesToday += 1;
-      reputationChange -= patient.returnVisit ? 3 : 1;
+      clinicalReliabilityChange -= patient.returnVisit ? 3 : 1;
       effectiveQuality = result.quality === "correct" ? "partial" : result.quality;
     }
 
     if (total > patient.budget) {
       risk += 0.1;
-      reputationChange -= patient.ownerProfile.id === "budget" ? 2 : 1;
+      ownerTrustChange -= patient.ownerProfile.id === "budget" ? 2 : 1;
       patient.findings.push("Владелец согласился, но лечение оказалось выше комфортного бюджета.");
     }
 
     if (!patient.selectedCommunicationId) {
       risk += 0.1 + patient.ownerProfile.anxiety / 1000;
-      reputationChange -= patient.ownerProfile.id === "anxious" ? 2 : 1;
+      ownerTrustChange -= patient.ownerProfile.id === "anxious" ? 2 : 1;
       patient.findings.push("Назначения даны без отдельного объяснения владельцу.");
     } else if (communicationMatch) {
       risk = Math.max(0, risk - 0.06);
-      reputationChange += 0.35;
+      ownerTrustChange += 0.35;
     } else {
       risk += 0.04;
     }
 
     if (effectiveQuality === "correct") {
-      reputationChange += patient.returnVisit ? 1 : 0.45;
+      clinicalReliabilityChange += patient.returnVisit ? 1 : 0.45;
     } else if (effectiveQuality === "partial") {
       if (diagnosisCorrect) state.mistakesToday += 1;
-      reputationChange -= patient.returnVisit ? 2 : 0;
+      clinicalReliabilityChange -= patient.returnVisit ? 2 : 0;
     } else {
       if (diagnosisCorrect) state.mistakesToday += 1;
-      reputationChange -= patient.returnVisit ? 4 : 1;
+      clinicalReliabilityChange -= patient.returnVisit ? 4 : 1;
     }
 
     const reputationReason = effectiveQuality === "correct"
       ? "корректно завершенный прием"
       : effectiveQuality === "partial" ? "неполный результат лечения" : "ошибка в лечении";
-    changeReputation(reputationChange, reputationReason);
+    if (isTier01V2()) {
+      changeOwnerTrust(ownerTrustChange, reputationReason);
+      changeClinicalReliability(clinicalReliabilityChange, reputationReason);
+    } else {
+      changeReputation(ownerTrustChange + clinicalReliabilityChange, reputationReason);
+    }
     if (patient.diseaseId === "urinaryObstruction"
       && patient.selectedUrgency === "urgent"
       && diagnosisCorrect
       && treatment.id === "urgentReferral") {
       incrementGoal("urgent");
-      changeReputation(2, "срочный пациент безопасно направлен");
+      changeClinicalReliability(2, "срочный пациент безопасно направлен");
     }
     if (Math.random() < risk) {
       state.pendingReturns.push({ diseaseId: patient.diseaseId, day: state.day + 1 });
@@ -2566,7 +2673,13 @@
       const fatigue = document.createElement("span");
       fatigue.textContent = `Усталость: ${Math.round(doctor.fatigue)}% · смен подряд: ${doctor.consecutiveShifts}/${MAX_CONSECUTIVE_SHIFTS}`;
       const note = document.createElement("small");
-      note.textContent = unavailable ? "После трех смен подряд врачу нужен выходной." : doctor.note;
+      const effect = isTier01V2() ? campaignMechanics.fatigueEffect(doctor.fatigue) : null;
+      const recovery = isTier01V2() ? campaignMechanics.expectedRecovery(doctor.fatigue, 1) : null;
+      note.textContent = unavailable
+        ? "После трех смен подряд врачу нужен выходной."
+        : effect
+          ? `${effect.label}. После дня отдыха: ${Math.round(recovery.afterRest)}%.`
+          : doctor.note;
       copy.append(name, fatigue, note);
       button.append(avatar, copy);
       button.addEventListener("click", () => {
@@ -2578,7 +2691,13 @@
     const selectedMode = document.querySelector(`input[name="hoursMode"][value="${state.hoursMode}"]`);
     if (selectedMode) selectedMode.checked = true;
     const extendedMode = document.querySelector('input[name="hoursMode"][value="extended"]');
-    if (extendedMode) extendedMode.disabled = state.day <= campaignDayCount();
+    if (extendedMode) {
+      const fatigueBlocksExtension = isTier01V2() && !campaignMechanics.fatigueEffect(currentDoctor().fatigue).canExtendShift;
+      extendedMode.disabled = state.day <= campaignDayCount() || fatigueBlocksExtension;
+      const description = extendedMode.closest("label")?.querySelector("small");
+      if (description && fatigueBlocksExtension) description.textContent = "Недоступно при усталости 80% и выше";
+      else if (description) description.textContent = "Откроется после первой недели";
+    }
   }
 
   function renderShiftForecast(plan) {
@@ -2689,6 +2808,12 @@
     doctor.shiftsWorked += 1;
     doctor.consecutiveShifts = doctor.lastShiftDay === state.day - 1 ? doctor.consecutiveShifts + 1 : 1;
     doctor.lastShiftDay = state.day;
+    const ledger = currentDailyLedger(true);
+    if (ledger) {
+      ledger.status = "running";
+      ledger.doctorId = doctor.id;
+      ledger.fatigueStart = doctor.fatigue;
+    }
     if (state.hoursMode === "extended") addDoctorFatigue(5);
     el.shiftWindow.classList.add("hidden");
 
@@ -2725,13 +2850,22 @@
       `<b>Усталость ${currentDoctor().shortName}:</b> ${Math.round(currentDoctor().fatigue)}%.`,
       `<b>Текущее время:</b> ${formatClinicTime(state.minute)}.`
     ].join("<br>");
-    el.extendShiftBtn.disabled = state.shiftExtended;
+    const fatigueEffect = isTier01V2() ? campaignMechanics.fatigueEffect(currentDoctor().fatigue) : null;
+    el.extendShiftBtn.disabled = state.shiftExtended || Boolean(fatigueEffect && !fatigueEffect.canExtendShift);
+    el.extendShiftBtn.title = fatigueEffect && !fatigueEffect.canExtendShift
+      ? "Продление недоступно при усталости 80% и выше"
+      : "Продлить смену на 60 минут";
     el.finishShiftBtn.disabled = urgent > 0;
     el.closeShiftWindow.classList.remove("hidden");
     persistGameState(true);
   }
 
   function extendShift() {
+    if (isTier01V2() && !campaignMechanics.fatigueEffect(currentDoctor().fatigue).canExtendShift) {
+      setLog("Продление смены недоступно: усталость врача достигла 80%.");
+      renderAll();
+      return;
+    }
     state.dayEnd += 60;
     state.shiftExtended = true;
     addDoctorFatigue(8);
@@ -2799,13 +2933,62 @@
     state.expensesToday = payroll + rentAndUtilities + supplies;
     state.money -= state.expensesToday;
     const net = state.revenueToday - state.expensesToday;
-    addDoctorFatigue(12 + (state.hoursMode === "extended" ? 10 : 0) + (state.shiftExtended ? 8 : 0) + Math.max(0, doctor.consecutiveShifts - 1) * 5);
+    const fatigueBeforeClosing = doctor.fatigue;
+    const closingFatigueLoad = 12
+      + (state.hoursMode === "extended" ? 10 : 0)
+      + (state.shiftExtended ? 8 : 0)
+      + Math.max(0, doctor.consecutiveShifts - 1) * 5;
+    addDoctorFatigue(closingFatigueLoad);
     state.doctors.forEach((item) => {
       if (item.id !== doctor.id) {
         item.fatigue = clamp(item.fatigue - 16, 0, 100);
         item.consecutiveShifts = 0;
       }
     });
+    const ledger = currentDailyLedger(true);
+    if (ledger) {
+      ledger.status = "closed";
+      ledger.diagnosticRevenue = state.diagnosticRevenueToday;
+      ledger.consultationRevenue = state.revenueToday - state.diagnosticRevenueToday;
+      ledger.procedureCost = supplies;
+      ledger.payroll = payroll;
+      ledger.maintenance = rentAndUtilities;
+      ledger.net = campaignMechanics.calculateLedgerNet(ledger);
+      ledger.ownerTrustEnd = state.ownerTrust;
+      ledger.clinicalReliabilityEnd = state.clinicalReliability;
+      ledger.fatigueBeforeClosing = fatigueBeforeClosing;
+      ledger.closingFatigueLoad = closingFatigueLoad;
+      ledger.fatigueEnd = doctor.fatigue;
+      state.campaignFinance.debt = Math.max(0, -state.money);
+      if (state.day % 7 === 0) {
+        state.campaignFinance.weeklyReview = campaignMechanics.weeklyFinancialReview({
+          day: state.day,
+          money: state.money,
+          mandatoryExpenses: payroll + rentAndUtilities,
+          creditLimit: state.campaignFinance.creditLimit
+        });
+        state.campaignFinance.closureRisk = state.campaignFinance.weeklyReview.closureRisk;
+      }
+      if (state.day >= 30) {
+        state.campaignOutcome = {
+          ...campaignMechanics.evaluateCampaignOutcome({
+            day: state.day,
+            money: state.money,
+            creditLimit: state.campaignFinance.creditLimit,
+            clinicalReliability: state.clinicalReliability,
+            mandatoryTrainingComplete: state.tutorialComplete
+          }),
+          ownerTrust: state.ownerTrust,
+          clinicalReliability: state.clinicalReliability,
+          developmentHistory: state.dailyLedger.map((item) => ({
+            day: item.day,
+            net: item.net,
+            ownerTrust: item.ownerTrustEnd,
+            clinicalReliability: item.clinicalReliabilityEnd
+          }))
+        };
+      }
+    }
     const goalsHtml = goals.length
       ? goals.map((goal) => `${goalComplete(goal) ? "Выполнено" : "Не выполнено"}: ${goal.label} (${goalProgress(goal)}/${goal.target})`).join("<br>")
       : "Свободный режим без сюжетных целей.";
@@ -2818,20 +3001,48 @@
       ? Object.entries(reputationByReason).map(([reason, delta]) => `${delta > 0 ? "+" : ""}${delta.toFixed(1)} — ${reason}`).join("<br>")
       : "Изменений не было.";
     state.chapterComplete = state.day === campaignDayCount();
-    state.summaryTitle = state.chapterComplete ? "Первая глава завершена" : `День ${state.day} завершен`;
-    state.summaryHtml = [
-      `<b>${plan ? plan.title : "Свободная смена"}</b>`,
-      `Врач: <b>${doctor.name}</b>. Усталость после смены: <b>${Math.round(doctor.fatigue)}%</b>.`,
-      `Посетителей пришло: <b>${state.arrivalsToday} из ${state.plannedArrivalsToday}</b>. Принято: <b>${state.treatedToday}</b>. Ушло без приема: <b>${state.lostToday}</b>.`,
-      state.specialEventsToday ? `Особые события: <b>${state.handledSpecialEventsToday}/${state.specialEventsToday}</b> обработано.` : "",
-      `Доход: <b>${formatMoney(state.revenueToday)} V</b>. Расходы: <b>${formatMoney(state.expensesToday)} V</b>. Итог: <b>${net >= 0 ? "+" : ""}${formatMoney(net)} V</b>.`,
-      `Исследования: <b>${state.microscopyToday}</b>, доход от них: <b>${formatMoney(state.diagnosticRevenueToday)} V</b>.`,
-      `Репутация: <b>${state.reputation.toFixed(1)}/100</b> (${reputationDelta >= 0 ? "+" : ""}${reputationDelta.toFixed(1)} за день).<br>${reputationReasons}`,
-      `Цели: <b>${completedGoals}/${goals.length}</b>.<br>${goalsHtml}`
-    ].filter(Boolean).join("<br>");
+    if (state.day === 30 && state.campaignOutcome?.completed) {
+      state.summaryTitle = state.campaignOutcome.success ? "Кампания завершена успешно" : "Кампания завершена";
+    } else {
+      state.summaryTitle = state.chapterComplete ? "Первая глава завершена" : `День ${state.day} завершен`;
+    }
+    if (ledger) {
+      const ownerDelta = ledger.ownerTrustEnd - ledger.ownerTrustStart;
+      const reliabilityDelta = ledger.clinicalReliabilityEnd - ledger.clinicalReliabilityStart;
+      const fatigueDuringShift = Math.max(0, fatigueBeforeClosing - ledger.fatigueStart);
+      const weekly = state.day % 7 === 0 ? state.campaignFinance.weeklyReview : null;
+      const weeklyRiskLabels = { stable: "стабильный", elevated: "повышенный", high: "высокий", critical: "критический" };
+      state.summaryHtml = [
+        `<b>${plan ? plan.title : "Свободная смена"}</b>`,
+        `Врач: <b>${doctor.name}</b>. Усталость: ${Math.round(ledger.fatigueStart)}% → ${Math.round(fatigueBeforeClosing)}% за работу (+${Math.round(fatigueDuringShift)}), закрытие смены +${Math.round(closingFatigueLoad)}, итог <b>${Math.round(doctor.fatigue)}%</b>. После дня отдыха ожидается ${Math.round(campaignMechanics.expectedRecovery(doctor.fatigue, 1).afterRest)}%.`,
+        `Посетителей пришло: <b>${state.arrivalsToday} из ${state.plannedArrivalsToday}</b>. Принято: <b>${state.treatedToday}</b>. Ушло без приема: <b>${state.lostToday}</b>.`,
+        state.specialEventsToday ? `Особые события: <b>${state.handledSpecialEventsToday}/${state.specialEventsToday}</b> обработано.` : "",
+        `Доход приёмов: <b>${formatMoney(ledger.consultationRevenue)} V</b>. Доход исследований: <b>${formatMoney(ledger.diagnosticRevenue)} V</b>.`,
+        `Стоимость процедур: <b>${formatMoney(ledger.procedureCost)} V</b>. Зарплаты: <b>${formatMoney(ledger.payroll)} V</b>. Обслуживание: <b>${formatMoney(ledger.maintenance)} V</b>.`,
+        `Возвраты: <b>${formatMoney(ledger.refunds)} V</b>. Бесплатные повторные приёмы: <b>${ledger.freeRechecks}</b> (${formatMoney(ledger.freeRecheckValue)} V).`,
+        `Итог дня: <b>${ledger.net >= 0 ? "+" : ""}${formatMoney(ledger.net)} V</b>. Баланс: <b>${formatMoney(state.money)} V</b>. Долг: <b>${formatMoney(state.campaignFinance.debt)} V</b> из ${formatMoney(state.campaignFinance.creditLimit)} V.`,
+        `Доверие владельцев: <b>${state.ownerTrust.toFixed(1)}/100</b> (${ownerDelta >= 0 ? "+" : ""}${ownerDelta.toFixed(1)}). Клиническая надёжность: <b>${state.clinicalReliability.toFixed(1)}/100</b> (${reliabilityDelta >= 0 ? "+" : ""}${reliabilityDelta.toFixed(1)}).`,
+        weekly ? `Недельная финансовая проверка: риск закрытия <b>${weeklyRiskLabels[weekly.closureRisk]}</b>, обязательные расходы следующей смены ${formatMoney(weekly.mandatoryExpenses)} V, доступный кредит ${formatMoney(weekly.remainingCredit)} V.${weekly.recoveryMeasures.length ? ` Меры: ${weekly.recoveryMeasures.join(", ")}.` : ""}` : "",
+        state.day === 30 && state.campaignOutcome?.completed ? `Итог кампании: <b>${state.campaignOutcome.success ? "условия успеха выполнены" : "не все условия успеха выполнены"}</b>. Клиническая оценка: ${state.campaignOutcome.clinicalAssessment}. Финансовая оценка: ${state.campaignOutcome.financialAssessment}. Доступен свободный режим.` : "",
+        `Цели: <b>${completedGoals}/${goals.length}</b>.<br>${goalsHtml}`
+      ].filter(Boolean).join("<br>");
+    } else {
+      state.summaryHtml = [
+        `<b>${plan ? plan.title : "Свободная смена"}</b>`,
+        `Врач: <b>${doctor.name}</b>. Усталость после смены: <b>${Math.round(doctor.fatigue)}%</b>.`,
+        `Посетителей пришло: <b>${state.arrivalsToday} из ${state.plannedArrivalsToday}</b>. Принято: <b>${state.treatedToday}</b>. Ушло без приема: <b>${state.lostToday}</b>.`,
+        state.specialEventsToday ? `Особые события: <b>${state.handledSpecialEventsToday}/${state.specialEventsToday}</b> обработано.` : "",
+        `Доход: <b>${formatMoney(state.revenueToday)} V</b>. Расходы: <b>${formatMoney(state.expensesToday)} V</b>. Итог: <b>${net >= 0 ? "+" : ""}${formatMoney(net)} V</b>.`,
+        `Исследования: <b>${state.microscopyToday}</b>, доход от них: <b>${formatMoney(state.diagnosticRevenueToday)} V</b>.`,
+        `Репутация: <b>${state.reputation.toFixed(1)}/100</b> (${reputationDelta >= 0 ? "+" : ""}${reputationDelta.toFixed(1)} за день).<br>${reputationReasons}`,
+        `Цели: <b>${completedGoals}/${goals.length}</b>.<br>${goalsHtml}`
+      ].filter(Boolean).join("<br>");
+    }
     el.summaryTitle.textContent = state.summaryTitle;
     el.summaryText.innerHTML = state.summaryHtml;
-    el.nextDayBtn.textContent = state.chapterComplete ? "Продолжить после главы" : "Планировать следующий день";
+    el.nextDayBtn.textContent = state.day === 30 && state.campaignOutcome?.completed
+      ? "Продолжить в свободной игре"
+      : state.chapterComplete ? "Продолжить после главы" : "Планировать следующий день";
     el.summaryWindow.classList.remove("hidden");
     renderAll();
     persistGameState(true);
@@ -2852,6 +3063,16 @@
     if (previous && previous.id !== patientId && isPatientInConsult(previous)) {
       setLog(`${previous.animal} ещё находится в кабинете. Сначала завершите текущий приём.`);
       el.caseWindow.classList.remove("hidden");
+      renderAll();
+      return;
+    }
+    const requestedPatient = state.queue.find((patient) => patient.id === patientId);
+    if (isTier01V2()
+      && requestedPatient
+      && requestedPatient.urgency !== "urgent"
+      && !isPatientInConsult(requestedPatient)
+      && !campaignMechanics.fatigueEffect(currentDoctor().fatigue).canStartRoutineVisit) {
+      setLog("Усталость врача 100%: новый обычный приём начать нельзя. Завершите смену или безопасно направьте срочного пациента.");
       renderAll();
       return;
     }
@@ -3432,10 +3653,22 @@
     el.dateValue.textContent = `День ${state.day}/30`;
     el.timeValue.textContent = formatClinicTime(state.minute);
     el.closingTime.textContent = `${Math.max(0, Math.ceil((state.dayEnd - state.minute) / 60))} ч.`;
-    el.reputationMeter.style.width = `${state.reputation}%`;
-    el.reputationValue.textContent = `${state.reputation.toFixed(1)} / 100`;
+    const tierMetrics = isTier01V2();
+    const displayedTrust = tierMetrics ? state.ownerTrust : state.reputation;
+    el.ownerTrustTitle.textContent = tierMetrics ? "Доверие владельцев" : "Репутация клиники";
+    el.reputationMeter.style.width = `${displayedTrust}%`;
+    el.reputationValue.textContent = `${displayedTrust.toFixed(1)} / 100`;
+    el.clinicalReliabilityRow.classList.toggle("hidden", !tierMetrics);
+    el.clinicalReliabilityMeterTrack.classList.toggle("hidden", !tierMetrics);
+    if (tierMetrics) {
+      el.clinicalReliabilityMeter.style.width = `${state.clinicalReliability}%`;
+      el.clinicalReliabilityValue.textContent = `${state.clinicalReliability.toFixed(1)} / 100`;
+    }
     const reputationDelta = reputationDeltaToday();
-    const lastReputationEvent = state.reputationEvents[state.reputationEvents.length - 1];
+    const ledger = currentDailyLedger();
+    const lastReputationEvent = tierMetrics
+      ? ledger?.ownerTrustEvents?.[ledger.ownerTrustEvents.length - 1]
+      : state.reputationEvents[state.reputationEvents.length - 1];
     el.reputationLabel.textContent = lastReputationEvent
       ? `${reputationDelta >= 0 ? "+" : ""}${reputationDelta.toFixed(1)} сегодня · ${lastReputationEvent.reason}`
       : "Сегодня без изменений";
@@ -3443,6 +3676,18 @@
     el.doctorHudName.textContent = state.dayStarted ? doctor.shortName : "Смена не открыта";
     el.doctorFatigue.textContent = `${Math.round(doctor.fatigue)}%`;
     el.doctorFatigueMeter.style.width = `${doctor.fatigue}%`;
+    if (tierMetrics && campaignMechanics) {
+      const effect = campaignMechanics.fatigueEffect(doctor.fatigue);
+      const forecast = fatigueForecastFor(doctor, null);
+      const recovery = campaignMechanics.expectedRecovery(doctor.fatigue, 1);
+      el.doctorFatigueEffect.textContent = effect.label;
+      el.doctorFatigueForecast.textContent = state.dayStarted
+        ? `прогноз: ${Math.round(forecast.projected)}% · после отдыха: ${Math.round(recovery.afterRest)}%`
+        : `после дня отдыха: ${Math.round(recovery.afterRest)}%`;
+    } else {
+      el.doctorFatigueEffect.textContent = "";
+      el.doctorFatigueForecast.textContent = "";
+    }
     el.pauseBtn.textContent = state.paused ? "▶" : "II";
     el.speedBtn.textContent = `${state.speed}x`;
     el.speedBtn.title = maxAllowedSpeed() < 4
