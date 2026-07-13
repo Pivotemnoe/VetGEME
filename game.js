@@ -16,6 +16,7 @@
   let campaign = window.PET_CLINIC_CAMPAIGN;
   let generatorRuntime = { mode: "current", catalog: null, generator: null };
   const visitState = window.PET_CLINIC_VISIT_STATE;
+  const clinicalDecisions = window.PET_CLINIC_CLINICAL_DECISIONS_V2;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
 
@@ -120,28 +121,13 @@
     }
   ];
 
-  const communicationOptions = [
-    {
-      id: "calmDetailed",
-      label: "Спокойно и подробно",
-      note: "Обсудить, что известно, что пока неясно и что делать дальше."
-    },
-    {
-      id: "riskFocus",
-      label: "Объяснить риски",
-      note: "Сначала обозначить опасные признаки и сроки повторного обращения."
-    },
-    {
-      id: "budgetPlan",
-      label: "План с учетом бюджета",
-      note: "Разделить обязательный минимум и дополнительные шаги."
-    },
-    {
-      id: "strict",
-      label: "Коротко и строго",
-      note: "Дать короткие пункты и попросить владельца повторить план."
-    }
+  const legacyCommunicationOptions = [
+    { id: "calmDetailed", label: "Спокойно и подробно", note: "Обсудить, что известно, что пока неясно и что делать дальше." },
+    { id: "riskFocus", label: "Объяснить риски", note: "Сначала обозначить опасные признаки и сроки повторного обращения." },
+    { id: "budgetPlan", label: "План с учетом бюджета", note: "Разделить обязательный минимум и дополнительные шаги." },
+    { id: "strict", label: "Коротко и строго", note: "Дать короткие пункты и попросить владельца повторить план." }
   ];
+  const communicationOptions = clinicalDecisions.COMMUNICATION_OPTIONS;
 
   const localExamOptions = [
     { id: "ears", label: "Отоскопия и осмотр ушей", time: 4 },
@@ -956,6 +942,11 @@
     reviewSupporting: document.getElementById("reviewSupporting"),
     reviewMissing: document.getElementById("reviewMissing"),
     reviewAssessment: document.getElementById("reviewAssessment"),
+    reviewTreatmentCoverage: document.getElementById("reviewTreatmentCoverage"),
+    reviewUnnecessaryTreatment: document.getElementById("reviewUnnecessaryTreatment"),
+    reviewClinicalSafety: document.getElementById("reviewClinicalSafety"),
+    reviewCommunicationQuality: document.getElementById("reviewCommunicationQuality"),
+    reviewOwnerDecision: document.getElementById("reviewOwnerDecision"),
     planList: document.getElementById("planList"),
     patientFacts: document.getElementById("patientFacts"),
     stressMeter: document.getElementById("stressMeter"),
@@ -1092,7 +1083,7 @@
   }
 
   function communicationLabel(id) {
-    const communication = communicationOptions.find((item) => item.id === id);
+    const communication = [...communicationOptions, ...legacyCommunicationOptions].find((item) => item.id === id);
     return communication ? communication.label : "";
   }
 
@@ -1330,6 +1321,7 @@
 
   function ownerStatusFor(patient) {
     if (patient.carePlanAgreed) {
+      if (patient.ownerPlanDecision?.decisionText) return patient.ownerPlanDecision.decisionText;
       if (patient.selectedTreatment?.planType === "owner_refusal") return "владелец отказался";
       const total = diseaseFor(patient).baseFee + (patient.selectedTreatment?.fee || 0);
       if (total > patient.budget) return "принял назначения частично";
@@ -1960,25 +1952,57 @@
   function selectCommunication(option) {
     const patient = activePatient();
     if (!patient) return;
+    if (!patient.v2Visit) {
+      patient.selectedCommunicationId = option.id;
+      patient.explanationDone = true;
+      recordClinical(patient, "carePlan", option.note);
+      const preferred = option.id === patient.ownerProfile.prefers;
+      let trustDelta = preferred ? 8 : 2;
+      if (option.id === "strict" && patient.ownerProfile.id === "anxious") trustDelta = -4;
+      if (option.id === "budgetPlan" && patient.ownerProfile.id === "budget") trustDelta = 10;
+      if (currentDoctor().fatigue >= 70) trustDelta -= 2;
+      adjustTrust(patient, trustDelta);
+      if (preferred) adjustOwnerState(patient, -10, -8);
+      else adjustOwnerState(patient, 3, 6);
+      incrementGoal("explained");
+      setLog("Результат объяснен владельцу. Реакция отражена в шкале доверия.");
+      closeChoice();
+      passTime(4);
+      return;
+    }
+    const communicationResult = clinicalDecisions.evaluateCommunication(option, {
+      trust: patient.trust,
+      anxiety: patient.anxiety,
+      irritation: patient.irritation,
+      comprehension: patient.ownerComprehension ?? Math.round(patient.ownerProfile.reliability * 100),
+      adherence: patient.ownerAdherence ?? Math.round(patient.ownerProfile.reliability * 100),
+      budget: patient.budget,
+      budgetDiscussed: patient.budgetAsked,
+      budgetLimited: ["budget", "budget_limited"].includes(patient.ownerProfile.id),
+      underestimatesRisk: patient.ownerProfile.id === "inattentive"
+    }, {
+      complexPlan: (patient.v2Visit?.medicalContent.planOptions[0]?.steps.length || 0) >= 4,
+      totalCost: diseaseFor(patient).baseFee,
+      doctorFatigue: currentDoctor().fatigue
+    });
     patient.selectedCommunicationId = option.id;
     patient.explanationDone = true;
+    patient.communicationResult = communicationResult;
+    patient.ownerComprehension = communicationResult.comprehension;
+    patient.ownerAdherence = communicationResult.adherence;
     const explanation = patient.v2Visit
       ? `${patient.v2Visit.medicalContent.ownerExplanation.known} ${patient.v2Visit.medicalContent.ownerExplanation.uncertain}`
       : option.note;
     recordClinical(patient, "carePlan", `Результат объяснён владельцу: ${explanation}`);
-    const preferred = option.id === patient.ownerProfile.prefers;
-    let trustDelta = preferred ? 8 : 2;
-    if (option.id === "strict" && patient.ownerProfile.id === "anxious") trustDelta = -4;
-    if (option.id === "budgetPlan" && patient.ownerProfile.id === "budget") trustDelta = 10;
-    if (currentDoctor().fatigue >= 70) trustDelta -= 2;
-    adjustTrust(patient, trustDelta);
-    if (preferred) adjustOwnerState(patient, -10, -8);
-    else adjustOwnerState(patient, 3, 6);
+    patient.trust = communicationResult.trust;
+    patient.anxiety = communicationResult.anxiety;
+    patient.irritation = communicationResult.irritation;
+    recordClinical(patient, "carePlan", communicationResult.reactionText);
     incrementGoal("explained");
-    setLog("Результат объяснен владельцу. Реакция отражена в шкале доверия.");
+    setLog(`Результат объяснён. ${communicationResult.reactionText}`);
     closeChoice();
     if (tutorialPatient(patient)) advanceTutorial("explanation", "Подтверждённые данные и оставшаяся неопределённость объяснены владельцу.");
-    passTime(4);
+    passTime(communicationResult.timeCost);
   }
 
   function planTypeFor(treatment) {
@@ -1996,6 +2020,47 @@
     if (!patient) return;
     patient.selectedTreatmentId = treatment.id;
     patient.selectedTreatment = { ...treatment, planType: planTypeFor(treatment) };
+    if (patient.v2Visit) patient.v2Visit.selectedPlanId = treatment.id;
+    const selectedDiagnosisIds = patient.selectedDiagnosisIds?.length
+      ? patient.selectedDiagnosisIds
+      : patient.selectedDiagnosisId ? [patient.selectedDiagnosisId] : [];
+    const approvedPlan = patient.v2Visit
+      ? patient.v2Visit.medicalContent.planOptions.find((plan) => plan.id === treatment.id)
+      : null;
+    patient.prescriptionComponents = clinicalDecisions.prescriptionComponentsFor(approvedPlan, selectedDiagnosisIds);
+    patient.selectedPlanIds = [treatment.id];
+    patient.ownerPlanDecision = clinicalDecisions.evaluateOwnerPlanDecision(patient.prescriptionComponents, {
+      trust: patient.trust,
+      irritation: patient.irritation,
+      comprehension: patient.ownerComprehension ?? 50,
+      budget: patient.budget
+    }, {
+      communicationReaction: patient.communicationResult?.reactionId
+    });
+    if (patient.v2Visit && window.PET_CLINIC_MULTI_DIAGNOSIS_V2) {
+      const evaluation = window.PET_CLINIC_MULTI_DIAGNOSIS_V2.evaluateCombinedOutcome(
+        patient.v2Visit,
+        selectedDiagnosisIds,
+        [treatment.id],
+        window.PET_CLINIC_GAME_ADAPTER_V2.treatmentOptionsFor(patient)
+      );
+      patient.diagnosticCoverage = evaluation.diagnosticCoverage;
+      patient.treatmentCoverage = evaluation.treatmentCoverage;
+      patient.clinicalSafety = evaluation.clinicalSafety;
+      patient.unnecessaryTreatment = evaluation.unnecessaryTreatment;
+      patient.communicationQuality = patient.communicationResult?.reactionId || "not_completed";
+    }
+    patient.immediateDecisionReview = {
+      ...diagnosisReviewFor(patient),
+      diagnosticCoverage: patient.diagnosticCoverage ?? null,
+      treatmentCoverage: patient.treatmentCoverage ?? null,
+      clinicalSafety: patient.clinicalSafety || "pending_outcome",
+      unnecessaryTreatment: Boolean(patient.unnecessaryTreatment),
+      communicationQuality: patient.communicationResult?.reactionText || "Объяснение не завершено.",
+      ownerDecision: patient.ownerPlanDecision.decisionText,
+      acceptedComponentIds: patient.ownerPlanDecision.acceptedComponentIds,
+      declinedComponentIds: patient.ownerPlanDecision.declinedComponentIds
+    };
     patient.carePlanAgreed = true;
     visitState.markReadyForDischarge(patient);
     const planText = patient.v2Visit
@@ -2004,7 +2069,8 @@
     recordClinical(patient, "carePlan", [
       `Назначения: ${treatment.label}.`,
       ...(planText?.steps || []),
-      planText?.followUp?.text || ""
+      planText?.followUp?.text || "",
+      `Реакция владельца: ${patient.ownerPlanDecision.decisionText}.`
     ]);
     incrementGoal("dischargePlan");
     if (planText?.followUp?.text && !patient.controlGoalCredited) {
@@ -2012,7 +2078,7 @@
       incrementGoal("include_control_in_discharge");
     }
     closeChoice();
-    setLog("Назначения сделаны и объяснены владельцу. Приём можно завершить.");
+    setLog(`Назначения сделаны: ${patient.ownerPlanDecision.decisionText}. Приём можно завершить.`);
     if (tutorialPatient(patient)) advanceTutorial("plan", `Назначения сделаны: ${treatment.label}.`);
     passTime(2);
   }
@@ -2037,7 +2103,13 @@
     const diagnosticsScore = diagnosticScore(patient);
     const consultFee = disease.baseFee;
     const total = consultFee + treatment.fee;
-    const communicationMatch = patient.selectedCommunicationId === patient.ownerProfile.prefers;
+    const communicationMatch = patient.v2Visit
+      ? Boolean(
+        patient.communicationResult
+        && patient.communicationResult.comprehension >= 55
+        && !["more_anxious", "irritated"].includes(patient.communicationResult.reactionId)
+      )
+      : patient.selectedCommunicationId === patient.ownerProfile.prefers;
     state.money += total;
     state.revenueToday += total;
     state.treatedToday += 1;
@@ -2135,6 +2207,8 @@
       treatment: treatment.label,
       planType: treatment.planType || planTypeFor(treatment),
       communication: communicationLabel(patient.selectedCommunicationId) || "без объяснения",
+      communicationQuality: patient.communicationQuality || "not_completed",
+      ownerPlanDecision: patient.ownerPlanDecision?.decision || null,
       visitTime: patient.visitTimeUsed,
       trust: patient.trust,
       quality: effectiveQuality,
@@ -2238,7 +2312,8 @@
       ? window.PET_CLINIC_GAME_ADAPTER_V2.diagnosisOptionsFor(patient, generatorRuntime.catalog).find((item) => item.id === patient.diseaseId)
       : diagnosisOptions.find((item) => item.id === patient.diseaseId);
     selectDiagnosis(diagnosis);
-    selectCommunication(communicationOptions.find((option) => option.id === patient.ownerProfile.prefers) || communicationOptions[0]);
+    const options = patient.v2Visit ? communicationOptions : legacyCommunicationOptions;
+    selectCommunication(options.find((option) => option.id === patient.ownerProfile.prefers) || options[0]);
     const treatment = patient.v2Visit
       ? window.PET_CLINIC_GAME_ADAPTER_V2.treatmentOptionsFor(patient).find((item) => item.id === correctTreatmentId(patient))
       : treatmentOptions.find((item) => item.id === correctTreatmentId(patient));
@@ -2761,11 +2836,27 @@
       setLog("Сначала сформулируйте предварительный диагноз.");
       return;
     }
+    if (!patient.v2Visit) {
+      openChoice("Объяснение", "Как объяснить владельцу результат?", legacyCommunicationOptions.map((option) => ({
+        label: option.label,
+        note: `${option.note} Потратит 4 минуты приема.`,
+        onClick: () => selectCommunication(option)
+      })));
+      return;
+    }
+    const observedSigns = clinicalDecisions.observableOwnerSigns({
+      anxiety: patient.anxiety,
+      irritation: patient.irritation,
+      comprehension: patient.ownerComprehension ?? Math.round(patient.ownerProfile.reliability * 100),
+      budgetDiscussed: patient.budgetAsked,
+      underestimatesRisk: patient.ownerProfile.id === "inattentive"
+    });
     const items = communicationOptions.map((option) => ({
       label: option.label,
       note: patient.selectedCommunicationId === option.id
         ? "Сейчас выбран этот стиль."
-        : `${option.note} Потратит 4 минуты приема.`,
+        : `${option.timeCost} мин. Цель: ${option.communicationGoal}. Риск: ${option.risk}.`,
+      sections: [{ label: "Наблюдаемые признаки", items: observedSigns }],
       onClick: () => selectCommunication(option)
     }));
     openChoice("Объяснение", "Как объяснить владельцу результат?", items);
@@ -2787,6 +2878,10 @@
     const availableTreatments = patient.v2Visit
       ? window.PET_CLINIC_GAME_ADAPTER_V2.treatmentOptionsFor(patient)
       : treatmentOptions;
+    if (patient.v2Visit && availableTreatments.length === 1) {
+      selectCarePlan(availableTreatments[0]);
+      return;
+    }
     const items = availableTreatments.map((treatment) => ({
       label: `${treatment.label} (+${treatment.fee} вет.)`,
       note: `${treatment.note} ${patient.budgetAsked
@@ -2961,7 +3056,7 @@
       ? [`Срочность: ${clinicalUrgencyLabel(patient)}.`, ...patient.clinicalRecord.clinicalInterpretation]
       : ["Срочность требует оценки после общего осмотра.", ...patient.clinicalRecord.clinicalInterpretation];
     renderClinicalList(el.assessmentList, assessment, "Клиническая оценка ещё не сформирована.");
-    const decisionReview = diagnosisReviewFor(patient);
+    const decisionReview = patient.immediateDecisionReview || diagnosisReviewFor(patient);
     el.decisionReview.classList.toggle("hidden", !decisionReview);
     if (decisionReview) {
       el.reviewSelectedDiagnosis.textContent = decisionReview.selected;
@@ -2970,6 +3065,13 @@
       renderClinicalList(el.reviewSupporting, decisionReview.supporting, "Поддерживающие данные не выделены.");
       renderClinicalList(el.reviewMissing, decisionReview.missing, "Недостающие данные не выделены.");
       el.reviewAssessment.textContent = decisionReview.assessment;
+      el.reviewTreatmentCoverage.textContent = decisionReview.treatmentCoverage === null || decisionReview.treatmentCoverage === undefined
+        ? "Назначения ещё не сделаны."
+        : `${Math.round(decisionReview.treatmentCoverage * 100)}%.`;
+      el.reviewUnnecessaryTreatment.textContent = decisionReview.unnecessaryTreatment ? "Есть лишние действия." : "Лишних действий не выявлено.";
+      el.reviewClinicalSafety.textContent = decisionReview.clinicalSafety === "safe" ? "Безопасное решение." : "Безопасность требует проверки.";
+      el.reviewCommunicationQuality.textContent = decisionReview.communicationQuality || "Объяснение ещё не завершено.";
+      el.reviewOwnerDecision.textContent = decisionReview.ownerDecision || "Решение по назначениям ещё не принято.";
     }
     renderClinicalList(el.planList, patient.clinicalRecord.carePlan, "Назначения ещё не сделаны.");
     const visitPercent = clamp((patient.visitTimeUsed / patient.visitTimeLimit) * 100, 0, 100);
@@ -3015,6 +3117,7 @@
         ? /микроскоп/iu.test(diagnosticTest.label) ? "Провести микроскопию" : "Провести исследование"
         : "Исследование не требуется";
       el.communicationBtn.querySelector("span").textContent = "Объяснить результат";
+      el.communicationBtn.querySelector("small").textContent = "3–6 мин. · зависит от стиля";
       el.microscopyBtn.querySelector("small").textContent = diagnosticTest
         ? `${diagnosticTest.durationMinutes} мин. · доход ${diagnosticTest.costVetcoins} V`
         : "нет показаний";
@@ -3028,7 +3131,9 @@
       || window.PET_CLINIC_GAME_ADAPTER_V2.diagnosticTestFor(patient)?.requires?.includes("sample");
     el.microscopyBtn.disabled = patient.microscopyDone || (testRequiresSample && !patient.sampleTaken) || !supportsTest;
     el.treatmentBtn.querySelector("span").textContent = patient.v2Visit ? "Сделать назначения" : "Назначить лечение";
-    el.treatmentBtn.querySelector("small").textContent = patient.v2Visit ? "выбрать действия" : "завершить приём";
+    el.treatmentBtn.querySelector("small").textContent = patient.v2Visit
+      ? patient.v2Visit.medicalContent.planOptions.length === 1 ? "выполнить утверждённый план" : "выбрать назначения"
+      : "завершить приём";
     el.treatmentBtn.disabled = patient.v2Visit
       ? !patient.explanationDone || patient.carePlanAgreed
       : selectedDiagnosisIds.length === 0;

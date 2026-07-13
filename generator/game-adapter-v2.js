@@ -200,11 +200,13 @@
   }
 
   function treatmentOptionsFor(patient) {
-    return patient.v2Visit.medicalContent.planOptions.map((plan, index) => ({
+    const caseData = patient.v2Visit.medicalContent;
+    return caseData.planOptions.map((plan, index) => ({
       id: plan.id,
       label: plan.label,
       fee: 110 + plan.steps.length * 20,
       note: `${plan.steps.join(" ")} ${plan.followUp?.text || ""}`.trim(),
+      coversDiagnosisIds: index === 0 ? [caseData.id] : [],
       quality: index === 0 ? "correct" : plan.disabledWhenRedFlags ? "wrong" : "partial"
     }));
   }

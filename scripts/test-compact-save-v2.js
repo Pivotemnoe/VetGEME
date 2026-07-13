@@ -248,6 +248,12 @@ async function main() {
     sampleTaken: true,
     microscopyDone: false,
     selectedDiagnosisIds: [],
+    communicationResult: { optionId: "calmDetailed", reactionId: "understood", comprehension: 76 },
+    ownerComprehension: 76,
+    prescriptionComponents: [{ id: "approved-plan", approvedTextId: "approved-plan" }],
+    selectedPlanIds: ["approved-plan"],
+    ownerPlanDecision: { decision: "accepted", acceptedComponentIds: ["approved-plan"], declinedComponentIds: [] },
+    immediateDecisionReview: { treatmentCoverage: 1, clinicalSafety: "safe" },
     clinicalRecord: { history: ["Точный ответ владельца"], physicalExam: ["Осмотр выполнен"], investigations: [] }
   });
   const futureTemplate = adapter.patientFromVisit(partialDay.visits[1]);
@@ -264,6 +270,10 @@ async function main() {
   const partialReload = gameSaveApi.load(partialStorage, "tier-01-v2", { catalog });
   assert.deepEqual(partialReload.state.queue[0].asked, partialPatient.asked);
   assert.deepEqual(partialReload.state.queue[0].clinicalRecord, partialPatient.clinicalRecord);
+  assert.deepEqual(partialReload.state.queue[0].communicationResult, partialPatient.communicationResult);
+  assert.deepEqual(partialReload.state.queue[0].prescriptionComponents, partialPatient.prescriptionComponents);
+  assert.deepEqual(partialReload.state.queue[0].ownerPlanDecision, partialPatient.ownerPlanDecision);
+  assert.deepEqual(partialReload.state.queue[0].immediateDecisionReview, partialPatient.immediateDecisionReview);
   assert.equal(partialReload.state.queue[0].v2Visit.complaint.text, partialPatient.v2Visit.complaint.text);
   assert.ok(partialReload.state.arrivalSchedule[0].template.v2Visit.medicalContent);
 
