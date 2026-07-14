@@ -1007,6 +1007,7 @@
     developerBtn: document.getElementById("developerBtn"),
     developerPanel: document.getElementById("developerPanel"),
     closeDeveloperBtn: document.getElementById("closeDeveloperBtn"),
+    newGameBtn: document.getElementById("newGameBtn"),
     developerData: document.getElementById("developerData"),
     shiftWindow: document.getElementById("shiftWindow"),
     shiftTitle: document.getElementById("shiftTitle"),
@@ -3080,6 +3081,34 @@
     openShiftPlanning();
   }
 
+  function startNewGame() {
+    const mode = generatorRuntime.mode;
+    const modeLabels = {
+      current: "текущий режим",
+      "legacy-v1": "контрольный режим legacy-v1",
+      "tier-01-v2": "режим tier-01-v2"
+    };
+    const confirmed = window.confirm(
+      `Начать новую игру в режиме «${modeLabels[mode] || mode}»? Текущая кампания этого режима будет удалена.`
+    );
+    if (!confirmed) return;
+
+    try {
+      const gameSaveKey = window.PET_CLINIC_GENERATOR_MODE?.gameSaveKey
+        || window.PET_CLINIC_SAVE_NAMESPACES?.gameSaveKey(mode);
+      if (gameSaveKey) window.localStorage.removeItem(gameSaveKey);
+      if (mode === "legacy-v1") window.localStorage.removeItem("pet-clinic-generator-v1");
+      if (mode === "tier-01-v2") window.localStorage.removeItem("pet-clinic-generator-v2");
+      window.location.reload();
+    } catch (error) {
+      state.paused = true;
+      setLog("Не удалось удалить сохранение. Проверьте доступ браузера к локальному хранилищу.");
+      el.developerPanel.classList.add("hidden");
+      renderAll();
+      console.error("New game reset failed.", error);
+    }
+  }
+
   function openCase(patientId) {
     const previous = activePatient();
     if (previous && previous.id !== patientId && isPatientInConsult(previous)) {
@@ -4506,6 +4535,7 @@
     el.finishShiftBtn.addEventListener("click", finishShift);
     el.developerBtn.addEventListener("click", () => el.developerPanel.classList.toggle("hidden"));
     el.closeDeveloperBtn.addEventListener("click", () => el.developerPanel.classList.add("hidden"));
+    el.newGameBtn.addEventListener("click", startNewGame);
     el.devResolvePatientBtn.addEventListener("click", debugResolveActivePatient);
     el.devFinishDayBtn.addEventListener("click", debugFinishDay);
     document.querySelectorAll(".stage-tabs button").forEach((button) => {

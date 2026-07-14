@@ -326,6 +326,11 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
 .developer-panel header { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; background: var(--blue-900); color: #fff; font-size: 11px; }
 .developer-panel header button { width: 25px; height: 23px; padding: 0; box-shadow: none; }
 .developer-panel div { padding: 8px; font-size: 10px; line-height: 1.45; white-space: pre-line; }
+.developer-panel .settings-actions { display: grid; gap: 5px; }
+.developer-panel .settings-actions small { color: #52677b; line-height: 1.3; }
+.developer-panel .new-game-button { min-height: 36px; border-color: #7c2029; background: linear-gradient(#fff4f4, #efc6c9); color: #641820; font-weight: 800; }
+.developer-panel .new-game-button:hover { background: linear-gradient(#fffafa, #eeb4b9); }
+.developer-panel .developer-heading { display: block; padding: 7px 8px 0; color: var(--blue-900); font-size: 10px; }
 .developer-panel .developer-actions { display: grid; gap: 6px; padding-top: 0; }
 .developer-actions button { min-height: 32px; padding: 5px; font-size: 9px; }
 

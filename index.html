@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pet Clinic: ветеринарная клиника</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eaf6ff'/%3E%3Cpath d='M13 5h6v22h-6zM5 13h22v6H5z' fill='%231976d2'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="styles.css?v=20260713d">
+    <link rel="stylesheet" href="styles.css?v=20260714a">
   </head>
   <body>
     <main class="game-shell" aria-label="Pet Clinic: ветеринарная стратегия">
@@ -181,7 +181,12 @@
       </section>
 
       <aside class="developer-panel hidden" id="developerPanel">
-        <header><strong>Режим разработчика</strong><button id="closeDeveloperBtn" type="button">×</button></header>
+        <header><strong>Настройки</strong><button id="closeDeveloperBtn" type="button" title="Закрыть" aria-label="Закрыть настройки">×</button></header>
+        <div class="settings-actions">
+          <button class="new-game-button" id="newGameBtn" type="button">Начать новую игру</button>
+          <small>Текущая кампания этого режима будет удалена.</small>
+        </div>
+        <strong class="developer-heading">Режим разработчика</strong>
         <div id="developerData"></div>
         <div class="developer-actions">
           <button id="devResolvePatientBtn" type="button">Закрыть текущий случай корректно</button>
@@ -240,7 +245,7 @@
         <div class="doctor-block"><strong id="doctorHudName">Смена не выбрана</strong><span>усталость <b id="doctorFatigue">0%</b></span><div class="meter fatigue-meter"><i id="doctorFatigueMeter"></i></div><small id="doctorFatigueEffect">Без штрафа</small><small id="doctorFatigueForecast"></small></div>
         <div class="queue-summary"><strong id="queueValue">0 / 12</strong><span>ожидают приема</span></div>
         <div class="message-log" id="messageLog">Клиника открыта. Ожидаем первых пациентов.</div>
-        <button class="settings-button" id="developerBtn" type="button" title="Режим разработчика" aria-label="Режим разработчика">⚙</button>
+        <button class="settings-button" id="developerBtn" type="button" title="Настройки" aria-label="Открыть настройки">⚙</button>
       </section>
     </main>
     <script src="campaign.js?v=20260712k" defer></script>
@@ -257,6 +262,6 @@
     <script src="generator/game-adapter-v2.js?v=20260713b" defer></script>
     <script src="generator/multi-diagnosis-engine-v2.js?v=20260713a" defer></script>
     <script src="generator/generator-mode.js?v=20260713a" defer></script>
-    <script src="game.js?v=20260713h" defer></script>
+    <script src="game.js?v=20260714a" defer></script>
   </body>
 </html>
