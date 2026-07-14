@@ -23,7 +23,7 @@
   let lastGameSaveAt = 0;
 
   function campaignDayCount() {
-    return generatorRuntime.mode === "tier-01-v2" ? 7 : 5;
+    return generatorRuntime.mode === "tier-01-v2" ? 30 : 5;
   }
 
   function isTier01V2() {
@@ -1438,7 +1438,12 @@
     if (isTier01V2()) {
       let day;
       try {
-        day = generatorRuntime.generator.getOrGenerateDay(state.day);
+        day = generatorRuntime.generator.getOrGenerateDay(state.day, tierDemandCampaignState());
+        const metadata = generatorRuntime.generator.metadata(state.day);
+        state.demandState = metadata.demandState || state.demandState;
+        if (day?.demandSnapshot?.capabilities && !Object.keys(state.equipmentCapabilities || {}).length) {
+          state.equipmentCapabilities = JSON.parse(JSON.stringify(day.demandSnapshot.capabilities));
+        }
       } catch (error) {
         blockGameForSaveError(error);
         console.error("Generator state could not be persisted.", error);
@@ -1482,6 +1487,23 @@
         sex: previous.sex || basePlan.patients[0].sex,
         ageYears: previous.ageYears || basePlan.patients[0].ageYears
       }, ...basePlan.patients.slice(1)]
+    };
+  }
+
+  function tierDemandCampaignState() {
+    const doctor = currentDoctor();
+    return {
+      day: state.day,
+      chapter: Math.min(4, Math.ceil(state.day / 7)),
+      ownerTrust: state.ownerTrust,
+      clinicalReliability: state.clinicalReliability,
+      awareness: state.awareness,
+      equipmentCapabilities: state.equipmentCapabilities,
+      doctorsOnShift: 1,
+      rooms: 1,
+      staffSupport: 1,
+      fatigue: doctor?.fatigue || 0,
+      referralNetwork: true
     };
   }
 
@@ -2790,7 +2812,7 @@
     state.hoursMode = state.day <= campaignDayCount() ? "standard" : selectedMode ? selectedMode.value : "standard";
     if (isTier01V2()) {
       try {
-        generatorRuntime.generator.openDay(state.day);
+        generatorRuntime.generator.openDay(state.day, tierDemandCampaignState());
       } catch (error) {
         blockGameForSaveError(error);
         renderHud();

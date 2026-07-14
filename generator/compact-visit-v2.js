@@ -197,6 +197,7 @@
       day: visit.day,
       arrivalMinute: visit.arrivalMinute,
       source: visit.source,
+      sourceCategory: visit.sourceCategory || null,
       urgency: visit.urgency,
       severity: visit.severity,
       family: visit.family,
@@ -238,6 +239,7 @@
       day: compact.day,
       arrivalMinute: compact.arrivalMinute,
       source: compact.source,
+      sourceCategory: compact.sourceCategory || null,
       urgency: compact.urgency,
       severity: compact.severity,
       family: compact.family,
@@ -262,6 +264,18 @@
       missingEquipment: clone(compact.missingEquipment || []),
       requiresReferral: Boolean(compact.requiresReferral),
       safeReferralAvailable: Boolean(compact.safeReferralAvailable),
+      requiredForDefinitiveDiagnosis: clone(compact.requiredForDefinitiveDiagnosis || caseData.requiredForDefinitiveDiagnosis || []),
+      requiredForTreatment: clone(compact.requiredForTreatment || caseData.requiredForTreatment || []),
+      preferredEquipment: clone(compact.preferredEquipment || caseData.preferredEquipment || []),
+      safeWithoutEquipmentActions: clone(compact.safeWithoutEquipmentActions || caseData.safeWithoutEquipmentActions || caseData.safeAlternatives || []),
+      safeReferralPath: compact.safeReferralPath
+        || caseData.safeReferralPath
+        || caseData.safeAlternatives?.find((id) => /referral|transfer/i.test(id))
+        || null,
+      referralDestination: compact.referralDestination || caseData.referralDestination || null,
+      arrivalAllowedWithoutEquipment: compact.arrivalAllowedWithoutEquipment !== false,
+      equipmentAttractionTags: clone(compact.equipmentAttractionTags || caseData.equipmentAttractionTags || []),
+      specialistReferralTags: clone(compact.specialistReferralTags || caseData.specialistReferralTags || []),
       medicalContent: clone(caseData)
     };
     if (compact.selectedPlanId !== undefined) visit.selectedPlanId = compact.selectedPlanId;

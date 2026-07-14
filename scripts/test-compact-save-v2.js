@@ -233,7 +233,7 @@ async function main() {
   const migrated = generatorApi.createGenerator({ catalog, storage: migrationStorage });
   assert.deepEqual(exactVisitSnapshot(migrated.getOrGenerateDay(1).visits[0]), beforeMigration);
   const migratedRaw = migrationStorage.getItem(generatorApi.SAVE_KEY);
-  assert.equal(JSON.parse(migratedRaw).saveVersion, 4);
+  assert.equal(JSON.parse(migratedRaw).saveVersion, generatorApi.SAVE_VERSION);
   assert.equal(migratedRaw.includes("medicalContent"), false);
   assert.equal(JSON.parse(migratedRaw).campaignSeed, version3.campaignSeed);
   assert.deepEqual(Object.keys(JSON.parse(migratedRaw).generatedDays), Object.keys(version3.generatedDays));

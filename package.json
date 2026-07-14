@@ -6,6 +6,7 @@
     "test:generator:legacy": "node scripts/simulate-generator-v1.js 1000",
     "test:generator:v2": "node scripts/simulate-generator-v2.js 1000",
     "test:generator:v2:full": "node scripts/simulate-generator-v2.js 10000",
+    "test:demand:v2": "node scripts/test-demand-director-v2.js",
     "test:adapter:v2": "node scripts/test-v2-adapter.js",
     "test:followups:v2": "node scripts/test-v2-followups.js",
     "test:save-isolation": "node scripts/test-save-isolation.js",

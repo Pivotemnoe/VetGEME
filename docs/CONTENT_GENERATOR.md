@@ -16,11 +16,13 @@ clinical template
 
 ## Runtime Levels
 
-1. Campaign director defines chapter, difficulty, equipment, staffing, teaching task and workload ceiling.
-2. Day planner adds due follow-ups, teaching/story slots, new visits, arrival times and compatible goals.
-3. Visit builder assembles one concrete visit without linking appearance to behavior.
-4. Validator rejects medically impossible, unfair or overloaded combinations.
-5. Consequence planner creates controls, calls, results, deterioration, non-adherence, gratitude and complaints.
+1. Campaign director defines chapter, difficulty, equipment, staffing and teaching constraints.
+2. Visitor Demand Director calculates deterministic potential demand, safe capacity, sources and the explicit disposition of excess demand.
+3. Equipment and referral routing rejects only cases without a safe local action or referral path.
+4. Day planner adds due follow-ups, teaching/story slots, new visits, arrival times and compatible goals inside the accepted capacity.
+5. Visit builder assembles one concrete visit without linking appearance to behavior.
+6. Validator rejects medically impossible, unfair or overloaded combinations.
+7. Consequence planner creates controls, calls, results, deterioration, non-adherence, gratitude and complaints.
 
 ## Persistence Contract
 
@@ -31,7 +33,11 @@ clinical template
 - the same seed and generator version reproduce the same result;
 - regeneration is a developer-only action.
 
-Required generator save fields: `saveVersion`, `generatorVersion`, `campaignSeed`, `difficulty`, `generatedDays`, `pendingFollowUps`, `seenCaseCounts`, recent case IDs, full and structural fingerprints, `contentPackId`, `contentPackVersion` and `contentPackHash`.
+Required generator save fields: `saveVersion`, `generatorVersion`, `campaignSeed`, `difficulty`, `generatedDays`, `pendingFollowUps`, `seenCaseCounts`, recent case IDs, full and structural fingerprints, `contentPackId`, `contentPackVersion`, `contentPackHash`, `demandDirectorVersion` and compact `demandState`.
+
+Every newly generated day stores the exact demand decision used to build it. Every visit stores a source category while preserving its old scheduling alias. Trust, staffing or equipment changes affect only days that do not yet exist.
+
+The active capability registry contains `microscope`, `xray` and `ultrasound`. Only the approved microscope is operational in the current game. Imaging capabilities are future-compatible test entries and do not create medical text.
 
 The game state is stored separately from generated content. Modes use the isolated keys `pet-clinic-game-current`, `pet-clinic-game-legacy-v1` and `pet-clinic-game-tier-01-v2`; the schema contract is documented in [GAME_STATE_SAVE.md](GAME_STATE_SAVE.md).
 

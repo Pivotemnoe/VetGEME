@@ -143,6 +143,7 @@
     return {
       arrivalMinute: visit.arrivalMinute,
       source: visit.source === "unplanned" ? "walkIn" : visit.source,
+      sourceCategory: visit.sourceCategory,
       bookingLabel: visit.bookingReason || bookingReasonByFamily[visit.family] || "Причина обращения",
       diseaseId: visit.caseId,
       profileId: visit.owner.profileId,
@@ -179,6 +180,7 @@
       goals: goalsForDay(catalog, day.day),
       patients: day.visits.map(patientFromVisit),
       unplannedRange: clone(day.unplannedRange),
+      demandSnapshot: clone(day.demandSnapshot || null),
       generatorFingerprint: day.fingerprint
     };
   }

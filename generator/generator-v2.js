@@ -4,15 +4,19 @@
   const compactApi = typeof module === "object" && module.exports
     ? require("./compact-visit-v2.js")
     : root.PET_CLINIC_COMPACT_VISIT_V2;
-  const api = factory(compactApi);
+  const demandApi = typeof module === "object" && module.exports
+    ? require("./demand-director-v2.js")
+    : root.PET_CLINIC_DEMAND_DIRECTOR_V2;
+  const api = factory(compactApi, demandApi);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_GENERATOR_V2 = api;
-})(typeof window !== "undefined" ? window : globalThis, function (compactApi) {
+})(typeof window !== "undefined" ? window : globalThis, function (compactApi, demandApi) {
   "use strict";
 
   const SAVE_KEY = "pet-clinic-generator-v2";
-  const SAVE_VERSION = 4;
-  const GENERATOR_VERSION = "tier-01-v2.1.0";
+  const SAVE_VERSION = 5;
+  const GENERATOR_VERSION = "tier-01-v2.2.0";
+  const PREVIOUS_GENERATOR_VERSION = "tier-01-v2.1.0";
   const SUPPORTED_MODES = ["current", "legacy-v1", "tier-01-v2"];
   const DEFAULT_EQUIPMENT = ["otoscope", "microscope"];
   const FIRST_TUTORIAL_CASE_IDS = ["EAR_FUNGAL_OTITIS", "EAR_MITES"];
@@ -129,8 +133,30 @@
       pendingFollowUps: [],
       completedCases: [],
       seenCaseCounts: {},
+      demandDirectorVersion: demandApi.DEMAND_DIRECTOR_VERSION,
+      demandState: demandApi.initialDemandState(),
       nextVisitId: 1
     };
+  }
+
+  function addDemandState(saved, catalog, contentPack) {
+    const migrated = clone(saved);
+    Object.assign(migrated, contentPack, {
+      saveVersion: SAVE_VERSION,
+      generatorVersion: GENERATOR_VERSION,
+      demandDirectorVersion: demandApi.DEMAND_DIRECTOR_VERSION,
+      demandState: { ...demandApi.initialDemandState(), ...(migrated.demandState || {}) }
+    });
+    migrated.generatedDays = Object.fromEntries(Object.entries(migrated.generatedDays || {}).map(([key, compactDay]) => {
+      const hydrated = compactApi.hydrateDay(compactDay, catalog);
+      hydrated.schemaVersion = SAVE_VERSION;
+      hydrated.visits.forEach((visit) => {
+        visit.sourceCategory = demandApi.sourceCategoryForLegacySource(visit.source, visit);
+        Object.assign(visit, demandApi.routingForCase(visit.medicalContent, migrated.demandState?.lastDecision?.capabilities || {}));
+      });
+      return [key, compactApi.compactDay(hydrated, catalog)];
+    }));
+    return migrated;
   }
 
   function compactPendingFollowUp(followUp, catalog) {
@@ -155,7 +181,7 @@
       return [key, compactDay];
     }));
     migrated.pendingFollowUps = (saved.pendingFollowUps || []).map((item) => compactPendingFollowUp(item, catalog));
-    return migrated;
+    return addDemandState(migrated, catalog, contentPack);
   }
 
   function migrateState(saved, seed, catalogOrPack = {}) {
@@ -168,13 +194,17 @@
       }
       return saved;
     }
-    if (saved && saved.saveVersion === 3 && saved.generatorVersion === GENERATOR_VERSION && contentPackMatches(saved, contentPack)) {
+    if (saved && saved.saveVersion === 4 && [PREVIOUS_GENERATOR_VERSION, GENERATOR_VERSION].includes(saved.generatorVersion) && contentPackMatches(saved, contentPack)) {
+      if (!catalog) throw new Error("Tier 01 v2 catalog is required to migrate generator save version 4");
+      return addDemandState(saved, catalog, contentPack);
+    }
+    if (saved && saved.saveVersion === 3 && [PREVIOUS_GENERATOR_VERSION, GENERATOR_VERSION].includes(saved.generatorVersion) && contentPackMatches(saved, contentPack)) {
       if (!catalog) throw new Error("Tier 01 v2 catalog is required to migrate generator save version 3");
       return compactState(saved, catalog, contentPack);
     }
     if (saved && saved.saveVersion === 2 && saved.generatorVersion === "tier-01-v2.0.0") {
       const migrated = clone(saved);
-      Object.assign(migrated, contentPack, { saveVersion: 3, generatorVersion: GENERATOR_VERSION });
+      Object.assign(migrated, contentPack, { saveVersion: 3, generatorVersion: PREVIOUS_GENERATOR_VERSION });
       Object.values(migrated.generatedDays || {}).forEach((day) => {
         Object.assign(day, contentPack, { schemaVersion: 3, generatorVersion: GENERATOR_VERSION });
         if (day.visits?.some((visit) => !visit.medicalContent)) {
@@ -291,6 +321,7 @@
       caseData.unlockDay <= dayRule.day
       && caseData.species.every((species) => allowedSpecies.has(species))
       && (!options.routineOnly || !caseIsUrgent(caseData))
+      && (!options.capabilities || demandApi.routingForCase(caseData, options.capabilities).arrivalAllowedWithoutEquipment)
     ));
     const selected = [];
     const familyTargets = [...new Set(eligible.map((item) => item.family))];
@@ -313,18 +344,73 @@
     return selected;
   }
 
-  function ensureUrgentSelection(caseList, catalog, dayRule, random, seenCaseCounts) {
-    if (caseList.some(caseIsUrgent) || dayRule.urgentSubset.max === 0) return caseList;
-    if (dayRule.urgentSubset.min === 0 && random() >= 0.3) return caseList;
+  function ensureUrgentCount(caseList, catalog, dayRule, desiredCount, random, seenCaseCounts) {
+    const result = caseList.slice();
     const allowed = new Set(dayRule.urgentPool || []);
-    const urgent = catalog.cases.filter((item) => (
-      item.unlockDay <= dayRule.day && caseIsUrgent(item) && (!allowed.size || allowed.has(item.id))
+    const candidates = catalog.cases.filter((item) => (
+      item.unlockDay <= dayRule.day
+      && caseIsUrgent(item)
+      && (!allowed.size || allowed.has(item.id))
     ));
-    const replacement = weightedPick(urgent, random, (item) => 1 / (1 + (seenCaseCounts[item.id] || 0)));
-    if (!replacement) throw new Error(`Day ${dayRule.day} requires an urgent case but none is compatible`);
-    const index = caseList.findIndex((item) => !caseIsUrgent(item));
-    caseList[index < 0 ? caseList.length - 1 : index] = replacement;
-    return caseList;
+    let urgentCount = result.filter(caseIsUrgent).length;
+    while (urgentCount < desiredCount && candidates.length) {
+      const replacement = weightedPick(candidates, random, (item) => 1 / (1 + (seenCaseCounts[item.id] || 0)));
+      candidates.splice(candidates.indexOf(replacement), 1);
+      let replaceIndex = -1;
+      for (let index = result.length - 1; index >= 0; index -= 1) {
+        if (!caseIsUrgent(result[index])) {
+          replaceIndex = index;
+          break;
+        }
+      }
+      if (replaceIndex < 0) break;
+      result[replaceIndex] = replacement;
+      urgentCount += 1;
+    }
+    return result;
+  }
+
+  function caseMatchesEquipmentAttraction(caseData, capabilities) {
+    const registry = demandApi.capabilityRegistry(capabilities);
+    const operational = Object.values(registry).filter(demandApi.operationalCapability);
+    const equipment = new Set([
+      ...(caseData.requiredEquipment || []),
+      ...(caseData.preferredEquipment || []),
+      ...(caseData.equipmentAttractionTags || [])
+    ]);
+    return operational.some((capability) => (
+      equipment.has(capability.id)
+      || capability.relevantCaseTags.some((tag) => equipment.has(tag))
+    ));
+  }
+
+  function ensureEquipmentReferralSelection(caseList, catalog, dayRule, count, random, capabilities, seenCaseCounts) {
+    if (count <= 0) return caseList;
+    let relevantCount = caseList.filter((item) => caseMatchesEquipmentAttraction(item, capabilities)).length;
+    if (relevantCount >= count) return caseList;
+    const allowedSpecies = new Set(catalog.manifest.contentPolicy.allowedSpeciesTier01);
+    const candidates = catalog.cases.filter((caseData) => (
+      caseData.unlockDay <= dayRule.day
+      && !caseIsUrgent(caseData)
+      && caseData.species.every((species) => allowedSpecies.has(species))
+      && demandApi.routingForCase(caseData, capabilities).arrivalAllowedWithoutEquipment
+      && caseMatchesEquipmentAttraction(caseData, capabilities)
+      && !caseList.includes(caseData)
+    ));
+    const result = caseList.slice();
+    while (relevantCount < count && candidates.length) {
+      const replacement = weightedPick(candidates, random, (item) => 1 / (1 + (seenCaseCounts[item.id] || 0)));
+      candidates.splice(candidates.indexOf(replacement), 1);
+      let replaceIndex = result.length - 1;
+      const minimumReplaceIndex = dayRule.day === 1 ? 1 : 0;
+      while (replaceIndex >= minimumReplaceIndex && (caseIsUrgent(result[replaceIndex]) || caseMatchesEquipmentAttraction(result[replaceIndex], capabilities))) {
+        replaceIndex -= 1;
+      }
+      if (replaceIndex < minimumReplaceIndex || caseIsUrgent(result[replaceIndex])) break;
+      result[replaceIndex] = replacement;
+      relevantCount += 1;
+    }
+    return result;
   }
 
   function makeIdentity(caseData, random) {
@@ -342,14 +428,12 @@
     const identity = options.identity ? clone(options.identity) : makeIdentity(caseData, random);
     const owner = options.owner ? clone(options.owner) : buildOwner(caseData, dayNumber, catalog, random, tutorialActive);
     const complaint = options.followUpLine || weightedPick(caseData.initialComplaintVariants, random, () => 1);
-    const missingEquipment = (caseData.requiredEquipment || []).filter((item) => !options.availableEquipment.includes(item));
-    const safeReferralAvailable = Boolean(caseData.safeAlternatives?.length || caseData.planOptions.some((plan) => (
-      /referral|urgent|transfer/i.test(plan.id) || plan.disabledWhenRedFlags === false
-    )));
+    const routing = demandApi.routingForCase(caseData, options.equipmentCapabilities || {});
     const visit = {
       visitId: `V2-${String(state.nextVisitId++).padStart(5, "0")}`,
       day: dayNumber,
       source,
+      sourceCategory: options.sourceCategory || demandApi.sourceCategoryForLegacySource(source, { urgency: caseData.severity }),
       caseId: caseData.id,
       caseIds: [caseData.id],
       bundleId: null,
@@ -370,9 +454,7 @@
       returnVisit: source === "follow_up",
       originalVisitId: options.originalVisitId || null,
       followUpReason: options.followUpReason || null,
-      missingEquipment,
-      requiresReferral: missingEquipment.length > 0,
-      safeReferralAvailable,
+      ...routing,
       medicalContent: clone(caseData)
     };
     visit.historyAnswerSelections = compactApi.deriveHistoryAnswerSelections(caseData, owner);
@@ -408,6 +490,7 @@
         visit.visitId,
         visit.caseId,
         visit.source,
+        visit.sourceCategory || null,
         visit.patient.species,
         visit.patient.animal,
         visit.owner.profileId,
@@ -428,6 +511,7 @@
         caseId: visit.caseId,
         family: visit.family,
         source: visit.source,
+        sourceCategory: visit.sourceCategory || null,
         urgency: visit.urgency,
         ownerProfileId: visit.owner.profileId,
         ownerModifierId: visit.owner.modifierId,
@@ -446,7 +530,7 @@
 
   function validateGeneratedDay(day, catalog, equipment) {
     const errors = [];
-    const rule = catalog.dayPlan.days.find((item) => item.day === day.day);
+    const rule = demandApi.progressionRule(day.day, catalog.dayPlan.days.find((item) => item.day === day.day) || null);
     if (!rule) return [`Unknown day ${day.day}`];
     if (day.visits.length + day.pendingUnplanned !== day.plannedVisitCount) errors.push("visit total does not match the persisted plan");
     if (day.plannedVisitCount < rule.visitsTotal.min || day.plannedVisitCount > rule.visitsTotal.max) errors.push("visit total outside day rules");
@@ -461,8 +545,9 @@
       if (!allowedSpecies.has(visit.patient.species)) errors.push(`unsupported species ${visit.patient.species}`);
       if (!caseSupportsOwner(visit.medicalContent, visit.owner.profileId)) errors.push(`owner ${visit.owner.profileId} incompatible with ${visit.caseId}`);
       if (visit.owner.homeAction && !visit.owner.homeAction.compatibleFamilies.includes(visit.family)) errors.push(`home action incompatible with ${visit.caseId}`);
-      const missing = (visit.medicalContent.requiredEquipment || []).filter((item) => !equipment.includes(item));
-      if (missing.length && !visit.safeReferralAvailable) errors.push(`missing safe referral for ${visit.caseId}`);
+      if (!demandApi.SOURCE_CATEGORIES.includes(visit.sourceCategory)) errors.push(`unknown source category ${visit.sourceCategory || "missing"}`);
+      if (visit.missingEquipment.length && !visit.safeReferralAvailable) errors.push(`missing safe referral for ${visit.caseId}`);
+      if (!visit.arrivalAllowedWithoutEquipment) errors.push(`case cannot arrive safely without equipment ${visit.caseId}`);
     });
     return errors;
   }
@@ -473,7 +558,16 @@
     const contentPack = contentPackMetadata(catalog);
     const seedNamespace = `${GENERATOR_VERSION}|${contentPack.contentPackId}|${contentPack.contentPackVersion}|${contentPack.contentPackHash}`;
     const storage = options.storage || (typeof localStorage !== "undefined" ? localStorage : createMemoryStorage());
-    const equipment = options.availableEquipment || DEFAULT_EQUIPMENT;
+    const initialCapabilities = demandApi.capabilityRegistry(options.equipmentCapabilities || Object.fromEntries(
+      ["microscope", "xray", "ultrasound"].map((id) => [id, options.availableEquipment
+        ? {
+            owned: options.availableEquipment.includes(id),
+            unlocked: options.availableEquipment.includes(id),
+            operational: options.availableEquipment.includes(id),
+            capacityPerDay: options.availableEquipment.includes(id) ? (id === "microscope" ? 6 : 4) : 0
+          }
+        : {}])
+    ));
     const state = loadState(storage, options.seed, catalog);
     if (state.migrationRequired) {
       throw new Error(`Generator save migration required: ${state.saveVersion || "unknown"}/${state.generatorVersion || "unknown"}/${state.contentPackVersion || "unknown"} -> ${SAVE_VERSION}/${GENERATOR_VERSION}/${contentPack.contentPackVersion}`);
@@ -481,10 +575,11 @@
     persist(storage, state);
 
     function getDayRule(dayNumber) {
-      return catalog.dayPlan.days.find((item) => item.day === dayNumber) || null;
+      if (dayNumber < 1 || dayNumber > 30) return null;
+      return demandApi.progressionRule(dayNumber, catalog.dayPlan.days.find((item) => item.day === dayNumber) || null);
     }
 
-    function getOrGenerateDay(dayNumber) {
+    function getOrGenerateDay(dayNumber, campaignState = {}) {
       const key = String(dayNumber);
       if (state.generatedDays[key]) return compactApi.hydrateDay(state.generatedDays[key], catalog);
       const rule = getDayRule(dayNumber);
@@ -493,14 +588,36 @@
         throw new Error(`Day ${dayNumber - 1} must be closed before day ${dayNumber} is generated`);
       }
       const random = createRandom(state.campaignSeed, `day:${dayNumber}:plan`, seedNamespace);
-      const plannedVisitCount = integerBetween(rule.visitsTotal, random);
-      const pendingUnplanned = unplannedCountForRule(rule, random);
+      const availableFollowUps = state.pendingFollowUps.filter((item) => item.eligibleDay <= dayNumber);
+      const baseLocalDemand = campaignState.baseLocalDemand
+        ?? ((Number(rule.visitsTotal.min) + Number(rule.visitsTotal.max)) / 2);
+      const decision = demandApi.directDemand({
+        ...campaignState,
+        day: dayNumber,
+        chapter: demandApi.chapterForDay(dayNumber),
+        dayRule: rule,
+        baseLocalDemand,
+        dueFollowUps: availableFollowUps.length,
+        deferredDemand: state.demandState?.deferredDemand || 0,
+        previousOutcomes: state.demandState?.outcomes || {},
+        equipmentCapabilities: {
+          ...initialCapabilities,
+          ...(campaignState.equipmentCapabilities || {})
+        },
+        campaignSeed: state.campaignSeed,
+        generatorVersion: GENERATOR_VERSION,
+        contentPackVersion: contentPack.contentPackVersion
+      });
+      const plannedVisitCount = decision.acceptedDemand;
+      const pendingUnplanned = decision.sourcePlan.walk_in;
       const followUpRange = {
         min: Math.min(rule.followUpTarget ?? rule.followUps.min, rule.followUpMaximum ?? rule.followUps.max),
         max: rule.followUpMaximum ?? rule.followUps.max
       };
-      const requestedFollowUps = integerBetween(followUpRange, random);
-      const availableFollowUps = state.pendingFollowUps.filter((item) => item.eligibleDay <= dayNumber);
+      const requestedFollowUps = Math.min(
+        followUpRange.max,
+        Math.max(followUpRange.min, decision.sourcePlan.follow_up)
+      );
       const selectedFollowUps = [];
       let selectedUrgentFollowUps = 0;
       for (const item of availableFollowUps) {
@@ -511,15 +628,17 @@
         if (urgent) selectedUrgentFollowUps += 1;
       }
       const followUpCount = selectedFollowUps.length;
-      const hasUrgentFollowUp = selectedFollowUps.some((item) => caseIsUrgent(catalog.casesById[item.caseId]));
       const newCount = plannedVisitCount - pendingUnplanned - followUpCount;
       let selectedCases = selectNewCases(catalog, rule, newCount, random, {
         routineOnly: true,
-        seenCaseCounts: state.seenCaseCounts
+        seenCaseCounts: state.seenCaseCounts,
+        capabilities: decision.capabilities
       });
-      if (!hasUrgentFollowUp) {
-        selectedCases = ensureUrgentSelection(selectedCases, catalog, rule, random, state.seenCaseCounts);
-      }
+      const desiredNewUrgent = Math.min(
+        decision.sourcePlan.emergency,
+        Math.max(0, rule.urgentSubset.max - selectedUrgentFollowUps)
+      );
+      selectedCases = ensureUrgentCount(selectedCases, catalog, rule, desiredNewUrgent, random, state.seenCaseCounts);
       if (dayNumber === 1) {
         const tutorialIds = new Set(FIRST_TUTORIAL_CASE_IDS);
         const tutorialIndex = selectedCases.findIndex((item) => tutorialIds.has(item.id));
@@ -534,15 +653,40 @@
           [selectedCases[0], selectedCases[insertedIndex]] = [selectedCases[insertedIndex], selectedCases[0]];
         }
       }
-      const visits = selectedCases.map((caseData, index) => createVisit(
-        caseData,
-        dayNumber,
-        "booked",
+      selectedCases = ensureEquipmentReferralSelection(
+        selectedCases,
         catalog,
+        rule,
+        decision.sourcePlan.clinic_referral,
         random,
-        state,
-        { tutorialActive: dayNumber === 1 && index === 0, availableEquipment: equipment }
-      ));
+        decision.capabilities,
+        state.seenCaseCounts
+      );
+      const categoryPool = [];
+      ["campaign_teaching", "campaign_story", "clinic_referral", "word_of_mouth", "local_regular"].forEach((sourceCategory) => {
+        for (let count = 0; count < (decision.sourcePlan[sourceCategory] || 0); count += 1) categoryPool.push(sourceCategory);
+      });
+      function consumeCategory(category) {
+        const index = categoryPool.indexOf(category);
+        if (index >= 0) categoryPool.splice(index, 1);
+        return category;
+      }
+      const visits = selectedCases.map((caseData, index) => {
+        let sourceCategory;
+        if (dayNumber === 1 && index === 0) sourceCategory = consumeCategory("campaign_teaching");
+        else if (caseIsUrgent(caseData)) sourceCategory = "emergency";
+        else if (caseMatchesEquipmentAttraction(caseData, decision.capabilities) && categoryPool.includes("clinic_referral")) {
+          sourceCategory = consumeCategory("clinic_referral");
+        } else {
+          const nextIndex = categoryPool.findIndex((category) => category !== "clinic_referral");
+          sourceCategory = nextIndex >= 0 ? categoryPool.splice(nextIndex, 1)[0] : "local_regular";
+        }
+        return createVisit(caseData, dayNumber, "booked", catalog, random, state, {
+          tutorialActive: dayNumber === 1 && index === 0,
+          sourceCategory,
+          equipmentCapabilities: decision.capabilities
+        });
+      });
       const followUpLines = catalog.owners["follow-up-lines"]?.lines || [];
       selectedFollowUps.forEach((followUp) => {
         const line = weightedPick(followUpLines, random, () => 1);
@@ -552,9 +696,16 @@
           originalVisitId: followUp.originalVisitId,
           followUpLine: line,
           followUpReason: followUp.reason,
-          availableEquipment: equipment
+          sourceCategory: "follow_up",
+          equipmentCapabilities: decision.capabilities
         }));
       });
+      const actualSourcePlan = Object.fromEntries(demandApi.SOURCE_CATEGORIES.map((sourceCategory) => [sourceCategory, 0]));
+      visits.forEach((visit) => {
+        actualSourcePlan[visit.sourceCategory] += 1;
+      });
+      actualSourcePlan.walk_in = pendingUnplanned;
+      decision.sourcePlan = actualSourcePlan;
       const usedFollowUps = new Set(selectedFollowUps.map((item) => item.id));
       state.pendingFollowUps = state.pendingFollowUps.filter((item) => !usedFollowUps.has(item.id));
       assignArrivals(visits, rule, random, false);
@@ -575,6 +726,7 @@
         followUpFallbackCount: Math.max(0, requestedFollowUps - followUpCount),
         pendingUnplanned,
         unplannedRange: clone(rule.unplannedNew),
+        demandSnapshot: demandApi.compactDemandDecision(decision),
         opened: false,
         closed: false,
         visits,
@@ -585,28 +737,34 @@
       day.fullFingerprint = fullFingerprint(day, contentPack);
       day.structuralFingerprint = structuralFingerprint(day, contentPack);
       day.fingerprint = day.fullFingerprint;
-      const errors = validateGeneratedDay(day, catalog, equipment);
+      const errors = validateGeneratedDay(day, catalog, demandApi.availableEquipment(decision.capabilities));
       if (errors.length) throw new Error(errors.join("; "));
       state.generatedDays[key] = compactApi.compactDay(day, catalog);
       selectedCases.forEach((caseData) => {
         state.seenCaseCounts[caseData.id] = (state.seenCaseCounts[caseData.id] || 0) + 1;
       });
+      state.demandState = demandApi.applyDemandDecision(state.demandState, decision);
       persist(storage, state);
       return compactApi.hydrateDay(state.generatedDays[key], catalog);
     }
 
-    function openDay(dayNumber) {
-      const day = getOrGenerateDay(dayNumber);
+    function openDay(dayNumber, campaignState = {}) {
+      const day = getOrGenerateDay(dayNumber, campaignState);
       if (day.opened) return day;
       const storedDay = compactApi.hydrateDay(state.generatedDays[String(dayNumber)], catalog);
       const rule = getDayRule(dayNumber);
       const random = createRandom(state.campaignSeed, `day:${dayNumber}:unplanned`, seedNamespace);
+      const capabilities = storedDay.demandSnapshot?.capabilities || initialCapabilities;
       const selected = selectNewCases(catalog, rule, storedDay.pendingUnplanned, random, {
         routineOnly: true,
-        seenCaseCounts: state.seenCaseCounts
+        seenCaseCounts: state.seenCaseCounts,
+        capabilities
       });
       selected.forEach((caseData) => {
-        storedDay.visits.push(createVisit(caseData, dayNumber, "unplanned", catalog, random, state, { availableEquipment: equipment }));
+        storedDay.visits.push(createVisit(caseData, dayNumber, "unplanned", catalog, random, state, {
+          sourceCategory: "walk_in",
+          equipmentCapabilities: capabilities
+        }));
         state.seenCaseCounts[caseData.id] = (state.seenCaseCounts[caseData.id] || 0) + 1;
       });
       storedDay.pendingUnplanned = 0;
@@ -615,7 +773,7 @@
       storedDay.fullFingerprint = fullFingerprint(storedDay, contentPack);
       storedDay.structuralFingerprint = structuralFingerprint(storedDay, contentPack);
       storedDay.fingerprint = storedDay.fullFingerprint;
-      const errors = validateGeneratedDay(storedDay, catalog, equipment);
+      const errors = validateGeneratedDay(storedDay, catalog, demandApi.availableEquipment(capabilities));
       if (errors.length) throw new Error(errors.join("; "));
       state.generatedDays[String(dayNumber)] = compactApi.compactDay(storedDay, catalog);
       persist(storage, state);
@@ -644,12 +802,13 @@
             patient: clone(visit.patient),
             owner: compactApi.compactOwner(visit.owner),
             reason: item.followUpReason || (item.deteriorated ? "deterioration" : "planned_control"),
-            eligibleDay: Math.min(7, dayNumber + Math.max(1, Number(item.followUpAfterDays || 1)))
+            eligibleDay: Math.min(30, dayNumber + Math.max(1, Number(item.followUpAfterDays || 1)))
           });
         }
       });
       day.closed = true;
       day.outcomes = clone(outcomes);
+      state.demandState = demandApi.applyDayOutcomes(state.demandState, outcomes);
       day.fullFingerprint = fullFingerprint(day, contentPack);
       day.structuralFingerprint = structuralFingerprint(day, contentPack);
       day.fingerprint = day.fullFingerprint;
@@ -658,8 +817,8 @@
       return clone(day);
     }
 
-    function schedulePreview(dayNumber) {
-      const day = getOrGenerateDay(dayNumber);
+    function schedulePreview(dayNumber, campaignState = {}) {
+      const day = getOrGenerateDay(dayNumber, campaignState);
       return {
         day: day.day,
         booked: day.visits.filter((visit) => visit.source !== "unplanned").map((visit) => ({
@@ -670,6 +829,7 @@
           arrivalMinute: visit.arrivalMinute
         })),
         unplannedRange: clone(day.unplannedRange),
+        demandSnapshot: clone(day.demandSnapshot || null),
         trueDiagnosesHidden: true
       };
     }
@@ -683,6 +843,8 @@
         campaignSeed: state.campaignSeed,
         generatedDays: Object.keys(state.generatedDays).map(Number).sort((a, b) => a - b),
         pendingFollowUps: state.pendingFollowUps.length,
+        demandDirectorVersion: state.demandDirectorVersion,
+        demandState: clone(state.demandState),
         fingerprint: day?.fingerprint || null,
         fullFingerprint: day?.fullFingerprint || null,
         structuralFingerprint: day?.structuralFingerprint || null
@@ -698,6 +860,7 @@
     GENERATOR_VERSION,
     SUPPORTED_MODES,
     DEFAULT_EQUIPMENT,
+    DEMAND_DIRECTOR_VERSION: demandApi.DEMAND_DIRECTOR_VERSION,
     createGenerator,
     createMemoryStorage,
     validateGeneratedDay,
