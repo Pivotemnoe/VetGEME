@@ -214,6 +214,27 @@ for (const file of caseFiles) {
     checkSource(item.followUp, "follow_up", file, `plan ${item.id}.followUp`);
     assert(Array.isArray(item.steps) && item.steps.length > 0, file, `plan ${item.id} needs exact steps`);
     assert(Array.isArray(item.worseningSigns) && item.worseningSigns.length > 0, file, `plan ${item.id} needs worsening signs`);
+    if (item.longitudinalCare) {
+      const care = item.longitudinalCare;
+      assert(care.schemaVersion === 1, file, `plan ${item.id} longitudinalCare schemaVersion must be 1`);
+      assert(["home_care", "outpatient", "scheduled_course", "inpatient", "referral"].includes(care.setting), file, `plan ${item.id} has invalid care setting`);
+      assert(Number.isInteger(care.durationDays) && care.durationDays > 0, file, `plan ${item.id} needs a positive durationDays`);
+      assert(Array.isArray(care.homeActionIds), file, `plan ${item.id} needs homeActionIds`);
+      assert(Array.isArray(care.clinicActionIds), file, `plan ${item.id} needs clinicActionIds`);
+      assert(Array.isArray(care.conditionalClinicActionIds), file, `plan ${item.id} needs conditionalClinicActionIds`);
+      assert(care.homeFrequency && ["daily", "per_approved_plan"].includes(care.homeFrequency.cadence), file, `plan ${item.id} needs an approved home frequency`);
+      const optionIds = new Set();
+      for (const followUp of care.followUpOptions ?? []) {
+        assert(typeof followUp.id === "string" && followUp.id.length > 0 && !optionIds.has(followUp.id), file, `plan ${item.id} follow-up needs a unique id`);
+        optionIds.add(followUp.id);
+        assert(Number.isInteger(followUp.offsetDays) && followUp.offsetDays > 0, file, `plan ${item.id} follow-up ${followUp.id} needs offsetDays`);
+        assert(["planned_recheck", "scheduled_procedure", "course_visit", "test_result_review", "deterioration", "complication", "relapse", "owner_concern", "error_return", "rescheduled_visit"].includes(followUp.reason), file, `plan ${item.id} follow-up ${followUp.id} has invalid reason`);
+      }
+      const worseningIds = new Set(item.worseningSigns.map((sign) => sign.id));
+      for (const signId of care.earlyReturnSignIds ?? []) {
+        assert(worseningIds.has(signId), file, `plan ${item.id} longitudinal care references unknown worsening sign ${signId}`);
+      }
+    }
   }
   assert(data.ownerExplanation?.known?.length >= 25, file, "ownerExplanation.known is incomplete");
   assert(data.ownerExplanation?.uncertain?.length >= 25, file, "ownerExplanation.uncertain is incomplete");

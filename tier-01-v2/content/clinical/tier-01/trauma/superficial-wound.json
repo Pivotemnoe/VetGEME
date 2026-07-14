@@ -756,6 +756,36 @@
         "source": "follow_up",
         "text": "Контроль при ухудшении или в установленный срок, если рана не закрывается."
       },
+      "longitudinalCare": {
+        "schemaVersion": 1,
+        "reviewStatus": "task_approved_vertical_slice",
+        "setting": "home_care",
+        "durationDays": 3,
+        "homeActionIds": ["wound_clean_daily", "wound_protect_daily", "wound_monitor_daily"],
+        "homeFrequency": { "cadence": "daily", "source": "plan_steps" },
+        "clinicActionIds": [],
+        "conditionalClinicActionIds": [],
+        "homeSummary": "обрабатывать и защищать рану ежедневно",
+        "followUpRequired": true,
+        "followUpOptions": [
+          {
+            "id": "wound_recheck_day_4",
+            "offsetDays": 3,
+            "scheduledTime": 660,
+            "reason": "planned_recheck",
+            "required": true,
+            "default": true
+          }
+        ],
+        "followUpGoal": "оценить заживление и признаки воспаления",
+        "earlyReturnSignIds": [
+          "superficial_wound_plan_w2",
+          "superficial_wound_plan_w3",
+          "superficial_wound_plan_w5"
+        ],
+        "earlyReturnSummary": "усилении боли, отёке или выделениях",
+        "completionCriterionIds": ["wound_closed_without_inflammation"]
+      },
       "worseningSigns": [
         {
           "id": "superficial_wound_plan_w1",

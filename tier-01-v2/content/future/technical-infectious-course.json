@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "FUTURE_INFECTIOUS_DAILY_COURSE",
+  "status": "pending_content",
+  "generatorEnabled": false,
+  "medicalTextApproved": false,
+  "purpose": "Техническая проверка серии ежедневных амбулаторных посещений без медицинского наполнения.",
+  "allowedCareSettings": ["scheduled_course", "inpatient", "referral"],
+  "technicalPlan": {
+    "id": "future_daily_outpatient_course",
+    "longitudinalCare": {
+      "schemaVersion": 1,
+      "reviewStatus": "pending_content",
+      "setting": "scheduled_course",
+      "durationDays": 3,
+      "homeActionIds": [],
+      "clinicActionIds": ["future_daily_procedure"],
+      "clinicVisitSchedule": {
+        "offsetDays": [1, 2, 3],
+        "scheduledTime": 600,
+        "reason": "course_visit"
+      },
+      "followUpRequired": true,
+      "completionCriterionIds": ["future_course_complete"]
+    }
+  }
+}

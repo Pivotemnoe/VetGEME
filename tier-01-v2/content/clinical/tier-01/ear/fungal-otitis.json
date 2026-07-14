@@ -629,6 +629,40 @@
         "source": "follow_up",
         "text": "Контрольный осмотр через 7–10 игровых дней или раньше при ухудшении."
       },
+      "longitudinalCare": {
+        "schemaVersion": 1,
+        "reviewStatus": "task_approved_vertical_slice",
+        "setting": "home_care",
+        "durationDays": 10,
+        "homeActionIds": ["ear_local_care_course", "avoid_unapproved_ear_drops"],
+        "homeFrequency": { "cadence": "per_approved_plan", "source": "plan_steps" },
+        "clinicActionIds": ["ear_recheck"],
+        "conditionalClinicActionIds": ["repeat_microscopy_if_indicated"],
+        "homeSummary": "выполнять согласованный местный план весь курс",
+        "followUpRequired": true,
+        "followUpOptions": [
+          {
+            "id": "fungal_otitis_recheck_day_8",
+            "offsetDays": 7,
+            "scheduledTime": 660,
+            "reason": "planned_recheck",
+            "required": true,
+            "default": true
+          },
+          {
+            "id": "fungal_otitis_recheck_day_11",
+            "offsetDays": 10,
+            "scheduledTime": 660,
+            "reason": "planned_recheck",
+            "required": true,
+            "default": false
+          }
+        ],
+        "followUpGoal": "оценить динамику уха и необходимость повторной микроскопии",
+        "earlyReturnSignIds": ["recommended_plan_w1", "recommended_plan_w2", "recommended_plan_w3", "recommended_plan_w4"],
+        "earlyReturnSummary": "усилении боли, отёке, нарушении равновесия или ухудшении состояния",
+        "completionCriterionIds": ["ear_signs_resolved_at_recheck"]
+      },
       "worseningSigns": [
         {
           "id": "recommended_plan_w1",
@@ -667,6 +701,40 @@
       "followUp": {
         "source": "follow_up",
         "text": "Обязательный контроль через 7–10 игровых дней."
+      },
+      "longitudinalCare": {
+        "schemaVersion": 1,
+        "reviewStatus": "task_approved_vertical_slice",
+        "setting": "home_care",
+        "durationDays": 10,
+        "homeActionIds": ["ear_local_care_course"],
+        "homeFrequency": { "cadence": "per_approved_plan", "source": "plan_steps" },
+        "clinicActionIds": ["ear_recheck"],
+        "conditionalClinicActionIds": ["repeat_microscopy_if_indicated"],
+        "homeSummary": "выполнять согласованный местный план без досрочной отмены",
+        "followUpRequired": true,
+        "followUpOptions": [
+          {
+            "id": "staged_otitis_recheck_day_8",
+            "offsetDays": 7,
+            "scheduledTime": 660,
+            "reason": "planned_recheck",
+            "required": true,
+            "default": true
+          },
+          {
+            "id": "staged_otitis_recheck_day_11",
+            "offsetDays": 10,
+            "scheduledTime": 660,
+            "reason": "planned_recheck",
+            "required": true,
+            "default": false
+          }
+        ],
+        "followUpGoal": "повторно оценить ухо и решить, нужны ли дополнительные исследования",
+        "earlyReturnSignIds": ["staged_plan_w1", "staged_plan_w2", "staged_plan_w3"],
+        "earlyReturnSummary": "усилении боли, неврологических признаках или отказе от еды",
+        "completionCriterionIds": ["ear_signs_resolved_at_recheck"]
       },
       "worseningSigns": [
         {
