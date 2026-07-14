@@ -1,0 +1,719 @@
+{
+  "status": "passed",
+  "runs": 10000,
+  "campaignDays": 30,
+  "trajectories": [
+    {
+      "id": "low_trust",
+      "label": "Низкое доверие"
+    },
+    {
+      "id": "high_trust",
+      "label": "Высокое доверие"
+    },
+    {
+      "id": "low_reliability",
+      "label": "Низкая клиническая надёжность"
+    },
+    {
+      "id": "high_reliability",
+      "label": "Высокая клиническая надёжность"
+    },
+    {
+      "id": "one_doctor",
+      "label": "Один врач"
+    },
+    {
+      "id": "two_doctors",
+      "label": "Два врача"
+    },
+    {
+      "id": "no_equipment",
+      "label": "Без оборудования"
+    },
+    {
+      "id": "microscope",
+      "label": "Микроскоп"
+    },
+    {
+      "id": "xray",
+      "label": "Рентген"
+    },
+    {
+      "id": "ultrasound",
+      "label": "УЗИ"
+    },
+    {
+      "id": "xray_ultrasound",
+      "label": "Рентген и УЗИ"
+    },
+    {
+      "id": "overload",
+      "label": "Перегрузка"
+    },
+    {
+      "id": "debt_risk",
+      "label": "Риск долга"
+    }
+  ],
+  "deterministic": true,
+  "excessConserved": true,
+  "sourceTotalsConserved": true,
+  "routingSafety": {
+    "checks": 150,
+    "safeMissingEquipmentArrivals": 71,
+    "blockedUnsafeArrivals": 0,
+    "syntheticBoundaryChecks": 2
+  },
+  "overall": {
+    "campaigns": 10000,
+    "days": 300000,
+    "averagesPerDay": {
+      "potentialDemand": 13.028,
+      "acceptedDemand": 7.642,
+      "excessDemand": 5.385,
+      "safeCapacity": 8.689,
+      "waitingList": 1.065,
+      "noCapacity": 0.073,
+      "incomingReferrals": 0.916,
+      "outgoingReferrals": 2.343,
+      "lostOpportunities": 0.191
+    },
+    "totals": {
+      "potentialDemand": 3908350,
+      "acceptedDemand": 2292709,
+      "excessDemand": 1615641,
+      "waitingList": 319572,
+      "noCapacity": 21964,
+      "incomingReferrals": 274916,
+      "outgoingReferrals": 702849,
+      "ownerLeft": 35291,
+      "lostOpportunities": 57255,
+      "deferredBookings": 855537,
+      "sources": {
+        "local_regular": 953375,
+        "word_of_mouth": 160107,
+        "clinic_referral": 274916,
+        "follow_up": 476777,
+        "walk_in": 268627,
+        "emergency": 109828,
+        "campaign_teaching": 9847,
+        "campaign_story": 39232
+      },
+      "operationalEquipmentDays": {
+        "microscope": 207720,
+        "xray": 46140,
+        "ultrasound": 46140
+      },
+      "maintenanceCostPotential": 16498200
+    },
+    "structuralUniqueCampaigns": 10000,
+    "structuralUniquenessPercent": 100
+  },
+  "byTrajectory": {
+    "low_trust": {
+      "label": "Низкое доверие",
+      "campaigns": 770,
+      "days": 23100,
+      "averagesPerDay": {
+        "potentialDemand": 7.653,
+        "acceptedDemand": 7.3,
+        "excessDemand": 0.353,
+        "safeCapacity": 8.69,
+        "waitingList": 0.061,
+        "noCapacity": 0.034,
+        "incomingReferrals": 0.927,
+        "outgoingReferrals": 0.12,
+        "lostOpportunities": 0.064
+      },
+      "totals": {
+        "potentialDemand": 176784,
+        "acceptedDemand": 168636,
+        "excessDemand": 8148,
+        "waitingList": 1407,
+        "noCapacity": 787,
+        "incomingReferrals": 21419,
+        "outgoingReferrals": 2776,
+        "ownerLeft": 684,
+        "lostOpportunities": 1471,
+        "deferredBookings": 3901,
+        "sources": {
+          "local_regular": 80251,
+          "word_of_mouth": 0,
+          "clinic_referral": 21419,
+          "follow_up": 33032,
+          "walk_in": 21391,
+          "emergency": 8693,
+          "campaign_teaching": 770,
+          "campaign_story": 3080
+        },
+        "operationalEquipmentDays": {
+          "microscope": 23100,
+          "xray": 0,
+          "ultrasound": 0
+        },
+        "maintenanceCostPotential": 808500
+      },
+      "structuralUniqueCampaigns": 770,
+      "structuralUniquenessPercent": 100
+    },
+    "high_trust": {
+      "label": "Высокое доверие",
+      "campaigns": 770,
+      "days": 23100,
+      "averagesPerDay": {
+        "potentialDemand": 15.788,
+        "acceptedDemand": 8.688,
+        "excessDemand": 7.1,
+        "safeCapacity": 8.69,
+        "waitingList": 1.607,
+        "noCapacity": 0,
+        "incomingReferrals": 0.927,
+        "outgoingReferrals": 2.88,
+        "lostOpportunities": 0
+      },
+      "totals": {
+        "potentialDemand": 364708,
+        "acceptedDemand": 200701,
+        "excessDemand": 164007,
+        "waitingList": 37129,
+        "noCapacity": 0,
+        "incomingReferrals": 21407,
+        "outgoingReferrals": 66523,
+        "ownerLeft": 0,
+        "lostOpportunities": 0,
+        "deferredBookings": 97484,
+        "sources": {
+          "local_regular": 69022,
+          "word_of_mouth": 34784,
+          "clinic_referral": 21407,
+          "follow_up": 41641,
+          "walk_in": 21318,
+          "emergency": 8679,
+          "campaign_teaching": 770,
+          "campaign_story": 3080
+        },
+        "operationalEquipmentDays": {
+          "microscope": 23100,
+          "xray": 0,
+          "ultrasound": 0
+        },
+        "maintenanceCostPotential": 808500
+      },
+      "structuralUniqueCampaigns": 770,
+      "structuralUniquenessPercent": 100
+    },
+    "low_reliability": {
+      "label": "Низкая клиническая надёжность",
+      "campaigns": 770,
+      "days": 23100,
+      "averagesPerDay": {
+        "potentialDemand": 11.836,
+        "acceptedDemand": 8.155,
+        "excessDemand": 3.681,
+        "safeCapacity": 8.69,
+        "waitingList": 0.795,
+        "noCapacity": 0.035,
+        "incomingReferrals": 0,
+        "outgoingReferrals": 1.155,
+        "lostOpportunities": 0.327
+      },
+      "totals": {
+        "potentialDemand": 273410,
+        "acceptedDemand": 188389,
+        "excessDemand": 85021,
+        "waitingList": 18373,
+        "noCapacity": 817,
+        "incomingReferrals": 0,
+        "outgoingReferrals": 26672,
+        "ownerLeft": 6743,
+        "lostOpportunities": 7560,
+        "deferredBookings": 50789,
+        "sources": {
+          "local_regular": 102533,
+          "word_of_mouth": 13339,
+          "clinic_referral": 0,
+          "follow_up": 38665,
+          "walk_in": 21314,
+          "emergency": 8688,
+          "campaign_teaching": 770,
+          "campaign_story": 3080
+        },
+        "operationalEquipmentDays": {
+          "microscope": 23100,
+          "xray": 0,
+          "ultrasound": 0
+        },
+        "maintenanceCostPotential": 808500
+      },
+      "structuralUniqueCampaigns": 770,
+      "structuralUniquenessPercent": 100
+    },
+    "high_reliability": {
+      "label": "Высокая клиническая надёжность",
+      "campaigns": 769,
+      "days": 23070,
+      "averagesPerDay": {
+        "potentialDemand": 13.788,
+        "acceptedDemand": 8.554,
+        "excessDemand": 5.234,
+        "safeCapacity": 8.69,
+        "waitingList": 1.126,
+        "noCapacity": 0,
+        "incomingReferrals": 1.531,
+        "outgoingReferrals": 2.187,
+        "lostOpportunities": 0
+      },
+      "totals": {
+        "potentialDemand": 318098,
+        "acceptedDemand": 197346,
+        "excessDemand": 120752,
+        "waitingList": 25973,
+        "noCapacity": 0,
+        "incomingReferrals": 35321,
+        "outgoingReferrals": 50452,
+        "ownerLeft": 0,
+        "lostOpportunities": 0,
+        "deferredBookings": 70300,
+        "sources": {
+          "local_regular": 74925,
+          "word_of_mouth": 13333,
+          "clinic_referral": 35321,
+          "follow_up": 40063,
+          "walk_in": 21302,
+          "emergency": 8557,
+          "campaign_teaching": 769,
+          "campaign_story": 3076
+        },
+        "operationalEquipmentDays": {
+          "microscope": 23070,
+          "xray": 0,
+          "ultrasound": 0
+        },
+        "maintenanceCostPotential": 807450
+      },
+      "structuralUniqueCampaigns": 769,
+      "structuralUniquenessPercent": 100
+    },
+    "one_doctor": {
+      "label": "Один врач",
+      "campaigns": 769,
+      "days": 23070,
+      "averagesPerDay": {
+        "potentialDemand": 13.037,
+        "acceptedDemand": 8.399,
+        "excessDemand": 4.638,
+        "safeCapacity": 8.69,
+        "waitingList": 0.998,
+        "noCapacity": 0,
+        "incomingReferrals": 0.921,
+        "outgoingReferrals": 1.913,
+        "lostOpportunities": 0.003
+      },
+      "totals": {
+        "potentialDemand": 300758,
+        "acceptedDemand": 193766,
+        "excessDemand": 106992,
+        "waitingList": 23034,
+        "noCapacity": 0,
+        "incomingReferrals": 21240,
+        "outgoingReferrals": 44144,
+        "ownerLeft": 66,
+        "lostOpportunities": 66,
+        "deferredBookings": 62782,
+        "sources": {
+          "local_regular": 85763,
+          "word_of_mouth": 13437,
+          "clinic_referral": 21240,
+          "follow_up": 39335,
+          "walk_in": 21458,
+          "emergency": 8688,
+          "campaign_teaching": 769,
+          "campaign_story": 3076
+        },
+        "operationalEquipmentDays": {
+          "microscope": 23070,
+          "xray": 0,
+          "ultrasound": 0
+        },
+        "maintenanceCostPotential": 807450
+      },
+      "structuralUniqueCampaigns": 769,
+      "structuralUniquenessPercent": 100
+    },
+    "two_doctors": {
+      "label": "Два врача",
+      "campaigns": 769,
+      "days": 23070,
+      "averagesPerDay": {
+        "potentialDemand": 12.74,
+        "acceptedDemand": 9.182,
+        "excessDemand": 3.557,
+        "safeCapacity": 19.388,
+        "waitingList": 0.791,
+        "noCapacity": 0,
+        "incomingReferrals": 0.925,
+        "outgoingReferrals": 1.297,
+        "lostOpportunities": 0.001
+      },
+      "totals": {
+        "potentialDemand": 293903,
+        "acceptedDemand": 211837,
+        "excessDemand": 82066,
+        "waitingList": 18252,
+        "noCapacity": 0,
+        "incomingReferrals": 21337,
+        "outgoingReferrals": 29915,
+        "ownerLeft": 26,
+        "lostOpportunities": 26,
+        "deferredBookings": 52125,
+        "sources": {
+          "local_regular": 103846,
+          "word_of_mouth": 13183,
+          "clinic_referral": 21337,
+          "follow_up": 39586,
+          "walk_in": 21404,
+          "emergency": 8636,
+          "campaign_teaching": 769,
+          "campaign_story": 3076
+        },
+        "operationalEquipmentDays": {
+          "microscope": 23070,
+          "xray": 0,
+          "ultrasound": 0
+        },
+        "maintenanceCostPotential": 807450
+      },
+      "structuralUniqueCampaigns": 769,
+      "structuralUniquenessPercent": 100
+    },
+    "no_equipment": {
+      "label": "Без оборудования",
+      "campaigns": 769,
+      "days": 23070,
+      "averagesPerDay": {
+        "potentialDemand": 12.632,
+        "acceptedDemand": 8.014,
+        "excessDemand": 4.618,
+        "safeCapacity": 8.299,
+        "waitingList": 0.986,
+        "noCapacity": 0,
+        "incomingReferrals": 0.493,
+        "outgoingReferrals": 1.931,
+        "lostOpportunities": 0.002
+      },
+      "totals": {
+        "potentialDemand": 291418,
+        "acceptedDemand": 184882,
+        "excessDemand": 106536,
+        "waitingList": 22757,
+        "noCapacity": 0,
+        "incomingReferrals": 11368,
+        "outgoingReferrals": 44554,
+        "ownerLeft": 41,
+        "lostOpportunities": 41,
+        "deferredBookings": 61941,
+        "sources": {
+          "local_regular": 87305,
+          "word_of_mouth": 13315,
+          "clinic_referral": 11368,
+          "follow_up": 38973,
+          "walk_in": 21444,
+          "emergency": 8632,
+          "campaign_teaching": 769,
+          "campaign_story": 3076
+        },
+        "operationalEquipmentDays": {
+          "microscope": 0,
+          "xray": 0,
+          "ultrasound": 0
+        },
+        "maintenanceCostPotential": 0
+      },
+      "structuralUniqueCampaigns": 769,
+      "structuralUniquenessPercent": 100
+    },
+    "microscope": {
+      "label": "Микроскоп",
+      "campaigns": 769,
+      "days": 23070,
+      "averagesPerDay": {
+        "potentialDemand": 13.051,
+        "acceptedDemand": 8.404,
+        "excessDemand": 4.648,
+        "safeCapacity": 8.69,
+        "waitingList": 0.997,
+        "noCapacity": 0,
+        "incomingReferrals": 0.927,
+        "outgoingReferrals": 1.916,
+        "lostOpportunities": 0.002
+      },
+      "totals": {
+        "potentialDemand": 301094,
+        "acceptedDemand": 193876,
+        "excessDemand": 107218,
+        "waitingList": 23008,
+        "noCapacity": 0,
+        "incomingReferrals": 21384,
+        "outgoingReferrals": 44194,
+        "ownerLeft": 48,
+        "lostOpportunities": 48,
+        "deferredBookings": 62976,
+        "sources": {
+          "local_regular": 85841,
+          "word_of_mouth": 13451,
+          "clinic_referral": 21384,
+          "follow_up": 39358,
+          "walk_in": 21306,
+          "emergency": 8691,
+          "campaign_teaching": 769,
+          "campaign_story": 3076
+        },
+        "operationalEquipmentDays": {
+          "microscope": 23070,
+          "xray": 0,
+          "ultrasound": 0
+        },
+        "maintenanceCostPotential": 807450
+      },
+      "structuralUniqueCampaigns": 769,
+      "structuralUniquenessPercent": 100
+    },
+    "xray": {
+      "label": "Рентген",
+      "campaigns": 769,
+      "days": 23070,
+      "averagesPerDay": {
+        "potentialDemand": 13.666,
+        "acceptedDemand": 8.516,
+        "excessDemand": 5.151,
+        "safeCapacity": 8.69,
+        "waitingList": 1.113,
+        "noCapacity": 0,
+        "incomingReferrals": 1.485,
+        "outgoingReferrals": 2.145,
+        "lostOpportunities": 0.005
+      },
+      "totals": {
+        "potentialDemand": 315283,
+        "acceptedDemand": 196458,
+        "excessDemand": 118825,
+        "waitingList": 25679,
+        "noCapacity": 0,
+        "incomingReferrals": 34257,
+        "outgoingReferrals": 49487,
+        "ownerLeft": 107,
+        "lostOpportunities": 107,
+        "deferredBookings": 69231,
+        "sources": {
+          "local_regular": 75324,
+          "word_of_mouth": 13277,
+          "clinic_referral": 34257,
+          "follow_up": 39840,
+          "walk_in": 21328,
+          "emergency": 8587,
+          "campaign_teaching": 769,
+          "campaign_story": 3076
+        },
+        "operationalEquipmentDays": {
+          "microscope": 0,
+          "xray": 23070,
+          "ultrasound": 0
+        },
+        "maintenanceCostPotential": 2076300
+      },
+      "structuralUniqueCampaigns": 769,
+      "structuralUniquenessPercent": 100
+    },
+    "ultrasound": {
+      "label": "УЗИ",
+      "campaigns": 769,
+      "days": 23070,
+      "averagesPerDay": {
+        "potentialDemand": 13.508,
+        "acceptedDemand": 8.493,
+        "excessDemand": 5.016,
+        "safeCapacity": 8.69,
+        "waitingList": 1.081,
+        "noCapacity": 0,
+        "incomingReferrals": 1.365,
+        "outgoingReferrals": 2.09,
+        "lostOpportunities": 0.004
+      },
+      "totals": {
+        "potentialDemand": 311635,
+        "acceptedDemand": 195926,
+        "excessDemand": 115709,
+        "waitingList": 24934,
+        "noCapacity": 0,
+        "incomingReferrals": 31480,
+        "outgoingReferrals": 48219,
+        "ownerLeft": 91,
+        "lostOpportunities": 91,
+        "deferredBookings": 67399,
+        "sources": {
+          "local_regular": 77498,
+          "word_of_mouth": 13280,
+          "clinic_referral": 31480,
+          "follow_up": 39695,
+          "walk_in": 21389,
+          "emergency": 8739,
+          "campaign_teaching": 769,
+          "campaign_story": 3076
+        },
+        "operationalEquipmentDays": {
+          "microscope": 0,
+          "xray": 0,
+          "ultrasound": 23070
+        },
+        "maintenanceCostPotential": 2537700
+      },
+      "structuralUniqueCampaigns": 769,
+      "structuralUniquenessPercent": 100
+    },
+    "xray_ultrasound": {
+      "label": "Рентген и УЗИ",
+      "campaigns": 769,
+      "days": 23070,
+      "averagesPerDay": {
+        "potentialDemand": 13.866,
+        "acceptedDemand": 8.85,
+        "excessDemand": 5.016,
+        "safeCapacity": 9.019,
+        "waitingList": 1.095,
+        "noCapacity": 0,
+        "incomingReferrals": 1.725,
+        "outgoingReferrals": 2.041,
+        "lostOpportunities": 0.005
+      },
+      "totals": {
+        "potentialDemand": 319886,
+        "acceptedDemand": 204165,
+        "excessDemand": 115721,
+        "waitingList": 25257,
+        "noCapacity": 0,
+        "incomingReferrals": 39792,
+        "outgoingReferrals": 47078,
+        "ownerLeft": 123,
+        "lostOpportunities": 123,
+        "deferredBookings": 68520,
+        "sources": {
+          "local_regular": 76325,
+          "word_of_mouth": 13325,
+          "clinic_referral": 39792,
+          "follow_up": 40754,
+          "walk_in": 21461,
+          "emergency": 8663,
+          "campaign_teaching": 769,
+          "campaign_story": 3076
+        },
+        "operationalEquipmentDays": {
+          "microscope": 0,
+          "xray": 23070,
+          "ultrasound": 23070
+        },
+        "maintenanceCostPotential": 4614000
+      },
+      "structuralUniqueCampaigns": 769,
+      "structuralUniquenessPercent": 100
+    },
+    "overload": {
+      "label": "Перегрузка",
+      "campaigns": 769,
+      "days": 23070,
+      "averagesPerDay": {
+        "potentialDemand": 17.965,
+        "acceptedDemand": 3.56,
+        "excessDemand": 14.405,
+        "safeCapacity": 3.502,
+        "waitingList": 1.985,
+        "noCapacity": 0.432,
+        "incomingReferrals": 0.243,
+        "outgoingReferrals": 8.367,
+        "lostOpportunities": 1.09
+      },
+      "totals": {
+        "potentialDemand": 414449,
+        "acceptedDemand": 82134,
+        "excessDemand": 332315,
+        "waitingList": 45798,
+        "noCapacity": 9956,
+        "incomingReferrals": 5606,
+        "outgoingReferrals": 193018,
+        "ownerLeft": 15198,
+        "lostOpportunities": 25154,
+        "deferredBookings": 114143,
+        "sources": {
+          "local_regular": 9355,
+          "word_of_mouth": 5383,
+          "clinic_referral": 5606,
+          "follow_up": 40452,
+          "walk_in": 12439,
+          "emergency": 5975,
+          "campaign_teaching": 616,
+          "campaign_story": 2308
+        },
+        "operationalEquipmentDays": {
+          "microscope": 23070,
+          "xray": 0,
+          "ultrasound": 0
+        },
+        "maintenanceCostPotential": 807450
+      },
+      "structuralUniqueCampaigns": 769,
+      "structuralUniquenessPercent": 100
+    },
+    "debt_risk": {
+      "label": "Риск долга",
+      "campaigns": 769,
+      "days": 23070,
+      "averagesPerDay": {
+        "potentialDemand": 9.836,
+        "acceptedDemand": 3.233,
+        "excessDemand": 6.603,
+        "safeCapacity": 3.233,
+        "waitingList": 1.212,
+        "noCapacity": 0.451,
+        "incomingReferrals": 0.447,
+        "outgoingReferrals": 2.419,
+        "lostOpportunities": 0.978
+      },
+      "totals": {
+        "potentialDemand": 226924,
+        "acceptedDemand": 74593,
+        "excessDemand": 152331,
+        "waitingList": 27971,
+        "noCapacity": 10404,
+        "incomingReferrals": 10305,
+        "outgoingReferrals": 55817,
+        "ownerLeft": 12164,
+        "lostOpportunities": 22568,
+        "deferredBookings": 73946,
+        "sources": {
+          "local_regular": 25387,
+          "word_of_mouth": 0,
+          "clinic_referral": 10305,
+          "follow_up": 5383,
+          "walk_in": 21073,
+          "emergency": 8600,
+          "campaign_teaching": 769,
+          "campaign_story": 3076
+        },
+        "operationalEquipmentDays": {
+          "microscope": 23070,
+          "xray": 0,
+          "ultrasound": 0
+        },
+        "maintenanceCostPotential": 807450
+      },
+      "structuralUniqueCampaigns": 769,
+      "structuralUniquenessPercent": 100
+    }
+  },
+  "definitions": {
+    "lostOpportunities": "no_capacity + owner_left",
+    "incomingReferrals": "accepted source category clinic_referral",
+    "outgoingReferrals": "excess demand safely sent to another clinic",
+    "debtRiskBoundary": "Demand Director receives staffing, shift and fatigue effects; financial closure is tested by campaign mechanics."
+  }
+}
