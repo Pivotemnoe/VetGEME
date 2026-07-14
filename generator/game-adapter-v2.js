@@ -154,6 +154,12 @@
       sex: visit.patient.sex === "male" ? "самец" : "самка",
       ageYears: visit.patient.ageYears,
       returnVisit: visit.returnVisit,
+      appointmentId: visit.appointmentId || null,
+      treatmentCourseId: visit.treatmentCourseId || null,
+      appointmentReason: visit.appointmentReason || visit.followUpReason || null,
+      attendanceDecision: visit.attendanceDecision || null,
+      adherenceState: visit.adherenceState || null,
+      longitudinalState: clone(visit.longitudinalState || null),
       urgency: visit.urgency === "urgent" ? "urgent" : "routine",
       eventLabel: visit.source === "unplanned" ? "Незапланированный пациент" : "",
       complaints: [adaptedVisit.complaint.text],
@@ -209,6 +215,8 @@
       label: plan.label,
       fee: 110 + plan.steps.length * 20,
       note: `${plan.steps.join(" ")} ${plan.followUp?.text || ""}`.trim(),
+      longitudinalCare: clone(plan.longitudinalCare || null),
+      followUpOptions: clone(plan.longitudinalCare?.followUpOptions || []),
       coversDiagnosisIds: index === 0 ? [caseData.id] : [],
       quality: index === 0 ? "correct" : plan.disabledWhenRedFlags ? "wrong" : "partial"
     }));

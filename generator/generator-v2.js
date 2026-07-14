@@ -14,7 +14,7 @@
   "use strict";
 
   const SAVE_KEY = "pet-clinic-generator-v2";
-  const SAVE_VERSION = 5;
+  const SAVE_VERSION = 6;
   const GENERATOR_VERSION = "tier-01-v2.2.0";
   const PREVIOUS_GENERATOR_VERSION = "tier-01-v2.1.0";
   const SUPPORTED_MODES = ["current", "legacy-v1", "tier-01-v2"];
@@ -156,6 +156,7 @@
       });
       return [key, compactApi.compactDay(hydrated, catalog)];
     }));
+    migrated.pendingFollowUps = (migrated.pendingFollowUps || []).map((item) => compactPendingFollowUp(item, catalog));
     return migrated;
   }
 
@@ -167,7 +168,13 @@
       patient: clone(followUp.patient),
       owner: compactApi.compactOwner(followUp.owner?.profile ? followUp.owner : compactApi.hydrateOwner(followUp.owner, catalog)),
       reason: followUp.reason,
-      eligibleDay: followUp.eligibleDay
+      eligibleDay: followUp.eligibleDay,
+      scheduledTime: followUp.scheduledTime || 660,
+      appointmentId: followUp.appointmentId || null,
+      treatmentCourseId: followUp.treatmentCourseId || null,
+      attendanceDecision: followUp.attendanceDecision || "attended",
+      adherenceState: followUp.adherenceState || null,
+      longitudinalState: clone(followUp.longitudinalState || null)
     };
   }
 
@@ -194,8 +201,8 @@
       }
       return saved;
     }
-    if (saved && saved.saveVersion === 4 && [PREVIOUS_GENERATOR_VERSION, GENERATOR_VERSION].includes(saved.generatorVersion) && contentPackMatches(saved, contentPack)) {
-      if (!catalog) throw new Error("Tier 01 v2 catalog is required to migrate generator save version 4");
+    if (saved && [4, 5].includes(saved.saveVersion) && [PREVIOUS_GENERATOR_VERSION, GENERATOR_VERSION].includes(saved.generatorVersion) && contentPackMatches(saved, contentPack)) {
+      if (!catalog) throw new Error(`Tier 01 v2 catalog is required to migrate generator save version ${saved.saveVersion}`);
       return addDemandState(saved, catalog, contentPack);
     }
     if (saved && saved.saveVersion === 3 && [PREVIOUS_GENERATOR_VERSION, GENERATOR_VERSION].includes(saved.generatorVersion) && contentPackMatches(saved, contentPack)) {
@@ -454,6 +461,13 @@
       returnVisit: source === "follow_up",
       originalVisitId: options.originalVisitId || null,
       followUpReason: options.followUpReason || null,
+      appointmentId: options.appointmentId || null,
+      treatmentCourseId: options.treatmentCourseId || null,
+      appointmentReason: options.appointmentReason || options.followUpReason || null,
+      attendanceDecision: options.attendanceDecision || null,
+      adherenceState: options.adherenceState || null,
+      longitudinalState: clone(options.longitudinalState || null),
+      scheduledTime: options.scheduledTime || null,
       ...routing,
       medicalContent: clone(caseData)
     };
@@ -468,7 +482,9 @@
     const occupiedBookedMinutes = new Set();
     visible.forEach((visit, index) => {
       const segment = Math.max(25, Math.floor((end - start - 45) / Math.max(1, visible.length)));
-      const rawMinute = Math.min(end - 30, start + 15 + index * segment + Math.floor(random() * Math.min(16, segment)));
+      const rawMinute = visit.scheduledTime
+        ? Math.min(end - 30, Math.max(start, visit.scheduledTime + (visit.attendanceDecision === "late" ? 25 : 0)))
+        : Math.min(end - 30, start + 15 + index * segment + Math.floor(random() * Math.min(16, segment)));
       if (visit.source === "unplanned") {
         visit.arrivalMinute = rawMinute;
         return;
@@ -588,7 +604,12 @@
         throw new Error(`Day ${dayNumber - 1} must be closed before day ${dayNumber} is generated`);
       }
       const random = createRandom(state.campaignSeed, `day:${dayNumber}:plan`, seedNamespace);
-      const availableFollowUps = state.pendingFollowUps.filter((item) => item.eligibleDay <= dayNumber);
+      const followUpPriority = { scheduled_procedure: 0, course_visit: 0, planned_recheck: 1, rescheduled_visit: 2 };
+      const availableFollowUps = state.pendingFollowUps
+        .filter((item) => item.eligibleDay <= dayNumber)
+        .sort((left, right) => (followUpPriority[left.reason] ?? 3) - (followUpPriority[right.reason] ?? 3)
+          || left.eligibleDay - right.eligibleDay
+          || String(left.id).localeCompare(String(right.id)));
       const baseLocalDemand = campaignState.baseLocalDemand
         ?? ((Number(rule.visitsTotal.min) + Number(rule.visitsTotal.max)) / 2);
       const decision = demandApi.directDemand({
@@ -614,10 +635,11 @@
         min: Math.min(rule.followUpTarget ?? rule.followUps.min, rule.followUpMaximum ?? rule.followUps.max),
         max: rule.followUpMaximum ?? rule.followUps.max
       };
-      const requestedFollowUps = Math.min(
-        followUpRange.max,
-        Math.max(followUpRange.min, decision.sourcePlan.follow_up)
-      );
+      const followUpCapacity = Math.max(0, plannedVisitCount - pendingUnplanned);
+      const requestedFollowUps = Math.min(followUpRange.max, followUpCapacity, Math.max(
+        Math.min(followUpRange.max, Math.max(followUpRange.min, decision.sourcePlan.follow_up)),
+        Math.min(followUpRange.max, availableFollowUps.length)
+      ));
       const selectedFollowUps = [];
       let selectedUrgentFollowUps = 0;
       for (const item of availableFollowUps) {
@@ -696,6 +718,13 @@
           originalVisitId: followUp.originalVisitId,
           followUpLine: line,
           followUpReason: followUp.reason,
+          appointmentId: followUp.appointmentId,
+          treatmentCourseId: followUp.treatmentCourseId,
+          appointmentReason: followUp.reason,
+          attendanceDecision: followUp.attendanceDecision,
+          adherenceState: followUp.adherenceState,
+          longitudinalState: followUp.longitudinalState,
+          scheduledTime: followUp.scheduledTime,
           sourceCategory: "follow_up",
           equipmentCapabilities: decision.capabilities
         }));
@@ -791,7 +820,25 @@
         visit.selectedPlanId = item.selectedPlanId ?? visit.selectedPlanId ?? null;
         visit.outcome = clone(item);
         state.completedCases.push({ day: dayNumber, visitId: visit.visitId, caseId: visit.caseId, outcome: clone(item) });
-        const clinicalFollowUp = item.followUpRequested || item.deteriorated;
+        const explicitAppointments = (item.appointments || []).filter((appointment) => ["confirmed", "rescheduled"].includes(appointment.status));
+        explicitAppointments.forEach((appointment) => {
+          state.pendingFollowUps.push({
+            id: appointment.appointmentId,
+            appointmentId: appointment.appointmentId,
+            treatmentCourseId: appointment.treatmentCourseId,
+            caseId: visit.caseId,
+            originalVisitId: visit.visitId,
+            patient: clone(visit.patient),
+            owner: compactApi.compactOwner(visit.owner),
+            reason: appointment.reason,
+            eligibleDay: appointment.scheduledDay,
+            scheduledTime: appointment.scheduledTime,
+            attendanceDecision: appointment.attendanceDecision,
+            adherenceState: appointment.adherenceState,
+            longitudinalState: clone(appointment.longitudinalState || null)
+          });
+        });
+        const clinicalFollowUp = !explicitAppointments.length && (item.followUpRequested || item.deteriorated);
         const declinedRoutineFollowUp = item.ownerDeclinedFollowUp && !item.deteriorated;
         const referralWithoutLocalControl = item.referred && !item.localFollowUpRequired && !item.deteriorated;
         if (clinicalFollowUp && !declinedRoutineFollowUp && !referralWithoutLocalControl) {
@@ -851,7 +898,18 @@
       };
     }
 
-    return { getOrGenerateDay, openDay, closeDay, schedulePreview, metadata };
+    function updatePendingAppointment(appointmentId, updates = {}) {
+      const pending = state.pendingFollowUps.find((item) => item.appointmentId === appointmentId);
+      if (!pending) return null;
+      if (updates.attendanceDecision) pending.attendanceDecision = updates.attendanceDecision;
+      if (updates.scheduledTime) pending.scheduledTime = updates.scheduledTime;
+      if (updates.scheduledDay) pending.eligibleDay = updates.scheduledDay;
+      if (updates.reason) pending.reason = updates.reason;
+      persist(storage, state);
+      return clone(pending);
+    }
+
+    return { getOrGenerateDay, openDay, closeDay, schedulePreview, metadata, updatePendingAppointment };
   }
 
   return {

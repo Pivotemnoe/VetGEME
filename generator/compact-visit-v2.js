@@ -224,6 +224,12 @@
       requiresReferral: Boolean(visit.requiresReferral),
       safeReferralAvailable: Boolean(visit.safeReferralAvailable)
     };
+    if (visit.appointmentId) compact.appointmentId = visit.appointmentId;
+    if (visit.treatmentCourseId) compact.treatmentCourseId = visit.treatmentCourseId;
+    if (visit.appointmentReason) compact.appointmentReason = visit.appointmentReason;
+    if (visit.attendanceDecision) compact.attendanceDecision = visit.attendanceDecision;
+    if (visit.adherenceState) compact.adherenceState = visit.adherenceState;
+    if (visit.longitudinalState) compact.longitudinalState = clone(visit.longitudinalState);
     if (visit.selectedPlanId !== undefined) compact.selectedPlanId = visit.selectedPlanId;
     if (visit.outcome !== undefined) compact.outcome = clone(visit.outcome);
     validateCompactVisit(compact, catalog);
@@ -261,6 +267,12 @@
       returnVisit: Boolean(compact.returnVisit),
       originalVisitId: compact.originalVisitId || null,
       followUpReason: compact.followUpReason || null,
+      appointmentId: compact.appointmentId || null,
+      treatmentCourseId: compact.treatmentCourseId || null,
+      appointmentReason: compact.appointmentReason || null,
+      attendanceDecision: compact.attendanceDecision || null,
+      adherenceState: compact.adherenceState || null,
+      longitudinalState: clone(compact.longitudinalState || null),
       missingEquipment: clone(compact.missingEquipment || []),
       requiresReferral: Boolean(compact.requiresReferral),
       safeReferralAvailable: Boolean(compact.safeReferralAvailable),
