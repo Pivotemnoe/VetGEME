@@ -15,6 +15,7 @@
   const CLINIC_VIEW = { x: 28, y: 42, scale: 0.88 };
   let campaign = window.PET_CLINIC_CAMPAIGN;
   let generatorRuntime = { mode: "current", catalog: null, generator: null };
+  const visualRenderer = window.PET_CLINIC_VISUAL_V2;
   const visitState = window.PET_CLINIC_VISIT_STATE;
   const clinicalDecisions = window.PET_CLINIC_CLINICAL_DECISIONS_V2;
   const diagnosticDecisions = window.PET_CLINIC_DIAGNOSTIC_DECISIONS_V2;
@@ -929,6 +930,11 @@
   const portraitCanvas = document.getElementById("portraitCanvas");
   const portraitCtx = portraitCanvas.getContext("2d");
   const expandedClinicalStages = new Set();
+  window.addEventListener("pet-clinic-visual-v2-ready", () => {
+    drawClinic();
+    updateVisualModeSettings();
+  });
+  window.addEventListener("pet-clinic-visual-v2-error", () => updateVisualModeSettings());
 
   const el = {
     campaignProgress: document.getElementById("campaignProgress"),
@@ -1025,6 +1031,8 @@
     developerPanel: document.getElementById("developerPanel"),
     closeDeveloperBtn: document.getElementById("closeDeveloperBtn"),
     newGameBtn: document.getElementById("newGameBtn"),
+    visualModeBtn: document.getElementById("visualModeBtn"),
+    visualModeStatus: document.getElementById("visualModeStatus"),
     developerData: document.getElementById("developerData"),
     shiftWindow: document.getElementById("shiftWindow"),
     shiftTitle: document.getElementById("shiftTitle"),
@@ -1832,6 +1840,11 @@
     }
   }
 
+  function routeForVisual(name, fallback) {
+    const visualRoute = visualRenderer?.isEnabled?.() ? visualRenderer.route(name) : null;
+    return visualRoute || fallback.map((point) => [...point]);
+  }
+
   function createPatient(forcedDiseaseId, isReturn, overrides = {}) {
     const diseaseId = forcedDiseaseId || pick(diseaseIds);
     const disease = overrides.v2Visit
@@ -1841,6 +1854,9 @@
     const flags = { ...(disease.makeFlags ? disease.makeFlags() : {}), ...(overrides.flags || {}) };
     const complaints = overrides.complaints || sample(disease.complaints, 3);
     const profile = overrides.ownerProfile || ownerProfiles.find((item) => item.id === overrides.profileId) || pick(ownerProfiles);
+    const arrivalRoute = routeForVisual("entranceToWaiting", [[932, 620], [932, 410], [760, 410], [760, 360], [610, 360], [610, 410]]);
+    const usesVisualRoute = Boolean(visualRenderer?.isEnabled?.() && visualRenderer?.isReady?.());
+    const [arrivalStartX, arrivalStartY] = usesVisualRoute ? arrivalRoute[0] : [932, 675];
     const patient = {
       id: state.nextPatientId,
       owner: overrides.owner || pick(owners),
@@ -1917,11 +1933,11 @@
       waitingStage: 0,
       protectedFromLeaving: false,
       completeExamCredited: false,
-      screenX: 932,
-      screenY: 675,
+      screenX: arrivalStartX,
+      screenY: arrivalStartY,
       motion: "arriving",
       routeIndex: 0,
-      route: [[932, 620], [932, 410], [760, 410], [760, 360], [610, 360], [610, 410]]
+      route: arrivalRoute
     };
     state.nextPatientId += 1;
     patient.findings.push(isReturn
@@ -2075,7 +2091,7 @@
         state.goalStats.noLost = 0;
         patient.motion = "leaving";
         patient.routeIndex = 0;
-        patient.route = [[610, 410], [610, 360], [760, 360], [760, 410], [932, 570], [932, 675]];
+        patient.route = routeForVisual("waitingToExit", [[610, 410], [610, 360], [760, 360], [760, 410], [932, 570], [932, 675]]);
         state.departures.push(patient);
       }
       return !lost;
@@ -2891,7 +2907,7 @@
     patient.motion = "leaving";
     visitState.markCompleted(patient);
     patient.routeIndex = 0;
-    patient.route = [[420, 280], [500, 315], [500, 360], [760, 360], [760, 410], [932, 570], [932, 675]];
+    patient.route = routeForVisual("doctorToExit", [[420, 280], [500, 315], [500, 360], [760, 360], [760, 410], [932, 570], [932, 675]]);
     state.departures.push(patient);
     state.queue = state.queue.filter((item) => item.id !== patient.id);
     state.activeId = null;
@@ -3573,7 +3589,7 @@
     if (patient && patient.motion !== "inCabinet") {
       patient.motion = "toCabinet";
       patient.routeIndex = 0;
-      patient.route = [[610, 410], [610, 360], [500, 360], [500, 315], [420, 280], [350, 245]];
+      patient.route = routeForVisual("waitingToDoctor", [[610, 410], [610, 360], [500, 360], [500, 315], [420, 280], [350, 245]]);
     }
     el.caseWindow.classList.remove("hidden");
     closeChoice();
@@ -4201,6 +4217,28 @@
     el.goalScore.textContent = `${goals.filter(goalComplete).length}/${goals.length}`;
   }
 
+  function updateVisualModeSettings() {
+    if (!el.visualModeBtn || !el.visualModeStatus) return;
+    const status = visualRenderer?.getStatus?.();
+    const enabled = Boolean(status?.enabled);
+    el.visualModeBtn.textContent = enabled ? "Вернуться к текущей графике" : "Включить новую визуализацию";
+    el.visualModeStatus.dataset.state = status?.error ? "error" : status?.ready ? "ready" : "loading";
+    el.visualModeStatus.textContent = status?.error
+      ? `Новая графика не загрузилась: ${status.error}`
+      : status?.ready
+        ? "Модульная графика включена. Медицинская логика не меняется."
+        : enabled
+          ? "Загружаются комнаты и спрайты…"
+          : "Модульная графика выключена."
+  }
+
+  function toggleVisualMode() {
+    const url = new URL(window.location.href);
+    if (visualRenderer?.isEnabled?.()) url.searchParams.delete("visualMode");
+    else url.searchParams.set("visualMode", "modular-v2");
+    window.location.assign(url.toString());
+  }
+
   function renderHud() {
     const doctor = currentDoctor();
     el.moneyValue.textContent = formatMoney(state.money);
@@ -4249,6 +4287,7 @@
       ? `Скорость ограничена до ${maxAllowedSpeed()}x условиями обучения и очереди`
       : "Скорость";
     el.messageLog.textContent = `${formatClinicTime(state.minute)} · ${state.log}`;
+    updateVisualModeSettings();
   }
 
   function renderAll() {
@@ -4259,6 +4298,76 @@
     drawClinic();
   }
 
+  function modularActorState(patient) {
+    const moving = ["arriving", "toCabinet", "leaving"].includes(patient.motion)
+      && patient.routeIndex < (patient.route?.length || 0);
+    return moving ? "walk" : "idle";
+  }
+
+  function buildModularActors() {
+    const actors = [];
+    const doctor = currentDoctor();
+    advanceDoctorMotion();
+    const doctorState = state.doctorMotion === "labWorking"
+      ? "work"
+      : state.doctorMotion !== "idle"
+        ? "walk"
+        : !el.caseWindow.classList.contains("hidden")
+          ? "work"
+          : "idle";
+    actors.push({
+      id: `doctor-${doctor.id}`,
+      animationId: doctor.id === "sokolova" ? "animation.veterinarian-female" : "animation.veterinarian-male",
+      state: doctorState,
+      x: Math.round(state.doctorScreenX + 7),
+      y: Math.round(state.doctorScreenY + 42),
+      zFootY: Math.round(state.doctorScreenY + 42)
+    });
+
+    const appendPatientActors = (patient, index, departing = false) => {
+      advancePatientMotion(patient, index);
+      const x = Math.round(patient.screenX);
+      const y = Math.round(patient.screenY);
+      const movementState = modularActorState(patient);
+      const ownerVariant = (Number(patient.id) + index) % 2 === 0 ? "female" : "male";
+      actors.push({
+        id: `${departing ? "departure" : "queue"}-owner-${patient.id}`,
+        animationId: `animation.owner-${ownerVariant}`,
+        state: movementState,
+        x: x + 7,
+        y: y + 42,
+        zFootY: y + 42,
+        timeOffset: index * 173
+      });
+      const animalState = movementState === "walk"
+        ? "walk"
+        : patient.motion === "waiting"
+          ? "sit"
+          : "idle";
+      actors.push({
+        id: `${departing ? "departure" : "queue"}-animal-${patient.id}`,
+        animationId: patient.species === "cat"
+          ? "animation.cat-gray"
+          : patient.species === "dog"
+            ? "animation.dog-brown"
+            : null,
+        fallbackSpecies: patient.species,
+        state: animalState,
+        x: x + 34,
+        y: y + 44,
+        zFootY: y + 44,
+        scale: patient.id === state.activeId ? 1.14 : 1,
+        active: patient.id === state.activeId,
+        timeOffset: index * 211
+      });
+    };
+
+    state.queue.forEach((patient, index) => appendPatientActors(patient, index));
+    state.departures.forEach((patient, index) => appendPatientActors(patient, index, true));
+    state.departures = state.departures.filter((patient) => patient.motion !== "gone");
+    return actors;
+  }
+
   function drawClinic() {
     ctx.imageSmoothingEnabled = false;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -4266,8 +4375,19 @@
     ctx.save();
     ctx.translate(CLINIC_VIEW.x, CLINIC_VIEW.y);
     ctx.scale(CLINIC_VIEW.scale, CLINIC_VIEW.scale);
-    drawClinicShell();
-    drawCharacters();
+    const modularReady = visualRenderer?.isEnabled?.() && visualRenderer?.isReady?.();
+    if (modularReady) {
+      visualRenderer.drawScene(ctx, {
+        time: state.animationTime,
+        actors: buildModularActors(),
+        fallbackActor: (actor) => {
+          if (actor.fallbackSpecies) drawAnimal(actor.fallbackSpecies, actor.x, actor.y - 27, actor.active);
+        }
+      });
+    } else {
+      drawClinicShell();
+      drawCharacters();
+    }
     drawFloatingLabels();
     ctx.restore();
   }
@@ -4754,14 +4874,14 @@
   function startDoctorLabTrip() {
     state.doctorMotion = "toLab";
     state.doctorRouteIndex = 0;
-    state.doctorRoute = [[500, 300], [525, 350], [825, 350], [850, 300], [875, 225]];
+    state.doctorRoute = routeForVisual("doctorToLaboratory", [[500, 300], [525, 350], [825, 350], [850, 300], [875, 225]]);
   }
 
   function advanceDoctorMotion() {
     if (state.doctorMotion === "labWorking" && state.animationTime >= state.doctorHoldUntil) {
       state.doctorMotion = "returning";
       state.doctorRouteIndex = 0;
-      state.doctorRoute = [[850, 300], [825, 350], [525, 350], [500, 300], [430, 240]];
+      state.doctorRoute = routeForVisual("laboratoryToDoctor", [[850, 300], [825, 350], [525, 350], [500, 300], [430, 240]]);
     }
     if (state.doctorRouteIndex < state.doctorRoute.length) {
       const [targetX, targetY] = state.doctorRoute[state.doctorRouteIndex];
@@ -5040,6 +5160,7 @@
     el.developerBtn.addEventListener("click", () => el.developerPanel.classList.toggle("hidden"));
     el.closeDeveloperBtn.addEventListener("click", () => el.developerPanel.classList.add("hidden"));
     el.newGameBtn.addEventListener("click", startNewGame);
+    el.visualModeBtn.addEventListener("click", toggleVisualMode);
     el.devResolvePatientBtn.addEventListener("click", debugResolveActivePatient);
     el.devFinishDayBtn.addEventListener("click", debugFinishDay);
     document.querySelectorAll(".stage-tabs button").forEach((button) => {

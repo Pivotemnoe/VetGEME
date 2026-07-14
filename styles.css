@@ -338,6 +338,11 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
 .developer-panel .settings-actions small { color: #52677b; line-height: 1.3; }
 .developer-panel .new-game-button { min-height: 36px; border-color: #7c2029; background: linear-gradient(#fff4f4, #efc6c9); color: #641820; font-weight: 800; }
 .developer-panel .new-game-button:hover { background: linear-gradient(#fffafa, #eeb4b9); }
+.developer-panel .visual-settings { display: grid; gap: 5px; border-top: 1px solid #b9c9d4; }
+.developer-panel .visual-settings button { min-height: 34px; font-weight: 800; }
+.developer-panel .visual-settings small { color: #52677b; line-height: 1.3; }
+.developer-panel .visual-settings small[data-state="ready"] { color: #246b4b; }
+.developer-panel .visual-settings small[data-state="error"] { color: #8a2930; }
 .developer-panel .developer-heading { display: block; padding: 7px 8px 0; color: var(--blue-900); font-size: 10px; }
 .developer-panel .developer-actions { display: grid; gap: 6px; padding-top: 0; }
 .developer-actions button { min-height: 32px; padding: 5px; font-size: 9px; }
