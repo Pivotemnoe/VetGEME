@@ -35,6 +35,10 @@ const base = {
   }],
   caseJournal: [{ day: 3, visitId: "visit-3-1" }],
   pendingReturns: [{ visitId: "visit-3-1", day: 5 }],
+  appointments: [{ appointmentId: "AP-3-1", treatmentCourseId: "TC-3-1", scheduledDay: 5, status: "confirmed" }],
+  treatmentCourses: [{ treatmentCourseId: "TC-3-1", status: "active" }],
+  longitudinalPatients: { "LP-3-1": { patientId: "LP-3-1", state: "improving" } },
+  attendanceEvents: [{ appointmentId: "AP-2-1", status: "attended" }],
   transientDomReference: { shouldNotPersist: true }
 };
 
@@ -42,6 +46,10 @@ saveApi.save(storage, "tier-01-v2", base);
 assert.equal(saveApi.load(storage, "tier-01-v2").state.money, 2040);
 assert.equal(saveApi.load(storage, "tier-01-v2").state.queue[0].diagnosticDecisions[0].noResult, true);
 assert.equal(saveApi.load(storage, "tier-01-v2").state.queue[0].diagnosticUncertainty.reason, "refused");
+assert.equal(saveApi.load(storage, "tier-01-v2").state.appointments[0].appointmentId, "AP-3-1");
+assert.equal(saveApi.load(storage, "tier-01-v2").state.treatmentCourses[0].treatmentCourseId, "TC-3-1");
+assert.equal(saveApi.load(storage, "tier-01-v2").state.longitudinalPatients["LP-3-1"].state, "improving");
+assert.equal(saveApi.load(storage, "tier-01-v2").state.attendanceEvents[0].status, "attended");
 assert.equal(saveApi.load(storage, "current"), null);
 assert.equal(saveApi.load(storage, "legacy-v1"), null);
 assert.equal(saveApi.load(storage, "tier-01-v2").state.transientDomReference, undefined);
@@ -76,13 +84,17 @@ const previousV2 = {
 };
 storage.setItem(incompatibleKey, JSON.stringify(previousV2));
 const migrated = saveApi.load(storage, "tier-01-v2", { catalog: {} });
-assert.equal(migrated.gameStateSaveVersion, 4);
+assert.equal(migrated.gameStateSaveVersion, 5);
 assert.equal(migrated.state.ownerTrust, 68);
 assert.equal(migrated.state.clinicalReliability, 68);
 assert.equal(migrated.state.campaignFinance.debt, 120);
 assert.deepEqual(migrated.state.caseJournal, previousV2.state.caseJournal);
 assert.deepEqual(migrated.state.pendingReturns, previousV2.state.pendingReturns);
-assert.equal(JSON.parse(storage.getItem(incompatibleKey)).gameStateSaveVersion, 4);
+assert.deepEqual(migrated.state.appointments, []);
+assert.deepEqual(migrated.state.treatmentCourses, []);
+assert.deepEqual(migrated.state.longitudinalPatients, {});
+assert.deepEqual(migrated.state.attendanceEvents, []);
+assert.equal(JSON.parse(storage.getItem(incompatibleKey)).gameStateSaveVersion, 5);
 
 const previousV3 = {
   gameStateSaveVersion: 3,
@@ -101,10 +113,32 @@ const previousV3 = {
 };
 storage.setItem(incompatibleKey, JSON.stringify(previousV3));
 const migratedV3 = saveApi.load(storage, "tier-01-v2", { catalog: {} });
-assert.equal(migratedV3.gameStateSaveVersion, 4);
+assert.equal(migratedV3.gameStateSaveVersion, 5);
 assert.equal(migratedV3.state.ownerTrust, 77);
 assert.equal(migratedV3.state.clinicalReliability, 81);
 assert.deepEqual(migratedV3.state.campaignFinance, previousV3.state.campaignFinance);
+
+const previousV4 = {
+  gameStateSaveVersion: 4,
+  generatorMode: "tier-01-v2",
+  savedAt: "2026-07-14T08:00:00.000Z",
+  state: {
+    phase: "running",
+    day: 2,
+    money: 1100,
+    ownerTrust: 72,
+    clinicalReliability: 76,
+    queue: [],
+    arrivalSchedule: []
+  }
+};
+storage.setItem(incompatibleKey, JSON.stringify(previousV4));
+const migratedV4 = saveApi.load(storage, "tier-01-v2", { catalog: {} });
+assert.equal(migratedV4.gameStateSaveVersion, 5);
+assert.deepEqual(migratedV4.state.appointments, []);
+assert.deepEqual(migratedV4.state.treatmentCourses, []);
+assert.deepEqual(migratedV4.state.longitudinalPatients, {});
+assert.deepEqual(migratedV4.state.attendanceEvents, []);
 
 const impossibleV2 = {
   gameStateSaveVersion: 2,

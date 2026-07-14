@@ -240,7 +240,13 @@ async function main() {
   assert.deepEqual(JSON.parse(migratedRaw).completedCases, version3.completedCases);
   assert.deepEqual(JSON.parse(migratedRaw).pendingFollowUps, version3.pendingFollowUps.map((item) => ({
     ...item,
-    owner: compactApi.compactOwner(item.owner)
+    owner: compactApi.compactOwner(item.owner),
+    scheduledTime: item.scheduledTime || 660,
+    appointmentId: item.appointmentId || null,
+    treatmentCourseId: item.treatmentCourseId || null,
+    attendanceDecision: item.attendanceDecision || "attended",
+    adherenceState: item.adherenceState || null,
+    longitudinalState: item.longitudinalState || null
   })));
   assert.deepEqual(JSON.parse(migratedRaw).generatedDays["1"].outcomes, version3.generatedDays["1"].outcomes);
   assert.equal(JSON.parse(migratedRaw).generatedDays["1"].visits[0].selectedPlanId, version3.generatedDays["1"].outcomes[0].selectedPlanId);
@@ -371,7 +377,7 @@ async function main() {
   const oldGameRaw = JSON.stringify(oldGameSnapshot);
   const gameMigrationStorage = memoryStorage({ [namespaces.gameSaveKey("tier-01-v2")]: oldGameRaw });
   const migratedGame = gameSaveApi.load(gameMigrationStorage, "tier-01-v2", { catalog });
-  assert.equal(migratedGame.gameStateSaveVersion, 4);
+  assert.equal(migratedGame.gameStateSaveVersion, 5);
   assert.ok(migratedGame.state.queue[0].v2Visit.medicalContent);
   assert.equal(gameMigrationStorage.getItem(namespaces.gameSaveKey("tier-01-v2")).includes("medicalContent"), false);
 

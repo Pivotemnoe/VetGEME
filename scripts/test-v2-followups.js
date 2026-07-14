@@ -54,12 +54,69 @@ async function main() {
     throw new Error("follow-up changed patient or owner identity");
   }
 
+  const scheduled = await generatorWithOpenedDayOne(catalog, "explicit-appointment-priority");
+  const procedureSource = scheduled.day.visits[0];
+  const recheckSource = scheduled.day.visits[1];
+  scheduled.generator.closeDay(1, [
+    {
+      visitId: procedureSource.visitId,
+      completed: true,
+      appointments: [{
+        appointmentId: "AP-COURSE-1",
+        treatmentCourseId: "TC-COURSE",
+        scheduledDay: 2,
+        scheduledTime: 660,
+        reason: "course_visit",
+        status: "confirmed",
+        attendanceDecision: "attended",
+        adherenceState: "complete",
+        longitudinalState: { state: "improving", reason: "planned_recheck" }
+      }]
+    },
+    {
+      visitId: recheckSource.visitId,
+      completed: true,
+      appointments: [{
+        appointmentId: "AP-RECHECK-1",
+        treatmentCourseId: "TC-RECHECK",
+        scheduledDay: 2,
+        scheduledTime: 720,
+        reason: "planned_recheck",
+        status: "confirmed",
+        attendanceDecision: "attended",
+        adherenceState: "partial",
+        longitudinalState: { state: "partial_improvement", reason: "planned_recheck" }
+      }]
+    }
+  ]);
+  scheduled.generator.updatePendingAppointment("AP-COURSE-1", { attendanceDecision: "late" });
+  const scheduledDayTwo = scheduled.generator.openDay(2);
+  const insertedProcedure = scheduledDayTwo.visits.find((visit) => visit.appointmentId === "AP-COURSE-1");
+  if (!insertedProcedure) throw new Error("course visit did not receive schedule priority");
+  if (scheduledDayTwo.visits.some((visit) => visit.appointmentId === "AP-RECHECK-1")) {
+    throw new Error("planned recheck displaced the higher-priority course visit");
+  }
+  if (insertedProcedure.treatmentCourseId !== "TC-COURSE" || insertedProcedure.appointmentReason !== "course_visit") {
+    throw new Error("appointment/course identity was not preserved");
+  }
+  if (insertedProcedure.attendanceDecision !== "late") throw new Error("appointment reminder decision was not persisted in the generator");
+  if (insertedProcedure.patient.animal !== procedureSource.patient.animal || insertedProcedure.owner.name !== procedureSource.owner.name) {
+    throw new Error("scheduled visit changed patient or owner identity");
+  }
+  scheduled.generator.closeDay(2, []);
+  const scheduledDayThree = scheduled.generator.openDay(3);
+  if (!scheduledDayThree.visits.some((visit) => visit.appointmentId === "AP-RECHECK-1")) {
+    throw new Error("deferred planned recheck was lost");
+  }
+
   console.log(JSON.stringify({
     status: "passed",
     negativeScenarios: scenarios.map((item) => item.id),
     deteriorationFollowUp: true,
     duplicateProtection: true,
-    identityPreserved: true
+    identityPreserved: true,
+    explicitAppointmentPriority: true,
+    deferredAppointmentPreserved: true
   }, null, 2));
 }
 
