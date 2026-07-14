@@ -16,9 +16,9 @@
   "use strict";
 
   const GAME_STATE_SAVE_VERSION = 1;
-  const LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS = Object.freeze([1, 2]);
-  const PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION = 3;
-  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 4;
+  const LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS = Object.freeze([1, 2, 3]);
+  const PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION = 4;
+  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 5;
   const SERIALIZED_FIELDS = Object.freeze([
     "phase", "day", "minute", "dayEnd", "money", "reputation", "queue", "activeId",
     "nextPatientId", "paused", "speed", "spawnMeter", "log", "treatedToday", "revenueToday",
@@ -32,7 +32,8 @@
   const TIER_01_V2_SERIALIZED_FIELDS = Object.freeze([
     ...SERIALIZED_FIELDS,
     "ownerTrust", "clinicalReliability", "awareness", "campaignFinance", "dailyLedger",
-    "equipmentCapabilities", "demandState", "campaignOutcome"
+    "equipmentCapabilities", "demandState", "campaignOutcome", "appointments", "treatmentCourses",
+    "longitudinalPatients", "attendanceEvents"
   ]);
 
   function clone(value) {
@@ -98,6 +99,18 @@
     return { ...clone(state || {}), ...campaignDefaults(state) };
   }
 
+  function addLongitudinalDefaults(state) {
+    return {
+      ...clone(state || {}),
+      appointments: Array.isArray(state?.appointments) ? clone(state.appointments) : [],
+      treatmentCourses: Array.isArray(state?.treatmentCourses) ? clone(state.treatmentCourses) : [],
+      longitudinalPatients: state?.longitudinalPatients && typeof state.longitudinalPatients === "object"
+        ? clone(state.longitudinalPatients)
+        : {},
+      attendanceEvents: Array.isArray(state?.attendanceEvents) ? clone(state.attendanceEvents) : []
+    };
+  }
+
   function hydratePatient(patient, catalog) {
     const hydrated = clone(patient);
     if (!hydrated.v2Visit) return hydrated;
@@ -159,14 +172,14 @@
     const compactState = snapshot.gameStateSaveVersion === GAME_STATE_SAVE_VERSION
       ? compactTierState(snapshot.state || {}, catalog)
       : clone(snapshot.state || {});
-    const campaignState = snapshot.gameStateSaveVersion < PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION
+    const campaignState = snapshot.gameStateSaveVersion < 3
       ? addCampaignDefaults(compactState)
       : compactState;
     const migrated = {
       gameStateSaveVersion: TIER_01_V2_GAME_STATE_SAVE_VERSION,
       generatorMode: "tier-01-v2",
       savedAt: snapshot.savedAt || new Date().toISOString(),
-      state: migrateClinicalActionState(campaignState, catalog)
+      state: migrateClinicalActionState(addLongitudinalDefaults(campaignState), catalog)
     };
     validateSnapshot(migrated, "tier-01-v2");
     hydrateTierState(migrated.state, catalog);
@@ -218,6 +231,7 @@
     compactTierState,
     campaignDefaults,
     addCampaignDefaults,
+    addLongitudinalDefaults,
     hydratePatient,
     hydrateTierState,
     createSnapshot,

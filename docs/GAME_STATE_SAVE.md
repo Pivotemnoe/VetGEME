@@ -4,7 +4,7 @@
 
 `current` and `legacy-v1` remain on `gameStateSaveVersion: 1`.
 
-`tier-01-v2` uses `gameStateSaveVersion: 4`. Version 3 extended the compact version-2 snapshot with campaign mechanics state:
+`tier-01-v2` uses `gameStateSaveVersion: 5`. Version 3 extended the compact version-2 snapshot with campaign mechanics state:
 
 - owner trust and clinical reliability;
 - awareness and reserved demand-director state;
@@ -14,7 +14,9 @@
 
 Version 4 adds compact per-patient action state for the free clinical flow: stable IDs of completed general-exam actions, target-exam actions and diagnostic tests. Full medical text remains in the validated content pack and is not duplicated in the save.
 
-Tier snapshots from versions 1, 2 and 3 migrate atomically to version 4. Versions 1 and 2 also receive the version-3 campaign defaults. During migration queued and scheduled visits are hydrated from the current content pack, legacy aggregate exam flags are converted to action IDs, and the candidate is compacted and validated before it is written. A failed migration leaves the original key byte-for-byte unchanged.
+Version 5 adds longitudinal state: appointments, treatment courses, attendance events and stable patient histories. Appointment and course records use stable IDs and content action IDs; approved medical text remains in the content pack.
+
+Tier snapshots from versions 1, 2, 3 and 4 migrate atomically to version 5. Versions 1 and 2 also receive the version-3 campaign defaults. Longitudinal collections are initialized without fabricating historical appointments. During migration queued and scheduled visits are hydrated from the current content pack, legacy aggregate exam flags are converted to action IDs, and the candidate is compacted and validated before it is written. A failed migration leaves the original key byte-for-byte unchanged.
 
 Unknown, missing or future versions are not loaded and are not overwritten during that browser session. A mode mismatch is handled the same way. This prevents a campaign from being silently reset or interpreted under another generator.
 
@@ -39,6 +41,7 @@ The whitelist includes:
 - money, revenue, expenses and clinic metric events;
 - selected doctor, fatigue and shift history;
 - case journal, completed visits and pending returns;
+- appointments, linked treatment courses, attendance outcomes and longitudinal patient state;
 - daily goals and counters;
 - tutorial progress;
 - stable IDs of performed questions, exam actions, measurements and diagnostic tests;
