@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pet Clinic: ветеринарная клиника</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eaf6ff'/%3E%3Cpath d='M13 5h6v22h-6zM5 13h22v6H5z' fill='%231976d2'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="styles.css?v=20260714a">
+    <link rel="stylesheet" href="styles.css?v=20260714b">
   </head>
   <body>
     <main class="game-shell" aria-label="Pet Clinic: ветеринарная стратегия">
@@ -94,7 +94,7 @@
                 <header><span class="stage-index">2</span><strong>Анамнез</strong><span class="stage-state" id="anamnesisStageState"></span><button class="stage-detail" type="button" data-case-detail="anamnesis">Показать подробно</button></header>
                 <p class="stage-summary" id="anamnesisSummary"></p>
                 <div class="stage-body">
-                  <div class="clinical-block unknown-block"><h2>Осталось уточнить</h2><ul id="unknownList"></ul><h3>Дополнительно</h3><ul id="optionalUnknownList"></ul></div>
+                  <div class="clinical-block unknown-block"><h2>Важно уточнить для безопасного решения</h2><ul id="unknownList"></ul><h3>Можно уточнить дополнительно</h3><ul id="optionalUnknownList"></ul></div>
                   <div class="clinical-block"><h2>Уточнено в анамнезе</h2><ul id="historyList"></ul></div>
                 </div>
               </article>
@@ -120,6 +120,7 @@
                       <dt>Непосредственно подтверждено</dt><dd><ul id="reviewConfirmed"></ul></dd>
                       <dt>Остаётся неопределённым</dt><dd><ul id="reviewUncertain"></ul></dd>
                       <dt>Выбор поддерживали</dt><dd><ul id="reviewSupporting"></ul></dd>
+                      <dt>Выбору противоречили</dt><dd><ul id="reviewContradicting"></ul></dd>
                       <dt>Не хватало данных</dt><dd><ul id="reviewMissing"></ul></dd>
                       <dt>Оценка решения</dt><dd id="reviewAssessment"></dd>
                       <dt>Покрытие назначениями</dt><dd id="reviewTreatmentCoverage"></dd>
@@ -251,17 +252,18 @@
     <script src="campaign.js?v=20260712k" defer></script>
     <script src="generator/save-namespaces.js?v=20260712a" defer></script>
     <script src="generator/compact-visit-v2.js?v=20260713a" defer></script>
-    <script src="generator/game-state-save.js?v=20260713b" defer></script>
+    <script src="systems/free-clinical-flow-v2.js?v=20260714b" defer></script>
+    <script src="generator/game-state-save.js?v=20260714b" defer></script>
     <script src="systems/clinical-visit-state.js?v=20260713a" defer></script>
-    <script src="systems/clinical-decisions-v2.js?v=20260713a" defer></script>
-    <script src="systems/diagnostic-decisions-v2.js?v=20260713a" defer></script>
+    <script src="systems/clinical-decisions-v2.js?v=20260714a" defer></script>
+    <script src="systems/diagnostic-decisions-v2.js?v=20260714a" defer></script>
     <script src="systems/campaign-mechanics-v2.js?v=20260713a" defer></script>
     <script src="generator/content-loader-v2.js?v=20260712b" defer></script>
     <script src="generator/demand-director-v2.js?v=20260713a" defer></script>
     <script src="generator/generator-v2.js?v=20260713b" defer></script>
-    <script src="generator/game-adapter-v2.js?v=20260713b" defer></script>
+    <script src="generator/game-adapter-v2.js?v=20260714a" defer></script>
     <script src="generator/multi-diagnosis-engine-v2.js?v=20260713a" defer></script>
     <script src="generator/generator-mode.js?v=20260713a" defer></script>
-    <script src="game.js?v=20260714a" defer></script>
+    <script src="game.js?v=20260714b" defer></script>
   </body>
 </html>

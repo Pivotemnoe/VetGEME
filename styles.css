@@ -304,6 +304,14 @@ button:disabled { cursor: not-allowed; opacity: .5; filter: saturate(.45); }
 .case-window.guided-map .case-actions button.current-action { display: block; }
 .case-window.guided-map .case-actions button.current-action span { font-size: 14px; }
 .case-window.guided-map .case-workspace { height: calc(100% - 124px); }
+.case-window.free-clinical-flow .case-actions {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  height: 118px;
+}
+.case-window.free-clinical-flow .case-actions button { padding: 5px 4px; }
+.case-window.free-clinical-flow .case-workspace { height: calc(100% - 174px); }
+.case-window.free-clinical-flow .case-stage-card.current > header { min-height: 48px; }
+.case-window.free-clinical-flow .case-stage-card:not(.complete) .stage-detail { visibility: visible; }
 button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, #b98310); }
 
 .choice-window { position: absolute; z-index: 20; right: 242px; top: 76px; width: min(410px, calc(100vw - 260px)); max-height: calc(100vh - 210px); border: 4px solid var(--line); background: linear-gradient(#41bddb, #1489b5); padding: 10px; box-shadow: 0 8px 0 rgba(8,21,34,.42); }

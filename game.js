@@ -18,6 +18,7 @@
   const visitState = window.PET_CLINIC_VISIT_STATE;
   const clinicalDecisions = window.PET_CLINIC_CLINICAL_DECISIONS_V2;
   const diagnosticDecisions = window.PET_CLINIC_DIAGNOSTIC_DECISIONS_V2;
+  const freeClinicalFlow = window.PET_CLINIC_FREE_CLINICAL_FLOW_V2;
   const campaignMechanics = window.PET_CLINIC_CAMPAIGN_MECHANICS_V2;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
@@ -950,6 +951,7 @@
     reviewConfirmed: document.getElementById("reviewConfirmed"),
     reviewUncertain: document.getElementById("reviewUncertain"),
     reviewSupporting: document.getElementById("reviewSupporting"),
+    reviewContradicting: document.getElementById("reviewContradicting"),
     reviewMissing: document.getElementById("reviewMissing"),
     reviewAssessment: document.getElementById("reviewAssessment"),
     reviewTreatmentCoverage: document.getElementById("reviewTreatmentCoverage"),
@@ -1115,6 +1117,7 @@
     const inConsultation = patient.id === state.activeId
       && (patient.motion === "inCabinet" || patient.motion === "toCabinet");
     visitState.normalizePatient(patient, { inConsultation });
+    if (patient.v2Visit && freeClinicalFlow) freeClinicalFlow.normalizeActionState(patient);
     if (!Array.isArray(patient.diagnosticDecisions)) patient.diagnosticDecisions = [];
     if (needsClinicalRecord) rebuildClinicalRecord(patient);
     return patient;
@@ -1125,16 +1128,25 @@
     disease.anamnesis(patient)
       .filter((question) => patient.asked?.[question.id])
       .forEach((question) => recordClinical(patient, "history", question.answer));
-    if (patient.generalExamDone) {
-      recordClinical(patient, "physicalExam", patient.v2Visit
-        ? patient.v2Visit.medicalContent.generalExam.findings.map((item) => item.text)
-        : [disease.temperature(patient), disease.mucous(patient)]);
+    if (patient.generalExamDone || freeClinicalFlow?.performedIds(patient, "general").length) {
+      const findings = patient.v2Visit && hasStructuredExams(patient)
+        ? freeClinicalFlow.completedActions(patient.v2Visit.medicalContent, patient, "general")
+          .map((action) => freeClinicalFlow.actionResult(action, patient)?.text)
+          .filter(Boolean)
+        : patient.v2Visit
+          ? patient.v2Visit.medicalContent.generalExam.findings.map((item) => item.text)
+          : [disease.temperature(patient), disease.mucous(patient)];
+      recordClinical(patient, "physicalExam", findings);
       assessClinicalUrgency(patient);
     }
     if (patient.localUsed > 0) {
-      recordClinical(patient, "physicalExam", patient.v2Visit
-        ? patient.v2Visit.medicalContent.targetExam.findings.map((item) => item.text)
-        : Object.keys(patient.localDone || {}).map((id) => {
+      recordClinical(patient, "physicalExam", patient.v2Visit && hasStructuredExams(patient)
+        ? freeClinicalFlow.completedActions(patient.v2Visit.medicalContent, patient, "target")
+          .map((action) => freeClinicalFlow.actionResult(action, patient)?.text)
+          .filter(Boolean)
+        : patient.v2Visit
+          ? patient.v2Visit.medicalContent.targetExam.findings.map((item) => item.text)
+          : Object.keys(patient.localDone || {}).map((id) => {
           const finding = disease.local[id];
           return typeof finding === "function" ? finding(patient) : finding;
         }).filter(Boolean));
@@ -1145,11 +1157,15 @@
         : "Материал для исследования взят и промаркирован.");
     }
     if (patient.microscopyDone) {
-      const completedTest = patient.v2Visit
-        ? diagnosticOptionsForPatient(patient).find((test) => test.id === patient.executedDiagnosticTestId)
-          || diagnosticOptionsForPatient(patient)[0]
-        : null;
-      recordClinical(patient, "diagnosticTests", patient.v2Visit ? completedTest?.resultText : disease.microscopy(patient));
+      const completedTests = patient.v2Visit
+        ? diagnosticOptionsForPatient(patient).filter((test) => (
+          freeClinicalFlow.performedIds(patient, "diagnostic").includes(test.id)
+          || test.id === patient.executedDiagnosticTestId
+        ))
+        : [];
+      recordClinical(patient, "diagnosticTests", patient.v2Visit
+        ? completedTests.map((test) => test.resultText)
+        : disease.microscopy(patient));
     }
     if (patient.selectedDiagnosisId) {
       recordClinical(patient, "clinicalInterpretation", `Основной диагноз: ${diagnosisLabel(patient.selectedDiagnosisId)}.`);
@@ -1201,7 +1217,76 @@
       .every((question) => patient.asked[question.id]);
   }
 
+  function isFreeClinicalVisit(patient) {
+    return Boolean(patient?.v2Visit && Number(patient.v2Visit.day || state.day) >= 2);
+  }
+
+  function hasStructuredExams(patient) {
+    return Boolean(patient?.v2Visit && freeClinicalFlow?.hasStructuredExams(patient.v2Visit.medicalContent));
+  }
+
+  function structuredExamComplete(patient, group) {
+    if (!hasStructuredExams(patient)) return group === "general" ? patient.generalExamDone : patient.localUsed > 0;
+    const actions = freeClinicalFlow.actionsFor(patient.v2Visit.medicalContent, group);
+    const important = actions.filter((action) => action.importantForSafety);
+    return important.length > 0 && important.every((action) => freeClinicalFlow.isPerformed(patient, group, action.id));
+  }
+
+  function freeVisitPosition(patient) {
+    const hasSample = Boolean(patient.v2Visit?.medicalContent.sampleActions.length);
+    const hasTest = diagnosticOptionsForPatient(patient).length > 0;
+    const historyComplete = requiredHistoryComplete(patient);
+    const generalStarted = hasStructuredExams(patient)
+      ? freeClinicalFlow.performedIds(patient, "general").length > 0
+      : patient.generalExamDone;
+    const targetStarted = hasStructuredExams(patient)
+      ? freeClinicalFlow.performedIds(patient, "target").length > 0
+      : patient.localUsed > 0;
+    const examComplete = structuredExamComplete(patient, "general") && structuredExamComplete(patient, "target");
+    const researchStarted = patient.sampleTaken
+      || freeClinicalFlow.performedIds(patient, "diagnostic").length > 0
+      || patient.diagnosticSkipped;
+    const researchComplete = !hasTest || researchStarted;
+    const diagnosisComplete = Boolean(patient.selectedDiagnosisId && patient.explanationDone);
+    const prescriptionComplete = Boolean(patient.carePlanAgreed);
+    let stage = "complaint";
+    let action = "history";
+    if (prescriptionComplete) {
+      stage = "discharge";
+      action = "finish";
+    } else if (patient.explanationDone) {
+      stage = "prescriptions";
+      action = "plan";
+    } else if (patient.selectedDiagnosisId) {
+      stage = "decision";
+      action = "explanation";
+    } else if (researchStarted) {
+      stage = "research";
+      action = "preliminary_diagnosis";
+    } else if (generalStarted || targetStarted) {
+      stage = "exam";
+      action = "target_exam";
+    } else if (Object.keys(patient.asked || {}).length) {
+      stage = "anamnesis";
+      action = historyComplete ? "general_exam" : "history";
+    }
+    return {
+      stage,
+      action,
+      complete: {
+        complaint: true,
+        anamnesis: historyComplete,
+        exam: examComplete,
+        research: researchComplete,
+        decision: diagnosisComplete,
+        prescriptions: prescriptionComplete,
+        discharge: patient.flowState === "completed"
+      }
+    };
+  }
+
   function guidedVisitPosition(patient) {
+    if (isFreeClinicalVisit(patient)) return freeVisitPosition(patient);
     const hasSample = Boolean(patient.v2Visit?.medicalContent.sampleActions.length);
     const hasTest = Boolean(patient.v2Visit && diagnosticOptionsForPatient(patient).length);
     const historyComplete = requiredHistoryComplete(patient);
@@ -1257,6 +1342,7 @@
   }
 
   function renderGuidedClinicalMap(patient, position) {
+    const freeVisit = isFreeClinicalVisit(patient);
     const selectedDiagnosis = diagnosisLabel(patient.selectedDiagnosisId);
     el.complaintSummary.textContent = patient.v2Visit.complaint.text;
     el.anamnesisSummary.textContent = compactClinicalSummary("Анамнез собран.", patient.clinicalRecord.history, "Анамнез ещё не собран.");
@@ -1278,10 +1364,10 @@
       const current = stage === position.stage;
       card.classList.toggle("complete", complete);
       card.classList.toggle("current", current);
-      card.classList.toggle("future", order.indexOf(stage) > currentIndex && !complete);
+      card.classList.toggle("future", !freeVisit && order.indexOf(stage) > currentIndex && !complete);
       card.classList.toggle("expanded", expandedClinicalStages.has(stage));
       const status = card.querySelector(".stage-state");
-      if (status) status.textContent = current ? "Текущий этап" : complete ? "Завершено" : "Впереди";
+      if (status) status.textContent = current ? "Текущий этап" : complete ? "Завершено" : freeVisit ? "Доступно" : "Впереди";
       const detail = card.querySelector(".stage-detail");
       if (detail) detail.textContent = expandedClinicalStages.has(stage) ? "Свернуть" : "Показать подробно";
     });
@@ -1322,26 +1408,46 @@
     const selected = selectedIds.map((id) => options.find((option) => option.id === id)).filter(Boolean);
     if (!selected.length) return null;
     const rank = { justified: 0, acceptable: 1, insufficient: 2, contradictory: 3, unsafe: 4 };
-    const assessment = selected.reduce((worst, option) => (rank[option.assessment] > rank[worst] ? option.assessment : worst), "justified");
-    const supporting = uniqueText(selected.flatMap((option) => option.supportingEvidence || []));
-    const missing = uniqueText(selected.flatMap((option) => [
-      ...(option.missingEvidence || []),
-      ...(option.contradictingEvidence || []).map((value) => `Противоречит: ${value}`)
-    ]));
-    const uncertain = uniqueText(selected.flatMap((option) => (
-      option.uncertainEvidence?.length ? option.uncertainEvidence : (option.missingEvidence || [])
-    )));
+    const dynamicEvidence = selected.map((option) => freeClinicalFlow.decisionEvidence(patient, option));
+    const usesDynamicEvidence = dynamicEvidence.some(Boolean);
+    const supporting = uniqueText(usesDynamicEvidence
+      ? dynamicEvidence.flatMap((evidence) => evidence?.supporting || [])
+      : selected.flatMap((option) => option.supportingEvidence || []));
+    const contradicting = uniqueText(usesDynamicEvidence
+      ? dynamicEvidence.flatMap((evidence) => evidence?.contradicting || [])
+      : selected.flatMap((option) => option.contradictingEvidence || []));
+    const missing = uniqueText(usesDynamicEvidence
+      ? dynamicEvidence.flatMap((evidence) => (evidence?.missingActions || []).map((label) => `Не выполнено: ${label}`))
+      : selected.flatMap((option) => option.missingEvidence || []));
+    const uncertain = uniqueText(usesDynamicEvidence
+      ? dynamicEvidence.flatMap((evidence) => evidence?.unknown || [])
+      : selected.flatMap((option) => (
+        option.uncertainEvidence?.length ? option.uncertainEvidence : (option.missingEvidence || [])
+      )));
+    let assessment = selected.reduce((worst, option) => (rank[option.assessment] > rank[worst] ? option.assessment : worst), "justified");
+    if (contradicting.length) assessment = "contradictory";
+    else if (missing.length && rank[assessment] < rank.insufficient) assessment = "insufficient";
     const confirmed = uniqueText([
       ...patient.clinicalRecord.diagnosticTests,
-      ...patient.clinicalRecord.physicalExam.slice(-1)
-    ]).slice(0, 3);
+      ...patient.clinicalRecord.physicalExam
+    ]).slice(0, 5);
+    const completedTests = new Set(freeClinicalFlow.performedIds(patient, "diagnostic"));
+    const unnecessaryActions = diagnosticOptionsForPatient(patient)
+      .filter((test) => completedTests.has(test.id) && test.classification === "low_value")
+      .map((test) => `${test.label}: выполнено, хотя новых данных для решения не ожидалось.`);
+    const safe = usesDynamicEvidence
+      ? dynamicEvidence.filter(Boolean).every((evidence) => evidence.safe)
+      : patient.clinicalSafety === "safe";
     return {
       selected: selected.map((option) => option.label).join(" + "),
       confirmed,
       uncertain,
       supporting,
+      contradicting,
       missing,
-      assessment: diagnosisAssessmentLabel(assessment)
+      assessment: diagnosisAssessmentLabel(assessment),
+      unnecessaryActions,
+      clinicalSafety: safe ? "safe" : "needs_review"
     };
   }
 
@@ -1762,6 +1868,11 @@
       asked: {},
       localDone: {},
       generalExamDone: false,
+      clinicalActionState: {
+        generalExamActionIds: [],
+        targetExamActionIds: [],
+        diagnosticTestIds: []
+      },
       sampleTaken: false,
       budgetAsked: false,
       temperatureDone: false,
@@ -1909,6 +2020,9 @@
     patient.dxPoints += 1;
     patient.findings.push(question.answer);
     recordClinical(patient, "history", question.answer);
+    const effects = question.ownerEffects || {};
+    adjustOwnerState(patient, effects.anxiety || 0, effects.irritation || 0);
+    adjustTrust(patient, effects.trust || 0);
     if (tutorialPatient(patient) && currentTutorialStep()?.id === "history") {
       const required = patient.v2Visit.medicalContent.historyQuestions.filter((item) => item.required);
       if (required.every((item) => patient.asked[item.id])) {
@@ -1916,7 +2030,7 @@
       }
     }
     setLog("Анамнез собран: +1 диагностическое очко.");
-    passTime(question.id === "budget" ? 1 : 2);
+    passTime(question.timeMinutes || (question.id === "budget" ? 1 : 2));
   }
 
   function doGeneralExam() {
@@ -1937,6 +2051,46 @@
     creditCompleteExam(patient);
     if (tutorialPatient(patient)) advanceTutorial("general_exam", `Общее состояние оценено. Срочность: ${clinicalUrgencyLabel(patient)}.`);
     passTime(3);
+  }
+
+  function performGeneralExamAction(action) {
+    const patient = activePatient();
+    if (!patient || !action || freeClinicalFlow.isPerformed(patient, "general", action.id)) return;
+    const result = freeClinicalFlow.actionResult(action, patient);
+    freeClinicalFlow.recordAction(patient, "general", action.id);
+    if (action.measurementKind === "temperature") patient.temperatureDone = true;
+    if (action.id === "general_mucous_crt") patient.mucousDone = true;
+    patient.generalExamDone = structuredExamComplete(patient, "general");
+    patient.dxPoints += 1;
+    patient.stress = clamp(patient.stress + (action.stressDelta || 0), 0, 100);
+    if (result?.text) {
+      patient.findings.push(result.text);
+      recordClinical(patient, "physicalExam", result.text);
+    }
+    if (patient.generalExamDone) assessClinicalUrgency(patient);
+    setLog(`${action.label}: результат добавлен в карту пациента.`);
+    closeChoice();
+    creditCompleteExam(patient);
+    passTime(action.timeMinutes || 2);
+  }
+
+  function openGeneralExam() {
+    const patient = activePatient();
+    if (!patient) return;
+    if (!isFreeClinicalVisit(patient) || !hasStructuredExams(patient)) {
+      doGeneralExam();
+      return;
+    }
+    const actions = freeClinicalFlow.actionsFor(patient.v2Visit.medicalContent, "general");
+    const items = actions.map((action) => ({
+      label: action.label,
+      note: freeClinicalFlow.isPerformed(patient, "general", action.id)
+        ? "Уже выполнено — результат сохранён."
+        : `${action.importantForSafety ? "Важное действие" : "Дополнительное действие"}. ${action.timeMinutes} мин. · стресс +${action.stressDelta || 0}.`,
+      disabled: freeClinicalFlow.isPerformed(patient, "general", action.id),
+      onClick: () => performGeneralExamAction(action)
+    }));
+    openChoice("Общий осмотр", "Выберите отдельное действие", items);
   }
 
   function doTemperature() {
@@ -1965,16 +2119,22 @@
 
   function doLocalExam(option) {
     const patient = activePatient();
-    if (!patient || patient.localDone[option.id] || patient.localUsed >= MAX_LOCAL_EXAMS) return;
+    const structured = isFreeClinicalVisit(patient) && hasStructuredExams(patient) && option.contentAction;
+    if (!patient || patient.localDone[option.id] || (!structured && patient.localUsed >= MAX_LOCAL_EXAMS)) return;
     const disease = diseaseFor(patient);
-    const result = disease.local[option.id];
+    const result = structured ? null : disease.local[option.id];
     patient.localDone[option.id] = true;
+    if (structured) freeClinicalFlow.recordAction(patient, "target", option.id);
     patient.localUsed += 1;
     patient.dxPoints += 1;
-    patient.stress = clamp(patient.stress + 5, 0, 100);
-    const resultText = typeof result === "function" ? result(patient) : result;
-    const resultItems = patient.v2Visit
-      ? patient.v2Visit.medicalContent.targetExam.findings.map((item) => item.text)
+    patient.stress = clamp(patient.stress + (option.stressDelta ?? 5), 0, 100);
+    const resultText = structured
+      ? freeClinicalFlow.actionResult(option.contentAction, patient)?.text
+      : typeof result === "function" ? result(patient) : result;
+    const resultItems = structured
+      ? [resultText].filter(Boolean)
+      : patient.v2Visit
+        ? patient.v2Visit.medicalContent.targetExam.findings.map((item) => item.text)
       : [resultText];
     patient.findings.push(resultText);
     recordClinical(patient, "physicalExam", resultItems);
@@ -2011,6 +2171,11 @@
 
   function diagnosticFlowResolved(patient) {
     if (!patient?.v2Visit) return Boolean(patient?.microscopyDone);
+    if (isFreeClinicalVisit(patient)) {
+      const options = diagnosticOptionsForPatient(patient);
+      const completed = new Set(freeClinicalFlow.performedIds(patient, "diagnostic"));
+      return patient.diagnosticSkipped || options.length === 0 || options.every((test) => completed.has(test.id));
+    }
     if (patient.microscopyDone || patient.diagnosticSkipped) return true;
     const latest = patient.diagnosticDecisions?.[patient.diagnosticDecisions.length - 1];
     if (!latest || patient.pendingDiagnosticTestId) return false;
@@ -2119,7 +2284,8 @@
       doMicroscopy({ ownerApproved: true });
       return;
     }
-    const options = diagnosticOptionsForPatient(patient);
+    const completed = new Set(freeClinicalFlow.performedIds(patient, "diagnostic"));
+    const options = diagnosticOptionsForPatient(patient).filter((test) => !completed.has(test.id));
     const pending = options.find((test) => test.id === patient.pendingDiagnosticTestId);
     if (pending) {
       if (diagnosticTestRequiresSample(patient, pending) && !patient.sampleTaken) {
@@ -2130,8 +2296,8 @@
       return;
     }
     const items = options.map((test) => ({
-      label: `${test.label} · ${test.classificationLabel}`,
-      note: `${test.reason} Стоимость: ${test.costVetcoins || 0} V; время: ${test.durationMinutes || 1} мин.`,
+      label: test.label,
+      note: `Материал: ${test.materialLabel || (diagnosticTestRequiresSample(patient, test) ? "образец, предусмотренный карточкой" : "не требуется")}. Стоимость: ${test.costVetcoins || 0} V; время: ${test.durationMinutes || 1} мин.`,
       disabled: ["unavailable", "contraindicated"].includes(test.classification),
       onClick: () => offerDiagnosticTest(test)
     }));
@@ -2167,7 +2333,8 @@
 
   function doMicroscopy(options = {}) {
     const patient = activePatient();
-    if (!patient || patient.microscopyDone) return;
+    const freeVisit = isFreeClinicalVisit(patient);
+    if (!patient || (!freeVisit && patient.microscopyDone)) return;
     if (patient.v2Visit && !options.ownerApproved) {
       openDiagnosticOffer();
       return;
@@ -2181,14 +2348,15 @@
       setLog("Сначала нужно взять материал для исследования.");
       return;
     }
-    if (patient.dxPoints < MICROSCOPY_COST) {
+    if (!freeVisit && patient.dxPoints < MICROSCOPY_COST) {
       setLog("Для микроскопии нужно минимум 2 диагностических очка.");
       return;
     }
     const testFee = approvedTest?.costVetcoins ?? MICROSCOPY_FEE;
     const testMinutes = approvedTest?.durationMinutes ?? 7;
-    patient.dxPoints -= MICROSCOPY_COST;
+    patient.dxPoints = Math.max(0, patient.dxPoints - MICROSCOPY_COST);
     patient.microscopyDone = true;
+    if (patient.v2Visit && approvedTest?.id) freeClinicalFlow.recordAction(patient, "diagnostic", approvedTest.id);
     patient.pendingDiagnosticTestId = null;
     patient.executedDiagnosticTestId = approvedTest?.id || null;
     const result = patient.v2Visit ? approvedTest.resultText : diseaseFor(patient).microscopy(patient);
@@ -2208,14 +2376,20 @@
       decisionRecord.chargedVetcoins = testFee;
       decisionRecord.resultRefId = approvedTest?.id || null;
     }
-    if (approvedTest?.classification === "low_value") {
+    const lowValueTest = approvedTest?.classification === "low_value";
+    if (lowValueTest) {
       adjustTrust(patient, -3);
       if (isTier01V2()) changeOwnerTrust(-0.25, "малоценное исследование не изменило решение");
     }
     if (!patient.v2Visit || ["laboratory", "system_low_value"].includes(approvedTest?.type)) startDoctorLabTrip();
-    setLog(`Исследование выполнено и оплачено: +${testFee} V.`);
+    if (!lowValueTest) setLog(`Исследование выполнено и оплачено: +${testFee} V.`);
     if (tutorialPatient(patient)) advanceTutorial("test", `${approvedTest?.label || "Исследование"}: результат получен.`);
     passTime(testMinutes);
+    if (lowValueTest) {
+      setLog(`${approvedTest.label}: результат получен, счёт увеличен, доверие владельца снизилось.`);
+      renderAll();
+      persistGameState(true);
+    }
   }
 
   function selectDiagnosis(diagnosis) {
@@ -2355,11 +2529,14 @@
       patient.unnecessaryTreatment = evaluation.unnecessaryTreatment;
       patient.communicationQuality = patient.communicationResult?.reactionId || "not_completed";
     }
+    const collectedDecisionReview = diagnosisReviewFor(patient);
     patient.immediateDecisionReview = {
-      ...diagnosisReviewFor(patient),
+      ...collectedDecisionReview,
       diagnosticCoverage: patient.diagnosticCoverage ?? null,
       treatmentCoverage: patient.treatmentCoverage ?? null,
-      clinicalSafety: patient.clinicalSafety || "pending_outcome",
+      clinicalSafety: collectedDecisionReview?.clinicalSafety === "needs_review"
+        ? "needs_review"
+        : patient.clinicalSafety || collectedDecisionReview?.clinicalSafety || "pending_outcome",
       unnecessaryTreatment: Boolean(patient.unnecessaryTreatment),
       communicationQuality: patient.communicationResult?.reactionText || "Объяснение не завершено.",
       ownerDecision: patient.ownerPlanDecision.decisionText,
@@ -2603,21 +2780,43 @@
         .forEach((question) => askQuestion(patient, questions.find((item) => item.id === question.id)));
     }
     if (!patient.selectedUrgency) selectUrgency(patient.urgency);
-    if (!patient.generalExamDone) doGeneralExam();
+    if (!patient.generalExamDone) {
+      if (isFreeClinicalVisit(patient) && hasStructuredExams(patient)) {
+        freeClinicalFlow.actionsFor(patient.v2Visit.medicalContent, "general")
+          .filter((action) => action.importantForSafety)
+          .forEach(performGeneralExamAction);
+      } else {
+        doGeneralExam();
+      }
+    }
     if (patient.localUsed === 0) {
+      if (isFreeClinicalVisit(patient) && hasStructuredExams(patient)) {
+        freeClinicalFlow.actionsFor(patient.v2Visit.medicalContent, "target")
+          .filter((action) => action.importantForSafety)
+          .forEach((action) => doLocalExam({
+            id: action.id,
+            label: action.label,
+            time: action.timeMinutes,
+            stressDelta: action.stressDelta,
+            importantForSafety: action.importantForSafety,
+            contentAction: action
+          }));
+      } else {
       const localOption = patient.v2Visit
         ? window.PET_CLINIC_GAME_ADAPTER_V2.targetExamOptionFor(patient)
         : localExamOptions.find((option) => option.id === (patient.diseaseId.includes("Otitis") ? "ears"
           : patient.diseaseId === "dermatitis" ? "skin"
             : patient.diseaseId === "trauma" ? "gait" : "abdomen"));
       doLocalExam(localOption);
+      }
     }
     if (!patient.budgetAsked) {
       patient.budgetAsked = true;
       incrementGoal("budget");
     }
-    if ((patient.diseaseId.includes("Otitis") || patient.v2Visit) && !diagnosticFlowResolved(patient)) {
-      const test = patient.v2Visit ? diagnosticOptionsForPatient(patient)[0] : null;
+    const test = patient.v2Visit ? diagnosticOptionsForPatient(patient)[0] : null;
+    const hasDebugDiagnostic = patient.v2Visit ? Boolean(test) : patient.diseaseId.includes("Otitis");
+    if (hasDebugDiagnostic && !diagnosticFlowResolved(patient)) {
       if (patient.v2Visit) {
         const decisionRecord = rememberDiagnosticDecision(patient, [test], {
           decision: "accepted",
@@ -3201,41 +3400,63 @@
       return {
         ...question,
         requiredForSafeDecision: patient.v2Visit ? Boolean(sourceQuestion?.required) : true,
-        optional: patient.v2Visit ? !sourceQuestion?.required : false
+        optional: patient.v2Visit ? !sourceQuestion?.required : false,
+        timeMinutes: sourceQuestion?.timeMinutes || 2,
+        ownerEffects: sourceQuestion?.ownerEffects || null
       };
     });
     const availableQuestions = tutorialPatient(patient) && currentTutorialStep()?.id === "history"
       ? anamnesisQuestions.filter((question) => patient.v2Visit.medicalContent.historyQuestions.find((item) => item.id === question.id)?.required)
       : [...anamnesisQuestions, budgetQuestion];
+    const requiredTotal = anamnesisQuestions.filter((question) => question.requiredForSafeDecision).length;
+    const requiredDone = anamnesisQuestions.filter((question) => question.requiredForSafeDecision && patient.asked[question.id]).length;
     const questions = availableQuestions.map((question) => ({
       label: question.label,
-      note: patient.asked[question.id] ? "Уже спросили." : `Спросить владельца. Потратит ${question.id === "budget" ? 1 : 2} мин. приема.`,
+      note: patient.asked[question.id]
+        ? "Уже уточнено — повторно не задаётся."
+        : `${question.requiredForSafeDecision ? "Важный вопрос" : "Дополнительный вопрос"}. Потратит ${question.timeMinutes || (question.id === "budget" ? 1 : 2)} мин. приёма.`,
       disabled: patient.asked[question.id],
       onClick: () => {
         askQuestion(patient, question);
         closeChoice();
       }
     }));
-    openChoice("Анамнез", "Что спросить у владельца?", questions);
+    openChoice(
+      "Анамнез",
+      requiredDone >= requiredTotal
+        ? `Обязательные сведения: ${requiredDone}/${requiredTotal} · можно продолжить или уточнить детали`
+        : `Обязательные сведения: ${requiredDone}/${requiredTotal} · выберите следующий вопрос`,
+      questions
+    );
   }
 
   function openLocalExam() {
     const patient = activePatient();
     if (!patient) return;
-    const availableOptions = patient.v2Visit
-      ? [window.PET_CLINIC_GAME_ADAPTER_V2.targetExamOptionFor(patient)]
+    const structured = isFreeClinicalVisit(patient) && hasStructuredExams(patient);
+    const availableOptions = structured
+      ? freeClinicalFlow.actionsFor(patient.v2Visit.medicalContent, "target").map((action) => ({
+        id: action.id,
+        label: action.label,
+        time: action.timeMinutes,
+        stressDelta: action.stressDelta,
+        importantForSafety: action.importantForSafety,
+        contentAction: action
+      }))
+      : patient.v2Visit
+        ? [window.PET_CLINIC_GAME_ADAPTER_V2.targetExamOptionFor(patient)]
       : localExamOptions;
     const items = availableOptions.map((option) => ({
       label: option.label,
       note: patient.localDone[option.id]
-        ? "Уже осмотрено."
-        : patient.localUsed >= MAX_LOCAL_EXAMS
+        ? "Уже выполнено — результат сохранён."
+        : !structured && patient.localUsed >= MAX_LOCAL_EXAMS
           ? "Лимит локальных осмотров исчерпан."
-          : `Потратит один локальный осмотр и ${option.time} мин. приема.`,
-      disabled: patient.localDone[option.id] || patient.localUsed >= MAX_LOCAL_EXAMS,
+          : `${option.importantForSafety ? "Важное действие" : "Дополнительное действие"}. ${option.time} мин. · стресс +${option.stressDelta || 0}.`,
+      disabled: patient.localDone[option.id] || (!structured && patient.localUsed >= MAX_LOCAL_EXAMS),
       onClick: () => doLocalExam(option)
     }));
-    openChoice("Осмотр", "Что осмотреть дополнительно?", items);
+    openChoice("Целевой осмотр", structured ? "Выберите область и действие" : "Что осмотреть дополнительно?", items);
   }
 
   function openTriage() {
@@ -3285,7 +3506,7 @@
         : schema.diagnosisMode === "multiple" && selectedIds.length >= schema.maximumDiagnosisSelections
           ? "Оба диагностических слота уже заняты."
           : `Клиническая оценка. Потратит 3 минуты приема.`,
-      sections: patient.v2Visit ? [
+      sections: patient.v2Visit && !isFreeClinicalVisit(patient) ? [
         { label: "Поддерживает", items: diagnosis.supportingEvidence },
         { label: "Не хватает данных", items: diagnosis.missingEvidence },
         { label: "Противоречит", items: diagnosis.contradictingEvidence }
@@ -3326,7 +3547,7 @@
       label: option.label,
       note: patient.selectedCommunicationId === option.id
         ? "Сейчас выбран этот стиль."
-        : `${option.timeCost} мин. Цель: ${option.communicationGoal}. Риск: ${option.risk}.`,
+        : `${option.playerDescription} ${option.playerTradeoff} Время: ${option.timeCost} мин.`,
       sections: [{ label: "Наблюдаемые признаки", items: observedSigns }],
       onClick: () => selectCommunication(option)
     }));
@@ -3490,7 +3711,8 @@
     const clinicalScrollTop = el.clinicalMap?.parentElement?.scrollTop || 0;
     normalizeVisitPatient(patient);
     el.caseWindow.classList.toggle("staged-completion", Boolean(patient.v2Visit));
-    el.caseWindow.classList.toggle("guided-map", Boolean(patient.v2Visit));
+    el.caseWindow.classList.toggle("guided-map", Boolean(patient.v2Visit) && !isFreeClinicalVisit(patient));
+    el.caseWindow.classList.toggle("free-clinical-flow", isFreeClinicalVisit(patient));
     const guidedPosition = patient.v2Visit ? guidedVisitPosition(patient) : null;
     el.caseStage.textContent = patient.returnVisit ? "Повторный прием" : "Кабинет врача";
     el.caseTitle.textContent = `${patient.animal} · ${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.`;
@@ -3518,10 +3740,13 @@
     if (!patient.v2Visit && !patient.asked.parasite) requiredUnknown.push("Проводились ли обработки");
     if (!patient.v2Visit && patient.flags.oldDrops && !patient.asked.medications) requiredUnknown.push("Какие препараты уже применяли дома");
     if (!patient.budgetAsked) optionalUnknown.push("Есть ли ограничения по бюджету");
-    renderClinicalList(el.unknownList, requiredUnknown, "Обязательные вопросы уточнены.");
-    renderClinicalList(el.optionalUnknownList, optionalUnknown, "Дополнительных вопросов нет.");
+    renderClinicalList(el.unknownList, requiredUnknown, "Обязательные сведения уточнены — можно продолжить приём.");
+    renderClinicalList(el.optionalUnknownList, optionalUnknown, "Дополнительных вопросов больше нет.");
     renderClinicalList(el.historyList, patient.clinicalRecord.history, "Ответы пока не получены.");
-    renderClinicalList(el.examList, patient.clinicalRecord.physicalExam, "Осмотр ещё не проводился.");
+    const measurementPlaceholders = patient.v2Visit && hasStructuredExams(patient)
+      ? freeClinicalFlow.measurementPlaceholders(patient.v2Visit.medicalContent, patient)
+      : [];
+    renderClinicalList(el.examList, [...patient.clinicalRecord.physicalExam, ...measurementPlaceholders], "Осмотр ещё не проводился.");
     renderClinicalList(el.testList, patient.clinicalRecord.diagnosticTests, "Исследования ещё не проводились.");
     const assessment = patient.generalExamDone
       ? [`Срочность: ${clinicalUrgencyLabel(patient)}.`, ...patient.clinicalRecord.clinicalInterpretation]
@@ -3533,14 +3758,19 @@
       el.reviewSelectedDiagnosis.textContent = decisionReview.selected;
       renderClinicalList(el.reviewConfirmed, decisionReview.confirmed, "Прямых подтверждений пока нет.");
       renderClinicalList(el.reviewUncertain, decisionReview.uncertain, "Дополнительная неопределённость не отмечена.");
-      renderClinicalList(el.reviewSupporting, decisionReview.supporting, "Поддерживающие данные не выделены.");
-      renderClinicalList(el.reviewMissing, decisionReview.missing, "Недостающие данные не выделены.");
+      renderClinicalList(el.reviewSupporting, decisionReview.supporting, "Собранных поддерживающих данных пока нет.");
+      renderClinicalList(el.reviewContradicting, decisionReview.contradicting, "Собранных противоречащих данных нет.");
+      renderClinicalList(el.reviewMissing, decisionReview.missing, "Важные пропуски не выявлены.");
       el.reviewAssessment.textContent = decisionReview.assessment;
       el.reviewTreatmentCoverage.textContent = decisionReview.treatmentCoverage === null || decisionReview.treatmentCoverage === undefined
         ? "Назначения ещё не сделаны."
         : `${Math.round(decisionReview.treatmentCoverage * 100)}%.`;
-      el.reviewUnnecessaryTreatment.textContent = decisionReview.unnecessaryTreatment ? "Есть лишние действия." : "Лишних действий не выявлено.";
-      el.reviewClinicalSafety.textContent = decisionReview.clinicalSafety === "safe" ? "Безопасное решение." : "Безопасность требует проверки.";
+      el.reviewUnnecessaryTreatment.textContent = decisionReview.unnecessaryActions?.length
+        ? decisionReview.unnecessaryActions.join(" ")
+        : decisionReview.unnecessaryTreatment ? "В назначениях есть лишние действия." : "Лишних действий не выявлено.";
+      el.reviewClinicalSafety.textContent = decisionReview.clinicalSafety === "safe"
+        ? "По собранным данным решение безопасно."
+        : `Нужно проверить пропущенные данные: ${(decisionReview.missing || []).join(" ") || "не завершена оценка важных признаков"}.`;
       el.reviewCommunicationQuality.textContent = decisionReview.communicationQuality || "Объяснение ещё не завершено.";
       el.reviewOwnerDecision.textContent = decisionReview.ownerDecision || "Решение по назначениям ещё не принято.";
     }
@@ -3570,30 +3800,41 @@
     if (diagnosisCount) diagnosisCount.textContent = patient.v2Visit
       ? `${window.PET_CLINIC_GAME_ADAPTER_V2.diagnosisOptionsFor(patient, generatorRuntime.catalog).length} варианта`
       : "10 диагнозов";
+    const structuredFreeVisit = isFreeClinicalVisit(patient) && hasStructuredExams(patient);
+    const generalActionsRemaining = structuredFreeVisit
+      ? freeClinicalFlow.actionsFor(patient.v2Visit.medicalContent, "general")
+        .some((action) => !freeClinicalFlow.isPerformed(patient, "general", action.id))
+      : !patient.generalExamDone;
+    const targetActionsRemaining = structuredFreeVisit
+      ? freeClinicalFlow.actionsFor(patient.v2Visit.medicalContent, "target")
+        .some((action) => !freeClinicalFlow.isPerformed(patient, "target", action.id))
+      : patient.localUsed < MAX_LOCAL_EXAMS;
     el.anamnesisBtn.disabled = false;
-    el.generalExamBtn.disabled = patient.generalExamDone;
-    el.localExamBtn.disabled = patient.localUsed >= MAX_LOCAL_EXAMS;
+    el.generalExamBtn.disabled = !generalActionsRemaining;
+    el.localExamBtn.disabled = !targetActionsRemaining;
     el.diagnosisBtn.disabled = false;
     el.communicationBtn.disabled = selectedDiagnosisIds.length === 0;
     const supportsSample = !patient.v2Visit || patient.v2Visit.medicalContent.sampleActions.length > 0;
     const diagnosticOptions = patient.v2Visit ? diagnosticOptionsForPatient(patient) : [];
-    const diagnosticTest = diagnosticOptions.find((test) => test.id === patient.pendingDiagnosticTestId) || diagnosticOptions[0];
+    const completedDiagnosticIds = new Set(freeClinicalFlow.performedIds(patient, "diagnostic"));
+    const diagnosticTest = diagnosticOptions.find((test) => test.id === patient.pendingDiagnosticTestId)
+      || diagnosticOptions.find((test) => !completedDiagnosticIds.has(test.id));
     const supportsTest = !patient.v2Visit || diagnosticOptions.length > 0;
     if (patient.v2Visit) {
       const sampleAction = patient.v2Visit.medicalContent.sampleActions[0];
       el.anamnesisBtn.querySelector("span").textContent = "Собрать анамнез";
-      el.generalExamBtn.querySelector("span").textContent = "Провести общий осмотр";
-      el.localExamBtn.querySelector("span").textContent = patient.v2Visit.family === "ear" ? "Осмотреть уши" : "Провести целевой осмотр";
+      el.generalExamBtn.querySelector("span").textContent = structuredFreeVisit ? "Общий осмотр: выбрать действие" : "Провести общий осмотр";
+      el.localExamBtn.querySelector("span").textContent = structuredFreeVisit
+        ? "Целевой осмотр: выбрать область"
+        : patient.v2Visit.family === "ear" ? "Осмотреть уши" : "Провести целевой осмотр";
       el.sampleBtn.querySelector("span").textContent = sampleAction ? "Взять материал" : "Материал не требуется";
       el.microscopyBtn.querySelector("span").textContent = patient.pendingDiagnosticTestId
         ? "Выполнить согласованное исследование"
-        : diagnosticTest?.classification === "low_value"
-          ? "Дополнительное исследование не обязательно"
-          : /микроскоп/iu.test(diagnosticTest?.label || "") ? "Предложить микроскопию" : "Предложить исследование";
+        : /микроскоп/iu.test(diagnosticTest?.label || "") ? "Предложить микроскопию" : "Предложить исследование";
       el.communicationBtn.querySelector("span").textContent = "Объяснить результат";
       el.communicationBtn.querySelector("small").textContent = "3–6 мин. · зависит от стиля";
       el.microscopyBtn.querySelector("small").textContent = diagnosticTest
-        ? `${diagnosticTest.classificationLabel} · ${diagnosticTest.durationMinutes || 1} мин. · ${diagnosticTest.costVetcoins || 0} V`
+        ? `${diagnosticTest.label} · ${diagnosticTest.durationMinutes || 1} мин. · ${diagnosticTest.costVetcoins || 0} V`
         : "варианты недоступны";
     } else {
       el.sampleBtn.querySelector("span").textContent = "Взять материал";
@@ -3602,7 +3843,8 @@
     }
     el.sampleBtn.disabled = patient.sampleTaken || !supportsSample;
     const testRequiresSample = !patient.v2Visit || diagnosticTestRequiresSample(patient, diagnosticTest);
-    el.microscopyBtn.disabled = diagnosticFlowResolved(patient)
+    el.microscopyBtn.disabled = (!isFreeClinicalVisit(patient) && diagnosticFlowResolved(patient))
+      || (isFreeClinicalVisit(patient) && !diagnosticTest)
       || (Boolean(patient.pendingDiagnosticTestId) && testRequiresSample && !patient.sampleTaken)
       || !supportsTest;
     el.treatmentBtn.querySelector("span").textContent = patient.v2Visit ? "Сделать назначения" : "Назначить лечение";
@@ -3653,7 +3895,7 @@
     }
     document.querySelectorAll(".stage-tabs button").forEach((button) => {
       button.classList.remove("active");
-      button.disabled = Boolean(patient.v2Visit);
+      button.disabled = Boolean(patient.v2Visit) && !isFreeClinicalVisit(patient);
     });
     const stage = guidedPosition?.stage || (patient.carePlanAgreed || patient.selectedCommunicationId ? "discharge"
       : patient.selectedDiagnosisId ? "decision"
@@ -4507,7 +4749,7 @@
     });
     el.closeChoiceBtn.addEventListener("click", closeChoice);
     el.anamnesisBtn.addEventListener("click", openAnamnesis);
-    el.generalExamBtn.addEventListener("click", doGeneralExam);
+    el.generalExamBtn.addEventListener("click", openGeneralExam);
     el.localExamBtn.addEventListener("click", openLocalExam);
     el.sampleBtn.addEventListener("click", doSample);
     el.microscopyBtn.addEventListener("click", doMicroscopy);
@@ -4542,7 +4784,7 @@
       button.addEventListener("click", () => {
         const handlers = {
           anamnesis: openAnamnesis,
-          exam: doGeneralExam,
+          exam: openGeneralExam,
           research: () => {
             const patient = activePatient();
             if (!patient) return;

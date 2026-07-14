@@ -6,15 +6,19 @@
   const compactApi = typeof module === "object" && module.exports
     ? require("./compact-visit-v2.js")
     : root.PET_CLINIC_COMPACT_VISIT_V2;
-  const api = factory(namespaces, compactApi);
+  const freeClinicalFlow = typeof module === "object" && module.exports
+    ? require("../systems/free-clinical-flow-v2.js")
+    : root.PET_CLINIC_FREE_CLINICAL_FLOW_V2;
+  const api = factory(namespaces, compactApi, freeClinicalFlow);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_GAME_STATE_SAVE = api;
-})(typeof window !== "undefined" ? window : globalThis, function (namespaces, compactApi) {
+})(typeof window !== "undefined" ? window : globalThis, function (namespaces, compactApi, freeClinicalFlow) {
   "use strict";
 
   const GAME_STATE_SAVE_VERSION = 1;
-  const PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION = 2;
-  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 3;
+  const LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS = Object.freeze([1, 2]);
+  const PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION = 3;
+  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 4;
   const SERIALIZED_FIELDS = Object.freeze([
     "phase", "day", "minute", "dayEnd", "money", "reputation", "queue", "activeId",
     "nextPatientId", "paused", "speed", "spawnMeter", "log", "treatedToday", "revenueToday",
@@ -114,6 +118,13 @@
     return hydrated;
   }
 
+  function migrateClinicalActionState(state, catalog) {
+    const hydrated = hydrateTierState(state, catalog);
+    (hydrated.queue || []).forEach((patient) => freeClinicalFlow.migratePatientActionState(patient));
+    (hydrated.arrivalSchedule || []).forEach((arrival) => freeClinicalFlow.migratePatientActionState(arrival.template));
+    return compactTierState(hydrated, catalog);
+  }
+
   function createSnapshot(mode, state, options = {}) {
     return {
       gameStateSaveVersion: saveVersionForMode(mode),
@@ -140,18 +151,22 @@
     if (snapshot.generatorMode !== "tier-01-v2") {
       throw new Error(`Game save mode mismatch: expected tier-01-v2, got ${snapshot.generatorMode}`);
     }
-    if (![GAME_STATE_SAVE_VERSION, PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION].includes(snapshot.gameStateSaveVersion)) {
+    const supportedVersions = [...LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS, PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION];
+    if (!supportedVersions.includes(snapshot.gameStateSaveVersion)) {
       throw new Error(`Unsupported game save version: ${snapshot.gameStateSaveVersion ?? "missing"}`);
     }
     if (!catalog) throw new Error(`Tier 01 v2 catalog is required to migrate game save version ${snapshot.gameStateSaveVersion}`);
     const compactState = snapshot.gameStateSaveVersion === GAME_STATE_SAVE_VERSION
       ? compactTierState(snapshot.state || {}, catalog)
       : clone(snapshot.state || {});
+    const campaignState = snapshot.gameStateSaveVersion < PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION
+      ? addCampaignDefaults(compactState)
+      : compactState;
     const migrated = {
       gameStateSaveVersion: TIER_01_V2_GAME_STATE_SAVE_VERSION,
       generatorMode: "tier-01-v2",
       savedAt: snapshot.savedAt || new Date().toISOString(),
-      state: addCampaignDefaults(compactState)
+      state: migrateClinicalActionState(campaignState, catalog)
     };
     validateSnapshot(migrated, "tier-01-v2");
     hydrateTierState(migrated.state, catalog);
@@ -175,7 +190,10 @@
       throw new Error(`Game save JSON is invalid: ${error.message}`);
     }
     let compactSnapshot = parsed;
-    if (mode === "tier-01-v2" && [GAME_STATE_SAVE_VERSION, PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION].includes(parsed.gameStateSaveVersion)) {
+    if (mode === "tier-01-v2" && [
+      ...LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS,
+      PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION
+    ].includes(parsed.gameStateSaveVersion)) {
       compactSnapshot = migrateTierSnapshot(parsed, options.catalog);
       storage.setItem(key, JSON.stringify(compactSnapshot));
     }
@@ -190,6 +208,7 @@
 
   return {
     GAME_STATE_SAVE_VERSION,
+    LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS,
     PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION,
     TIER_01_V2_GAME_STATE_SAVE_VERSION,
     SERIALIZED_FIELDS,

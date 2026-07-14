@@ -10,6 +10,8 @@
     Object.freeze({
       id: "calmDetailed",
       label: "Спокойно и подробно",
+      playerDescription: "Разделить подтверждённое, неизвестное и следующие шаги.",
+      playerTradeoff: "Снижает тревогу и помогает понять сложный план, но занимает больше времени.",
       communicationGoal: "separate_known_unknown_and_next_steps",
       recommendedOwnerTraits: ["anxious", "low_comprehension"],
       riskyOwnerTraits: ["impatient", "irritated"],
@@ -24,6 +26,8 @@
     Object.freeze({
       id: "riskFocus",
       label: "Сначала объяснить риски",
+      playerDescription: "Сначала назвать опасные изменения и объяснить, почему нельзя их пропустить.",
+      playerTradeoff: "Полезно при недооценке риска, но может усилить тревогу.",
       communicationGoal: "correct_underestimation_of_urgency",
       recommendedOwnerTraits: ["underestimates_risk", "low_medical_literacy"],
       riskyOwnerTraits: ["high_anxiety"],
@@ -38,6 +42,8 @@
     Object.freeze({
       id: "budgetPlan",
       label: "Обсудить варианты и стоимость",
+      playerDescription: "Сопоставить безопасные варианты помощи с доступным бюджетом.",
+      playerTradeoff: "Повышает доверие при финансовых ограничениях, но требует времени на обсуждение.",
       communicationGoal: "agree_affordable_safe_plan",
       recommendedOwnerTraits: ["budget_limited", "budget_unknown"],
       riskyOwnerTraits: ["urgent_without_delay"],
@@ -52,6 +58,8 @@
     Object.freeze({
       id: "strict",
       label: "Коротко и конкретно",
+      playerDescription: "Дать короткую последовательность действий без лишних деталей.",
+      playerTradeoff: "Снижает раздражение, но сложный план может быть понят не полностью.",
       communicationGoal: "give_memorable_short_instructions",
       recommendedOwnerTraits: ["irritated", "impatient"],
       riskyOwnerTraits: ["complex_plan", "low_comprehension"],

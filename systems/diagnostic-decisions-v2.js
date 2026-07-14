@@ -51,22 +51,7 @@
 
   function diagnosticOptionsFor(caseData, context = {}) {
     const tests = caseData?.diagnosticTests || [];
-    if (!tests.length) {
-      if (context.allowLowValue === false) return [];
-      return [{
-        id: LOW_VALUE_TEST_ID,
-        label: "Дополнительное исследование",
-        type: "system_low_value",
-        source: "system",
-        classification: "low_value",
-        classificationLabel: CLASSIFICATIONS.low_value,
-        reason: "Дополнительное исследование не обязательно.",
-        resultText: NEUTRAL_LOW_VALUE_RESULT,
-        costVetcoins: context.lowValueCostVetcoins ?? 40,
-        durationMinutes: context.lowValueDurationMinutes ?? 5,
-        requires: []
-      }];
-    }
+    if (!tests.length) return [];
     return tests.map((test) => {
       const status = classifyDiagnosticTest(caseData, test, context);
       return {

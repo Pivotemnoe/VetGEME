@@ -196,7 +196,8 @@
       supportingEvidence: clone(option.supportingEvidence || []),
       missingEvidence: clone(option.missingEvidence || []),
       contradictingEvidence: clone(option.contradictingEvidence || []),
-      uncertainEvidence: clone(option.uncertainEvidence || [])
+      uncertainEvidence: clone(option.uncertainEvidence || []),
+      evidenceRules: clone(option.evidenceRules || null)
     }));
     return primary;
   }
