@@ -105,6 +105,7 @@ for (const [layerName, segments] of Object.entries({
 })) {
   for (const segment of segments || []) validateRect(segment, `corridor.${layerName}.${segment.id}`);
 }
+validateConnectedRects(layout.corridor?.underlaySegments || [], "corridor.underlaySegments");
 
 for (const actor of layout.staticActors || []) {
   requireAsset(actor.animationId, `статичный персонаж ${actor.id}`);
@@ -177,6 +178,34 @@ function validateRect(rect, context) {
   ) {
     errors.push(`${context}: прямоугольник выходит за границы сцены`);
   }
+}
+
+function validateConnectedRects(rects, context) {
+  if (rects.length < 2) return;
+  const visited = new Set([0]);
+  const pending = [0];
+  while (pending.length) {
+    const currentIndex = pending.shift();
+    for (let candidateIndex = 0; candidateIndex < rects.length; candidateIndex += 1) {
+      if (visited.has(candidateIndex)) continue;
+      if (!rectsTouch(rects[currentIndex], rects[candidateIndex])) continue;
+      visited.add(candidateIndex);
+      pending.push(candidateIndex);
+    }
+  }
+  if (visited.size !== rects.length) {
+    const disconnected = rects
+      .filter((_, index) => !visited.has(index))
+      .map((rect) => rect.id || "<без id>");
+    errors.push(`${context}: несвязанные секции ${disconnected.join(", ")}`);
+  }
+}
+
+function rectsTouch(first, second) {
+  return first.x <= second.x + second.width &&
+    first.x + first.width >= second.x &&
+    first.y <= second.y + second.height &&
+    first.y + first.height >= second.y;
 }
 
 async function readJson(filePath) {

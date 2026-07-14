@@ -4409,7 +4409,7 @@
       ctx.fillRect(x - 10, 38, 70, 22);
     }
     const modularVisual = Boolean(visualRenderer?.isEnabled?.());
-    const pathLogicalX = modularVisual ? 910 : 885;
+    const pathLogicalX = modularVisual ? 990 : 885;
     const pathLogicalWidth = modularVisual ? 70 : 94;
     const pathX = CLINIC_VIEW.x + pathLogicalX * CLINIC_VIEW.scale;
     const pathY = CLINIC_VIEW.y + 620 * CLINIC_VIEW.scale;
@@ -4971,7 +4971,7 @@
       return;
     }
     if (patient.motion === "waiting") {
-      const waitingSpots = [[215, 510], [460, 510], [215, 592], [460, 592], [575, 510], [575, 585]];
+      const waitingSpots = [[210, 468], [455, 468], [315, 488], [560, 488], [145, 455], [610, 455]];
       const [targetX, targetY] = waitingSpots[index % waitingSpots.length];
       patient.screenX += (targetX - patient.screenX) * 0.14;
       patient.screenY += (targetY - patient.screenY) * 0.14;

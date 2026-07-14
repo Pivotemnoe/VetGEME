@@ -6,20 +6,19 @@
   "background": {
     "grass": "#1e4932",
     "grassAlternate": "#275b3e",
-    "path": { "x": 910, "y": 618, "width": 70 }
+    "path": { "x": 990, "y": 618, "width": 70 }
   },
   "corridor": {
     "base": "#b7c4c8",
     "grid": "#95a5aa",
     "tileSize": 32,
     "underlaySegments": [
-      { "id": "upper-hall", "x": 70, "y": 290, "width": 1130, "height": 96 },
-      { "id": "lower-hall", "x": 350, "y": 602, "width": 630, "height": 64 },
-      { "id": "entrance", "x": 910, "y": 602, "width": 70, "height": 118 }
+      { "id": "upper-hall", "x": 318, "y": 304, "width": 629, "height": 64 },
+      { "id": "central-spine", "x": 690, "y": 304, "width": 80, "height": 372 },
+      { "id": "lower-hall", "x": 348, "y": 612, "width": 712, "height": 64 },
+      { "id": "entrance", "x": 990, "y": 612, "width": 70, "height": 108 }
     ],
-    "overlaySegments": [
-      { "id": "central-spine", "x": 650, "y": 300, "width": 76, "height": 366 }
-    ]
+    "overlaySegments": []
   },
   "rooms": [
     {
@@ -58,14 +57,14 @@
     {
       "id": "reception",
       "assetId": "room.reception",
-      "position": { "x": 690, "y": 365 },
+      "position": { "x": 770, "y": 365 },
       "logicalBox": { "width": 510, "height": 255 },
       "foregroundSlice": { "sourceY": 184, "height": 71 },
       "doors": [
-        { "id": "reception-entrance", "side": "bottom", "x": 945, "y": 619, "width": 70 },
-        { "id": "reception-waiting", "side": "left", "x": 692, "y": 470, "width": 58 }
+        { "id": "reception-entrance", "side": "bottom", "x": 1025, "y": 619, "width": 70 },
+        { "id": "reception-waiting", "side": "left", "x": 772, "y": 470, "width": 58 }
       ],
-      "walkablePolygon": [[738, 452], [1152, 452], [1152, 584], [980, 584], [980, 619], [910, 619], [910, 584], [738, 584]],
+      "walkablePolygon": [[818, 452], [1232, 452], [1232, 584], [1060, 584], [1060, 619], [990, 619], [990, 584], [818, 584]],
       "fixedPropPlacements": ["reception-clock", "reception-diploma"]
     }
   ],
@@ -79,31 +78,32 @@
   "placements": [
     { "id": "doctor-clock", "assetId": "environment.wall-clock", "x": 150, "y": 135, "zFootY": 135, "layer": "wall", "scale": 0.4 },
     { "id": "doctor-diploma", "assetId": "environment.framed-poster", "x": 545, "y": 140, "zFootY": 140, "layer": "wall", "scale": 0.4 },
-    { "id": "doctor-exam-table", "assetId": "furniture.exam-table", "x": 245, "y": 272, "zFootY": 272, "layer": "floor", "scale": 0.88 },
-    { "id": "doctor-stool", "assetId": "furniture.rolling-stool", "x": 420, "y": 268, "zFootY": 268, "layer": "floor", "scale": 0.72 },
-    { "id": "doctor-desk", "assetId": "furniture.doctor-desk", "x": 545, "y": 255, "zFootY": 255, "layer": "floor", "scale": 0.88 },
+    { "id": "doctor-exam-table", "assetId": "furniture.exam-table", "x": 245, "y": 238, "zFootY": 238, "layer": "floor", "scale": 0.88 },
+    { "id": "doctor-stool", "assetId": "furniture.rolling-stool", "x": 420, "y": 238, "zFootY": 238, "layer": "floor", "scale": 0.72 },
+    { "id": "doctor-desk", "assetId": "furniture.doctor-desk", "x": 545, "y": 238, "zFootY": 238, "layer": "floor", "scale": 0.88 },
 
     { "id": "lab-diploma", "assetId": "environment.framed-poster", "x": 690, "y": 140, "zFootY": 140, "layer": "wall", "scale": 0.4 },
     { "id": "lab-clock", "assetId": "environment.wall-clock", "x": 1135, "y": 135, "zFootY": 135, "layer": "wall", "scale": 0.4 },
-    { "id": "lab-sample-tray", "assetId": "equipment.sample-tray", "x": 790, "y": 272, "zFootY": 272, "layer": "floor", "scale": 0.78 },
-    { "id": "lab-microscope", "assetId": "equipment.microscope", "x": 1050, "y": 272, "zFootY": 272, "layer": "floor", "scale": 0.78 },
+    { "id": "lab-sample-tray", "assetId": "equipment.sample-tray", "x": 810, "y": 225, "zFootY": 225, "layer": "floor", "scale": 0.9 },
+    { "id": "lab-microscope", "assetId": "equipment.microscope", "x": 1010, "y": 225, "zFootY": 225, "layer": "floor", "scale": 0.9 },
 
     { "id": "waiting-diploma", "assetId": "environment.framed-poster", "x": 550, "y": 420, "zFootY": 420, "layer": "wall", "scale": 0.4 },
     { "id": "waiting-clock", "assetId": "environment.wall-clock", "x": 625, "y": 420, "zFootY": 420, "layer": "wall", "scale": 0.4 },
     { "id": "waiting-bench-1", "assetId": "environment.waiting-bench", "x": 245, "y": 520, "zFootY": 520, "layer": "floor", "scale": 0.9 },
     { "id": "waiting-bench-2", "assetId": "environment.waiting-bench", "x": 500, "y": 520, "zFootY": 520, "layer": "floor", "scale": 0.9 },
 
-    { "id": "reception-diploma", "assetId": "environment.framed-poster", "x": 765, "y": 430, "zFootY": 430, "layer": "wall", "scale": 0.4 },
-    { "id": "reception-clock", "assetId": "environment.wall-clock", "x": 1135, "y": 430, "zFootY": 430, "layer": "wall", "scale": 0.4 },
-    { "id": "reception-counter", "assetId": "environment.reception-counter", "x": 1060, "y": 555, "zFootY": 555, "layer": "floor", "scale": 0.85 }
+    { "id": "reception-diploma", "assetId": "environment.framed-poster", "x": 845, "y": 430, "zFootY": 430, "layer": "wall", "scale": 0.4 },
+    { "id": "reception-clock", "assetId": "environment.wall-clock", "x": 1215, "y": 430, "zFootY": 430, "layer": "wall", "scale": 0.4 },
+    { "id": "reception-seat-1", "assetId": "environment.waiting-bench", "x": 900, "y": 515, "zFootY": 515, "layer": "floor", "scale": 0.78 },
+    { "id": "reception-counter", "assetId": "environment.reception-counter", "x": 1140, "y": 535, "zFootY": 535, "layer": "floor", "scale": 0.85 }
   ],
   "staticActors": [],
   "routeHints": {
-    "entranceToWaiting": [[945, 710], [945, 640], [820, 640], [690, 640], [690, 510], [650, 500], [585, 500]],
-    "waitingToExit": [[585, 500], [650, 500], [690, 510], [690, 640], [820, 640], [945, 640], [945, 710]],
-    "waitingToDoctor": [[585, 500], [650, 500], [690, 500], [690, 345], [350, 345], [350, 307], [350, 185]],
-    "doctorToExit": [[350, 185], [350, 307], [350, 345], [690, 345], [690, 640], [820, 640], [945, 640], [945, 710]],
-    "doctorToLaboratory": [[440, 190], [440, 307], [440, 345], [915, 345], [915, 307], [1045, 185]],
-    "laboratoryToDoctor": [[1045, 185], [915, 307], [915, 345], [440, 345], [440, 307], [440, 190]]
+    "entranceToWaiting": [[1025, 668], [1025, 608], [850, 608], [730, 608], [730, 458], [690, 433], [620, 443], [585, 458]],
+    "waitingToExit": [[585, 458], [620, 443], [690, 433], [730, 458], [730, 608], [850, 608], [1025, 608], [1025, 668]],
+    "waitingToDoctor": [[585, 458], [640, 458], [690, 433], [730, 433], [730, 298], [350, 298], [350, 265], [350, 185]],
+    "doctorToExit": [[350, 185], [350, 265], [350, 298], [730, 298], [730, 608], [1025, 608], [1025, 668]],
+    "doctorToLaboratory": [[500, 170], [350, 218], [350, 265], [350, 298], [915, 298], [915, 265], [1090, 185]],
+    "laboratoryToDoctor": [[1090, 185], [915, 265], [915, 298], [350, 298], [350, 265], [500, 170]]
   }
 }

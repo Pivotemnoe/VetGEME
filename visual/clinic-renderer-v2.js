@@ -4,7 +4,7 @@
   const MODE_ID = "modular-v2";
   const params = new URLSearchParams(window.location.search);
   const enabled = params.get("visualMode") === MODE_ID;
-  const assetPackVersion = "20260714c";
+  const assetPackVersion = "20260714d";
   const manifestUrl = `art/runtime-v2/manifest.json?v=${assetPackVersion}`;
   const layoutUrl = `art/runtime-v2/scene-layout.json?v=${assetPackVersion}`;
   const assets = new Map();
