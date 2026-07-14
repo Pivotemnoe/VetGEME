@@ -4408,15 +4408,36 @@
       ctx.fillRect(x, 20, 50, 54);
       ctx.fillRect(x - 10, 38, 70, 22);
     }
-    const pathX = CLINIC_VIEW.x + 885 * CLINIC_VIEW.scale;
+    const modularVisual = Boolean(visualRenderer?.isEnabled?.());
+    const pathLogicalX = modularVisual ? 910 : 885;
+    const pathLogicalWidth = modularVisual ? 70 : 94;
+    const pathX = CLINIC_VIEW.x + pathLogicalX * CLINIC_VIEW.scale;
     const pathY = CLINIC_VIEW.y + 620 * CLINIC_VIEW.scale;
-    const pathWidth = 94 * CLINIC_VIEW.scale;
-    ctx.fillStyle = "#6f7d84";
-    ctx.fillRect(pathX, pathY, pathWidth, canvas.height - pathY);
-    ctx.fillStyle = "#86949b";
-    ctx.fillRect(pathX + 14, pathY, pathWidth - 28, canvas.height - pathY);
-    ctx.fillStyle = "#b8c3c8";
-    ctx.fillRect(pathX + 14, pathY, pathWidth - 28, 5);
+    const pathWidth = pathLogicalWidth * CLINIC_VIEW.scale;
+    if (modularVisual) {
+      const tileSize = 32 * CLINIC_VIEW.scale;
+      ctx.fillStyle = "#b7c4c8";
+      ctx.fillRect(pathX, pathY, pathWidth, canvas.height - pathY);
+      ctx.strokeStyle = "#95a5aa";
+      ctx.lineWidth = 1;
+      for (let y = pathY + tileSize; y < canvas.height; y += tileSize) {
+        ctx.beginPath();
+        ctx.moveTo(pathX, y);
+        ctx.lineTo(pathX + pathWidth, y);
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      ctx.moveTo(pathX + pathWidth / 2, pathY);
+      ctx.lineTo(pathX + pathWidth / 2, canvas.height);
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = "#6f7d84";
+      ctx.fillRect(pathX, pathY, pathWidth, canvas.height - pathY);
+      ctx.fillStyle = "#86949b";
+      ctx.fillRect(pathX + 14, pathY, pathWidth - 28, canvas.height - pathY);
+      ctx.fillStyle = "#b8c3c8";
+      ctx.fillRect(pathX + 14, pathY, pathWidth - 28, 5);
+    }
   }
 
   function drawFlowerBed(x, y, width) {
@@ -4909,8 +4930,13 @@
       return;
     }
     if (state.doctorMotion === "labWorking") return;
-    const doctorTargetX = !el.caseWindow.classList.contains("hidden") ? 430 : 440;
-    const doctorTargetY = !el.caseWindow.classList.contains("hidden") ? 240 : 190;
+    const modularVisual = visualRenderer?.isEnabled?.() && visualRenderer?.isReady?.();
+    const doctorTargetX = modularVisual
+      ? 500
+      : !el.caseWindow.classList.contains("hidden") ? 430 : 440;
+    const doctorTargetY = modularVisual
+      ? !el.caseWindow.classList.contains("hidden") ? 180 : 170
+      : !el.caseWindow.classList.contains("hidden") ? 240 : 190;
     state.doctorScreenX += (doctorTargetX - state.doctorScreenX) * 0.12;
     state.doctorScreenY += (doctorTargetY - state.doctorScreenY) * 0.12;
   }

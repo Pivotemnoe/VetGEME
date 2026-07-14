@@ -94,6 +94,16 @@ for (const placement of layout.placements || []) {
   }
   placementIds.add(placement.id);
   requireAsset(placement.assetId, `размещение ${placement.id}`);
+  if (placement.scale !== undefined && (!Number.isFinite(placement.scale) || placement.scale <= 0)) {
+    errors.push(`размещение ${placement.id}: scale должен быть положительным числом`);
+  }
+}
+
+for (const [layerName, segments] of Object.entries({
+  underlaySegments: layout.corridor?.underlaySegments,
+  overlaySegments: layout.corridor?.overlaySegments,
+})) {
+  for (const segment of segments || []) validateRect(segment, `corridor.${layerName}.${segment.id}`);
 }
 
 for (const actor of layout.staticActors || []) {
@@ -150,6 +160,22 @@ function validatePoints(points, context) {
     ) {
       errors.push(`${context}: точка ${point.join(",")} вне сцены`);
     }
+  }
+}
+
+function validateRect(rect, context) {
+  const values = [rect?.x, rect?.y, rect?.width, rect?.height];
+  if (!values.every(Number.isFinite) || rect.width <= 0 || rect.height <= 0) {
+    errors.push(`${context}: координаты и размеры должны быть положительными числами`);
+    return;
+  }
+  if (
+    rect.x < 0 ||
+    rect.y < 0 ||
+    rect.x + rect.width > layout.logicalSize.width ||
+    rect.y + rect.height > layout.logicalSize.height
+  ) {
+    errors.push(`${context}: прямоугольник выходит за границы сцены`);
   }
 }
 

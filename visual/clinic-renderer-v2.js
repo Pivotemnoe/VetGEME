@@ -4,8 +4,9 @@
   const MODE_ID = "modular-v2";
   const params = new URLSearchParams(window.location.search);
   const enabled = params.get("visualMode") === MODE_ID;
-  const manifestUrl = "art/runtime-v2/manifest.json";
-  const layoutUrl = "art/runtime-v2/scene-layout.json";
+  const assetPackVersion = "20260714c";
+  const manifestUrl = `art/runtime-v2/manifest.json?v=${assetPackVersion}`;
+  const layoutUrl = `art/runtime-v2/scene-layout.json?v=${assetPackVersion}`;
   const assets = new Map();
   const images = new Map();
   let manifest = null;
@@ -166,46 +167,65 @@
     );
   }
 
-  function drawCorridor(context) {
-    context.fillStyle = "#b6c3c8";
-    context.fillRect(70, 308, 1130, 64);
-    context.strokeStyle = "rgba(72, 89, 101, 0.28)";
+  function drawTiledSegment(context, segment) {
+    const corridor = layout.corridor;
+    const tileSize = corridor.tileSize || 32;
+    context.fillStyle = corridor.base;
+    context.fillRect(segment.x, segment.y, segment.width, segment.height);
+    context.strokeStyle = corridor.grid;
     context.lineWidth = 1;
-    for (let x = 70; x <= 1200; x += 32) {
+    for (let x = Math.ceil(segment.x / tileSize) * tileSize; x < segment.x + segment.width; x += tileSize) {
       context.beginPath();
-      context.moveTo(x, 308);
-      context.lineTo(x, 372);
+      context.moveTo(x, segment.y);
+      context.lineTo(x, segment.y + segment.height);
       context.stroke();
     }
-    context.beginPath();
-    context.moveTo(70, 340);
-    context.lineTo(1200, 340);
-    context.stroke();
+    for (let y = Math.ceil(segment.y / tileSize) * tileSize; y < segment.y + segment.height; y += tileSize) {
+      context.beginPath();
+      context.moveTo(segment.x, y);
+      context.lineTo(segment.x + segment.width, y);
+      context.stroke();
+    }
+  }
+
+  function drawCorridor(context, layer) {
+    const key = layer === "overlay" ? "overlaySegments" : "underlaySegments";
+    (layout.corridor?.[key] || []).forEach((segment) => drawTiledSegment(context, segment));
   }
 
   function drawScene(context, options = {}) {
     if (!ready) return false;
     context.imageSmoothingEnabled = false;
-    drawCorridor(context);
+    drawCorridor(context, "underlay");
     layout.rooms.forEach((room) => drawRoom(context, room));
     layout.placements
       .filter((placement) => placement.layer === "wall")
-      .forEach((placement) => drawAsset(context, placement.assetId, placement.x, placement.y));
+      .forEach((placement) => drawAsset(context, placement.assetId, placement.x, placement.y, {
+        scale: placement.scale || 1
+      }));
 
-    const drawables = [];
+    const floorDrawables = [];
     layout.placements
       .filter((placement) => placement.layer === "floor")
-      .forEach((placement) => drawables.push({
+      .forEach((placement) => floorDrawables.push({
         id: placement.id,
         zFootY: placement.zFootY,
-        draw: () => drawAsset(context, placement.assetId, placement.x, placement.y)
+        draw: () => drawAsset(context, placement.assetId, placement.x, placement.y, {
+          scale: placement.scale || 1
+        })
       }));
-    layout.staticActors.forEach((actor) => drawables.push({
+    floorDrawables.sort((a, b) => a.zFootY - b.zFootY || a.id.localeCompare(b.id));
+    floorDrawables.forEach((drawable) => drawable.draw());
+    layout.rooms.forEach((room) => drawRoomForeground(context, room));
+    drawCorridor(context, "overlay");
+
+    const actorDrawables = [];
+    layout.staticActors.forEach((actor) => actorDrawables.push({
       id: actor.id,
       zFootY: actor.zFootY,
       draw: () => drawAnimation(context, actor, options.time || 0)
     }));
-    (options.actors || []).forEach((actor) => drawables.push({
+    (options.actors || []).forEach((actor) => actorDrawables.push({
       id: actor.id,
       zFootY: actor.zFootY ?? actor.y,
       draw: () => {
@@ -213,9 +233,8 @@
         options.fallbackActor?.(actor);
       }
     }));
-    drawables.sort((a, b) => a.zFootY - b.zFootY || a.id.localeCompare(b.id));
-    drawables.forEach((drawable) => drawable.draw());
-    layout.rooms.forEach((room) => drawRoomForeground(context, room));
+    actorDrawables.sort((a, b) => a.zFootY - b.zFootY || a.id.localeCompare(b.id));
+    actorDrawables.forEach((drawable) => drawable.draw());
     return true;
   }
 
