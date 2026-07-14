@@ -146,9 +146,41 @@ for (const file of caseFiles) {
   for (const item of data.diagnosticTests ?? []) actionIds.add(item.id);
   for (const [i, item] of (data.generalExam?.findings ?? []).entries()) checkSource(item, "physical_exam", file, `generalExam[${i}]`);
   for (const [i, item] of (data.targetExam?.findings ?? []).entries()) checkSource(item, "physical_exam", file, `targetExam[${i}]`);
+  for (const group of ["generalExam", "targetExam"]) {
+    const actionIdsInGroup = new Set();
+    for (const [i, action] of (data[group]?.actions ?? []).entries()) {
+      checkSource(action, "physical_exam", file, `${group}.actions[${i}]`);
+      assert(typeof action.id === "string" && action.id.length > 0, file, `${group}.actions[${i}] needs a stable id`);
+      assert(!actionIdsInGroup.has(action.id), file, `${group} has duplicate action id ${action.id}`);
+      actionIdsInGroup.add(action.id);
+      actionIds.add(action.id);
+      assert(typeof action.label === "string" && action.label.length >= 12, file, `${group} action ${action.id} needs a player label`);
+      assert(Number.isFinite(action.timeMinutes) && action.timeMinutes > 0, file, `${group} action ${action.id} needs timeMinutes`);
+      assert(Number.isFinite(action.stressDelta) && action.stressDelta >= 0, file, `${group} action ${action.id} needs stressDelta`);
+      const results = action.resultsBySpecies ? Object.entries(action.resultsBySpecies) : [["default", action.result]];
+      assert(results.length > 0, file, `${group} action ${action.id} needs an authored result`);
+      for (const [species, result] of results) {
+        if (species !== "default") assert(data.species.includes(species), file, `${group} action ${action.id} has unsupported result species ${species}`);
+        checkSource(result, "physical_exam", file, `${group} action ${action.id} result ${species}`);
+        if (result.measurement) {
+          assert(result.measurement.displayValue, file, `${group} action ${action.id} measurement needs displayValue`);
+          assert(result.measurement.unit, file, `${group} action ${action.id} measurement needs a unit`);
+          assert(result.measurement.referenceLabel, file, `${group} action ${action.id} measurement needs a content reference`);
+          assert(result.measurement.interpretation, file, `${group} action ${action.id} measurement needs an interpretation`);
+        } else {
+          assert(result.text?.length >= 20, file, `${group} action ${action.id} needs exact result text`);
+        }
+      }
+    }
+  }
   assert((data.generalExam?.findings ?? []).length >= 4, file, "general exam needs concrete findings");
   assert((data.targetExam?.findings ?? []).length >= 3, file, "target exam needs concrete findings");
-  for (const [i, item] of (data.diagnosticTests ?? []).entries()) checkSource(item, "diagnostic_test", file, `diagnosticTests[${i}]`);
+  for (const [i, item] of (data.diagnosticTests ?? []).entries()) {
+    checkSource(item, "diagnostic_test", file, `diagnosticTests[${i}]`);
+    assert(item.label?.length >= 12, file, `diagnosticTests[${i}] needs the actual procedure name`);
+    assert(item.text?.length >= 25, file, `diagnosticTests[${i}] needs a concrete result`);
+    assert(!/не изменил клиническое решение/iu.test(item.text), file, `diagnosticTests[${i}] uses a generic result`);
+  }
   const diagnoses = data.preliminaryDiagnosisOptions ?? [];
   const excludedDiagnoses = data.excludedPreliminaryDiagnosisOptions ?? [];
   assert(diagnoses.length >= 3, file, "at least three active diagnostic options are required");

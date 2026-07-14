@@ -482,6 +482,83 @@
         "source": "physical_exam",
         "text": "Основная проблема на момент осмотра — выраженный зуд ушей."
       }
+    ],
+    "actions": [
+      {
+        "id": "general_condition_activity",
+        "label": "Оценить общее состояние и активность",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 1,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_general_state_stable"],
+        "result": { "source": "physical_exam", "text": "Общее состояние стабильное, животное активно и реагирует на окружающее." }
+      },
+      {
+        "id": "general_temperature",
+        "label": "Измерить температуру",
+        "measurementKind": "temperature",
+        "measurementLabel": "Температура",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 2,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_temperature_normal"],
+        "resultsBySpecies": {
+          "dog": { "source": "physical_exam", "measurement": { "displayValue": "38,4", "unit": "°C", "referenceLabel": "37,7–39,2 °C для собаки по спецификации MVP 1", "interpretation": "в пределах нормы для собаки" } },
+          "cat": { "source": "physical_exam", "measurement": { "displayValue": "38,4", "unit": "°C", "referenceLabel": "37,7–39,2 °C для кошки по спецификации MVP 1", "interpretation": "в пределах нормы для кошки" } }
+        }
+      },
+      {
+        "id": "general_mucous_crt",
+        "label": "Оценить слизистые и наполнение капилляров",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 1,
+        "importantForSafety": false,
+        "revealsFactIds": ["fact_mucous_normal"],
+        "result": { "source": "physical_exam", "text": "Слизистые розовые и влажные; видимой задержки наполнения капилляров нет." }
+      },
+      {
+        "id": "general_pulse",
+        "label": "Оценить пульс",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 1,
+        "importantForSafety": false,
+        "revealsFactIds": ["fact_circulation_stable"],
+        "result": { "source": "physical_exam", "text": "Пульс пальпируется уверенно; признаков нарушения периферического кровообращения нет." }
+      },
+      {
+        "id": "general_respiration",
+        "label": "Оценить дыхание",
+        "source": "physical_exam",
+        "timeMinutes": 1,
+        "stressDelta": 0,
+        "importantForSafety": false,
+        "revealsFactIds": ["fact_breathing_stable"],
+        "result": { "source": "physical_exam", "text": "Дыхание свободное, признаков дыхательного усилия нет." }
+      },
+      {
+        "id": "general_hydration",
+        "label": "Оценить гидратацию",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 1,
+        "importantForSafety": false,
+        "revealsFactIds": ["fact_hydration_stable"],
+        "result": { "source": "physical_exam", "text": "Клинических признаков обезвоживания не выявлено." }
+      },
+      {
+        "id": "general_pain",
+        "label": "Оценить общую болезненность",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 2,
+        "importantForSafety": false,
+        "revealsFactIds": ["fact_pain_localized_to_ears"],
+        "result": { "source": "physical_exam", "text": "Выраженной общей болезненности вне области ушей не выявлено." }
+      }
     ]
   },
   "targetExam": {
@@ -501,6 +578,58 @@
         "id": "target_3",
         "source": "physical_exam",
         "text": "Выраженного сужения слуховых проходов нет."
+      }
+    ],
+    "actions": [
+      {
+        "id": "ear_pinna_skin",
+        "label": "Осмотреть ушные раковины и кожу вокруг ушей",
+        "source": "physical_exam",
+        "timeMinutes": 3,
+        "stressDelta": 3,
+        "importantForSafety": false,
+        "revealsFactIds": ["fact_pinna_excoriations"],
+        "result": { "source": "physical_exam", "text": "Вокруг ушных раковин заметны поверхностные расчёсы." }
+      },
+      {
+        "id": "ear_pain",
+        "label": "Оценить болезненность ушей",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 4,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_ear_pain_mild"],
+        "result": { "source": "physical_exam", "text": "Осмотр вызывает умеренное беспокойство, но выраженной боли при осторожной пальпации нет." }
+      },
+      {
+        "id": "ear_both_canals",
+        "label": "Осмотреть оба слуховых прохода",
+        "source": "physical_exam",
+        "timeMinutes": 3,
+        "stressDelta": 4,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_bilateral_dark_debris"],
+        "result": { "source": "physical_exam", "text": "В обоих слуховых проходах присутствуют сухие тёмно-коричневые выделения." }
+      },
+      {
+        "id": "ear_otoscopy",
+        "label": "Провести отоскопию",
+        "source": "physical_exam",
+        "timeMinutes": 4,
+        "stressDelta": 5,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_no_marked_canal_narrowing"],
+        "result": { "source": "physical_exam", "text": "Выраженного сужения слуховых проходов нет; доступный отоскопический осмотр выполнен с обеих сторон." }
+      },
+      {
+        "id": "ear_other_skin_lesions",
+        "label": "Проверить кожу головы и шеи на другие поражения",
+        "source": "physical_exam",
+        "timeMinutes": 3,
+        "stressDelta": 2,
+        "importantForSafety": false,
+        "revealsFactIds": ["fact_no_other_head_lesions"],
+        "result": { "source": "physical_exam", "text": "Других выраженных поражений кожи головы и шеи не обнаружено." }
       }
     ]
   },
@@ -529,7 +658,8 @@
         "sample"
       ],
       "costVetcoins": 80,
-      "durationMinutes": 7
+      "durationMinutes": 7,
+      "revealsFactIds": ["fact_mites_confirmed", "fact_no_secondary_component"]
     }
   ],
   "preliminaryDiagnosisOptions": [
@@ -544,6 +674,20 @@
         "microscopy"
       ],
       "feedback": "Клещи обнаружены при микроскопии, а клиническая картина соответствует паразитарному поражению ушей.",
+      "evidenceRules": {
+        "supporting": [
+          { "text": "В обоих слуховых проходах обнаружены сухие тёмно-коричневые выделения.", "requiresFactIds": ["fact_bilateral_dark_debris"] },
+          { "text": "Микроскопия выявила ушных клещей и их фрагменты.", "requiresFactIds": ["fact_mites_confirmed"] }
+        ],
+        "contradicting": [],
+        "safety": [
+          { "requiresFactIds": ["fact_ear_pain_mild", "fact_no_marked_canal_narrowing"] }
+        ],
+        "unknown": [
+          { "text": "Причина выделений остаётся неподтверждённой без микроскопии.", "requiresMissingFactIds": ["fact_mites_confirmed"] },
+          { "text": "Степень болезненности слуховых проходов не оценена.", "requiresMissingFactIds": ["fact_ear_pain_mild"] }
+        ]
+      },
       "isCorrectForTemplate": true,
       "isUnsafeChoice": false
     },
@@ -558,6 +702,16 @@
         "microscopy"
       ],
       "feedback": "Значимого количества грибковых клеток не обнаружено.",
+      "evidenceRules": {
+        "supporting": [],
+        "contradicting": [
+          { "text": "Микроскопия выявила ушных клещей и не выявила значимого грибкового компонента.", "requiresFactIds": ["fact_mites_confirmed", "fact_no_secondary_component"] }
+        ],
+        "safety": [],
+        "unknown": [
+          { "text": "Состав ушных выделений остаётся неизвестным без микроскопии.", "requiresMissingFactIds": ["fact_no_secondary_component"] }
+        ]
+      },
       "isCorrectForTemplate": false,
       "isUnsafeChoice": false
     },
@@ -572,6 +726,16 @@
         "microscopy"
       ],
       "feedback": "Микроскопия не показала выраженного бактериального воспаления.",
+      "evidenceRules": {
+        "supporting": [],
+        "contradicting": [
+          { "text": "Микроскопия выявила ушных клещей и не выявила значимого бактериального компонента.", "requiresFactIds": ["fact_mites_confirmed", "fact_no_secondary_component"] }
+        ],
+        "safety": [],
+        "unknown": [
+          { "text": "Состав ушных выделений остаётся неизвестным без микроскопии.", "requiresMissingFactIds": ["fact_no_secondary_component"] }
+        ]
+      },
       "isCorrectForTemplate": false,
       "isUnsafeChoice": false
     },
@@ -584,6 +748,16 @@
         "otoscopy"
       ],
       "feedback": "Аллергия может быть фоновой проблемой, но текущий эпизод объясняется обнаруженными паразитами.",
+      "evidenceRules": {
+        "supporting": [],
+        "contradicting": [
+          { "text": "Обнаруженные ушные клещи прямо объясняют текущий эпизод.", "requiresFactIds": ["fact_mites_confirmed"] }
+        ],
+        "safety": [],
+        "unknown": [
+          { "text": "Фоновая аллергическая проблема этим приёмом не подтверждена и не исключена.", "requiresMissingFactIds": ["fact_mites_confirmed"] }
+        ]
+      },
       "isCorrectForTemplate": false,
       "isUnsafeChoice": false
     }

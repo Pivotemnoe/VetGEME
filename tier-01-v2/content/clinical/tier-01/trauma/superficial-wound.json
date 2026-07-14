@@ -481,6 +481,83 @@
         "source": "physical_exam",
         "text": "Признаков значимой кровопотери или шока нет."
       }
+    ],
+    "actions": [
+      {
+        "id": "general_condition_activity",
+        "label": "Оценить общее состояние и активность",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 1,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_systemically_stable"],
+        "result": { "source": "physical_exam", "text": "Общее состояние стабильное, животное активно и реагирует на окружающее." }
+      },
+      {
+        "id": "general_temperature",
+        "label": "Измерить температуру",
+        "measurementKind": "temperature",
+        "measurementLabel": "Температура",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 2,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_temperature_normal"],
+        "resultsBySpecies": {
+          "dog": { "source": "physical_exam", "measurement": { "displayValue": "38,6", "unit": "°C", "referenceLabel": "37,7–39,2 °C для собаки по спецификации MVP 1", "interpretation": "в пределах нормы для собаки" } },
+          "cat": { "source": "physical_exam", "measurement": { "displayValue": "38,6", "unit": "°C", "referenceLabel": "37,7–39,2 °C для кошки по спецификации MVP 1", "interpretation": "в пределах нормы для кошки" } }
+        }
+      },
+      {
+        "id": "general_mucous_crt",
+        "label": "Оценить слизистые и наполнение капилляров",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 1,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_no_shock"],
+        "result": { "source": "physical_exam", "text": "Слизистые розовые и влажные; видимой задержки наполнения капилляров нет." }
+      },
+      {
+        "id": "general_pulse",
+        "label": "Оценить пульс",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 1,
+        "importantForSafety": false,
+        "revealsFactIds": ["fact_circulation_stable"],
+        "result": { "source": "physical_exam", "text": "Пульс пальпируется уверенно; признаков нарушения периферического кровообращения не выявлено." }
+      },
+      {
+        "id": "general_respiration",
+        "label": "Оценить дыхание",
+        "source": "physical_exam",
+        "timeMinutes": 1,
+        "stressDelta": 0,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_breathing_stable"],
+        "result": { "source": "physical_exam", "text": "Дыхание свободное, признаков дыхательного усилия нет." }
+      },
+      {
+        "id": "general_hydration",
+        "label": "Оценить гидратацию",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 1,
+        "importantForSafety": false,
+        "revealsFactIds": ["fact_hydration_stable"],
+        "result": { "source": "physical_exam", "text": "Клинических признаков обезвоживания не выявлено." }
+      },
+      {
+        "id": "general_pain",
+        "label": "Оценить общую болезненность",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 2,
+        "importantForSafety": false,
+        "revealsFactIds": ["fact_no_generalized_pain"],
+        "result": { "source": "physical_exam", "text": "Выраженной общей болезненности вне области раны не выявлено." }
+      }
     ]
   },
   "targetExam": {
@@ -511,6 +588,68 @@
         "source": "physical_exam",
         "text": "Выраженного отёка, гноя и некроза нет."
       }
+    ],
+    "actions": [
+      {
+        "id": "wound_surface_edges_contamination",
+        "label": "Осмотреть поверхность, края и загрязнение раны",
+        "source": "physical_exam",
+        "timeMinutes": 3,
+        "stressDelta": 3,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_wound_superficial", "fact_wound_contamination"],
+        "result": { "source": "physical_exam", "text": "Рана поверхностная, края расходятся минимально; имеется небольшое удаляемое загрязнение." }
+      },
+      {
+        "id": "wound_bleeding",
+        "label": "Оценить кровотечение",
+        "source": "physical_exam",
+        "timeMinutes": 2,
+        "stressDelta": 2,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_no_active_bleeding"],
+        "result": { "source": "physical_exam", "text": "Активного кровотечения нет." }
+      },
+      {
+        "id": "wound_swelling_pain_tissues",
+        "label": "Оценить отёк, боль и окружающие ткани",
+        "source": "physical_exam",
+        "timeMinutes": 3,
+        "stressDelta": 4,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_no_inflammation"],
+        "result": { "source": "physical_exam", "text": "Выраженного отёка, гноя и некроза нет; болезненность ограничена краями раны." }
+      },
+      {
+        "id": "wound_deep_structures",
+        "label": "Проверить признаки вовлечения глубоких структур",
+        "source": "physical_exam",
+        "timeMinutes": 4,
+        "stressDelta": 5,
+        "importantForSafety": true,
+        "revealsFactIds": ["fact_no_deep_involvement"],
+        "result": { "source": "physical_exam", "text": "Глубокие ткани, сустав, сухожилие и полость тела не вовлечены по доступному осмотру." }
+      },
+      {
+        "id": "wound_limb_function",
+        "label": "Проверить функцию конечности и походку",
+        "source": "physical_exam",
+        "timeMinutes": 3,
+        "stressDelta": 2,
+        "importantForSafety": false,
+        "revealsFactIds": ["fact_limb_function_preserved"],
+        "result": { "source": "physical_exam", "text": "Походка и опора на конечности сохранены; локализация раны не ограничивает движение." }
+      },
+      {
+        "id": "wound_other_injuries",
+        "label": "Осмотреть другие повреждения после травмы",
+        "source": "physical_exam",
+        "timeMinutes": 3,
+        "stressDelta": 2,
+        "importantForSafety": false,
+        "revealsFactIds": ["fact_no_other_injuries"],
+        "result": { "source": "physical_exam", "text": "Других видимых повреждений после травмы не обнаружено." }
+      }
     ]
   },
   "sampleActions": [],
@@ -526,6 +665,21 @@
         "wound_exam"
       ],
       "feedback": "Осмотр показывает неглубокую рану без продолжающегося кровотечения и вовлечения глубоких структур.",
+      "evidenceRules": {
+        "supporting": [
+          { "text": "Осмотрена поверхностная рана с минимальным расхождением краёв.", "requiresFactIds": ["fact_wound_superficial"] },
+          { "text": "Активного кровотечения нет.", "requiresFactIds": ["fact_no_active_bleeding"] },
+          { "text": "По доступному осмотру глубокие структуры не вовлечены.", "requiresFactIds": ["fact_no_deep_involvement"] }
+        ],
+        "contradicting": [],
+        "safety": [
+          { "requiresFactIds": ["fact_no_active_bleeding", "fact_no_deep_involvement"] }
+        ],
+        "unknown": [
+          { "text": "Глубина и вовлечение важных структур остаются неизвестными.", "requiresMissingFactIds": ["fact_no_deep_involvement"] },
+          { "text": "Наличие продолжающегося кровотечения не проверено.", "requiresMissingFactIds": ["fact_no_active_bleeding"] }
+        ]
+      },
       "isCorrectForTemplate": true,
       "isUnsafeChoice": false
     },
@@ -539,6 +693,17 @@
         "history"
       ],
       "feedback": "Нет анамнеза драки и характерных глубоких проколов.",
+      "evidenceRules": {
+        "supporting": [],
+        "contradicting": [
+          { "text": "Владелец не сообщает контакта с другим животным.", "requiresFactIds": ["fact_not_bite"] },
+          { "text": "Осмотрена поверхностная рана без характерных глубоких проколов.", "requiresFactIds": ["fact_wound_superficial"] }
+        ],
+        "safety": [],
+        "unknown": [
+          { "text": "Характер повреждения ещё не уточнён осмотром.", "requiresMissingFactIds": ["fact_wound_superficial"] }
+        ]
+      },
       "isCorrectForTemplate": false,
       "isUnsafeChoice": false
     },
@@ -551,6 +716,17 @@
         "wound_exam"
       ],
       "feedback": "Глубокие структуры не видны и края расходятся минимально.",
+      "evidenceRules": {
+        "supporting": [],
+        "contradicting": [
+          { "text": "Края раны расходятся минимально.", "requiresFactIds": ["fact_wound_superficial"] },
+          { "text": "По доступному осмотру глубокие структуры не вовлечены.", "requiresFactIds": ["fact_no_deep_involvement"] }
+        ],
+        "safety": [],
+        "unknown": [
+          { "text": "Глубина повреждения ещё не проверена.", "requiresMissingFactIds": ["fact_no_deep_involvement"] }
+        ]
+      },
       "isCorrectForTemplate": false,
       "isUnsafeChoice": false
     }
