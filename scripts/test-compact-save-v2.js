@@ -278,6 +278,11 @@ async function main() {
     findings: ["Собран анамнез", "Температура в норме"],
     generalExamDone: true,
     localUsed: 1,
+    clinicalActionState: {
+      generalExamActionIds: ["general_condition_activity", "general_temperature"],
+      targetExamActionIds: ["target_surface"],
+      diagnosticTestIds: []
+    },
     sampleTaken: true,
     microscopyDone: false,
     selectedDiagnosisIds: [],
@@ -314,6 +319,7 @@ async function main() {
   const partialReload = gameSaveApi.load(partialStorage, "tier-01-v2", { catalog });
   assert.deepEqual(partialReload.state.queue[0].asked, partialPatient.asked);
   assert.deepEqual(partialReload.state.queue[0].clinicalRecord, partialPatient.clinicalRecord);
+  assert.deepEqual(partialReload.state.queue[0].clinicalActionState, partialPatient.clinicalActionState);
   assert.deepEqual(partialReload.state.queue[0].diagnosticDecisions, partialPatient.diagnosticDecisions);
   assert.equal(partialReload.state.queue[0].pendingDiagnosticTestId, partialPatient.pendingDiagnosticTestId);
   assert.deepEqual(partialReload.state.queue[0].communicationResult, partialPatient.communicationResult);
@@ -365,7 +371,7 @@ async function main() {
   const oldGameRaw = JSON.stringify(oldGameSnapshot);
   const gameMigrationStorage = memoryStorage({ [namespaces.gameSaveKey("tier-01-v2")]: oldGameRaw });
   const migratedGame = gameSaveApi.load(gameMigrationStorage, "tier-01-v2", { catalog });
-  assert.equal(migratedGame.gameStateSaveVersion, 3);
+  assert.equal(migratedGame.gameStateSaveVersion, 4);
   assert.ok(migratedGame.state.queue[0].v2Visit.medicalContent);
   assert.equal(gameMigrationStorage.getItem(namespaces.gameSaveKey("tier-01-v2")).includes("medicalContent"), false);
 

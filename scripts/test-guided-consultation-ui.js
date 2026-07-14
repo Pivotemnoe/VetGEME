@@ -23,6 +23,9 @@ assert.match(css, /\.case-stage-card\s+\.stage-body\s*\{[^}]*display:\s*none/);
 assert.match(css, /\.case-window\.guided-map\s+\.case-actions button\s*\{[^}]*display:\s*none/iu, "guided action visibility rule is missing");
 assert.match(css, /\.case-window\.guided-map\s+\.case-actions button\.current-action\s*\{[^}]*display:\s*block/iu, "current guided action visibility rule is missing");
 assert.match(game, /guidedActionButton\(guidedPosition\.action\)\?\.classList\.add\("current-action"\)/);
+assert.match(css, /\.case-window\.free-clinical-flow\s+\.case-actions\s*\{[^}]*grid-template-columns:\s*repeat\(5/iu, "free clinical action grid is missing");
+assert.match(game, /button\.disabled = Boolean\(patient\.v2Visit\) && !isFreeClinicalVisit\(patient\)/u, "day 2 stage navigation must remain available");
+assert.match(game, /generalExamBtn\.addEventListener\("click", openGeneralExam\)/u);
 
 for (const label of [
   "Собрать анамнез",
@@ -43,12 +46,15 @@ assert.equal(activeRuntimeText.includes("Согласовать план пом�
 assert.equal(activeRuntimeText.includes("Что согласовать с владельцем?"), false, "obsolete agreement wording is still player-facing");
 assert.ok(tutorial.steps.find((step) => step.id === "preliminary_diagnosis")?.text.startsWith("Сначала выберите состояние"));
 assert.equal(game.includes("Исследование не требуется"), false, "obsolete diagnostic label is still player-facing");
-assert.ok(game.includes("Дополнительное исследование не обязательно"));
+assert.ok(game.includes("Продолжить без дополнительного исследования"));
+assert.ok(game.includes("playerDescription"));
+assert.ok(game.includes("playerTradeoff"));
 
 console.log(JSON.stringify({
   status: "passed",
   clinicalStages: 7,
   singleClinicalScroll: true,
-  oneGuidedPrimaryAction: true,
+  oneGuidedPrimaryActionOnDayOne: true,
+  freeClinicalActionsFromDayTwo: true,
   obsoletePlanWordingRemoved: true
 }, null, 2));

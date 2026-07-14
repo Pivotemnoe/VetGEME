@@ -16,6 +16,7 @@
     "test:multi-diagnosis-v2": "node scripts/test-multi-diagnosis-v2.js",
     "test:clinical-visit": "node scripts/test-clinical-visit-state.js",
     "test:clinical-decisions:v2": "node scripts/test-clinical-decisions-v2.js",
+    "test:free-clinical-flow:v2": "node scripts/test-free-clinical-flow-v2.js",
     "test:diagnostic-decisions:v2": "node scripts/test-diagnostic-decisions-v2.js",
     "test:campaign-mechanics:v2": "node scripts/test-campaign-mechanics-v2.js",
     "test:introductory-cases:v2": "node scripts/test-introductory-cases-v2.js",

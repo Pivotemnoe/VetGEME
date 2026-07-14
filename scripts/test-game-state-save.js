@@ -76,13 +76,35 @@ const previousV2 = {
 };
 storage.setItem(incompatibleKey, JSON.stringify(previousV2));
 const migrated = saveApi.load(storage, "tier-01-v2", { catalog: {} });
-assert.equal(migrated.gameStateSaveVersion, 3);
+assert.equal(migrated.gameStateSaveVersion, 4);
 assert.equal(migrated.state.ownerTrust, 68);
 assert.equal(migrated.state.clinicalReliability, 68);
 assert.equal(migrated.state.campaignFinance.debt, 120);
 assert.deepEqual(migrated.state.caseJournal, previousV2.state.caseJournal);
 assert.deepEqual(migrated.state.pendingReturns, previousV2.state.pendingReturns);
-assert.equal(JSON.parse(storage.getItem(incompatibleKey)).gameStateSaveVersion, 3);
+assert.equal(JSON.parse(storage.getItem(incompatibleKey)).gameStateSaveVersion, 4);
+
+const previousV3 = {
+  gameStateSaveVersion: 3,
+  generatorMode: "tier-01-v2",
+  savedAt: "2026-07-13T12:00:00.000Z",
+  state: {
+    phase: "planning",
+    day: 7,
+    money: 900,
+    ownerTrust: 77,
+    clinicalReliability: 81,
+    campaignFinance: { creditLimit: 2500, debt: 0, weeklyReview: null, closureRisk: "stable" },
+    queue: [],
+    arrivalSchedule: []
+  }
+};
+storage.setItem(incompatibleKey, JSON.stringify(previousV3));
+const migratedV3 = saveApi.load(storage, "tier-01-v2", { catalog: {} });
+assert.equal(migratedV3.gameStateSaveVersion, 4);
+assert.equal(migratedV3.state.ownerTrust, 77);
+assert.equal(migratedV3.state.clinicalReliability, 81);
+assert.deepEqual(migratedV3.state.campaignFinance, previousV3.state.campaignFinance);
 
 const impossibleV2 = {
   gameStateSaveVersion: 2,

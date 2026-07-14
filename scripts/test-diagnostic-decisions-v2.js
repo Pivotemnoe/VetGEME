@@ -18,9 +18,20 @@ const optional = decisions.diagnosticOptionsFor(optionalCase);
 assert.equal(optional[0].classification, "low_value");
 
 const noTestCase = { diagnosticTests: [], preliminaryDiagnosisOptions: [] };
-const lowValue = decisions.diagnosticOptionsFor(noTestCase);
+assert.deepEqual(decisions.diagnosticOptionsFor(noTestCase), [], "the engine must not invent a generic test");
+
+const lowValue = decisions.diagnosticOptionsFor({
+  diagnosticTests: [{
+    id: "optional_repeat_test",
+    label: "Repeat bedside test",
+    classification: "low_value",
+    text: "The repeated procedure confirms the same visible finding and adds no new data.",
+    costVetcoins: 20
+  }],
+  preliminaryDiagnosisOptions: []
+});
 assert.equal(lowValue[0].classification, "low_value");
-assert.equal(lowValue[0].resultText, "Полученный результат не изменил клиническое решение");
+assert.match(lowValue[0].resultText, /same visible finding/);
 
 const unavailable = decisions.diagnosticOptionsFor(requiredCase, {
   unavailableReasons: { fluorescein_test: "Оснащение временно недоступно." }
@@ -61,7 +72,7 @@ const partial = decisions.evaluateDiagnosticProposal([
 });
 assert.equal(partial.decision, "partially_accepted");
 assert.deepEqual(partial.acceptedTestIds, ["fluorescein_test"]);
-assert.deepEqual(partial.declinedTestIds, [decisions.LOW_VALUE_TEST_ID]);
+assert.deepEqual(partial.declinedTestIds, ["optional_repeat_test"]);
 
 const reloaded = JSON.parse(JSON.stringify({ diagnosticDecisions: [refused], diagnosticUncertainty: refused.diagnosticUncertainty }));
 assert.equal(reloaded.diagnosticDecisions[0].noResult, true);
