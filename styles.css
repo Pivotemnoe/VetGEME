@@ -343,7 +343,7 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
 .developer-actions button { min-height: 32px; padding: 5px; font-size: 9px; }
 
 .shift-window, .close-shift-window { position: absolute; z-index: 50; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(8,24,38,.68); }
-.shift-card, .close-shift-card { width: min(720px,calc(100vw - 40px)); border: 4px solid var(--line); background: #eaf7fb; box-shadow: 0 10px 0 rgba(0,0,0,.38); }
+.shift-card, .close-shift-card { width: min(720px,calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow-y: auto; border: 4px solid var(--line); background: #eaf7fb; box-shadow: 0 10px 0 rgba(0,0,0,.38); }
 .shift-card > header, .close-shift-card > header { padding: 13px 16px; border-bottom: 3px solid var(--line); background: linear-gradient(#f8fdff,#cae7f1); }
 .shift-card h2, .close-shift-card h2 { margin: 0; font-size: 20px; }
 .shift-briefing { margin: 0; padding: 12px 16px; color: #40566b; font-size: 12px; }
@@ -355,6 +355,11 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
 .shift-forecast-row strong { color: var(--blue-900); }
 .shift-forecast-row span { display: grid; gap: 2px; }
 .shift-forecast-row small { color: var(--ink-soft); font-size: 10px; }
+.future-appointments { display: grid; gap: 5px; margin-top: 9px; padding-top: 8px; border-top: 1px solid #a8bbc6; }
+.future-appointments h4 { margin: 0; color: var(--blue-900); font-size: 11px; }
+.future-appointment-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 7px; align-items: center; padding: 5px 7px; border: 1px solid #9fb5c1; background: #edf7fa; color: #40596c; font-size: 10px; }
+.future-appointment-row small { color: #647a89; }
+.future-appointment-row button { min-height: 25px; padding: 3px 7px; box-shadow: none; font-size: 9px; }
 .doctor-options { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; padding: 0 16px 14px; }
 .doctor-option { display: grid; grid-template-columns: 48px 1fr; gap: 9px; align-items: center; padding: 10px; text-align: left; background: #f7fcff; box-shadow: 0 3px 0 #0b1b2c; }
 .doctor-option.selected { outline: 4px solid #f2cf55; }

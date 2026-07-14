@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pet Clinic: ветеринарная клиника</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eaf6ff'/%3E%3Cpath d='M13 5h6v22h-6zM5 13h22v6H5z' fill='%231976d2'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="styles.css?v=20260714b">
+    <link rel="stylesheet" href="styles.css?v=20260714c">
   </head>
   <body>
     <main class="game-shell" aria-label="Pet Clinic: ветеринарная стратегия">
@@ -168,7 +168,7 @@
           <button id="microscopyBtn" type="button"><span>Микроскопия</span><small>7 мин. · доход 90 V</small></button>
           <button id="diagnosisBtn" type="button"><span>Выбрать предварительный диагноз</span><small>варианты по случаю</small></button>
           <button id="communicationBtn" type="button"><span>Объяснить результат</span><small>4 мин.</small></button>
-          <button id="treatmentBtn" type="button"><span>Сделать назначения</span><small>выбрать действия</small></button>
+          <button id="treatmentBtn" type="button"><span>Назначить лечение и контроль</span><small>выбрать действия</small></button>
           <button class="primary" id="finishVisitBtn" type="button"><span>Завершить приём</span><small>оформить выписку</small></button>
         </div>
       </section>
@@ -251,19 +251,20 @@
     </main>
     <script src="campaign.js?v=20260712k" defer></script>
     <script src="generator/save-namespaces.js?v=20260712a" defer></script>
-    <script src="generator/compact-visit-v2.js?v=20260713a" defer></script>
+    <script src="generator/compact-visit-v2.js?v=20260714c" defer></script>
     <script src="systems/free-clinical-flow-v2.js?v=20260714b" defer></script>
-    <script src="generator/game-state-save.js?v=20260714b" defer></script>
+    <script src="systems/longitudinal-care-v2.js?v=20260714c" defer></script>
+    <script src="generator/game-state-save.js?v=20260714c" defer></script>
     <script src="systems/clinical-visit-state.js?v=20260713a" defer></script>
     <script src="systems/clinical-decisions-v2.js?v=20260714a" defer></script>
     <script src="systems/diagnostic-decisions-v2.js?v=20260714a" defer></script>
     <script src="systems/campaign-mechanics-v2.js?v=20260713a" defer></script>
     <script src="generator/content-loader-v2.js?v=20260712b" defer></script>
     <script src="generator/demand-director-v2.js?v=20260713a" defer></script>
-    <script src="generator/generator-v2.js?v=20260713b" defer></script>
-    <script src="generator/game-adapter-v2.js?v=20260714a" defer></script>
+    <script src="generator/generator-v2.js?v=20260714c" defer></script>
+    <script src="generator/game-adapter-v2.js?v=20260714c" defer></script>
     <script src="generator/multi-diagnosis-engine-v2.js?v=20260713a" defer></script>
     <script src="generator/generator-mode.js?v=20260713a" defer></script>
-    <script src="game.js?v=20260714b" defer></script>
+    <script src="game.js?v=20260714c" defer></script>
   </body>
 </html>

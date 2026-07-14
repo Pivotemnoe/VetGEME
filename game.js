@@ -19,9 +19,14 @@
   const clinicalDecisions = window.PET_CLINIC_CLINICAL_DECISIONS_V2;
   const diagnosticDecisions = window.PET_CLINIC_DIAGNOSTIC_DECISIONS_V2;
   const freeClinicalFlow = window.PET_CLINIC_FREE_CLINICAL_FLOW_V2;
+  const longitudinalCare = window.PET_CLINIC_LONGITUDINAL_CARE_V2;
   const campaignMechanics = window.PET_CLINIC_CAMPAIGN_MECHANICS_V2;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
+
+  function cloneData(value) {
+    return value === undefined ? undefined : JSON.parse(JSON.stringify(value));
+  }
 
   function campaignDayCount() {
     return generatorRuntime.mode === "tier-01-v2" ? 30 : 5;
@@ -795,6 +800,10 @@
     equipmentCapabilities: {},
     demandState: null,
     campaignOutcome: null,
+    appointments: [],
+    treatmentCourses: [],
+    longitudinalPatients: {},
+    attendanceEvents: [],
     queue: [],
     activeId: null,
     nextPatientId: 1,
@@ -884,6 +893,12 @@
       });
       if (!snapshot) return "empty";
       Object.assign(state, snapshot.state);
+      state.appointments = Array.isArray(state.appointments) ? state.appointments : [];
+      state.treatmentCourses = Array.isArray(state.treatmentCourses) ? state.treatmentCourses : [];
+      state.longitudinalPatients = state.longitudinalPatients && typeof state.longitudinalPatients === "object"
+        ? state.longitudinalPatients
+        : {};
+      state.attendanceEvents = Array.isArray(state.attendanceEvents) ? state.attendanceEvents : [];
       state.queue = Array.isArray(state.queue) ? state.queue : [];
       state.queue.forEach((patient) => {
         restoreRuntimePatient(patient);
@@ -1890,6 +1905,12 @@
       controlGoalCredited: false,
       tutorialResult: "",
       returnVisit: Boolean(isReturn || overrides.returnVisit),
+      appointmentId: overrides.appointmentId || null,
+      treatmentCourseId: overrides.treatmentCourseId || null,
+      appointmentReason: overrides.appointmentReason || null,
+      attendanceDecision: overrides.attendanceDecision || null,
+      adherenceState: overrides.adherenceState || null,
+      longitudinalState: overrides.longitudinalState || null,
       eventLabel: overrides.eventLabel || "",
       bookingLabel: overrides.bookingLabel || disease.short,
       source: overrides.source || "booked",
@@ -1916,6 +1937,28 @@
     const patient = createPatient(forcedDiseaseId, isReturn, { ...overrides, flowState: "arrived" });
     patient.protectedFromLeaving = state.day === 1 && isFirstArrival;
     state.queue.push(patient);
+    if (patient.appointmentId) {
+      const appointment = state.appointments.find((item) => item.appointmentId === patient.appointmentId);
+      if (appointment) {
+        appointment.status = patient.attendanceDecision === "late" ? "late" : "attended";
+        appointment.attendanceState = patient.attendanceDecision === "late" ? "arrived_late" : "arrived";
+        const longitudinalPatient = Object.values(state.longitudinalPatients)
+          .find((item) => item.sourceVisitId === appointment.sourceVisitId);
+        if (longitudinalPatient) {
+          longitudinalPatient.elapsedDays = Math.max(0, state.day - (state.treatmentCourses
+            .find((course) => course.treatmentCourseId === appointment.treatmentCourseId)?.startDay || state.day));
+          longitudinalPatient.state = patient.longitudinalState?.state || longitudinalPatient.state;
+          longitudinalPatient.currentVisitReason = appointment.reason;
+          longitudinalPatient.attendanceState = appointment.attendanceState;
+        }
+        state.attendanceEvents.push({
+          day: state.day,
+          minute: state.minute,
+          appointmentId: appointment.appointmentId,
+          status: appointment.status
+        });
+      }
+    }
     state.arrivalsToday += 1;
     if (patient.eventLabel) state.specialEventsToday += 1;
     if (state.day <= campaignDayCount()) state.speed = 1;
@@ -1926,7 +1969,9 @@
     setLog(patient.eventLabel
       ? `Событие: ${patient.eventLabel}. Привезли пациента ${patient.animal}.`
       : isReturn
-        ? `${patient.owner} вернулся с ${patient.animal}: прошлое лечение не помогло.`
+        ? patient.appointmentReason
+          ? `${longitudinalCare.reasonLabel(patient.appointmentReason)}: ${patient.owner} пришёл с ${patient.animal}.`
+          : `${patient.owner} повторно пришёл с ${patient.animal}.`
         : `Новый пациент: ${patient.animal}, ${speciesLabels[patient.species]}.`);
     renderAll();
     persistGameState(true);
@@ -1971,9 +2016,41 @@
     if (state.day <= campaignDayCount()) {
       while (state.arrivalSchedule.length && state.arrivalSchedule[0].minute <= state.minute) {
         const plan = currentPlan();
-        if (plan && waitingPatients().length >= plan.maxWaiting) break;
-        const arrival = state.arrivalSchedule.shift();
+        const arrival = state.arrivalSchedule[0];
         const template = arrival.template || {};
+        if (template.appointmentId && ["no_show", "cancelled"].includes(template.attendanceDecision)) {
+          state.arrivalSchedule.shift();
+          const index = state.appointments.findIndex((item) => item.appointmentId === template.appointmentId);
+          if (index >= 0) {
+            const resolved = longitudinalCare.resolveAttendance(state.appointments[index]);
+            if (template.attendanceDecision === "cancelled") {
+              resolved.status = "cancelled";
+              resolved.attendanceState = "cancelled";
+            }
+            state.appointments[index] = resolved;
+            state.attendanceEvents.push({
+              day: state.day,
+              minute: state.minute,
+              appointmentId: resolved.appointmentId,
+              status: resolved.status,
+              reason: resolved.noShowReason || null
+            });
+            const longitudinalPatient = Object.values(state.longitudinalPatients)
+              .find((item) => item.sourceVisitId === resolved.sourceVisitId);
+            if (longitudinalPatient) {
+              longitudinalPatient.attendanceState = resolved.status;
+              longitudinalPatient.noShowReason = resolved.noShowReason || null;
+              longitudinalPatient.currentVisitReason = resolved.reason;
+            }
+            setLog(resolved.status === "no_show"
+              ? "Пациент не явился на плановый контроль. Запись сохранена в истории наблюдения."
+              : "Владелец отменил повторную запись.");
+          }
+          persistGameState(true);
+          continue;
+        }
+        if (plan && waitingPatients().length >= plan.maxWaiting) break;
+        state.arrivalSchedule.shift();
         spawnPatient(arrival.diseaseId || template.diseaseId, Boolean(template.returnVisit), template);
       }
       return;
@@ -2494,6 +2571,88 @@
     return "treatment";
   }
 
+  function longitudinalOwnerState(patient) {
+    const reliability = Math.round((patient.ownerProfile?.reliability ?? 0.6) * 100);
+    const profileId = patient.ownerProfile?.id || patient.v2Visit?.owner?.profileId;
+    return {
+      attentiveness: profileId === "inattentive" ? 28 : profileId === "observant" ? 82 : reliability,
+      responsibility: reliability,
+      adherence: patient.ownerAdherence ?? reliability,
+      trust: patient.trust,
+      comprehension: patient.ownerComprehension ?? 50,
+      anxiety: patient.anxiety,
+      explanationQuality: patient.ownerComprehension ?? 50,
+      severityConcern: ["urgent", "emergency"].includes(patient.v2Visit?.severity) ? 90 : 45,
+      subjectiveImprovement: false,
+      budgetLimited: ["budget", "budget_limited"].includes(profileId)
+    };
+  }
+
+  function registerLongitudinalCourse(patient, approvedPlan, selectedTreatment) {
+    if (!isTier01V2() || !approvedPlan?.longitudinalCare || !longitudinalCare || !patient.v2Visit?.visitId) return null;
+    const planAccepted = patient.ownerPlanDecision?.acceptedComponentIds?.includes(approvedPlan.id);
+    const metadata = generatorRuntime.generator?.metadata(state.day) || {};
+    const sourceVisitId = patient.v2Visit.visitId;
+    state.treatmentCourses = state.treatmentCourses.filter((course) => course.sourceVisitId !== sourceVisitId);
+    state.appointments = state.appointments.filter((appointment) => appointment.sourceVisitId !== sourceVisitId);
+    const ownerUnderstood = (patient.ownerComprehension ?? 0) >= 50;
+    const course = longitudinalCare.createCourse({
+      seed: metadata.campaignSeed || "tier-01-v2",
+      sourceVisitId,
+      caseId: patient.v2Visit.caseId,
+      startDay: state.day,
+      plan: approvedPlan,
+      selectedFollowUpOptionId: selectedTreatment?.followUpOptionId || null,
+      planAccepted,
+      controlConsent: planAccepted && ownerUnderstood,
+      ownerUnderstood,
+      ownerState: longitudinalOwnerState(patient),
+      patient: {
+        species: patient.species,
+        animal: patient.animal,
+        sex: patient.v2Visit.patient.sex,
+        ageYears: patient.ageYears
+      },
+      owner: {
+        name: patient.owner,
+        profileId: patient.v2Visit.owner.profileId,
+        modifierId: patient.v2Visit.owner.modifierId || null,
+        homeActionId: patient.v2Visit.owner.homeActionId || null
+      }
+    });
+    if (!course) return null;
+    course.appointments.forEach((appointment) => {
+      appointment.longitudinalState = longitudinalCare.longitudinalState(
+        course.adherenceState,
+        appointment.scheduledDay - state.day
+      );
+    });
+    state.treatmentCourses.push(course);
+    state.appointments.push(...course.appointments);
+    state.longitudinalPatients[course.patientId] = {
+      patientId: course.patientId,
+      patient: cloneData(course.appointments[0]?.patient || {}),
+      owner: cloneData(course.appointments[0]?.owner || {}),
+      sourceVisitId,
+      previousComplaintId: patient.v2Visit.complaint?.id || null,
+      diagnosisIds: [...(patient.selectedDiagnosisIds || [patient.selectedDiagnosisId]).filter(Boolean)],
+      diagnosticTestIds: freeClinicalFlow.performedIds(patient, "diagnostic"),
+      selectedPlanIds: [approvedPlan.id],
+      treatmentCourseIds: [course.treatmentCourseId],
+      durationDays: course.durationDays,
+      homeActionIds: cloneData(course.homeActionIds),
+      clinicActionIds: cloneData(course.clinicActionIds),
+      conditionalClinicActionIds: cloneData(course.conditionalClinicActionIds),
+      adherenceState: course.adherenceState,
+      visitReasons: course.appointments.map((appointment) => appointment.reason),
+      elapsedDays: 0,
+      state: "under_treatment"
+    };
+    patient.treatmentCourseId = course.treatmentCourseId;
+    patient.longitudinalSummary = longitudinalCare.summarizePlan(approvedPlan, course);
+    return course;
+  }
+
   function selectCarePlan(treatment) {
     const patient = activePatient();
     if (!patient) return;
@@ -2516,6 +2675,7 @@
     }, {
       communicationReaction: patient.communicationResult?.reactionId
     });
+    const treatmentCourse = registerLongitudinalCourse(patient, approvedPlan, treatment);
     if (patient.v2Visit && window.PET_CLINIC_MULTI_DIAGNOSIS_V2) {
       const evaluation = window.PET_CLINIC_MULTI_DIAGNOSIS_V2.evaluateCombinedOutcome(
         patient.v2Visit,
@@ -2552,6 +2712,7 @@
       `Назначения: ${treatment.label}.`,
       ...(planText?.steps || []),
       planText?.followUp?.text || "",
+      ...(patient.longitudinalSummary || []),
       `Реакция владельца: ${patient.ownerPlanDecision.decisionText}.`
     ]);
     incrementGoal("dischargePlan");
@@ -2560,7 +2721,9 @@
       incrementGoal("include_control_in_discharge");
     }
     closeChoice();
-    setLog(`Назначения сделаны: ${patient.ownerPlanDecision.decisionText}. Приём можно завершить.`);
+    setLog(treatmentCourse?.appointments.some((appointment) => appointment.status === "confirmed")
+      ? `Назначения сделаны. Будущий контроль добавлен в расписание. ${patient.ownerPlanDecision.decisionText}.`
+      : `Назначения сделаны: ${patient.ownerPlanDecision.decisionText}. Приём можно завершить.`);
     if (tutorialPatient(patient)) advanceTutorial("plan", `Назначения сделаны: ${treatment.label}.`);
     passTime(2);
   }
@@ -2679,6 +2842,9 @@
       state.pendingReturns.push({ diseaseId: patient.diseaseId, day: state.day + 1 });
     }
 
+    const scheduledAppointments = patient.v2Visit?.visitId
+      ? state.appointments.filter((appointment) => appointment.sourceVisitId === patient.v2Visit.visitId)
+      : [];
     state.caseJournal.push({
       day: state.day,
       visitId: patient.v2Visit?.visitId || null,
@@ -2703,7 +2869,12 @@
       trust: patient.trust,
       quality: effectiveQuality,
       risk: Math.round(risk * 100),
-      followUpRequested: Boolean(patient.v2Visit?.medicalContent.planOptions.find((plan) => plan.id === treatment.id)?.followUp)
+      followUpRequested: scheduledAppointments.length === 0
+        && Boolean(patient.v2Visit?.medicalContent.planOptions.find((plan) => plan.id === treatment.id)?.followUp),
+      appointments: cloneData(scheduledAppointments),
+      treatmentCourseId: patient.treatmentCourseId || null,
+      appointmentId: patient.appointmentId || null,
+      appointmentReason: patient.appointmentReason || null
     });
 
     const completionGoals = ["treated"];
@@ -2850,16 +3021,18 @@
   }
 
   function debugFinishDay() {
-    while (state.arrivalSchedule.length) {
-      const arrival = state.arrivalSchedule.shift();
-      const template = arrival.template || {};
-      spawnPatient(arrival.diseaseId || template.diseaseId, Boolean(template.returnVisit), template);
-    }
     state.queue.forEach((patient) => { patient.patience = 999; });
-    let safety = 20;
-    while (state.queue.length && safety > 0) {
-      state.activeId = state.queue[0].id;
-      debugResolveActivePatient();
+    let safety = 60;
+    while ((state.arrivalSchedule.length || state.queue.length) && safety > 0) {
+      if (state.arrivalSchedule.length) {
+        state.minute = Math.max(state.minute, state.arrivalSchedule[0].minute);
+        maybeSpawn();
+        state.queue.forEach((patient) => { patient.patience = 999; });
+      }
+      if (state.queue.length) {
+        state.activeId = state.queue[0].id;
+        debugResolveActivePatient();
+      }
       safety -= 1;
     }
     requestShiftClose(false);
@@ -2936,8 +3109,22 @@
     const rows = plan.patients.map((patient) => `
       <div class="shift-forecast-row">
         <strong>${formatTime(patient.arrivalMinute)}</strong>
-        <span>${patient.animal}, ${speciesLabels[patient.species] || patient.species} · ${patient.returnVisit ? "повторный" : "первичный"}<small>${patient.bookingLabel || "Причина обращения"}</small></span>
+        <span>${patient.animal}, ${speciesLabels[patient.species] || patient.species} · ${patient.returnVisit
+          ? longitudinalCare.reasonLabel(patient.appointmentReason || patient.v2Visit?.followUpReason)
+          : "Первичный приём"}<small>${patient.bookingLabel || "Причина обращения"}</small></span>
       </div>`).join("");
+    const futureAppointments = state.appointments
+      .filter((appointment) => appointment.scheduledDay > state.day && ["planned", "confirmed", "rescheduled"].includes(appointment.status))
+      .sort((left, right) => left.scheduledDay - right.scheduledDay || left.scheduledTime - right.scheduledTime)
+      .slice(0, 6);
+    const appointmentRows = futureAppointments.length
+      ? `<div class="future-appointments"><h4>Будущие посещения</h4>${futureAppointments.map((appointment) => `
+        <div class="future-appointment-row">
+          <span><b>День ${appointment.scheduledDay}, ${formatTime(appointment.scheduledTime)}</b> · ${appointment.patient.animal} · ${longitudinalCare.reasonLabel(appointment.reason)}</span>
+          <small>${appointment.reminderState === "none" ? "Напоминание не отправлено" : "Напоминание зафиксировано"}</small>
+          ${appointment.reminderState === "none" ? `<button type="button" data-appointment-reminder="${appointment.appointmentId}">Позвонить владельцу</button>` : ""}
+        </div>`).join("")}</div>`
+      : "";
     const walkInSummary = plan.unplannedRange?.max > 0
       ? `<span>Возможны без записи: <b>${walkInRange}</b></span>`
       : "";
@@ -2950,7 +3137,53 @@
         <span>Нагрузка: <b>${plan.loadLabel}</b></span>
         <span>Закрытие: <b>${formatTime(plan.endMinute)}</b></span>
       </div>
-      <div class="shift-forecast-list">${rows}</div>`;
+      <div class="shift-forecast-list">${rows}</div>
+      ${appointmentRows}`;
+    el.shiftForecast.querySelectorAll("[data-appointment-reminder]").forEach((button) => {
+      button.addEventListener("click", () => remindAppointment(button.dataset.appointmentReminder));
+    });
+  }
+
+  function remindAppointment(appointmentId) {
+    const index = state.appointments.findIndex((item) => item.appointmentId === appointmentId);
+    if (index < 0) return;
+    const appointment = state.appointments[index];
+    const metadata = generatorRuntime.generator?.metadata(state.day) || {};
+    const profileId = appointment.owner?.profileId;
+    const ownerState = {
+      attentiveness: profileId === "inattentive" ? 28 : profileId === "observant" ? 82 : 60,
+      responsibility: profileId === "inattentive" ? 38 : 65,
+      trust: state.ownerTrust,
+      comprehension: 65,
+      budgetLimited: profileId === "budget_limited"
+    };
+    const updated = longitudinalCare.applyReminder(appointment, {
+      seed: metadata.campaignSeed || "tier-01-v2",
+      ownerState,
+      day: state.day,
+      type: "manual_call",
+      minutes: 5
+    });
+    state.appointments[index] = updated;
+    state.treatmentCourses.forEach((course) => {
+      const courseIndex = course.appointments?.findIndex((item) => item.appointmentId === appointmentId) ?? -1;
+      if (courseIndex >= 0) course.appointments[courseIndex] = cloneData(updated);
+    });
+    state.arrivalSchedule.forEach((arrival) => {
+      if (arrival.template?.appointmentId === appointmentId) {
+        arrival.template.attendanceDecision = updated.attendanceDecision;
+      }
+    });
+    generatorRuntime.generator?.updatePendingAppointment?.(appointmentId, {
+      attendanceDecision: updated.attendanceDecision,
+      scheduledTime: updated.scheduledTime,
+      scheduledDay: updated.scheduledDay,
+      reason: updated.reason
+    });
+    state.minute += 5;
+    setLog(`Регистратор позвонил владельцу пациента ${appointment.patient.animal}: запись и напоминание подтверждены.`);
+    renderShiftPlanning();
+    persistGameState(true);
   }
 
   function openShiftPlanning() {
@@ -3139,6 +3372,7 @@
           completed: Boolean(item.visitId),
           followUpRequested: item.followUpRequested,
           followUpAfterDays: 1,
+          appointments: item.appointments || [],
           selectedPlanId: item.selectedPlanId,
           quality: item.quality
         })));
@@ -3214,6 +3448,10 @@
     const goalsHtml = goals.length
       ? goals.map((goal) => `${goalComplete(goal) ? "Выполнено" : "Не выполнено"}: ${goal.label} (${goalProgress(goal)}/${goal.target})`).join("<br>")
       : "Свободный режим без сюжетных целей.";
+    const attendance = longitudinalCare
+      ? longitudinalCare.attendanceReport(state.appointments, state.day)
+      : { scheduled: 0, attended: 0, late: 0, cancelled: 0, rescheduled: 0, noShow: 0 };
+    const attendanceSummary = `Контроли: запланировано <b>${attendance.scheduled}</b>, пришло <b>${attendance.attended}</b>, опоздало <b>${attendance.late}</b>, отменено <b>${attendance.cancelled}</b>, перенесено <b>${attendance.rescheduled}</b>, не явилось <b>${attendance.noShow}</b>.`;
     const reputationDelta = reputationDeltaToday();
     const reputationByReason = state.reputationEvents.reduce((totals, event) => {
       totals[event.reason] = (totals[event.reason] || 0) + event.delta;
@@ -3242,6 +3480,7 @@
         `Доход приёмов: <b>${formatMoney(ledger.consultationRevenue)} V</b>. Доход исследований: <b>${formatMoney(ledger.diagnosticRevenue)} V</b>.`,
         `Стоимость процедур: <b>${formatMoney(ledger.procedureCost)} V</b>. Зарплаты: <b>${formatMoney(ledger.payroll)} V</b>. Обслуживание: <b>${formatMoney(ledger.maintenance)} V</b>.`,
         `Возвраты: <b>${formatMoney(ledger.refunds)} V</b>. Бесплатные повторные приёмы: <b>${ledger.freeRechecks}</b> (${formatMoney(ledger.freeRecheckValue)} V).`,
+        attendanceSummary,
         `Итог дня: <b>${ledger.net >= 0 ? "+" : ""}${formatMoney(ledger.net)} V</b>. Баланс: <b>${formatMoney(state.money)} V</b>. Долг: <b>${formatMoney(state.campaignFinance.debt)} V</b> из ${formatMoney(state.campaignFinance.creditLimit)} V.`,
         `Доверие владельцев: <b>${state.ownerTrust.toFixed(1)}/100</b> (${ownerDelta >= 0 ? "+" : ""}${ownerDelta.toFixed(1)}). Клиническая надёжность: <b>${state.clinicalReliability.toFixed(1)}/100</b> (${reliabilityDelta >= 0 ? "+" : ""}${reliabilityDelta.toFixed(1)}).`,
         weekly ? `Недельная финансовая проверка: риск закрытия <b>${weeklyRiskLabels[weekly.closureRisk]}</b>, обязательные расходы следующей смены ${formatMoney(weekly.mandatoryExpenses)} V, доступный кредит ${formatMoney(weekly.remainingCredit)} V.${weekly.recoveryMeasures.length ? ` Меры: ${weekly.recoveryMeasures.join(", ")}.` : ""}` : "",
@@ -3256,6 +3495,7 @@
         state.specialEventsToday ? `Особые события: <b>${state.handledSpecialEventsToday}/${state.specialEventsToday}</b> обработано.` : "",
         `Доход: <b>${formatMoney(state.revenueToday)} V</b>. Расходы: <b>${formatMoney(state.expensesToday)} V</b>. Итог: <b>${net >= 0 ? "+" : ""}${formatMoney(net)} V</b>.`,
         `Исследования: <b>${state.microscopyToday}</b>, доход от них: <b>${formatMoney(state.diagnosticRevenueToday)} V</b>.`,
+        attendanceSummary,
         `Репутация: <b>${state.reputation.toFixed(1)}/100</b> (${reputationDelta >= 0 ? "+" : ""}${reputationDelta.toFixed(1)} за день).<br>${reputationReasons}`,
         `Цели: <b>${completedGoals}/${goals.length}</b>.<br>${goalsHtml}`
       ].filter(Boolean).join("<br>");
@@ -3570,20 +3810,32 @@
     const availableTreatments = patient.v2Visit
       ? window.PET_CLINIC_GAME_ADAPTER_V2.treatmentOptionsFor(patient)
       : treatmentOptions;
-    if (patient.v2Visit && availableTreatments.length === 1) {
+    if (patient.v2Visit && !isFreeClinicalVisit(patient) && availableTreatments.length === 1) {
       selectCarePlan(availableTreatments[0]);
       return;
     }
+    const selectTreatmentAndSchedule = (treatment) => {
+      const followUpOptions = treatment.followUpOptions || [];
+      if (isFreeClinicalVisit(patient) && followUpOptions.length > 1) {
+        openChoice("Срок контроля", "Выберите допустимую дату из карточки", followUpOptions.map((option) => ({
+          label: `Контроль: день ${state.day + option.offsetDays}`,
+          note: longitudinalCare.reasonLabel(option.reason),
+          onClick: () => selectCarePlan({ ...treatment, followUpOptionId: option.id })
+        })));
+        return;
+      }
+      selectCarePlan({ ...treatment, followUpOptionId: followUpOptions.find((option) => option.default)?.id || followUpOptions[0]?.id || null });
+    };
     const items = availableTreatments.map((treatment) => ({
       label: `${treatment.label} (+${treatment.fee} вет.)`,
-      note: `${treatment.note} ${patient.budgetAsked
+      note: `${treatment.longitudinalCare?.durationDays ? `Длительность: ${treatment.longitudinalCare.durationDays} игровых дней. ` : ""}${treatment.note} ${patient.budgetAsked
         ? diseaseFor(patient).baseFee + treatment.fee > patient.budget
           ? "Выше обсужденного бюджета."
           : "В обсужденный бюджет помещается."
         : "Бюджет владельца не обсуждался."}`,
-      onClick: () => patient.v2Visit ? selectCarePlan(treatment) : treatPatient(treatment)
+      onClick: () => patient.v2Visit ? selectTreatmentAndSchedule(treatment) : treatPatient(treatment)
     }));
-    openChoice(patient.v2Visit ? "Назначения" : "Лечение", patient.v2Visit ? "Какие назначения выдать?" : "Назначение владельцу", items);
+    openChoice(patient.v2Visit ? "Назначения" : "Лечение", patient.v2Visit ? "Выберите лечение и контроль" : "Назначение владельцу", items);
   }
 
   function cyclePatient() {
@@ -3631,7 +3883,9 @@
         ? `СОБЫТИЕ · ${patient.eventLabel}`
         : patient.selectedUrgency === "urgent"
         ? `СРОЧНО · ждет ${Math.max(1, Math.round(patient.age))} мин.`
-        : patient.returnVisit ? "повторное обращение" : `Ждет ${Math.max(1, Math.round(patient.age))} мин.`;
+        : patient.returnVisit
+          ? longitudinalCare.reasonLabel(patient.appointmentReason)
+          : `Ждет ${Math.max(1, Math.round(patient.age))} мин.`;
       if (patient.selectedUrgency === "urgent") button.classList.add("urgent");
       const owner = document.createElement("span");
       owner.className = "queue-complaint";
@@ -3666,7 +3920,9 @@
         const patient = document.createElement("span");
         patient.textContent = `${nextBooked.template.animal} · ${speciesLabels[nextBooked.template.species]}`;
         const type = document.createElement("span");
-        type.textContent = nextBooked.template.returnVisit ? "Повторный приём" : "Первичный приём";
+        type.textContent = nextBooked.template.returnVisit
+          ? longitudinalCare.reasonLabel(nextBooked.template.appointmentReason)
+          : "Первичный приём";
         const reason = document.createElement("span");
         reason.textContent = `Причина записи: ${nextBooked.template.bookingLabel}`;
         card.append(time, patient, type, reason);
@@ -3714,7 +3970,9 @@
     el.caseWindow.classList.toggle("guided-map", Boolean(patient.v2Visit) && !isFreeClinicalVisit(patient));
     el.caseWindow.classList.toggle("free-clinical-flow", isFreeClinicalVisit(patient));
     const guidedPosition = patient.v2Visit ? guidedVisitPosition(patient) : null;
-    el.caseStage.textContent = patient.returnVisit ? "Повторный прием" : "Кабинет врача";
+    el.caseStage.textContent = patient.returnVisit
+      ? longitudinalCare.reasonLabel(patient.appointmentReason)
+      : "Кабинет врача";
     el.caseTitle.textContent = `${patient.animal} · ${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.`;
     el.caseOwner.textContent = `Владелец: ${patient.owner}`;
     el.caseUrgencyBtn.textContent = `Срочность: ${clinicalUrgencyLabel(patient)}`;
@@ -3723,7 +3981,11 @@
     el.ownerComplaint.textContent = patient.v2Visit
       ? patient.v2Visit.complaint.text
       : patient.returnVisit
-      ? `«После прошлого лечения не стало нормально. ${patient.complaints.join(", ")}.»`
+      ? patient.appointmentReason === "planned_recheck"
+        ? `«Пришли на назначенный контроль. ${patient.complaints.join(", ")}.»`
+        : patient.appointmentReason === "relapse"
+          ? `«После улучшения симптомы вернулись. ${patient.complaints.join(", ")}.»`
+          : `«Пришли повторно. ${patient.complaints.join(", ")}.»`
       : `«${patient.ownerLead ? `${patient.ownerLead}. ` : ""}${patient.complaints.join(", ")}.»`;
     const requiredUnknown = patient.v2Visit
       ? patient.v2Visit.medicalContent.historyQuestions
@@ -3847,7 +4109,7 @@
       || (isFreeClinicalVisit(patient) && !diagnosticTest)
       || (Boolean(patient.pendingDiagnosticTestId) && testRequiresSample && !patient.sampleTaken)
       || !supportsTest;
-    el.treatmentBtn.querySelector("span").textContent = patient.v2Visit ? "Сделать назначения" : "Назначить лечение";
+    el.treatmentBtn.querySelector("span").textContent = patient.v2Visit ? "Назначить лечение и контроль" : "Назначить лечение";
     el.treatmentBtn.querySelector("small").textContent = patient.v2Visit
       ? patient.v2Visit.medicalContent.planOptions.length === 1 ? "выполнить утверждённый план" : "выбрать назначения"
       : "завершить приём";
