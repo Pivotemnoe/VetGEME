@@ -51,6 +51,44 @@ button:disabled { cursor: not-allowed; opacity: .5; filter: saturate(.45); }
   background: #1b3328;
 }
 
+.app-loading-veil {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: linear-gradient(145deg, #eaf6ff, #cfeaf7);
+  image-rendering: auto;
+}
+.app-loading-veil[hidden] { display: none; }
+
+.app-loading-card {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 4px 14px;
+  width: min(420px, 100%);
+  padding: 22px 24px;
+  border: 3px solid var(--blue-900);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 10px 26px rgba(16, 36, 59, .22);
+}
+
+.app-loading-mark {
+  grid-row: 1 / span 2;
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--blue-900);
+  background:
+    linear-gradient(var(--blue-700) 0 0) 20px 7px / 8px 34px no-repeat,
+    linear-gradient(var(--blue-700) 0 0) 7px 20px / 34px 8px no-repeat,
+    #f3fbff;
+}
+
+.app-loading-card strong { align-self: end; color: var(--blue-900); font-size: 18px; }
+.app-loading-card > span:last-child { align-self: start; color: var(--muted); font-size: 12px; line-height: 1.4; }
+
 #clinicCanvas {
   display: block;
   width: calc(100% - 226px);

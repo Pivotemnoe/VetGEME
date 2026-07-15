@@ -24,6 +24,7 @@
   const campaignMechanics = window.PET_CLINIC_CAMPAIGN_MECHANICS_V2;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
+  let appBootstrapComplete = false;
 
   function cloneData(value) {
     return value === undefined ? undefined : JSON.parse(JSON.stringify(value));
@@ -931,7 +932,7 @@
   const portraitCtx = portraitCanvas.getContext("2d");
   const expandedClinicalStages = new Set();
   window.addEventListener("pet-clinic-visual-v2-ready", () => {
-    drawClinic();
+    if (appBootstrapComplete) drawClinic();
     updateVisualModeSettings();
   });
   window.addEventListener("pet-clinic-visual-v2-error", () => updateVisualModeSettings());
@@ -4408,7 +4409,7 @@
       ctx.fillRect(x, 20, 50, 54);
       ctx.fillRect(x - 10, 38, 70, 22);
     }
-    const modularVisual = Boolean(visualRenderer?.isEnabled?.());
+    const modularVisual = Boolean(visualRenderer?.isEnabled?.() && visualRenderer?.isReady?.());
     const pathLogicalX = modularVisual ? 990 : 885;
     const pathLogicalWidth = modularVisual ? 70 : 94;
     const pathX = CLINIC_VIEW.x + pathLogicalX * CLINIC_VIEW.scale;
@@ -5293,47 +5294,116 @@
     openShiftPlanning();
   }
 
-  function init() {
+  function nextPaint() {
+    return new Promise((resolve) => window.requestAnimationFrame(resolve));
+  }
+
+  function activeVisitId() {
+    const patient = activePatient();
+    return patient?.v2Visit?.visitId || patient?.visitId || null;
+  }
+
+  async function prepareVisualRenderer() {
+    const loadingMessage = document.getElementById("appLoadingMessage");
+    if (loadingMessage && visualRenderer?.isEnabled?.()) {
+      loadingMessage.textContent = "Состояние клиники подготовлено. Загружаем и декодируем кабинеты…";
+    }
+    await Promise.resolve(visualRenderer?.prepare?.());
+    updateVisualModeSettings();
+  }
+
+  async function revealReadyGame(restoreStatus, render = renderAll) {
+    const gameShell = document.querySelector(".game-shell");
+    const loadingVeil = document.getElementById("appLoadingVeil");
+    render();
+    await nextPaint();
+
+    document.documentElement.dataset.appStatus = "revealing";
+    if (loadingVeil) loadingVeil.hidden = true;
+    gameShell?.setAttribute("aria-busy", "false");
+    gameShell?.removeAttribute("aria-describedby");
+    gameShell?.removeAttribute("inert");
+    await nextPaint();
+
+    appBootstrapComplete = true;
+    const detail = Object.freeze({
+      mode: generatorRuntime.mode,
+      restoreStatus,
+      activeId: state.activeId ?? null,
+      visitId: activeVisitId(),
+      visualStatus: visualRenderer?.getStatus?.() || {
+        enabled: false,
+        ready: false,
+        settled: true,
+        fallback: false,
+        error: null
+      }
+    });
+    window.__PET_CLINIC_APP_READY__ = detail;
+    document.documentElement.dataset.appStatus = "ready";
+    window.dispatchEvent(new CustomEvent("pet-clinic-app-ready", { detail }));
+  }
+
+  async function init() {
     bindEvents();
     const restoreStatus = restoreGameState();
-    if (restoreStatus === "restored") {
-      resumeRestoredGame();
-    } else {
+    if (restoreStatus !== "restored") {
       resetDayState();
       setLog(restoreStatus === "blocked"
         ? "Несовместимое сохранение этого режима не загружено и не перезаписано. Начата временная новая сессия."
         : "Выберите врача и режим работы перед открытием клиники.");
+    }
+
+    await prepareVisualRenderer();
+    if (restoreStatus === "restored") {
+      resumeRestoredGame();
+    } else {
       openShiftPlanning();
     }
+    await revealReadyGame(restoreStatus);
     window.requestAnimationFrame(tick);
   }
 
-  function initBlockedGenerator(error) {
+  async function initBlockedGenerator(error) {
     bindEvents();
     blockGameForSaveError(error);
     state.modalOpen = true;
     el.shiftWindow.classList.add("hidden");
     el.messageLog.textContent = state.log;
-    renderHud();
-    drawClinic();
+    await prepareVisualRenderer();
+    await revealReadyGame("generator-blocked", () => {
+      renderHud();
+      drawClinic();
+    });
     window.requestAnimationFrame(tick);
   }
 
-  window.PET_CLINIC_GENERATOR_READY
-    .then((runtime) => {
-      generatorRuntime = runtime;
-      window.__PET_CLINIC_RUNTIME__ = generatorRuntime;
-      if (runtime.initializationError) {
-        console.error("Tier 01 v2 generator initialization failed; game remains paused.", runtime.initializationError);
-        initBlockedGenerator(runtime.initializationError);
-        return;
-      }
-      init();
-    })
-    .catch((error) => {
+  async function bootstrapGame() {
+    try {
+      generatorRuntime = await window.PET_CLINIC_GENERATOR_READY;
+    } catch (error) {
       console.error("Generator mode initialization failed; current mode retained.", error);
       generatorRuntime = { mode: "current", catalog: null, generator: null };
-      window.__PET_CLINIC_RUNTIME__ = generatorRuntime;
-      init();
-    });
+    }
+
+    window.__PET_CLINIC_RUNTIME__ = generatorRuntime;
+    if (generatorRuntime.initializationError) {
+      console.error("Tier 01 v2 generator initialization failed; game remains paused.", generatorRuntime.initializationError);
+      await initBlockedGenerator(generatorRuntime.initializationError);
+      return;
+    }
+    await init();
+  }
+
+  bootstrapGame().catch((error) => {
+    const gameShell = document.querySelector(".game-shell");
+    const loadingMessage = document.getElementById("appLoadingMessage");
+    console.error("Game bootstrap failed.", error);
+    document.documentElement.dataset.appStatus = "error";
+    gameShell?.setAttribute("aria-busy", "false");
+    if (loadingMessage) {
+      loadingMessage.textContent = "Не удалось открыть клинику. Перезагрузите страницу; игра продолжит с последнего успешно записанного состояния.";
+      loadingMessage.closest(".app-loading-veil")?.setAttribute("role", "alert");
+    }
+  });
 })();

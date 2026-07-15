@@ -23,6 +23,7 @@
     "test:longitudinal-care:v2": "node scripts/test-longitudinal-care-v2.js",
     "test:guided-ui": "node scripts/test-guided-consultation-ui.js",
     "test:diagnostic-feedback-ui": "node scripts/test-diagnostic-feedback-ui.js",
+    "test:renderer-readiness:v2": "node scripts/test-renderer-readiness-v2.js",
     "validate:visual-assets-v2": "node scripts/validate-visual-assets-v2.mjs",
     "validate:tier-01-content": "node scripts/validate-tier-01-content.mjs",
     "validate:tier-01-v2": "node tier-01-v2/scripts/validate-tier-01-content-v2.mjs"
