@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "familyId": "resp_dog_cough",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog"],
+  "coreCapabilities": ["general_exam", "respiratory_exam", "auscultation", "respiratory_rate", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "resp_dog_cough_undifferentiated",
+      "title": "Недифференцированный острый кашель или похожий эпизод",
+      "presentations": ["p1_owner_video_true_cough", "p2_reverse_sneeze_not_cough", "p3_gagging_or_regurgitation_differential"]
+    },
+    {
+      "id": "resp_dog_cirdc_uncomplicated",
+      "title": "Неосложнённый инфекционный респираторный комплекс собак",
+      "presentations": ["p1_post_boarding_harsh_cough", "p2_vaccinated_dog_still_compatible", "p3_multi_dog_cluster_stable"]
+    },
+    {
+      "id": "resp_dog_cirdc_complicated",
+      "title": "Осложнённый инфекционный кашель с риском бронхопневмонии",
+      "presentations": ["p1_puppy_fever_lethargy", "p2_productive_cough_abnormal_lungs", "p3_deterioration_after_mild_course"]
+    },
+    {
+      "id": "resp_dog_dynamic_airway_collapse",
+      "title": "Динамический коллапс трахеи или крупных дыхательных путей",
+      "presentations": ["p1_toy_breed_honking_excitement", "p2_obesity_heat_trigger", "p3_cyanosis_or_syncope_escalation"]
+    },
+    {
+      "id": "resp_dog_chronic_inflammatory_airway",
+      "title": "Хронический воспалительный кашель дыхательных путей",
+      "presentations": ["p1_cough_over_two_months", "p2_environmental_irritant_exposure", "p3_nonresponse_requires_airway_workup"]
+    },
+    {
+      "id": "resp_dog_cough_dyspnea_or_cardiac_red_flags",
+      "title": "Кашель с одышкой, обмороком или сердечно-лёгочными красными флагами",
+      "presentations": ["p1_tachypnea_at_rest_with_murmur", "p2_acute_dyspnea_minimal_handling", "p3_syncope_or_exercise_intolerance"]
+    }
+  ],
+  "researchIds": [
+    "resp_dog_event_classification",
+    "resp_dog_resting_respiratory_rate",
+    "resp_dog_auscultation",
+    "resp_dog_pulse_oximetry",
+    "resp_dog_targeted_pcr",
+    "resp_dog_thoracic_xray",
+    "resp_dog_dynamic_airway_imaging",
+    "resp_dog_airway_sampling",
+    "resp_dog_cardiac_workup"
+  ],
+  "crossFamilyLinks": ["resp_pneumonia", "cardio_chf", "infectious_canine_major", "gi_acute"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/respiratory-system/respiratory-system-introduction/clinical-signs-of-respiratory-disease-in-animals",
+    "https://www.merckvetmanual.com/respiratory-system/respiratory-diseases-of-small-animals/kennel-cough",
+    "https://www.merckvetmanual.com/respiratory-system/respiratory-system-introduction/diagnostic-techniques-for-respiratory-disease-in-animals",
+    "https://www.merckvetmanual.com/dog-owners/lung-and-airway-disorders-of-dogs/tracheal-collapse-in-dogs",
+    "https://www.merckvetmanual.com/dog-owners/lung-and-airway-disorders-of-dogs/tracheobronchitis-bronchitis-in-dogs",
+    "https://www.merckvetmanual.com/circulatory-system/heart-failure-in-dogs-and-cats/heart-failure-in-dogs-and-cats",
+    "https://doi.org/10.1111/JVIM.14627"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "familyId": "resp_cat_upper",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["cat"],
+  "coreCapabilities": ["general_exam", "respiratory_exam", "isolation_protocol", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 5,
+  "presentationCount": 15,
+  "variants": [
+    {
+      "id": "resp_cat_uri_acute_uncomplicated",
+      "title": "Острый неосложнённый синдром верхних дыхательных путей кошки",
+      "presentations": ["p1_mild_sneeze_serous_discharge", "p2_multi_cat_contact_stable", "p3_early_recheck_improving"]
+    },
+    {
+      "id": "resp_cat_uri_conjunctivitis_dominant",
+      "title": "Конъюнктивально-доминантный респираторный синдром",
+      "presentations": ["p1_unilateral_then_bilateral", "p2_marked_chemosis_young_cat", "p3_ocular_pain_requires_corneal_branch"]
+    },
+    {
+      "id": "resp_cat_uri_oral_ulcer_phenotype",
+      "title": "Респираторный синдром с язвами ротовой полости",
+      "presentations": ["p1_oral_ulcer_hypersalivation", "p2_kitten_fever_transient_lameness", "p3_pain_limits_eating"]
+    },
+    {
+      "id": "resp_cat_uri_severe_obstructive_or_systemic",
+      "title": "Тяжёлый ринит с обструкцией, анорексией или системными признаками",
+      "presentations": ["p1_nasal_obstruction_dehydration", "p2_lower_airway_red_flags", "p3_cluster_with_virulent_systemic_warning"]
+    },
+    {
+      "id": "resp_cat_uri_chronic_or_recurrent",
+      "title": "Хронический или рецидивирующий синдром верхних дыхательных путей",
+      "presentations": ["p1_stress_linked_recurrence", "p2_persistent_over_ten_days", "p3_unilateral_chronic_red_flag"]
+    }
+  ],
+  "researchIds": [
+    "resp_cat_isolation_triage",
+    "resp_cat_upper_airway_exam",
+    "resp_cat_eye_oral_exam",
+    "resp_cat_hydration_nutrition_assessment",
+    "resp_cat_targeted_pcr",
+    "resp_cat_cytology_or_culture",
+    "resp_cat_cbc_biochemistry",
+    "resp_cat_thoracic_imaging"
+  ],
+  "crossFamilyLinks": ["eye_surface", "resp_pneumonia", "infectious_feline_major"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/respiratory-system/respiratory-diseases-of-small-animals/feline-respiratory-disease-complex",
+    "https://www.abcdcatsvets.org/guideline-for-feline-herpesvirus-infection/",
+    "https://www.abcdcatsvets.org/guideline-for-feline-calicivirus-infection/",
+    "https://www.abcdcatsvets.org/guideline-for-chlamydia-felis/",
+    "https://www.abcdcatsvets.org/guideline-for-feline-respiratory-mycoplasma-infections/",
+    "https://doi.org/10.1111/JVIM.14627",
+    "https://catvets.com/2022-aafp-aaha-antimicrobial-guidelines-pdf/"
+  ]
+}

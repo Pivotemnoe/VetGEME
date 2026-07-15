@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "familyId": "resp_pneumonia",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["respiratory_exam", "cbc", "xray_or_referral", "oxygen", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 5,
+  "presentationCount": 15,
+  "variants": [
+    {
+      "id": "resp_pneumonia_bacterial_bronchopneumonia",
+      "title": "Бактериальная бронхопневмония",
+      "presentations": ["p1_fever_cough_and_alveolar_pattern", "p2_secondary_after_airway_or_viral_disease", "p3_recurrent_or_immunocompromised_patient"]
+    },
+    {
+      "id": "resp_pneumonia_aspiration",
+      "title": "Аспирационный пневмонит или аспирационная пневмония",
+      "presentations": ["p1_after_vomiting_regurgitation_anesthesia_or_feeding", "p2_recurrent_aspiration_from_esophageal_or_swallowing_disease", "p3_early_or_equivocal_imaging_with_clinical_progression"]
+    },
+    {
+      "id": "resp_pneumonia_severe_hypoxemic",
+      "title": "Тяжёлая гипоксемическая пневмония",
+      "presentations": ["p1_increased_effort_cyanosis_or_low_oxygenation", "p2_sepsis_shock_or_multilobar_disease", "p3_oxygen_dependent_or_ventilatory_failure"]
+    },
+    {
+      "id": "resp_pneumonia_nonbacterial_or_mimic",
+      "title": "Небактериальная пневмония или имитирующее заболевание",
+      "presentations": ["p1_fungal_or_regional_exposure_pattern", "p2_eosinophilic_parasitic_or_inflammatory_pattern", "p3_edema_hemorrhage_neoplasia_or_other_mimic"]
+    },
+    {
+      "id": "resp_pneumonia_followup_or_nonresolving",
+      "title": "Контроль или неразрешающаяся пневмония",
+      "presentations": ["p1_clinical_response_with_planned_reassessment", "p2_culture_resistance_or_incorrect_initial_assumption", "p3_persistent_focus_foreign_body_bronchiectasis_or_underlying_disease"]
+    }
+  ],
+  "researchIds": [
+    "pneumonia_respiratory_triage_and_oxygenation",
+    "pneumonia_cbc_biochemistry_and_sepsis_assessment",
+    "pneumonia_multiview_thoracic_radiography",
+    "pneumonia_lower_airway_cytology_culture_and_susceptibility",
+    "pneumonia_blood_culture_when_airway_sampling_is_unsafe",
+    "pneumonia_aspiration_source_and_esophageal_swallowing_workup",
+    "pneumonia_infectious_fungal_parasitic_or_inflammatory_workup",
+    "pneumonia_serial_clinical_hematologic_and_imaging_reassessment",
+    "pneumonia_nonresolving_advanced_airway_or_imaging_referral"
+  ],
+  "crossFamilyLinks": ["resp_cat_upper", "resp_dog_cough", "resp_feline_asthma", "cardio_chf", "gi_obstruction", "infectious_canine_major", "infectious_feline_major", "oncology_mass"],
+  "sourceUrls": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC5354050/",
+    "https://www.merckvetmanual.com/respiratory-system/respiratory-diseases-of-small-animals/pneumonia-in-dogs-and-cats",
+    "https://pubmed.ncbi.nlm.nih.gov/34751462/",
+    "https://pubmed.ncbi.nlm.nih.gov/19046033/"
+  ]
+}

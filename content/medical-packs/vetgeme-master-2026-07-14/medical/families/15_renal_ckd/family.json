@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "familyId": "renal_ckd",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["urinalysis", "biochemistry", "blood_pressure", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "renal_ckd_early_nonazotemic",
+      "title": "Ранняя неазотемическая хроническая болезнь почек",
+      "presentations": ["p1_persistent_concentrating_defect", "p2_persistent_renal_proteinuria_or_sdma_signal", "p3_structural_renal_abnormality_on_imaging"]
+    },
+    {
+      "id": "renal_ckd_stable_mild_azotemia",
+      "title": "Стабильная хроническая болезнь почек с лёгкой азотемией",
+      "presentations": ["p1_incidental_senior_screening", "p2_pupd_with_stable_stage_pattern", "p3_creatinine_sdma_discrepancy_requires_context"]
+    },
+    {
+      "id": "renal_ckd_moderate_symptomatic",
+      "title": "Умеренно выраженная симптомная хроническая болезнь почек",
+      "presentations": ["p1_weight_or_muscle_loss_and_reduced_appetite", "p2_dehydration_masks_baseline", "p3_anemia_phosphorus_or_acid_base_complication"]
+    },
+    {
+      "id": "renal_ckd_advanced_or_acute_on_chronic",
+      "title": "Продвинутая CKD или острое ухудшение на её фоне",
+      "presentations": ["p1_uremic_signs_and_severe_azotemia", "p2_abrupt_rise_from_documented_baseline", "p3_quality_of_life_and_referral_decision"]
+    },
+    {
+      "id": "renal_ckd_proteinuric_glomerular_pattern",
+      "title": "Протеинурический или гломерулярный почечный паттерн",
+      "presentations": ["p1_persistent_inactive_sediment_proteinuria", "p2_hypoalbuminemia_edema_or_thrombotic_risk", "p3_search_for_underlying_trigger_and_specialist_route"]
+    },
+    {
+      "id": "renal_ckd_hypertensive_pattern",
+      "title": "Гипертензивный паттерн при хронической болезни почек",
+      "presentations": ["p1_persistent_high_pressure_without_target_damage", "p2_acute_vision_change_or_retinal_target_damage", "p3_treated_substage_requires_serial_measurement"]
+    }
+  ],
+  "researchIds": [
+    "renal_chronicity_and_baseline_timeline",
+    "renal_hydration_weight_and_muscle_assessment",
+    "renal_creatinine_sdma_and_stability",
+    "renal_urinalysis_specific_gravity_and_culture",
+    "renal_upc_and_proteinuria_persistence",
+    "renal_blood_pressure_and_target_organ_exam",
+    "renal_cbc_biochemistry_electrolytes_phosphorus",
+    "renal_imaging_and_structure",
+    "renal_serial_stage_substage_and_quality_of_life"
+  ],
+  "crossFamilyLinks": ["urinary_complex", "urinary_uroliths", "endocrine_diabetes", "endocrine_feline_hyperthyroid", "hematology_anemia"],
+  "sourceUrls": [
+    "https://www.iris-kidney.com/iris-staging-system",
+    "https://www.iris-kidney.com/iris-guidelines-1",
+    "https://www.iris-kidney.com/proteinuria",
+    "https://www.iris-kidney.com/hypertension",
+    "https://www.merckvetmanual.com/urinary-system/noninfectious-diseases-of-the-urinary-system-in-small-animals/renal-dysfunction-in-small-animals"
+  ]
+}

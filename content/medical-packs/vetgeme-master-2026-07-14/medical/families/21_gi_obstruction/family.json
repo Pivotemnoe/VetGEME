@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "familyId": "gi_obstruction",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["xray_or_referral", "ultrasound_or_referral", "stabilization", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "gi_obstruction_discrete_foreign_body",
+      "title": "Механическая непроходимость одиночным инородным телом",
+      "presentations": ["p1_witnessed_ingestion_with_early_signs", "p2_radiopaque_or_ultrasound_visible_object", "p3_nonmoving_object_or_worsening_obstruction"]
+    },
+    {
+      "id": "gi_obstruction_linear_foreign_body",
+      "title": "Линейное инородное тело",
+      "presentations": ["p1_cat_string_under_tongue_or_plication", "p2_no_visible_string_but_ultrasound_pattern", "p3_perforation_or_peritonitis_red_flags"]
+    },
+    {
+      "id": "gi_obstruction_partial_or_chronic",
+      "title": "Частичная или перемежающаяся непроходимость",
+      "presentations": ["p1_intermittent_vomiting_and_weight_loss", "p2_object_moves_but_clinical_monitoring_needed", "p3_apparent_improvement_then_recurrence"]
+    },
+    {
+      "id": "gi_obstruction_intussusception",
+      "title": "Инвагинация кишечника",
+      "presentations": ["p1_young_patient_after_enteritis_or_parasites", "p2_target_sign_on_ultrasound", "p3_recurrent_or_compromised_bowel_pattern"]
+    },
+    {
+      "id": "gi_obstruction_mass_stricture_or_hernia",
+      "title": "Обструкция массой, стриктурой или ущемлением",
+      "presentations": ["p1_older_patient_with_mass_and_progressive_signs", "p2_postoperative_or_inflammatory_stricture", "p3_incarcerated_hernia_or_extraluminal_compression"]
+    },
+    {
+      "id": "gi_obstruction_postoperative_or_complicated",
+      "title": "Послеоперационное или осложнённое течение непроходимости",
+      "presentations": ["p1_ileus_vs_persistent_mechanical_obstruction", "p2_anastomotic_leak_or_septic_peritonitis_suspicion", "p3_short_bowel_or_long_term_nutritional_followup"]
+    }
+  ],
+  "researchIds": [
+    "gi_obstruction_stability_hydration_and_abdominal_pain",
+    "gi_obstruction_ingestion_and_surgery_history",
+    "gi_obstruction_cbc_biochemistry_electrolytes_acid_base",
+    "gi_obstruction_multiview_abdominal_radiography",
+    "gi_obstruction_abdominal_ultrasound",
+    "gi_obstruction_serial_imaging_when_safe",
+    "gi_obstruction_perforation_and_fluid_assessment",
+    "gi_obstruction_endoscopic_or_surgical_route",
+    "gi_obstruction_postoperative_response_and_nutrition"
+  ],
+  "crossFamilyLinks": ["gi_acute", "gi_chronic_enteropathy", "gi_pancreas_acute", "oncology_mass", "wound_abscess"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/digestive-system/surgical-problems-of-the-gastrointestinal-tract-in-small-animals/gastrointestinal-obstruction-in-small-animals",
+    "https://www.acvs.org/small-animal/gastrointestinal-foreign-bodies/",
+    "https://www.acvs.org/small-animal/intussusception/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC13137067/",
+    "https://onlinelibrary.wiley.com/doi/full/10.1111/vru.13151"
+  ]
+}

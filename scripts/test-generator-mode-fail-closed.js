@@ -80,8 +80,13 @@ async function main() {
     /if \(generatorRuntime\.initializationError\)[\s\S]{0,500}await initBlockedGenerator\(generatorRuntime\.initializationError\)/u,
     "game bootstrap no longer blocks a rejected tier runtime"
   );
-  assert.match(indexSource, /generator\/content-loader-v2\.js\?v=20260715a/u);
-  assert.match(indexSource, /generator\/generator-mode\.js\?v=20260715a/u);
+  assert.match(indexSource, /generator\/medical-catalog-v2\.js\?v=20260715a/u);
+  assert.match(indexSource, /generator\/content-loader-v2\.js\?v=20260715b/u);
+  assert.match(indexSource, /generator\/generator-mode\.js\?v=20260715b/u);
+  assert.ok(
+    indexSource.indexOf("generator/medical-catalog-v2.js") < indexSource.indexOf("generator/content-loader-v2.js"),
+    "medical gate must load before the registered content loader"
+  );
   console.log(JSON.stringify({
     status: "passed",
     rejectedLoadsStayInTierMode: true,

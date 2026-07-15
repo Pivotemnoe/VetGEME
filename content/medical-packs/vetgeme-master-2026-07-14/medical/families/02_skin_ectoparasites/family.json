@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "familyId": "skin_ectoparasites",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["skin_exam", "microscope", "skin_scraping"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "skin_flea_infestation",
+      "title": "Блошиная инвазия без выраженной аллергии",
+      "presentations": ["p1_visible_fleas", "p2_low_burden_multi_pet", "p3_heavy_burden_anemia_risk"]
+    },
+    {
+      "id": "skin_flea_allergy_dermatitis",
+      "title": "Блошиный аллергический дерматит",
+      "presentations": ["p1_dog_dorsolumbar", "p2_cat_miliary", "p3_secondary_infection"]
+    },
+    {
+      "id": "skin_contagious_mange",
+      "title": "Заразная чесотка Sarcoptes/Notoedres",
+      "presentations": ["p1_dog_intense_pruritus", "p2_cat_crusted_head", "p3_negative_scrape_contacts_itch"]
+    },
+    {
+      "id": "skin_demodicosis",
+      "title": "Демодекоз",
+      "presentations": ["p1_juvenile_localized", "p2_generalized_pyoderma", "p3_adult_onset_underlying"]
+    },
+    {
+      "id": "skin_cheyletiellosis",
+      "title": "Хейлетиеллёз",
+      "presentations": ["p1_dorsal_scaling", "p2_multi_pet_carrier", "p3_owner_transient_lesions"]
+    },
+    {
+      "id": "skin_pediculosis",
+      "title": "Педикулёз",
+      "presentations": ["p1_visible_nits", "p2_debilitated_heavy_burden", "p3_matted_coat_recurrence"]
+    }
+  ],
+  "researchIds": [
+    "flea_comb_exam",
+    "flea_dirt_wet_test",
+    "superficial_skin_scrape",
+    "deep_skin_scrape",
+    "acetate_tape_prep",
+    "hair_trichogram",
+    "skin_cytology"
+  ],
+  "sourceUrls": [
+    "https://capcvet.org/guidelines/fleas/",
+    "https://capcvet.org/guidelines/sarcoptic-mite/",
+    "https://capcvet.org/guidelines/demodex/",
+    "https://www.merckvetmanual.com/integumentary-system/mange/mange-in-dogs-and-cats",
+    "https://www.merckvetmanual.com/integumentary-system/lice/lice-in-dogs-and-cats",
+    "https://www.aaha.org/resources/2023-aaha-management-of-allergic-skin-diseases-in-dogs-and-cats-guidelines/"
+  ]
+}

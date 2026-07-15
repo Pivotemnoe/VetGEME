@@ -104,6 +104,7 @@ async function createFixture(root) {
     "legacy",
     "visual",
     "content/packs/tier-01-v2",
+    "content/medical-packs/vetgeme-master-2026-07-14",
     "tier-01-v2/scripts",
     "art/runtime-v2",
     "scripts",

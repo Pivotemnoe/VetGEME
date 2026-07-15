@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "familyId": "urinary_uroliths",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["urinalysis", "xray_or_referral", "ultrasound_or_referral", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 5,
+  "presentationCount": 15,
+  "variants": [
+    {
+      "id": "urolith_struvite_dissolution_candidate",
+      "title": "Струвитный уролит — кандидат на растворение",
+      "presentations": ["p1_canine_infection_induced_struvite_pattern", "p2_feline_sterile_struvite_pattern", "p3_serial_imaging_confirms_or_refutes_dissolution"]
+    },
+    {
+      "id": "urolith_nondissolvable_lower_tract",
+      "title": "Нерастворимый уролит нижних мочевых путей",
+      "presentations": ["p1_calcium_oxalate_bladder_stone_pattern", "p2_urate_or_cystine_requires_metabolic_context", "p3_asymptomatic_stone_monitoring_vs_removal"]
+    },
+    {
+      "id": "urolith_urethral_obstruction",
+      "title": "Уретральная обструкция камнем, пробкой или стриктурой",
+      "presentations": ["p1_male_cat_unproductive_straining", "p2_dog_urethrolith_or_mass_pattern", "p3_recurrent_obstruction_and_salvage_route"]
+    },
+    {
+      "id": "urolith_upper_urinary_tract",
+      "title": "Нефролит или уретеролит",
+      "presentations": ["p1_incidental_nonobstructive_nephrolith", "p2_unilateral_ureteral_obstruction_with_subtle_signs", "p3_bilateral_or_ckd_complicated_obstruction"]
+    },
+    {
+      "id": "urolith_recurrent_or_post_removal",
+      "title": "Рецидивирующий уролитиаз и контроль после удаления",
+      "presentations": ["p1_quantitative_stone_analysis_changes_prevention", "p2_residual_fragment_or_incomplete_clearance", "p3_recurrence_despite_reported_diet_or_infection_control"]
+    }
+  ],
+  "researchIds": [
+    "urolith_obstruction_perfusion_and_bladder_triage",
+    "urolith_urinalysis_sediment_pH_and_culture",
+    "urolith_cbc_biochemistry_electrolytes_ecg",
+    "urolith_multiview_radiography",
+    "urolith_ultrasound_upper_and_lower_tract",
+    "urolith_serial_size_number_and_location",
+    "urolith_quantitative_composition_analysis",
+    "urolith_endoscopic_surgical_or_bypass_referral",
+    "urolith_recurrence_and_prevention_monitoring"
+  ],
+  "crossFamilyLinks": ["urinary_feline_lower", "urinary_complex", "renal_ckd", "endocrine_addison", "hepatobiliary"],
+  "sourceUrls": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC5032870/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC11816079/",
+    "https://www.merckvetmanual.com/urinary-system/urolithiasis-in-small-animals/urethral-obstruction-in-small-animals",
+    "https://www.merckvetmanual.com/urinary-system/noninfectious-diseases-of-the-urinary-system-in-small-animals/obstructive-uropathy-in-dogs-and-cats",
+    "https://www.merckvetmanual.com/urinary-system/urolithiasis-in-small-animals/overview-of-urolithiasis-in-small-animals"
+  ]
+}

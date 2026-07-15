@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "familyId": "endocrine_feline_hyperthyroid",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["cat"],
+  "coreCapabilities": ["t4_external", "blood_pressure", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 4,
+  "presentationCount": 12,
+  "variants": [
+    {
+      "id": "feline_hyperthyroid_overt_classic",
+      "title": "Явный классический гипертиреоз кошки",
+      "presentations": ["p1_weight_loss_despite_good_appetite", "p2_pupd_hyperactivity_vocalization", "p3_incidental_high_t4_with_subtle_signs"]
+    },
+    {
+      "id": "feline_hyperthyroid_equivocal_or_occult",
+      "title": "Сомнительный или скрытый гипертиреоз кошки",
+      "presentations": ["p1_compatible_signs_high_normal_t4", "p2_thyroid_nodule_with_normal_t4", "p3_nonthyroidal_illness_confounds_testing"]
+    },
+    {
+      "id": "feline_hyperthyroid_with_ckd",
+      "title": "Гипертиреоз с сопутствующей или маскированной CKD",
+      "presentations": ["p1_preexisting_ckd_and_high_t4", "p2_renal_risk_revealed_during_control_trial", "p3_post_treatment_azotemia_requires_joint_monitoring"]
+    },
+    {
+      "id": "feline_hyperthyroid_cardiovascular_or_severe",
+      "title": "Кардиоваскулярное, гипертензивное или тяжёлое течение",
+      "presentations": ["p1_tachycardia_murmur_or_gallop", "p2_hypertension_and_retinal_target_damage", "p3_apathetic_or_decompensated_hyperthyroid_cat"]
+    }
+  ],
+  "researchIds": [
+    "feline_hyperthyroid_weight_appetite_and_behavior_timeline",
+    "feline_hyperthyroid_thyroid_palpation",
+    "feline_hyperthyroid_total_t4",
+    "feline_hyperthyroid_free_t4_tsh_or_repeat",
+    "feline_hyperthyroid_cbc_biochemistry_urinalysis",
+    "feline_hyperthyroid_blood_pressure_and_retina",
+    "feline_hyperthyroid_cardiac_assessment",
+    "feline_hyperthyroid_scintigraphy_or_referral",
+    "feline_hyperthyroid_treatment_and_renal_monitoring"
+  ],
+  "crossFamilyLinks": ["renal_ckd", "cardio_chf", "endocrine_diabetes", "gi_chronic_enteropathy", "oncology_mass"],
+  "sourceUrls": [
+    "https://pubmed.ncbi.nlm.nih.gov/27143042/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC11132203/",
+    "https://www.merckvetmanual.com/endocrine-system/the-thyroid-gland/hyperthyroidism-in-animals",
+    "https://catvets.com/wp-content/uploads/2024/01/AAFP%20Hypertension%20Toolkit%20-%20Full.pdf"
+  ]
+}

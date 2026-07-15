@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "familyId": "gi_chronic_enteropathy",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["cbc", "biochemistry", "diet_trial", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "chronic_enteropathy_food_responsive",
+      "title": "Пищевой ответ при хронической энтеропатии",
+      "presentations": ["p1_chronic_diarrhea_stable_for_diet_trial", "p2_vomiting_or_mixed_signs_with_diet_history", "p3_response_requires_exclusive_feeding_and_recheck"]
+    },
+    {
+      "id": "chronic_enteropathy_inflammatory_small_intestinal",
+      "title": "Хроническая воспалительная энтеропатия тонкой кишки",
+      "presentations": ["p1_weight_loss_small_bowel_diarrhea", "p2_failed_adequate_diet_trials_needs_staging", "p3_biopsy_supported_inflammation_after_mimic_exclusion"]
+    },
+    {
+      "id": "chronic_enteropathy_protein_losing",
+      "title": "Энтеропатия с потерей белка",
+      "presentations": ["p1_hypoalbuminemia_weight_and_muscle_loss", "p2_edema_ascites_or_thrombotic_risk", "p3_lymphangiectasia_or_severe_mucosal_disease_pattern"]
+    },
+    {
+      "id": "chronic_enteropathy_large_bowel_colitis",
+      "title": "Хроническая толстокишечная энтеропатия или колит",
+      "presentations": ["p1_mucus_fresh_blood_tenesmus", "p2_fiber_or_diet_responsive_colitis", "p3_severe_breed_or_histology_specific_colitis"]
+    },
+    {
+      "id": "chronic_enteropathy_feline_multisystem",
+      "title": "Кошачья хроническая энтеропатия с сочетанной болезнью",
+      "presentations": ["p1_chronic_vomiting_weight_loss_or_appetite_change", "p2_enteropathy_with_cholangitis_or_pancreatitis_evidence", "p3_hypocobalaminemia_and_nutritional_decline"]
+    },
+    {
+      "id": "chronic_enteropathy_refractory_or_mimic",
+      "title": "Рефрактерная энтеропатия или заболевание-имитатор",
+      "presentations": ["p1_parasite_infection_or_epi_not_excluded", "p2_ultrasound_or_biopsy_raises_lymphoma_concern", "p3_persistent_signs_after_complete_staged_workup"]
+    }
+  ],
+  "researchIds": [
+    "chronic_enteropathy_timeline_diet_and_fecal_character",
+    "chronic_enteropathy_nutritional_and_activity_score",
+    "chronic_enteropathy_cbc_biochemistry_urinalysis",
+    "chronic_enteropathy_fecal_parasite_and_pathogen_workup",
+    "chronic_enteropathy_cobalamin_folate_tli_and_pancreatic_markers",
+    "chronic_enteropathy_albumin_and_protein_loss_localization",
+    "chronic_enteropathy_abdominal_ultrasound",
+    "chronic_enteropathy_exclusive_diet_trials",
+    "chronic_enteropathy_endoscopy_biopsy_and_histopathology"
+  ],
+  "crossFamilyLinks": ["gi_parasites", "gi_epi", "gi_pancreas_acute", "hepatobiliary", "oncology_mass"],
+  "sourceUrls": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12881957/",
+    "https://www.merckvetmanual.com/digestive-system/diseases-of-the-small-intestine-in-small-animals/chronic-enteropathies-in-small-animals",
+    "https://wsava.org/Global-Guidelines/Gastrointestinal-Guidelines/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC9534534/",
+    "https://pubmed.ncbi.nlm.nih.gov/30762910/"
+  ]
+}

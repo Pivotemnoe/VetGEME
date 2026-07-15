@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "familyId": "ortho_lameness",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["orthopedic_exam", "pain_assessment", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "ortho_paw_nail_local_problem",
+      "title": "Локальная проблема лапы, когтя или межпальцевого пространства",
+      "presentations": ["p1_broken_nail_or_pad_injury", "p2_interdigital_foreign_body", "p3_licking_with_subtle_weight_shift"]
+    },
+    {
+      "id": "ortho_muscle_tendon_sprain",
+      "title": "Растяжение мышцы, сухожилия или связки без явной нестабильности",
+      "presentations": ["p1_after_unusual_exercise", "p2_subtle_activity_related_lameness", "p3_not_improving_requires_relocalization"]
+    },
+    {
+      "id": "ortho_patellar_luxation_pattern",
+      "title": "Паттерн вывиха надколенника",
+      "presentations": ["p1_intermittent_skip_then_normal", "p2_persistent_hindlimb_lameness", "p3_bilateral_or_conformation_related"]
+    },
+    {
+      "id": "ortho_cranial_cruciate_disease",
+      "title": "Заболевание краниальной крестообразной связки",
+      "presentations": ["p1_acute_noncontact_stifle_lameness", "p2_partial_tear_or_intermittent_lameness", "p3_chronic_stifle_with_muscle_loss"]
+    },
+    {
+      "id": "ortho_osteoarthritis_chronic_pain",
+      "title": "Остеоартрит и хроническая скелетно-мышечная боль",
+      "presentations": ["p1_senior_dog_stiff_after_rest", "p2_cat_reduced_jump_and_grooming", "p3_multijoint_or_bilateral_disease"]
+    },
+    {
+      "id": "ortho_developmental_joint_disease",
+      "title": "Развивающееся заболевание сустава молодого животного",
+      "presentations": ["p1_large_breed_forelimb_lameness", "p2_young_dog_hip_gait_change", "p3_persistent_young_patient_needs_imaging"]
+    }
+  ],
+  "researchIds": [
+    "ortho_history_and_home_video",
+    "ortho_gait_analysis",
+    "ortho_four_limb_and_spine_exam",
+    "ortho_paw_nail_exam",
+    "ortho_joint_localization_and_stability",
+    "ortho_neurologic_screen",
+    "ortho_orthogonal_radiography",
+    "ortho_advanced_imaging_or_referral",
+    "ortho_serial_pain_and_function_score"
+  ],
+  "crossFamilyLinks": ["wound_abscess", "ortho_fracture_luxation", "neuro_vestibular", "oncology_mass", "infectious_vector_borne"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/musculoskeletal-system/lameness-in-small-animals/orthopedic-examination-in-small-animals",
+    "https://www.merckvetmanual.com/musculoskeletal-system/musculoskeletal-system-introduction/diagnosis-and-treatment-of-musculoskeletal-disorders-in-animals",
+    "https://www.merckvetmanual.com/musculoskeletal-system/osteoarthritis-in-dogs-and-cats/osteoarthritis-in-dogs-and-cats",
+    "https://www.merckvetmanual.com/nervous-system/the-neurologic-examination/the-neurologic-examination-of-animals",
+    "https://www.aaha.org/resources/2022-aaha-pain-management-guidelines-for-dogs-and-cats/"
+  ]
+}

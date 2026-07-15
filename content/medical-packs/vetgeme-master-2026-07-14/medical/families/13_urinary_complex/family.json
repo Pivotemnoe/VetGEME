@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "familyId": "urinary_complex",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["urinalysis", "urine_collection", "urine_culture_external", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 5,
+  "presentationCount": 15,
+  "variants": [
+    {
+      "id": "urinary_recurrent_bacterial_cystitis",
+      "title": "Рецидивирующий бактериальный цистит",
+      "presentations": ["p1_new_episode_after_prior_cure", "p2_same_organism_relapse_pattern", "p3_repeated_empirical_courses_without_workup"]
+    },
+    {
+      "id": "urinary_pyelonephritis_suspected",
+      "title": "Подозрение на бактериальный пиелонефрит",
+      "presentations": ["p1_fever_renal_pain_and_positive_culture", "p2_azotemia_or_acute_kidney_injury_pattern", "p3_vague_systemic_signs_with_risk_factor"]
+    },
+    {
+      "id": "urinary_subclinical_bacteriuria",
+      "title": "Субклиническая бактериурия",
+      "presentations": ["p1_incidental_positive_culture_no_signs", "p2_comorbid_patient_without_urinary_signs", "p3_preprocedure_exception_requires_protocol"]
+    },
+    {
+      "id": "urinary_bacterial_prostatitis",
+      "title": "Бактериальный простатит у кобеля",
+      "presentations": ["p1_intact_male_lower_urinary_signs", "p2_acute_systemic_and_painful_pattern", "p3_chronic_recurrent_uti_pattern"]
+    },
+    {
+      "id": "urinary_catheter_or_device_associated",
+      "title": "Катетер- или устройством ассоциированная мочевая проблема",
+      "presentations": ["p1_bacteriuria_without_clinical_cystitis", "p2_new_clinical_signs_with_indwelling_catheter", "p3_recurrent_infection_with_urologic_device"]
+    }
+  ],
+  "researchIds": [
+    "urinary_episode_timeline_and_prior_cultures",
+    "urinary_obstruction_and_systemic_triage",
+    "urinary_urinalysis_with_collection_method",
+    "urinary_quantitative_culture_and_susceptibility",
+    "urinary_isolate_comparison",
+    "urinary_cbc_biochemistry",
+    "urinary_imaging_for_underlying_cause",
+    "urinary_prostate_evaluation",
+    "urinary_catheter_and_device_audit"
+  ],
+  "crossFamilyLinks": ["urinary_feline_lower", "urinary_uroliths", "renal_ckd", "endocrine_diabetes", "repro_pyometra"],
+  "sourceUrls": [
+    "https://www.sciencedirect.com/science/article/pii/S109002331830460X",
+    "https://www.vdl.ndsu.edu/wp-content/uploads/2022/02/ISCAID-Urinary-Guidelines-2019.pdf",
+    "https://www.merckvetmanual.com/urinary-system/infectious-diseases-of-the-urinary-system-in-small-animals/bacterial-cystitis-in-small-animals",
+    "https://www.merckvetmanual.com/urinary-system/urinary-system-introduction/the-urinary-system-in-animals",
+    "https://www.merckvetmanual.com/clinical-pathology-and-procedures/diagnostic-procedures-for-the-private-practice-laboratory/urinalysis"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "familyId": "neuro_vestibular",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["neurologic_exam", "ear_exam", "blood_pressure", "advanced_imaging_referral", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 5,
+  "presentationCount": 15,
+  "variants": [
+    {
+      "id": "vestibular_idiopathic_peripheral_improving",
+      "title": "Острый улучшающийся idiopathic peripheral syndrome",
+      "presentations": ["p1_geriatric_dog_acute_nonpainful_peripheral_pattern", "p2_cat_of_any_age_with_acute_improving_peripheral_pattern", "p3_residual_head_tilt_recurrence_or_incomplete_recovery"]
+    },
+    {
+      "id": "vestibular_otitis_media_interna_or_peripheral_ear",
+      "title": "Среднее/внутреннее ухо и периферическая локализация",
+      "presentations": ["p1_head_tilt_nystagmus_with_facialis_or_horner_signs", "p2_chronic_ear_history_with_hidden_middle_inner_ear_disease", "p3_otogenic_intracranial_extension_or_severe_pain_fever"]
+    },
+    {
+      "id": "vestibular_central_syndrome",
+      "title": "Центральный вестибулярный синдром",
+      "presentations": ["p1_mentation_postural_or_additional_cranial_nerve_deficits", "p2_paradoxical_cerebellar_or_multifocal_pattern", "p3_vascular_inflammatory_infectious_neoplastic_or_metabolic_route"]
+    },
+    {
+      "id": "vestibular_toxic_traumatic_congenital_or_systemic",
+      "title": "Токсическая, травматическая, врождённая или системная причина",
+      "presentations": ["p1_ear_cleaner_or_otoxic_medication_exposure", "p2_head_trauma_or_temporal_bone_injury", "p3_congenital_bilateral_hypothyroid_or_other_systemic_pattern"]
+    },
+    {
+      "id": "vestibular_feline_polyp_mass_or_uncertain_course",
+      "title": "Кошачий полип/масса или атипичное течение",
+      "presentations": ["p1_feline_nasopharyngeal_or_middle_ear_polyp_pattern", "p2_ear_or_skull_base_mass_with_progressive_deficits", "p3_no_expected_improvement_relapse_or_new_central_signs"]
+    }
+  ],
+  "researchIds": [
+    "vestibular_onset_course_video_fall_vomiting_and_exposure_history",
+    "vestibular_complete_neurologic_localization_and_cranial_nerve_exam",
+    "vestibular_otoscopy_middle_inner_ear_and_hearing_route",
+    "vestibular_cbc_biochemistry_electrolytes_glucose_blood_pressure_and_selected_thyroid_tests",
+    "vestibular_mri_ct_and_csf_referral_when_central_atypical_or_persistent",
+    "vestibular_ear_sampling_or_polyp_endoscopy_referral",
+    "vestibular_hydration_nausea_aspiration_mobility_and_injury_safety",
+    "vestibular_serial_localization_recovery_and_recurrence_monitoring",
+    "vestibular_owner_home_environment_and_emergency_red_flag_plan",
+    "vestibular_neurology_or_ear_specialist_referral"
+  ],
+  "crossFamilyLinks": ["ear_chronic_middle", "ear_external", "resp_pneumonia", "endocrine_feline_hyperthyroid", "endocrine_addison", "oncology_mass", "infectious_feline_major"],
+  "sourceUrls": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC10556701/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC7249679/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC7517853/",
+    "https://www.merckvetmanual.com/ear-disorders/otitis-media-and-interna/otitis-media-and-interna-in-animals"
+  ]
+}

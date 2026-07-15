@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "familyId": "perianal",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["general_exam", "local_exam", "digital_rectal_exam", "anal_sac_exam", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 4,
+  "presentationCount": 12,
+  "variants": [
+    {
+      "id": "perianal_anal_sac_impaction",
+      "title": "Переполнение или закупорка параанального мешка",
+      "presentations": ["p1_scooting_bilateral_impaction", "p2_cat_reduced_defecation", "p3_recurrent_requires_predisposing_factors"]
+    },
+    {
+      "id": "perianal_anal_sac_sacculitis",
+      "title": "Воспаление или инфекция параанального мешка",
+      "presentations": ["p1_painful_inflamed_contents", "p2_recurrent_infection_culture_branch", "p3_procedure_requires_analgesia_or_sedation"]
+    },
+    {
+      "id": "perianal_anal_sac_abscess_or_rupture",
+      "title": "Абсцесс параанального мешка или его разрыв",
+      "presentations": ["p1_intact_painful_abscess", "p2_ruptured_draining_tract", "p3_systemic_or_deep_spread_risk"]
+    },
+    {
+      "id": "perianal_non_simple_lesion",
+      "title": "Параанальная проблема, не объясняемая простым заболеванием мешка",
+      "presentations": ["p1_perianal_fistulous_tracts", "p2_firm_unilateral_nonexpressible_mass", "p3_perineal_swelling_or_urinary_obstruction_red_flag"]
+    }
+  ],
+  "researchIds": [
+    "perianal_visual_exam",
+    "perianal_digital_rectal_exam",
+    "perianal_anal_sac_assessment",
+    "perianal_content_cytology",
+    "perianal_culture",
+    "perianal_ultrasound",
+    "perianal_biopsy_histology",
+    "perianal_cbc_biochemistry_calcium"
+  ],
+  "crossFamilyLinks": ["skin_atopy", "gi_chronic_enteropathy", "oncology_mass"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/digestive-system/diseases-of-the-rectum-and-anus/anal-sac-disease-in-dogs-and-cats",
+    "https://www.merckvetmanual.com/digestive-system/diseases-of-the-rectum-and-anus/perianal-fistula-in-dogs",
+    "https://www.acvs.org/small-animal/perianal-fistulas/",
+    "https://www.acvs.org/small-animal/anal-sac-tumors-in-dogs/",
+    "https://www.merckvetmanual.com/dog-owners/digestive-disorders-of-dogs/disorders-of-the-rectum-and-anus-in-dogs"
+  ]
+}

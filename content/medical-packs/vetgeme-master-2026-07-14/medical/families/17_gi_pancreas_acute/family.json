@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "familyId": "gi_pancreas_acute",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["biochemistry", "pancreatic_marker_external", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 5,
+  "presentationCount": 15,
+  "variants": [
+    {
+      "id": "pancreatitis_dog_acute_stable",
+      "title": "Острый панкреатит собаки без органной недостаточности",
+      "presentations": ["p1_vomiting_abdominal_pain_after_nonspecific_trigger", "p2_mild_to_moderate_dehydration_stable_perfusion", "p3_improving_supportive_care_followup"]
+    },
+    {
+      "id": "pancreatitis_severe_systemic",
+      "title": "Тяжёлый острый панкреатит с системными осложнениями",
+      "presentations": ["p1_shock_or_poor_perfusion", "p2_multiorgan_or_coagulation_red_flags", "p3_local_complication_or_biliary_obstruction_suspicion"]
+    },
+    {
+      "id": "pancreatitis_cat_subtle_acute",
+      "title": "Малозаметный острый панкреатит кошки",
+      "presentations": ["p1_lethargy_anorexia_without_vomiting", "p2_dehydration_or_hypothermia_with_vague_pain", "p3_hepatic_lipidosis_risk_requires_nutrition_plan"]
+    },
+    {
+      "id": "pancreatitis_chronic_or_recurrent",
+      "title": "Хронический или рецидивирующий панкреатит",
+      "presentations": ["p1_intermittent_gi_signs_and_weight_loss", "p2_acute_on_chronic_episode", "p3_progression_to_diabetes_or_epi_risk"]
+    },
+    {
+      "id": "pancreatitis_equivocal_or_comorbid",
+      "title": "Неоднозначный панкреатический результат или сочетанная болезнь",
+      "presentations": ["p1_positive_marker_without_matching_clinical_picture", "p2_ultrasound_and_marker_disagree", "p3_feline_cholangitis_enteropathy_or_diabetes_cluster"]
+    }
+  ],
+  "researchIds": [
+    "pancreatitis_history_pain_hydration_and_perfusion",
+    "pancreatitis_cbc_biochemistry_electrolytes",
+    "pancreatitis_specific_lipase_testing",
+    "pancreatitis_abdominal_ultrasound",
+    "pancreatitis_radiography_for_differentials",
+    "pancreatitis_coagulation_and_organ_monitoring",
+    "pancreatitis_nutrition_and_comorbidity_assessment",
+    "pancreatitis_serial_clinical_response",
+    "pancreatitis_specialist_or_intensive_referral"
+  ],
+  "crossFamilyLinks": ["gi_acute", "endocrine_diabetes", "gi_epi", "gi_chronic_enteropathy", "hepatobiliary"],
+  "sourceUrls": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC7995362/",
+    "https://onlinelibrary.wiley.com/doi/10.1111/jvim.16053",
+    "https://www.merckvetmanual.com/digestive-system/the-exocrine-pancreas/pancreatitis-in-dogs-and-cats",
+    "https://www.merckvetmanual.com/clinical-pathology-and-procedures/diagnostic-procedures-for-the-private-practice-laboratory/clinical-biochemistry"
+  ]
+}

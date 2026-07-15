@@ -85,6 +85,14 @@ async function inspectDockerRuntime() {
     imageFiles.includes("content/packs/tier-01-v2/clinical/tier-01/manifest.json"),
     "canonical Tier 01 v2 manifest is absent from image",
   );
+  assert.ok(
+    imageFiles.includes("content/medical-packs/vetgeme-master-2026-07-14/medical/catalog/family-registry.json"),
+    "registered medical family index is absent from image",
+  );
+  assert.ok(
+    !imageFiles.some((file) => file.startsWith("content/medical-packs/") && file.endsWith(".md")),
+    "medical authoring Markdown leaked into the runtime image",
+  );
   for (const forbiddenPrefix of [
     "content/clinical/",
     "legacy/content/",

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "familyId": "wound_abscess",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["general_exam", "wound_exam", "analgesia", "wound_care", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "wound_superficial_clean",
+      "title": "Поверхностная чистая ссадина или неглубокая рана",
+      "presentations": ["p1_recent_abrasion_stable", "p2_small_paw_or_pad_wound", "p3_recheck_uncomplicated_healing"]
+    },
+    {
+      "id": "wound_fresh_laceration_closure_candidate",
+      "title": "Свежая рваная рана — кандидат на первичное закрытие",
+      "presentations": ["p1_clean_recent_laceration", "p2_layered_tissue_involvement", "p3_near_joint_functional_risk"]
+    },
+    {
+      "id": "wound_contaminated_or_delayed",
+      "title": "Загрязнённая или запоздало представленная рана",
+      "presentations": ["p1_soil_or_debris_contamination", "p2_delayed_with_questionable_tissue", "p3_delayed_closure_followup"]
+    },
+    {
+      "id": "wound_bite_puncture",
+      "title": "Укус или колотая рана со скрытым повреждением",
+      "presentations": ["p1_cat_bite_small_puncture", "p2_dog_bite_crush_under_small_skin_marks", "p3_bite_near_thorax_abdomen_or_joint"]
+    },
+    {
+      "id": "wound_abscess_or_cellulitis",
+      "title": "Кожный или подкожный абсцесс и целлюлит",
+      "presentations": ["p1_closed_fluctuant_abscess", "p2_spontaneously_draining_abscess", "p3_systemic_or_recurrent_abscess"]
+    },
+    {
+      "id": "wound_major_penetrating_or_degloving",
+      "title": "Проникающая, дегловинг- или обширная травма",
+      "presentations": ["p1_degloving_with_uncertain_viability", "p2_penetrating_thoracic_or_abdominal_wound", "p3_active_hemorrhage_or_shock"]
+    }
+  ],
+  "researchIds": [
+    "wound_stability_and_hemorrhage_assessment",
+    "wound_depth_and_structure_exam",
+    "wound_neurovascular_assessment",
+    "wound_xray_or_ultrasound",
+    "wound_cytology_or_culture",
+    "wound_cbc_biochemistry",
+    "wound_serial_viability_map"
+  ],
+  "crossFamilyLinks": ["ortho_fracture_luxation", "resp_pneumonia", "oncology_mass"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/emergency-medicine-and-critical-care/wound-management-in-small-animals/initial-wound-management-in-small-animals",
+    "https://www.merckvetmanual.com/special-pet-topics/emergencies/wound-management",
+    "https://www.merckvetmanual.com/emergency-medicine-and-critical-care/evaluation-and-initial-treatment-of-small-animal-emergency-patients/initial-triage-and-resuscitation-of-small-animal-emergency-patients",
+    "https://www.merckvetmanual.com/pharmacology/systemic-pharmacotherapeutics-of-the-integumentary-system/antibacterials-for-integumentary-disease-in-animals",
+    "https://www.aaha.org/resources/2022-aaha-pain-management-guidelines-for-dogs-and-cats/home-3/"
+  ]
+}

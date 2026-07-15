@@ -5,10 +5,10 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const EXPECTED_RUNTIME_FILE_COUNT = 143;
+export const EXPECTED_RUNTIME_FILE_COUNT = 187;
 export const EXPECTED_RUNTIME_GROUP_COUNTS = Object.freeze({
-  base: 22,
-  canonicalContent: 56,
+  base: 23,
+  canonicalContent: 99,
   visual: 65,
 });
 
@@ -22,6 +22,7 @@ const EXPECTED_BASE_RUNTIME_FILES = Object.freeze([
   "generator/game-state-save.js",
   "generator/generator-mode.js",
   "generator/generator-v2.js",
+  "generator/medical-catalog-v2.js",
   "generator/multi-diagnosis-engine-v2.js",
   "generator/save-namespaces.js",
   "index.html",
@@ -42,6 +43,8 @@ const TIER_CONTENT_ROOT = "content/packs/tier-01-v2";
 const TIER_CONTENT_PACK_ID = "tier-01-v2";
 const TIER_CONTENT_PACK_VERSION = "2026.07.12.2";
 const EXPECTED_TIER_PACK_RUNTIME_JSON_COUNT = 55;
+const MEDICAL_CONTENT_ROOT = "content/medical-packs/vetgeme-master-2026-07-14";
+const EXPECTED_MEDICAL_PACK_RUNTIME_JSON_COUNT = 43;
 const VISUAL_MANIFEST = "art/runtime-v2/manifest.json";
 const VISUAL_LAYOUT = "art/runtime-v2/scene-layout.json";
 const VISUAL_ASSET_ROOT = "art/runtime-v2/assets";
@@ -242,7 +245,10 @@ async function collectCanonicalContentFiles(root) {
     const isTierPackJson = (
       relativeFile.startsWith(`${TIER_CONTENT_ROOT}/`) && relativeFile.endsWith(".json")
     );
-    if (!isRegistry && !isTierPackJson) {
+    const isMedicalPackJson = (
+      relativeFile.startsWith(`${MEDICAL_CONTENT_ROOT}/`) && relativeFile.endsWith(".json")
+    );
+    if (!isRegistry && !isTierPackJson && !isMedicalPackJson) {
       throw new Error(`Tier 01 v2 loader referenced an unexpected path: ${relativeFile}`);
     }
     referencedFiles.add(relativeFile);
@@ -262,6 +268,11 @@ async function collectCanonicalContentFiles(root) {
     "Tier 01 v2 pack runtime JSON",
     [...referencedFiles].filter((relativeFile) => relativeFile.startsWith(`${TIER_CONTENT_ROOT}/`)),
     EXPECTED_TIER_PACK_RUNTIME_JSON_COUNT,
+  );
+  assertCount(
+    "medical review pack runtime JSON",
+    [...referencedFiles].filter((relativeFile) => relativeFile.startsWith(`${MEDICAL_CONTENT_ROOT}/`)),
+    EXPECTED_MEDICAL_PACK_RUNTIME_JSON_COUNT,
   );
   return [...referencedFiles].sort();
 }

@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "familyId": "infectious_feline_major",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["cat"],
+  "coreCapabilities": ["isolation_protocol", "infectious_rapid_test", "pcr_external", "serology_external", "regulated_infection_route", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "feline_panleukopenia",
+      "title": "Панлейкопения кошек",
+      "presentations": ["p1_kitten_or_unvaccinated_cat_with_fever_gi_signs_and_leukopenia", "p2_negative_antigen_with_intermittent_shedding_or_recent_vaccine_context", "p3_peracute_severe_or_group_housing_outbreak_route"]
+    },
+    {
+      "id": "feline_herpes_calicivirus_complex",
+      "title": "FHV-1/FCV и кошачий респираторный комплекс",
+      "presentations": ["p1_conjunctival_nasal_or_keratitis_dominant_fhv_pattern", "p2_oral_ulcer_lameness_or_lower_airway_fcv_pattern", "p3_carrier_shedding_coinfection_or_virulent_systemic_red_flags"]
+    },
+    {
+      "id": "feline_felv_infection",
+      "title": "Инфекция FeLV",
+      "presentations": ["p1_screen_positive_well_cat_requires_confirmed_status_route", "p2_progressive_regressive_or_discordant_antigen_pcr_pattern", "p3_anemia_neoplasia_secondary_disease_or_longitudinal_care"]
+    },
+    {
+      "id": "feline_fiv_infection",
+      "title": "Инфекция FIV",
+      "presentations": ["p1_risk_exposure_or_sick_cat_antibody_screen", "p2_positive_kitten_maternal_antibody_vaccine_or_recent_exposure_context", "p3_confirmed_infection_with_secondary_disease_or_longitudinal_care"]
+    },
+    {
+      "id": "feline_infectious_peritonitis",
+      "title": "Инфекционный перитонит кошек (FIP)",
+      "presentations": ["p1_effusive_multisystemic_fip_evidence_pattern", "p2_noneffusive_ocular_neurologic_or_organ_specific_pattern", "p3_fcov_pcr_serology_or_treatment_response_cannot_stand_alone"]
+    },
+    {
+      "id": "feline_rabies_exposure_or_suspected_case",
+      "title": "Экспозиция или подозрение на бешенство у кошки",
+      "presentations": ["p1_bite_wildlife_contact_or_unknown_vaccination_status", "p2_behavior_swallowing_salivation_paralysis_or_unexplained_neurologic_signs", "p3_human_exposure_public_health_and_regulated_disposition_route"]
+    }
+  ],
+  "researchIds": [
+    "feline_infectious_origin_group_housing_contacts_vaccine_and_exposure_timeline",
+    "feline_infectious_triage_isolation_ppe_flow_and_outbreak_log",
+    "feline_panleukopenia_antigen_cbc_pcr_and_vaccine_timing_context",
+    "feline_respiratory_multisite_pcr_and_carrier_coinfection_context",
+    "feline_felv_antigen_confirmatory_pcr_and_serial_infection_status",
+    "feline_fiv_antibody_confirmatory_age_vaccine_and_exposure_window_review",
+    "feline_fip_multimodal_evidence_effusion_cytology_pcr_and_antigen_detection",
+    "feline_retrovirus_secondary_disease_household_and_longitudinal_plan",
+    "feline_rabies_no_routine_handling_public_health_notification_and_exposure_log",
+    "feline_infectious_external_lab_emergency_and_regulated_referral_route"
+  ],
+  "crossFamilyLinks": ["resp_cat_upper", "eye_surface", "hematology_anemia", "oncology_mass", "gi_acute", "neuro_vestibular", "hepatobiliary"],
+  "sourceUrls": [
+    "https://wsava.org/wp-content/uploads/2024/04/WSAVA-Vaccination-guidelines-2024.pdf",
+    "https://www.merckvetmanual.com/digestive-system/infectious-diseases-of-the-gastrointestinal-tract-in-small-animals/feline-panleukopenia",
+    "https://www.merckvetmanual.com/respiratory-system/respiratory-diseases-of-small-animals/feline-respiratory-disease-complex",
+    "https://catvets.com/resource/feline-retrovirus-management-guidelines/",
+    "https://www.merckvetmanual.com/infectious-diseases/feline-leukemia-virus/feline-leukemia-virus-disease",
+    "https://catvets.com/resource/aafp-everycat-feline-infectious-peritonitis-diagnosis-fip-guidelines/",
+    "https://www.merckvetmanual.com/infectious-diseases/feline-infectious-peritonitis/feline-infectious-peritonitis",
+    "https://www.who.int/news-room/fact-sheets/detail/rabies"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "familyId": "endocrine_cushing",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["biochemistry", "urinalysis", "endocrine_testing_external", "ultrasound_or_referral", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 5,
+  "presentationCount": 15,
+  "variants": [
+    {
+      "id": "cushing_appropriate_suspicion_or_false_positive_risk",
+      "title": "Клинически обоснованное подозрение или высокий риск ложноположительного теста",
+      "presentations": ["p1_classic_progressive_clinical_and_routine_lab_pattern", "p2_incidental_adrenal_or_liver_finding_without_compatible_signs", "p3_concurrent_illness_stress_or_recent_glucocorticoid_exposure"]
+    },
+    {
+      "id": "cushing_pituitary_dependent",
+      "title": "Гипофизарно-зависимый гиперадренокортицизм",
+      "presentations": ["p1_confirmed_hypercortisolism_with_pituitary_pattern", "p2_macroadenoma_neurologic_or_behavioral_concern", "p3_medical_control_and_longitudinal_quality_of_life"]
+    },
+    {
+      "id": "cushing_adrenal_dependent",
+      "title": "Надпочечниково-зависимый гиперадренокортицизм",
+      "presentations": ["p1_unilateral_adrenal_mass_with_confirmed_hypercortisolism", "p2_bilateral_or_equivocal_adrenal_findings", "p3_invasive_or_metastatic_risk_and_surgical_referral"]
+    },
+    {
+      "id": "cushing_iatrogenic",
+      "title": "Ятрогенный гиперадренокортицизм и подавление HPA-оси",
+      "presentations": ["p1_chronic_systemic_glucocorticoid_exposure", "p2_topical_otic_ophthalmic_inhaled_or_hidden_exposure", "p3_withdrawal_or_illness_reveals_adrenal_suppression_risk"]
+    },
+    {
+      "id": "cushing_complicated_or_monitoring",
+      "title": "Осложнённый случай или мониторинг лечения",
+      "presentations": ["p1_diabetes_insulin_resistance_or_hyperlipidemia_overlap", "p2_recurrent_urinary_skin_or_other_infection", "p3_thrombosis_hypertension_pancreatitis_or_hypoadrenal_treatment_risk"]
+    }
+  ],
+  "researchIds": [
+    "cushing_clinical_sign_routine_lab_and_medication_inventory",
+    "cushing_delay_testing_during_significant_nonadrenal_illness",
+    "cushing_screening_lddst_acth_or_uccr_route",
+    "cushing_confirm_before_differentiation",
+    "cushing_endogenous_acth_and_adrenal_imaging",
+    "cushing_pituitary_imaging_when_neurologically_indicated",
+    "cushing_infection_diabetes_blood_pressure_and_thrombosis_workup",
+    "cushing_treatment_response_and_hypoadrenal_safety_monitoring",
+    "cushing_adrenal_surgery_or_advanced_endocrine_referral",
+    "cushing_owner_water_appetite_skin_strength_and_quality_of_life_log"
+  ],
+  "crossFamilyLinks": ["endocrine_diabetes", "endocrine_addison", "skin_atopy", "skin_infectious", "urinary_complex", "gi_pancreas_acute", "oncology_mass"],
+  "sourceUrls": [
+    "https://www.aaha.org/resources/2023-aaha-selected-endocrinopathies-of-dogs-and-cats-guidelines/",
+    "https://www.merckvetmanual.com/endocrine-system/the-adrenal-glands/cushing-syndrome-hyperadrenocorticism-in-animals",
+    "https://academic.oup.com/jvim/article/27/6/1292/8483203",
+    "https://www.merckvetmanual.com/endocrine-system/the-pituitary-gland/cushing-disease-pituitary-dependent-hyperadrenocorticism-in-animals"
+  ]
+}

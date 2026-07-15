@@ -1,10 +1,13 @@
 (function (root, factory) {
   "use strict";
 
-  const api = factory();
+  const medicalCatalogApi = typeof module === "object" && module.exports
+    ? require("./medical-catalog-v2.js")
+    : root?.PET_CLINIC_MEDICAL_CATALOG_V2;
+  const api = factory(medicalCatalogApi);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_CONTENT_V2 = api;
-})(typeof window !== "undefined" ? window : globalThis, function () {
+})(typeof window !== "undefined" ? window : globalThis, function (medicalCatalogApi) {
   "use strict";
 
   const CONTENT_REGISTRY_PATH = "content/registry.json";
@@ -27,6 +30,8 @@
     "humorous-lines.json",
     "follow-up-lines.json"
   ];
+
+  if (!medicalCatalogApi) throw new Error("Medical catalog v2 dependency is unavailable");
 
   function joinPath(...parts) {
     return parts.map((part, index) => {
@@ -88,6 +93,7 @@
         assert(pack.integrationStatus === "connected", `${identity}: production content must be connected`);
       }
     }
+    medicalCatalogApi.validateMedicalRegistrations(registry);
     return registry;
   }
 
@@ -183,6 +189,24 @@
     if (new Set(resultingBundleIds).size !== resultingBundleIds.length) {
       throw new Error("Tier 01 v2 loaded bundles contain duplicate IDs");
     }
+    if (multiDiagnosisManifest.automaticPairingAllowed !== false) {
+      throw new Error("Tier 01 v2 multi-diagnosis automatic pairing must stay disabled");
+    }
+    for (const bundle of multiDiagnosisBundles) {
+      if (bundle.status !== "pending_content" || bundle.approvedClinicalContent !== null) {
+        throw new Error(`Tier 01 v2 bundle ${bundle.bundleId} must stay nonselectable pending content`);
+      }
+    }
+
+    const sourceAudit = {
+      cases: cases.map((caseData) => medicalCatalogApi.validateClinicalSourceTree(caseData, {
+        label: `case ${caseData.id}`
+      })),
+      owners: Object.fromEntries(ownerEntries.map(([id, value]) => [
+        id,
+        medicalCatalogApi.validateClinicalSourceTree(value, { label: `owner library ${id}` })
+      ]))
+    };
 
     return {
       schemaVersion: 2,
@@ -196,6 +220,7 @@
       doctorShifts,
       labels,
       tutorial,
+      sourceAudit,
       multiDiagnosis: {
         manifest: multiDiagnosisManifest,
         bundles: multiDiagnosisBundles,
@@ -208,11 +233,20 @@
     assert(!options.registryPath || options.registryPath === CONTENT_REGISTRY_PATH, `unsupported registryPath ${options.registryPath}`);
     const registry = validateRegistry(await readJson(CONTENT_REGISTRY_PATH));
     const pack = resolveRegisteredPack(registry, options);
+    const medicalRegistration = medicalCatalogApi.resolveRegisteredMedicalCatalog(registry, options);
     const manifest = validateManifestIdentity(pack, await readJson(joinPath(pack.root, pack.manifestPath)));
-    const catalog = await loadCatalog(readJson, pack.root, pack.manifestPath, manifest);
+    const [catalog, medicalCatalog, compatibilityDocument] = await Promise.all([
+      loadCatalog(readJson, pack.root, pack.manifestPath, manifest),
+      medicalCatalogApi.loadRegisteredMedicalCatalog(readJson, medicalRegistration, options),
+      readJson(joinPath(medicalRegistration.root, medicalRegistration.compatibilityPath))
+    ]);
+    const compatibility = medicalCatalogApi.applyCompatibilityDocument(catalog, compatibilityDocument);
     return {
       ...catalog,
       registryEntry: JSON.parse(JSON.stringify(pack)),
+      medicalRegistryEntry: JSON.parse(JSON.stringify(medicalRegistration)),
+      medicalCatalog,
+      compatibility,
       loadContext: options.context || "review"
     };
   }
@@ -247,6 +281,7 @@
     DEFAULT_PACK_ID,
     DEFAULT_PACK_VERSION,
     OWNER_FILES,
+    medicalCatalogApi,
     validateRegistry,
     resolveRegisteredPack,
     validateManifestIdentity,

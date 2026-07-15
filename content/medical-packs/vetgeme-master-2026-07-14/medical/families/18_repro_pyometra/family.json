@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "familyId": "repro_pyometra",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["cbc", "biochemistry", "ultrasound_or_referral", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 4,
+  "presentationCount": 12,
+  "variants": [
+    {
+      "id": "pyometra_open_cervix",
+      "title": "Пиометра с открытой шейкой матки",
+      "presentations": ["p1_discharge_with_stable_patient", "p2_pupd_lethargy_and_open_drainage", "p3_owner_thinks_it_is_normal_heat"]
+    },
+    {
+      "id": "pyometra_closed_cervix",
+      "title": "Пиометра с закрытой шейкой матки",
+      "presentations": ["p1_no_discharge_progressive_systemic_signs", "p2_abdominal_distension_and_fluid_filled_uterus", "p3_rapid_deterioration_despite_subtle_start"]
+    },
+    {
+      "id": "pyometra_atypical_or_stump",
+      "title": "Атипичная, кошачья или культёвая пиометра",
+      "presentations": ["p1_intact_cat_with_nonspecific_illness", "p2_reported_spayed_patient_with_stump_or_remnant_risk", "p3_hormonal_exposure_or_uncertain_reproductive_history"]
+    },
+    {
+      "id": "pyometra_complicated_or_postoperative",
+      "title": "Осложнённая пиометра и послеоперационное наблюдение",
+      "presentations": ["p1_sepsis_or_organ_dysfunction", "p2_uterine_rupture_or_peritonitis_suspicion", "p3_postoperative_failure_to_improve_or_expected_recheck"]
+    }
+  ],
+  "researchIds": [
+    "pyometra_reproductive_and_cycle_history",
+    "pyometra_stability_perfusion_and_abdominal_exam",
+    "pyometra_cbc_biochemistry_electrolytes_coagulation",
+    "pyometra_abdominal_ultrasound",
+    "pyometra_radiography_for_differentials",
+    "pyometra_urinalysis_and_renal_assessment",
+    "pyometra_culture_when_appropriate",
+    "pyometra_surgical_or_specialist_route",
+    "pyometra_postoperative_response_monitoring"
+  ],
+  "crossFamilyLinks": ["urinary_complex", "renal_ckd", "gi_acute", "hematology_anemia", "endocrine_diabetes"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/reproductive-system/reproductive-diseases-of-the-female-small-animal/cystic-endometrial-hyperplasia-pyometra-complex-in-small-animals",
+    "https://healthtopics.vetmed.ucdavis.edu/health-topics/canine/pyometra",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC10647846/",
+    "https://wsava.org/wp-content/uploads/2024/05/J-of-Small-Animal-Practice-2024-Romagnoli-WSAVA-guidelines-for-the-control-of-reproduction-in-dogs-and-cats.pdf"
+  ]
+}

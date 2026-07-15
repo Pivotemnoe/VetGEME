@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "familyId": "ortho_fracture_luxation",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["trauma_primary_survey", "pain_assessment", "analgesia", "xray_or_referral", "fracture_first_aid_stabilization", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 7,
+  "presentationCount": 21,
+  "variants": [
+    {
+      "id": "fracture_closed_stable_limb",
+      "title": "Закрытый относительно стабильный перелом конечности",
+      "presentations": ["p1_incomplete_or_minimally_displaced_young_patient", "p2_distal_metacarpal_metatarsal_or_digit_pattern", "p3_stable_after_appropriate_temporary_support"]
+    },
+    {
+      "id": "fracture_unstable_displaced_or_comminuted",
+      "title": "Нестабильный, смещённый или оскольчатый перелом",
+      "presentations": ["p1_long_bone_displaced_fracture", "p2_comminuted_high_energy_injury", "p3_multiple_limb_or_multi_level_fracture"]
+    },
+    {
+      "id": "fracture_open_or_severe_soft_tissue_injury",
+      "title": "Открытый перелом или тяжёлое повреждение мягких тканей",
+      "presentations": ["p1_small_wound_communicating_with_fracture", "p2_contaminated_crush_or_high_energy_open_injury", "p3_delayed_open_fracture_with_infection_risk"]
+    },
+    {
+      "id": "fracture_articular_or_physeal",
+      "title": "Внутрисуставной перелом или повреждение зоны роста",
+      "presentations": ["p1_articular_surface_disruption", "p2_juvenile_physeal_injury", "p3_feline_capital_physeal_or_slipped_epiphysis_pattern"]
+    },
+    {
+      "id": "fracture_pelvic_or_axial_trauma",
+      "title": "Перелом таза или осевой скелет с сопутствующей травмой",
+      "presentations": ["p1_pelvic_fracture_with_weight_bearing_assessment", "p2_urinary_neurologic_or_rectal_risk", "p3_mandibular_spinal_or_other_axial_route"]
+    },
+    {
+      "id": "joint_luxation_traumatic_or_developmental",
+      "title": "Травматический вывих или клинически значимый подвывих",
+      "presentations": ["p1_acute_hip_luxation", "p2_other_joint_luxation_or_subluxation", "p3_patellar_luxation_symptomatic_vs_incidental"]
+    },
+    {
+      "id": "fracture_pathologic_delayed_union_or_repair_complication",
+      "title": "Патологический перелом, нарушение сращения или осложнение ремонта",
+      "presentations": ["p1_pathologic_fracture_without_adequate_trauma", "p2_delayed_union_nonunion_or_malunion", "p3_implant_bandage_or_reluxation_complication"]
+    }
+  ],
+  "researchIds": [
+    "fracture_whole_patient_trauma_survey",
+    "fracture_pain_neurologic_and_neurovascular_assessment",
+    "fracture_open_closed_and_soft_tissue_classification",
+    "fracture_orthogonal_radiography_and_adjacent_joints",
+    "fracture_cross_sectional_or_surgical_planning_referral",
+    "fracture_temporary_support_and_bandage_monitoring",
+    "fracture_healing_and_implant_followup",
+    "fracture_growth_plate_and_alignment_monitoring",
+    "fracture_pathologic_bone_workup",
+    "luxation_joint_congruence_and_associated_injury_workup"
+  ],
+  "crossFamilyLinks": ["ortho_lameness", "wound_abscess", "oncology_mass", "neuro_vestibular"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/musculoskeletal-system/osteopathies-in-small-animals/bone-fractures-in-dogs-and-cats",
+    "https://www.acvs.org/small-animal/fractured-limbs/",
+    "https://www.merckvetmanual.com/musculoskeletal-system/arthropathies-and-related-disorders-in-small-animals/joint-trauma-in-dogs-and-cats",
+    "https://www.acvs.org/small-animal/hip-luxation/",
+    "https://www.acvs.org/small-animal/femoral-capital-physeal-fractures/",
+    "https://www.acvs.org/small-animal/patellar-luxations/"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "familyId": "ear_external",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["otoscope", "microscope", "ear_cytology"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 8,
+  "presentationCount": 24,
+  "variants": [
+    {"id":"ear_yeast_otitis","title":"Грибковый наружный отит","presentations":["p1_uncomplicated","p2_bilateral_skin_signs","p3_pain_old_drops"]},
+    {"id":"ear_bacterial_cocci","title":"Кокковый бактериальный наружный отит","presentations":["p1_first_local","p2_recurrence_incomplete_course","p3_pain_stenosis"]},
+    {"id":"ear_bacterial_rods","title":"Палочковый бактериальный наружный отит","presentations":["p1_rods_cytology","p2_chronic_stenosis","p3_neurologic_signs"]},
+    {"id":"ear_otodectosis","title":"Отодектоз","presentations":["p1_young_cat","p2_multi_pet_secondary_infection","p3_severe_pruritus_low_debris"]},
+    {"id":"ear_foreign_body","title":"Инородное тело слухового прохода","presentations":["p1_visible_plant","p2_hidden_pain_edema","p3_tympanic_damage"]},
+    {"id":"ear_recurrent_allergic","title":"Рецидивирующий отит с вероятной аллергической причиной","presentations":["p1_seasonal_bilateral","p2_nonadherence_recurrence","p3_chronic_proliferative"]},
+    {"id":"ear_media_suspected","title":"Подозрение на средний или внутренний отит","presentations":["p1_persistent_deep_pain","p2_peripheral_vestibular","p3_facial_or_horner"]},
+    {"id":"ear_aural_hematoma","title":"Отогематома","presentations":["p1_small_with_otitis","p2_large_tense","p3_chronic_recurrent"]}
+  ],
+  "researchIds": [
+    "ear_cytology",
+    "ear_mite_microscopy",
+    "ear_culture_ast",
+    "ear_video_otoscopy",
+    "ear_middle_sample",
+    "ear_ct_mri",
+    "ear_mass_histology"
+  ],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/ear-disorders/otitis-externa/otitis-externa-in-animals",
+    "https://www.merckvetmanual.com/ear-disorders/otitis-media-and-interna/otitis-media-and-interna-in-animals",
+    "https://www.merckvetmanual.com/ear-disorders/diseases-of-the-pinna/auricular-hematomas-in-animals",
+    "https://www.aaha.org/resources/2023-aaha-management-of-allergic-skin-diseases-in-dogs-and-cats-guidelines/",
+    "https://capcvet.org/guidelines/otodectic-mite/"
+  ]
+}

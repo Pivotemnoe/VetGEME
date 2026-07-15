@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "familyId": "hepatobiliary",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["cbc", "biochemistry", "urinalysis", "coagulation", "ultrasound_or_referral", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "hepatic_enzyme_elevation_or_reactive_pattern",
+      "title": "Повышение ферментов или reactive hepatopathy",
+      "presentations": ["p1_incidental_persistent_alt_increase_without_failure", "p2_cholestatic_enzyme_pattern_with_extrahepatic_disease_or_drug_exposure", "p3_enzyme_trend_normalizes_or_progresses_on_recheck"]
+    },
+    {
+      "id": "hepatic_chronic_hepatitis_or_cirrhosis",
+      "title": "Хронический гепатит или цирроз",
+      "presentations": ["p1_subclinical_persistent_injury_pattern", "p2_clinical_chronic_hepatitis_with_function_change", "p3_portal_hypertension_ascites_or_advanced_fibrosis"]
+    },
+    {
+      "id": "hepatic_acute_failure_or_toxic_injury",
+      "title": "Острое повреждение/недостаточность или токсическая экспозиция",
+      "presentations": ["p1_known_or_possible_toxin_drug_exposure", "p2_hypoglycemia_coagulopathy_or_encephalopathy", "p3_acute_on_chronic_decompensation_or_uncertain_exposure"]
+    },
+    {
+      "id": "biliary_cholestasis_cholecystitis_or_obstruction",
+      "title": "Холестаз, холецистит, мукоцеле или обструкция",
+      "presentations": ["p1_jaundice_with_intrahepatic_vs_extrahepatic_uncertainty", "p2_gallbladder_mucocele_or_progressive_obstruction", "p3_cholecystitis_leakage_rupture_or_sepsis_risk"]
+    },
+    {
+      "id": "hepatic_portosystemic_shunt_or_encephalopathy",
+      "title": "Портосистемный шунт или печёночная энцефалопатия",
+      "presentations": ["p1_young_small_patient_with_growth_gi_or_neurobehavioral_signs", "p2_ammonium_biurate_urolith_or_postprandial_episode", "p3_acquired_shunting_or_encephalopathy_in_advanced_liver_disease"]
+    },
+    {
+      "id": "feline_hepatobiliary_syndrome",
+      "title": "Кошачий гепатобилиарный синдром",
+      "presentations": ["p1_obese_cat_after_anorexia_with_hepatic_lipidosis", "p2_feline_cholangitis_or_triangular_comorbidity", "p3_cat_with_jaundice_requires_biliary_pancreatic_intestinal_differentiation"]
+    }
+  ],
+  "researchIds": [
+    "hepatobiliary_history_medication_toxin_diet_and_weight_inventory",
+    "hepatobiliary_cbc_biochemistry_urinalysis_glucose_and_serial_enzyme_pattern",
+    "hepatobiliary_function_bilirubin_albumin_bun_cholesterol_bile_acid_and_ammonia_route",
+    "hepatobiliary_coagulation_platelet_and_bleeding_risk_assessment",
+    "hepatobiliary_ultrasound_biliary_patency_gallbladder_vessels_and_mass_review",
+    "hepatobiliary_culture_cytology_histology_and_copper_quantification_referral",
+    "hepatobiliary_portosystemic_shunt_advanced_imaging_referral",
+    "hepatobiliary_encephalopathy_acute_failure_and_biliary_rupture_stabilization",
+    "hepatobiliary_assisted_nutrition_referral_for_feline_lipidosis",
+    "hepatobiliary_serial_clinical_lab_imaging_and_quality_of_life_monitoring"
+  ],
+  "crossFamilyLinks": ["gi_pancreas_acute", "gi_chronic_enteropathy", "endocrine_cushing", "endocrine_diabetes", "urinary_uroliths", "oncology_mass", "infectious_canine_major"],
+  "sourceUrls": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC6524396/",
+    "https://wsava.org/Global-Guidelines/Liver-Disease-Guidelines/",
+    "https://www.merckvetmanual.com/digestive-system/laboratory-analyses-and-imaging-in-hepatic-disease-in-small-animals/hepatic-function-tests-in-small-animals",
+    "https://www.merckvetmanual.com/digestive-system/hepatic-diseases-of-small-animals/cholecystitis-in-small-animals",
+    "https://www.merckvetmanual.com/digestive-system/hepatic-diseases-of-small-animals/canine-gallbladder-mucocele",
+    "https://www.merckvetmanual.com/digestive-system/hepatic-diseases-of-small-animals/hepatic-portal-venous-hypoperfusion-in-small-animals",
+    "https://www.merckvetmanual.com/digestive-system/hepatic-diseases-of-small-animals/feline-hepatic-lipidosis"
+  ]
+}

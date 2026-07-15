@@ -1,0 +1,581 @@
+{
+  "schemaVersion": 1,
+  "namespace": "tier-01-v2-compat",
+  "namespaceVersion": "2026.07.15.1",
+  "sourceContentPackId": "tier-01-v2",
+  "sourceContentPackVersion": "2026.07.12.2",
+  "mappingPolicy": "identity_only_no_master_crosswalk",
+  "caseCount": 30,
+  "cases": [
+    {
+      "family": "ear",
+      "caseId": "EAR_BACTERIAL_OTITIS",
+      "ref": "tier-01-v2-compat/family/ear/case/EAR_BACTERIAL_OTITIS",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_BACTERIAL_OTITIS/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_BACTERIAL_OTITIS/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_BACTERIAL_OTITIS/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "ear",
+      "caseId": "EAR_FOREIGN_BODY",
+      "ref": "tier-01-v2-compat/family/ear/case/EAR_FOREIGN_BODY",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_FOREIGN_BODY/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_FOREIGN_BODY/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_FOREIGN_BODY/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "ear",
+      "caseId": "EAR_FUNGAL_OTITIS",
+      "ref": "tier-01-v2-compat/family/ear/case/EAR_FUNGAL_OTITIS",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_FUNGAL_OTITIS/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_FUNGAL_OTITIS/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_FUNGAL_OTITIS/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "ear",
+      "caseId": "EAR_MITES",
+      "ref": "tier-01-v2-compat/family/ear/case/EAR_MITES",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_MITES/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_MITES/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_MITES/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "ear",
+      "caseId": "EAR_RECURRENT_OTITIS",
+      "ref": "tier-01-v2-compat/family/ear/case/EAR_RECURRENT_OTITIS",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_RECURRENT_OTITIS/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_RECURRENT_OTITIS/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/ear/case/EAR_RECURRENT_OTITIS/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "eyes",
+      "caseId": "EYE_CONJUNCTIVITIS",
+      "ref": "tier-01-v2-compat/family/eyes/case/EYE_CONJUNCTIVITIS",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/eyes/case/EYE_CONJUNCTIVITIS/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/eyes/case/EYE_CONJUNCTIVITIS/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/eyes/case/EYE_CONJUNCTIVITIS/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "eyes",
+      "caseId": "EYE_CORNEAL_ULCER",
+      "ref": "tier-01-v2-compat/family/eyes/case/EYE_CORNEAL_ULCER",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/eyes/case/EYE_CORNEAL_ULCER/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/eyes/case/EYE_CORNEAL_ULCER/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/eyes/case/EYE_CORNEAL_ULCER/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "gastrointestinal",
+      "caseId": "GI_ACUTE_UPSET",
+      "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_ACUTE_UPSET",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_ACUTE_UPSET/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_ACUTE_UPSET/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_ACUTE_UPSET/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "gastrointestinal",
+      "caseId": "GI_DIETARY_INDISCRETION",
+      "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_DIETARY_INDISCRETION",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_DIETARY_INDISCRETION/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_DIETARY_INDISCRETION/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_DIETARY_INDISCRETION/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "gastrointestinal",
+      "caseId": "GI_FOREIGN_BODY",
+      "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_FOREIGN_BODY",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_FOREIGN_BODY/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_FOREIGN_BODY/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_FOREIGN_BODY/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "gastrointestinal",
+      "caseId": "GI_GIARDIA",
+      "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_GIARDIA",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_GIARDIA/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_GIARDIA/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_GIARDIA/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "gastrointestinal",
+      "caseId": "GI_INTESTINAL_PARASITES",
+      "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_INTESTINAL_PARASITES",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_INTESTINAL_PARASITES/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_INTESTINAL_PARASITES/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_INTESTINAL_PARASITES/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "gastrointestinal",
+      "caseId": "GI_REGURGITATION",
+      "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_REGURGITATION",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_REGURGITATION/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_REGURGITATION/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/gastrointestinal/case/GI_REGURGITATION/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "perianal",
+      "caseId": "PERIANAL_IMPACTION",
+      "ref": "tier-01-v2-compat/family/perianal/case/PERIANAL_IMPACTION",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/perianal/case/PERIANAL_IMPACTION/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/perianal/case/PERIANAL_IMPACTION/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/perianal/case/PERIANAL_IMPACTION/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "perianal",
+      "caseId": "PERIANAL_INFLAMMATION",
+      "ref": "tier-01-v2-compat/family/perianal/case/PERIANAL_INFLAMMATION",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/perianal/case/PERIANAL_INFLAMMATION/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/perianal/case/PERIANAL_INFLAMMATION/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/perianal/case/PERIANAL_INFLAMMATION/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "respiratory",
+      "caseId": "RESP_CANINE_COUGH",
+      "ref": "tier-01-v2-compat/family/respiratory/case/RESP_CANINE_COUGH",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/respiratory/case/RESP_CANINE_COUGH/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/respiratory/case/RESP_CANINE_COUGH/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/respiratory/case/RESP_CANINE_COUGH/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "respiratory",
+      "caseId": "RESP_CAT_URI",
+      "ref": "tier-01-v2-compat/family/respiratory/case/RESP_CAT_URI",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/respiratory/case/RESP_CAT_URI/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/respiratory/case/RESP_CAT_URI/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/respiratory/case/RESP_CAT_URI/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "respiratory",
+      "caseId": "RESP_SUSPECTED_PNEUMONIA",
+      "ref": "tier-01-v2-compat/family/respiratory/case/RESP_SUSPECTED_PNEUMONIA",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/respiratory/case/RESP_SUSPECTED_PNEUMONIA/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/respiratory/case/RESP_SUSPECTED_PNEUMONIA/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/respiratory/case/RESP_SUSPECTED_PNEUMONIA/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "skin",
+      "caseId": "SKIN_FLEA_ALLERGY",
+      "ref": "tier-01-v2-compat/family/skin/case/SKIN_FLEA_ALLERGY",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_FLEA_ALLERGY/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_FLEA_ALLERGY/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_FLEA_ALLERGY/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "skin",
+      "caseId": "SKIN_FLEA_INFESTATION",
+      "ref": "tier-01-v2-compat/family/skin/case/SKIN_FLEA_INFESTATION",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_FLEA_INFESTATION/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_FLEA_INFESTATION/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_FLEA_INFESTATION/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "skin",
+      "caseId": "SKIN_FUNGAL_DERMATITIS",
+      "ref": "tier-01-v2-compat/family/skin/case/SKIN_FUNGAL_DERMATITIS",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_FUNGAL_DERMATITIS/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_FUNGAL_DERMATITIS/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_FUNGAL_DERMATITIS/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "skin",
+      "caseId": "SKIN_GROOMING_IRRITATION",
+      "ref": "tier-01-v2-compat/family/skin/case/SKIN_GROOMING_IRRITATION",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_GROOMING_IRRITATION/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_GROOMING_IRRITATION/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_GROOMING_IRRITATION/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "skin",
+      "caseId": "SKIN_SUPERFICIAL_PYODERMA",
+      "ref": "tier-01-v2-compat/family/skin/case/SKIN_SUPERFICIAL_PYODERMA",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_SUPERFICIAL_PYODERMA/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_SUPERFICIAL_PYODERMA/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/skin/case/SKIN_SUPERFICIAL_PYODERMA/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "trauma",
+      "caseId": "TRAUMA_BITE_ABSCESS",
+      "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_BITE_ABSCESS",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_BITE_ABSCESS/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_BITE_ABSCESS/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_BITE_ABSCESS/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "trauma",
+      "caseId": "TRAUMA_SOFT_TISSUE_LAMENESS",
+      "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SOFT_TISSUE_LAMENESS",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SOFT_TISSUE_LAMENESS/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SOFT_TISSUE_LAMENESS/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SOFT_TISSUE_LAMENESS/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "trauma",
+      "caseId": "TRAUMA_SUPERFICIAL_WOUND",
+      "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SUPERFICIAL_WOUND",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SUPERFICIAL_WOUND/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SUPERFICIAL_WOUND/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SUPERFICIAL_WOUND/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "trauma",
+      "caseId": "TRAUMA_SUSPECTED_DISLOCATION",
+      "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SUSPECTED_DISLOCATION",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SUSPECTED_DISLOCATION/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SUSPECTED_DISLOCATION/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SUSPECTED_DISLOCATION/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "trauma",
+      "caseId": "TRAUMA_SUSPECTED_FRACTURE",
+      "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SUSPECTED_FRACTURE",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SUSPECTED_FRACTURE/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SUSPECTED_FRACTURE/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/trauma/case/TRAUMA_SUSPECTED_FRACTURE/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "urinary",
+      "caseId": "URINARY_LOWER_SIGNS",
+      "ref": "tier-01-v2-compat/family/urinary/case/URINARY_LOWER_SIGNS",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/urinary/case/URINARY_LOWER_SIGNS/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/urinary/case/URINARY_LOWER_SIGNS/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/urinary/case/URINARY_LOWER_SIGNS/complaint/complaint_3"
+        }
+      ]
+    },
+    {
+      "family": "urinary",
+      "caseId": "URINARY_OBSTRUCTION",
+      "ref": "tier-01-v2-compat/family/urinary/case/URINARY_OBSTRUCTION",
+      "complaints": [
+        {
+          "complaintId": "complaint_1",
+          "ref": "tier-01-v2-compat/family/urinary/case/URINARY_OBSTRUCTION/complaint/complaint_1"
+        },
+        {
+          "complaintId": "complaint_2",
+          "ref": "tier-01-v2-compat/family/urinary/case/URINARY_OBSTRUCTION/complaint/complaint_2"
+        },
+        {
+          "complaintId": "complaint_3",
+          "ref": "tier-01-v2-compat/family/urinary/case/URINARY_OBSTRUCTION/complaint/complaint_3"
+        }
+      ]
+    }
+  ]
+}

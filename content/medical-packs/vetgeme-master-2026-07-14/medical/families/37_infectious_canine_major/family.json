@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "familyId": "infectious_canine_major",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog"],
+  "coreCapabilities": ["isolation_protocol", "infectious_rapid_test", "pcr_external", "regulated_infection_route", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 5,
+  "presentationCount": 15,
+  "variants": [
+    {
+      "id": "canine_parvoviral_enteritis",
+      "title": "Парвовирусный энтерит собак",
+      "presentations": ["p1_young_incompletely_vaccinated_dog_with_acute_gi_disease", "p2_early_or_late_false_negative_antigen_with_pcr_review", "p3_severe_leukopenia_dehydration_sepsis_or_household_exposure"]
+    },
+    {
+      "id": "canine_distemper_multisystemic",
+      "title": "Чума плотоядных",
+      "presentations": ["p1_febrile_respiratory_gi_and_ocular_multisystem_pattern", "p2_delayed_or_progressive_neurologic_disease", "p3_recent_vaccination_sample_site_or_concurrent_infection_complicates_testing"]
+    },
+    {
+      "id": "canine_infectious_hepatitis_adenovirus",
+      "title": "Инфекционный гепатит собак / CAV-1",
+      "presentations": ["p1_fever_abdominal_pain_hepatic_injury_or_adenoviral_pattern", "p2_coagulopathy_acute_failure_or_peracute_disease", "p3_hepatic_mimics_and_laboratory_confirmation_route"]
+    },
+    {
+      "id": "canine_leptospirosis_zoonotic",
+      "title": "Лептоспироз собак",
+      "presentations": ["p1_acute_kidney_liver_or_respiratory_pattern_in_any_signalment", "p2_pcr_mat_timing_vaccination_and_convalescent_sample_route", "p3_zoonotic_urine_blood_barrier_precautions_and_owner_guidance"]
+    },
+    {
+      "id": "canine_rabies_exposure_or_suspected_case",
+      "title": "Экспозиция или подозрение на бешенство",
+      "presentations": ["p1_bite_wildlife_contact_or_vaccination_status_question", "p2_behavior_swallowing_salivation_paralysis_or_unexplained_neurologic_signs", "p3_human_exposure_public_health_and_regulated_disposition_route"]
+    }
+  ],
+  "researchIds": [
+    "canine_infectious_exposure_travel_origin_contacts_vaccine_and_timeline_inventory",
+    "canine_infectious_triage_isolation_ppe_flow_and_outbreak_log",
+    "canine_parvovirus_fecal_antigen_pcr_and_false_negative_context",
+    "canine_distemper_multisite_rt_pcr_antibody_and_vaccine_context",
+    "canine_adenovirus_hepatic_coagulation_and_pcr_confirmation_route",
+    "canine_leptospira_blood_urine_pcr_acute_convalescent_mat_and_vaccine_context",
+    "canine_leptospira_barrier_precautions_environment_and_owner_health_guidance",
+    "canine_rabies_no_routine_handling_public_health_notification_and_exposure_log",
+    "canine_serial_organ_support_contagious_window_and_household_monitoring",
+    "canine_infectious_external_lab_emergency_and_regulated_referral_route"
+  ],
+  "crossFamilyLinks": ["gi_acute", "resp_dog_cough", "resp_pneumonia", "hepatobiliary", "renal_ckd", "hematology_anemia", "neuro_vestibular"],
+  "sourceUrls": [
+    "https://wsava.org/wp-content/uploads/2024/04/WSAVA-Vaccination-guidelines-2024.pdf",
+    "https://www.merckvetmanual.com/digestive-system/infectious-diseases-of-the-gastrointestinal-tract-in-small-animals/canine-parvovirus-infection-parvoviral-enteritis-in-dogs",
+    "https://www.merckvetmanual.com/infectious-diseases/canine-distemper/canine-distemper",
+    "https://www.merckvetmanual.com/infectious-diseases/infectious-canine-hepatitis/infectious-canine-hepatitis",
+    "https://www.merckvetmanual.com/infectious-diseases/leptospirosis/leptospirosis-in-dogs",
+    "https://www.who.int/news-room/fact-sheets/detail/rabies"
+  ]
+}

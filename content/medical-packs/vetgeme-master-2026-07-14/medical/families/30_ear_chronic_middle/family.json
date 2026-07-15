@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "familyId": "ear_chronic_middle",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["ear_exam", "ear_cytology", "video_otoscopy_referral", "middle_ear_imaging_external", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "ear_chronic_recurrent_externa_with_middle_ear_risk",
+      "title": "Хронический наружный отит с риском среднего уха",
+      "presentations": ["p1_repeated_same_ear_or_incomplete_response", "p2_stenotic_painful_canal_limits_tympanic_view", "p3_recurrent_resistant_bacterial_or_mixed_cytology"]
+    },
+    {
+      "id": "ear_otitis_media_intact_or_unseen_tympanum",
+      "title": "Средний отит при интактной или недоступной осмотру барабанной перепонке",
+      "presentations": ["p1_normal_appearing_tympanum_but_supporting_signs", "p2_bulging_opaque_or_abnormal_tympanum", "p3_bilateral_or_subclinical_contralateral_middle_ear_disease"]
+    },
+    {
+      "id": "ear_otitis_media_ruptured_tympanum",
+      "title": "Средний отит с разрывом барабанной перепонки",
+      "presentations": ["p1_spontaneous_rupture_with_otorrhea", "p2_foreign_body_or_traumatic_iatrogenic_rupture", "p3_middle_ear_sample_differs_from_external_canal"]
+    },
+    {
+      "id": "ear_otitis_interna_peripheral_vestibular",
+      "title": "Внутренний отит и периферический вестибулярный синдром",
+      "presentations": ["p1_head_tilt_nystagmus_and_ataxia_with_ear_disease", "p2_facial_nerve_horner_dry_eye_or_hearing_deficit", "p3_severe_vestibular_signs_require_central_differential_route"]
+    },
+    {
+      "id": "ear_feline_polyp_or_secretory_middle_ear_disease",
+      "title": "Полип, секреторное заболевание или носоглоточный источник у кошки",
+      "presentations": ["p1_young_cat_with_polyp_and_upper_airway_or_ear_signs", "p2_primary_secretory_middle_ear_pattern", "p3_recurrent_after_incomplete_polyp_removal_or_bilateral_disease"]
+    },
+    {
+      "id": "ear_end_stage_cholesteatoma_or_mass",
+      "title": "Терминальный ушной канал, холестеатома или объёмное образование",
+      "presentations": ["p1_mineralized_obliterated_end_stage_canal", "p2_cholesteatoma_or_progressive_bulla_change", "p3_mass_neoplasia_or_surgical_salvage_route"]
+    }
+  ],
+  "researchIds": [
+    "ear_chronic_complete_dermatologic_and_neurologic_history",
+    "ear_chronic_bilateral_cytology_and_external_canal_mapping",
+    "ear_chronic_video_otoscopy_and_tympanic_assessment",
+    "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+    "ear_chronic_middle_ear_sampling_cytology_culture",
+    "ear_chronic_facial_nerve_horner_tear_and_hearing_assessment",
+    "ear_chronic_polyp_nasopharyngeal_and_mass_workup",
+    "ear_chronic_underlying_allergy_endocrine_and_anatomic_review",
+    "ear_chronic_response_tympanum_neurologic_and_hearing_monitoring",
+    "ear_chronic_surgical_salvage_referral"
+  ],
+  "crossFamilyLinks": ["ear_external", "skin_atopy", "skin_infectious", "neuro_vestibular", "oncology_mass"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/ear-disorders/otitis-media-and-interna/otitis-media-and-interna-in-animals",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC6294027/",
+    "https://www.merckvetmanual.com/ear-disorders/tumors-of-the-ear-in-small-animals/cholesteatomas-in-small-animals",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC11529141/",
+    "https://open.lib.umn.edu/animaldermatology/chapter/otitis-media-dogs-and-cats/"
+  ]
+}

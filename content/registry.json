@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "vetgeme-content-registry",
-  "registryVersion": "2026.07.15.1",
+  "registryVersion": "2026.07.15.2",
   "packs": [
     {
       "contentPackId": "tier-01-v2",
@@ -11,6 +11,37 @@
       "manifestPath": "clinical/tier-01/manifest.json",
       "status": "editorial_complete_pending_medical_review",
       "integrationStatus": "not_connected",
+      "reviewPolicy": {
+        "reviewModeAllowed": true,
+        "productionEligible": false
+      },
+      "allowedModes": [
+        "tier-01-v2"
+      ]
+    }
+  ],
+  "medicalCatalogs": [
+    {
+      "medicalCatalogId": "vetgeme-medical-family-registry",
+      "medicalCatalogVersion": "2026.07.14.3",
+      "packageId": "vetgeme-master-package",
+      "packageVersion": "2026.07.14.2",
+      "root": "content/medical-packs/vetgeme-master-2026-07-14",
+      "manifestPath": "PACKAGE_MANIFEST.json",
+      "familyRegistryPath": "medical/catalog/family-registry.json",
+      "provenancePath": "provenance.json",
+      "compatibilityPath": "compatibility/tier-01-v2.json",
+      "sourceDigest": "c114651092f6efc16d722b6495c91dfe51e70251a8a420ea95184dcf5237e094",
+      "status": "all_families_authored_pending_veterinary_review",
+      "packageStatus": "handoff_ready_medical_activation_requires_veterinary_approval",
+      "familyStatus": "source_checked_pending_veterinary_review",
+      "expectedCounts": {
+        "families": 39,
+        "variants": 215,
+        "presentations": 645,
+        "generatorEligibleFamilies": 0,
+        "sourceFiles": 83
+      },
       "reviewPolicy": {
         "reviewModeAllowed": true,
         "productionEligible": false

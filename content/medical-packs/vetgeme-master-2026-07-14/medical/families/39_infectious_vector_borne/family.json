@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "familyId": "infectious_vector_borne",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["regional_disease_filter", "cbc", "blood_smear", "pcr_external", "serology_external", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 3,
+  "presentationCount": 9,
+  "variants": [
+    {
+      "id": "vector_tick_borne_bacterial_complex",
+      "title": "Клещевые бактериальные инфекции",
+      "presentations": ["p1_ehrlichia_or_anaplasma_fever_cytopenia_lameness_pattern", "p2_borrelia_exposure_vs_compatible_clinical_disease", "p3_acute_seronegative_chronic_seropositive_or_tick_coinfection_route"]
+    },
+    {
+      "id": "vector_hemoparasite_complex",
+      "title": "Гемопаразитарные инфекции",
+      "presentations": ["p1_canine_babesia_acute_hemolysis_thrombocytopenia_or_collapse", "p2_babesia_low_parasitemia_chronic_or_coinfection_pattern", "p3_feline_hemotropic_mycoplasma_anemia_or_carrier_state"]
+    },
+    {
+      "id": "vector_travel_regional_complex",
+      "title": "Региональные и travel-associated инфекции",
+      "presentations": ["p1_canine_leishmaniosis_cutaneous_systemic_renal_or_subclinical_infection", "p2_canine_heartworm_antigen_microfilaria_and_cardiopulmonary_staging", "p3_feline_heartworm_antibody_antigen_imaging_and_low_worm_burden_uncertainty"]
+    }
+  ],
+  "researchIds": [
+    "vector_region_season_travel_import_transfusion_vector_and_prevention_timeline",
+    "vector_cbc_reticulocyte_smear_biochemistry_urinalysis_and_organ_severity",
+    "vector_ehrlichia_anaplasma_pcr_morula_serology_and_paired_titer_context",
+    "vector_borrelia_exposure_test_compatible_syndrome_and_complication_review",
+    "vector_babesia_smear_species_pcr_and_coinfection_assessment",
+    "vector_feline_hemoplasma_smear_pcr_retrovirus_and_carrier_context",
+    "vector_leishmania_quantitative_serology_tissue_cytology_pcr_and_renal_staging",
+    "vector_heartworm_species_specific_antigen_antibody_microfilaria_and_imaging_route",
+    "vector_hemolysis_shock_bleeding_respiratory_or_renal_emergency_route",
+    "vector_longitudinal_response_relapse_transmission_prevention_and_retest_plan"
+  ],
+  "crossFamilyLinks": ["hematology_anemia", "renal_ckd", "urinary_complex", "ortho_lameness", "skin_infectious", "cardio_chf", "resp_pneumonia", "infectious_canine_major", "infectious_feline_major"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/infectious-diseases/rickettsial-diseases-in-dogs/ehrlichiosis-in-dogs",
+    "https://www.merckvetmanual.com/infectious-diseases/rickettsial-diseases-in-dogs/anaplasmosis-in-dogs",
+    "https://www.merckvetmanual.com/infectious-diseases/lyme-borreliosis/lyme-borreliosis-in-animals",
+    "https://www.merckvetmanual.com/circulatory-system/blood-parasites/hemotropic-mycoplasma-infections-in-animals",
+    "https://www.merckvetmanual.com/infectious-diseases/leishmaniosis/leishmaniosis-in-dogs",
+    "https://capcvet.org/guidelines/heartworm/"
+  ]
+}

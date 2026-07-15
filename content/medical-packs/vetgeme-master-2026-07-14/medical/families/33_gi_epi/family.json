@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "familyId": "gi_epi",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["cbc", "biochemistry", "tli_external", "cobalamin_external", "longitudinal_care", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 4,
+  "presentationCount": 12,
+  "variants": [
+    {
+      "id": "epi_classic_canine_maldigestion",
+      "title": "Классическая мальдигестия у собаки",
+      "presentations": ["p1_weight_loss_polyphagia_and_voluminous_stool", "p2_breed_or_young_dog_with_acinar_atrophy_pattern", "p3_adult_dog_after_chronic_pancreatic_disease"]
+    },
+    {
+      "id": "epi_feline_or_atypical_presentation",
+      "title": "Кошачья или нетипичная подача",
+      "presentations": ["p1_feline_weight_loss_and_loose_stool_with_concurrent_disease", "p2_intermittent_or_subclinical_low_tli_pattern", "p3_diarrhea_without_polyphagia_or_obvious_steatorrhea"]
+    },
+    {
+      "id": "epi_cobalamin_deficiency_or_poor_response",
+      "title": "Дефицит кобаламина или неполный ответ",
+      "presentations": ["p1_severe_cobalamin_deficiency_and_poor_weight_gain", "p2_persistent_diarrhea_despite_reported_enzyme_use", "p3_concurrent_chronic_enteropathy_dysbiosis_or_other_mimic"]
+    },
+    {
+      "id": "epi_longitudinal_management",
+      "title": "Продольное ведение подтверждённой EPI",
+      "presentations": ["p1_early_response_weight_and_stool_recheck", "p2_relapse_from_adherence_storage_diet_or_batch_problem", "p3_stable_lifelong_care_with_comorbidity_surveillance"]
+    }
+  ],
+  "researchIds": [
+    "epi_history_weight_body_condition_stool_and_diet_inventory",
+    "epi_cbc_biochemistry_urinalysis_and_malabsorption_mimic_screen",
+    "epi_species_specific_serum_tli_confirmation",
+    "epi_serum_cobalamin_and_folate_assessment",
+    "epi_pancreatic_and_intestinal_comorbidity_review",
+    "epi_structured_response_weight_stool_and_appetite_monitoring",
+    "epi_adherence_storage_meal_and_product_review",
+    "epi_chronic_enteropathy_or_dysbiosis_workup_when_poor_response",
+    "epi_owner_lifelong_management_and_red_flag_plan",
+    "epi_internal_medicine_referral_for_discordant_or_refractory_case"
+  ],
+  "crossFamilyLinks": ["gi_chronic_enteropathy", "gi_pancreas_acute", "endocrine_diabetes", "gi_parasites", "oncology_mass"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/digestive-system/the-exocrine-pancreas/exocrine-pancreatic-insufficiency-in-dogs-and-cats",
+    "https://www.merckvetmanual.com/digestive-system/diseases-of-the-small-intestine-in-small-animals/malabsorption-syndromes-in-small-animals"
+  ]
+}

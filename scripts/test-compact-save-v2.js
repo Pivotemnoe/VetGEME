@@ -213,6 +213,23 @@ function createFirstDaySnapshot(catalog, seed) {
   return storage;
 }
 
+function withSyntheticMedicalCatalogGrowth(catalog) {
+  return {
+    ...catalog,
+    medicalCatalog: {
+      ...catalog.medicalCatalog,
+      syntheticGrowthFixture: Array.from({ length: 10000 }, (_, index) => ({
+        key: `future-medical-presentation-${String(index).padStart(5, "0")}`,
+        authoredPayload: "x".repeat(160)
+      }))
+    }
+  };
+}
+
+function comparableGameState(storage) {
+  return JSON.parse(storage.getItem(namespaces.gameSaveKey("tier-01-v2"))).state;
+}
+
 async function main() {
   const catalog = await loader.loadFromDirectory(path.resolve(__dirname, ".."), {
     packId: "tier-01-v2",
@@ -447,6 +464,40 @@ async function main() {
     day7: utf16Bytes(week.storage),
     day30: utf16Bytes(month.storage)
   };
+  const grownCatalog = withSyntheticMedicalCatalogGrowth(catalog);
+  const grownThirtyCatalog = withSyntheticMedicalCatalogGrowth(thirtyCatalog);
+  const grownDayOneStorage = createFirstDaySnapshot(grownCatalog, "compact-size-created-day");
+  const grownWeek = await simulateCampaign(grownCatalog, 7, "compact-size-week");
+  const grownMonth = await simulateCampaign(grownThirtyCatalog, 30, "compact-size-month");
+  const catalogGrowthSizes = {
+    day1: utf16Bytes(grownDayOneStorage),
+    day7: utf16Bytes(grownWeek.storage),
+    day30: utf16Bytes(grownMonth.storage)
+  };
+  assert.deepEqual(catalogGrowthSizes, compactSizes, "save size changed when the in-memory medical catalog grew");
+  assert.equal(
+    grownDayOneStorage.getItem(generatorApi.SAVE_KEY),
+    createdDayOneStorage.getItem(generatorApi.SAVE_KEY),
+    "day 1 generator save copied catalog growth"
+  );
+  assert.equal(
+    grownWeek.storage.getItem(generatorApi.SAVE_KEY),
+    week.storage.getItem(generatorApi.SAVE_KEY),
+    "day 7 generator save copied catalog growth"
+  );
+  assert.equal(
+    grownMonth.storage.getItem(generatorApi.SAVE_KEY),
+    month.storage.getItem(generatorApi.SAVE_KEY),
+    "day 30 generator save copied catalog growth"
+  );
+  assert.deepEqual(comparableGameState(grownDayOneStorage), comparableGameState(createdDayOneStorage));
+  assert.deepEqual(comparableGameState(grownWeek.storage), comparableGameState(week.storage));
+  assert.deepEqual(comparableGameState(grownMonth.storage), comparableGameState(month.storage));
+  const syntheticCatalogGrowthUtf8Bytes = Buffer.byteLength(
+    JSON.stringify(grownCatalog.medicalCatalog.syntheticGrowthFixture),
+    "utf8"
+  );
+  assert.ok(syntheticCatalogGrowthUtf8Bytes > 2 * 1024 * 1024, "catalog growth fixture is too small to prove isolation");
   const legacySizes = {
     day1: utf16BytesForEntries([
       [generatorApi.SAVE_KEY, JSON.stringify(expandGeneratorSaveToVersion3(createdDayOneStorage.getItem(generatorApi.SAVE_KEY), catalog))],
@@ -486,6 +537,9 @@ async function main() {
     quotaPreservedPreviousSave: true,
     currentAndLegacyUnchanged: true,
     compactSizesUtf16Bytes: compactSizes,
+    catalogGrowthSizesUtf16Bytes: catalogGrowthSizes,
+    syntheticCatalogGrowthUtf8Bytes,
+    catalogGrowthInvariant: true,
     legacyEquivalentSizesUtf16Bytes: legacySizes,
     reductionPercent: Object.fromEntries(Object.keys(compactSizes).map((key) => [
       key,

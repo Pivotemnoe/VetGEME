@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "familyId": "endocrine_diabetes",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["blood_glucose", "urinalysis", "biochemistry", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 5,
+  "presentationCount": 15,
+  "variants": [
+    {
+      "id": "diabetes_confirmed_metabolically_stable",
+      "title": "Подтверждённый клинический диабет без декомпенсации",
+      "presentations": ["p1_dog_pupd_polyphagia_weight_loss", "p2_cat_pupd_weight_loss_persistent_hyperglycemia", "p3_glucosuria_and_cataract_or_neuropathy_clue"]
+    },
+    {
+      "id": "diabetes_feline_stress_or_transient_hyperglycemia",
+      "title": "Стрессовая или транзиторная гипергликемия кошки против диабета",
+      "presentations": ["p1_high_clinic_glucose_without_classic_signs", "p2_equivocal_glucosuria_requires_persistence_check", "p3_fructosamine_and_home_trend_resolve_uncertainty"]
+    },
+    {
+      "id": "diabetes_ketoacidosis_or_hyperosmolar_decompensation",
+      "title": "Кетоацидоз или гиперосмолярная декомпенсация",
+      "presentations": ["p1_vomiting_anorexia_dehydration_with_ketones", "p2_known_diabetic_now_systemically_unwell", "p3_severe_hyperglycemia_altered_mentation_mixed_state"]
+    },
+    {
+      "id": "diabetes_hypoglycemia_in_treated_patient",
+      "title": "Гипогликемия у лечащегося диабетика",
+      "presentations": ["p1_weakness_tremor_or_seizure", "p2_low_sensor_reading_without_signs", "p3_food_or_activity_mismatch_and_recurrence_risk"]
+    },
+    {
+      "id": "diabetes_unstable_control_or_feline_remission",
+      "title": "Нестабильный контроль или возможная ремиссия кошки",
+      "presentations": ["p1_persistent_signs_despite_reported_treatment", "p2_large_day_to_day_variability_or_comorbidity", "p3_cat_needs_less_treatment_possible_remission"]
+    }
+  ],
+  "researchIds": [
+    "diabetes_clinical_signs_weight_and_diet_history",
+    "diabetes_persistent_blood_glucose_and_glucosuria",
+    "diabetes_fructosamine_or_home_glucose_context",
+    "diabetes_ketone_and_acid_base_assessment",
+    "diabetes_cbc_biochemistry_urinalysis_culture",
+    "diabetes_glucose_curve_or_cgm",
+    "diabetes_treatment_handling_audit",
+    "diabetes_comorbidity_workup",
+    "diabetes_home_monitoring_and_emergency_plan"
+  ],
+  "crossFamilyLinks": ["urinary_complex", "gi_pancreas_acute", "endocrine_cushing", "endocrine_feline_hyperthyroid", "renal_ckd"],
+  "sourceUrls": [
+    "https://www.aaha.org/resources/2018-aaha-diabetes-management-guideline-for-dogs-and-cats/",
+    "https://www.aaha.org/resources/2026-aaha-diabetes-management-guidelines-for-cats/section-7-insulin-treatment-and-monitoring/",
+    "https://www.aaha.org/resources/2026-aaha-diabetes-management-guidelines-for-cats/section-11-client-education/",
+    "https://www.merckvetmanual.com/endocrine-system/the-pancreas/diabetes-mellitus-in-dogs-and-cats",
+    "https://www.aaha.org/resources/2018-aaha-diabetes-management-guideline-for-dogs-and-cats/troubleshooting-2/"
+  ]
+}

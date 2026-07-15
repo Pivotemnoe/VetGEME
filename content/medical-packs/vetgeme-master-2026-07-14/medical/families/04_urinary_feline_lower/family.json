@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "familyId": "urinary_feline_lower",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["cat"],
+  "coreCapabilities": ["general_exam", "abdominal_palpation", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "urinary_feline_luts_undifferentiated",
+      "title": "Недифференцированные симптомы нижних мочевыводящих путей",
+      "presentations": ["p1_pollakiuria_periuria", "p2_owner_calls_constipation", "p3_female_nonobstructive"]
+    },
+    {
+      "id": "urinary_feline_idiopathic_cystitis",
+      "title": "Идиопатический цистит кошек",
+      "presentations": ["p1_first_episode_young_adult", "p2_recurrent_multi_cat_stress", "p3_environment_plan_incomplete"]
+    },
+    {
+      "id": "urinary_feline_bacterial_uti",
+      "title": "Бактериальная инфекция мочевыводящих путей кошки",
+      "presentations": ["p1_older_comorbid_cat", "p2_culture_confirmed", "p3_recurrence_after_empirical_treatment"]
+    },
+    {
+      "id": "urinary_feline_crystalluria",
+      "title": "Кристаллурия у кошки",
+      "presentations": ["p1_incidental_crystals", "p2_symptomatic_concentrated_urine", "p3_male_plug_risk"]
+    },
+    {
+      "id": "urinary_feline_urolithiasis",
+      "title": "Уролитиаз мочевого пузыря или уретры кошки",
+      "presentations": ["p1_nonobstructive_stone", "p2_recurrent_hematuria", "p3_stone_with_obstruction_warning"]
+    },
+    {
+      "id": "urinary_feline_urethral_obstruction",
+      "title": "Обструкция уретры у кота",
+      "presentations": ["p1_early_stable", "p2_hyperkalemic_azotemic", "p3_post_catheter_reobstruction"]
+    }
+  ],
+  "researchIds": [
+    "urinary_observe_urination",
+    "urinary_bladder_assessment",
+    "urinary_urinalysis",
+    "urinary_culture",
+    "urinary_blood_electrolytes",
+    "urinary_ecg",
+    "urinary_xray",
+    "urinary_ultrasound"
+  ],
+  "sourceUrls": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC11816079/",
+    "https://journals.sagepub.com/doi/pdf/10.1177/1098612x241309176",
+    "https://www.merckvetmanual.com/urinary-system/urolithiasis-in-small-animals/urethral-obstruction-in-small-animals",
+    "https://www.merckvetmanual.com/urinary-system/noninfectious-diseases-of-the-urinary-system-in-small-animals/obstructive-uropathy-in-dogs-and-cats",
+    "https://www.aaha.org/resources/2021-aaha-aafp-feline-life-stage-guidelines/lower-urinary-tract-disease/"
+  ]
+}

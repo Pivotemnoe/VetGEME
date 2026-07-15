@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "familyId": "hematology_anemia",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["cbc", "blood_smear", "reticulocyte_count", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "anemia_acute_blood_loss",
+      "title": "Острая кровопотеря",
+      "presentations": ["p1_visible_traumatic_or_surgical_bleeding", "p2_internal_hemorrhage_without_external_blood", "p3_early_nonregenerative_appearance_before_marrow_response"]
+    },
+    {
+      "id": "anemia_chronic_blood_loss_iron_deficiency",
+      "title": "Хроническая кровопотеря и дефицит железа",
+      "presentations": ["p1_gi_or_parasite_occult_loss", "p2_slow_microcytic_hypochromic_pattern", "p3_source_not_found_requires_imaging_or_endoscopy_route"]
+    },
+    {
+      "id": "anemia_immune_mediated_hemolysis",
+      "title": "Иммунно-опосредованный гемолиз",
+      "presentations": ["p1_regenerative_anemia_with_hemolysis_markers", "p2_agglutination_or_spherocyte_supported_imha", "p3_secondary_trigger_screen_and_thrombotic_risk"]
+    },
+    {
+      "id": "anemia_infectious_or_oxidative_hemolysis",
+      "title": "Инфекционный или окислительный гемолиз",
+      "presentations": ["p1_feline_hemoplasma_or_vector_context", "p2_heinz_body_or_toxin_exposure", "p3_babesia_or_regional_vector_borne_pattern"]
+    },
+    {
+      "id": "anemia_chronic_disease_or_renal",
+      "title": "Анемия хронического заболевания или CKD",
+      "presentations": ["p1_stable_mild_to_moderate_nonregenerative_pattern", "p2_ckd_with_progressive_anemia", "p3_inflammation_neoplasia_or_endocrine_context"]
+    },
+    {
+      "id": "anemia_bone_marrow_or_pancytopenic",
+      "title": "Костномозговая, апластическая или панцитопеническая анемия",
+      "presentations": ["p1_persistent_severe_nonregenerative_anemia", "p2_multiple_cell_lines_reduced", "p3_drug_infection_or_infiltrative_marrow_suspicion"]
+    }
+  ],
+  "researchIds": [
+    "anemia_stability_perfusion_and_bleeding_triage",
+    "anemia_cbc_pcv_total_solids_and_serial_trend",
+    "anemia_absolute_reticulocyte_count",
+    "anemia_manual_blood_smear_review",
+    "anemia_hemolysis_and_agglutination_workup",
+    "anemia_coagulation_and_blood_loss_source",
+    "anemia_infectious_toxin_and_comorbidity_screen",
+    "anemia_blood_type_crossmatch_and_transfusion_route",
+    "anemia_bone_marrow_or_specialist_referral"
+  ],
+  "crossFamilyLinks": ["wound_abscess", "gi_parasites", "renal_ckd", "infectious_vector_borne", "oncology_mass"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/circulatory-system/anemia/overview-of-anemia-in-animals",
+    "https://www.merckvetmanual.com/circulatory-system/anemia/regenerative-anemias-in-animals",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC6430921/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC7152186/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC10741281/"
+  ]
+}

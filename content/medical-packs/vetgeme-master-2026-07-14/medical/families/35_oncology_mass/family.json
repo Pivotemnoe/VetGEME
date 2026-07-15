@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "familyId": "oncology_mass",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["general_exam", "cytology", "histology_external", "imaging_or_referral", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 7,
+  "presentationCount": 21,
+  "variants": [
+    {
+      "id": "mass_non_neoplastic_or_inflammatory",
+      "title": "Неопухолевое или воспалительное образование",
+      "presentations": ["p1_cyst_lipoma_or_other_benign_cytology_pattern", "p2_abscess_granuloma_or_reactive_lesion", "p3_mass_resolves_persists_or_changes_on_defined_recheck"]
+    },
+    {
+      "id": "mass_cutaneous_or_subcutaneous_undifferentiated",
+      "title": "Неидентифицированная кожная/подкожная масса",
+      "presentations": ["p1_small_mobile_slow_growing_mass", "p2_large_fixed_ulcerated_or_rapidly_growing_mass", "p3_multiple_masses_with_independent_sample_identity"]
+    },
+    {
+      "id": "mass_round_cell_or_mast_cell_pattern",
+      "title": "Round-cell или mast-cell pattern",
+      "presentations": ["p1_cytology_supports_mast_cell_tumor", "p2_round_cell_tumor_requires_classification", "p3_systemic_or_degranulation_red_flags_change_urgency"]
+    },
+    {
+      "id": "mass_lymph_node_or_systemic_pattern",
+      "title": "Лимфоузел или системное опухолевое заболевание",
+      "presentations": ["p1_local_reactive_vs_metastatic_node", "p2_generalized_lymphadenopathy_or_lymphoma_pattern", "p3_cytology_needs_flow_histology_or_immunophenotype"]
+    },
+    {
+      "id": "mass_internal_or_organ_associated",
+      "title": "Внутренняя или орган-ассоциированная масса",
+      "presentations": ["p1_incidental_internal_mass_without_clinical_effect", "p2_mass_with_bleeding_obstruction_effusion_or_organ_dysfunction", "p3_image_guided_sampling_has_site_specific_risk_or_low_yield"]
+    },
+    {
+      "id": "mass_nondiagnostic_or_biopsy_planning",
+      "title": "Неинформативная цитология или планирование biopsy",
+      "presentations": ["p1_low_cellularity_blood_or_necrosis_only", "p2_mesenchymal_epithelial_or_indeterminate_category", "p3_incisional_vs_excisional_plan_must_protect_definitive_margins"]
+    },
+    {
+      "id": "mass_confirmed_neoplasia_staging_and_followup",
+      "title": "Подтверждённая опухоль: grade, stage и наблюдение",
+      "presentations": ["p1_histology_confirms_type_grade_and_margin_status", "p2_selective_regional_and_distant_staging", "p3_treatment_surveillance_palliative_or_quality_of_life_route"]
+    }
+  ],
+  "researchIds": [
+    "mass_map_measure_photo_growth_function_and_sample_identity",
+    "mass_cytology_with_pathologist_review",
+    "mass_inflammation_infection_and_non_neoplastic_differential",
+    "mass_biopsy_method_site_and_definitive_surgery_planning",
+    "mass_histopathology_grade_invasion_and_margin_review",
+    "mass_regional_lymph_node_sampling_by_drainage_not_size_alone",
+    "mass_selective_thoracic_abdominal_or_advanced_imaging_staging",
+    "mass_flow_cytometry_immunophenotype_or_immunohistochemistry_referral",
+    "mass_baseline_patient_comorbidity_and_treatment_readiness",
+    "mass_quality_of_life_owner_goals_cost_and_followup_plan"
+  ],
+  "crossFamilyLinks": ["skin_infectious", "wound_abscess", "hematology_anemia", "gi_obstruction", "hepatobiliary", "ortho_fracture_luxation", "neuro_vestibular"],
+  "sourceUrls": [
+    "https://www.aaha.org/resources/2026-aaha-oncology-guidelines-for-dogs-and-cats/section-3-tumor-diagnostics-staging/",
+    "https://www.aaha.org/resources/2026-aaha-oncology-guidelines-for-dogs-and-cats/section-1-overview-of-common-cancers/",
+    "https://www.merckvetmanual.com/integumentary-system/tumors-of-the-skin-and-soft-tissues/overview-of-tumors-of-the-skin-and-soft-tissues-in-animals",
+    "https://www.merckvetmanual.com/integumentary-system/tumors-of-the-skin-and-soft-tissues/lymphocytic-histiocytic-and-related-cutaneous-tumors-in-animals",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12378112/"
+  ]
+}

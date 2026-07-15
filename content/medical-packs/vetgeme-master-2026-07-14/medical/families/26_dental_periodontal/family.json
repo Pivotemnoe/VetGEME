@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "familyId": "dental_periodontal",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["oral_exam", "pain_assessment", "anesthesia", "dental_xray_or_referral", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "dental_conscious_screen_and_preventive_plan",
+      "title": "Осознанный скрининг полости рта и профилактический план",
+      "presentations": ["p1_no_owner_complaint_but_visible_risk", "p2_halitosis_calculus_or_early_gingivitis", "p3_home_care_and_recheck_after_previous_dental"]
+    },
+    {
+      "id": "dental_periodontal_disease",
+      "title": "Пародонтальная болезнь",
+      "presentations": ["p1_gingivitis_without_confirmed_attachment_loss", "p2_periodontitis_with_pockets_or_bone_loss", "p3_advanced_mobile_teeth_or_oronasal_complication"]
+    },
+    {
+      "id": "dental_feline_tooth_resorption",
+      "title": "Резорбция зубов кошек",
+      "presentations": ["p1_painful_cervical_lesion_suspected_awake", "p2_type_and_stage_defined_by_intraoral_radiographs", "p3_recurrent_new_lesions_on_longitudinal_screening"]
+    },
+    {
+      "id": "dental_fractured_nonvital_or_endodontic_tooth",
+      "title": "Перелом, нежизнеспособность пульпы или эндодонтическая проблема",
+      "presentations": ["p1_recent_complicated_crown_fracture", "p2_discolored_nonvital_or_chronic_periapical_disease", "p3_strategic_tooth_extraction_vs_endodontic_referral"]
+    },
+    {
+      "id": "dental_feline_chronic_gingivostomatitis",
+      "title": "Хронический гингивостоматит кошек",
+      "presentations": ["p1_severe_caudal_oral_pain_and_hyporexia", "p2_concurrent_periodontal_resorptive_or_viral_context", "p3_persistent_or_refractory_after_prior_dental_surgery"]
+    },
+    {
+      "id": "dental_complex_anesthesia_or_referral",
+      "title": "Стоматологический пациент с повышенным анестезиологическим или процедурным риском",
+      "presentations": ["p1_geriatric_or_systemic_comorbidity_requires_plan", "p2_airway_brachycephalic_or_monitoring_constraint", "p3_extensive_disease_requires_staged_or_specialist_procedure"]
+    }
+  ],
+  "researchIds": [
+    "dental_conscious_oral_screen",
+    "dental_preanesthetic_whole_patient_assessment",
+    "dental_anesthetized_tooth_by_tooth_charting",
+    "dental_full_mouth_intraoral_radiography",
+    "dental_periodontal_probe_mobility_and_furcation_assessment",
+    "dental_pulp_vitality_and_periapical_assessment",
+    "dental_feline_resorption_type_and_stage",
+    "dental_stomatitis_and_concurrent_disease_workup",
+    "dental_postprocedure_pain_nutrition_and_healing_recheck",
+    "dental_lifetime_home_care_and_recall_plan"
+  ],
+  "crossFamilyLinks": ["wound_abscess", "oncology_mass", "infectious_feline_major", "renal_ckd", "cardio_chf"],
+  "sourceUrls": [
+    "https://www.aaha.org/resources/2019-aaha-dental-care-guidelines-for-dogs-and-cats/overview/",
+    "https://www.aaha.org/resources/2019-aaha-dental-care-guidelines-for-dogs-and-cats/unconscious/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12665832/",
+    "https://avdc.org/wp-content/uploads/2019/AVDC-pos-stmts/FORL_2019.pdf",
+    "https://avdc.org/avdc-nomenclature/"
+  ]
+}

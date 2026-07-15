@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "familyId": "gi_acute",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["general_exam", "abdominal_palpation", "hydration_assessment"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 8,
+  "presentationCount": 24,
+  "variants": [
+    {
+      "id": "gi_acute_uncomplicated_vomiting",
+      "title": "Острая неосложнённая рвота",
+      "presentations": ["p1_single_episode_stable", "p2_two_episodes_low_budget", "p3_persistent_next_day"]
+    },
+    {
+      "id": "gi_acute_uncomplicated_diarrhea",
+      "title": "Острая неосложнённая диарея",
+      "presentations": ["p1_mild_small_bowel", "p2_large_bowel_tenesmus", "p3_group_exposure"]
+    },
+    {
+      "id": "gi_acute_dietary_indiscretion",
+      "title": "Пищевая погрешность",
+      "presentations": ["p1_garbage_access_stable", "p2_fatty_food_abdominal_pain", "p3_uncertain_toxin_or_foreign_material"]
+    },
+    {
+      "id": "gi_acute_regurgitation",
+      "title": "Регургитация как жалоба на рвоту",
+      "presentations": ["p1_passive_after_meal", "p2_owner_video_clarifies", "p3_aspiration_warning"]
+    },
+    {
+      "id": "gi_acute_hemorrhagic_diarrhea",
+      "title": "Острый геморрагический диарейный синдром собак",
+      "presentations": ["p1_early_bloody_stable", "p2_hemoconcentration_dehydration", "p3_hypovolemic_shock"]
+    },
+    {
+      "id": "gi_acute_dehydrating_gastroenteritis",
+      "title": "Острый гастроэнтерит с обезвоживанием",
+      "presentations": ["p1_mild_oral_tolerant", "p2_moderate_cannot_hold_water", "p3_hypovolemia_systemic_signs"]
+    },
+    {
+      "id": "gi_acute_feline_nausea_anorexia",
+      "title": "Острая тошнота и анорексия кошки",
+      "presentations": ["p1_subtle_nausea", "p2_repeated_vomiting", "p3_systemic_disease_differential"]
+    },
+    {
+      "id": "gi_acute_red_flag_abdomen",
+      "title": "Острая ЖКТ-жалоба с признаками хирургического риска",
+      "presentations": ["p1_foreign_body_access", "p2_cat_linear_foreign_body", "p3_distension_nonproductive_retching"]
+    }
+  ],
+  "researchIds": [
+    "gi_general_exam",
+    "gi_hydration_perfusion_assessment",
+    "gi_abdominal_palpation",
+    "gi_fecal_microscopy",
+    "gi_pcv_total_solids",
+    "gi_cbc_biochemistry_electrolytes",
+    "gi_abdominal_xray",
+    "gi_abdominal_ultrasound"
+  ],
+  "sourceUrls": [
+    "https://wsava.org/wp-content/uploads/2025/02/Canine-acute-diarrhea_V11.pdf",
+    "https://wsava.org/wp-content/uploads/2024/09/ENOVAT-GUIDELINES-FOR-ANTIMICROBIAL-USE-IN-CANINE-ACUTE-DIARRHEA.pdf",
+    "https://www.aaha.org/resources/2024-aaha-fluid-therapy-guidelines-for-dogs-and-cats/",
+    "https://www.merckvetmanual.com/digestive-system/diseases-of-the-stomach-in-small-animals/gastritis-in-small-animals",
+    "https://www.merckvetmanual.com/digestive-system/diseases-of-the-large-intestine-in-small-animals/acute-hemorrhagic-diarrhea-syndrome-in-dogs",
+    "https://www.merckvetmanual.com/digestive-system/surgical-problems-of-the-gastrointestinal-tract-in-small-animals/gastrointestinal-obstruction-in-small-animals",
+    "https://www.merckvetmanual.com/digestive-system/digestive-system-introduction/the-digestive-system-in-animals"
+  ]
+}

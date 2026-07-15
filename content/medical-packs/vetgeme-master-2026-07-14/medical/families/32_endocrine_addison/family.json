@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "familyId": "endocrine_addison",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog"],
+  "coreCapabilities": ["cbc", "biochemistry", "electrolytes", "acth_test_external", "emergency_stabilization", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 4,
+  "presentationCount": 12,
+  "variants": [
+    {
+      "id": "addison_primary_with_electrolyte_changes",
+      "title": "Первичный гипоадренокортицизм с mineralocorticoid deficiency",
+      "presentations": ["p1_waxing_waning_gi_lethargy_and_weight_loss", "p2_hyponatremia_hyperkalemia_azotemia_or_hypoglycemia_pattern", "p3_mimics_renal_gi_or_other_chronic_disease"]
+    },
+    {
+      "id": "addison_eunatremic_eukalemic_or_secondary",
+      "title": "Eunatremic/eukalemic primary или secondary hypoadrenocorticism",
+      "presentations": ["p1_recurrent_gi_or_weakness_without_classic_electrolytes", "p2_low_baseline_cortisol_requires_acth_confirmation", "p3_primary_vs_secondary_classification_and_future_electrolyte_monitoring"]
+    },
+    {
+      "id": "addisonian_crisis",
+      "title": "Аддисонический криз",
+      "presentations": ["p1_hypovolemic_shock_collapse_or_severe_gi_loss", "p2_hyperkalemic_bradyarrhythmia_hypoglycemia_or_acidosis", "p3_crisis_mimics_acute_kidney_injury_sepsis_or_gi_catastrophe"]
+    },
+    {
+      "id": "addison_iatrogenic_or_longitudinal_management",
+      "title": "Ятрогенная супрессия или продольное ведение",
+      "presentations": ["p1_glucocorticoid_withdrawal_or_cushing_treatment_suppression", "p2_stable_replacement_monitoring_and_individualized_interval", "p3_stress_illness_missed_dose_or_owner_emergency_plan"]
+    }
+  ],
+  "researchIds": [
+    "addison_history_exam_cbc_chemistry_electrolytes_glucose_and_urinalysis",
+    "addison_baseline_cortisol_as_rule_out_not_confirmation",
+    "addison_acth_stimulation_confirmation",
+    "addison_primary_secondary_and_mineralocorticoid_classification",
+    "addison_crisis_perfusion_ecg_glucose_electrolyte_and_acid_base_monitoring",
+    "addison_acute_kidney_gi_sepsis_and_other_mimic_review",
+    "addison_glucocorticoid_exposure_and_endocrine_treatment_inventory",
+    "addison_longitudinal_electrolyte_clinical_and_weight_monitoring",
+    "addison_owner_stress_event_and_emergency_plan",
+    "addison_endocrinology_referral_for_discordant_cases"
+  ],
+  "crossFamilyLinks": ["endocrine_cushing", "renal_ckd", "gi_acute", "gi_chronic_enteropathy", "endocrine_diabetes"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/endocrine-system/the-adrenal-glands/addison-disease-hypoadrenocorticism-in-animals",
+    "https://www.aaha.org/resources/2023-aaha-selected-endocrinopathies-of-dogs-and-cats-guidelines/categorical-approach-to-diagnosis-based-on-clinical-presentation-3/",
+    "https://www.aaha.org/resources/2023-aaha-selected-endocrinopathies-of-dogs-and-cats-guidelines/diagnostic-testing-and-monitoring-3/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC9066729/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC6055912/"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "familyId": "gi_parasites",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["general_exam", "hydration_assessment", "fecal_flotation_centrifugal", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 7,
+  "presentationCount": 21,
+  "variants": [
+    {
+      "id": "gi_parasite_ascarid",
+      "title": "Аскаридоз собак или кошек",
+      "presentations": ["p1_puppy_or_kitten_potbelly", "p2_asymptomatic_egg_shedding", "p3_adult_worm_in_vomit_or_stool"]
+    },
+    {
+      "id": "gi_parasite_hookworm",
+      "title": "Анкилостомоз собак или кошек",
+      "presentations": ["p1_subclinical_positive_flotation", "p2_puppy_anemia_melena", "p3_persistent_or_resistant_shedding"]
+    },
+    {
+      "id": "gi_parasite_whipworm",
+      "title": "Трихоцефалёз собаки",
+      "presentations": ["p1_chronic_large_bowel_diarrhea", "p2_intermittent_shedding_false_negative", "p3_heavy_burden_weakness_or_anemia"]
+    },
+    {
+      "id": "gi_parasite_giardia",
+      "title": "Инфекция Giardia duodenalis",
+      "presentations": ["p1_young_animal_intermit_diarrhea", "p2_asymptomatic_positive_result", "p3_reinfection_in_multi_animal_home"]
+    },
+    {
+      "id": "gi_parasite_cystoisospora",
+      "title": "Цистоизоспороз собак или кошек",
+      "presentations": ["p1_stressed_young_animal_diarrhea", "p2_asymptomatic_oocyst_shedding", "p3_dehydrating_or_hemorrhagic_complication"]
+    },
+    {
+      "id": "gi_parasite_tritrichomonas_feline",
+      "title": "Tritrichomonas foetus у кошки",
+      "presentations": ["p1_young_multi_cat_large_bowel_diarrhea", "p2_direct_smear_negative_pcr_positive", "p3_persistent_signs_after_empirical_treatment"]
+    },
+    {
+      "id": "gi_parasite_cestode",
+      "title": "Цестодоз собак или кошек",
+      "presentations": ["p1_dipylidium_segments_and_flea_link", "p2_hunting_or_raw_offal_taenia_risk", "p3_regional_echinococcus_public_health_route"]
+    }
+  ],
+  "researchIds": [
+    "parasite_risk_and_prevention_history",
+    "parasite_fecal_macroscopic_exam",
+    "parasite_centrifugal_flotation",
+    "parasite_direct_fresh_smear",
+    "parasite_fecal_antigen",
+    "parasite_fecal_pcr",
+    "parasite_pcv_cbc_protein",
+    "parasite_quantitative_followup",
+    "parasite_environment_and_contact_plan"
+  ],
+  "crossFamilyLinks": ["gi_acute", "gi_chronic_enteropathy", "skin_ectoparasites", "hematology_anemia"],
+  "sourceUrls": [
+    "https://capcvet.org/guidelines/ascarid/",
+    "https://capcvet.org/guidelines/hookworms/",
+    "https://capcvet.org/guidelines/trichuris-vulpis/",
+    "https://capcvet.org/guidelines/giardia/",
+    "https://capcvet.org/guidelines/coccidia/",
+    "https://capcvet.org/guidelines/cestodes/",
+    "https://www.esccap.org/uploads/docs/82qb4jhx_1477_ESCCAP_GL6_Update_v3_1p.pdf",
+    "https://www.merckvetmanual.com/digestive-system/gastrointestinal-parasites-of-small-animals/roundworms-in-small-animals",
+    "https://www.merckvetmanual.com/digestive-system/gastrointestinal-parasites-of-small-animals/hookworms-in-small-animals",
+    "https://www.merckvetmanual.com/digestive-system/coccidiosis/coccidiosis-of-cats-and-dogs",
+    "https://www.merckvetmanual.com/digestive-system/giardiasis-giardia/giardiasis-in-animals"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "familyId": "eye_surface",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["general_exam", "eye_exam", "fluorescein", "safe_referral"],
+  "safeRouteCapability": "ophthalmology_referral",
+  "variantCount": 7,
+  "presentationCount": 21,
+  "variants": [
+    {
+      "id": "eye_conjunctivitis_undifferentiated",
+      "title": "Недифференцированный конъюнктивальный синдром",
+      "presentations": ["p1_unilateral_mild_discharge", "p2_bilateral_group_contact_cat", "p3_recurrent_without_corneal_signs"]
+    },
+    {
+      "id": "eye_corneal_ulcer_superficial",
+      "title": "Поверхностная неосложнённая язва роговицы",
+      "presentations": ["p1_acute_after_minor_trauma", "p2_owner_reports_red_eye_only", "p3_recheck_healing_as_expected"]
+    },
+    {
+      "id": "eye_corneal_ulcer_complicated",
+      "title": "Глубокая, инфицированная или расплавляющаяся язва роговицы",
+      "presentations": ["p1_deep_stromal_defect", "p2_infiltrate_or_melting", "p3_rapid_progression_or_nonhealing"]
+    },
+    {
+      "id": "eye_foreign_body_or_mechanical_cause",
+      "title": "Инородное тело или механическая причина раздражения роговицы",
+      "presentations": ["p1_visible_superficial_foreign_material", "p2_hidden_under_third_eyelid", "p3_eyelid_or_hair_contact_recurrence"]
+    },
+    {
+      "id": "eye_keratoconjunctivitis_sicca",
+      "title": "Сухой кератоконъюнктивит",
+      "presentations": ["p1_bilateral_mucoid_discharge", "p2_secondary_ulcer", "p3_chronic_pigment_or_poor_adherence"]
+    },
+    {
+      "id": "eye_anterior_uveitis",
+      "title": "Передний увеит",
+      "presentations": ["p1_unilateral_acute_pain", "p2_bilateral_systemic_risk", "p3_recheck_secondary_pressure_risk"]
+    },
+    {
+      "id": "eye_acute_glaucoma",
+      "title": "Острый глаукомный приступ",
+      "presentations": ["p1_pain_edema_mydriasis", "p2_owner_reports_lethargy_not_eye_pain", "p3_fellow_eye_risk_followup"]
+    }
+  ],
+  "researchIds": [
+    "eye_neurovisual_screen",
+    "eye_surface_exam",
+    "eye_schirmer_test",
+    "eye_fluorescein",
+    "eye_tonometry",
+    "eye_ophthalmoscopy",
+    "eye_ocular_cytology",
+    "eye_external_pcr_or_culture"
+  ],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/eye-diseases-and-disorders/ophthalmology/the-conjunctiva-in-animals",
+    "https://www.merckvetmanual.com/eye-diseases-and-disorders/ophthalmology/the-cornea-in-animals",
+    "https://www.merckvetmanual.com/emergency-medicine-and-critical-care/ophthalmic-emergencies-in-small-animals/anterior-uveitis-in-small-animals",
+    "https://www.merckvetmanual.com/emergency-medicine-and-critical-care/ophthalmic-emergencies-in-small-animals/acute-glaucoma-in-small-animals",
+    "https://www.merckvetmanual.com/pharmacology/systemic-pharmacotherapeutics-of-the-eye/diagnostic-tests-pertaining-to-ocular-medications-in-animals",
+    "https://www.acvo.org/common-conditions-1/2018/2/2/dry-eye-keratoconjunctivitis-sicca",
+    "https://www.acvo.org/gp-referrals"
+  ]
+}

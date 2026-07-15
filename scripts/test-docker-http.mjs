@@ -93,6 +93,10 @@ async function runHttpSmoke() {
       type: "application/json",
     },
     {
+      path: "/content/medical-packs/vetgeme-master-2026-07-14/medical/catalog/family-registry.json",
+      type: "application/json",
+    },
+    {
       path: "/art/runtime-v2/assets/rooms/doctor-office.png",
       type: "image/png",
     },
@@ -167,6 +171,10 @@ async function runHttpSmoke() {
     "/content/packs/not-a-pack/manifest.json",
     "/content/packs/tier-01-v2/future/technical-infectious-course.json",
     "/content/packs/tier-01-v2/not-shipped.json",
+    "/content/medical-packs/not-a-pack/PACKAGE_MANIFEST.json",
+    "/content/medical-packs/vetgeme-master-2026-07-14/medical/README.md",
+    "/content/medical-packs/vetgeme-master-2026-07-14/medical/families/01_ear/EAR_FAMILY.md",
+    "/content/medical-packs/vetgeme-master-2026-07-14/medical/families/01_ear/not-shipped.json",
     "/tier-01-v2/content/clinical/tier-01/manifest.json",
     "/tier-01-v2/scripts/validate-tier-01-content-v2.mjs",
     "/legacy/content/tier-01-v1-review/clinical/tier-01/manifest.json",

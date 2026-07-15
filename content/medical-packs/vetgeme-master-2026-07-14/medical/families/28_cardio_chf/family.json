@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "familyId": "cardio_chf",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["respiratory_distress_minimal_handling", "oxygen", "xray_or_referral", "ecg", "cardiology_referral", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 5,
+  "presentationCount": 15,
+  "variants": [
+    {
+      "id": "chf_left_sided_cardiogenic_pulmonary_edema",
+      "title": "Левосторонняя недостаточность с кардиогенным отёком лёгких",
+      "presentations": ["p1_dog_with_tachypnea_dyspnea_and_cardiac_context", "p2_cat_with_occult_cardiomyopathy_and_acute_distress", "p3_recurrent_pulmonary_edema_after_previous_control"]
+    },
+    {
+      "id": "chf_pleural_effusion_cardiac_or_mixed",
+      "title": "Плевральный выпот при сердечной недостаточности или смешанной причине",
+      "presentations": ["p1_cat_with_pleural_effusion_and_reduced_ventilation", "p2_effusion_requires_sampling_or_competing_cause", "p3_reaccumulating_effusion_and_drainage_decision"]
+    },
+    {
+      "id": "chf_right_sided_systemic_congestion",
+      "title": "Правосторонняя недостаточность и системный застой",
+      "presentations": ["p1_ascites_jugular_distension_or_hepatomegaly", "p2_pulmonary_hypertension_or_tricuspid_context", "p3_refractory_ascites_with_quality_of_life_tradeoff"]
+    },
+    {
+      "id": "chf_acute_decompensated_or_low_output",
+      "title": "Острая декомпенсация, аритмия или низкий сердечный выброс",
+      "presentations": ["p1_severe_hypoxemic_distress_needing_minimal_handling", "p2_arrhythmia_syncope_hypotension_or_cardiogenic_shock", "p3_concurrent_arterial_thromboembolism_or_other_emergency"]
+    },
+    {
+      "id": "chf_longitudinal_control_or_respiratory_mimic",
+      "title": "Продольный контроль CHF или респираторная имитация",
+      "presentations": ["p1_stable_home_resting_respiratory_rate_followup", "p2_azotemia_electrolyte_or_blood_pressure_tradeoff", "p3_cough_tachypnea_without_confirmed_congestion"]
+    }
+  ],
+  "researchIds": [
+    "chf_minimal_handling_respiratory_and_perfusion_triage",
+    "chf_thoracic_radiography_or_pocus_route",
+    "chf_ecg_blood_pressure_and_oxygenation",
+    "chf_echocardiography_and_cardiac_phenotype",
+    "chf_pleural_or_abdominal_effusion_assessment",
+    "chf_cbc_biochemistry_electrolyte_renal_and_thyroid_context",
+    "chf_cardiac_biomarker_as_support_not_proof",
+    "chf_home_resting_respiratory_rate_and_weight_log",
+    "chf_response_renal_perfusion_and_quality_of_life_monitoring",
+    "chf_refractory_or_advanced_cardiology_referral"
+  ],
+  "crossFamilyLinks": ["resp_pneumonia", "resp_feline_asthma", "renal_ckd", "endocrine_feline_hyperthyroid", "hematology_anemia", "oncology_mass"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/circulatory-system/heart-failure-in-dogs-and-cats/heart-failure-in-dogs-and-cats",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC6524084/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC7255676/",
+    "https://www.merckvetmanual.com/circulatory-system/diagnosis-of-heart-disease/diagnosis-of-heart-disease-in-animals"
+  ]
+}

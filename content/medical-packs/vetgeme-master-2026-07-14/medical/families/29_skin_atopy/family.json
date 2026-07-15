@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "familyId": "skin_atopy",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["skin_exam", "skin_cytology", "skin_scraping", "longitudinal_care", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 6,
+  "presentationCount": 18,
+  "variants": [
+    {
+      "id": "atopy_canine_environmental_pattern",
+      "title": "Атопический дерматит собаки с совместимым клиническим паттерном",
+      "presentations": ["p1_seasonal_face_feet_ears_flexural_pruritus", "p2_nonseasonal_or_seasonal_flare_on_chronic_background", "p3_recurrent_otitis_as_dominant_manifestation"]
+    },
+    {
+      "id": "atopy_feline_atopic_skin_syndrome",
+      "title": "Атопический кожный синдром кошки",
+      "presentations": ["p1_head_neck_pruritus_or_self_induced_alopecia", "p2_miliary_dermatitis_or_eosinophilic_pattern", "p3_multifactorial_feline_pruritus_without_single_visible_cause"]
+    },
+    {
+      "id": "atopy_food_induced_allergic_dermatitis",
+      "title": "Пище-индуцированный аллергический дерматит",
+      "presentations": ["p1_year_round_pruritus_with_or_without_gi_signs", "p2_elimination_trial_with_hidden_exposure_or_poor_feasibility", "p3_improvement_then_controlled_provocation_confirms_food_trigger"]
+    },
+    {
+      "id": "atopy_flea_parasite_or_contact_overlap",
+      "title": "Блошиная, паразитарная, контактная или комбинированная гиперчувствительность",
+      "presentations": ["p1_no_fleas_seen_but_exposure_and_distribution_compatible", "p2_mite_or_other_ectoparasite_mimic", "p3_contact_insect_or_multiple_allergic_triggers"]
+    },
+    {
+      "id": "atopy_secondary_infection_or_flare",
+      "title": "Обострение с вторичной инфекцией кожи или уха",
+      "presentations": ["p1_staphylococcal_pyoderma_amplifies_pruritus", "p2_malassezia_skin_or_ear_overgrowth", "p3_recurrent_or_treatment_unresponsive_infection_requires_culture_and_cause_review"]
+    },
+    {
+      "id": "atopy_longitudinal_poor_control_or_immunotherapy",
+      "title": "Плохой контроль, нежелательные эффекты или план аллерген-специфической иммунотерапии",
+      "presentations": ["p1_trigger_adherence_or_home_plan_gap", "p2_treatment_limited_by_comorbidity_or_adverse_effect", "p3_allergy_testing_for_immunotherapy_after_clinical_diagnosis"]
+    }
+  ],
+  "researchIds": [
+    "atopy_full_pruritus_history_distribution_and_seasonality",
+    "atopy_skin_ear_cytology_and_infection_mapping",
+    "atopy_flea_comb_scraping_and_ectoparasite_control_trial",
+    "atopy_dermatophyte_and_other_mimic_route",
+    "atopy_strict_elimination_and_provocation_trial",
+    "atopy_secondary_infection_culture_when_indicated",
+    "atopy_allergy_testing_only_for_immunotherapy_selection",
+    "atopy_environment_barrier_and_home_feasibility_review",
+    "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+    "atopy_refractory_dermatology_referral"
+  ],
+  "crossFamilyLinks": ["skin_ectoparasites", "skin_infectious", "ear_external", "ear_chronic_middle", "gi_chronic_enteropathy", "endocrine_cushing", "oncology_mass"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/integumentary-system/atopic-skin-conditions-in-dogs-and-cats/atopic-dermatitis-in-dogs",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC4531508/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC4537558/",
+    "https://www.aaha.org/wp-content/uploads/2023/10/2023-aaha-management-of-allergic-skin-diseases-guidelines-new.pdf",
+    "https://www.merckvetmanual.com/integumentary-system/fleas-and-flea-allergy-dermatitis/flea-allergy-dermatitis-in-dogs-and-cats"
+  ]
+}

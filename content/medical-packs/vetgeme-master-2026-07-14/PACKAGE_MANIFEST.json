@@ -1,0 +1,38 @@
+{
+  "packageId": "vetgeme-master-package",
+  "packageVersion": "2026.07.14.2",
+  "status": "handoff_ready_medical_activation_requires_veterinary_approval",
+  "entrypoint": "START_HERE_FOR_PROGRAMMER.md",
+  "medical": {
+    "familyCount": 39,
+    "variantCount": 215,
+    "presentationCount": 645,
+    "familyStatus": "source_checked_pending_veterinary_review",
+    "generatorEligibleFamilies": 0,
+    "registry": "medical/catalog/family-registry.json"
+  },
+  "systems": {
+    "capabilityCount": 447,
+    "registry": "systems/catalog/capability-registry.json"
+  },
+  "engineVerification": {
+    "status": "passed_with_p0r_and_p0v_visual_preflight_required",
+    "report": "audit/ENGINE_VERIFICATION_2026-07-14.md",
+    "evidenceDirectory": "audit/evidence"
+  },
+  "visualPrototype": {
+    "mode": "modular-v2",
+    "status": "feature_flag_only_pending_p0r_p0v",
+    "validatedAssets": 63,
+    "placedRooms": 4,
+    "animationStrips": 8,
+    "review": "audit/VISUAL_PROTOTYPE_REVIEW_2026-07-14.md"
+  },
+  "activationRules": [
+    "Do not enable a medical family before independent veterinary approval.",
+    "Do not invent clinical truth, medication names, doses, protocols or test results in code.",
+    "Use seeded generation and persist a generated day immediately.",
+    "Version and migrate every save schema change.",
+    "Keep a safe referral path when equipment is unavailable."
+  ]
+}

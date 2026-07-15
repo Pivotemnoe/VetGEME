@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "familyId": "resp_feline_asthma",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["cat"],
+  "coreCapabilities": ["respiratory_exam", "pulse_oximetry", "xray_or_referral", "oxygen", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 4,
+  "presentationCount": 12,
+  "variants": [
+    {
+      "id": "feline_asthma_stable_lower_airway_disease",
+      "title": "Стабильное подозрение на астму кошек",
+      "presentations": ["p1_intermittent_cough_or_wheeze", "p2_chronic_cough_with_bronchial_pattern", "p3_cough_mistaken_for_hairball_or_nausea"]
+    },
+    {
+      "id": "feline_asthma_acute_exacerbation",
+      "title": "Острое обострение астмы",
+      "presentations": ["p1_after_smoke_dust_aerosol_or_environment_change", "p2_inhaler_or_spacer_technique_failure", "p3_breakthrough_exacerbation_despite_reported_plan"]
+    },
+    {
+      "id": "feline_asthma_severe_status",
+      "title": "Тяжёлый бронхоспазм или астматический статус",
+      "presentations": ["p1_marked_expiratory_distress_or_cyanosis", "p2_exhaustion_quiet_chest_or_worsening_gas_exchange", "p3_pneumothorax_or_other_acute_complication"]
+    },
+    {
+      "id": "feline_asthma_mimic_or_poor_control",
+      "title": "Имитация астмы или плохой контроль",
+      "presentations": ["p1_lungworm_or_heartworm_compatible_context", "p2_chronic_bronchitis_infection_or_mixed_inflammation", "p3_cardiac_neoplastic_foreign_body_or_other_mimic"]
+    }
+  ],
+  "researchIds": [
+    "feline_asthma_respiratory_triage_and_minimal_handling",
+    "feline_asthma_thoracic_radiography",
+    "feline_asthma_airway_cytology_and_culture",
+    "feline_asthma_parasite_heartworm_and_regional_exclusion",
+    "feline_asthma_cardiac_and_structural_mimic_exclusion",
+    "feline_asthma_environment_and_trigger_inventory",
+    "feline_asthma_inhaler_device_technique_check",
+    "feline_asthma_longitudinal_symptom_and_exacerbation_log",
+    "feline_asthma_refractory_advanced_airway_referral"
+  ],
+  "crossFamilyLinks": ["resp_cat_upper", "resp_pneumonia", "cardio_chf", "infectious_feline_major", "oncology_mass"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/respiratory-system/respiratory-diseases-of-small-animals/feline-bronchial-asthma",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC11148999/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC10814146/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC13082273/"
+  ]
+}

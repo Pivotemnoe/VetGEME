@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "familyId": "skin_infectious",
+  "familyVersion": "2026.07.14.1",
+  "status": "source_checked_pending_veterinary_review",
+  "generatorEligible": false,
+  "species": ["dog", "cat"],
+  "coreCapabilities": ["skin_exam", "skin_cytology", "skin_scraping", "safe_referral"],
+  "safeRouteCapability": "safe_referral",
+  "variantCount": 7,
+  "presentationCount": 21,
+  "variants": [
+    {
+      "id": "skin_surface_bacterial_overgrowth_or_intertrigo",
+      "title": "Поверхностное бактериальное разрастание или интертриго",
+      "presentations": ["p1_moist_skin_fold", "p2_local_bacterial_overgrowth", "p3_recurrent_fold_requires_underlying_plan"]
+    },
+    {
+      "id": "skin_acute_moist_dermatitis",
+      "title": "Острый влажный дерматит",
+      "presentations": ["p1_rapid_hot_spot_after_self_trauma", "p2_dense_coat_hidden_extent", "p3_deeper_folliculitis_red_flag"]
+    },
+    {
+      "id": "skin_superficial_bacterial_folliculitis",
+      "title": "Поверхностный бактериальный фолликулит",
+      "presentations": ["p1_papules_pustules_collarettes", "p2_feline_crusted_or_miliary_pattern", "p3_recurrent_requires_trigger_search"]
+    },
+    {
+      "id": "skin_deep_pyoderma_or_furunculosis",
+      "title": "Глубокая пиодермия или фурункулёз",
+      "presentations": ["p1_pain_blood_pus_draining_tracts", "p2_interdigital_furunculosis", "p3_post_grooming_or_unusual_organism"]
+    },
+    {
+      "id": "skin_malassezia_dermatitis",
+      "title": "Malassezia-дерматит",
+      "presentations": ["p1_greasy_odorous_pruritic_skin", "p2_paws_folds_and_concurrent_otitis", "p3_recurrent_secondary_to_allergy_or_endocrine"]
+    },
+    {
+      "id": "skin_dermatophytosis",
+      "title": "Дерматофития собак или кошек",
+      "presentations": ["p1_kitten_or_puppy_focal_alopecia", "p2_longhaired_cat_multi_animal_home", "p3_clinical_cure_requires_mycological_check"]
+    },
+    {
+      "id": "skin_nodular_or_atypical_infection",
+      "title": "Узловая или атипичная инфекция кожи",
+      "presentations": ["p1_nodules_after_soil_or_plant_exposure", "p2_nonhealing_draining_tracts", "p3_systemic_or_zoonotic_red_flags"]
+    }
+  ],
+  "researchIds": [
+    "skin_infectious_lesion_map",
+    "skin_infectious_impression_or_tape_cytology",
+    "skin_infectious_scraping_and_trichogram",
+    "skin_infectious_wood_lamp",
+    "skin_infectious_dermatophyte_direct_exam",
+    "skin_infectious_bacterial_culture",
+    "skin_infectious_fungal_culture_or_pcr",
+    "skin_infectious_biopsy_histology",
+    "skin_infectious_underlying_trigger_workup"
+  ],
+  "crossFamilyLinks": ["skin_ectoparasites", "skin_atopy", "ear_external", "endocrine_cushing", "oncology_mass"],
+  "sourceUrls": [
+    "https://www.merckvetmanual.com/integumentary-system/pyoderma/pyoderma-in-dogs-and-cats",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12058580/",
+    "https://www.merckvetmanual.com/integumentary-system/dermatophytosis/dermatophytosis-in-dogs-and-cats",
+    "https://www.merckvetmanual.com/integumentary-system/integumentary-system-introduction/diagnosis-of-skin-diseases-in-small-animals",
+    "https://www.merckvetmanual.com/integumentary-system/interdigital-furunculosis/interdigital-furunculosis-in-dogs",
+    "https://www.merckvetmanual.com/integumentary-system/integumentary-system-introduction/dermatological-problems-in-animals"
+  ]
+}

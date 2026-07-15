@@ -27,6 +27,9 @@ for (const file of syntaxFiles) {
 const checks = [
   ["content registry validator", "scripts/validate-content-registry.mjs"],
   ["content registry contract", "scripts/test-content-registry.js"],
+  ["medical source provenance", "scripts/refresh-medical-metadata-v2.mjs"],
+  ["medical catalog validator", "scripts/validate-medical-catalog-v2.mjs"],
+  ["medical catalog contract", "scripts/test-medical-catalog-v2.js"],
   ["generator mode fail-closed", "scripts/test-generator-mode-fail-closed.js"],
   ["content divergence baseline", "scripts/report-content-divergence.mjs", "--summary"],
   ["Tier 01 content validator", "scripts/validate-tier-01-content.mjs"],

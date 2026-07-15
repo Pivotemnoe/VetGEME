@@ -1,7 +1,10 @@
 import fs from "node:fs";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+const require = createRequire(import.meta.url);
+const medicalCatalogApi = require("../../generator/medical-catalog-v2.js");
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const projectRoot = path.resolve(root, "..");
 const contentRoot = path.join(projectRoot, "content/packs/tier-01-v2");
@@ -13,7 +16,18 @@ const ownersRoot = path.join(contentRoot, "owners/tier-01");
 const multiDiagnosisRoot = path.join(contentRoot, "multi-diagnosis");
 const errors = [];
 const warnings = [];
-const stats = { jsonParsed: 0, clinicalFiles: 0, questions: 0, answers: 0, uniqueAnswerTexts: 0, homeActions: 0, urgentCases: 0 };
+const stats = {
+  jsonParsed: 0,
+  clinicalFiles: 0,
+  questions: 0,
+  answers: 0,
+  uniqueAnswerTexts: 0,
+  homeActions: 0,
+  urgentCases: 0,
+  recursiveSourceChecks: 0,
+  measurementSources: 0,
+  legacyMetadataSources: 0
+};
 const prohibitedPhrases = [
   "дрожжевой отит", "дрожжевой наружный отит", "рабочая версия", "простой дерматит",
   "владелец называет точное наблюдение", "владелец не уверен в деталях",
@@ -22,7 +36,7 @@ const prohibitedPhrases = [
   "использует бытовую формулировку, не заменяющую медицинский факт",
   "requires_case_specific_review"
 ];
-const allowedSources = new Set(["initial_complaint", "owner_history", "physical_exam", "diagnostic_test", "doctor_interpretation", "follow_up"]);
+const allowedSources = new Set(medicalCatalogApi.PRIMARY_FACT_SOURCES);
 const allowedSpecies = new Set(["dog", "cat"]);
 const fixedSpeciesTerms = {
   dog: /(?:^|[^\p{L}])(?:собак\p{L}*|пёс\p{L}*|пса|щен\p{L}*)(?=$|[^\p{L}])/iu,
@@ -84,6 +98,16 @@ assert(stats.homeActions >= 25, homeActionFile, "expanded tier needs at least 25
 for (const file of caseFiles) {
   const data = readJson(file);
   if (!data) continue;
+  try {
+    const sourceAudit = medicalCatalogApi.validateClinicalSourceTree(data, {
+      label: path.relative(projectRoot, file)
+    });
+    stats.recursiveSourceChecks += sourceAudit.primaryFactCount;
+    stats.measurementSources += sourceAudit.counts.measurement;
+    stats.legacyMetadataSources += sourceAudit.legacyMetadataCount;
+  } catch (error) {
+    errors.push(`${path.relative(root, file)}: ${error.message}`);
+  }
   assert(data.schemaVersion === 2, file, "case schemaVersion must be 2");
   assert(data.editorialStatus === "complete_ru_v1", file, "case must be editorially complete");
   assert(data.validation?.noGeneratedMedicalText === true, file, "case must forbid generated medical text");
@@ -253,6 +277,21 @@ for (const file of caseFiles) {
     assert(data.safeAlternatives?.includes("urgent_referral"), file, "urgent case needs urgent_referral alternative");
     assert((data.planOptions ?? []).some((x) => x.id === "urgent_referral"), file, "urgent case needs urgent_referral plan");
     assert(!(data.planOptions ?? []).some((x) => x.allowsRoutineObservation), file, "urgent case cannot allow routine observation");
+  }
+}
+
+for (const file of allJsonFiles(ownersRoot)) {
+  const data = readJson(file);
+  if (!data) continue;
+  try {
+    const sourceAudit = medicalCatalogApi.validateClinicalSourceTree(data, {
+      label: path.relative(projectRoot, file)
+    });
+    stats.recursiveSourceChecks += sourceAudit.primaryFactCount;
+    stats.measurementSources += sourceAudit.counts.measurement;
+    stats.legacyMetadataSources += sourceAudit.legacyMetadataCount;
+  } catch (error) {
+    errors.push(`${path.relative(root, file)}: ${error.message}`);
   }
 }
 
