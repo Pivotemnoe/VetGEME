@@ -67,17 +67,21 @@
   function evaluateDiagnosticProposal(tests, ownerState = {}, context = {}) {
     const offered = (tests || []).filter(Boolean);
     const selectable = offered.filter((test) => !["unavailable", "contraindicated"].includes(test.classification));
-    const totalCost = selectable.reduce((sum, test) => sum + (test.costVetcoins || 0), 0);
+    const allPricesAuthored = selectable.every((test) => Number.isFinite(test.costVetcoins));
+    const totalCost = allPricesAuthored
+      ? selectable.reduce((sum, test) => sum + test.costVetcoins, 0)
+      : null;
     const required = selectable.filter((test) => test.classification === "required");
     const recommended = selectable.filter((test) => test.classification === "recommended");
     const discretionary = selectable.filter((test) => ["optional", "low_value"].includes(test.classification));
     let decision = "accepted";
 
     if (!selectable.length) decision = "unavailable";
-    else if (!ownerState.budgetDiscussed && totalCost > 0
+    else if (!ownerState.budgetDiscussed && Number.isFinite(totalCost) && totalCost > 0
       && (ownerState.budgetLimited || totalCost >= Math.max(50, (ownerState.budget || 0) * 0.2))) decision = "asks_cost";
-    else if (totalCost > (ownerState.budget || Infinity)) decision = "requests_cheaper_option";
-    else if (required.length && discretionary.length && totalCost >= (ownerState.budget || Infinity) * 0.7) decision = "partially_accepted";
+    else if (Number.isFinite(totalCost) && totalCost > (ownerState.budget || Infinity)) decision = "requests_cheaper_option";
+    else if (required.length && discretionary.length && Number.isFinite(totalCost)
+      && totalCost >= (ownerState.budget || Infinity) * 0.7) decision = "partially_accepted";
     else if (!required.length && discretionary.length === selectable.length && (ownerState.trust ?? 50) < 55) decision = "refused";
     else if (!required.length && discretionary.length === selectable.length && (ownerState.anxiety ?? 0) >= 75) decision = "delayed";
     else if (!required.length && !recommended.length && (ownerState.irritation ?? 0) >= 55) decision = "refused";
@@ -94,6 +98,7 @@
       acceptedTestIds: acceptedTests.map((test) => test.id),
       declinedTestIds: selectable.filter((test) => !acceptedTests.includes(test)).map((test) => test.id),
       totalCost,
+      priceStatus: allPricesAuthored ? "authored" : "not_authored",
       noResult: !["accepted", "partially_accepted"].includes(decision),
       noPayment: !["accepted", "partially_accepted"].includes(decision),
       diagnosticUncertainty: ["refused", "requests_cheaper_option", "delayed"].includes(decision),

@@ -421,6 +421,10 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
 .shift-start { display: block; min-width: 210px; min-height: 42px; margin: 0 auto 16px; font-weight: 800; }
 .close-shift-card { width: min(620px,calc(100vw - 40px)); }
 #closeShiftSummary { padding: 14px 16px; color: #40566b; font-size: 12px; line-height: 1.5; }
+.close-shift-results { display: grid; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid #9fb5c1; }
+.close-shift-results > strong { color: var(--blue-900); }
+.close-shift-results button { min-height: 34px; padding: 6px 10px; text-align: left; font-size: 10px; box-shadow: 0 2px 0 #0b1b2c; }
+.close-shift-results button.critical { border-color: #8f1e24; background: linear-gradient(#fff2f0,#efb1aa); color: #6f1318; }
 .close-shift-actions { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; padding: 0 16px 16px; }
 .close-shift-actions button { min-height: 50px; padding: 7px; font-size: 10px; font-weight: 700; }
 

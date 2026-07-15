@@ -31,6 +31,11 @@
   const freeClinicalFlow = window.PET_CLINIC_FREE_CLINICAL_FLOW_V2;
   const longitudinalCare = window.PET_CLINIC_LONGITUDINAL_CARE_V2;
   const campaignMechanics = window.PET_CLINIC_CAMPAIGN_MECHANICS_V2;
+  const capabilityRegistry = window.PET_CLINIC_CAPABILITY_REGISTRY_V3;
+  const researchOrders = window.PET_CLINIC_RESEARCH_ORDERS_V3;
+  const referralOrders = window.PET_CLINIC_REFERRAL_ORDERS_V3;
+  const asyncEvents = window.PET_CLINIC_ASYNC_EVENTS_V3;
+  const deviceQueue = window.PET_CLINIC_DEVICE_QUEUE_V3;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
   let appBootstrapComplete = false;
@@ -809,6 +814,11 @@
     campaignFinance: { creditLimit: 2500, debt: 0, weeklyReview: null, closureRisk: "stable" },
     dailyLedger: [],
     equipmentCapabilities: {},
+    capabilityState: null,
+    researchOrders: [],
+    referralOrders: [],
+    asyncEvents: [],
+    deviceQueues: { schemaVersion: 1, resources: {} },
     demandState: null,
     campaignOutcome: null,
     appointments: [],
@@ -910,6 +920,13 @@
         ? state.longitudinalPatients
         : {};
       state.attendanceEvents = Array.isArray(state.attendanceEvents) ? state.attendanceEvents : [];
+      state.researchOrders = Array.isArray(state.researchOrders) ? state.researchOrders : [];
+      state.referralOrders = Array.isArray(state.referralOrders) ? state.referralOrders : [];
+      state.asyncEvents = Array.isArray(state.asyncEvents) ? state.asyncEvents : [];
+      state.deviceQueues = state.deviceQueues && typeof state.deviceQueues === "object"
+        ? state.deviceQueues
+        : { schemaVersion: 1, resources: {} };
+      ensureP3RuntimeState();
       state.queue = Array.isArray(state.queue) ? state.queue : [];
       state.queue.forEach((patient) => {
         restoreRuntimePatient(patient);
@@ -2355,6 +2372,299 @@
     }
   }
 
+  function p3CapabilityDocument() {
+    return isTier01V2() ? generatorRuntime.catalog?.capabilityRegistry || null : null;
+  }
+
+  function ensureP3RuntimeState() {
+    const registry = p3CapabilityDocument();
+    if (!registry || !capabilityRegistry) return;
+    if (!state.capabilityState) {
+      state.capabilityState = capabilityRegistry.createSparseState(registry, {});
+    } else {
+      const validation = capabilityRegistry.validateSparseState(registry, state.capabilityState);
+      if (!validation.valid) throw new Error(`Capability state is incompatible: ${validation.errors.join(", ")}`);
+    }
+    if (!Array.isArray(state.researchOrders)) state.researchOrders = [];
+    if (!Array.isArray(state.referralOrders)) state.referralOrders = [];
+    if (!Array.isArray(state.asyncEvents)) state.asyncEvents = [];
+    if (!state.deviceQueues || typeof state.deviceQueues !== "object") {
+      state.deviceQueues = { schemaVersion: 1, resources: {} };
+    }
+  }
+
+  function campaignMinuteAt(minute = state.minute) {
+    const normalizedMinute = Math.max(0, Math.min(1439, Math.floor(minute)));
+    return asyncEvents
+      ? asyncEvents.toCampaignMinute(state.day, normalizedMinute)
+      : (state.day - 1) * 1440 + normalizedMinute;
+  }
+
+  function stableVisitPatientId(patient) {
+    const visitId = patient?.v2Visit?.visitId || patient?.visitId || patient?.id;
+    return String(patient?.persistentPatientId || `visit-${visitId}-patient`);
+  }
+
+  function diagnosticCapabilityState(test) {
+    const registry = p3CapabilityDocument();
+    if (!registry || !capabilityRegistry || !test?.id) return { mapped: false, available: true, reasonCode: "unmapped" };
+    const index = capabilityRegistry.buildIndex(registry);
+    if (!index.byId[test.id]) return { mapped: false, available: true, reasonCode: "unmapped" };
+    ensureP3RuntimeState();
+    return {
+      mapped: true,
+      ...capabilityRegistry.resolveCapability(index, test.id, {
+        day: state.day,
+        state: state.capabilityState
+      })
+    };
+  }
+
+  function capabilityReasonText(reasonCode) {
+    return {
+      locked: "возможность ещё не открыта на текущем этапе кампании",
+      explicitly_unavailable: "возможность временно недоступна",
+      not_operational: "оборудование не работает",
+      not_connected: "внешняя услуга не подключена",
+      not_qualified: "нет сотрудника с необходимым допуском",
+      closed: "служба сейчас закрыта",
+      out_of_stock: "закончился необходимый расходник",
+      requires_unavailable: "не выполнены обязательные зависимости",
+      no_available_alternative: "нет доступного локального или внешнего варианта",
+      not_activated: "возможность не активирована"
+    }[reasonCode] || "возможность недоступна";
+  }
+
+  function authoredPriceLabel(test) {
+    return Number.isFinite(test?.costVetcoins) ? `${test.costVetcoins} V` : "цена не указана";
+  }
+
+  function authoredDurationLabel(test) {
+    return Number.isInteger(test?.durationMinutes) && test.durationMinutes > 0
+      ? `${test.durationMinutes} мин.`
+      : "срок не указан";
+  }
+
+  function findResearchOrder(patient, test) {
+    const encounterId = patient?.v2Visit?.visitId || patient?.visitId;
+    return [...(state.researchOrders || [])].reverse().find((order) => (
+      order.encounterId === encounterId
+      && order.researchId === test?.id
+      && !researchOrders.TERMINAL_STATUSES.includes(order.status)
+    )) || null;
+  }
+
+  function ensureResearchOrder(patient, test, route) {
+    if (!isTier01V2() || !researchOrders || !patient?.v2Visit || !test?.id) return null;
+    ensureP3RuntimeState();
+    const existing = findResearchOrder(patient, test);
+    if (existing) return existing;
+    const order = researchOrders.createResearchOrder({
+      id: researchOrders.allocateResearchOrderId(state.researchOrders),
+      caseId: patient.v2Visit.caseId,
+      patientId: stableVisitPatientId(patient),
+      encounterId: patient.v2Visit.visitId,
+      researchId: test.id,
+      route,
+      sampleRequired: diagnosticTestRequiresSample(patient, test),
+      createdAt: campaignMinuteAt(),
+      createdBy: currentDoctor().id
+    });
+    state.researchOrders.push(order);
+    return order;
+  }
+
+  function transitionResearchOrder(orderId, to, payload, at = campaignMinuteAt()) {
+    if (!researchOrders) return null;
+    const index = state.researchOrders.findIndex((order) => order.id === orderId);
+    if (index < 0) return null;
+    const result = researchOrders.applyResearchTransition(state.researchOrders[index], {
+      commandId: `${orderId}:${to}`,
+      to,
+      at,
+      payload
+    });
+    state.researchOrders[index] = result.order;
+    return result.order;
+  }
+
+  function recordResearchOwnerDecision(patient, test, decision) {
+    const capability = diagnosticCapabilityState(test);
+    const order = ensureResearchOrder(
+      patient,
+      test,
+      capability.mapped ? (capability.available ? "local_capability" : "safe_referral_required") : "authored_current_flow"
+    );
+    if (!order || order.status !== "proposed") return order;
+    const ownerDecision = {
+      decision: decision.decision,
+      offeredTestIds: cloneData(decision.offeredTestIds || [test.id]),
+      acceptedTestIds: cloneData(decision.acceptedTestIds || [])
+    };
+    if (decision.acceptedTestIds?.includes(test.id)) {
+      let next = transitionResearchOrder(order.id, "owner_accepted", { ownerDecision });
+      if (next?.status === "owner_accepted") {
+        next = transitionResearchOrder(order.id, "sample_planned", {
+          samplePlan: {
+            source: "authored_diagnostic_test",
+            requirementIds: cloneData(test.requires || []),
+            sampleRequired: next.sampleRequired
+          }
+        });
+      }
+      return next;
+    }
+    if (decision.decision === "asks_cost") return order;
+    const terminal = decision.decision === "refused" ? "owner_refused" : "deferred";
+    return transitionResearchOrder(order.id, terminal, { ownerDecision });
+  }
+
+  function markResearchSampleCollected(patient) {
+    if (!researchOrders) return;
+    const encounterId = patient?.v2Visit?.visitId;
+    for (const order of state.researchOrders.filter((item) => item.encounterId === encounterId && item.status === "sample_planned")) {
+      transitionResearchOrder(order.id, "sample_collected", {
+        sampleCollection: {
+          source: "visit_action",
+          atVisitId: encounterId
+        }
+      });
+    }
+  }
+
+  function completeImmediateResearchOrder(patient, test, authoredResult, charge, durationMinutes) {
+    if (!researchOrders || !patient?.v2Visit || !test?.id) return;
+    let order = findResearchOrder(patient, test)
+      || ensureResearchOrder(patient, test, "authored_current_flow");
+    if (!order) return;
+    if (order.status === "proposed") {
+      order = transitionResearchOrder(order.id, "owner_accepted", {
+        ownerDecision: { decision: "accepted", acceptedTestIds: [test.id] }
+      });
+    }
+    if (order.status === "owner_accepted") {
+      order = transitionResearchOrder(order.id, "sample_planned", {
+        samplePlan: {
+          source: "authored_diagnostic_test",
+          requirementIds: cloneData(test.requires || []),
+          sampleRequired: order.sampleRequired
+        }
+      });
+    }
+    if (order.status === "sample_planned" && (!order.sampleRequired || patient.sampleTaken)) {
+      order = transitionResearchOrder(order.id, "sample_collected", {
+        sampleCollection: {
+          source: order.sampleRequired ? "visit_action" : "not_required",
+          atVisitId: patient.v2Visit.visitId
+        }
+      });
+    }
+    if (order.status !== "sample_collected") return;
+    const dispatch = {
+      route: order.route,
+      researchId: test.id
+    };
+    const sentPayload = { dispatch };
+    if (Number.isFinite(charge)) sentPayload.charge = { amount: charge, currency: "V" };
+    order = transitionResearchOrder(order.id, "sent_or_queued", sentPayload);
+    order = transitionResearchOrder(order.id, "processing", {
+      processing: { route: order.route, authoredDurationMinutes: durationMinutes }
+    });
+    const resultAt = Number.isInteger(durationMinutes) && durationMinutes > 0
+      ? campaignMinuteAt(state.minute + durationMinutes)
+      : campaignMinuteAt();
+    transitionResearchOrder(order.id, "resulted", {
+      authoredResult: {
+        resultRefId: test.id,
+        text: authoredResult,
+        source: "diagnostic_test"
+      }
+    }, resultAt);
+  }
+
+  function reviewAndCommunicateResearch(patient) {
+    if (!researchOrders || !patient) return;
+    const encounterId = patient.v2Visit?.visitId || patient.visitId;
+    const now = campaignMinuteAt();
+    for (const candidate of state.researchOrders.filter((order) => order.encounterId === encounterId)) {
+      let order = candidate;
+      if (order.status === "resulted") {
+        order = transitionResearchOrder(order.id, "reviewed_by_doctor", {
+          review: { reviewerId: currentDoctor().id }
+        }, now);
+      }
+      if (order?.status === "reviewed_by_doctor") {
+        transitionResearchOrder(order.id, "communicated_to_owner", {
+          communication: { channel: "during_visit", encounterId }
+        }, now);
+      }
+    }
+  }
+
+  function isExplicitlyCriticalResearchResult(order) {
+    const result = order?.authoredResult;
+    if (!result || typeof result !== "object") return false;
+    return result.critical === true
+      || result.criticality === "critical"
+      || result.criticality === "safety_critical";
+  }
+
+  function pendingResearchCloseState() {
+    const orders = Array.isArray(state.researchOrders) ? state.researchOrders : [];
+    const unreviewed = orders.filter((order) => order.status === "resulted");
+    return {
+      unreviewed,
+      criticalUnreviewed: unreviewed.filter(isExplicitlyCriticalResearchResult),
+      awaitingOwnerContact: orders.filter((order) => order.status === "reviewed_by_doctor")
+    };
+  }
+
+  function createSafeReferralForTest(patient, test, capabilityStatus) {
+    if (!referralOrders || !patient?.v2Visit) return;
+    ensureP3RuntimeState();
+    const createdAt = campaignMinuteAt();
+    let order = referralOrders.createReferralOrder({
+      id: referralOrders.allocateReferralOrderId(state.referralOrders),
+      caseId: patient.v2Visit.caseId,
+      patientId: stableVisitPatientId(patient),
+      encounterId: patient.v2Visit.visitId,
+      reason: test.label,
+      urgency: patient.selectedUrgency || patient.urgency || "routine",
+      routeCapabilityId: "safe_referral",
+      createdAt,
+      createdBy: currentDoctor().id
+    });
+    state.referralOrders.push(order);
+    const index = state.referralOrders.length - 1;
+    order = referralOrders.applyReferralTransition(order, {
+      commandId: `${order.id}:owner_accepted`,
+      to: "owner_accepted",
+      at: createdAt,
+      payload: { ownerDecision: { decision: "accepted_safe_route" } }
+    }).order;
+    const transmission = { sourceVisitId: patient.v2Visit.visitId };
+    if (capabilityStatus.mapped) transmission.unavailableCapabilityId = test.id;
+    order = referralOrders.applyReferralTransition(order, {
+      commandId: `${order.id}:sent`,
+      to: "sent",
+      at: createdAt,
+      payload: { transmission }
+    }).order;
+    state.referralOrders[index] = order;
+    patient.pendingDiagnosticTestId = null;
+    patient.diagnosticSkipped = true;
+    patient.diagnosticUncertainty = {
+      testId: test.id,
+      reason: "safe_referral",
+      text: "Локальное исследование не выполнено; безопасный маршрут направления зафиксирован."
+    };
+    recordClinical(patient, "carePlan", `Безопасное направление по причине: ${test.label}.`);
+    closeChoice();
+    setLog(`Локально недоступно: ${capabilityReasonText(capabilityStatus.reasonCode)}. Безопасное направление зафиксировано.`);
+    renderAll();
+    persistGameState(true);
+  }
+
   function diagnosticOptionsForPatient(patient) {
     if (!patient?.v2Visit || !diagnosticDecisions) return [];
     return diagnosticDecisions.diagnosticOptionsFor(patient.v2Visit.medicalContent);
@@ -2415,7 +2725,7 @@
       classifications: tests.map((test) => ({ testId: test.id, classification: test.classification })),
       decidedAtMinute: state.minute,
       resultStatus: result.noResult ? "not_performed" : "owner_accepted_pending_execution",
-      chargedVetcoins: 0
+      chargedVetcoins: null
     };
     patient.diagnosticDecisions.push(record);
     patient.lastDiagnosticOwnerDecision = result.decision;
@@ -2425,10 +2735,16 @@
   function offerDiagnosticTest(test) {
     const patient = activePatient();
     if (!patient?.v2Visit || !test) return;
+    const capabilityStatus = diagnosticCapabilityState(test);
+    if (capabilityStatus.mapped && !capabilityStatus.available) {
+      setLog(`Исследование локально недоступно: ${capabilityReasonText(capabilityStatus.reasonCode)}. Выберите безопасное направление.`);
+      return;
+    }
     const decision = diagnosticDecisions.evaluateDiagnosticProposal([test], diagnosticOwnerState(patient), {
       explanationQuality: patient.explanationDone ? "recorded" : "brief_offer"
     });
     const record = rememberDiagnosticDecision(patient, [test], decision);
+    recordResearchOwnerDecision(patient, test, decision);
     closeChoice();
     if (decision.decision === "asks_cost") {
       patient.budgetAsked = true;
@@ -2496,12 +2812,32 @@
       doMicroscopy({ test: pending, ownerApproved: true });
       return;
     }
-    const items = options.map((test) => ({
-      label: test.label,
-      note: `Материал: ${test.materialLabel || (diagnosticTestRequiresSample(patient, test) ? "образец, предусмотренный карточкой" : "не требуется")}. Стоимость: ${test.costVetcoins || 0} V; время: ${test.durationMinutes || 1} мин.`,
-      disabled: ["unavailable", "contraindicated"].includes(test.classification),
-      onClick: () => offerDiagnosticTest(test)
-    }));
+    const capabilityStatuses = new Map(options.map((test) => [test.id, diagnosticCapabilityState(test)]));
+    const items = options.map((test) => {
+      const capabilityStatus = capabilityStatuses.get(test.id);
+      const capabilityUnavailable = capabilityStatus.mapped && !capabilityStatus.available;
+      const noteParts = [
+        `Материал: ${test.materialLabel || (diagnosticTestRequiresSample(patient, test) ? "образец, предусмотренный карточкой" : "не требуется")}.`,
+        `Стоимость: ${authoredPriceLabel(test)}; время: ${authoredDurationLabel(test)}.`
+      ];
+      if (capabilityUnavailable) noteParts.push(`Локально недоступно: ${capabilityReasonText(capabilityStatus.reasonCode)}.`);
+      return {
+        label: test.label,
+        note: noteParts.join(" "),
+        disabled: capabilityUnavailable || ["unavailable", "contraindicated"].includes(test.classification),
+        onClick: () => offerDiagnosticTest(test)
+      };
+    });
+    for (const test of options) {
+      const capabilityStatus = capabilityStatuses.get(test.id);
+      if ((capabilityStatus.mapped && !capabilityStatus.available) || test.classification === "unavailable") {
+        items.push({
+          label: `Безопасное направление: ${test.label}`,
+          note: "Направление сохраняет доступный путь без выдуманной цены, места или результата.",
+          onClick: () => createSafeReferralForTest(patient, test, capabilityStatus)
+        });
+      }
+    }
     if (options.length && options.every((test) => ["optional", "low_value", "unavailable"].includes(test.classification))) {
       items.push({
         label: "Продолжить без дополнительного исследования",
@@ -2520,6 +2856,7 @@
       return;
     }
     patient.sampleTaken = true;
+    markResearchSampleCollected(patient);
     patient.stress = clamp(patient.stress + 4, 0, 100);
     const approvedResult = patient.v2Visit
       ? window.PET_CLINIC_GAME_ADAPTER_V2.sampleResultFor(patient)
@@ -2553,29 +2890,43 @@
       setLog("Для микроскопии нужно минимум 2 диагностических очка.");
       return;
     }
-    const testFee = approvedTest?.costVetcoins ?? MICROSCOPY_FEE;
-    const testMinutes = approvedTest?.durationMinutes ?? 7;
+    const testFee = patient.v2Visit
+      ? (Number.isFinite(approvedTest?.costVetcoins) ? approvedTest.costVetcoins : null)
+      : MICROSCOPY_FEE;
+    const testMinutes = patient.v2Visit
+      ? (Number.isInteger(approvedTest?.durationMinutes) && approvedTest.durationMinutes > 0
+        ? approvedTest.durationMinutes
+        : null)
+      : 7;
     patient.dxPoints = Math.max(0, patient.dxPoints - MICROSCOPY_COST);
     patient.microscopyDone = true;
     if (patient.v2Visit && approvedTest?.id) freeClinicalFlow.recordAction(patient, "diagnostic", approvedTest.id);
     patient.pendingDiagnosticTestId = null;
     patient.executedDiagnosticTestId = approvedTest?.id || null;
     const result = patient.v2Visit ? approvedTest.resultText : diseaseFor(patient).microscopy(patient);
-    patient.findings.push(`${result} Стоимость исследования: ${testFee} V.`);
+    patient.findings.push(Number.isFinite(testFee)
+      ? `${result} Стоимость исследования: ${testFee} V.`
+      : `${result} Стоимость исследования не указана в карточке.`);
     recordClinical(patient, "diagnosticTests", result);
     assessClinicalUrgency(patient);
-    state.money += testFee;
-    state.revenueToday += testFee;
-    state.diagnosticRevenueToday += testFee;
-    const ledger = currentDailyLedger(true);
-    if (ledger) ledger.diagnosticRevenue += testFee;
+    if (Number.isFinite(testFee)) {
+      state.money += testFee;
+      state.revenueToday += testFee;
+      state.diagnosticRevenueToday += testFee;
+      const ledger = currentDailyLedger(true);
+      if (ledger) ledger.diagnosticRevenue += testFee;
+    }
     state.microscopyToday += 1;
     const decisionRecord = options.decisionRecord || [...(patient.diagnosticDecisions || [])]
       .reverse().find((record) => record.acceptedTestIds?.includes(approvedTest?.id) && record.resultStatus !== "completed");
     if (decisionRecord) {
       decisionRecord.resultStatus = "completed";
-      decisionRecord.chargedVetcoins = testFee;
+      decisionRecord.chargedVetcoins = Number.isFinite(testFee) ? testFee : null;
+      decisionRecord.priceStatus = Number.isFinite(testFee) ? "authored_and_charged" : "not_authored_no_charge";
       decisionRecord.resultRefId = approvedTest?.id || null;
+    }
+    if (patient.v2Visit && approvedTest?.id) {
+      completeImmediateResearchOrder(patient, approvedTest, result, testFee, testMinutes);
     }
     const lowValueTest = approvedTest?.classification === "low_value";
     if (lowValueTest) {
@@ -2583,11 +2934,19 @@
       if (isTier01V2()) changeOwnerTrust(-0.25, "малоценное исследование не изменило решение");
     }
     if (!patient.v2Visit || ["laboratory", "system_low_value"].includes(approvedTest?.type)) startDoctorLabTrip();
-    if (!lowValueTest) setLog(`Исследование выполнено и оплачено: +${testFee} V.`);
+    if (!lowValueTest) setLog(Number.isFinite(testFee)
+      ? `Исследование выполнено и оплачено: +${testFee} V.`
+      : "Исследование выполнено; цена в карточке не указана, начисление не создано.");
     if (tutorialPatient(patient)) advanceTutorial("test", `${approvedTest?.label || "Исследование"}: результат получен.`);
-    passTime(testMinutes);
+    if (testMinutes) passTime(testMinutes);
+    else {
+      renderAll();
+      persistGameState(true);
+    }
     if (lowValueTest) {
-      setLog(`${approvedTest.label}: результат получен, счёт увеличен, доверие владельца снизилось.`);
+      setLog(Number.isFinite(testFee)
+        ? `${approvedTest.label}: результат получен, счёт увеличен, доверие владельца снизилось.`
+        : `${approvedTest.label}: результат получен без начисления, доверие владельца снизилось.`);
       renderAll();
       persistGameState(true);
     }
@@ -2667,6 +3026,7 @@
     });
     patient.selectedCommunicationId = option.id;
     patient.explanationDone = true;
+    reviewAndCommunicateResearch(patient);
     patient.communicationResult = communicationResult;
     patient.ownerComprehension = communicationResult.comprehension;
     patient.ownerAdherence = communicationResult.adherence;
@@ -3118,7 +3478,7 @@
           offeredTestIds: [test.id],
           acceptedTestIds: [test.id],
           declinedTestIds: [],
-          totalCost: test.costVetcoins || 0,
+          totalCost: Number.isFinite(test.costVetcoins) ? test.costVetcoins : null,
           noResult: false,
           noPayment: false,
           diagnosticUncertainty: false
@@ -3412,6 +3772,58 @@
     persistGameState(true);
   }
 
+  function renderCloseShiftPanel() {
+    const urgent = state.queue.filter((patient) => patient.selectedUrgency === "urgent").length;
+    const research = pendingResearchCloseState();
+    el.closeShiftSummary.innerHTML = [
+      `<b>В очереди:</b> ${state.queue.length}.`,
+      `<b>Срочных:</b> ${urgent}.`,
+      `<b>Непросмотренных результатов:</b> ${research.unreviewed.length}.`,
+      `<b>Из них критических:</b> ${research.criticalUnreviewed.length}.`,
+      `<b>Ожидают связи с владельцем:</b> ${research.awaitingOwnerContact.length}.`,
+      `<b>Усталость ${currentDoctor().shortName}:</b> ${Math.round(currentDoctor().fatigue)}%.`,
+      `<b>Текущее время:</b> ${formatClinicTime(state.minute)}.`
+    ].join("<br>");
+    if (research.unreviewed.length) {
+      const list = document.createElement("section");
+      list.className = "close-shift-results";
+      const title = document.createElement("strong");
+      title.textContent = "Результаты для просмотра";
+      list.appendChild(title);
+      research.unreviewed.forEach((order) => {
+        const critical = isExplicitlyCriticalResearchResult(order);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = critical ? "critical" : "";
+        button.textContent = `${critical ? "Критический: " : ""}${order.researchId} · просмотреть`;
+        button.addEventListener("click", () => {
+          transitionResearchOrder(order.id, "reviewed_by_doctor", {
+            review: { reviewerId: currentDoctor().id, context: "shift_close" }
+          });
+          setLog(`Результат ${order.researchId} просмотрен врачом. Связь с владельцем остаётся отдельной обязанностью.`);
+          renderCloseShiftPanel();
+          renderHud();
+          persistGameState(true);
+        });
+        list.appendChild(button);
+      });
+      el.closeShiftSummary.appendChild(list);
+    }
+    const fatigueEffect = isTier01V2() ? campaignMechanics.fatigueEffect(currentDoctor().fatigue) : null;
+    el.extendShiftBtn.disabled = state.shiftExtended || Boolean(fatigueEffect && !fatigueEffect.canExtendShift);
+    el.extendShiftBtn.title = fatigueEffect && !fatigueEffect.canExtendShift
+      ? "Продление недоступно при усталости 80% и выше"
+      : "Продлить смену на 60 минут";
+    el.transferQueueBtn.disabled = research.criticalUnreviewed.length > 0;
+    el.transferQueueBtn.title = research.criticalUnreviewed.length
+      ? "Сначала просмотрите критические результаты"
+      : "";
+    el.finishShiftBtn.disabled = urgent > 0 || research.criticalUnreviewed.length > 0;
+    el.finishShiftBtn.title = research.criticalUnreviewed.length
+      ? "Сначала просмотрите критические результаты"
+      : urgent > 0 ? "Срочных пациентов нужно безопасно направить" : "";
+  }
+
   function requestShiftClose(forced = false) {
     if (!state.dayStarted || !el.closeShiftWindow.classList.contains("hidden")) return;
     if (!forced && state.queue.length > 0 && state.minute < state.dayEnd - 120) {
@@ -3421,20 +3833,7 @@
     state.modalOpen = true;
     state.phase = "closing";
     state.paused = true;
-    const urgent = state.queue.filter((patient) => patient.selectedUrgency === "urgent").length;
-    el.closeShiftSummary.innerHTML = [
-      `<b>В очереди:</b> ${state.queue.length}.`,
-      `<b>Срочных:</b> ${urgent}.`,
-      `<b>Непросмотренных результатов:</b> 0.`,
-      `<b>Усталость ${currentDoctor().shortName}:</b> ${Math.round(currentDoctor().fatigue)}%.`,
-      `<b>Текущее время:</b> ${formatClinicTime(state.minute)}.`
-    ].join("<br>");
-    const fatigueEffect = isTier01V2() ? campaignMechanics.fatigueEffect(currentDoctor().fatigue) : null;
-    el.extendShiftBtn.disabled = state.shiftExtended || Boolean(fatigueEffect && !fatigueEffect.canExtendShift);
-    el.extendShiftBtn.title = fatigueEffect && !fatigueEffect.canExtendShift
-      ? "Продление недоступно при усталости 80% и выше"
-      : "Продлить смену на 60 минут";
-    el.finishShiftBtn.disabled = urgent > 0;
+    renderCloseShiftPanel();
     el.closeShiftWindow.classList.remove("hidden");
     persistGameState(true);
   }
@@ -3458,6 +3857,11 @@
   }
 
   function transferAndClose() {
+    if (pendingResearchCloseState().criticalUnreviewed.length) {
+      setLog("Критический результат нельзя оставить без просмотра врачом.");
+      renderCloseShiftPanel();
+      return;
+    }
     const routine = state.queue.filter((patient) => patient.selectedUrgency !== "urgent").length;
     const urgent = state.queue.length - routine;
     if (routine > 0) changeReputation(-Math.min(3, routine), "пациенты перенесены на другой день");
@@ -3469,6 +3873,11 @@
   }
 
   function finishShift() {
+    if (pendingResearchCloseState().criticalUnreviewed.length) {
+      setLog("Критический результат нельзя оставить без просмотра врачом.");
+      renderCloseShiftPanel();
+      return;
+    }
     if (state.queue.length > 0) {
       state.lostToday += state.queue.length;
       state.goalStats.noLost = 0;
@@ -3660,8 +4069,19 @@
       const gameSaveKey = window.PET_CLINIC_GENERATOR_MODE?.gameSaveKey
         || window.PET_CLINIC_SAVE_NAMESPACES?.gameSaveKey(mode);
       if (gameSaveKey) window.localStorage.removeItem(gameSaveKey);
-      if (mode === "legacy-v1") window.localStorage.removeItem("pet-clinic-generator-v1");
-      if (mode === "tier-01-v2") window.localStorage.removeItem("pet-clinic-generator-v2");
+      const generatorSaveKey = mode === "legacy-v1"
+        ? "pet-clinic-generator-v1"
+        : mode === "tier-01-v2" ? "pet-clinic-generator-v2" : null;
+      if (generatorSaveKey) window.localStorage.removeItem(generatorSaveKey);
+      const activePrefixes = [gameSaveKey, generatorSaveKey]
+        .filter(Boolean)
+        .map((key) => `${key}:migration-source:v`);
+      const migrationBackupKeys = [];
+      for (let index = 0; index < window.localStorage.length; index += 1) {
+        const key = window.localStorage.key(index);
+        if (key && activePrefixes.some((prefix) => key.startsWith(prefix))) migrationBackupKeys.push(key);
+      }
+      migrationBackupKeys.forEach((key) => window.localStorage.removeItem(key));
       window.location.reload();
     } catch (error) {
       state.paused = true;
@@ -4218,7 +4638,7 @@
       el.communicationBtn.querySelector("span").textContent = "Объяснить результат";
       el.communicationBtn.querySelector("small").textContent = "3–6 мин. · зависит от стиля";
       el.microscopyBtn.querySelector("small").textContent = diagnosticTest
-        ? `${diagnosticTest.label} · ${diagnosticTest.durationMinutes || 1} мин. · ${diagnosticTest.costVetcoins || 0} V`
+        ? `${diagnosticTest.label} · ${authoredDurationLabel(diagnosticTest)} · ${authoredPriceLabel(diagnosticTest)}`
         : "варианты недоступны";
     } else {
       el.sampleBtn.querySelector("span").textContent = "Взять материал";
@@ -5479,6 +5899,7 @@
     bindEvents();
     const restoreStatus = restoreGameState();
     if (restoreStatus !== "restored") {
+      ensureP3RuntimeState();
       resetDayState();
       setLog(restoreStatus === "blocked"
         ? "Несовместимое сохранение этого режима не загружено и не перезаписано. Начата временная новая сессия."

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "vetgeme-content-registry",
-  "registryVersion": "2026.07.15.2",
+  "registryVersion": "2026.07.15.3",
   "packs": [
     {
       "contentPackId": "tier-01-v2",
@@ -45,6 +45,31 @@
       "reviewPolicy": {
         "reviewModeAllowed": true,
         "productionEligible": false
+      },
+      "allowedModes": [
+        "tier-01-v2"
+      ]
+    }
+  ],
+  "capabilityRegistries": [
+    {
+      "capabilityRegistryId": "vetgeme-clinic-capabilities",
+      "capabilityRegistryVersion": "2026.07.14.38",
+      "packageId": "vetgeme-master-package",
+      "packageVersion": "2026.07.14.2",
+      "root": "content/system-packs/vetgeme-master-2026-07-14",
+      "registryPath": "capability-registry.json",
+      "sourceDigest": "16ff64c015a8edb302c15289540a4ed760cfc356d832bca31094f992b1da3c81",
+      "status": "canonical_design_complete",
+      "expectedCounts": {
+        "capabilities": 447
+      },
+      "activationPolicy": {
+        "registryRuntimeEligible": true,
+        "medicalResearchMappingEligible": false,
+        "criticalityEligible": false,
+        "economicSchedulingEligible": false,
+        "referralOutcomesEligible": false
       },
       "allowedModes": [
         "tier-01-v2"

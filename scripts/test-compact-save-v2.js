@@ -11,14 +11,20 @@ const namespaces = require("../generator/save-namespaces.js");
 
 function memoryStorage(initial = {}) {
   const values = new Map(Object.entries(initial).map(([key, value]) => [key, String(value)]));
-  return {
+  const storage = {
     values,
+    setCalls: [],
     getItem(key) { return values.has(key) ? values.get(key) : null; },
-    setItem(key, value) { values.set(key, String(value)); },
+    setItem(key, value) {
+      storage.setCalls.push({ key, value: String(value) });
+      values.set(key, String(value));
+    },
     removeItem(key) { values.delete(key); },
     key(index) { return [...values.keys()][index] || null; },
-    get length() { return values.size; }
+    get length() { return values.size; },
+    resetCalls() { storage.setCalls.length = 0; }
   };
+  return storage;
 }
 
 function quotaStorage(initial = {}) {
@@ -148,9 +154,13 @@ function saveGameSummary(storage, catalog, day, journal) {
 function expandGeneratorSaveToVersion3(raw, catalog) {
   const state = JSON.parse(raw);
   state.saveVersion = 3;
+  state.generatorVersion = generatorApi.LEGACY_GENERATOR_VERSION;
+  delete state.capabilityRegistryId;
+  delete state.capabilityRegistryVersion;
   state.generatedDays = Object.fromEntries(Object.entries(state.generatedDays).map(([key, day]) => {
     const hydrated = compactApi.hydrateDay(day, catalog);
     hydrated.schemaVersion = 3;
+    hydrated.generatorVersion = generatorApi.LEGACY_GENERATOR_VERSION;
     return [key, hydrated];
   }));
   state.pendingFollowUps = state.pendingFollowUps.map((item) => ({
@@ -273,6 +283,40 @@ async function main() {
   assert.deepEqual(JSON.parse(migratedRaw).generatedDays["1"].outcomes, version3.generatedDays["1"].outcomes);
   assert.equal(JSON.parse(migratedRaw).generatedDays["1"].visits[0].selectedPlanId, version3.generatedDays["1"].outcomes[0].selectedPlanId);
   assert.deepEqual(JSON.parse(migratedRaw).generatedDays["1"].visits[0].outcome, version3.generatedDays["1"].outcomes[0]);
+
+  const version6 = JSON.parse(compactRaw);
+  version6.saveVersion = generatorApi.PREVIOUS_SAVE_VERSION;
+  version6.generatorVersion = generatorApi.PREVIOUS_GENERATOR_VERSION;
+  delete version6.capabilityRegistryId;
+  delete version6.capabilityRegistryVersion;
+  Object.values(version6.generatedDays).forEach((day) => {
+    day.schemaVersion = generatorApi.PREVIOUS_SAVE_VERSION;
+    day.generatorVersion = generatorApi.PREVIOUS_GENERATOR_VERSION;
+  });
+  const version6GeneratedDaysRaw = JSON.stringify(version6.generatedDays);
+  const version6Raw = JSON.stringify(version6, null, 2);
+  const version6Storage = memoryStorage({ [generatorApi.SAVE_KEY]: version6Raw });
+  generatorApi.createGenerator({ catalog, storage: version6Storage });
+  const version7 = JSON.parse(version6Storage.getItem(generatorApi.SAVE_KEY));
+  assert.equal(version7.saveVersion, 7);
+  assert.equal(version7.generatorVersion, "tier-01-v2.3.0");
+  assert.equal(version7.capabilityRegistryId, generatorApi.CAPABILITY_REGISTRY_ID);
+  assert.equal(version7.capabilityRegistryVersion, generatorApi.CAPABILITY_REGISTRY_VERSION);
+  assert.equal(JSON.stringify(version7.generatedDays), version6GeneratedDaysRaw, "v6 -> v7 migration changed generatedDays bytes");
+  assert.equal(
+    version6Storage.getItem(generatorApi.migrationBackupKeyForVersion(6)),
+    version6Raw,
+    "v6 -> v7 migration did not retain exact source bytes"
+  );
+  version6Storage.resetCalls();
+  generatorApi.createGenerator({ catalog, storage: version6Storage });
+  assert.equal(version6Storage.setCalls.length, 0, "current generator save load performed a write");
+
+  const futureGeneratorRaw = JSON.stringify({ ...version7, saveVersion: 999 });
+  const futureGeneratorStorage = memoryStorage({ [generatorApi.SAVE_KEY]: futureGeneratorRaw });
+  assert.throws(() => generatorApi.createGenerator({ catalog, storage: futureGeneratorStorage }), /migration required/);
+  assert.equal(futureGeneratorStorage.getItem(generatorApi.SAVE_KEY), futureGeneratorRaw);
+  assert.equal(futureGeneratorStorage.setCalls.length, 0, "future generator save performed a write");
 
   const repeatStorage = memoryStorage();
   const repeatGenerator = generatorApi.createGenerator({ catalog, seed: "compact-follow-up", storage: repeatStorage });
@@ -399,7 +443,7 @@ async function main() {
   const oldGameRaw = JSON.stringify(oldGameSnapshot);
   const gameMigrationStorage = memoryStorage({ [namespaces.gameSaveKey("tier-01-v2")]: oldGameRaw });
   const migratedGame = gameSaveApi.load(gameMigrationStorage, "tier-01-v2", { catalog });
-  assert.equal(migratedGame.gameStateSaveVersion, 5);
+  assert.equal(migratedGame.gameStateSaveVersion, 6);
   assert.ok(migratedGame.state.queue[0].v2Visit.medicalContent);
   assert.equal(gameMigrationStorage.getItem(namespaces.gameSaveKey("tier-01-v2")).includes("medicalContent"), false);
 
@@ -415,8 +459,13 @@ async function main() {
   incompatibleGenerator.contentPackHash = "incompatible-hash";
   const incompatibleGeneratorRaw = JSON.stringify(incompatibleGenerator);
   const incompatibleGeneratorStorage = memoryStorage({ [generatorApi.SAVE_KEY]: incompatibleGeneratorRaw });
-  assert.throws(() => generatorApi.createGenerator({ catalog, storage: incompatibleGeneratorStorage }), /migration required/);
+  assert.throws(() => generatorApi.createGenerator({ catalog, storage: incompatibleGeneratorStorage }), /content pack mismatch/);
   assert.equal(incompatibleGeneratorStorage.getItem(generatorApi.SAVE_KEY), incompatibleGeneratorRaw);
+
+  const emptyGeneratorStorage = memoryStorage({ [generatorApi.SAVE_KEY]: "" });
+  assert.throws(() => generatorApi.createGenerator({ catalog, storage: emptyGeneratorStorage }), /Generator save JSON is invalid/);
+  assert.equal(emptyGeneratorStorage.getItem(generatorApi.SAVE_KEY), "");
+  assert.equal(emptyGeneratorStorage.setCalls.length, 0, "empty corrupt generator save performed a write");
 
   const impossibleV3 = expandGeneratorSaveToVersion3(compactRaw, catalog);
   impossibleV3.generatedDays["1"].visits[0].owner.profileId = "missing-owner-profile";
@@ -515,6 +564,28 @@ async function main() {
       ["pet-clinic-generator-mode", "tier-01-v2"]
     ])
   };
+  const monthVersion6 = JSON.parse(month.storage.getItem(generatorApi.SAVE_KEY));
+  monthVersion6.saveVersion = generatorApi.PREVIOUS_SAVE_VERSION;
+  monthVersion6.generatorVersion = generatorApi.PREVIOUS_GENERATOR_VERSION;
+  delete monthVersion6.capabilityRegistryId;
+  delete monthVersion6.capabilityRegistryVersion;
+  Object.values(monthVersion6.generatedDays).forEach((day) => {
+    day.generatorVersion = generatorApi.PREVIOUS_GENERATOR_VERSION;
+    day.campaignSeed = monthVersion6.campaignSeed;
+  });
+  const monthVersion6Raw = JSON.stringify(monthVersion6);
+  const migrationPeakStorage = memoryStorage({
+    ...Object.fromEntries(month.storage.values),
+    [generatorApi.SAVE_KEY]: monthVersion6Raw
+  });
+  generatorApi.createGenerator({ catalog: thirtyCatalog, storage: migrationPeakStorage });
+  const migrationPeakUtf16Bytes = utf16Bytes(migrationPeakStorage);
+  assert.equal(
+    migrationPeakStorage.getItem(generatorApi.migrationBackupKeyForVersion(6)),
+    monthVersion6Raw,
+    "30-day migration peak lost the exact v6 backup"
+  );
+  assert.ok(migrationPeakUtf16Bytes <= 4 * 1024 * 1024, `migration peak exceeds 4 MiB: ${migrationPeakUtf16Bytes}`);
   assert.ok(compactSizes.day30 <= 2 * 1024 * 1024, `30-day save exceeds 2 MiB: ${compactSizes.day30}`);
   assert.ok(compactSizes.day30 <= 1.5 * 1024 * 1024, `30-day save exceeds preferred 1.5 MiB: ${compactSizes.day30}`);
 
@@ -535,8 +606,11 @@ async function main() {
     incompatibleContentPackBlocked: true,
     impossibleMigrationPreservedSource: true,
     quotaPreservedPreviousSave: true,
+    currentLoadZeroWrites: true,
+    generatorV6ToV7GeneratedDaysByteStable: true,
     currentAndLegacyUnchanged: true,
     compactSizesUtf16Bytes: compactSizes,
+    migrationPeakUtf16Bytes,
     catalogGrowthSizesUtf16Bytes: catalogGrowthSizes,
     syntheticCatalogGrowthUtf8Bytes,
     catalogGrowthInvariant: true,

@@ -75,18 +75,47 @@ async function runRejectedLoad(message) {
 async function main() {
   await runRejectedLoad("unknown content registry");
   await runRejectedLoad("manifest identity mismatch");
+  await runRejectedLoad("capability registry identity mismatch");
   assert.match(
     gameSource,
     /if \(generatorRuntime\.initializationError\)[\s\S]{0,500}await initBlockedGenerator\(generatorRuntime\.initializationError\)/u,
     "game bootstrap no longer blocks a rejected tier runtime"
   );
   assert.match(indexSource, /generator\/medical-catalog-v2\.js\?v=20260715a/u);
-  assert.match(indexSource, /generator\/content-loader-v2\.js\?v=20260715b/u);
+  assert.match(indexSource, /systems\/capability-registry-v3\.js\?v=20260715a/u);
+  assert.match(indexSource, /systems\/device-queue-v3\.js\?v=20260715a/u);
+  assert.match(indexSource, /systems\/research-orders-v3\.js\?v=20260715a/u);
+  assert.match(indexSource, /systems\/referral-orders-v3\.js\?v=20260715a/u);
+  assert.match(indexSource, /systems\/async-events-v3\.js\?v=20260715a/u);
+  assert.match(indexSource, /generator\/atomic-save-migration\.js\?v=20260715a/u);
+  assert.match(indexSource, /generator\/content-loader-v2\.js\?v=20260715c/u);
   assert.match(indexSource, /generator\/generator-mode\.js\?v=20260715b/u);
   assert.ok(
     indexSource.indexOf("generator/medical-catalog-v2.js") < indexSource.indexOf("generator/content-loader-v2.js"),
     "medical gate must load before the registered content loader"
   );
+  assert.ok(
+    indexSource.indexOf("systems/capability-registry-v3.js") < indexSource.indexOf("generator/content-loader-v2.js"),
+    "capability registry v3 must load before the registered content loader"
+  );
+  assert.ok(
+    indexSource.indexOf("generator/atomic-save-migration.js") < indexSource.indexOf("generator/game-state-save.js")
+      && indexSource.indexOf("generator/atomic-save-migration.js") < indexSource.indexOf("generator/generator-v2.js"),
+    "atomic migration dependency must load before both save runtimes"
+  );
+  for (const runtimeFile of [
+    "systems/capability-registry-v3.js",
+    "systems/device-queue-v3.js",
+    "systems/research-orders-v3.js",
+    "systems/referral-orders-v3.js",
+    "systems/async-events-v3.js"
+  ]) {
+    assert.ok(
+      indexSource.indexOf(runtimeFile) < indexSource.indexOf("generator/game-state-save.js")
+        && indexSource.indexOf(runtimeFile) < indexSource.indexOf("game.js"),
+      `${runtimeFile} must load before game-state-save.js and game.js`
+    );
+  }
   console.log(JSON.stringify({
     status: "passed",
     rejectedLoadsStayInTierMode: true,

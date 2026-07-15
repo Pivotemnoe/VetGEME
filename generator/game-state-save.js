@@ -9,16 +9,56 @@
   const freeClinicalFlow = typeof module === "object" && module.exports
     ? require("../systems/free-clinical-flow-v2.js")
     : root.PET_CLINIC_FREE_CLINICAL_FLOW_V2;
-  const api = factory(namespaces, compactApi, freeClinicalFlow);
+  const atomicSaveMigration = typeof module === "object" && module.exports
+    ? require("./atomic-save-migration.js")
+    : root.PET_CLINIC_ATOMIC_SAVE_MIGRATION;
+  const capabilityApi = typeof module === "object" && module.exports
+    ? require("../systems/capability-registry-v3.js")
+    : root.PET_CLINIC_CAPABILITY_REGISTRY_V3;
+  const researchApi = typeof module === "object" && module.exports
+    ? require("../systems/research-orders-v3.js")
+    : root.PET_CLINIC_RESEARCH_ORDERS_V3;
+  const referralApi = typeof module === "object" && module.exports
+    ? require("../systems/referral-orders-v3.js")
+    : root.PET_CLINIC_REFERRAL_ORDERS_V3;
+  const asyncEventApi = typeof module === "object" && module.exports
+    ? require("../systems/async-events-v3.js")
+    : root.PET_CLINIC_ASYNC_EVENTS_V3;
+  const deviceQueueApi = typeof module === "object" && module.exports
+    ? require("../systems/device-queue-v3.js")
+    : root.PET_CLINIC_DEVICE_QUEUE_V3;
+  const api = factory(
+    namespaces,
+    compactApi,
+    freeClinicalFlow,
+    atomicSaveMigration,
+    capabilityApi,
+    researchApi,
+    referralApi,
+    asyncEventApi,
+    deviceQueueApi
+  );
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_GAME_STATE_SAVE = api;
-})(typeof window !== "undefined" ? window : globalThis, function (namespaces, compactApi, freeClinicalFlow) {
+})(typeof window !== "undefined" ? window : globalThis, function (
+  namespaces,
+  compactApi,
+  freeClinicalFlow,
+  atomicSaveMigration,
+  capabilityApi,
+  researchApi,
+  referralApi,
+  asyncEventApi,
+  deviceQueueApi
+) {
   "use strict";
 
   const GAME_STATE_SAVE_VERSION = 1;
-  const LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS = Object.freeze([1, 2, 3]);
-  const PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION = 4;
-  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 5;
+  const LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS = Object.freeze([1, 2, 3, 4]);
+  const PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION = 5;
+  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 6;
+  const CAPABILITY_REGISTRY_ID = "vetgeme-clinic-capabilities";
+  const CAPABILITY_REGISTRY_VERSION = "2026.07.14.38";
   const SERIALIZED_FIELDS = Object.freeze([
     "phase", "day", "minute", "dayEnd", "money", "reputation", "queue", "activeId",
     "nextPatientId", "paused", "speed", "spawnMeter", "log", "treatedToday", "revenueToday",
@@ -33,11 +73,16 @@
     ...SERIALIZED_FIELDS,
     "ownerTrust", "clinicalReliability", "awareness", "campaignFinance", "dailyLedger",
     "equipmentCapabilities", "demandState", "campaignOutcome", "appointments", "treatmentCourses",
-    "longitudinalPatients", "attendanceEvents"
+    "longitudinalPatients", "attendanceEvents", "capabilityState", "researchOrders", "referralOrders",
+    "asyncEvents", "deviceQueues"
   ]);
 
   function clone(value) {
     return JSON.parse(JSON.stringify(value));
+  }
+
+  function isRecord(value) {
+    return Boolean(value) && typeof value === "object" && !Array.isArray(value);
   }
 
   function snapshotState(state, fields = SERIALIZED_FIELDS) {
@@ -111,6 +156,40 @@
     };
   }
 
+  function defaultCapabilityState(state = {}) {
+    if (isRecord(state.capabilityState)
+      && state.capabilityState.schemaVersion === 1
+      && isRecord(state.capabilityState.entries)) {
+      return clone(state.capabilityState);
+    }
+    return {
+      schemaVersion: 1,
+      registryId: CAPABILITY_REGISTRY_ID,
+      registryVersion: CAPABILITY_REGISTRY_VERSION,
+      entries: isRecord(state.equipmentCapabilities) ? clone(state.equipmentCapabilities) : {}
+    };
+  }
+
+  function defaultDeviceQueues(state = {}) {
+    if (isRecord(state.deviceQueues)
+      && state.deviceQueues.schemaVersion === 1
+      && isRecord(state.deviceQueues.resources)) {
+      return clone(state.deviceQueues);
+    }
+    return { schemaVersion: 1, resources: {} };
+  }
+
+  function addP3Defaults(state) {
+    return {
+      ...clone(state || {}),
+      capabilityState: defaultCapabilityState(state),
+      researchOrders: Array.isArray(state?.researchOrders) ? clone(state.researchOrders) : [],
+      referralOrders: Array.isArray(state?.referralOrders) ? clone(state.referralOrders) : [],
+      asyncEvents: Array.isArray(state?.asyncEvents) ? clone(state.asyncEvents) : [],
+      deviceQueues: defaultDeviceQueues(state)
+    };
+  }
+
   function hydratePatient(patient, catalog) {
     const hydrated = clone(patient);
     if (!hydrated.v2Visit) return hydrated;
@@ -138,16 +217,254 @@
     return compactTierState(hydrated, catalog);
   }
 
+  function assertUniqueIds(items, label) {
+    const ids = new Set();
+    items.forEach((item, index) => {
+      if (!isRecord(item) || typeof item.id !== "string" || !item.id) {
+        throw new Error(`${label} ${index} has no stable id`);
+      }
+      if (ids.has(item.id)) throw new Error(`${label} contains duplicate id ${item.id}`);
+      ids.add(item.id);
+    });
+    return ids;
+  }
+
+  function validateLifecycle(item, transitions, initialStatus, label) {
+    if (!Array.isArray(item.history) || item.history.length < 1) throw new Error(`${label} history is missing`);
+    if (!Array.isArray(item.appliedCommandIds)) throw new Error(`${label} appliedCommandIds is missing`);
+    if (new Set(item.appliedCommandIds).size !== item.appliedCommandIds.length) {
+      throw new Error(`${label} appliedCommandIds contains duplicates`);
+    }
+    let current = null;
+    let previousAt = -1;
+    const historyCommandIds = new Set();
+    item.history.forEach((entry, index) => {
+      if (!isRecord(entry) || !Number.isInteger(entry.at) || entry.at < 0) {
+        throw new Error(`${label} history ${index} is invalid`);
+      }
+      if (entry.at < previousAt) throw new Error(`${label} history time moves backwards`);
+      if (index === 0) {
+        if (entry.from !== null || entry.to !== initialStatus) throw new Error(`${label} history does not start at ${initialStatus}`);
+      } else {
+        if (entry.from !== current) throw new Error(`${label} history has a broken from reference`);
+        if (!Array.isArray(transitions[current]) || !transitions[current].includes(entry.to)) {
+          throw new Error(`${label} has invalid transition ${current} -> ${entry.to}`);
+        }
+        if (typeof entry.commandId !== "string" || !entry.commandId) throw new Error(`${label} transition commandId is missing`);
+        if (historyCommandIds.has(entry.commandId)) throw new Error(`${label} history commandId is duplicated`);
+        historyCommandIds.add(entry.commandId);
+      }
+      current = entry.to;
+      previousAt = entry.at;
+    });
+    if (item.status !== current) throw new Error(`${label} status does not match history`);
+    if (item.createdAt !== undefined && item.history[0].at !== item.createdAt) {
+      throw new Error(`${label} createdAt does not match history`);
+    }
+    if (item.queuedAt !== undefined && item.history[0].at !== item.queuedAt) {
+      throw new Error(`${label} queuedAt does not match history`);
+    }
+    if (item.appliedCommandIds.length !== historyCommandIds.size
+      || item.appliedCommandIds.some((id) => !historyCommandIds.has(id))) {
+      throw new Error(`${label} appliedCommandIds does not match history`);
+    }
+  }
+
+  function collectStateReferences(state) {
+    const patientIds = new Set();
+    const encounterIds = new Set();
+    const caseIds = new Set();
+    const add = (set, value) => {
+      if (value !== undefined && value !== null && String(value)) set.add(String(value));
+    };
+    const addPatient = (patient) => {
+      if (!isRecord(patient)) return;
+      const visitId = patient.v2Visit?.visitId || patient.visitId || patient.id;
+      add(patientIds, patient.patientId);
+      add(patientIds, patient.longitudinalPatientId);
+      add(patientIds, patient.persistentPatientId);
+      add(patientIds, patient.id);
+      if (visitId !== undefined && visitId !== null) add(patientIds, `visit-${visitId}-patient`);
+      add(encounterIds, patient.visitId);
+      add(encounterIds, patient.v2Visit?.visitId);
+      add(caseIds, patient.caseId);
+      add(caseIds, patient.diseaseId);
+      add(caseIds, patient.v2Visit?.caseId);
+      add(patientIds, patient.v2Visit?.patient?.patientId);
+      add(patientIds, patient.v2Visit?.patient?.id);
+    };
+    (state.queue || []).forEach(addPatient);
+    (state.arrivalSchedule || []).forEach((arrival) => addPatient(arrival.template));
+    (state.caseJournal || []).forEach((entry) => {
+      add(patientIds, entry.patientId);
+      if (entry.visitId !== undefined && entry.visitId !== null) add(patientIds, `visit-${entry.visitId}-patient`);
+      add(encounterIds, entry.encounterId);
+      add(encounterIds, entry.visitId);
+      add(caseIds, entry.caseId);
+    });
+    Object.entries(state.longitudinalPatients || {}).forEach(([id, patient]) => {
+      add(patientIds, id);
+      add(patientIds, patient?.patientId);
+      add(caseIds, patient?.caseId);
+    });
+    (state.appointments || []).forEach((appointment) => {
+      add(patientIds, appointment.patientId);
+      const visitId = appointment.encounterId || appointment.visitId || appointment.originalVisitId;
+      if (visitId !== undefined && visitId !== null) add(patientIds, `visit-${visitId}-patient`);
+      add(encounterIds, appointment.encounterId);
+      add(encounterIds, appointment.visitId);
+      add(encounterIds, appointment.originalVisitId);
+      add(caseIds, appointment.caseId);
+    });
+    return { patientIds, encounterIds, caseIds };
+  }
+
+  function validatePatientStateReferences(state, catalog, label) {
+    if (state.queue !== undefined && !Array.isArray(state.queue)) throw new Error(`${label} queue must be an array`);
+    if (state.arrivalSchedule !== undefined && !Array.isArray(state.arrivalSchedule)) {
+      throw new Error(`${label} arrivalSchedule must be an array`);
+    }
+    if (state.activeId !== undefined && state.activeId !== null
+      && !(state.queue || []).some((patient) => patient?.id === state.activeId)) {
+      throw new Error(`${label} activeId does not reference a queued patient`);
+    }
+    hydrateTierState(state, catalog);
+  }
+
+  function validateRuntimeObject(result, label) {
+    if (!result?.valid) throw new Error(`${label} is invalid: ${(result?.errors || ["unknown error"]).join(", ")}`);
+  }
+
+  function validateP3State(state, options = {}) {
+    if (!isRecord(state.capabilityState)
+      || state.capabilityState.schemaVersion !== 1
+      || state.capabilityState.registryId !== CAPABILITY_REGISTRY_ID
+      || state.capabilityState.registryVersion !== CAPABILITY_REGISTRY_VERSION
+      || !isRecord(state.capabilityState.entries)) {
+      throw new Error("Game save capabilityState is invalid or uses a different registry");
+    }
+    const capabilityRegistry = options.capabilityRegistry || options.catalog?.capabilityRegistry;
+    if (capabilityRegistry) {
+      validateRuntimeObject(capabilityApi.validateSparseState(capabilityRegistry, state.capabilityState), "Game save capabilityState");
+    }
+    if (!Array.isArray(state.researchOrders)) throw new Error("Game save researchOrders must be an array");
+    if (!Array.isArray(state.referralOrders)) throw new Error("Game save referralOrders must be an array");
+    if (!Array.isArray(state.asyncEvents)) throw new Error("Game save asyncEvents must be an array");
+    if (!isRecord(state.deviceQueues)) throw new Error("Game save deviceQueues must be an object");
+
+    const researchIds = assertUniqueIds(state.researchOrders, "Research orders");
+    const referralIds = assertUniqueIds(state.referralOrders, "Referral orders");
+    const eventIds = assertUniqueIds(state.asyncEvents, "Async events");
+    validateRuntimeObject(deviceQueueApi.validateDeviceQueueState(state.deviceQueues), "Device queues");
+
+    const references = collectStateReferences(state);
+    state.researchOrders.forEach((order) => {
+      validateRuntimeObject(researchApi.validateResearchOrder(order), `Research order ${order.id}`);
+      validateLifecycle(order, researchApi.TRANSITIONS, "proposed", `Research order ${order.id}`);
+      if (!references.patientIds.has(String(order.patientId))) throw new Error(`Research order ${order.id} has dangling patientId`);
+      if (order.encounterId !== undefined && !references.encounterIds.has(String(order.encounterId))) {
+        throw new Error(`Research order ${order.id} has dangling encounterId`);
+      }
+      if (order.supersedesOrderId !== undefined && !researchIds.has(order.supersedesOrderId)) {
+        throw new Error(`Research order ${order.id} has dangling supersedesOrderId`);
+      }
+    });
+    state.referralOrders.forEach((order) => {
+      validateRuntimeObject(referralApi.validateReferralOrder(order), `Referral order ${order.id}`);
+      validateLifecycle(order, referralApi.TRANSITIONS, "proposed", `Referral order ${order.id}`);
+      if (!references.patientIds.has(String(order.patientId))) throw new Error(`Referral order ${order.id} has dangling patientId`);
+      if (order.encounterId !== undefined && !references.encounterIds.has(String(order.encounterId))) {
+        throw new Error(`Referral order ${order.id} has dangling encounterId`);
+      }
+      if (order.supersedesOrderId !== undefined && !referralIds.has(order.supersedesOrderId)) {
+        throw new Error(`Referral order ${order.id} has dangling supersedesOrderId`);
+      }
+      if (["response_received", "reviewed", "communicated", "closed"].includes(order.status)
+        && order.response === undefined) {
+        throw new Error(`Referral order ${order.id} reached ${order.status} without a response`);
+      }
+    });
+
+    const asyncTransitions = { scheduled: ["handled", "cancelled"], handled: [], cancelled: [] };
+    state.asyncEvents.forEach((event) => {
+      validateRuntimeObject(asyncEventApi.validateAsyncEvent(event), `Async event ${event.id}`);
+      validateLifecycle(event, asyncTransitions, "scheduled", `Async event ${event.id}`);
+      if (event.dueAt < event.createdAt) throw new Error(`Async event ${event.id} is due before it was created`);
+      if ((event.sourceType === undefined) !== (event.sourceId === undefined)) {
+        throw new Error(`Async event ${event.id} has incomplete source reference`);
+      }
+      if (["research", "research_order"].includes(event.sourceType) && !researchIds.has(event.sourceId)) {
+        throw new Error(`Async event ${event.id} has dangling research source`);
+      }
+      if (["referral", "referral_order"].includes(event.sourceType) && !referralIds.has(event.sourceId)) {
+        throw new Error(`Async event ${event.id} has dangling referral source`);
+      }
+    });
+
+    const deviceTransitions = {
+      queued: ["processing", "cancelled"],
+      processing: ["completed", "cancelled"],
+      completed: [],
+      cancelled: []
+    };
+    const deviceTaskIds = new Set();
+    Object.values(state.deviceQueues.resources).forEach((resource) => {
+      resource.tasks.forEach((task) => {
+        if (deviceTaskIds.has(task.id)) throw new Error(`Device queues contain duplicate task ${task.id}`);
+        deviceTaskIds.add(task.id);
+        validateLifecycle(task, deviceTransitions, "queued", `Device task ${task.id}`);
+        if (["research", "research_order"].includes(task.orderType) && !researchIds.has(task.orderId)) {
+          throw new Error(`Device task ${task.id} has dangling research order`);
+        }
+        if (["referral", "referral_order"].includes(task.orderType) && !referralIds.has(task.orderId)) {
+          throw new Error(`Device task ${task.id} has dangling referral order`);
+        }
+      });
+    });
+    state.researchOrders.forEach((order) => {
+      if (order.queueTaskId !== undefined && !deviceTaskIds.has(order.queueTaskId)) {
+        throw new Error(`Research order ${order.id} has dangling queueTaskId`);
+      }
+      if (order.asyncEventIds !== undefined) {
+        if (!Array.isArray(order.asyncEventIds) || new Set(order.asyncEventIds).size !== order.asyncEventIds.length) {
+          throw new Error(`Research order ${order.id} has invalid asyncEventIds`);
+        }
+        order.asyncEventIds.forEach((id) => {
+          if (!eventIds.has(id)) throw new Error(`Research order ${order.id} has dangling async event ${id}`);
+        });
+      }
+    });
+    state.referralOrders.forEach((order) => {
+      if (order.asyncEventIds !== undefined) {
+        if (!Array.isArray(order.asyncEventIds) || new Set(order.asyncEventIds).size !== order.asyncEventIds.length) {
+          throw new Error(`Referral order ${order.id} has invalid asyncEventIds`);
+        }
+        order.asyncEventIds.forEach((id) => {
+          if (!eventIds.has(id)) throw new Error(`Referral order ${order.id} has dangling async event ${id}`);
+        });
+      }
+    });
+    return state;
+  }
+
   function createSnapshot(mode, state, options = {}) {
-    return {
+    const snapshot = {
       gameStateSaveVersion: saveVersionForMode(mode),
       generatorMode: mode,
       savedAt: new Date().toISOString(),
-      state: mode === "tier-01-v2" ? compactTierState(state, options.catalog) : snapshotState(state)
+      state: mode === "tier-01-v2"
+        ? addP3Defaults(compactTierState(state, options.catalog))
+        : snapshotState(state)
     };
+    if (mode === "tier-01-v2") {
+      snapshot.capabilityRegistryId = CAPABILITY_REGISTRY_ID;
+      snapshot.capabilityRegistryVersion = CAPABILITY_REGISTRY_VERSION;
+    }
+    validateSnapshot(snapshot, mode, options);
+    return snapshot;
   }
 
-  function validateSnapshot(snapshot, expectedMode) {
+  function validateSnapshot(snapshot, expectedMode, options = {}) {
     if (!snapshot || typeof snapshot !== "object") throw new Error("Game save is not an object");
     const expectedVersion = saveVersionForMode(expectedMode);
     if (snapshot.gameStateSaveVersion !== expectedVersion) {
@@ -157,10 +474,18 @@
       throw new Error(`Game save mode mismatch: expected ${expectedMode}, got ${snapshot.generatorMode}`);
     }
     if (!snapshot.state || typeof snapshot.state !== "object") throw new Error("Game save state is missing");
+    if (expectedMode === "tier-01-v2") {
+      if (snapshot.capabilityRegistryId !== CAPABILITY_REGISTRY_ID
+        || snapshot.capabilityRegistryVersion !== CAPABILITY_REGISTRY_VERSION) {
+        throw new Error("Game save capability registry identity is missing or incompatible");
+      }
+      validatePatientStateReferences(snapshot.state, options.catalog, "Game save");
+      validateP3State(snapshot.state, options);
+    }
     return snapshot;
   }
 
-  function migrateTierSnapshot(snapshot, catalog) {
+  function validateTierMigrationSource(snapshot, catalog) {
     if (snapshot.generatorMode !== "tier-01-v2") {
       throw new Error(`Game save mode mismatch: expected tier-01-v2, got ${snapshot.generatorMode}`);
     }
@@ -169,20 +494,44 @@
       throw new Error(`Unsupported game save version: ${snapshot.gameStateSaveVersion ?? "missing"}`);
     }
     if (!catalog) throw new Error(`Tier 01 v2 catalog is required to migrate game save version ${snapshot.gameStateSaveVersion}`);
+    if (!isRecord(snapshot.state)) throw new Error("Game save state is missing");
+    validatePatientStateReferences(snapshot.state, catalog, "Game migration source");
+    return snapshot;
+  }
+
+  function migrateLegacyTierSnapshotToV5(snapshot, catalog) {
     const compactState = snapshot.gameStateSaveVersion === GAME_STATE_SAVE_VERSION
       ? compactTierState(snapshot.state || {}, catalog)
       : clone(snapshot.state || {});
     const campaignState = snapshot.gameStateSaveVersion < 3
       ? addCampaignDefaults(compactState)
       : compactState;
-    const migrated = {
-      gameStateSaveVersion: TIER_01_V2_GAME_STATE_SAVE_VERSION,
+    return {
+      gameStateSaveVersion: PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION,
       generatorMode: "tier-01-v2",
       savedAt: snapshot.savedAt || new Date().toISOString(),
       state: migrateClinicalActionState(addLongitudinalDefaults(campaignState), catalog)
     };
-    validateSnapshot(migrated, "tier-01-v2");
-    hydrateTierState(migrated.state, catalog);
+  }
+
+  function migrateTierSnapshot(snapshot, catalog, options = {}) {
+    validateTierMigrationSource(snapshot, catalog);
+    const sourceV5 = snapshot.gameStateSaveVersion === PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION
+      ? clone(snapshot)
+      : migrateLegacyTierSnapshotToV5(snapshot, catalog);
+    const migrated = {
+      ...sourceV5,
+      gameStateSaveVersion: TIER_01_V2_GAME_STATE_SAVE_VERSION,
+      capabilityRegistryId: CAPABILITY_REGISTRY_ID,
+      capabilityRegistryVersion: CAPABILITY_REGISTRY_VERSION,
+      state: addP3Defaults(sourceV5.state)
+    };
+    Object.keys(sourceV5.state).forEach((key) => {
+      if (JSON.stringify(migrated.state[key]) !== JSON.stringify(sourceV5.state[key])) {
+        throw new Error(`Game v5 migration changed active state field ${key}`);
+      }
+    });
+    validateSnapshot(migrated, "tier-01-v2", { ...options, catalog });
     return migrated;
   }
 
@@ -192,10 +541,14 @@
     return snapshot;
   }
 
+  function migrationBackupKeyForVersion(mode, sourceVersion) {
+    return atomicSaveMigration.migrationBackupKey(namespaces.gameSaveKey(mode), sourceVersion);
+  }
+
   function load(storage, mode, options = {}) {
     const key = namespaces.gameSaveKey(mode);
     const raw = storage.getItem(key);
-    if (!raw) return null;
+    if (raw === null) return null;
     let parsed;
     try {
       parsed = JSON.parse(raw);
@@ -207,12 +560,43 @@
       ...LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS,
       PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION
     ].includes(parsed.gameStateSaveVersion)) {
-      compactSnapshot = migrateTierSnapshot(parsed, options.catalog);
-      storage.setItem(key, JSON.stringify(compactSnapshot));
+      validateTierMigrationSource(parsed, options.catalog);
+      compactSnapshot = atomicSaveMigration.migrate({
+        storage,
+        primaryKey: key,
+        backupKey: migrationBackupKeyForVersion(mode, parsed.gameStateSaveVersion),
+        sourceRaw: raw,
+        label: "Tier 01 v2 game save migration",
+        validateSource: (source) => validateTierMigrationSource(source, options.catalog),
+        buildCandidate: (source) => migrateTierSnapshot(source, options.catalog, options),
+        validateCandidate: (candidate) => validateSnapshot(candidate, mode, options)
+      }).value;
     }
-    validateSnapshot(compactSnapshot, mode);
+    validateSnapshot(compactSnapshot, mode, options);
     if (mode !== "tier-01-v2" || options.hydrate === false) return compactSnapshot;
     return { ...compactSnapshot, state: hydrateTierState(compactSnapshot.state, options.catalog) };
+  }
+
+  function restoreMigrationBackup(storage, mode, sourceVersion, options = {}) {
+    const supportedVersions = [
+      ...LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS,
+      PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION
+    ];
+    if (mode !== "tier-01-v2" || !supportedVersions.includes(sourceVersion)) {
+      throw new Error(`Unsupported game migration backup: ${mode}/${sourceVersion}`);
+    }
+    return atomicSaveMigration.restore({
+      storage,
+      primaryKey: namespaces.gameSaveKey(mode),
+      backupKey: migrationBackupKeyForVersion(mode, sourceVersion),
+      label: "Tier 01 v2 game save migration rollback",
+      validateBackup: (backup) => {
+        if (backup.gameStateSaveVersion !== sourceVersion) {
+          throw new Error(`Game migration backup version mismatch: expected ${sourceVersion}, got ${backup.gameStateSaveVersion ?? "missing"}`);
+        }
+        validateTierMigrationSource(backup, options.catalog);
+      }
+    });
   }
 
   function clear(storage, mode) {
@@ -224,6 +608,12 @@
     LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS,
     PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION,
     TIER_01_V2_GAME_STATE_SAVE_VERSION,
+    CAPABILITY_REGISTRY_ID,
+    CAPABILITY_REGISTRY_VERSION,
+    RESEARCH_ORDER_STATUSES: researchApi.STATUSES,
+    REFERRAL_ORDER_STATUSES: referralApi.STATUSES,
+    ASYNC_EVENT_STATUSES: asyncEventApi.STATUSES,
+    DEVICE_TASK_STATUSES: deviceQueueApi.TASK_STATUSES,
     SERIALIZED_FIELDS,
     TIER_01_V2_SERIALIZED_FIELDS,
     saveVersionForMode,
@@ -232,11 +622,16 @@
     campaignDefaults,
     addCampaignDefaults,
     addLongitudinalDefaults,
+    addP3Defaults,
     hydratePatient,
     hydrateTierState,
     createSnapshot,
     validateSnapshot,
+    validateP3State,
+    validateTierMigrationSource,
     migrateTierSnapshot,
+    migrationBackupKeyForVersion,
+    restoreMigrationBackup,
     save,
     load,
     clear

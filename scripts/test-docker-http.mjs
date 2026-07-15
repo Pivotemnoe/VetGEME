@@ -97,6 +97,10 @@ async function runHttpSmoke() {
       type: "application/json",
     },
     {
+      path: "/content/system-packs/vetgeme-master-2026-07-14/capability-registry.json",
+      type: "application/json",
+    },
+    {
       path: "/art/runtime-v2/assets/rooms/doctor-office.png",
       type: "image/png",
     },
@@ -175,6 +179,10 @@ async function runHttpSmoke() {
     "/content/medical-packs/vetgeme-master-2026-07-14/medical/README.md",
     "/content/medical-packs/vetgeme-master-2026-07-14/medical/families/01_ear/EAR_FAMILY.md",
     "/content/medical-packs/vetgeme-master-2026-07-14/medical/families/01_ear/not-shipped.json",
+    "/content/system-packs/not-a-pack/capability-registry.json",
+    "/content/system-packs/vetgeme-master-2026-07-14/README.md",
+    "/content/system-packs/vetgeme-master-2026-07-14/not-shipped.json",
+    "/handoff/vetgeme-master-package/systems/catalog/capability-registry.json",
     "/tier-01-v2/content/clinical/tier-01/manifest.json",
     "/tier-01-v2/scripts/validate-tier-01-content-v2.mjs",
     "/legacy/content/tier-01-v1-review/clinical/tier-01/manifest.json",

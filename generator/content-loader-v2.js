@@ -4,16 +4,24 @@
   const medicalCatalogApi = typeof module === "object" && module.exports
     ? require("./medical-catalog-v2.js")
     : root?.PET_CLINIC_MEDICAL_CATALOG_V2;
-  const api = factory(medicalCatalogApi);
+  const capabilityRegistryApi = typeof module === "object" && module.exports
+    ? require("../systems/capability-registry-v3.js")
+    : root?.PET_CLINIC_CAPABILITY_REGISTRY_V3;
+  const api = factory(medicalCatalogApi, capabilityRegistryApi);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_CONTENT_V2 = api;
-})(typeof window !== "undefined" ? window : globalThis, function (medicalCatalogApi) {
+})(typeof window !== "undefined" ? window : globalThis, function (medicalCatalogApi, capabilityRegistryApi) {
   "use strict";
 
   const CONTENT_REGISTRY_PATH = "content/registry.json";
   const CONTENT_ROOT = "content/packs/tier-01-v2";
   const DEFAULT_PACK_ID = "tier-01-v2";
   const DEFAULT_PACK_VERSION = "2026.07.12.2";
+  const DEFAULT_CAPABILITY_REGISTRY_ID = "vetgeme-clinic-capabilities";
+  const DEFAULT_CAPABILITY_REGISTRY_VERSION = "2026.07.14.38";
+  const DEFAULT_CAPABILITY_REGISTRY_ROOT = "content/system-packs/vetgeme-master-2026-07-14";
+  const DEFAULT_CAPABILITY_REGISTRY_PATH = "capability-registry.json";
+  const DEFAULT_CAPABILITY_REGISTRY_DIGEST = "16ff64c015a8edb302c15289540a4ed760cfc356d832bca31094f992b1da3c81";
   const KNOWN_PACK_STATUSES = new Set([
     "editorial_complete_pending_medical_review",
     "approved"
@@ -32,6 +40,7 @@
   ];
 
   if (!medicalCatalogApi) throw new Error("Medical catalog v2 dependency is unavailable");
+  if (!capabilityRegistryApi) throw new Error("Capability registry v3 dependency is unavailable");
 
   function joinPath(...parts) {
     return parts.map((part, index) => {
@@ -94,7 +103,123 @@
       }
     }
     medicalCatalogApi.validateMedicalRegistrations(registry);
+    validateCapabilityRegistrations(registry);
     return registry;
+  }
+
+  function validateCapabilityRegistration(registration) {
+    assert(registration && typeof registration === "object" && !Array.isArray(registration), "capability registration must be an object");
+    const id = registration.capabilityRegistryId;
+    const version = registration.capabilityRegistryVersion;
+    const identity = `${id || "missing"}@${version || "missing"}`;
+    assert(typeof id === "string" && /^[A-Za-z0-9][A-Za-z0-9_-]*$/u.test(id), "capabilityRegistryId is invalid");
+    assert(typeof version === "string" && version.length > 0, `${id}: capabilityRegistryVersion is required`);
+    assert(id === capabilityRegistryApi.REGISTRY_ID, `${identity}: registry ID does not match the v3 runtime contract`);
+    assert(version === capabilityRegistryApi.REGISTRY_VERSION, `${identity}: registry version does not match the v3 runtime contract`);
+    assert(typeof registration.packageId === "string" && registration.packageId.length > 0, `${identity}: packageId is required`);
+    assert(typeof registration.packageVersion === "string" && registration.packageVersion.length > 0, `${identity}: packageVersion is required`);
+    assert(
+      isSafeRelativePath(registration.root) && registration.root.startsWith("content/system-packs/"),
+      `${identity}: invalid root`
+    );
+    assert(isSafeRelativePath(registration.registryPath), `${identity}: invalid registryPath`);
+    assert(/^[a-f0-9]{64}$/u.test(registration.sourceDigest || ""), `${identity}: sourceDigest must be SHA-256`);
+    assert(registration.root === DEFAULT_CAPABILITY_REGISTRY_ROOT, `${identity}: unexpected registry root ${registration.root}`);
+    assert(registration.registryPath === DEFAULT_CAPABILITY_REGISTRY_PATH, `${identity}: unexpected registryPath ${registration.registryPath}`);
+    assert(registration.sourceDigest === DEFAULT_CAPABILITY_REGISTRY_DIGEST, `${identity}: sourceDigest does not match the audited source file`);
+    assert(registration.status === capabilityRegistryApi.REGISTRY_STATUS, `${identity}: unknown status ${registration.status || "missing"}`);
+    assert(registration.expectedCounts && typeof registration.expectedCounts === "object", `${identity}: expectedCounts are required`);
+    assert(
+      Number.isInteger(registration.expectedCounts.capabilities) && registration.expectedCounts.capabilities > 0,
+      `${identity}: expectedCounts.capabilities is invalid`
+    );
+    assert(
+      registration.expectedCounts.capabilities === capabilityRegistryApi.EXPECTED_CAPABILITY_COUNT,
+      `${identity}: expected capability count does not match the v3 runtime contract`
+    );
+    assert(registration.activationPolicy && typeof registration.activationPolicy === "object", `${identity}: activationPolicy is required`);
+    for (const field of [
+      "registryRuntimeEligible",
+      "medicalResearchMappingEligible",
+      "criticalityEligible",
+      "economicSchedulingEligible",
+      "referralOutcomesEligible"
+    ]) {
+      assert(typeof registration.activationPolicy[field] === "boolean", `${identity}: activationPolicy.${field} must be boolean`);
+    }
+    assert(registration.activationPolicy.registryRuntimeEligible, `${identity}: registry runtime loading is disabled`);
+    for (const blockedField of [
+      "medicalResearchMappingEligible",
+      "criticalityEligible",
+      "economicSchedulingEligible",
+      "referralOutcomesEligible"
+    ]) {
+      assert(registration.activationPolicy[blockedField] === false, `${identity}: ${blockedField} requires authored activation data`);
+    }
+    assert(Array.isArray(registration.allowedModes) && registration.allowedModes.length > 0, `${identity}: allowedModes must be non-empty`);
+    assert(new Set(registration.allowedModes).size === registration.allowedModes.length, `${identity}: duplicate allowed mode`);
+    assert(
+      registration.allowedModes.every((mode) => typeof mode === "string" && mode.length > 0),
+      `${identity}: invalid allowed mode`
+    );
+    return registration;
+  }
+
+  function validateCapabilityRegistrations(registry) {
+    assert(
+      Array.isArray(registry?.capabilityRegistries) && registry.capabilityRegistries.length > 0,
+      "capabilityRegistries must be a non-empty array"
+    );
+    const ids = new Set();
+    const identities = new Set();
+    const roots = new Set();
+    for (const registration of registry.capabilityRegistries) {
+      validateCapabilityRegistration(registration);
+      const identity = `${registration.capabilityRegistryId}@${registration.capabilityRegistryVersion}`;
+      assert(!ids.has(registration.capabilityRegistryId), `duplicate capabilityRegistryId ${registration.capabilityRegistryId}`);
+      ids.add(registration.capabilityRegistryId);
+      assert(!identities.has(identity), `duplicate capability registry identity ${identity}`);
+      identities.add(identity);
+      assert(!roots.has(registration.root), `duplicate capability registry root ${registration.root}`);
+      roots.add(registration.root);
+    }
+    return registry.capabilityRegistries;
+  }
+
+  function resolveRegisteredCapabilityRegistry(registry, options = {}) {
+    const registrations = validateCapabilityRegistrations(registry);
+    const registryId = options.capabilityRegistryId || DEFAULT_CAPABILITY_REGISTRY_ID;
+    const registryVersion = options.capabilityRegistryVersion || DEFAULT_CAPABILITY_REGISTRY_VERSION;
+    const mode = options.mode || "tier-01-v2";
+    const matchesId = registrations.filter((entry) => entry.capabilityRegistryId === registryId);
+    assert(matchesId.length === 1, `unknown capabilityRegistryId ${registryId}`);
+    const registration = matchesId.find((entry) => entry.capabilityRegistryVersion === registryVersion);
+    assert(registration, `unknown capability registry version ${registryId}@${registryVersion}`);
+    assert(registration.allowedModes.includes(mode), `${registryId}@${registryVersion}: mode ${mode} is not allowed`);
+    assert(registration.activationPolicy.registryRuntimeEligible, `${registryId}@${registryVersion}: registry runtime loading is disabled`);
+    return registration;
+  }
+
+  function validateCapabilityRegistryIdentity(registration, capabilityRegistry) {
+    const identity = `${registration.capabilityRegistryId}@${registration.capabilityRegistryVersion}`;
+    assert(capabilityRegistry && typeof capabilityRegistry === "object" && !Array.isArray(capabilityRegistry), `${identity}: registry document is missing`);
+    assert(capabilityRegistry.registryId === registration.capabilityRegistryId, `${identity}: registryId mismatch`);
+    assert(capabilityRegistry.registryVersion === registration.capabilityRegistryVersion, `${identity}: registryVersion mismatch`);
+    assert(capabilityRegistry.status === registration.status, `${identity}: registry status mismatch`);
+    const validation = capabilityRegistryApi.validateRegistry(capabilityRegistry, {
+      expectedCount: registration.expectedCounts.capabilities,
+      requireCanonicalIdentity: true
+    });
+    assert(validation && validation.valid === true, `${identity}: ${validation?.errors?.join(", ") || "registry validation failed"}`);
+    return capabilityRegistry;
+  }
+
+  async function loadRegisteredCapabilityRegistry(readJson, registration) {
+    validateCapabilityRegistration(registration);
+    return validateCapabilityRegistryIdentity(
+      registration,
+      await readJson(joinPath(registration.root, registration.registryPath))
+    );
   }
 
   function resolveRegisteredPack(registry, options = {}) {
@@ -234,11 +359,13 @@
     const registry = validateRegistry(await readJson(CONTENT_REGISTRY_PATH));
     const pack = resolveRegisteredPack(registry, options);
     const medicalRegistration = medicalCatalogApi.resolveRegisteredMedicalCatalog(registry, options);
+    const capabilityRegistration = resolveRegisteredCapabilityRegistry(registry, options);
     const manifest = validateManifestIdentity(pack, await readJson(joinPath(pack.root, pack.manifestPath)));
-    const [catalog, medicalCatalog, compatibilityDocument] = await Promise.all([
+    const [catalog, medicalCatalog, compatibilityDocument, capabilityRegistry] = await Promise.all([
       loadCatalog(readJson, pack.root, pack.manifestPath, manifest),
       medicalCatalogApi.loadRegisteredMedicalCatalog(readJson, medicalRegistration, options),
-      readJson(joinPath(medicalRegistration.root, medicalRegistration.compatibilityPath))
+      readJson(joinPath(medicalRegistration.root, medicalRegistration.compatibilityPath)),
+      loadRegisteredCapabilityRegistry(readJson, capabilityRegistration)
     ]);
     const compatibility = medicalCatalogApi.applyCompatibilityDocument(catalog, compatibilityDocument);
     return {
@@ -246,6 +373,8 @@
       registryEntry: JSON.parse(JSON.stringify(pack)),
       medicalRegistryEntry: JSON.parse(JSON.stringify(medicalRegistration)),
       medicalCatalog,
+      capabilityRegistryEntry: JSON.parse(JSON.stringify(capabilityRegistration)),
+      capabilityRegistry,
       compatibility,
       loadContext: options.context || "review"
     };
@@ -280,9 +409,20 @@
     CONTENT_ROOT,
     DEFAULT_PACK_ID,
     DEFAULT_PACK_VERSION,
+    DEFAULT_CAPABILITY_REGISTRY_ID,
+    DEFAULT_CAPABILITY_REGISTRY_VERSION,
+    DEFAULT_CAPABILITY_REGISTRY_ROOT,
+    DEFAULT_CAPABILITY_REGISTRY_PATH,
+    DEFAULT_CAPABILITY_REGISTRY_DIGEST,
     OWNER_FILES,
     medicalCatalogApi,
+    capabilityRegistryApi,
     validateRegistry,
+    validateCapabilityRegistration,
+    validateCapabilityRegistrations,
+    resolveRegisteredCapabilityRegistry,
+    validateCapabilityRegistryIdentity,
+    loadRegisteredCapabilityRegistry,
     resolveRegisteredPack,
     validateManifestIdentity,
     loadRegisteredCatalog,

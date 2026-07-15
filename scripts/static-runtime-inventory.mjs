@@ -5,16 +5,17 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const EXPECTED_RUNTIME_FILE_COUNT = 187;
+export const EXPECTED_RUNTIME_FILE_COUNT = 194;
 export const EXPECTED_RUNTIME_GROUP_COUNTS = Object.freeze({
-  base: 23,
-  canonicalContent: 99,
+  base: 29,
+  canonicalContent: 100,
   visual: 65,
 });
 
 const EXPECTED_BASE_RUNTIME_FILES = Object.freeze([
   "campaign.js",
   "game.js",
+  "generator/atomic-save-migration.js",
   "generator/compact-visit-v2.js",
   "generator/content-loader-v2.js",
   "generator/demand-director-v2.js",
@@ -30,11 +31,16 @@ const EXPECTED_BASE_RUNTIME_FILES = Object.freeze([
   "legacy/generator-v1.js",
   "styles.css",
   "systems/campaign-mechanics-v2.js",
+  "systems/capability-registry-v3.js",
+  "systems/async-events-v3.js",
   "systems/clinical-decisions-v2.js",
   "systems/clinical-visit-state.js",
+  "systems/device-queue-v3.js",
   "systems/diagnostic-decisions-v2.js",
   "systems/free-clinical-flow-v2.js",
   "systems/longitudinal-care-v2.js",
+  "systems/referral-orders-v3.js",
+  "systems/research-orders-v3.js",
   "visual/clinic-renderer-v2.js",
 ]);
 
@@ -45,6 +51,9 @@ const TIER_CONTENT_PACK_VERSION = "2026.07.12.2";
 const EXPECTED_TIER_PACK_RUNTIME_JSON_COUNT = 55;
 const MEDICAL_CONTENT_ROOT = "content/medical-packs/vetgeme-master-2026-07-14";
 const EXPECTED_MEDICAL_PACK_RUNTIME_JSON_COUNT = 43;
+const CAPABILITY_CONTENT_ROOT = "content/system-packs/vetgeme-master-2026-07-14";
+const CAPABILITY_REGISTRY_FILE = `${CAPABILITY_CONTENT_ROOT}/capability-registry.json`;
+const EXPECTED_CAPABILITY_PACK_RUNTIME_JSON_COUNT = 1;
 const VISUAL_MANIFEST = "art/runtime-v2/manifest.json";
 const VISUAL_LAYOUT = "art/runtime-v2/scene-layout.json";
 const VISUAL_ASSET_ROOT = "art/runtime-v2/assets";
@@ -248,7 +257,8 @@ async function collectCanonicalContentFiles(root) {
     const isMedicalPackJson = (
       relativeFile.startsWith(`${MEDICAL_CONTENT_ROOT}/`) && relativeFile.endsWith(".json")
     );
-    if (!isRegistry && !isTierPackJson && !isMedicalPackJson) {
+    const isCapabilityPackJson = relativeFile === CAPABILITY_REGISTRY_FILE;
+    if (!isRegistry && !isTierPackJson && !isMedicalPackJson && !isCapabilityPackJson) {
       throw new Error(`Tier 01 v2 loader referenced an unexpected path: ${relativeFile}`);
     }
     referencedFiles.add(relativeFile);
@@ -273,6 +283,11 @@ async function collectCanonicalContentFiles(root) {
     "medical review pack runtime JSON",
     [...referencedFiles].filter((relativeFile) => relativeFile.startsWith(`${MEDICAL_CONTENT_ROOT}/`)),
     EXPECTED_MEDICAL_PACK_RUNTIME_JSON_COUNT,
+  );
+  assertCount(
+    "capability pack runtime JSON",
+    [...referencedFiles].filter((relativeFile) => relativeFile.startsWith(`${CAPABILITY_CONTENT_ROOT}/`)),
+    EXPECTED_CAPABILITY_PACK_RUNTIME_JSON_COUNT,
   );
   return [...referencedFiles].sort();
 }

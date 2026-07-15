@@ -23,6 +23,7 @@ export const DOCKER_BUILD_INPUT_PATHS = Object.freeze([
   "content/registry.json",
   "content/packs/tier-01-v2",
   "content/medical-packs/vetgeme-master-2026-07-14",
+  "content/system-packs/vetgeme-master-2026-07-14/capability-registry.json",
   "tier-01-v2/scripts",
   "art/runtime-v2",
   "scripts",

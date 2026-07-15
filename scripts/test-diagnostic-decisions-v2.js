@@ -58,6 +58,17 @@ const insufficientBudget = decisions.evaluateDiagnosticProposal(required, {
 assert.equal(insufficientBudget.decision, "requests_cheaper_option");
 assert.equal(insufficientBudget.diagnosticUncertainty, true);
 
+const priceNotAuthored = decisions.evaluateDiagnosticProposal([{
+  id: "owner_video_review",
+  label: "Owner video review",
+  classification: "recommended"
+}], {
+  trust: 70, anxiety: 30, irritation: 10, budget: 20, budgetLimited: true, budgetDiscussed: false
+});
+assert.equal(priceNotAuthored.totalCost, null, "missing price must not become zero");
+assert.equal(priceNotAuthored.priceStatus, "not_authored");
+assert.equal(priceNotAuthored.decision, "accepted", "unknown price must not drive invented budget logic");
+
 const refused = decisions.evaluateDiagnosticProposal(lowValue, {
   trust: 35, anxiety: 30, irritation: 10, budget: 500, budgetDiscussed: true
 });

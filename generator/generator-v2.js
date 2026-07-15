@@ -7,16 +7,23 @@
   const demandApi = typeof module === "object" && module.exports
     ? require("./demand-director-v2.js")
     : root.PET_CLINIC_DEMAND_DIRECTOR_V2;
-  const api = factory(compactApi, demandApi);
+  const atomicSaveMigration = typeof module === "object" && module.exports
+    ? require("./atomic-save-migration.js")
+    : root.PET_CLINIC_ATOMIC_SAVE_MIGRATION;
+  const api = factory(compactApi, demandApi, atomicSaveMigration);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_GENERATOR_V2 = api;
-})(typeof window !== "undefined" ? window : globalThis, function (compactApi, demandApi) {
+})(typeof window !== "undefined" ? window : globalThis, function (compactApi, demandApi, atomicSaveMigration) {
   "use strict";
 
   const SAVE_KEY = "pet-clinic-generator-v2";
-  const SAVE_VERSION = 6;
-  const GENERATOR_VERSION = "tier-01-v2.2.0";
-  const PREVIOUS_GENERATOR_VERSION = "tier-01-v2.1.0";
+  const SAVE_VERSION = 7;
+  const GENERATOR_VERSION = "tier-01-v2.3.0";
+  const PREVIOUS_SAVE_VERSION = 6;
+  const PREVIOUS_GENERATOR_VERSION = "tier-01-v2.2.0";
+  const LEGACY_GENERATOR_VERSION = "tier-01-v2.1.0";
+  const CAPABILITY_REGISTRY_ID = "vetgeme-clinic-capabilities";
+  const CAPABILITY_REGISTRY_VERSION = "2026.07.14.38";
   const SUPPORTED_MODES = ["current", "legacy-v1", "tier-01-v2"];
   const DEFAULT_EQUIPMENT = ["otoscope", "microscope"];
   const FIRST_TUTORIAL_CASE_IDS = ["EAR_FUNGAL_OTITIS", "EAR_MITES"];
@@ -127,6 +134,8 @@
     return {
       saveVersion: SAVE_VERSION,
       generatorVersion: GENERATOR_VERSION,
+      capabilityRegistryId: CAPABILITY_REGISTRY_ID,
+      capabilityRegistryVersion: CAPABILITY_REGISTRY_VERSION,
       ...contentPack,
       campaignSeed: seed || randomSeed(),
       generatedDays: {},
@@ -142,14 +151,14 @@
   function addDemandState(saved, catalog, contentPack) {
     const migrated = clone(saved);
     Object.assign(migrated, contentPack, {
-      saveVersion: SAVE_VERSION,
-      generatorVersion: GENERATOR_VERSION,
+      saveVersion: PREVIOUS_SAVE_VERSION,
+      generatorVersion: PREVIOUS_GENERATOR_VERSION,
       demandDirectorVersion: demandApi.DEMAND_DIRECTOR_VERSION,
       demandState: { ...demandApi.initialDemandState(), ...(migrated.demandState || {}) }
     });
     migrated.generatedDays = Object.fromEntries(Object.entries(migrated.generatedDays || {}).map(([key, compactDay]) => {
       const hydrated = compactApi.hydrateDay(compactDay, catalog);
-      hydrated.schemaVersion = SAVE_VERSION;
+      hydrated.schemaVersion = PREVIOUS_SAVE_VERSION;
       hydrated.visits.forEach((visit) => {
         visit.sourceCategory = demandApi.sourceCategoryForLegacySource(visit.source, visit);
         Object.assign(visit, demandApi.routingForCase(visit.medicalContent, migrated.demandState?.lastDecision?.capabilities || {}));
@@ -180,9 +189,17 @@
 
   function compactState(saved, catalog, contentPack) {
     const migrated = clone(saved);
-    Object.assign(migrated, contentPack, { saveVersion: SAVE_VERSION, generatorVersion: GENERATOR_VERSION });
+    Object.assign(migrated, contentPack, {
+      saveVersion: PREVIOUS_SAVE_VERSION,
+      generatorVersion: PREVIOUS_GENERATOR_VERSION
+    });
     migrated.generatedDays = Object.fromEntries(Object.entries(saved.generatedDays || {}).map(([key, day]) => {
-      const dayWithMetadata = { ...clone(day), ...contentPack, schemaVersion: SAVE_VERSION, generatorVersion: GENERATOR_VERSION };
+      const dayWithMetadata = {
+        ...clone(day),
+        ...contentPack,
+        schemaVersion: PREVIOUS_SAVE_VERSION,
+        generatorVersion: PREVIOUS_GENERATOR_VERSION
+      };
       const compactDay = compactApi.compactDay(dayWithMetadata, catalog);
       compactApi.hydrateDay(compactDay, catalog);
       return [key, compactDay];
@@ -191,29 +208,110 @@
     return addDemandState(migrated, catalog, contentPack);
   }
 
+  function isRecord(value) {
+    return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+  }
+
+  function assertGeneratorCollections(saved, catalog, label) {
+    if (typeof saved.campaignSeed !== "string" || !saved.campaignSeed.trim()) {
+      throw new Error(`${label} campaignSeed is missing`);
+    }
+    if (!isRecord(saved.generatedDays)) throw new Error(`${label} generatedDays must be an object`);
+    if (!Array.isArray(saved.pendingFollowUps)) throw new Error(`${label} pendingFollowUps must be an array`);
+    if (!Array.isArray(saved.completedCases)) throw new Error(`${label} completedCases must be an array`);
+    if (!isRecord(saved.seenCaseCounts)) throw new Error(`${label} seenCaseCounts must be an object`);
+    if (!Number.isInteger(saved.nextVisitId) || saved.nextVisitId < 1) {
+      throw new Error(`${label} nextVisitId is invalid`);
+    }
+    if (catalog) {
+      Object.entries(saved.generatedDays).forEach(([dayNumber, day]) => {
+        if (!/^\d+$/.test(dayNumber) || !isRecord(day)) throw new Error(`${label} generated day ${dayNumber} is invalid`);
+        compactApi.hydrateDay(day, catalog);
+      });
+      saved.pendingFollowUps.forEach((item, index) => {
+        if (!isRecord(item)) throw new Error(`${label} pending follow-up ${index} is invalid`);
+        compactApi.hydrateOwner(item.owner, catalog);
+      });
+    }
+  }
+
+  function validatePersistedState(saved, catalogOrPack = {}) {
+    if (!isRecord(saved)) throw new Error("Generator save is not an object");
+    const catalog = catalogOrPack?.manifest ? catalogOrPack : null;
+    const contentPack = catalog ? contentPackMetadata(catalog) : catalogOrPack;
+    if (saved.saveVersion !== SAVE_VERSION || saved.generatorVersion !== GENERATOR_VERSION) {
+      throw new Error(`Unsupported generator save version: ${saved.saveVersion ?? "missing"}/${saved.generatorVersion ?? "missing"}`);
+    }
+    if (!contentPackMatches(saved, contentPack)) throw new Error("Generator save content pack mismatch");
+    if (saved.capabilityRegistryId !== CAPABILITY_REGISTRY_ID
+      || saved.capabilityRegistryVersion !== CAPABILITY_REGISTRY_VERSION) {
+      throw new Error(`Generator save capability registry mismatch: ${saved.capabilityRegistryId || "missing"}/${saved.capabilityRegistryVersion || "missing"}`);
+    }
+    assertGeneratorCollections(saved, catalog, "Generator save");
+    return saved;
+  }
+
+  function validateVersion6State(saved, catalogOrPack = {}) {
+    if (!isRecord(saved)) throw new Error("Generator save is not an object");
+    const catalog = catalogOrPack?.manifest ? catalogOrPack : null;
+    const contentPack = catalog ? contentPackMetadata(catalog) : catalogOrPack;
+    if (saved.saveVersion !== PREVIOUS_SAVE_VERSION || saved.generatorVersion !== PREVIOUS_GENERATOR_VERSION) {
+      throw new Error(`Unsupported generator save version: ${saved.saveVersion ?? "missing"}/${saved.generatorVersion ?? "missing"}`);
+    }
+    if (!contentPackMatches(saved, contentPack)) throw new Error("Generator save content pack mismatch");
+    assertGeneratorCollections(saved, catalog, "Generator save v6");
+    return saved;
+  }
+
+  function migrateVersion6State(saved, catalogOrPack = {}) {
+    validateVersion6State(saved, catalogOrPack);
+    const migrated = clone(saved);
+    migrated.saveVersion = SAVE_VERSION;
+    migrated.generatorVersion = GENERATOR_VERSION;
+    migrated.capabilityRegistryId = CAPABILITY_REGISTRY_ID;
+    migrated.capabilityRegistryVersion = CAPABILITY_REGISTRY_VERSION;
+    Object.keys(saved).forEach((key) => {
+      if (["saveVersion", "generatorVersion", "capabilityRegistryId", "capabilityRegistryVersion"].includes(key)) return;
+      if (JSON.stringify(migrated[key]) !== JSON.stringify(saved[key])) {
+        throw new Error(`Generator v6 migration changed persisted ${key}`);
+      }
+    });
+    if (JSON.stringify(migrated.generatedDays) !== JSON.stringify(saved.generatedDays)) {
+      throw new Error("Generator v6 migration changed generatedDays");
+    }
+    validatePersistedState(migrated, catalogOrPack);
+    return migrated;
+  }
+
   function migrateState(saved, seed, catalogOrPack = {}) {
     const catalog = catalogOrPack?.manifest ? catalogOrPack : null;
     const contentPack = catalog ? contentPackMetadata(catalog) : catalogOrPack;
-    if (saved && saved.saveVersion === SAVE_VERSION && saved.generatorVersion === GENERATOR_VERSION && contentPackMatches(saved, contentPack)) {
-      if (catalog) {
-        Object.values(saved.generatedDays || {}).forEach((day) => compactApi.hydrateDay(day, catalog));
-        (saved.pendingFollowUps || []).forEach((item) => compactApi.hydrateOwner(item.owner, catalog));
-      }
-      return saved;
+    if (!saved) return freshState(seed, contentPack);
+    if (saved.saveVersion === SAVE_VERSION && saved.generatorVersion === GENERATOR_VERSION && contentPackMatches(saved, contentPack)) {
+      return validatePersistedState(saved, catalogOrPack);
     }
-    if (saved && [4, 5].includes(saved.saveVersion) && [PREVIOUS_GENERATOR_VERSION, GENERATOR_VERSION].includes(saved.generatorVersion) && contentPackMatches(saved, contentPack)) {
+    if (saved.saveVersion === PREVIOUS_SAVE_VERSION
+      && saved.generatorVersion === PREVIOUS_GENERATOR_VERSION
+      && contentPackMatches(saved, contentPack)) {
+      return migrateVersion6State(saved, catalogOrPack);
+    }
+    if ([4, 5].includes(saved.saveVersion)
+      && [LEGACY_GENERATOR_VERSION, PREVIOUS_GENERATOR_VERSION].includes(saved.generatorVersion)
+      && contentPackMatches(saved, contentPack)) {
       if (!catalog) throw new Error(`Tier 01 v2 catalog is required to migrate generator save version ${saved.saveVersion}`);
-      return addDemandState(saved, catalog, contentPack);
+      return migrateVersion6State(addDemandState(saved, catalog, contentPack), catalog);
     }
-    if (saved && saved.saveVersion === 3 && [PREVIOUS_GENERATOR_VERSION, GENERATOR_VERSION].includes(saved.generatorVersion) && contentPackMatches(saved, contentPack)) {
+    if (saved.saveVersion === 3
+      && [LEGACY_GENERATOR_VERSION, PREVIOUS_GENERATOR_VERSION].includes(saved.generatorVersion)
+      && contentPackMatches(saved, contentPack)) {
       if (!catalog) throw new Error("Tier 01 v2 catalog is required to migrate generator save version 3");
-      return compactState(saved, catalog, contentPack);
+      return migrateVersion6State(compactState(saved, catalog, contentPack), catalog);
     }
-    if (saved && saved.saveVersion === 2 && saved.generatorVersion === "tier-01-v2.0.0") {
+    if (saved.saveVersion === 2 && saved.generatorVersion === "tier-01-v2.0.0") {
       const migrated = clone(saved);
-      Object.assign(migrated, contentPack, { saveVersion: 3, generatorVersion: PREVIOUS_GENERATOR_VERSION });
+      Object.assign(migrated, contentPack, { saveVersion: 3, generatorVersion: LEGACY_GENERATOR_VERSION });
       Object.values(migrated.generatedDays || {}).forEach((day) => {
-        Object.assign(day, contentPack, { schemaVersion: 3, generatorVersion: GENERATOR_VERSION });
+        Object.assign(day, contentPack, { schemaVersion: 3, generatorVersion: LEGACY_GENERATOR_VERSION });
         if (day.visits?.some((visit) => !visit.medicalContent)) {
           const hydrated = compactApi.hydrateDay(day, catalog);
           Object.keys(day).forEach((key) => { delete day[key]; });
@@ -243,29 +341,82 @@
         day.fingerprint = day.fullFingerprint;
       });
       if (!catalog) throw new Error("Tier 01 v2 catalog is required to migrate generator save version 2");
-      return compactState(migrated, catalog, contentPack);
+      return migrateVersion6State(compactState(migrated, catalog, contentPack), catalog);
     }
-    if (saved) {
-      return {
-        ...saved,
-        migrationRequired: true,
-        expectedSaveVersion: SAVE_VERSION,
-        expectedGeneratorVersion: GENERATOR_VERSION
-      };
-    }
-    return freshState(seed, contentPack);
+    return {
+      ...saved,
+      migrationRequired: true,
+      expectedSaveVersion: SAVE_VERSION,
+      expectedGeneratorVersion: GENERATOR_VERSION
+    };
+  }
+
+  function migrationRequiredError(saved, contentPack) {
+    return new Error(`Generator save migration required: ${saved?.saveVersion || "unknown"}/${saved?.generatorVersion || "unknown"}/${saved?.contentPackVersion || "unknown"} -> ${SAVE_VERSION}/${GENERATOR_VERSION}/${contentPack.contentPackVersion}`);
+  }
+
+  function validateMigrationSource(saved, catalog) {
+    if (!isRecord(saved)) throw new Error("Generator save is not an object");
+    if (saved.saveVersion === PREVIOUS_SAVE_VERSION) return validateVersion6State(saved, catalog);
+    const contentPack = contentPackMetadata(catalog);
+    const compatibleLegacy = (
+      [3, 4, 5].includes(saved.saveVersion)
+      && [LEGACY_GENERATOR_VERSION, PREVIOUS_GENERATOR_VERSION].includes(saved.generatorVersion)
+      && contentPackMatches(saved, contentPack)
+    ) || (saved.saveVersion === 2 && saved.generatorVersion === "tier-01-v2.0.0");
+    if (!compatibleLegacy) throw migrationRequiredError(saved, contentPack);
+    if (!isRecord(saved.generatedDays)) throw new Error("Generator migration source generatedDays must be an object");
+    if (!Array.isArray(saved.pendingFollowUps || [])) throw new Error("Generator migration source pendingFollowUps must be an array");
+    return saved;
+  }
+
+  function migrationBackupKeyForVersion(sourceVersion) {
+    return atomicSaveMigration.migrationBackupKey(SAVE_KEY, sourceVersion);
   }
 
   function loadState(storage, seed, catalog) {
     const raw = storage.getItem(SAVE_KEY);
-    if (!raw) return migrateState(null, seed, catalog);
+    if (raw === null) return { state: migrateState(null, seed, catalog), isFresh: true };
     let saved;
     try {
       saved = JSON.parse(raw);
     } catch (error) {
       throw new Error(`Generator save JSON is invalid: ${error.message}`);
     }
-    return migrateState(saved, seed, catalog);
+    if (saved.saveVersion === SAVE_VERSION) {
+      return { state: validatePersistedState(saved, catalog), isFresh: false };
+    }
+    validateMigrationSource(saved, catalog);
+    const migrated = atomicSaveMigration.migrate({
+      storage,
+      primaryKey: SAVE_KEY,
+      backupKey: migrationBackupKeyForVersion(saved.saveVersion),
+      sourceRaw: raw,
+      label: "Generator save migration",
+      validateSource: (source) => validateMigrationSource(source, catalog),
+      buildCandidate: (source) => {
+        const candidate = migrateState(source, seed, catalog);
+        if (candidate.migrationRequired) throw migrationRequiredError(source, contentPackMetadata(catalog));
+        return candidate;
+      },
+      validateCandidate: (candidate) => validatePersistedState(candidate, catalog)
+    });
+    return { state: migrated.value, isFresh: false };
+  }
+
+  function restoreMigrationBackup(storage, sourceVersion, catalog) {
+    return atomicSaveMigration.restore({
+      storage,
+      primaryKey: SAVE_KEY,
+      backupKey: migrationBackupKeyForVersion(sourceVersion),
+      label: "Generator save migration rollback",
+      validateBackup: (backup) => {
+        if (backup.saveVersion !== sourceVersion) {
+          throw new Error(`Generator migration backup version mismatch: expected ${sourceVersion}, got ${backup.saveVersion ?? "missing"}`);
+        }
+        validateMigrationSource(backup, catalog);
+      }
+    });
   }
 
   function persist(storage, state) {
@@ -584,11 +735,12 @@
           }
         : {}])
     ));
-    const state = loadState(storage, options.seed, catalog);
+    const loaded = loadState(storage, options.seed, catalog);
+    const state = loaded.state;
     if (state.migrationRequired) {
       throw new Error(`Generator save migration required: ${state.saveVersion || "unknown"}/${state.generatorVersion || "unknown"}/${state.contentPackVersion || "unknown"} -> ${SAVE_VERSION}/${GENERATOR_VERSION}/${contentPack.contentPackVersion}`);
     }
-    persist(storage, state);
+    if (loaded.isFresh) persist(storage, state);
 
     function getDayRule(dayNumber) {
       if (dayNumber < 1 || dayNumber > 30) return null;
@@ -768,7 +920,13 @@
       day.fingerprint = day.fullFingerprint;
       const errors = validateGeneratedDay(day, catalog, demandApi.availableEquipment(decision.capabilities));
       if (errors.length) throw new Error(errors.join("; "));
-      state.generatedDays[key] = compactApi.compactDay(day, catalog);
+      const compactDay = compactApi.compactDay(day, catalog);
+      // The top-level save already owns generator compatibility and the seed.
+      // Repeating both on every newly generated day costs several KiB by day 30.
+      delete compactDay.generatorVersion;
+      delete compactDay.campaignSeed;
+      if (compactDay.tutorial === null) delete compactDay.tutorial;
+      state.generatedDays[key] = compactDay;
       selectedCases.forEach((caseData) => {
         state.seenCaseCounts[caseData.id] = (state.seenCaseCounts[caseData.id] || 0) + 1;
       });
@@ -916,6 +1074,11 @@
     SAVE_KEY,
     SAVE_VERSION,
     GENERATOR_VERSION,
+    PREVIOUS_SAVE_VERSION,
+    PREVIOUS_GENERATOR_VERSION,
+    LEGACY_GENERATOR_VERSION,
+    CAPABILITY_REGISTRY_ID,
+    CAPABILITY_REGISTRY_VERSION,
     SUPPORTED_MODES,
     DEFAULT_EQUIPMENT,
     DEMAND_DIRECTOR_VERSION: demandApi.DEMAND_DIRECTOR_VERSION,
@@ -926,6 +1089,11 @@
     fullFingerprint,
     structuralFingerprint,
     hashString,
-    migrateState
+    migrateState,
+    migrateVersion6State,
+    validatePersistedState,
+    validateVersion6State,
+    migrationBackupKeyForVersion,
+    restoreMigrationBackup
   };
 });

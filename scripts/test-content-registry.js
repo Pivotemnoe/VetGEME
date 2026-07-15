@@ -69,6 +69,42 @@ async function main() {
   unknownIntegrationStatus.packs[0].integrationStatus = "unknown-integration-status";
   assert.throws(() => loader.validateRegistry(unknownIntegrationStatus), /unknown integrationStatus unknown-integration-status/);
 
+  const missingCapabilityRegistries = clone(registry);
+  delete missingCapabilityRegistries.capabilityRegistries;
+  assert.throws(
+    () => loader.validateRegistry(missingCapabilityRegistries),
+    /capabilityRegistries must be a non-empty array/
+  );
+
+  const unknownCapabilityDigest = clone(registry);
+  unknownCapabilityDigest.capabilityRegistries[0].sourceDigest = "0".repeat(64);
+  assert.throws(
+    () => loader.validateRegistry(unknownCapabilityDigest),
+    /sourceDigest does not match the audited source file/
+  );
+
+  const activatedUnauthoredResearch = clone(registry);
+  activatedUnauthoredResearch.capabilityRegistries[0].activationPolicy.medicalResearchMappingEligible = true;
+  assert.throws(
+    () => loader.validateRegistry(activatedUnauthoredResearch),
+    /medicalResearchMappingEligible requires authored activation data/
+  );
+
+  assert.throws(() => loader.resolveRegisteredCapabilityRegistry(registry, {
+    ...options,
+    capabilityRegistryId: "unknown-capability-registry"
+  }), /unknown capabilityRegistryId unknown-capability-registry/);
+
+  assert.throws(() => loader.resolveRegisteredCapabilityRegistry(registry, {
+    ...options,
+    capabilityRegistryVersion: "unknown-version"
+  }), /unknown capability registry version vetgeme-clinic-capabilities@unknown-version/);
+
+  assert.throws(() => loader.resolveRegisteredCapabilityRegistry(registry, {
+    ...options,
+    mode: "current"
+  }), /mode current is not allowed/);
+
   await assert.rejects(loader.loadFromDirectory(projectRoot, {
     ...options,
     context: "production"
@@ -106,14 +142,36 @@ async function main() {
     return value;
   }, options), /bundle identity mismatch: manifest=DUAL_EAR_FUNGAL_BACTERIAL, file=TAMPERED_BUNDLE_ID/);
 
+  const capabilityRegistration = loader.resolveRegisteredCapabilityRegistry(registry, options);
+  const capabilityRequestPath = `${capabilityRegistration.root}/${capabilityRegistration.registryPath}`;
+  await assert.rejects(loader.loadRegisteredCatalog(async (requestedPath) => {
+    const value = await readProjectJson(requestedPath);
+    if (requestedPath === capabilityRequestPath) return { ...value, registryVersion: "TAMPERED_VERSION" };
+    return value;
+  }, options), /registryVersion mismatch/);
+
+  await assert.rejects(loader.loadRegisteredCatalog(async (requestedPath) => {
+    const value = await readProjectJson(requestedPath);
+    if (requestedPath !== capabilityRequestPath) return value;
+    const tampered = clone(value);
+    tampered.capabilities[0].requires = ["missing_authored_capability"];
+    return tampered;
+  }, options), /missing_reference:general_exam->missing_authored_capability/);
+
   const catalog = await loader.loadFromDirectory(projectRoot, options);
   assert.equal(catalog.loadContext, "review");
   assert.equal(catalog.contentRoot, "content/packs/tier-01-v2");
   assert.equal(catalog.registryEntry.contentPackHash, catalog.manifest.contentPackHash);
   assert.equal(catalog.cases.length, 30);
   assert.equal(Object.keys(catalog.casesById).length, 30);
+  assert.equal(catalog.capabilityRegistryEntry.capabilityRegistryId, "vetgeme-clinic-capabilities");
+  assert.equal(catalog.capabilityRegistryEntry.capabilityRegistryVersion, "2026.07.14.38");
+  assert.equal(catalog.capabilityRegistryEntry.activationPolicy.medicalResearchMappingEligible, false);
+  assert.equal(catalog.capabilityRegistry.registryId, catalog.capabilityRegistryEntry.capabilityRegistryId);
+  assert.equal(catalog.capabilityRegistry.registryVersion, catalog.capabilityRegistryEntry.capabilityRegistryVersion);
+  assert.equal(catalog.capabilityRegistry.capabilities.length, 447);
 
-  console.log("Content registry tests passed: unique identity/root, strict lookup/hash/status, case/bundle identity, review-only gate.");
+  console.log("Content registry tests passed: content/medical/capability identity, exact digest gate, strict mode lookup, authored activation gates, case/bundle/graph integrity.");
 }
 
 main().catch((error) => {

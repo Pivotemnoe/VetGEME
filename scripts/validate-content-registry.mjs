@@ -27,6 +27,7 @@ console.log(JSON.stringify({
   registryVersion: registry.registryVersion,
   packCount: registry.packs.length,
   medicalCatalogCount: registry.medicalCatalogs.length,
+  capabilityRegistryCount: registry.capabilityRegistries.length,
   selectedPack: {
     contentPackId: catalog.registryEntry.contentPackId,
     contentPackVersion: catalog.registryEntry.contentPackVersion,
@@ -48,5 +49,16 @@ console.log(JSON.stringify({
     counts: catalog.medicalCatalog.counts,
     productionPresentations: catalog.medicalCatalog.productionPool.presentations.length,
     compatibilityCases: catalog.compatibility.cases.length
+  },
+  capabilityRegistry: {
+    capabilityRegistryId: catalog.capabilityRegistryEntry.capabilityRegistryId,
+    capabilityRegistryVersion: catalog.capabilityRegistryEntry.capabilityRegistryVersion,
+    packageId: catalog.capabilityRegistryEntry.packageId,
+    packageVersion: catalog.capabilityRegistryEntry.packageVersion,
+    sourceDigest: catalog.capabilityRegistryEntry.sourceDigest,
+    status: catalog.capabilityRegistryEntry.status,
+    allowedModes: catalog.capabilityRegistryEntry.allowedModes,
+    activationPolicy: catalog.capabilityRegistryEntry.activationPolicy,
+    capabilities: catalog.capabilityRegistry.capabilities.length
   }
 }, null, 2));

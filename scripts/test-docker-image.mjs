@@ -90,8 +90,16 @@ async function inspectDockerRuntime() {
     "registered medical family index is absent from image",
   );
   assert.ok(
+    imageFiles.includes("content/system-packs/vetgeme-master-2026-07-14/capability-registry.json"),
+    "registered capability index is absent from image",
+  );
+  assert.ok(
     !imageFiles.some((file) => file.startsWith("content/medical-packs/") && file.endsWith(".md")),
     "medical authoring Markdown leaked into the runtime image",
+  );
+  assert.ok(
+    !imageFiles.some((file) => file.startsWith("content/system-packs/") && file.endsWith(".md")),
+    "system authoring Markdown leaked into the runtime image",
   );
   for (const forbiddenPrefix of [
     "content/clinical/",

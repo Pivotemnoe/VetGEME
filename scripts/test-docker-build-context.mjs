@@ -55,6 +55,18 @@ try {
   );
   assert.equal(retiredSchemaOne.contextSha256, clean.contextSha256);
 
+  await writeFile(
+    path.join(fixture, "content/system-packs/vetgeme-master-2026-07-14/not-registered.json"),
+    "{\"notRegistered\":true}\n",
+  );
+  const unregisteredSystemFile = await collectDockerBuildProvenance(fixture);
+  assert.equal(
+    unregisteredSystemFile.dirty,
+    false,
+    "unregistered system-pack JSON polluted exact Docker provenance",
+  );
+  assert.equal(unregisteredSystemFile.contextSha256, clean.contextSha256);
+
   await writeFile(path.join(fixture, "scripts", "ignored.tmp"), "ignored but copied\n");
   const ignored = await collectDockerBuildProvenance(fixture);
   assert.equal(ignored.dirty, true, "ignored build input was not reported dirty");
@@ -92,6 +104,7 @@ try {
     userArtExcluded: true,
     retiredTierContentExcluded: true,
     retiredSchemaOneExcluded: true,
+    unregisteredSystemFileExcluded: true,
   }, null, 2));
 } finally {
   await rm(fixture, { recursive: true, force: true });
