@@ -24,6 +24,8 @@ assert.deepEqual(catalog.medicalCatalog.counts, {
 assert.equal(catalog.medicalCatalog.productionPool.families.length, 0);
 assert.equal(catalog.medicalCatalog.productionPool.variants.length, 0);
 assert.equal(catalog.medicalCatalog.productionPool.presentations.length, 0);
+assert.equal(catalog.medicalCatalog.loadContext, "review");
+assert.equal(catalog.medicalCatalog.reviewCandidates.families.length, 0);
 assert.equal(catalog.compatibility.cases.length, 30);
 assert.equal(
   catalog.compatibility.cases.reduce((sum, entry) => sum + entry.complaints.length, 0),
@@ -68,6 +70,12 @@ console.log(JSON.stringify({
     variants: catalog.medicalCatalog.productionPool.variants.length,
     presentations: catalog.medicalCatalog.productionPool.presentations.length
   },
+  reviewCandidates: {
+    families: catalog.medicalCatalog.reviewCandidates.families.length,
+    variants: catalog.medicalCatalog.reviewCandidates.variants.length,
+    presentations: catalog.medicalCatalog.reviewCandidates.presentations.length
+  },
+  sourceIntegrity: catalog.medicalCatalog.sourceIntegrity,
   compatibility: {
     policy: catalog.compatibility.mappingPolicy,
     cases: catalog.compatibility.cases.length,

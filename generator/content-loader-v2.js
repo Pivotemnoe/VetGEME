@@ -60,6 +60,38 @@
     return parts.every((part) => part && part !== "." && part !== "..");
   }
 
+  function createIntegrityJsonReader(loadBytes) {
+    const cache = new Map();
+
+    async function load(requestedPath) {
+      if (!cache.has(requestedPath)) {
+        cache.set(requestedPath, Promise.resolve(loadBytes(requestedPath)).then((value) => {
+          const bytes = value instanceof Uint8Array ? value : new Uint8Array(value);
+          const text = new TextDecoder().decode(bytes);
+          return {
+            bytes,
+            value: JSON.parse(text),
+            integrity: null
+          };
+        }));
+      }
+      return cache.get(requestedPath);
+    }
+
+    const readJson = async (requestedPath) => (await load(requestedPath)).value;
+    readJson.integrity = async (requestedPath) => {
+      const loaded = await load(requestedPath);
+      if (!loaded.integrity) {
+        loaded.integrity = medicalCatalogApi.sha256Hex(loaded.bytes).then((sha256) => ({
+          bytes: loaded.bytes.byteLength,
+          sha256
+        }));
+      }
+      return loaded.integrity;
+    };
+    return readJson;
+  }
+
   function validateRegistry(registry) {
     assert(registry && typeof registry === "object" && !Array.isArray(registry), "registry must be an object");
     assert(registry.schemaVersion === 1, `unsupported schemaVersion ${registry.schemaVersion ?? "missing"}`);
@@ -214,12 +246,22 @@
     return capabilityRegistry;
   }
 
-  async function loadRegisteredCapabilityRegistry(readJson, registration) {
+  async function loadRegisteredCapabilityRegistry(readJson, registration, options = {}) {
     validateCapabilityRegistration(registration);
-    return validateCapabilityRegistryIdentity(
+    const context = options.context || "production";
+    assert(LOAD_CONTEXTS.has(context), `unknown load context ${context}`);
+    const requestedPath = joinPath(registration.root, registration.registryPath);
+    const capabilityRegistry = validateCapabilityRegistryIdentity(
       registration,
-      await readJson(joinPath(registration.root, registration.registryPath))
+      await readJson(requestedPath)
     );
+    if (typeof readJson.integrity === "function") {
+      const integrity = await readJson.integrity(requestedPath);
+      assert(integrity?.sha256 === registration.sourceDigest, `${registration.capabilityRegistryId}: runtime SHA-256 does not match the registered source digest`);
+    } else {
+      assert(context !== "production", `${registration.capabilityRegistryId}: production loading requires a source-integrity reader`);
+    }
+    return capabilityRegistry;
   }
 
   function resolveRegisteredPack(registry, options = {}) {
@@ -227,7 +269,7 @@
     const packId = options.packId || DEFAULT_PACK_ID;
     const packVersion = options.packVersion || DEFAULT_PACK_VERSION;
     const mode = options.mode || "tier-01-v2";
-    const context = options.context || "review";
+    const context = options.context || "production";
     assert(LOAD_CONTEXTS.has(context), `unknown load context ${context}`);
 
     const matchesId = registry.packs.filter((pack) => pack.contentPackId === packId);
@@ -254,6 +296,69 @@
     assert(manifest.status === pack.status, `${identity}: manifest status mismatch`);
     assert(manifest.integrationStatus === pack.integrationStatus, `${identity}: manifest integrationStatus mismatch`);
     return manifest;
+  }
+
+  function validateMedicalCapabilityReferences(medicalCatalog, capabilityRegistry, options = {}) {
+    const context = options.context || "production";
+    assert(LOAD_CONTEXTS.has(context), `unknown load context ${context}`);
+    assert(medicalCatalog && Array.isArray(medicalCatalog.families), "medical catalog families are unavailable");
+    assert(capabilityRegistry && Array.isArray(capabilityRegistry.capabilities), "capability registry entries are unavailable");
+    const capabilityIds = new Set(capabilityRegistry.capabilities.map((entry) => entry.id));
+    const declarationDifferences = [];
+    const productionCandidateFamilyIds = new Set(medicalCatalog.families.filter((family) => (
+      family.status === medicalCatalogApi.APPROVED_STATUS
+      && family.generatorEligible === true
+    )).map((family) => family.id));
+    let registryReferences = 0;
+    let familyReferences = 0;
+    let safeRouteReferences = 0;
+
+    for (const family of medicalCatalog.families) {
+      const registryEntry = medicalCatalog.familyRegistry.families.find((entry) => entry.id === family.id);
+      assert(registryEntry, `${family.id}: family registry entry is missing`);
+      for (const capabilityId of registryEntry.coreCapabilities) {
+        assert(capabilityIds.has(capabilityId), `${family.id}: unknown registry capability reference ${capabilityId}`);
+        registryReferences += 1;
+      }
+      for (const capabilityId of family.coreCapabilities) {
+        assert(capabilityIds.has(capabilityId), `${family.id}: unknown family capability reference ${capabilityId}`);
+        familyReferences += 1;
+      }
+      assert(capabilityIds.has(family.safeRouteCapability), `${family.id}: unknown safe-route capability reference ${family.safeRouteCapability}`);
+      safeRouteReferences += 1;
+      const registrySet = new Set(registryEntry.coreCapabilities);
+      const familySet = new Set(family.coreCapabilities);
+      const onlyRegistry = [...registrySet].filter((id) => !familySet.has(id)).sort();
+      const onlyFamily = [...familySet].filter((id) => !registrySet.has(id)).sort();
+      if (onlyRegistry.length || onlyFamily.length) {
+        declarationDifferences.push({
+          familyId: family.id,
+          productionCandidate: productionCandidateFamilyIds.has(family.id),
+          onlyRegistry,
+          onlyFamily
+        });
+      }
+    }
+
+    const productionCandidateDifferences = declarationDifferences.filter((entry) => entry.productionCandidate);
+    if (context === "production") {
+      assert(productionCandidateDifferences.length === 0, "production-candidate medical capability declarations are contradictory");
+    }
+    return {
+      capabilityCount: capabilityIds.size,
+      registryReferences,
+      familyReferences,
+      safeRouteReferences,
+      declarationDifferences,
+      productionCandidateFamilyIds: [...productionCandidateFamilyIds].sort(),
+      productionCandidateDifferences
+    };
+  }
+
+  function requireGeneratorMedicalPool(catalog) {
+    assert(catalog && catalog.loadContext === "production", "master medical consumption requires production loadContext");
+    assert(catalog.medicalCatalog?.loadContext === "production", "master medical catalog requires production loadContext");
+    return medicalCatalogApi.requireProductionPool(catalog.medicalCatalog);
   }
 
   async function loadCatalog(readJson, rootPath, manifestPath, manifest) {
@@ -365,8 +470,9 @@
       loadCatalog(readJson, pack.root, pack.manifestPath, manifest),
       medicalCatalogApi.loadRegisteredMedicalCatalog(readJson, medicalRegistration, options),
       readJson(joinPath(medicalRegistration.root, medicalRegistration.compatibilityPath)),
-      loadRegisteredCapabilityRegistry(readJson, capabilityRegistration)
+      loadRegisteredCapabilityRegistry(readJson, capabilityRegistration, options)
     ]);
+    const capabilityReferenceAudit = validateMedicalCapabilityReferences(medicalCatalog, capabilityRegistry, options);
     const compatibility = medicalCatalogApi.applyCompatibilityDocument(catalog, compatibilityDocument);
     return {
       ...catalog,
@@ -375,18 +481,21 @@
       medicalCatalog,
       capabilityRegistryEntry: JSON.parse(JSON.stringify(capabilityRegistration)),
       capabilityRegistry,
+      capabilityReferenceAudit,
       compatibility,
-      loadContext: options.context || "review"
+      loadContext: options.context || "production"
     };
   }
 
   async function loadFromFetch(options = {}, fetchImpl = fetch) {
     if (typeof options === "string") throw new Error("Direct content-root loading is disabled; use the content registry");
-    return loadRegisteredCatalog(async (path) => {
-      const response = await fetchImpl(path);
-      if (!response.ok) throw new Error(`Registered content request failed: ${path} (${response.status})`);
-      return response.json();
-    }, options);
+    const readJson = createIntegrityJsonReader(async (requestedPath) => {
+      const response = await fetchImpl(requestedPath);
+      if (!response.ok) throw new Error(`Registered content request failed: ${requestedPath} (${response.status})`);
+      assert(typeof response.arrayBuffer === "function", `registered content response cannot provide source bytes: ${requestedPath}`);
+      return new Uint8Array(await response.arrayBuffer());
+    });
+    return loadRegisteredCatalog(readJson, options);
   }
 
   async function loadFromDirectory(projectRoot, options = {}) {
@@ -394,14 +503,15 @@
     const fs = require("node:fs/promises");
     const pathModule = require("node:path");
     const resolvedProjectRoot = pathModule.resolve(projectRoot);
-    return loadRegisteredCatalog(async (requestedPath) => {
+    const readJson = createIntegrityJsonReader(async (requestedPath) => {
       const resolved = pathModule.resolve(resolvedProjectRoot, requestedPath);
       const relative = pathModule.relative(resolvedProjectRoot, resolved);
       if (!relative || relative.startsWith(`..${pathModule.sep}`) || pathModule.isAbsolute(relative)) {
         throw new Error(`Registered content path escapes the project root: ${requestedPath}`);
       }
-      return JSON.parse(await fs.readFile(resolved, "utf8"));
-    }, options);
+      return fs.readFile(resolved);
+    });
+    return loadRegisteredCatalog(readJson, options);
   }
 
   return {
@@ -423,6 +533,8 @@
     resolveRegisteredCapabilityRegistry,
     validateCapabilityRegistryIdentity,
     loadRegisteredCapabilityRegistry,
+    validateMedicalCapabilityReferences,
+    requireGeneratorMedicalPool,
     resolveRegisteredPack,
     validateManifestIdentity,
     loadRegisteredCatalog,

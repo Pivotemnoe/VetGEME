@@ -59,6 +59,13 @@ console.log(JSON.stringify({
     status: catalog.capabilityRegistryEntry.status,
     allowedModes: catalog.capabilityRegistryEntry.allowedModes,
     activationPolicy: catalog.capabilityRegistryEntry.activationPolicy,
-    capabilities: catalog.capabilityRegistry.capabilities.length
+    capabilities: catalog.capabilityRegistry.capabilities.length,
+    medicalReferenceAudit: {
+      registryReferences: catalog.capabilityReferenceAudit.registryReferences,
+      familyReferences: catalog.capabilityReferenceAudit.familyReferences,
+      safeRouteReferences: catalog.capabilityReferenceAudit.safeRouteReferences,
+      declarationDifferenceFamilies: catalog.capabilityReferenceAudit.declarationDifferences.length,
+      productionCandidateDifferenceFamilies: catalog.capabilityReferenceAudit.productionCandidateDifferences.length
+    }
   }
 }, null, 2));

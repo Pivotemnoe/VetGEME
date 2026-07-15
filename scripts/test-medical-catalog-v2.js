@@ -23,6 +23,13 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function assertDeepFrozen(value, seen = new WeakSet()) {
+  if (!value || typeof value !== "object" || seen.has(value)) return;
+  seen.add(value);
+  assert.equal(Object.isFrozen(value), true, "production projection contains a mutable object");
+  for (const nested of Object.values(value)) assertDeepFrozen(nested, seen);
+}
+
 async function readProjectJson(requestedPath) {
   return JSON.parse(await fs.readFile(path.join(projectRoot, ...requestedPath.split("/")), "utf8"));
 }
@@ -43,6 +50,37 @@ async function main() {
   assert.equal(medical.productionPool.families.length, 0);
   assert.equal(medical.productionPool.variants.length, 0);
   assert.equal(medical.productionPool.presentations.length, 0);
+  assert.equal(medical.loadContext, "review");
+  assert.equal(medical.reviewCandidates.families.length, 0);
+  assert.throws(
+    () => medicalApi.requireProductionPool(medical),
+    /master medical consumption requires production loadContext/
+  );
+  assert.equal(medicalApi.normalizeMedicalCatalog, undefined);
+  const forgedProductionCatalog = clone(medical);
+  forgedProductionCatalog.loadContext = "production";
+  forgedProductionCatalog.productionPool = {
+    families: [{ id: "forged_family" }],
+    variants: [{ id: "forged_variant" }],
+    presentations: [{ id: "forged_presentation" }]
+  };
+  assert.throws(
+    () => medicalApi.requireProductionPool(forgedProductionCatalog),
+    /production medical catalog is not loader-attested/
+  );
+  assert.throws(
+    () => loader.requireGeneratorMedicalPool({
+      loadContext: "production",
+      medicalCatalog: forgedProductionCatalog
+    }),
+    /production medical catalog is not loader-attested/
+  );
+  assert.deepEqual(medical.sourceIntegrity, {
+    aggregateVerified: true,
+    loadedFilesVerified: 41,
+    required: false,
+    readerAvailable: true
+  });
 
   const repeatedPresentationId = "p2_behavior_swallowing_salivation_paralysis_or_unexplained_neurologic_signs";
   const repeatedKeys = Object.keys(medical.presentationsByKey).filter((key) => key.endsWith(`/presentation/${repeatedPresentationId}`));
@@ -63,6 +101,16 @@ async function main() {
   )));
 
   const registry = await readProjectJson(loader.CONTENT_REGISTRY_PATH);
+  const omittedContext = { ...options };
+  delete omittedContext.context;
+  assert.throws(
+    () => medicalApi.resolveRegisteredMedicalCatalog(registry, omittedContext),
+    /production loading is disabled/
+  );
+  await assert.rejects(
+    loader.loadFromDirectory(projectRoot, omittedContext),
+    /production loading is disabled/
+  );
   assert.throws(() => medicalApi.resolveRegisteredMedicalCatalog(registry, {
     ...options,
     context: "production"
@@ -70,6 +118,18 @@ async function main() {
   const unknownStatus = clone(registry.medicalCatalogs[0]);
   unknownStatus.status = "unknown";
   assert.throws(() => medicalApi.validateMedicalRegistration(unknownStatus), /unknown status unknown/);
+  const unknownPackageStatus = clone(registry.medicalCatalogs[0]);
+  unknownPackageStatus.packageStatus = "unknown";
+  assert.throws(() => medicalApi.validateMedicalRegistration(unknownPackageStatus), /unknown packageStatus unknown/);
+  const contradictoryApproval = clone(registry.medicalCatalogs[0]);
+  contradictoryApproval.status = "approved";
+  assert.throws(() => medicalApi.validateMedicalRegistration(contradictoryApproval), /approval statuses contradict/);
+  const blockedProduction = clone(registry.medicalCatalogs[0]);
+  blockedProduction.reviewPolicy.productionEligible = true;
+  assert.throws(() => medicalApi.validateMedicalRegistration(blockedProduction), /blocked package cannot be production eligible/);
+  const blockedEligibility = clone(registry.medicalCatalogs[0]);
+  blockedEligibility.expectedCounts.generatorEligibleFamilies = 1;
+  assert.throws(() => medicalApi.validateMedicalRegistration(blockedEligibility), /blocked package cannot register generator-eligible families/);
   const unsafeRoot = clone(registry.medicalCatalogs[0]);
   unsafeRoot.root = "../handoff/vetgeme-master-package";
   assert.throws(() => medicalApi.validateMedicalRegistration(unsafeRoot), /invalid root/);
@@ -78,9 +138,167 @@ async function main() {
   assert.throws(() => medicalApi.validateMedicalRegistration(missingDigest), /sourceDigest must be SHA-256/);
 
   const medicalRegistration = registry.medicalCatalogs[0];
+  await assert.rejects(
+    medicalApi.loadRegisteredMedicalCatalog(readProjectJson, medicalRegistration),
+    /production loading is disabled/
+  );
+  const packageManifestPath = `${medicalRegistration.root}/${medicalRegistration.manifestPath}`;
+  const packageManifest = await readProjectJson(packageManifestPath);
+  const mismatchedLegacyRollup = clone(packageManifest);
+  mismatchedLegacyRollup.medical.familyStatus = "approved";
+  assert.throws(
+    () => medicalApi.validatePackageManifest(medicalRegistration, mismatchedLegacyRollup),
+    /legacy registration\/manifest familyStatus mismatch/
+  );
   const familyRegistryPath = `${medicalRegistration.root}/${medicalRegistration.familyRegistryPath}`;
   const familyRegistry = await readProjectJson(familyRegistryPath);
   const firstFamilyPath = `${medicalRegistration.root}/medical/${familyRegistry.families[0].contentFile}`;
+  const firstFamily = await readProjectJson(firstFamilyPath);
+  const secondFamilyPath = `${medicalRegistration.root}/medical/${familyRegistry.families[1].contentFile}`;
+  const secondFamily = await readProjectJson(secondFamilyPath);
+
+  const mixedRegistration = clone(medicalRegistration);
+  mixedRegistration.status = "approved";
+  mixedRegistration.packageStatus = "approved";
+  mixedRegistration.expectedCounts.generatorEligibleFamilies = 1;
+  mixedRegistration.reviewPolicy.productionEligible = true;
+  const mixedManifest = clone(packageManifest);
+  mixedManifest.status = "approved";
+  mixedManifest.medical.generatorEligibleFamilies = 1;
+  const mixedFamilyRegistry = clone(familyRegistry);
+  mixedFamilyRegistry.status = "approved";
+  mixedFamilyRegistry.families[0].status = "approved";
+  mixedFamilyRegistry.families[1].status = "retired";
+  const mixedFirstFamily = clone(firstFamily);
+  mixedFirstFamily.status = "approved";
+  mixedFirstFamily.generatorEligible = true;
+  const fixtureVariantStatuses = [
+    "approved",
+    "planned",
+    "authored",
+    "source_checked",
+    "pending_veterinary_review",
+    "retired"
+  ];
+  mixedFirstFamily.variants.forEach((variant, index) => {
+    variant.version = `mixed-fixture-${index + 1}`;
+    variant.status = fixtureVariantStatuses[index % fixtureVariantStatuses.length];
+    variant.generatorEligible = index === 0;
+  });
+  const mixedSecondFamily = clone(secondFamily);
+  mixedSecondFamily.status = "retired";
+  mixedSecondFamily.generatorEligible = false;
+  const mixedReader = async (requestedPath) => {
+    if (requestedPath === packageManifestPath) return clone(mixedManifest);
+    if (requestedPath === familyRegistryPath) return clone(mixedFamilyRegistry);
+    if (requestedPath === firstFamilyPath) return clone(mixedFirstFamily);
+    if (requestedPath === secondFamilyPath) return clone(mixedSecondFamily);
+    return readProjectJson(requestedPath);
+  };
+  const mixedCatalog = await medicalApi.loadRegisteredMedicalCatalog(
+    mixedReader,
+    mixedRegistration,
+    { ...options, context: "review" }
+  );
+  assert.deepEqual(
+    [...new Set(mixedCatalog.families.map((family) => family.status))].sort(),
+    ["approved", "retired", medicalApi.REVIEW_FAMILY_STATUS].sort()
+  );
+  assert.deepEqual(
+    [...new Set(mixedCatalog.familiesById.ear_external.variants.map((variant) => variant.status))].sort(),
+    fixtureVariantStatuses.slice().sort()
+  );
+  assert.equal(mixedCatalog.counts.generatorEligibleFamilies, 1);
+  assert.equal(mixedCatalog.reviewCandidates.families.length, 1);
+  assert.equal(mixedCatalog.reviewCandidates.variants.length, 1);
+  assert.equal(mixedCatalog.reviewCandidates.presentations.length, 0);
+  assert.equal(mixedCatalog.productionPool.families.length, 0);
+  assert.equal(mixedCatalog.productionPool.variants.length, 0);
+  assert.equal(mixedCatalog.productionPool.presentations.length, 0);
+  assert.throws(
+    () => medicalApi.requireProductionPool(mixedCatalog),
+    /master medical consumption requires production loadContext/
+  );
+
+  const projectionSource = clone(mixedCatalog.familiesById.ear_external);
+  const eligibleVariant = projectionSource.variants[0];
+  const eligiblePresentation = eligibleVariant.presentations[0];
+  eligiblePresentation.version = "projection-presentation-v1";
+  eligiblePresentation.status = "approved";
+  eligiblePresentation.generatorEligible = true;
+  const pendingVariant = projectionSource.variants[1];
+  pendingVariant.version = "projection-pending-variant-v1";
+  pendingVariant.status = "pending_veterinary_review";
+  pendingVariant.generatorEligible = false;
+  pendingVariant.presentations[0].version = "projection-ineligible-parent-presentation-v1";
+  pendingVariant.presentations[0].status = "approved";
+  pendingVariant.presentations[0].generatorEligible = true;
+
+  const productionProjection = medicalApi.__testOnly.buildProductionCandidateProjection([projectionSource]);
+  assert.equal(productionProjection.families.length, 1);
+  assert.equal(productionProjection.variants.length, 1);
+  assert.equal(productionProjection.presentations.length, 1);
+  assert.deepEqual(productionProjection.families[0].variants.map((variant) => variant.id), [eligibleVariant.id]);
+  assert.deepEqual(
+    productionProjection.families[0].variants[0].presentations.map((presentation) => presentation.id),
+    [eligiblePresentation.id]
+  );
+  assert.equal(JSON.stringify(productionProjection).includes(pendingVariant.id), false);
+  assert.notEqual(productionProjection.families[0], projectionSource);
+  assert.notEqual(productionProjection.families[0].variants[0], eligibleVariant);
+  assert.notEqual(productionProjection.families[0].variants[0].presentations[0], eligiblePresentation);
+  assertDeepFrozen(productionProjection);
+  assert.throws(() => productionProjection.families.push({}), TypeError);
+  assert.throws(() => {
+    productionProjection.families[0].title = "mutated";
+  }, TypeError);
+  assert.throws(() => productionProjection.families[0].species.push("cat"), TypeError);
+  assert.throws(() => {
+    productionProjection.families[0].variants[0].presentations[0].id = "mutated";
+  }, TypeError);
+  assert.throws(
+    () => medicalApi.requireProductionPool({
+      loadContext: "production",
+      productionPool: productionProjection
+    }),
+    /production medical catalog is not loader-attested/
+  );
+
+  const invalidVariantVersion = clone(firstFamily);
+  invalidVariantVersion.variants[0].version = 1;
+  assert.throws(() => medicalApi.validateFamily(
+    medicalRegistration,
+    familyRegistry.families[0],
+    invalidVariantVersion
+  ), /variant version is invalid/);
+  const blankVariantVersion = clone(firstFamily);
+  blankVariantVersion.variants[0].version = "  ";
+  assert.throws(() => medicalApi.validateFamily(
+    medicalRegistration,
+    familyRegistry.families[0],
+    blankVariantVersion
+  ), /variant version is invalid/);
+  const unknownVariantStatus = clone(firstFamily);
+  unknownVariantStatus.variants[0].status = "writer_reviewed";
+  assert.throws(() => medicalApi.validateFamily(
+    medicalRegistration,
+    familyRegistry.families[0],
+    unknownVariantStatus
+  ), /unknown variant status writer_reviewed/);
+  const invalidVariantEligibility = clone(firstFamily);
+  invalidVariantEligibility.variants[0].generatorEligible = "false";
+  assert.throws(() => medicalApi.validateFamily(
+    medicalRegistration,
+    familyRegistry.families[0],
+    invalidVariantEligibility
+  ), /variant generatorEligible must be boolean/);
+  const unapprovedEligibleVariant = clone(firstFamily);
+  unapprovedEligibleVariant.variants[0].generatorEligible = true;
+  assert.throws(() => medicalApi.validateFamily(
+    medicalRegistration,
+    familyRegistry.families[0],
+    unapprovedEligibleVariant
+  ), /generator-eligible variant must be approved/);
   await assert.rejects(medicalApi.loadRegisteredMedicalCatalog(async (requestedPath) => {
     const value = await readProjectJson(requestedPath);
     if (requestedPath === firstFamilyPath) return { ...value, familyId: "tampered_family" };
@@ -102,6 +320,31 @@ async function main() {
     }
     return value;
   }, medicalRegistration, options), /provenance aggregate digest mismatch/);
+  await assert.rejects(medicalApi.loadRegisteredMedicalCatalog(async (requestedPath) => {
+    const value = await readProjectJson(requestedPath);
+    if (requestedPath === `${medicalRegistration.root}/${medicalRegistration.provenancePath}`) {
+      const tampered = clone(value);
+      tampered.files.find((file) => file.path === "medical/00_MASTER_FAMILY_MAP.md").sha256 = "0".repeat(64);
+      return tampered;
+    }
+    return value;
+  }, medicalRegistration, options), /provenance inventory digest mismatch/);
+
+  const provenance = await readProjectJson(`${medicalRegistration.root}/${medicalRegistration.provenancePath}`);
+  const provenanceByPath = Object.fromEntries(provenance.files.map((file) => [file.path, file]));
+  const integrityReader = async (requestedPath) => readProjectJson(requestedPath);
+  integrityReader.integrity = async (requestedPath) => {
+    const sourcePath = requestedPath.slice(`${medicalRegistration.root}/`.length);
+    const expected = provenanceByPath[sourcePath];
+    return {
+      bytes: expected.bytes,
+      sha256: requestedPath === firstFamilyPath ? "0".repeat(64) : expected.sha256
+    };
+  };
+  await assert.rejects(
+    medicalApi.loadRegisteredMedicalCatalog(integrityReader, medicalRegistration, options),
+    /runtime SHA-256 mismatch.*medical\/families\/01_ear\/family\.json/
+  );
 
   assert.equal(catalog.compatibility.mappingPolicy, "identity_only_no_master_crosswalk");
   assert.equal(catalog.compatibility.cases.length, 30);
@@ -166,7 +409,17 @@ async function main() {
     counts: medical.counts,
     productionPoolPresentations: medical.productionPool.presentations.length,
     compositePresentationIdentityVerified: repeatedKeys.length,
-    failClosedTamperCases: 6,
+    failClosedContextVerified: true,
+    contradictoryStatusesRejected: true,
+    invalidVariantMetadataRejected: true,
+    provenanceTamperRejected: true,
+    runtimeSourceFilesVerified: medical.sourceIntegrity.loadedFilesVerified,
+    forgedProductionAttestationRejected: true,
+    normalizerIsInternal: true,
+    productionProjectionDeepFrozen: true,
+    pendingVariantsExcludedFromProductionProjection: true,
+    mixedFamilyLifecycleLoaded: true,
+    reviewCandidatesNotConsumable: true,
     compatibilityCases: catalog.compatibility.cases.length,
     compatibilityComplaints: catalog.compatibility.cases.reduce((sum, entry) => sum + entry.complaints.length, 0),
     masterCrosswalks: 0,

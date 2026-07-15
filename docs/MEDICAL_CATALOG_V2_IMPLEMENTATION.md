@@ -43,6 +43,62 @@ source поля остаются `null`, а family version/status записан
 status/version и отдельный production flag, поэтому текущий production pool
 равен нулю.
 
+### P8 preflight hardening
+
+Неуказанный `context` теперь означает `production`, а не `review`.
+Поэтому текущий заблокированный пакет нельзя получить неявно:
+review-загрузка требует явного `context: "review"`.
+
+Статусы catalog registration, package registration и package manifest
+проверяются как единый activation gate. Заблокированный package status
+запрещает `productionEligible:true` и ненулевой
+`generatorEligibleFamilies`. Единый `familyStatus` больше не является
+ограничением для всех family entries: каждое семейство имеет
+собственный валидируемый status, что позволяет будущие независимые
+`approved`/`retired` переходы. Текущие 39 семейств остаются pending и не
+входят в production pool.
+
+Опциональные variant `version`, `status` и `generatorEligible` теперь
+валидируются при наличии. Для variant разрешены только статусы из handoff:
+`planned`, `authored`, `source_checked`, `pending_veterinary_review`,
+`approved`, `retired`. Неизвестный status, пустая/нестроковая version,
+небулев eligibility и eligibility без собственных `approved` + version
+отклоняются.
+
+Review-загрузка публикует потенциально активируемые сущности только в
+аудиторском `reviewCandidates`; её `productionPool` всегда пуст. Передача
+медицинского пула в generator/master проходит через
+`requireGeneratorMedicalPool()` и разрешена только каталогу, загруженному с
+явным `context: "production"`. Compatibility-слой текущих 30 карточек при этом
+остаётся доступным в review-контексте.
+
+Normalizer является внутренней частью medical loader и не входит в public API.
+`requireProductionPool()` принимает только тот же объект каталога, которому
+`loadRegisteredMedicalCatalog()` выдал внутреннюю production-attestation после
+проверок approval-статусов, byte-integrity и непустого production pool.
+Поддельный объект, JSON-копия или одна лишь подмена `loadContext` эту границу не
+проходят; аттестованные массивы пула заморожены от последующей подмены состава.
+Сам production pool строится как отделённая от review-графа deep-frozen
+проекция: family содержит только собственные `approved` + eligible варианты, а
+каждый вариант — только собственные `approved` + eligible presentations.
+Pending/retired дочерние сущности и варианты без хотя бы одной допустимой
+presentation в production-проекцию не копируются.
+
+Встроенные browser/Node loaders проверяют не только структуру
+`provenance.json`, но и заново вычисляют aggregate SHA-256 его inventory,
+а затем сверяют сырые байты 41 runtime medical JSON с зафиксированными
+размерами и hash. Production не принимает reader без byte-integrity
+контракта. Capability registry также сверяет фактический runtime SHA-256
+с registration digest.
+
+Все `coreCapabilities` и `safeRouteCapability` проверяются на
+ссылочную целостность против канонического capability registry.
+Текущие расхождения между registry- и family-списками собираются
+в review-audit. Production отклоняет противоречие только для семейства,
+которое одновременно имеет `status: "approved"` и
+`generatorEligible: true`; расхождения pending/retired семейств остаются
+аудиторскими и сами по себе не блокируют production preflight.
+
 ## Совместимость с 30 карточками
 
 `compatibility/tier-01-v2.json` генерируется только из существующих
