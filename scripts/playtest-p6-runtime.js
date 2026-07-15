@@ -243,7 +243,7 @@ async function main() {
 
     const before = await storageEvidence(page);
     assert.equal(before.gameVersion, before.expectedVersion);
-    assert.equal(before.gameVersion, 9);
+    assert.equal(before.gameVersion, 10);
     assert.equal(before.economySummary.auditEventCount, 0);
     assert.equal(before.reputationSummary.initialized, false);
     const injected = await injectP6State(page);

@@ -11,6 +11,7 @@ const namespaces = require("../generator/save-namespaces.js");
 const identityRuntime = require("../systems/identity-runtime-v4.js");
 const economyApi = require("../systems/economy-runtime-v6.js");
 const reputationApi = require("../systems/reputation-runtime-v6.js");
+const campaignDirectorApi = require("../systems/campaign-director-v7.js");
 
 function memoryStorage(initial = {}) {
   const values = new Map(Object.entries(initial).map(([key, value]) => [key, String(value)]));
@@ -521,9 +522,10 @@ async function main() {
     catalog,
     campaignIdentity: partialGenerator.metadata(1).campaignSeed
   });
-  assert.equal(compactP6Reload.gameStateSaveVersion, 9);
+  assert.equal(compactP6Reload.gameStateSaveVersion, 10);
   assert.deepEqual(compactP6Reload.state.economyState, compactP6EconomyState);
   assert.deepEqual(compactP6Reload.state.reputationState, compactP6ReputationState);
+  assert.deepEqual(compactP6Reload.state.campaignDirectorState, campaignDirectorApi.createState());
   for (const [field, expected] of Object.entries(compactP6LegacyState)) {
     assert.deepEqual(compactP6Reload.state[field], expected, `compact P6 roundtrip changed ${field}`);
   }
@@ -577,11 +579,13 @@ async function main() {
     campaignIdentity: partialGenerator.metadata(1).campaignSeed
   });
   assert.equal(gameSaveApi.P5_TIER_01_V2_GAME_STATE_SAVE_VERSION, 8);
-  assert.equal(gameSaveApi.TIER_01_V2_GAME_STATE_SAVE_VERSION, 9);
-  assert.equal(migratedGame.gameStateSaveVersion, 9);
+  assert.equal(gameSaveApi.P6_TIER_01_V2_GAME_STATE_SAVE_VERSION, 9);
+  assert.equal(gameSaveApi.TIER_01_V2_GAME_STATE_SAVE_VERSION, 10);
+  assert.equal(migratedGame.gameStateSaveVersion, 10);
   assert.ok(migratedGame.state.queue[0].v2Visit.medicalContent);
   assert.deepEqual(migratedGame.state.economyState, economyApi.createState());
   assert.deepEqual(migratedGame.state.reputationState, reputationApi.createState());
+  assert.deepEqual(migratedGame.state.campaignDirectorState, campaignDirectorApi.createState());
   assert.equal(gameMigrationStorage.getItem(namespaces.gameSaveKey("tier-01-v2")).includes("medicalContent"), false);
 
   for (const mode of ["current", "legacy-v1"]) {
@@ -590,13 +594,15 @@ async function main() {
       day: 3,
       queue: [{ id: 1, animal: "Бакс" }],
       economyState: compactP6EconomyState,
-      reputationState: compactP6ReputationState
+      reputationState: compactP6ReputationState,
+      campaignDirectorState: campaignDirectorApi.createState()
     });
     const raw = JSON.parse(isolated.getItem(namespaces.gameSaveKey(mode)));
     assert.equal(raw.gameStateSaveVersion, 1);
     assert.deepEqual(raw.state.queue, [{ id: 1, animal: "Бакс" }]);
     assert.equal(raw.state.economyState, undefined);
     assert.equal(raw.state.reputationState, undefined);
+    assert.equal(raw.state.campaignDirectorState, undefined);
   }
 
   const incompatibleGenerator = JSON.parse(migratedRaw);

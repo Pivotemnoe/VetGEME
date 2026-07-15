@@ -39,6 +39,7 @@ const checks = [
   ["operations runtime v5", "scripts/test-operations-runtime-v5.js"],
   ["economy runtime v6", "scripts/test-economy-runtime-v6.js"],
   ["reputation runtime v6", "scripts/test-reputation-runtime-v6.js"],
+  ["campaign director v7", "scripts/test-campaign-director-v7.js"],
   ["generator mode fail-closed", "scripts/test-generator-mode-fail-closed.js"],
   ["content divergence baseline", "scripts/report-content-divergence.mjs", "--summary"],
   ["Tier 01 content validator", "scripts/validate-tier-01-content.mjs"],

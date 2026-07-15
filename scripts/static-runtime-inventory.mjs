@@ -5,9 +5,9 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const EXPECTED_RUNTIME_FILE_COUNT = 200;
+export const EXPECTED_RUNTIME_FILE_COUNT = 201;
 export const EXPECTED_RUNTIME_GROUP_COUNTS = Object.freeze({
-  base: 35,
+  base: 36,
   canonicalContent: 100,
   visual: 65,
 });
@@ -31,6 +31,7 @@ const EXPECTED_BASE_RUNTIME_FILES = Object.freeze([
   "legacy/generator-v1.js",
   "styles.css",
   "systems/campaign-mechanics-v2.js",
+  "systems/campaign-director-v7.js",
   "systems/capability-registry-v3.js",
   "systems/async-events-v3.js",
   "systems/clinical-decisions-v2.js",

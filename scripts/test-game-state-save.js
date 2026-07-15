@@ -10,6 +10,7 @@ const deviceQueueApi = require("../systems/device-queue-v3.js");
 const schedulerApi = require("../systems/resource-scheduler-v5.js");
 const economyApi = require("../systems/economy-runtime-v6.js");
 const reputationApi = require("../systems/reputation-runtime-v6.js");
+const campaignDirectorApi = require("../systems/campaign-director-v7.js");
 const CAMPAIGN_IDENTITY = "clinic-v2-game-save-test";
 
 function tierOptions(options = {}) {
@@ -215,6 +216,24 @@ function populatedReputationState() {
   return state;
 }
 
+function populatedCampaignDirectorState(campaignId = CAMPAIGN_IDENTITY) {
+  let state = campaignDirectorApi.createState();
+  state = campaignDirectorApi.initializeCampaign(state, {
+    commandId: "campaign-save-initialize-1",
+    campaignId,
+    initializedAt: 600
+  }).state;
+  state = campaignDirectorApi.recordCampaignDay(state, {
+    commandId: "campaign-save-day-1",
+    campaignId,
+    dayId: "campaign-save-day-record-1",
+    dayNumber: 1,
+    recordedAt: 601,
+    evidenceRefs: ["generated-day-1"]
+  }).state;
+  return state;
+}
+
 function assertLegacyP6FieldsPreserved(actual, expected, label) {
   for (const field of [
     "money", "campaignFinance", "dailyLedger", "reputation", "ownerTrust", "clinicalReliability"
@@ -277,8 +296,9 @@ const base = {
 const storage = memoryStorage();
 const saved = saveApi.save(storage, "tier-01-v2", base, tierOptions());
 assert.equal(saveApi.P5_TIER_01_V2_GAME_STATE_SAVE_VERSION, 8);
-assert.equal(saveApi.TIER_01_V2_GAME_STATE_SAVE_VERSION, 9);
-assert.equal(saved.gameStateSaveVersion, 9);
+assert.equal(saveApi.P6_TIER_01_V2_GAME_STATE_SAVE_VERSION, 9);
+assert.equal(saveApi.TIER_01_V2_GAME_STATE_SAVE_VERSION, 10);
+assert.equal(saved.gameStateSaveVersion, 10);
 assert.equal(saved.capabilityRegistryId, saveApi.CAPABILITY_REGISTRY_ID);
 assert.equal(saved.capabilityRegistryVersion, saveApi.CAPABILITY_REGISTRY_VERSION);
 const loaded = saveApi.load(storage, "tier-01-v2", tierOptions());
@@ -303,7 +323,8 @@ assert.deepEqual(loaded.state.operationsState, {
 });
 assert.deepEqual(loaded.state.economyState, economyApi.createState());
 assert.deepEqual(loaded.state.reputationState, reputationApi.createState());
-assertLegacyP6FieldsPreserved(loaded.state, base, "fresh v9 roundtrip");
+assert.deepEqual(loaded.state.campaignDirectorState, campaignDirectorApi.createState());
+assertLegacyP6FieldsPreserved(loaded.state, base, "fresh v10 roundtrip");
 assert.equal(loaded.state.transientDomReference, undefined);
 
 const operationsStorage = memoryStorage();
@@ -321,16 +342,19 @@ assert.equal(/authoredResult|diagnosis|clinicalTruth/u.test(JSON.stringify(opera
 const populatedP6Storage = memoryStorage();
 const expectedEconomyState = populatedEconomyState();
 const expectedReputationState = populatedReputationState();
+const expectedCampaignDirectorState = populatedCampaignDirectorState();
 saveApi.save(populatedP6Storage, "tier-01-v2", {
   ...base,
   operationsState: expectedOperationsState,
   economyState: expectedEconomyState,
-  reputationState: expectedReputationState
+  reputationState: expectedReputationState,
+  campaignDirectorState: expectedCampaignDirectorState
 }, tierOptions());
 const populatedP6Loaded = saveApi.load(populatedP6Storage, "tier-01-v2", tierOptions());
 assert.deepEqual(populatedP6Loaded.state.economyState, expectedEconomyState);
 assert.deepEqual(populatedP6Loaded.state.reputationState, expectedReputationState);
 assert.deepEqual(populatedP6Loaded.state.operationsState, expectedOperationsState);
+assert.deepEqual(populatedP6Loaded.state.campaignDirectorState, expectedCampaignDirectorState);
 assertLegacyP6FieldsPreserved(populatedP6Loaded.state, base, "populated P6 roundtrip");
 
 const duplicateDeviceTaskOperations = activeOperationsState();
@@ -367,13 +391,15 @@ const currentWithP6Input = saveApi.createSnapshot("current", {
   money: 100,
   reputation: 70,
   economyState: expectedEconomyState,
-  reputationState: expectedReputationState
+  reputationState: expectedReputationState,
+  campaignDirectorState: expectedCampaignDirectorState
 });
 const legacyWithP6Input = saveApi.createSnapshot("legacy-v1", {
   money: 200,
   reputation: 71,
   economyState: expectedEconomyState,
-  reputationState: expectedReputationState
+  reputationState: expectedReputationState,
+  campaignDirectorState: expectedCampaignDirectorState
 });
 assert.equal(currentWithP6Input.gameStateSaveVersion, 1);
 assert.equal(legacyWithP6Input.gameStateSaveVersion, 1);
@@ -381,6 +407,8 @@ assert.equal(currentWithP6Input.state.economyState, undefined);
 assert.equal(currentWithP6Input.state.reputationState, undefined);
 assert.equal(legacyWithP6Input.state.economyState, undefined);
 assert.equal(legacyWithP6Input.state.reputationState, undefined);
+assert.equal(currentWithP6Input.state.campaignDirectorState, undefined);
+assert.equal(legacyWithP6Input.state.campaignDirectorState, undefined);
 
 const tierKey = namespaces.gameSaveKey("tier-01-v2");
 const compactIdentityRaw = storage.getItem(tierKey);
@@ -445,6 +473,32 @@ malformedReputationSnapshot.state.reputationState.scores = {
 };
 assertP6LoadRejected(malformedReputationSnapshot, "malformed reputation state", /reputationState.*invalid|initialized together/i);
 
+const futureCampaignDirectorSnapshot = JSON.parse(compactIdentityRaw);
+futureCampaignDirectorSnapshot.state.campaignDirectorState.schemaVersion = 999;
+assertP6LoadRejected(
+  futureCampaignDirectorSnapshot,
+  "future campaign director state",
+  /campaignDirectorState.*invalid|Unsupported campaign director schemaVersion/i
+);
+
+const malformedCampaignDirectorSnapshot = JSON.parse(compactIdentityRaw);
+malformedCampaignDirectorSnapshot.state.campaignDirectorState.initialized = true;
+malformedCampaignDirectorSnapshot.state.campaignDirectorState.campaignId = CAMPAIGN_IDENTITY;
+malformedCampaignDirectorSnapshot.state.campaignDirectorState.initializedAt = 600;
+assertP6LoadRejected(
+  malformedCampaignDirectorSnapshot,
+  "malformed campaign director state",
+  /campaignDirectorState.*invalid|projections do not match immutable audit replay/i
+);
+
+const foreignCampaignDirectorSnapshot = saveApi.createSnapshot("tier-01-v2", base, tierOptions());
+foreignCampaignDirectorSnapshot.state.campaignDirectorState = populatedCampaignDirectorState("foreign-campaign");
+assertP6LoadRejected(
+  foreignCampaignDirectorSnapshot,
+  "foreign campaign director state",
+  /campaignDirectorState belongs to a different campaign identity/i
+);
+
 const migrationState = {
   phase: "running",
   day: 6,
@@ -498,7 +552,7 @@ for (const sourceVersion of [1, 2, 3, 4, 5]) {
   const sourceRaw = JSON.stringify(source, null, 2);
   const migrationStorage = memoryStorage({ [tierKey]: sourceRaw });
   const migrated = saveApi.load(migrationStorage, "tier-01-v2", tierOptions({ catalog: {} }));
-  assert.equal(migrated.gameStateSaveVersion, 9, `v${sourceVersion} did not migrate to v9`);
+  assert.equal(migrated.gameStateSaveVersion, 10, `v${sourceVersion} did not migrate to v10`);
   assert.equal(migrated.capabilityRegistryId, saveApi.CAPABILITY_REGISTRY_ID);
   assert.equal(migrated.state.capabilityState.registryVersion, saveApi.CAPABILITY_REGISTRY_VERSION);
   assert.deepEqual(migrated.state.researchOrders, []);
@@ -516,6 +570,7 @@ for (const sourceVersion of [1, 2, 3, 4, 5]) {
   });
   assert.deepEqual(migrated.state.economyState, economyApi.createState());
   assert.deepEqual(migrated.state.reputationState, reputationApi.createState());
+  assert.deepEqual(migrated.state.campaignDirectorState, campaignDirectorApi.createState());
   assertLegacyP6FieldsPreserved(migrated.state, source.state, `v${sourceVersion} migration`);
   assert.equal(
     migrationStorage.getItem(saveApi.migrationBackupKeyForVersion("tier-01-v2", sourceVersion)),
@@ -530,7 +585,7 @@ for (const sourceVersion of [1, 2, 3, 4, 5]) {
     assert.deepEqual(migrated.state.capabilityState.entries, source.state.equipmentCapabilities);
     migrationStorage.resetCalls();
     saveApi.load(migrationStorage, "tier-01-v2", tierOptions({ catalog: {} }));
-    assert.equal(migrationStorage.setCalls.length, 0, "current v9 migrated save rewrote storage");
+    assert.equal(migrationStorage.setCalls.length, 0, "current v10 migrated save rewrote storage");
     const restored = saveApi.restoreMigrationBackup(migrationStorage, "tier-01-v2", 5, tierOptions({ catalog: {} }));
     assert.equal(restored.raw, sourceRaw);
     assert.equal(migrationStorage.getItem(tierKey), sourceRaw, "rollback did not restore exact v5 bytes");
@@ -571,17 +626,67 @@ for (const [field, injectedValue] of [
   assert.equal(unauthorizedStorage.setCalls.length, 0, `pre-P6 ${field} injection performed a write`);
 }
 
+const sourceV9 = saveApi.migrateTierSnapshotToV9(sourceV8, {}, tierOptions());
+sourceV9.state.economyState = expectedEconomyState;
+sourceV9.state.reputationState = expectedReputationState;
+assert.equal(sourceV9.gameStateSaveVersion, 9);
+const sourceV9Raw = JSON.stringify(sourceV9, null, 2);
+
+const unauthorizedP7 = JSON.parse(sourceV9Raw);
+unauthorizedP7.state.campaignDirectorState = campaignDirectorApi.createState();
+const unauthorizedP7Raw = JSON.stringify(unauthorizedP7);
+const unauthorizedP7Storage = memoryStorage({ [tierKey]: unauthorizedP7Raw });
+assert.throws(() => saveApi.load(
+  unauthorizedP7Storage,
+  "tier-01-v2",
+  tierOptions({ catalog: {}, hydrate: false })
+), /Pre-P7 game save contains unauthorized campaign director state/);
+assert.equal(unauthorizedP7Storage.getItem(tierKey), unauthorizedP7Raw);
+assert.equal(unauthorizedP7Storage.setCalls.length, 0, "pre-P7 campaign director injection performed a write");
+
+const sourceV9Storage = memoryStorage({ [tierKey]: sourceV9Raw });
+const migratedV9 = saveApi.load(
+  sourceV9Storage,
+  "tier-01-v2",
+  tierOptions({ catalog: {}, hydrate: false })
+);
+assert.equal(migratedV9.gameStateSaveVersion, 10);
+assert.equal(migratedV9.savedAt, sourceV9.savedAt);
+for (const [field, expected] of Object.entries(sourceV9.state)) {
+  assert.deepEqual(migratedV9.state[field], expected, `v9 to v10 migration changed ${field}`);
+}
+assert.deepEqual(migratedV9.state.economyState, expectedEconomyState);
+assert.deepEqual(migratedV9.state.reputationState, expectedReputationState);
+assert.deepEqual(migratedV9.state.campaignDirectorState, campaignDirectorApi.createState());
+assert.equal(
+  sourceV9Storage.getItem(saveApi.migrationBackupKeyForVersion("tier-01-v2", 9)),
+  sourceV9Raw,
+  "v9 to v10 migration did not preserve exact source bytes"
+);
+sourceV9Storage.resetCalls();
+saveApi.load(sourceV9Storage, "tier-01-v2", tierOptions({ catalog: {}, hydrate: false }));
+assert.equal(sourceV9Storage.setCalls.length, 0, "current v10 save rewrote storage after v9 migration");
+const restoredV9 = saveApi.restoreMigrationBackup(
+  sourceV9Storage,
+  "tier-01-v2",
+  9,
+  tierOptions({ catalog: {}, hydrate: false })
+);
+assert.equal(restoredV9.raw, sourceV9Raw);
+assert.equal(sourceV9Storage.getItem(tierKey), sourceV9Raw, "rollback did not restore exact v9 bytes");
+
 const sourceV8Storage = memoryStorage({ [tierKey]: sourceV8Raw });
 const migratedV8 = saveApi.load(sourceV8Storage, "tier-01-v2", tierOptions({ catalog: {}, hydrate: false }));
-assert.equal(migratedV8.gameStateSaveVersion, 9);
+assert.equal(migratedV8.gameStateSaveVersion, 10);
 assert.deepEqual(migratedV8.state.operationsState, expectedOperationsState);
 assert.deepEqual(migratedV8.state.economyState, economyApi.createState());
 assert.deepEqual(migratedV8.state.reputationState, reputationApi.createState());
-assertLegacyP6FieldsPreserved(migratedV8.state, sourceV8.state, "v8 to v9 migration");
+assert.deepEqual(migratedV8.state.campaignDirectorState, campaignDirectorApi.createState());
+assertLegacyP6FieldsPreserved(migratedV8.state, sourceV8.state, "v8 to v10 migration");
 assert.equal(
   sourceV8Storage.getItem(saveApi.migrationBackupKeyForVersion("tier-01-v2", 8)),
   sourceV8Raw,
-  "v8 to v9 migration did not preserve exact source bytes"
+  "v8 to v10 migration did not preserve exact source bytes"
 );
 const restoredV8 = saveApi.restoreMigrationBackup(
   sourceV8Storage,
@@ -595,7 +700,7 @@ assert.equal(sourceV8Storage.getItem(tierKey), sourceV8Raw, "rollback did not re
 const sourceV7Raw = JSON.stringify(sourceV7, null, 2);
 const sourceV7Storage = memoryStorage({ [tierKey]: sourceV7Raw });
 const migratedV7 = saveApi.load(sourceV7Storage, "tier-01-v2", tierOptions({ catalog: {}, hydrate: false }));
-assert.equal(migratedV7.gameStateSaveVersion, 9);
+assert.equal(migratedV7.gameStateSaveVersion, 10);
 assert.deepEqual(migratedV7.state.identityRegistry, sourceV7.state.identityRegistry);
 assert.deepEqual(migratedV7.state.deviceQueues, sourceV7.state.deviceQueues);
 assert.deepEqual(migratedV7.state.operationsState, {
@@ -609,7 +714,8 @@ assert.deepEqual(migratedV7.state.operationsState, {
 });
 assert.deepEqual(migratedV7.state.economyState, economyApi.createState());
 assert.deepEqual(migratedV7.state.reputationState, reputationApi.createState());
-assertLegacyP6FieldsPreserved(migratedV7.state, sourceV7.state, "v7 to v9 migration");
+assert.deepEqual(migratedV7.state.campaignDirectorState, campaignDirectorApi.createState());
+assertLegacyP6FieldsPreserved(migratedV7.state, sourceV7.state, "v7 to v10 migration");
 assert.equal(
   sourceV7Storage.getItem(saveApi.migrationBackupKeyForVersion("tier-01-v2", 7)),
   sourceV7Raw,
@@ -627,7 +733,7 @@ assert.equal(sourceV7Storage.getItem(tierKey), sourceV7Raw, "rollback did not re
 const sourceV6Raw = JSON.stringify(sourceV6, null, 2);
 const sourceV6Storage = memoryStorage({ [tierKey]: sourceV6Raw });
 const migratedV6 = saveApi.load(sourceV6Storage, "tier-01-v2", tierOptions({ catalog: {} }));
-assert.equal(migratedV6.gameStateSaveVersion, 9);
+assert.equal(migratedV6.gameStateSaveVersion, 10);
 assert.equal(migratedV6.state.queue[0].visitId, sourceV6.state.queue[0].visitId);
 assert.equal(migratedV6.state.queue[0].owner, sourceV6.state.queue[0].owner);
 assert.match(migratedV6.state.queue[0].persistentOwnerId, /^OWN-/);
@@ -637,7 +743,8 @@ assert.equal(Object.keys(migratedV6.state.identityRegistry.owners).length, 2);
 assert.equal(Object.keys(migratedV6.state.identityRegistry.patients).length, 2);
 assert.deepEqual(migratedV6.state.economyState, economyApi.createState());
 assert.deepEqual(migratedV6.state.reputationState, reputationApi.createState());
-assertLegacyP6FieldsPreserved(migratedV6.state, sourceV6.state, "v6 to v9 migration");
+assert.deepEqual(migratedV6.state.campaignDirectorState, campaignDirectorApi.createState());
+assertLegacyP6FieldsPreserved(migratedV6.state, sourceV6.state, "v6 to v10 migration");
 assert.equal(
   sourceV6Storage.getItem(saveApi.migrationBackupKeyForVersion("tier-01-v2", 6)),
   sourceV6Raw,
@@ -645,7 +752,7 @@ assert.equal(
 );
 sourceV6Storage.resetCalls();
 saveApi.load(sourceV6Storage, "tier-01-v2", tierOptions({ catalog: {} }));
-assert.equal(sourceV6Storage.setCalls.length, 0, "current v9 save rewrote storage");
+assert.equal(sourceV6Storage.setCalls.length, 0, "current v10 save rewrote storage");
 
 const conflict = memoryStorage({ [tierKey]: sourceV5Raw, [sourceV5Backup]: "different-backup" });
 assert.throws(() => saveApi.load(conflict, "tier-01-v2", tierOptions({ catalog: {} })), /backup conflict/);
@@ -665,7 +772,7 @@ assert.equal(primaryQuota.getItem(tierKey), sourceV5Raw);
 assert.equal(primaryQuota.getItem(sourceV5Backup), sourceV5Raw);
 const backupWriteCount = primaryQuota.setCalls.filter((call) => call.key === sourceV5Backup).length;
 primaryQuota.failSet = null;
-assert.equal(saveApi.load(primaryQuota, "tier-01-v2", tierOptions({ catalog: {} })).gameStateSaveVersion, 9);
+assert.equal(saveApi.load(primaryQuota, "tier-01-v2", tierOptions({ catalog: {} })).gameStateSaveVersion, 10);
 assert.equal(primaryQuota.setCalls.filter((call) => call.key === sourceV5Backup).length, backupWriteCount, "retry rewrote exact backup");
 
 const futureRaw = JSON.stringify({ gameStateSaveVersion: 999, generatorMode: "tier-01-v2", state: {} });

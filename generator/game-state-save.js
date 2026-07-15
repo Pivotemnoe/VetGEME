@@ -45,6 +45,9 @@
   const reputationRuntime = typeof module === "object" && module.exports
     ? require("../systems/reputation-runtime-v6.js")
     : root.PET_CLINIC_REPUTATION_RUNTIME_V6;
+  const campaignDirector = typeof module === "object" && module.exports
+    ? require("../systems/campaign-director-v7.js")
+    : root.PET_CLINIC_CAMPAIGN_DIRECTOR_V7;
   const api = factory(
     namespaces,
     compactApi,
@@ -60,7 +63,8 @@
     resourceScheduler,
     operationsRuntimeFactory,
     economyRuntime,
-    reputationRuntime
+    reputationRuntime,
+    campaignDirector
   );
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_GAME_STATE_SAVE = api;
@@ -79,7 +83,8 @@
   resourceScheduler,
   operationsRuntimeFactory,
   economyRuntime,
-  reputationRuntime
+  reputationRuntime,
+  campaignDirector
 ) {
   "use strict";
 
@@ -89,7 +94,8 @@
   const P3_TIER_01_V2_GAME_STATE_SAVE_VERSION = 6;
   const P4_TIER_01_V2_GAME_STATE_SAVE_VERSION = 7;
   const P5_TIER_01_V2_GAME_STATE_SAVE_VERSION = 8;
-  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 9;
+  const P6_TIER_01_V2_GAME_STATE_SAVE_VERSION = 9;
+  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 10;
   const CAPABILITY_REGISTRY_ID = "vetgeme-clinic-capabilities";
   const CAPABILITY_REGISTRY_VERSION = "2026.07.14.38";
   const SERIALIZED_FIELDS = Object.freeze([
@@ -107,7 +113,8 @@
     "ownerTrust", "clinicalReliability", "awareness", "campaignFinance", "dailyLedger",
     "equipmentCapabilities", "demandState", "campaignOutcome", "appointments", "treatmentCourses",
     "longitudinalPatients", "attendanceEvents", "capabilityState", "researchOrders", "referralOrders",
-    "asyncEvents", "deviceQueues", "identityRegistry", "operationsState", "economyState", "reputationState"
+    "asyncEvents", "deviceQueues", "identityRegistry", "operationsState", "economyState", "reputationState",
+    "campaignDirectorState"
   ]);
   const operationsRuntime = operationsRuntimeFactory.createOperationsRuntime(resourceScheduler);
 
@@ -284,6 +291,24 @@
       ...clone(state || {}),
       economyState: defaultEconomyState(state),
       reputationState: defaultReputationState(state)
+    };
+  }
+
+  function defaultCampaignDirectorState(state = {}) {
+    if (state.campaignDirectorState !== undefined) {
+      const validation = campaignDirector.validateState(state.campaignDirectorState);
+      if (!validation.valid) {
+        throw new Error(`Game save campaignDirectorState is invalid: ${validation.errors.join(", ")}`);
+      }
+      return campaignDirector.normalizeState(state.campaignDirectorState);
+    }
+    return campaignDirector.createState();
+  }
+
+  function addP7Defaults(state) {
+    return {
+      ...clone(state || {}),
+      campaignDirectorState: defaultCampaignDirectorState(state)
     };
   }
 
@@ -650,13 +675,27 @@
     return state;
   }
 
+  function validateP7State(state, options = {}) {
+    const validation = campaignDirector.validateState(state.campaignDirectorState);
+    if (!validation.valid) {
+      throw new Error(`Game save campaignDirectorState is invalid: ${validation.errors.join(", ")}`);
+    }
+    const normalized = campaignDirector.normalizeState(state.campaignDirectorState);
+    if (normalized.initialized && normalized.campaignId !== requireCampaignIdentity(options)) {
+      throw new Error("Game save campaignDirectorState belongs to a different campaign identity");
+    }
+    return state;
+  }
+
   function createSnapshot(mode, state, options = {}) {
     const snapshot = {
       gameStateSaveVersion: saveVersionForMode(mode),
       generatorMode: mode,
       savedAt: new Date().toISOString(),
       state: mode === "tier-01-v2"
-        ? addP6Defaults(addP5Defaults(addP3Defaults(compactTierState(addP4Defaults(state, options), options.catalog))))
+        ? addP7Defaults(addP6Defaults(addP5Defaults(addP3Defaults(
+          compactTierState(addP4Defaults(state, options), options.catalog)
+        ))))
         : snapshotState(state)
     };
     if (mode === "tier-01-v2") {
@@ -688,6 +727,7 @@
       validateP4State(validationState, options);
       validateP5State(validationState);
       validateP6State(validationState);
+      validateP7State(validationState, options);
     }
     return snapshot;
   }
@@ -701,16 +741,22 @@
       PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION,
       P3_TIER_01_V2_GAME_STATE_SAVE_VERSION,
       P4_TIER_01_V2_GAME_STATE_SAVE_VERSION,
-      P5_TIER_01_V2_GAME_STATE_SAVE_VERSION
+      P5_TIER_01_V2_GAME_STATE_SAVE_VERSION,
+      P6_TIER_01_V2_GAME_STATE_SAVE_VERSION
     ];
     if (!supportedVersions.includes(snapshot.gameStateSaveVersion)) {
       throw new Error(`Unsupported game save version: ${snapshot.gameStateSaveVersion ?? "missing"}`);
     }
     if (!catalog) throw new Error(`Tier 01 v2 catalog is required to migrate game save version ${snapshot.gameStateSaveVersion}`);
     if (!isRecord(snapshot.state)) throw new Error("Game save state is missing");
-    if (Object.prototype.hasOwnProperty.call(snapshot.state, "economyState")
-      || Object.prototype.hasOwnProperty.call(snapshot.state, "reputationState")) {
+    if (snapshot.gameStateSaveVersion <= P5_TIER_01_V2_GAME_STATE_SAVE_VERSION
+      && (Object.prototype.hasOwnProperty.call(snapshot.state, "economyState")
+        || Object.prototype.hasOwnProperty.call(snapshot.state, "reputationState"))) {
       throw new Error("Pre-P6 game save contains unauthorized economy/reputation state");
+    }
+    if (snapshot.gameStateSaveVersion <= P6_TIER_01_V2_GAME_STATE_SAVE_VERSION
+      && Object.prototype.hasOwnProperty.call(snapshot.state, "campaignDirectorState")) {
+      throw new Error("Pre-P7 game save contains unauthorized campaign director state");
     }
     validatePatientStateReferences(snapshot.state, catalog, "Game migration source");
     if (snapshot.gameStateSaveVersion === P3_TIER_01_V2_GAME_STATE_SAVE_VERSION) {
@@ -721,6 +767,9 @@
     }
     if (snapshot.gameStateSaveVersion === P5_TIER_01_V2_GAME_STATE_SAVE_VERSION) {
       validateP5TierSnapshot(snapshot, catalog, options);
+    }
+    if (snapshot.gameStateSaveVersion === P6_TIER_01_V2_GAME_STATE_SAVE_VERSION) {
+      validateP6TierSnapshot(snapshot, catalog, options);
     }
     return snapshot;
   }
@@ -769,6 +818,24 @@
     validateP3State(validationState, { ...options, catalog });
     validateP4State(validationState, options);
     validateP5State(validationState);
+    return snapshot;
+  }
+
+  function validateP6TierSnapshot(snapshot, catalog, options = {}) {
+    if (snapshot.gameStateSaveVersion !== P6_TIER_01_V2_GAME_STATE_SAVE_VERSION) {
+      throw new Error(`Expected P6 game save version ${P6_TIER_01_V2_GAME_STATE_SAVE_VERSION}`);
+    }
+    if (snapshot.generatorMode !== "tier-01-v2") throw new Error("P6 game save mode mismatch");
+    if (snapshot.capabilityRegistryId !== CAPABILITY_REGISTRY_ID
+      || snapshot.capabilityRegistryVersion !== CAPABILITY_REGISTRY_VERSION) {
+      throw new Error("P6 game save capability registry identity is missing or incompatible");
+    }
+    const validationState = hydrateTierState(snapshot.state, catalog);
+    validatePatientStateReferences(validationState, catalog, "P6 game save");
+    validateP3State(validationState, { ...options, catalog });
+    validateP4State(validationState, options);
+    validateP5State(validationState);
+    validateP6State(validationState);
     return snapshot;
   }
 
@@ -861,17 +928,33 @@
     return migrated;
   }
 
-  function migrateTierSnapshot(snapshot, catalog, options = {}) {
+  function migrateTierSnapshotToV9(snapshot, catalog, options = {}) {
     validateTierMigrationSource(snapshot, catalog, options);
+    if (snapshot.gameStateSaveVersion === P6_TIER_01_V2_GAME_STATE_SAVE_VERSION) return clone(snapshot);
     const sourceV8 = snapshot.gameStateSaveVersion === P5_TIER_01_V2_GAME_STATE_SAVE_VERSION
       ? clone(snapshot)
       : migrateTierSnapshotToV8(snapshot, catalog, options);
     const migrated = {
       ...sourceV8,
-      gameStateSaveVersion: TIER_01_V2_GAME_STATE_SAVE_VERSION,
+      gameStateSaveVersion: P6_TIER_01_V2_GAME_STATE_SAVE_VERSION,
       state: addP6Defaults(sourceV8.state)
     };
     assertExistingStatePreserved(sourceV8.state, migrated.state);
+    validateP6TierSnapshot(migrated, catalog, options);
+    return migrated;
+  }
+
+  function migrateTierSnapshot(snapshot, catalog, options = {}) {
+    validateTierMigrationSource(snapshot, catalog, options);
+    const sourceV9 = snapshot.gameStateSaveVersion === P6_TIER_01_V2_GAME_STATE_SAVE_VERSION
+      ? clone(snapshot)
+      : migrateTierSnapshotToV9(snapshot, catalog, options);
+    const migrated = {
+      ...sourceV9,
+      gameStateSaveVersion: TIER_01_V2_GAME_STATE_SAVE_VERSION,
+      state: addP7Defaults(sourceV9.state)
+    };
+    assertExistingStatePreserved(sourceV9.state, migrated.state);
     validateSnapshot(migrated, "tier-01-v2", { ...options, catalog });
     return migrated;
   }
@@ -902,7 +985,8 @@
       PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION,
       P3_TIER_01_V2_GAME_STATE_SAVE_VERSION,
       P4_TIER_01_V2_GAME_STATE_SAVE_VERSION,
-      P5_TIER_01_V2_GAME_STATE_SAVE_VERSION
+      P5_TIER_01_V2_GAME_STATE_SAVE_VERSION,
+      P6_TIER_01_V2_GAME_STATE_SAVE_VERSION
     ].includes(parsed.gameStateSaveVersion)) {
       validateTierMigrationSource(parsed, options.catalog, options);
       compactSnapshot = atomicSaveMigration.migrate({
@@ -927,7 +1011,8 @@
       PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION,
       P3_TIER_01_V2_GAME_STATE_SAVE_VERSION,
       P4_TIER_01_V2_GAME_STATE_SAVE_VERSION,
-      P5_TIER_01_V2_GAME_STATE_SAVE_VERSION
+      P5_TIER_01_V2_GAME_STATE_SAVE_VERSION,
+      P6_TIER_01_V2_GAME_STATE_SAVE_VERSION
     ];
     if (mode !== "tier-01-v2" || !supportedVersions.includes(sourceVersion)) {
       throw new Error(`Unsupported game migration backup: ${mode}/${sourceVersion}`);
@@ -957,6 +1042,7 @@
     P3_TIER_01_V2_GAME_STATE_SAVE_VERSION,
     P4_TIER_01_V2_GAME_STATE_SAVE_VERSION,
     P5_TIER_01_V2_GAME_STATE_SAVE_VERSION,
+    P6_TIER_01_V2_GAME_STATE_SAVE_VERSION,
     TIER_01_V2_GAME_STATE_SAVE_VERSION,
     CAPABILITY_REGISTRY_ID,
     CAPABILITY_REGISTRY_VERSION,
@@ -976,6 +1062,7 @@
     addP4Defaults,
     addP5Defaults,
     addP6Defaults,
+    addP7Defaults,
     hydratePatient,
     hydrateTierState,
     createSnapshot,
@@ -984,10 +1071,12 @@
     validateP4State,
     validateP5State,
     validateP6State,
+    validateP7State,
     validateTierMigrationSource,
     migrateTierSnapshotToV6,
     migrateTierSnapshotToV7,
     migrateTierSnapshotToV8,
+    migrateTierSnapshotToV9,
     migrateTierSnapshot,
     migrationBackupKeyForVersion,
     restoreMigrationBackup,

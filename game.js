@@ -43,6 +43,7 @@
   const operationsRuntime = operationsRuntimeFactory?.createOperationsRuntime?.(resourceScheduler) || null;
   const economyRuntime = window.PET_CLINIC_ECONOMY_RUNTIME_V6;
   const reputationRuntime = window.PET_CLINIC_REPUTATION_RUNTIME_V6;
+  const campaignDirector = window.PET_CLINIC_CAMPAIGN_DIRECTOR_V7;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
   let appBootstrapComplete = false;
@@ -53,6 +54,12 @@
 
   function campaignDayCount() {
     return generatorRuntime.mode === "tier-01-v2" ? 30 : 5;
+  }
+
+  function campaignDayPosition(day = state.day) {
+    return generatorRuntime.mode === "tier-01-v2" && campaignDirector
+      ? campaignDirector.mapDay(day)
+      : null;
   }
 
   function isTier01V2() {
@@ -830,6 +837,7 @@
     operationsState: null,
     economyState: null,
     reputationState: null,
+    campaignDirectorState: null,
     demandState: null,
     campaignOutcome: null,
     appointments: [],
@@ -904,6 +912,7 @@
         ensureP4RuntimeState();
         ensureP5RuntimeState();
         ensureP6RuntimeState();
+        ensureP7RuntimeState();
       }
       window.PET_CLINIC_GAME_STATE_SAVE.save(window.localStorage, generatorRuntime.mode, state, {
         catalog: generatorRuntime.catalog,
@@ -948,6 +957,7 @@
       ensureP4RuntimeState();
       ensureP5RuntimeState();
       ensureP6RuntimeState();
+      ensureP7RuntimeState();
       state.queue = Array.isArray(state.queue) ? state.queue : [];
       state.queue.forEach((patient) => {
         restoreRuntimePatient(patient);
@@ -1672,6 +1682,8 @@
     const doctor = currentDoctor();
     return {
       day: state.day,
+      // Compatibility only: demand-director-v2 still owns its four legacy balance periods.
+      // P7's six five-day chapters must not silently reinterpret those seeded arrays.
       chapter: Math.min(4, Math.ceil(state.day / 7)),
       ownerTrust: state.ownerTrust,
       clinicalReliability: state.clinicalReliability,
@@ -2473,6 +2485,27 @@
       economy: economyRuntime.summarizeState(runtimeState.economyState),
       reputation: reputationRuntime.summarizeState(runtimeState.reputationState)
     };
+  }
+
+  function ensureP7RuntimeState() {
+    if (!isTier01V2()) return null;
+    if (!campaignDirector) throw new Error("Campaign director runtime v7 is unavailable");
+    if (!state.campaignDirectorState) state.campaignDirectorState = campaignDirector.createState();
+    const validation = campaignDirector.validateState(state.campaignDirectorState);
+    if (!validation.valid) {
+      throw new Error(`Campaign director state is incompatible: ${validation.errors.join(", ")}`);
+    }
+    state.campaignDirectorState = campaignDirector.normalizeState(state.campaignDirectorState);
+    if (state.campaignDirectorState.initialized
+      && state.campaignDirectorState.campaignId !== tierCampaignIdentity()) {
+      throw new Error("Campaign director state belongs to a different campaign identity");
+    }
+    return state.campaignDirectorState;
+  }
+
+  function p7RuntimeSummary() {
+    if (!isTier01V2()) return null;
+    return campaignDirector.summarizeState(ensureP7RuntimeState());
   }
 
   function campaignMinuteAt(minute = state.minute) {
@@ -4106,11 +4139,18 @@
     const reputationReasons = Object.keys(reputationByReason).length
       ? Object.entries(reputationByReason).map(([reason, delta]) => `${delta > 0 ? "+" : ""}${delta.toFixed(1)} — ${reason}`).join("<br>")
       : "Изменений не было.";
-    state.chapterComplete = state.day === campaignDayCount();
+    const dayPosition = campaignDayPosition();
+    state.chapterComplete = dayPosition?.mode === "campaign"
+      ? dayPosition.chapterDayNumber === campaignDirector.DAYS_PER_CHAPTER
+      : state.day === campaignDayCount();
     if (state.day === 30 && state.campaignOutcome?.completed) {
       state.summaryTitle = state.campaignOutcome.success ? "Кампания завершена успешно" : "Кампания завершена";
     } else {
-      state.summaryTitle = state.chapterComplete ? "Первая глава завершена" : `День ${state.day} завершен`;
+      state.summaryTitle = state.chapterComplete
+        ? dayPosition?.chapterNumber
+          ? `Глава ${dayPosition.chapterNumber} завершена`
+          : "Первая глава завершена"
+        : `День ${state.day} завершен`;
     }
     if (ledger) {
       const ownerDelta = ledger.ownerTrustEnd - ledger.ownerTrustStart;
@@ -4850,9 +4890,14 @@
 
   function renderCampaign() {
     const plan = currentPlan();
-    el.campaignProgress.textContent = plan
-      ? `Глава 1 · день ${plan.chapterDay}/${campaignDayCount()} · кампания ${state.day}/30`
-      : `Свободный режим · день ${state.day}`;
+    const dayPosition = campaignDayPosition();
+    el.campaignProgress.textContent = dayPosition?.mode === "campaign"
+      ? `Глава ${dayPosition.chapterNumber} · день ${dayPosition.chapterDayNumber}/${campaignDirector.DAYS_PER_CHAPTER} · кампания ${dayPosition.campaignDayNumber}/${campaignDirector.CAMPAIGN_DAY_COUNT}`
+      : dayPosition?.mode === "endless"
+        ? `Свободный режим · день ${dayPosition.endlessDayNumber}`
+        : plan
+          ? `Глава 1 · день ${plan.chapterDay}/${campaignDayCount()}`
+          : `Свободный режим · день ${state.day}`;
     el.dayTitle.textContent = plan ? plan.title : "Клиника продолжает работу";
     el.dayGoalsList.textContent = "";
     const goals = plan ? plan.goals : [];
@@ -6007,6 +6052,7 @@
     appBootstrapComplete = true;
     const operationStatus = operationsSummary();
     const p6Status = p6RuntimeSummary();
+    const p7Status = p7RuntimeSummary();
     if (operationStatus) {
       document.documentElement.dataset.operationsSchema = String(operationStatus.schemaVersion);
       document.documentElement.dataset.operationsActiveTasks = String(operationStatus.activeTaskCount);
@@ -6023,6 +6069,13 @@
       delete document.documentElement.dataset.economySchema;
       delete document.documentElement.dataset.reputationSchema;
     }
+    if (p7Status) {
+      document.documentElement.dataset.campaignDirectorSchema = String(p7Status.schemaVersion);
+      document.documentElement.dataset.campaignDirectorInitialized = String(p7Status.initialized);
+    } else {
+      delete document.documentElement.dataset.campaignDirectorSchema;
+      delete document.documentElement.dataset.campaignDirectorInitialized;
+    }
     const detail = Object.freeze({
       mode: generatorRuntime.mode,
       restoreStatus,
@@ -6031,6 +6084,7 @@
       operations: operationStatus,
       economy: p6Status?.economy || null,
       reputation: p6Status?.reputation || null,
+      campaignDirector: p7Status,
       visualStatus: visualRenderer?.getStatus?.() || {
         enabled: false,
         ready: false,
@@ -6052,6 +6106,7 @@
       ensureP4RuntimeState();
       ensureP5RuntimeState();
       ensureP6RuntimeState();
+      ensureP7RuntimeState();
       resetDayState();
       setLog(restoreStatus === "blocked"
         ? "Несовместимое сохранение этого режима не загружено и не перезаписано. Начата временная новая сессия."
