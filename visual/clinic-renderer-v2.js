@@ -5,7 +5,7 @@
   const LOAD_TIMEOUT_MS = 15000;
   const params = new URLSearchParams(window.location.search);
   const enabled = params.get("visualMode") === MODE_ID;
-  const assetPackVersion = "20260715a";
+  const assetPackVersion = "20260715d";
   const manifestUrl = `art/runtime-v2/manifest.json?v=${assetPackVersion}`;
   const layoutUrl = `art/runtime-v2/scene-layout.json?v=${assetPackVersion}`;
   const assets = new Map();
@@ -174,7 +174,8 @@
     if (!asset?.animation || !image) return false;
     const animation = asset.animation;
     const frame = animationFrame(asset, actor.state || "idle", time + (actor.timeOffset || 0));
-    const scale = actor.scale || 1;
+    const roleScale = layout.actorPresentation?.scaleByRole?.[asset.role] || 1;
+    const scale = (actor.scale || 1) * roleScale;
     const width = asset.logical.width * scale;
     const height = asset.logical.height * scale;
     const anchorX = actor.anchorX ?? asset.anchorX ?? 0.5;
@@ -275,37 +276,46 @@
         scale: placement.scale || 1
       }));
 
-    const floorDrawables = [];
+    drawCorridor(context, "overlay");
+
+    const depthDrawables = [];
     layout.placements
       .filter((placement) => placement.layer === "floor")
-      .forEach((placement) => floorDrawables.push({
+      .forEach((placement) => depthDrawables.push({
         id: placement.id,
         zFootY: placement.zFootY,
+        drawOrder: placement.drawOrder || 0,
         draw: () => drawAsset(context, placement.assetId, placement.x, placement.y, {
           scale: placement.scale || 1
         })
       }));
-    floorDrawables.sort((a, b) => a.zFootY - b.zFootY || a.id.localeCompare(b.id));
-    floorDrawables.forEach((drawable) => drawable.draw());
-    layout.rooms.forEach((room) => drawRoomForeground(context, room));
-    drawCorridor(context, "overlay");
-
-    const actorDrawables = [];
-    layout.staticActors.forEach((actor) => actorDrawables.push({
+    layout.rooms
+      .filter((room) => room.foregroundSlice)
+      .forEach((room) => depthDrawables.push({
+        id: `foreground-${room.id}`,
+        zFootY: room.foregroundSlice.zFootY,
+        drawOrder: room.foregroundSlice.drawOrder ?? 100,
+        draw: () => drawRoomForeground(context, room)
+      }));
+    layout.staticActors.forEach((actor) => depthDrawables.push({
       id: actor.id,
       zFootY: actor.zFootY,
+      drawOrder: actor.drawOrder ?? 50,
       draw: () => drawAnimation(context, actor, options.time || 0)
     }));
-    (options.actors || []).forEach((actor) => actorDrawables.push({
+    (options.actors || []).forEach((actor) => depthDrawables.push({
       id: actor.id,
       zFootY: actor.zFootY ?? actor.y,
+      drawOrder: actor.drawOrder ?? 50,
       draw: () => {
         if (actor.animationId && drawAnimation(context, actor, options.time || 0)) return;
         options.fallbackActor?.(actor);
       }
     }));
-    actorDrawables.sort((a, b) => a.zFootY - b.zFootY || a.id.localeCompare(b.id));
-    actorDrawables.forEach((drawable) => drawable.draw());
+    depthDrawables.sort((a, b) => a.zFootY - b.zFootY
+      || a.drawOrder - b.drawOrder
+      || a.id.localeCompare(b.id));
+    depthDrawables.forEach((drawable) => drawable.draw());
     return true;
   }
 
@@ -313,6 +323,26 @@
     return ready && Array.isArray(layout.routeHints[name])
       ? layout.routeHints[name].map((point) => [...point])
       : null;
+  }
+
+  function getSceneMetrics() {
+    if (!ready) return null;
+    return {
+      view: { ...layout.view },
+      backgroundPath: { ...layout.background.path },
+      corridorTileSize: layout.corridor?.tileSize || 32,
+      actorPresentation: {
+        ...layout.actorPresentation,
+        runtimeFootOffset: { ...layout.actorPresentation.runtimeFootOffset },
+        animalOffset: { ...layout.actorPresentation.animalOffset },
+        travelAnimalOffset: { ...layout.actorPresentation.travelAnimalOffset },
+        scaleByRole: { ...layout.actorPresentation.scaleByRole },
+        routeOccupants: Object.fromEntries(
+          Object.entries(layout.actorPresentation.routeOccupants || {})
+            .map(([name, roles]) => [name, [...roles]])
+        )
+      }
+    };
   }
 
   window.PET_CLINIC_VISUAL_V2 = {
@@ -325,6 +355,7 @@
     prepare,
     whenSettled: prepare,
     drawScene,
-    route
+    route,
+    getSceneMetrics
   };
 }());

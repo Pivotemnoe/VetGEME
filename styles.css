@@ -93,6 +93,8 @@ button:disabled { cursor: not-allowed; opacity: .5; filter: saturate(.45); }
   display: block;
   width: calc(100% - 226px);
   height: calc(100vh - 112px);
+  object-fit: contain;
+  object-position: left top;
   background: #193528;
   image-rendering: pixelated;
 }
@@ -434,6 +436,7 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
   bottom: 0;
   display: grid;
   grid-template-columns: 190px 125px 168px 178px 150px 104px minmax(220px,1fr) 46px;
+  grid-template-rows: minmax(0, 1fr);
   gap: 6px;
   height: 112px;
   padding: 8px;
@@ -441,6 +444,7 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
   background: linear-gradient(#2dc1df,#0b6f9f);
   box-shadow: 0 -5px 0 rgba(8,21,34,.35);
 }
+.bottom-hud > * { min-height: 0; }
 .money-block, .calendar-block, .hud-buttons, .status-block, .doctor-block, .queue-summary, .message-log { border: 3px solid var(--line); background: #f4fcff; box-shadow: inset 0 -5px 0 rgba(8,21,34,.13); }
 .money-block { display: grid; grid-template-columns: 56px 1fr; grid-template-rows: 1fr auto; align-items: center; padding: 7px; }
 .coin-icon { grid-row: span 2; display: grid; place-items: center; width: 49px; height: 49px; border: 3px solid var(--line); border-radius: 50%; background: #fff3bc; color: #0b6f9f; font-size: 25px; font-weight: 900; }
@@ -465,12 +469,37 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
 .queue-summary strong { color: var(--blue-900); font-size: 18px; }
 .queue-summary span { color: var(--muted); font-size: 9px; }
 .message-log { display: flex; align-items: center; padding: 10px 12px; background: var(--hud-dark); color: #e5f9ff; font-size: 11px; line-height: 1.3; }
-.settings-button { width: 100%; font-size: 22px; }
+.settings-button { width: 100%; min-width: 40px; font-size: 22px; }
+
+@media (max-width: 1280px) {
+  #clinicCanvas { width: calc(100% - 206px); }
+  .patient-rail { right: 8px; width: 190px; gap: 8px; }
+  .case-window { right: 210px; }
+  .panel-label, .queue-panel header { padding: 6px 7px; font-size: 10px; }
+  .queue-card { grid-template-columns: 42px minmax(0,1fr); min-height: 94px; padding: 6px; column-gap: 6px; }
+  .queue-card-portrait { width: 42px; height: 42px; }
+  .queue-card strong { font-size: 12px; }
+  .queue-card span { font-size: 9px; }
+  .queue-panel .queue-card { min-height: 78px; }
+  .queue-panel .queue-complaint { display: none; }
+}
+
+@media (max-width: 1240px) {
+  .bottom-hud { grid-template-columns: 165px 110px 145px 160px 130px 92px minmax(170px,1fr) 44px; }
+}
 
 @media (max-width: 1180px) {
   .case-workspace { grid-template-columns: 180px 105px minmax(300px,1fr) 180px; }
-  .bottom-hud { grid-template-columns: 165px 110px 145px 160px 130px 92px minmax(170px,1fr) 44px; }
   .case-meta { gap: 8px; }
+}
+
+@media (max-width: 1074px) {
+  .bottom-hud { grid-template-columns: 128px 96px 128px 130px 110px minmax(120px,1fr) 40px; gap: 5px; }
+  .queue-summary { display: none; }
+  .money-block { grid-template-columns: 42px 1fr; padding: 5px; }
+  .coin-icon { width: 38px; height: 38px; font-size: 20px; }
+  .money-block strong { font-size: 18px; }
+  .message-log { padding: 7px 8px; font-size: 10px; }
 }
 
 @media (max-width: 940px) {
@@ -488,7 +517,5 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
   .case-window.guided-map .case-actions { height: 68px; }
   .case-window.guided-map .case-workspace { height: calc(100% - 124px); }
   .choice-window { right: 14px; width: min(410px,calc(100vw - 28px)); }
-  .bottom-hud { grid-template-columns: 150px 110px 140px 140px 125px minmax(170px,1fr) 40px; gap: 5px; }
-  .queue-summary { display: none; }
-  .money-block strong { font-size: 18px; }
+  .bottom-hud { grid-template-columns: 128px 96px 128px 130px 110px minmax(120px,1fr) 40px; gap: 5px; }
 }

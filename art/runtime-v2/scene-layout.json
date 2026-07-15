@@ -1,12 +1,12 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "sceneId": "clinic-level-1-modular-v2",
   "logicalSize": { "width": 1280, "height": 720 },
   "view": { "x": 28, "y": 42, "scale": 0.88 },
   "background": {
     "grass": "#1e4932",
     "grassAlternate": "#275b3e",
-    "path": { "x": 990, "y": 618, "width": 70 }
+    "path": { "x": 990, "y": 612, "width": 70, "tileSize": 32 }
   },
   "corridor": {
     "base": "#b7c4c8",
@@ -26,8 +26,8 @@
       "assetId": "room.doctor-office",
       "position": { "x": 70, "y": 66 },
       "logicalBox": { "width": 560, "height": 242 },
-      "foregroundSlice": { "sourceY": 174, "height": 68 },
-      "doors": [{ "id": "doctor-corridor", "side": "bottom", "x": 350, "y": 307, "width": 62 }],
+      "foregroundSlice": { "sourceY": 174, "height": 68, "zFootY": 307 },
+      "doors": [{ "id": "doctor-corridor", "side": "bottom", "x": 350, "y": 307, "width": 62, "corridorId": "upper-hall" }],
       "walkablePolygon": [[122, 150], [578, 150], [578, 278], [382, 278], [382, 307], [318, 307], [318, 278], [122, 278]],
       "fixedPropPlacements": ["doctor-clock", "doctor-diploma"]
     },
@@ -36,8 +36,8 @@
       "assetId": "room.laboratory",
       "position": { "x": 630, "y": 62 },
       "logicalBox": { "width": 570, "height": 246 },
-      "foregroundSlice": { "sourceY": 176, "height": 70 },
-      "doors": [{ "id": "laboratory-corridor", "side": "bottom", "x": 915, "y": 307, "width": 62 }],
+      "foregroundSlice": { "sourceY": 176, "height": 70, "zFootY": 307 },
+      "doors": [{ "id": "laboratory-corridor", "side": "bottom", "x": 915, "y": 307, "width": 62, "corridorId": "upper-hall" }],
       "walkablePolygon": [[682, 148], [1148, 148], [1148, 278], [947, 278], [947, 307], [883, 307], [883, 278], [682, 278]],
       "fixedPropPlacements": ["lab-clock", "lab-diploma"]
     },
@@ -46,10 +46,9 @@
       "assetId": "room.waiting",
       "position": { "x": 70, "y": 352 },
       "logicalBox": { "width": 620, "height": 268 },
-      "foregroundSlice": { "sourceY": 188, "height": 80 },
+      "foregroundSlice": { "sourceY": 188, "height": 80, "zFootY": 619 },
       "doors": [
-        { "id": "waiting-corridor", "side": "bottom", "x": 380, "y": 619, "width": 64 },
-        { "id": "waiting-reception", "side": "right", "x": 688, "y": 470, "width": 58 }
+        { "id": "waiting-corridor", "side": "bottom", "x": 380, "y": 619, "width": 64, "corridorId": "lower-hall" }
       ],
       "walkablePolygon": [[124, 444], [640, 444], [640, 584], [412, 584], [412, 619], [348, 619], [348, 584], [124, 584]],
       "fixedPropPlacements": ["waiting-clock", "waiting-diploma"]
@@ -59,10 +58,9 @@
       "assetId": "room.reception",
       "position": { "x": 770, "y": 365 },
       "logicalBox": { "width": 510, "height": 255 },
-      "foregroundSlice": { "sourceY": 184, "height": 71 },
+      "foregroundSlice": { "sourceY": 184, "height": 71, "zFootY": 619 },
       "doors": [
-        { "id": "reception-entrance", "side": "bottom", "x": 1025, "y": 619, "width": 70 },
-        { "id": "reception-waiting", "side": "left", "x": 772, "y": 470, "width": 58 }
+        { "id": "reception-entrance", "side": "bottom", "x": 1025, "y": 619, "width": 70, "corridorId": "entrance" }
       ],
       "walkablePolygon": [[818, 452], [1232, 452], [1232, 584], [1060, 584], [1060, 619], [990, 619], [990, 584], [818, 584]],
       "fixedPropPlacements": ["reception-clock", "reception-diploma"]
@@ -84,8 +82,10 @@
 
     { "id": "lab-diploma", "assetId": "environment.framed-poster", "x": 690, "y": 140, "zFootY": 140, "layer": "wall", "scale": 0.4 },
     { "id": "lab-clock", "assetId": "environment.wall-clock", "x": 1135, "y": 135, "zFootY": 135, "layer": "wall", "scale": 0.4 },
-    { "id": "lab-sample-tray", "assetId": "equipment.sample-tray", "x": 810, "y": 225, "zFootY": 225, "layer": "floor", "scale": 0.9 },
-    { "id": "lab-microscope", "assetId": "equipment.microscope", "x": 1010, "y": 225, "zFootY": 225, "layer": "floor", "scale": 0.9 },
+    { "id": "lab-sample-cart", "assetId": "furniture.instrument-trolley", "x": 810, "y": 238, "zFootY": 238, "layer": "floor", "scale": 0.9 },
+    { "id": "lab-sample-tray", "assetId": "equipment.sample-tray", "x": 810, "y": 198, "zFootY": 239, "drawOrder": 1, "layer": "floor", "scale": 0.48, "supportId": "lab-sample-cart" },
+    { "id": "lab-microscope-cart", "assetId": "furniture.instrument-trolley", "x": 1010, "y": 238, "zFootY": 238, "layer": "floor", "scale": 0.9 },
+    { "id": "lab-microscope", "assetId": "equipment.microscope", "x": 1010, "y": 205, "zFootY": 239, "drawOrder": 1, "layer": "floor", "scale": 0.55, "supportId": "lab-microscope-cart" },
 
     { "id": "waiting-diploma", "assetId": "environment.framed-poster", "x": 550, "y": 420, "zFootY": 420, "layer": "wall", "scale": 0.4 },
     { "id": "waiting-clock", "assetId": "environment.wall-clock", "x": 625, "y": 420, "zFootY": 420, "layer": "wall", "scale": 0.4 },
@@ -98,12 +98,53 @@
     { "id": "reception-counter", "assetId": "environment.reception-counter", "x": 1140, "y": 535, "zFootY": 535, "layer": "floor", "scale": 0.85 }
   ],
   "staticActors": [],
+  "actorPresentation": {
+    "anchor": "bottom_center",
+    "routeCoordinate": "bottom_center",
+    "runtimeFootOffset": { "x": 0, "y": 42 },
+    "animalOffset": { "x": 27, "y": 2 },
+    "travelScale": 0.84,
+    "travelAnimalOffset": { "x": 0, "y": 2 },
+    "scaleByRole": {
+      "staff_animation": 1.12,
+      "owner_animation": 1.12,
+      "patient_animation": 1.06
+    },
+    "routeOccupants": {
+      "entranceToWaiting": ["owner_animation", "patient_animation"],
+      "waitingToExit": ["owner_animation", "patient_animation"],
+      "waitingToDoctor": ["owner_animation", "patient_animation"],
+      "doctorToExit": ["owner_animation", "patient_animation"],
+      "doctorToLaboratory": ["staff_animation"],
+      "laboratoryToDoctor": ["staff_animation"],
+      "waitingSpots": ["owner_animation", "patient_animation"]
+    }
+  },
+  "routeAnchors": {
+    "entry": { "point": [1025, 710], "zone": "entrance" },
+    "registration": { "point": [1040, 542], "zone": "reception" },
+    "waiting": { "point": [335, 542], "zone": "waiting" },
+    "consult": { "point": [335, 227], "zone": "doctor-office" },
+    "doctorWorkstation": { "point": [500, 212], "zone": "doctor-office" },
+    "laboratory": { "point": [1090, 227], "zone": "laboratory" },
+    "discharge": { "point": [1040, 542], "zone": "reception" },
+    "exit": { "point": [1025, 710], "zone": "entrance" }
+  },
+  "routeContracts": {
+    "entranceToWaiting": ["entry", "registration", "waiting"],
+    "waitingToExit": ["waiting", "discharge", "exit"],
+    "waitingToDoctor": ["waiting", "consult"],
+    "doctorToExit": ["consult", "discharge", "exit"],
+    "doctorToLaboratory": ["doctorWorkstation", "laboratory"],
+    "laboratoryToDoctor": ["laboratory", "doctorWorkstation"]
+  },
   "routeHints": {
-    "entranceToWaiting": [[1025, 668], [1025, 608], [850, 608], [730, 608], [730, 458], [690, 433], [620, 443], [585, 458]],
-    "waitingToExit": [[585, 458], [620, 443], [690, 433], [730, 458], [730, 608], [850, 608], [1025, 608], [1025, 668]],
-    "waitingToDoctor": [[585, 458], [640, 458], [690, 433], [730, 433], [730, 298], [350, 298], [350, 265], [350, 185]],
-    "doctorToExit": [[350, 185], [350, 265], [350, 298], [730, 298], [730, 608], [1025, 608], [1025, 668]],
-    "doctorToLaboratory": [[500, 170], [350, 218], [350, 265], [350, 298], [915, 298], [915, 265], [1090, 185]],
-    "laboratoryToDoctor": [[1090, 185], [915, 265], [915, 298], [350, 298], [350, 265], [500, 170]]
+    "entranceToWaiting": [[1025, 710], [1025, 650], [1025, 619], [1025, 562], [1040, 542], [1025, 562], [1025, 619], [1025, 650], [730, 650], [380, 650], [380, 619], [380, 567], [335, 542]],
+    "waitingToExit": [[335, 542], [380, 567], [380, 619], [380, 650], [730, 650], [1025, 650], [1025, 619], [1025, 562], [1040, 542], [1025, 562], [1025, 619], [1025, 650], [1025, 710]],
+    "waitingToDoctor": [[335, 542], [380, 567], [380, 619], [380, 650], [730, 650], [730, 340], [350, 340], [350, 307], [350, 260], [335, 227]],
+    "doctorToExit": [[335, 227], [350, 260], [350, 307], [350, 340], [730, 340], [730, 650], [1025, 650], [1025, 619], [1025, 562], [1040, 542], [1025, 562], [1025, 619], [1025, 650], [1025, 710]],
+    "doctorToLaboratory": [[500, 212], [460, 202], [460, 252], [350, 260], [350, 307], [350, 340], [915, 340], [915, 307], [915, 260], [1090, 260], [1090, 227]],
+    "laboratoryToDoctor": [[1090, 227], [1090, 260], [915, 260], [915, 307], [915, 340], [350, 340], [350, 307], [350, 260], [460, 252], [460, 202], [500, 212]],
+    "waitingSpots": [[161, 542], [335, 542], [565, 542], [220, 567], [475, 567], [335, 567]]
   }
 }

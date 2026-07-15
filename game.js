@@ -13,6 +13,15 @@
   const DOCTOR_ROUTE_SPEED = 5.2;
   const LAB_HOLD_MS = 1200;
   const CLINIC_VIEW = { x: 28, y: 42, scale: 0.88 };
+  const CLASSIC_VISUAL_ROUTES = Object.freeze({
+    entranceToWaiting: [[932, 620], [932, 410], [760, 410], [760, 360], [610, 360], [610, 410]],
+    waitingToExit: [[610, 410], [610, 360], [760, 360], [760, 410], [932, 570], [932, 675]],
+    waitingToDoctor: [[610, 410], [610, 360], [500, 360], [500, 315], [420, 280], [350, 245]],
+    doctorToExit: [[420, 280], [500, 315], [500, 360], [760, 360], [760, 410], [932, 570], [932, 675]],
+    doctorToLaboratory: [[500, 300], [525, 350], [825, 350], [850, 300], [875, 225]],
+    laboratoryToDoctor: [[850, 300], [825, 350], [525, 350], [500, 300], [430, 240]],
+    waitingSpots: [[210, 468], [455, 468], [315, 488], [560, 488], [145, 455], [610, 455]]
+  });
   let campaign = window.PET_CLINIC_CAMPAIGN;
   let generatorRuntime = { mode: "current", catalog: null, generator: null };
   const visualRenderer = window.PET_CLINIC_VISUAL_V2;
@@ -1841,9 +1850,107 @@
     }
   }
 
-  function routeForVisual(name, fallback) {
+  function modularSceneMetrics() {
+    return visualRenderer?.isEnabled?.() && visualRenderer?.isReady?.()
+      ? visualRenderer.getSceneMetrics?.() || null
+      : null;
+  }
+
+  function activeClinicView() {
+    return modularSceneMetrics()?.view || CLINIC_VIEW;
+  }
+
+  function routeForVisual(name, fallback = []) {
     const visualRoute = visualRenderer?.isEnabled?.() ? visualRenderer.route(name) : null;
-    return visualRoute || fallback.map((point) => [...point]);
+    if (!visualRoute) return fallback.map((point) => [...point]);
+    const presentation = modularSceneMetrics()?.actorPresentation;
+    if (presentation?.routeCoordinate !== "bottom_center") return visualRoute;
+    const footOffset = presentation.runtimeFootOffset || { x: 0, y: 0 };
+    return visualRoute.map(([x, y]) => [x - footOffset.x, y - footOffset.y]);
+  }
+
+  function nearestRouteIndex(route, screenX, screenY) {
+    let nearestIndex = 0;
+    let nearestDistance = Number.POSITIVE_INFINITY;
+    route.forEach(([x, y], index) => {
+      const distance = Math.hypot(x - screenX, y - screenY);
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearestIndex = index;
+      }
+    });
+    return nearestIndex;
+  }
+
+  function replaceMotionRoute(entity, routeName) {
+    const route = routeForVisual(routeName, CLASSIC_VISUAL_ROUTES[routeName] || []);
+    if (!entity || !route.length) return;
+    const nearestIndex = nearestRouteIndex(route, entity.screenX, entity.screenY);
+    entity.screenX = route[nearestIndex][0];
+    entity.screenY = route[nearestIndex][1];
+    entity.route = route;
+    entity.routeIndex = nearestIndex;
+  }
+
+  function replaceDoctorMotionRoute(routeName) {
+    const route = routeForVisual(routeName, CLASSIC_VISUAL_ROUTES[routeName] || []);
+    if (!route.length) return;
+    const nearestIndex = nearestRouteIndex(route, state.doctorScreenX, state.doctorScreenY);
+    state.doctorScreenX = route[nearestIndex][0];
+    state.doctorScreenY = route[nearestIndex][1];
+    state.doctorRoute = route;
+    state.doctorRouteIndex = nearestIndex;
+  }
+
+  function placePatientAtRouteEnd(patient, routeName) {
+    const route = routeForVisual(routeName, CLASSIC_VISUAL_ROUTES[routeName] || []);
+    const target = route.at(-1);
+    if (!patient || !target) return false;
+    [patient.screenX, patient.screenY] = target;
+    patient.route = [];
+    patient.routeIndex = 0;
+    return true;
+  }
+
+  function normalizeVisualMotionRoutes() {
+    const routeByMotion = {
+      arriving: "entranceToWaiting",
+      toCabinet: "waitingToDoctor",
+      leaving: "doctorToExit"
+    };
+    const waitingSpots = routeForVisual("waitingSpots", CLASSIC_VISUAL_ROUTES.waitingSpots);
+    const consultRoute = routeForVisual("waitingToDoctor", CLASSIC_VISUAL_ROUTES.waitingToDoctor);
+    const normalizePatient = (patient, index) => {
+      const routeName = routeByMotion[patient.motion];
+      if (routeName) {
+        replaceMotionRoute(patient, routeName);
+        return;
+      }
+      if (patient.motion === "waiting" && waitingSpots.length) {
+        const [x, y] = waitingSpots[index % waitingSpots.length];
+        patient.screenX = x;
+        patient.screenY = y;
+        patient.route = [];
+        patient.routeIndex = 0;
+      }
+      if (patient.motion === "inCabinet" && consultRoute.length) {
+        placePatientAtRouteEnd(patient, "waitingToDoctor");
+      }
+    };
+    (state.queue || []).forEach(normalizePatient);
+    (state.departures || []).forEach((patient, index) => normalizePatient(patient, index + (state.queue || []).length));
+    if (state.doctorMotion === "toLab") replaceDoctorMotionRoute("doctorToLaboratory");
+    if (state.doctorMotion === "returning") replaceDoctorMotionRoute("laboratoryToDoctor");
+    if (state.doctorMotion === "labWorking") {
+      const laboratoryRoute = routeForVisual("doctorToLaboratory", CLASSIC_VISUAL_ROUTES.doctorToLaboratory);
+      [state.doctorScreenX, state.doctorScreenY] = laboratoryRoute.at(-1) || [state.doctorScreenX, state.doctorScreenY];
+    }
+    if (state.doctorMotion === "idle") {
+      const doctorRoute = routeForVisual("doctorToLaboratory", CLASSIC_VISUAL_ROUTES.doctorToLaboratory);
+      const modularTarget = doctorRoute[0];
+      const classicTarget = isPatientInConsult(activePatient()) ? [430, 240] : [440, 190];
+      [state.doctorScreenX, state.doctorScreenY] = modularSceneMetrics() ? modularTarget : classicTarget;
+    }
   }
 
   function createPatient(forcedDiseaseId, isReturn, overrides = {}) {
@@ -3885,6 +3992,7 @@
       const button = document.createElement("button");
       button.type = "button";
       button.className = `queue-card${patient.id === state.activeId ? " active" : ""}`;
+      button.dataset.patientId = String(patient.id);
       const portrait = document.createElement("canvas");
       portrait.className = "queue-card-portrait";
       portrait.width = 48;
@@ -3919,14 +4027,11 @@
       button.append(portrait, copy, bar);
       button.addEventListener("click", () => openCase(patient.id));
       if (index === 0) {
-        const nextClone = button.cloneNode(true);
-        drawQueuePortrait(nextClone.querySelector("canvas"), patient.species);
-        el.nextPatientCard.appendChild(nextClone);
+        el.nextPatientCard.appendChild(button);
+      } else {
+        el.queueStrip.appendChild(button);
       }
-      el.queueStrip.appendChild(button);
     });
-    const nextButton = el.nextPatientCard.querySelector(".queue-card");
-    if (nextButton && waiting[0]) nextButton.addEventListener("click", () => openCase(waiting[0].id));
     if (!waiting.length) {
       const nextBooked = state.arrivalSchedule.find((arrival) => arrival.template?.source !== "walkIn");
       if (state.dayStarted && nextBooked) {
@@ -4308,7 +4413,11 @@
   function buildModularActors() {
     const actors = [];
     const doctor = currentDoctor();
-    advanceDoctorMotion();
+    const presentation = modularSceneMetrics()?.actorPresentation || {};
+    const footOffset = presentation.runtimeFootOffset || { x: 0, y: 42 };
+    const animalOffset = presentation.animalOffset || { x: 27, y: 2 };
+    const travelAnimalOffset = presentation.travelAnimalOffset || { x: 0, y: 2 };
+    const travelScale = presentation.travelScale || 1;
     const doctorState = state.doctorMotion === "labWorking"
       ? "work"
       : state.doctorMotion !== "idle"
@@ -4320,24 +4429,27 @@
       id: `doctor-${doctor.id}`,
       animationId: doctor.id === "sokolova" ? "animation.veterinarian-female" : "animation.veterinarian-male",
       state: doctorState,
-      x: Math.round(state.doctorScreenX + 7),
-      y: Math.round(state.doctorScreenY + 42),
-      zFootY: Math.round(state.doctorScreenY + 42)
+      x: Math.round(state.doctorScreenX + footOffset.x),
+      y: Math.round(state.doctorScreenY + footOffset.y),
+      zFootY: Math.round(state.doctorScreenY + footOffset.y),
+      scale: doctorState === "walk" ? travelScale : 1
     });
 
     const appendPatientActors = (patient, index, departing = false) => {
-      advancePatientMotion(patient, index);
       const x = Math.round(patient.screenX);
       const y = Math.round(patient.screenY);
       const movementState = modularActorState(patient);
+      const moving = movementState === "walk";
+      const patientAnimalOffset = moving ? travelAnimalOffset : animalOffset;
       const ownerVariant = (Number(patient.id) + index) % 2 === 0 ? "female" : "male";
       actors.push({
         id: `${departing ? "departure" : "queue"}-owner-${patient.id}`,
         animationId: `animation.owner-${ownerVariant}`,
         state: movementState,
-        x: x + 7,
-        y: y + 42,
-        zFootY: y + 42,
+        x: x + footOffset.x,
+        y: y + footOffset.y,
+        zFootY: y + footOffset.y,
+        scale: moving ? travelScale : 1,
         timeOffset: index * 173
       });
       const animalState = movementState === "walk"
@@ -4354,10 +4466,10 @@
             : null,
         fallbackSpecies: patient.species,
         state: animalState,
-        x: x + 34,
-        y: y + 44,
-        zFootY: y + 44,
-        scale: patient.id === state.activeId ? 1.14 : 1,
+        x: x + footOffset.x + patientAnimalOffset.x,
+        y: y + footOffset.y + patientAnimalOffset.y,
+        zFootY: y + footOffset.y + patientAnimalOffset.y,
+        scale: moving ? travelScale : 1,
         active: patient.id === state.activeId,
         timeOffset: index * 211
       });
@@ -4365,7 +4477,6 @@
 
     state.queue.forEach((patient, index) => appendPatientActors(patient, index));
     state.departures.forEach((patient, index) => appendPatientActors(patient, index, true));
-    state.departures = state.departures.filter((patient) => patient.motion !== "gone");
     return actors;
   }
 
@@ -4374,9 +4485,10 @@
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBackground();
     ctx.save();
-    ctx.translate(CLINIC_VIEW.x, CLINIC_VIEW.y);
-    ctx.scale(CLINIC_VIEW.scale, CLINIC_VIEW.scale);
     const modularReady = visualRenderer?.isEnabled?.() && visualRenderer?.isReady?.();
+    const clinicView = modularReady ? activeClinicView() : CLINIC_VIEW;
+    ctx.translate(clinicView.x, clinicView.y);
+    ctx.scale(clinicView.scale, clinicView.scale);
     if (modularReady) {
       visualRenderer.drawScene(ctx, {
         time: state.animationTime,
@@ -4409,28 +4521,41 @@
       ctx.fillRect(x, 20, 50, 54);
       ctx.fillRect(x - 10, 38, 70, 22);
     }
-    const modularVisual = Boolean(visualRenderer?.isEnabled?.() && visualRenderer?.isReady?.());
-    const pathLogicalX = modularVisual ? 990 : 885;
-    const pathLogicalWidth = modularVisual ? 70 : 94;
-    const pathX = CLINIC_VIEW.x + pathLogicalX * CLINIC_VIEW.scale;
-    const pathY = CLINIC_VIEW.y + 620 * CLINIC_VIEW.scale;
-    const pathWidth = pathLogicalWidth * CLINIC_VIEW.scale;
+    const modularMetrics = modularSceneMetrics();
+    const modularVisual = Boolean(modularMetrics);
+    const clinicView = modularVisual ? modularMetrics.view : CLINIC_VIEW;
+    const backgroundPath = modularMetrics?.backgroundPath || { x: 885, y: 620, width: 94 };
+    const pathX = clinicView.x + backgroundPath.x * clinicView.scale;
+    const pathY = clinicView.y + backgroundPath.y * clinicView.scale;
+    const pathWidth = backgroundPath.width * clinicView.scale;
     if (modularVisual) {
-      const tileSize = 32 * CLINIC_VIEW.scale;
+      const logicalTileSize = backgroundPath.tileSize || modularMetrics.corridorTileSize || 32;
       ctx.fillStyle = "#b7c4c8";
       ctx.fillRect(pathX, pathY, pathWidth, canvas.height - pathY);
       ctx.strokeStyle = "#95a5aa";
       ctx.lineWidth = 1;
-      for (let y = pathY + tileSize; y < canvas.height; y += tileSize) {
+      for (
+        let logicalY = Math.ceil(backgroundPath.y / logicalTileSize) * logicalTileSize;
+        clinicView.y + logicalY * clinicView.scale < canvas.height;
+        logicalY += logicalTileSize
+      ) {
+        const y = clinicView.y + logicalY * clinicView.scale;
         ctx.beginPath();
         ctx.moveTo(pathX, y);
         ctx.lineTo(pathX + pathWidth, y);
         ctx.stroke();
       }
-      ctx.beginPath();
-      ctx.moveTo(pathX + pathWidth / 2, pathY);
-      ctx.lineTo(pathX + pathWidth / 2, canvas.height);
-      ctx.stroke();
+      for (
+        let logicalX = Math.ceil(backgroundPath.x / logicalTileSize) * logicalTileSize;
+        logicalX < backgroundPath.x + backgroundPath.width;
+        logicalX += logicalTileSize
+      ) {
+        const x = clinicView.x + logicalX * clinicView.scale;
+        ctx.beginPath();
+        ctx.moveTo(x, pathY);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
     } else {
       ctx.fillStyle = "#6f7d84";
       ctx.fillRect(pathX, pathY, pathWidth, canvas.height - pathY);
@@ -4870,12 +4995,10 @@
   function drawCharacters() {
     const idle = Math.round(Math.sin(state.animationTime / 380) * 1.5);
     const doctor = currentDoctor();
-    advanceDoctorMotion();
     drawPerson(Math.round(state.doctorScreenX), Math.round(state.doctorScreenY + idle), { shirt: doctor.color, pants: "#253c65", hair: doctor.hair, coat: true });
 
     state.queue.forEach((patient, index) => {
       const bob = Math.round(Math.sin(state.animationTime / 420 + index) * 1.5);
-      advancePatientMotion(patient, index);
       const x = Math.round(patient.screenX);
       const y = Math.round(patient.screenY + bob);
       const color = ownerColor(index);
@@ -4884,13 +5007,11 @@
       if (patient.returnVisit) drawBubble(x + 20, y - 42, "!");
     });
     state.departures.forEach((patient, index) => {
-      advancePatientMotion(patient, index);
       const x = Math.round(patient.screenX);
       const y = Math.round(patient.screenY);
       drawPerson(x, y, ownerColor(patient.id));
       drawAnimal(patient.species, x + 22, y + 17, false);
     });
-    state.departures = state.departures.filter((patient) => patient.motion !== "gone");
   }
 
   function startDoctorLabTrip() {
@@ -4972,11 +5093,18 @@
       return;
     }
     if (patient.motion === "waiting") {
-      const waitingSpots = [[210, 468], [455, 468], [315, 488], [560, 488], [145, 455], [610, 455]];
+      const waitingSpots = routeForVisual("waitingSpots", [[210, 468], [455, 468], [315, 488], [560, 488], [145, 455], [610, 455]]);
       const [targetX, targetY] = waitingSpots[index % waitingSpots.length];
       patient.screenX += (targetX - patient.screenX) * 0.14;
       patient.screenY += (targetY - patient.screenY) * 0.14;
     }
+  }
+
+  function advanceClinicMotion() {
+    advanceDoctorMotion();
+    state.queue.forEach((patient, index) => advancePatientMotion(patient, index));
+    state.departures.forEach((patient, index) => advancePatientMotion(patient, index));
+    state.departures = state.departures.filter((patient) => patient.motion !== "gone");
   }
 
   function drawFloatingLabels() {
@@ -5226,6 +5354,7 @@
 
   function tick(timestamp) {
     state.animationTime = timestamp;
+    advanceClinicMotion();
     if (!state.lastTick) state.lastTick = timestamp;
     const delta = timestamp - state.lastTick;
     state.lastTick = timestamp;
@@ -5286,6 +5415,7 @@
       if (isPatientInConsult(patient)) {
         el.caseWindow.classList.remove("hidden");
         patient.motion = "inCabinet";
+        placePatientAtRouteEnd(patient, "waitingToDoctor");
       }
       renderAll();
       return;
@@ -5309,6 +5439,7 @@
       loadingMessage.textContent = "Состояние клиники подготовлено. Загружаем и декодируем кабинеты…";
     }
     await Promise.resolve(visualRenderer?.prepare?.());
+    normalizeVisualMotionRoutes();
     updateVisualModeSettings();
   }
 
