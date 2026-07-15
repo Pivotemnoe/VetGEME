@@ -7,6 +7,7 @@ const researchApi = require("../systems/research-orders-v3.js");
 const referralApi = require("../systems/referral-orders-v3.js");
 const asyncEventApi = require("../systems/async-events-v3.js");
 const deviceQueueApi = require("../systems/device-queue-v3.js");
+const schedulerApi = require("../systems/resource-scheduler-v5.js");
 const CAMPAIGN_IDENTITY = "clinic-v2-game-save-test";
 
 function tierOptions(options = {}) {
@@ -133,6 +134,44 @@ function p3Collections() {
   };
 }
 
+function activeOperationsState() {
+  let state = schedulerApi.createState([{
+    id: "doctor-a",
+    capacity: 1,
+    capabilities: ["synthetic-authored-task"],
+    unavailableWindows: []
+  }, {
+    id: "room-a",
+    capacity: 1,
+    capabilities: ["synthetic-authored-room"],
+    unavailableWindows: []
+  }]);
+  state = schedulerApi.enqueueTask(state, {
+    commandId: "OPS-ENQUEUE-1",
+    task: {
+      id: "OPS-TASK-1",
+      queuedAt: 500,
+      priority: 20,
+      authoredDurationMinutes: 15,
+      fatigue: { percent: 42, durationMultiplier: 1.2 },
+      requirementGroups: [{
+        id: "staff",
+        anyOf: [{ resourceId: "doctor-a", capabilityId: "synthetic-authored-task", units: 1 }]
+      }, {
+        id: "room",
+        anyOf: [{ resourceId: "room-a", capabilityId: "synthetic-authored-room", units: 1 }]
+      }],
+      urgency: "routine",
+      safeRouteRequired: false,
+      sourceType: "operations_test_fixture",
+      sourceId: "OPS-SOURCE-1",
+      patientId: "LP-000001"
+    }
+  }).state;
+  state = schedulerApi.scheduleTask(state, { commandId: "OPS-START-1", at: 500 }).state;
+  return { ...state, handoffs: [] };
+}
+
 const base = {
   phase: "running",
   day: 4,
@@ -168,7 +207,7 @@ const base = {
 
 const storage = memoryStorage();
 const saved = saveApi.save(storage, "tier-01-v2", base, tierOptions());
-assert.equal(saved.gameStateSaveVersion, 7);
+assert.equal(saved.gameStateSaveVersion, 8);
 assert.equal(saved.capabilityRegistryId, saveApi.CAPABILITY_REGISTRY_ID);
 assert.equal(saved.capabilityRegistryVersion, saveApi.CAPABILITY_REGISTRY_VERSION);
 const loaded = saveApi.load(storage, "tier-01-v2", tierOptions());
@@ -182,7 +221,46 @@ assert.deepEqual(loaded.state.researchOrders, base.researchOrders);
 assert.deepEqual(loaded.state.referralOrders, base.referralOrders);
 assert.deepEqual(loaded.state.asyncEvents, base.asyncEvents);
 assert.deepEqual(loaded.state.deviceQueues, base.deviceQueues);
+assert.deepEqual(loaded.state.operationsState, {
+  schemaVersion: 1,
+  resources: {},
+  tasks: [],
+  reservations: [],
+  handoffs: [],
+  appliedCommandIds: [],
+  commandFingerprints: {}
+});
 assert.equal(loaded.state.transientDomReference, undefined);
+
+const operationsStorage = memoryStorage();
+const expectedOperationsState = activeOperationsState();
+saveApi.save(operationsStorage, "tier-01-v2", {
+  ...base,
+  operationsState: expectedOperationsState
+}, tierOptions());
+const operationsLoaded = saveApi.load(operationsStorage, "tier-01-v2", tierOptions());
+assert.deepEqual(operationsLoaded.state.operationsState, expectedOperationsState);
+assert.equal(operationsLoaded.state.operationsState.tasks[0].status, "active");
+assert.equal(operationsLoaded.state.operationsState.reservations.length, 2);
+assert.equal(/authoredResult|diagnosis|clinicalTruth/u.test(JSON.stringify(operationsLoaded.state.operationsState)), false);
+
+const duplicateDeviceTaskOperations = activeOperationsState();
+duplicateDeviceTaskOperations.tasks[0].id = "DT-000001";
+duplicateDeviceTaskOperations.reservations.forEach((reservation) => { reservation.taskId = "DT-000001"; });
+assert.throws(() => saveApi.createSnapshot("tier-01-v2", {
+  ...base,
+  operationsState: duplicateDeviceTaskOperations
+}, tierOptions()), /duplicates a P3 device queue task/);
+
+const duplicateDeviceOrderOperations = activeOperationsState();
+duplicateDeviceOrderOperations.tasks[0].sourceType = "research_order";
+duplicateDeviceOrderOperations.tasks[0].sourceId = "RO-000001";
+assert.throws(() => saveApi.createSnapshot("tier-01-v2", {
+  ...base,
+  operationsState: duplicateDeviceOrderOperations
+}, tierOptions()), /duplicates a P3 device queue order/);
+assert.doesNotThrow(() => saveApi.createSnapshot("tier-01-v2", base, tierOptions()),
+  "a populated P3 device queue without an operations duplicate must stay valid");
 
 storage.resetCalls();
 saveApi.load(storage, "tier-01-v2", tierOptions());
@@ -214,6 +292,22 @@ const malformedIdentityStorage = memoryStorage({ [tierKey]: malformedIdentityRaw
 assert.throws(() => saveApi.load(malformedIdentityStorage, "tier-01-v2", tierOptions()), /four-slot array/);
 assert.equal(malformedIdentityStorage.getItem(tierKey), malformedIdentityRaw);
 assert.equal(malformedIdentityStorage.setCalls.length, 0, "malformed compact identity performed a write");
+
+const futureOperationsSnapshot = JSON.parse(compactIdentityRaw);
+futureOperationsSnapshot.state.operationsState.schemaVersion = 999;
+const futureOperationsRaw = JSON.stringify(futureOperationsSnapshot);
+const futureOperationsStorage = memoryStorage({ [tierKey]: futureOperationsRaw });
+assert.throws(() => saveApi.load(futureOperationsStorage, "tier-01-v2", tierOptions()), /operations state schema version/i);
+assert.equal(futureOperationsStorage.getItem(tierKey), futureOperationsRaw);
+assert.equal(futureOperationsStorage.setCalls.length, 0, "future operations state performed a write");
+
+const malformedOperationsSnapshot = JSON.parse(compactIdentityRaw);
+malformedOperationsSnapshot.state.operationsState.tasks = [{ id: "task-without-authored-duration" }];
+const malformedOperationsRaw = JSON.stringify(malformedOperationsSnapshot);
+const malformedOperationsStorage = memoryStorage({ [tierKey]: malformedOperationsRaw });
+assert.throws(() => saveApi.load(malformedOperationsStorage, "tier-01-v2", tierOptions()), /operationsState|scheduler/i);
+assert.equal(malformedOperationsStorage.getItem(tierKey), malformedOperationsRaw);
+assert.equal(malformedOperationsStorage.setCalls.length, 0, "malformed operations state performed a write");
 
 const migrationState = {
   phase: "running",
@@ -250,13 +344,22 @@ for (const sourceVersion of [1, 2, 3, 4, 5]) {
   const sourceRaw = JSON.stringify(source, null, 2);
   const migrationStorage = memoryStorage({ [tierKey]: sourceRaw });
   const migrated = saveApi.load(migrationStorage, "tier-01-v2", tierOptions({ catalog: {} }));
-  assert.equal(migrated.gameStateSaveVersion, 7, `v${sourceVersion} did not migrate to v7`);
+  assert.equal(migrated.gameStateSaveVersion, 8, `v${sourceVersion} did not migrate to v8`);
   assert.equal(migrated.capabilityRegistryId, saveApi.CAPABILITY_REGISTRY_ID);
   assert.equal(migrated.state.capabilityState.registryVersion, saveApi.CAPABILITY_REGISTRY_VERSION);
   assert.deepEqual(migrated.state.researchOrders, []);
   assert.deepEqual(migrated.state.referralOrders, []);
   assert.deepEqual(migrated.state.asyncEvents, []);
   assert.deepEqual(migrated.state.deviceQueues, { schemaVersion: 1, resources: {} });
+  assert.deepEqual(migrated.state.operationsState, {
+    schemaVersion: 1,
+    resources: {},
+    tasks: [],
+    reservations: [],
+    handoffs: [],
+    appliedCommandIds: [],
+    commandFingerprints: {}
+  });
   assert.equal(
     migrationStorage.getItem(saveApi.migrationBackupKeyForVersion("tier-01-v2", sourceVersion)),
     sourceRaw,
@@ -287,10 +390,41 @@ const sourceV5Raw = JSON.stringify(sourceV5);
 const sourceV5Backup = saveApi.migrationBackupKeyForVersion("tier-01-v2", 5);
 
 const sourceV6 = saveApi.migrateTierSnapshotToV6(sourceV5, {}, tierOptions());
+const sourceV7 = saveApi.migrateTierSnapshotToV7(sourceV6, {}, tierOptions());
+assert.equal(sourceV7.gameStateSaveVersion, 7);
+const sourceV7Raw = JSON.stringify(sourceV7, null, 2);
+const sourceV7Storage = memoryStorage({ [tierKey]: sourceV7Raw });
+const migratedV7 = saveApi.load(sourceV7Storage, "tier-01-v2", tierOptions({ catalog: {}, hydrate: false }));
+assert.equal(migratedV7.gameStateSaveVersion, 8);
+assert.deepEqual(migratedV7.state.identityRegistry, sourceV7.state.identityRegistry);
+assert.deepEqual(migratedV7.state.deviceQueues, sourceV7.state.deviceQueues);
+assert.deepEqual(migratedV7.state.operationsState, {
+  schemaVersion: 1,
+  resources: {},
+  tasks: [],
+  reservations: [],
+  handoffs: [],
+  appliedCommandIds: [],
+  commandFingerprints: {}
+});
+assert.equal(
+  sourceV7Storage.getItem(saveApi.migrationBackupKeyForVersion("tier-01-v2", 7)),
+  sourceV7Raw,
+  "v7 migration did not preserve exact source bytes"
+);
+const restoredV7 = saveApi.restoreMigrationBackup(
+  sourceV7Storage,
+  "tier-01-v2",
+  7,
+  tierOptions({ catalog: {} })
+);
+assert.equal(restoredV7.raw, sourceV7Raw);
+assert.equal(sourceV7Storage.getItem(tierKey), sourceV7Raw, "rollback did not restore exact v7 bytes");
+
 const sourceV6Raw = JSON.stringify(sourceV6, null, 2);
 const sourceV6Storage = memoryStorage({ [tierKey]: sourceV6Raw });
 const migratedV6 = saveApi.load(sourceV6Storage, "tier-01-v2", tierOptions({ catalog: {} }));
-assert.equal(migratedV6.gameStateSaveVersion, 7);
+assert.equal(migratedV6.gameStateSaveVersion, 8);
 assert.equal(migratedV6.state.queue[0].visitId, sourceV6.state.queue[0].visitId);
 assert.equal(migratedV6.state.queue[0].owner, sourceV6.state.queue[0].owner);
 assert.match(migratedV6.state.queue[0].persistentOwnerId, /^OWN-/);
@@ -305,7 +439,7 @@ assert.equal(
 );
 sourceV6Storage.resetCalls();
 saveApi.load(sourceV6Storage, "tier-01-v2", tierOptions({ catalog: {} }));
-assert.equal(sourceV6Storage.setCalls.length, 0, "current v7 save rewrote storage");
+assert.equal(sourceV6Storage.setCalls.length, 0, "current v8 save rewrote storage");
 
 const conflict = memoryStorage({ [tierKey]: sourceV5Raw, [sourceV5Backup]: "different-backup" });
 assert.throws(() => saveApi.load(conflict, "tier-01-v2", tierOptions({ catalog: {} })), /backup conflict/);
@@ -325,7 +459,7 @@ assert.equal(primaryQuota.getItem(tierKey), sourceV5Raw);
 assert.equal(primaryQuota.getItem(sourceV5Backup), sourceV5Raw);
 const backupWriteCount = primaryQuota.setCalls.filter((call) => call.key === sourceV5Backup).length;
 primaryQuota.failSet = null;
-assert.equal(saveApi.load(primaryQuota, "tier-01-v2", tierOptions({ catalog: {} })).gameStateSaveVersion, 7);
+assert.equal(saveApi.load(primaryQuota, "tier-01-v2", tierOptions({ catalog: {} })).gameStateSaveVersion, 8);
 assert.equal(primaryQuota.setCalls.filter((call) => call.key === sourceV5Backup).length, backupWriteCount, "retry rewrote exact backup");
 
 const futureRaw = JSON.stringify({ gameStateSaveVersion: 999, generatorMode: "tier-01-v2", state: {} });

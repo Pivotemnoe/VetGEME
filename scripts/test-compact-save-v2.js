@@ -494,7 +494,7 @@ async function main() {
     catalog,
     campaignIdentity: partialGenerator.metadata(1).campaignSeed
   });
-  assert.equal(migratedGame.gameStateSaveVersion, 7);
+  assert.equal(migratedGame.gameStateSaveVersion, 8);
   assert.ok(migratedGame.state.queue[0].v2Visit.medicalContent);
   assert.equal(gameMigrationStorage.getItem(namespaces.gameSaveKey("tier-01-v2")).includes("medicalContent"), false);
 

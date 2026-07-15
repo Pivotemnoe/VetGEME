@@ -38,6 +38,9 @@
   const deviceQueue = window.PET_CLINIC_DEVICE_QUEUE_V3;
   const identityBehavior = window.PET_CLINIC_IDENTITY_BEHAVIOR_V4;
   const identityRuntime = window.PET_CLINIC_IDENTITY_RUNTIME_V4;
+  const resourceScheduler = window.PET_CLINIC_RESOURCE_SCHEDULER_V5;
+  const operationsRuntimeFactory = window.PET_CLINIC_OPERATIONS_RUNTIME_V5;
+  const operationsRuntime = operationsRuntimeFactory?.createOperationsRuntime?.(resourceScheduler) || null;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
   let appBootstrapComplete = false;
@@ -822,6 +825,7 @@
     asyncEvents: [],
     deviceQueues: { schemaVersion: 1, resources: {} },
     identityRegistry: null,
+    operationsState: null,
     demandState: null,
     campaignOutcome: null,
     appointments: [],
@@ -892,7 +896,10 @@
     const now = Date.now();
     if (!force && now - lastGameSaveAt < 5000) return;
     try {
-      if (isTier01V2()) ensureP4RuntimeState();
+      if (isTier01V2()) {
+        ensureP4RuntimeState();
+        ensureP5RuntimeState();
+      }
       window.PET_CLINIC_GAME_STATE_SAVE.save(window.localStorage, generatorRuntime.mode, state, {
         catalog: generatorRuntime.catalog,
         campaignIdentity: isTier01V2() ? tierCampaignIdentity() : undefined
@@ -934,6 +941,7 @@
         : { schemaVersion: 1, resources: {} };
       ensureP3RuntimeState();
       ensureP4RuntimeState();
+      ensureP5RuntimeState();
       state.queue = Array.isArray(state.queue) ? state.queue : [];
       state.queue.forEach((patient) => {
         restoreRuntimePatient(patient);
@@ -2415,6 +2423,23 @@
     return identityRuntime.syncStateIdentityReferences(state, {
       campaignIdentity: tierCampaignIdentity()
     });
+  }
+
+  function ensureP5RuntimeState() {
+    if (!isTier01V2()) return null;
+    if (!resourceScheduler || !operationsRuntime) throw new Error("Operations runtime v5 is unavailable");
+    if (!state.operationsState) state.operationsState = operationsRuntime.createState();
+    const validation = operationsRuntime.validateState(state.operationsState);
+    if (!validation.valid) {
+      throw new Error(`Operations state is incompatible: ${validation.errors.join(", ")}`);
+    }
+    state.operationsState = operationsRuntime.normalizeState(state.operationsState);
+    return state.operationsState;
+  }
+
+  function operationsSummary() {
+    if (!isTier01V2()) return null;
+    return operationsRuntime.summarizeState(ensureP5RuntimeState());
   }
 
   function campaignMinuteAt(minute = state.minute) {
@@ -4780,7 +4805,11 @@
       `Точный бюджет: ${patient.budget} V`,
       `Надежность назначений: ${Math.round(patient.ownerProfile.reliability * 100)}%`,
       `Диагностические очки: ${patient.dxPoints}`,
-      `Врач смены: ${currentDoctor().name}, усталость ${Math.round(currentDoctor().fatigue)}%`
+      `Врач смены: ${currentDoctor().name}, усталость ${Math.round(currentDoctor().fatigue)}%`,
+      ...(isTier01V2() ? (() => {
+        const summary = operationsSummary();
+        return [`Операционный scheduler: ${summary.activeTaskCount} активных, ${summary.queuedTaskCount} в очереди`];
+      })() : [])
     ].join("\n");
     drawPortrait(patient);
     if (el.clinicalMap?.parentElement) el.clinicalMap.parentElement.scrollTop = clinicalScrollTop;
@@ -5943,11 +5972,22 @@
     await nextPaint();
 
     appBootstrapComplete = true;
+    const operationStatus = operationsSummary();
+    if (operationStatus) {
+      document.documentElement.dataset.operationsSchema = String(operationStatus.schemaVersion);
+      document.documentElement.dataset.operationsActiveTasks = String(operationStatus.activeTaskCount);
+      document.documentElement.dataset.operationsQueuedTasks = String(operationStatus.queuedTaskCount);
+    } else {
+      delete document.documentElement.dataset.operationsSchema;
+      delete document.documentElement.dataset.operationsActiveTasks;
+      delete document.documentElement.dataset.operationsQueuedTasks;
+    }
     const detail = Object.freeze({
       mode: generatorRuntime.mode,
       restoreStatus,
       activeId: state.activeId ?? null,
       visitId: activeVisitId(),
+      operations: operationStatus,
       visualStatus: visualRenderer?.getStatus?.() || {
         enabled: false,
         ready: false,
@@ -5967,6 +6007,7 @@
     if (restoreStatus !== "restored") {
       ensureP3RuntimeState();
       ensureP4RuntimeState();
+      ensureP5RuntimeState();
       resetDayState();
       setLog(restoreStatus === "blocked"
         ? "Несовместимое сохранение этого режима не загружено и не перезаписано. Начата временная новая сессия."
