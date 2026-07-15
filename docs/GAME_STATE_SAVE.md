@@ -4,7 +4,7 @@
 
 `current` and `legacy-v1` remain on `gameStateSaveVersion: 1`.
 
-`tier-01-v2` uses `gameStateSaveVersion: 5`. Version 3 extended the compact version-2 snapshot with campaign mechanics state:
+`tier-01-v2` uses `gameStateSaveVersion: 7`. Version 3 extended the compact version-2 snapshot with campaign mechanics state:
 
 - owner trust and clinical reliability;
 - awareness and reserved demand-director state;
@@ -16,7 +16,11 @@ Version 4 adds compact per-patient action state for the free clinical flow: stab
 
 Version 5 adds longitudinal state: appointments, treatment courses, attendance events and stable patient histories. Appointment and course records use stable IDs and content action IDs; approved medical text remains in the content pack.
 
-Tier snapshots from versions 1, 2, 3 and 4 migrate atomically to version 5. Versions 1 and 2 also receive the version-3 campaign defaults. Longitudinal collections are initialized without fabricating historical appointments. During migration queued and scheduled visits are hydrated from the current content pack, legacy aggregate exam flags are converted to action IDs, and the candidate is compacted and validated before it is written. A failed migration leaves the original key byte-for-byte unchanged.
+Version 6 adds the P3 capability, research-order, referral-order, async-event and device-queue state. The save records the exact capability-registry identity and validates every lifecycle and cross-reference.
+
+Version 7 adds the P4 owner/patient identity registry, per-visit references and historical state snapshots. Stable identities are scoped by the exact campaign seed and the explicit root visit (`originalVisitId || sourceVisitId || visitId`); names and appearance never participate in identity. The raw save uses compact format `identity-v4-delta-2`: derivable IDs and current snapshots are restored at load, while authored profile, state, appearance and idempotent history differences are stored as validated deltas. A historical visit keeps its own snapshot when a repeat changes current state.
+
+Tier snapshots from versions 1 through 6 migrate atomically to version 7. Versions 1 and 2 also receive the version-3 campaign defaults. Longitudinal and P3 collections are initialized without fabricating historical appointments, tasks or results. The v6-to-v7 step preserves every pre-existing state field, creates only identities justified by exact source references, validates campaign ownership and reciprocal links, and never changes generator saves or already generated days. During migration queued and scheduled visits are hydrated from the current content pack, legacy aggregate exam flags are converted to action IDs, and the candidate is compacted and validated before it is written. A failed migration leaves the original key byte-for-byte unchanged.
 
 Unknown, missing or future versions are not loaded and are not overwritten during that browser session. A mode mismatch is handled the same way. This prevents a campaign from being silently reset or interpreted under another generator.
 
@@ -42,6 +46,8 @@ The whitelist includes:
 - selected doctor, fatigue and shift history;
 - case journal, completed visits and pending returns;
 - appointments, linked treatment courses, attendance outcomes and longitudinal patient state;
+- the compact persistent owner/patient registry, exact per-visit identity references, snapshots and visit history;
+- capability state, research/referral lifecycles, async events and queued device work;
 - daily goals and counters;
 - tutorial progress;
 - stable IDs of performed questions, exam actions, measurements and diagnostic tests;

@@ -33,6 +33,8 @@ const checks = [
   ["capability registry validator", "scripts/validate-capability-registry-v3.mjs"],
   ["capability registry contract", "scripts/test-capability-registry-v3.js"],
   ["research/referral lifecycle", "scripts/test-research-referral-v3.js"],
+  ["identity behavior v4", "scripts/test-identity-behavior-v4.js"],
+  ["identity runtime v4", "scripts/test-identity-runtime-v4.js"],
   ["generator mode fail-closed", "scripts/test-generator-mode-fail-closed.js"],
   ["content divergence baseline", "scripts/report-content-divergence.mjs", "--summary"],
   ["Tier 01 content validator", "scripts/validate-tier-01-content.mjs"],

@@ -7,6 +7,11 @@ const researchApi = require("../systems/research-orders-v3.js");
 const referralApi = require("../systems/referral-orders-v3.js");
 const asyncEventApi = require("../systems/async-events-v3.js");
 const deviceQueueApi = require("../systems/device-queue-v3.js");
+const CAMPAIGN_IDENTITY = "clinic-v2-game-save-test";
+
+function tierOptions(options = {}) {
+  return { ...options, campaignIdentity: CAMPAIGN_IDENTITY };
+}
 
 function memoryStorage(initial = {}) {
   const values = new Map(Object.entries(initial).map(([key, value]) => [key, String(value)]));
@@ -162,11 +167,11 @@ const base = {
 };
 
 const storage = memoryStorage();
-const saved = saveApi.save(storage, "tier-01-v2", base);
-assert.equal(saved.gameStateSaveVersion, 6);
+const saved = saveApi.save(storage, "tier-01-v2", base, tierOptions());
+assert.equal(saved.gameStateSaveVersion, 7);
 assert.equal(saved.capabilityRegistryId, saveApi.CAPABILITY_REGISTRY_ID);
 assert.equal(saved.capabilityRegistryVersion, saveApi.CAPABILITY_REGISTRY_VERSION);
-const loaded = saveApi.load(storage, "tier-01-v2");
+const loaded = saveApi.load(storage, "tier-01-v2", tierOptions());
 assert.equal(loaded.state.money, 2040);
 assert.equal(loaded.state.activeId, 7);
 assert.equal(loaded.state.queue[0].diagnosticDecisions[0].noResult, true);
@@ -180,7 +185,7 @@ assert.deepEqual(loaded.state.deviceQueues, base.deviceQueues);
 assert.equal(loaded.state.transientDomReference, undefined);
 
 storage.resetCalls();
-saveApi.load(storage, "tier-01-v2");
+saveApi.load(storage, "tier-01-v2", tierOptions());
 assert.equal(storage.setCalls.length, 0, "current tier save load performed a write");
 
 saveApi.save(storage, "current", { ...base, day: 1, money: 100 });
@@ -188,11 +193,28 @@ saveApi.save(storage, "legacy-v1", { ...base, day: 2, money: 200 });
 assert.equal(saveApi.load(storage, "current").gameStateSaveVersion, 1);
 assert.equal(saveApi.load(storage, "current").state.money, 100);
 assert.equal(saveApi.load(storage, "legacy-v1").state.money, 200);
-assert.equal(saveApi.load(storage, "tier-01-v2").state.money, 2040);
+assert.equal(saveApi.load(storage, "tier-01-v2", tierOptions()).state.money, 2040);
 assert.equal(saveApi.createSnapshot("current", { ownerTrust: 90, reputation: 70 }).state.ownerTrust, undefined);
 assert.equal(saveApi.createSnapshot("legacy-v1", { clinicalReliability: 90, reputation: 70 }).state.clinicalReliability, undefined);
 
 const tierKey = namespaces.gameSaveKey("tier-01-v2");
+const compactIdentityRaw = storage.getItem(tierKey);
+const futureIdentitySnapshot = JSON.parse(compactIdentityRaw);
+futureIdentitySnapshot.state.identityRegistry.schemaVersion = 999;
+const futureIdentityRaw = JSON.stringify(futureIdentitySnapshot);
+const futureIdentityStorage = memoryStorage({ [tierKey]: futureIdentityRaw });
+assert.throws(() => saveApi.load(futureIdentityStorage, "tier-01-v2", tierOptions()), /compact identity schema version/);
+assert.equal(futureIdentityStorage.getItem(tierKey), futureIdentityRaw);
+assert.equal(futureIdentityStorage.setCalls.length, 0, "future compact identity performed a write");
+
+const malformedIdentitySnapshot = JSON.parse(compactIdentityRaw);
+malformedIdentitySnapshot.state.identityRegistry.overrides = [["VISIT-000001", {}, null]];
+const malformedIdentityRaw = JSON.stringify(malformedIdentitySnapshot);
+const malformedIdentityStorage = memoryStorage({ [tierKey]: malformedIdentityRaw });
+assert.throws(() => saveApi.load(malformedIdentityStorage, "tier-01-v2", tierOptions()), /four-slot array/);
+assert.equal(malformedIdentityStorage.getItem(tierKey), malformedIdentityRaw);
+assert.equal(malformedIdentityStorage.setCalls.length, 0, "malformed compact identity performed a write");
+
 const migrationState = {
   phase: "running",
   day: 6,
@@ -200,7 +222,12 @@ const migrationState = {
   reputation: 68,
   queue: [{
     id: 19,
+    visitId: "visit-6-1",
     animal: "Мурка",
+    owner: "Орлова",
+    species: "cat",
+    sex: "самка",
+    ageYears: 5,
     asked: { onset: true },
     diagnosticDecisions: [{ decision: "owner_accepted_pending_execution" }],
     pendingDiagnosticTestId: "ear_cytology",
@@ -222,8 +249,8 @@ for (const sourceVersion of [1, 2, 3, 4, 5]) {
   };
   const sourceRaw = JSON.stringify(source, null, 2);
   const migrationStorage = memoryStorage({ [tierKey]: sourceRaw });
-  const migrated = saveApi.load(migrationStorage, "tier-01-v2", { catalog: {} });
-  assert.equal(migrated.gameStateSaveVersion, 6, `v${sourceVersion} did not migrate to v6`);
+  const migrated = saveApi.load(migrationStorage, "tier-01-v2", tierOptions({ catalog: {} }));
+  assert.equal(migrated.gameStateSaveVersion, 7, `v${sourceVersion} did not migrate to v7`);
   assert.equal(migrated.capabilityRegistryId, saveApi.CAPABILITY_REGISTRY_ID);
   assert.equal(migrated.state.capabilityState.registryVersion, saveApi.CAPABILITY_REGISTRY_VERSION);
   assert.deepEqual(migrated.state.researchOrders, []);
@@ -236,13 +263,15 @@ for (const sourceVersion of [1, 2, 3, 4, 5]) {
     `v${sourceVersion} migration did not preserve exact source bytes`
   );
   if (sourceVersion === 5) {
-    assert.equal(JSON.stringify(migrated.state.queue), JSON.stringify(source.state.queue), "v5 migration changed active queue bytes");
+    Object.entries(source.state.queue[0]).forEach(([key, value]) => {
+      assert.deepEqual(migrated.state.queue[0][key], value, `v5 migration changed active queue field ${key}`);
+    });
     assert.equal(migrated.state.activeId, source.state.activeId);
     assert.deepEqual(migrated.state.capabilityState.entries, source.state.equipmentCapabilities);
     migrationStorage.resetCalls();
-    saveApi.load(migrationStorage, "tier-01-v2", { catalog: {} });
+    saveApi.load(migrationStorage, "tier-01-v2", tierOptions({ catalog: {} }));
     assert.equal(migrationStorage.setCalls.length, 0, "current migrated save rewrote storage");
-    const restored = saveApi.restoreMigrationBackup(migrationStorage, "tier-01-v2", 5, { catalog: {} });
+    const restored = saveApi.restoreMigrationBackup(migrationStorage, "tier-01-v2", 5, tierOptions({ catalog: {} }));
     assert.equal(restored.raw, sourceRaw);
     assert.equal(migrationStorage.getItem(tierKey), sourceRaw, "rollback did not restore exact v5 bytes");
   }
@@ -257,41 +286,62 @@ const sourceV5 = {
 const sourceV5Raw = JSON.stringify(sourceV5);
 const sourceV5Backup = saveApi.migrationBackupKeyForVersion("tier-01-v2", 5);
 
+const sourceV6 = saveApi.migrateTierSnapshotToV6(sourceV5, {}, tierOptions());
+const sourceV6Raw = JSON.stringify(sourceV6, null, 2);
+const sourceV6Storage = memoryStorage({ [tierKey]: sourceV6Raw });
+const migratedV6 = saveApi.load(sourceV6Storage, "tier-01-v2", tierOptions({ catalog: {} }));
+assert.equal(migratedV6.gameStateSaveVersion, 7);
+assert.equal(migratedV6.state.queue[0].visitId, sourceV6.state.queue[0].visitId);
+assert.equal(migratedV6.state.queue[0].owner, sourceV6.state.queue[0].owner);
+assert.match(migratedV6.state.queue[0].persistentOwnerId, /^OWN-/);
+assert.match(migratedV6.state.queue[0].persistentPatientId, /^PAT-/);
+assert.equal(migratedV6.state.identityRegistry.campaignIdentity, CAMPAIGN_IDENTITY);
+assert.equal(Object.keys(migratedV6.state.identityRegistry.owners).length, 2);
+assert.equal(Object.keys(migratedV6.state.identityRegistry.patients).length, 2);
+assert.equal(
+  sourceV6Storage.getItem(saveApi.migrationBackupKeyForVersion("tier-01-v2", 6)),
+  sourceV6Raw,
+  "v6 migration did not preserve exact source bytes"
+);
+sourceV6Storage.resetCalls();
+saveApi.load(sourceV6Storage, "tier-01-v2", tierOptions({ catalog: {} }));
+assert.equal(sourceV6Storage.setCalls.length, 0, "current v7 save rewrote storage");
+
 const conflict = memoryStorage({ [tierKey]: sourceV5Raw, [sourceV5Backup]: "different-backup" });
-assert.throws(() => saveApi.load(conflict, "tier-01-v2", { catalog: {} }), /backup conflict/);
+assert.throws(() => saveApi.load(conflict, "tier-01-v2", tierOptions({ catalog: {} })), /backup conflict/);
 assert.equal(conflict.getItem(tierKey), sourceV5Raw);
 assert.equal(conflict.setCalls.length, 0, "backup conflict performed a write");
 
 const backupQuota = memoryStorage({ [tierKey]: sourceV5Raw });
 backupQuota.failSet = (key) => key === sourceV5Backup;
-assert.throws(() => saveApi.load(backupQuota, "tier-01-v2", { catalog: {} }), /quota/);
+assert.throws(() => saveApi.load(backupQuota, "tier-01-v2", tierOptions({ catalog: {} })), /quota/);
 assert.equal(backupQuota.getItem(tierKey), sourceV5Raw);
 assert.equal(backupQuota.getItem(sourceV5Backup), null);
 
 const primaryQuota = memoryStorage({ [tierKey]: sourceV5Raw });
 primaryQuota.failSet = (key) => key === tierKey;
-assert.throws(() => saveApi.load(primaryQuota, "tier-01-v2", { catalog: {} }), /quota/);
+assert.throws(() => saveApi.load(primaryQuota, "tier-01-v2", tierOptions({ catalog: {} })), /quota/);
 assert.equal(primaryQuota.getItem(tierKey), sourceV5Raw);
 assert.equal(primaryQuota.getItem(sourceV5Backup), sourceV5Raw);
 const backupWriteCount = primaryQuota.setCalls.filter((call) => call.key === sourceV5Backup).length;
 primaryQuota.failSet = null;
-assert.equal(saveApi.load(primaryQuota, "tier-01-v2", { catalog: {} }).gameStateSaveVersion, 6);
+assert.equal(saveApi.load(primaryQuota, "tier-01-v2", tierOptions({ catalog: {} })).gameStateSaveVersion, 7);
 assert.equal(primaryQuota.setCalls.filter((call) => call.key === sourceV5Backup).length, backupWriteCount, "retry rewrote exact backup");
 
 const futureRaw = JSON.stringify({ gameStateSaveVersion: 999, generatorMode: "tier-01-v2", state: {} });
 const futureStorage = memoryStorage({ [tierKey]: futureRaw });
-assert.throws(() => saveApi.load(futureStorage, "tier-01-v2", { catalog: {} }), /Unsupported game save version/);
+assert.throws(() => saveApi.load(futureStorage, "tier-01-v2", tierOptions({ catalog: {} })), /Unsupported game save version/);
 assert.equal(futureStorage.getItem(tierKey), futureRaw);
 assert.equal(futureStorage.setCalls.length, 0, "future save performed a write");
 
 const emptyRawStorage = memoryStorage({ [tierKey]: "" });
-assert.throws(() => saveApi.load(emptyRawStorage, "tier-01-v2", { catalog: {} }), /Game save JSON is invalid/);
+assert.throws(() => saveApi.load(emptyRawStorage, "tier-01-v2", tierOptions({ catalog: {} })), /Game save JSON is invalid/);
 assert.equal(emptyRawStorage.getItem(tierKey), "");
 assert.equal(emptyRawStorage.setCalls.length, 0, "empty corrupt save performed a write");
 
 const mismatchedRaw = JSON.stringify({ gameStateSaveVersion: 1, generatorMode: "current", state: {} });
 const mismatchedStorage = memoryStorage({ [tierKey]: mismatchedRaw });
-assert.throws(() => saveApi.load(mismatchedStorage, "tier-01-v2", { catalog: {} }), /mode mismatch/);
+assert.throws(() => saveApi.load(mismatchedStorage, "tier-01-v2", tierOptions({ catalog: {} })), /mode mismatch/);
 assert.equal(mismatchedStorage.getItem(tierKey), mismatchedRaw);
 assert.equal(mismatchedStorage.setCalls.length, 0, "mode mismatch performed a write");
 
@@ -310,14 +360,14 @@ assert.doesNotThrow(() => saveApi.createSnapshot("tier-01-v2", {
   activeId: 29,
   arrivalSchedule: [],
   researchOrders: [runtimeDerivedOrder]
-}));
+}, tierOptions()));
 assert.doesNotThrow(() => saveApi.createSnapshot("tier-01-v2", {
   queue: [],
   activeId: null,
   arrivalSchedule: [],
   caseJournal: [{ visitId: "VISIT-RUNTIME-1" }],
   researchOrders: [runtimeDerivedOrder]
-}));
+}, tierOptions()));
 
 let refused = researchApi.createResearchOrder({
   id: "RO-000010",
@@ -335,7 +385,7 @@ assert.throws(() => saveApi.createSnapshot("tier-01-v2", {
   arrivalSchedule: [],
   longitudinalPatients: { "LP-000001": { patientId: "LP-000001" } },
   researchOrders: [refused]
-}), /refusal_invariant/);
+}, tierOptions()), /refusal_invariant/);
 
 const danglingTaskOrder = researchApi.createResearchOrder({
   id: "RO-000011",
@@ -352,9 +402,51 @@ assert.throws(() => saveApi.createSnapshot("tier-01-v2", {
   arrivalSchedule: [],
   longitudinalPatients: { "LP-000001": { patientId: "LP-000001" } },
   researchOrders: [danglingTaskOrder]
-}), /dangling queueTaskId/);
+}, tierOptions()), /dangling queueTaskId/);
 
 const invalidActive = { ...base, activeId: 999, researchOrders: [], referralOrders: [], asyncEvents: [], deviceQueues: { schemaVersion: 1, resources: {} } };
-assert.throws(() => saveApi.createSnapshot("tier-01-v2", invalidActive), /activeId does not reference/);
+assert.throws(() => saveApi.createSnapshot("tier-01-v2", invalidActive, tierOptions()), /activeId does not reference/);
+
+const historicalSnapshotStorage = memoryStorage();
+saveApi.save(historicalSnapshotStorage, "tier-01-v2", {
+  queue: [{
+    id: 51,
+    visitId: "VISIT-REPEAT-2",
+    originalVisitId: "VISIT-REPEAT-1",
+    owner: "Орлова",
+    animal: "Тайга",
+    species: "dog",
+    sex: "female",
+    ageYears: 4,
+    irritation: 30,
+    anxiety: 80,
+    trust: 40
+  }],
+  activeId: 51,
+  arrivalSchedule: [],
+  caseJournal: [{
+    visitId: "VISIT-REPEAT-1",
+    identitySourceVisitId: "VISIT-REPEAT-1",
+    owner: "Орлова",
+    animal: "Тайга",
+    species: "dog",
+    sex: "female",
+    ageYears: 4,
+    ownerStateSnapshot: { irritation: 5, anxiety: 20, trust: 70 },
+    patientStateSnapshot: {}
+  }]
+}, tierOptions());
+const historicalReload = saveApi.load(historicalSnapshotStorage, "tier-01-v2", tierOptions());
+assert.deepEqual(historicalReload.state.caseJournal[0].ownerStateSnapshot, {
+  irritation: 5,
+  anxiety: 20,
+  trust: 70
+});
+const historicalOwnerId = historicalReload.state.queue[0].persistentOwnerId;
+assert.deepEqual(historicalReload.state.identityRegistry.owners[historicalOwnerId].currentState, {
+  irritation: 30,
+  anxiety: 80,
+  trust: 40
+});
 
 console.log("game state save: ok");

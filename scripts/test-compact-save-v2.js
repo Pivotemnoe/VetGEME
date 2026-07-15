@@ -8,6 +8,7 @@ const compactApi = require("../generator/compact-visit-v2.js");
 const adapter = require("../generator/game-adapter-v2.js");
 const gameSaveApi = require("../generator/game-state-save.js");
 const namespaces = require("../generator/save-namespaces.js");
+const identityRuntime = require("../systems/identity-runtime-v4.js");
 
 function memoryStorage(initial = {}) {
   const values = new Map(Object.entries(initial).map(([key, value]) => [key, String(value)]));
@@ -99,7 +100,7 @@ function makeJournalEntry(dayNumber, visit) {
   };
 }
 
-function saveGameSummary(storage, catalog, day, journal) {
+function saveGameSummary(storage, catalog, day, journal, campaignIdentity, identityRegistry = null) {
   const dailyLedger = Array.from({ length: day }, (_, index) => ({
     day: index + 1,
     status: "closed",
@@ -143,12 +144,53 @@ function saveGameSummary(storage, catalog, day, journal) {
     queue: [],
     arrivalSchedule: [],
     caseJournal: journal,
+    identityRegistry,
     pendingReturns: [],
     doctors: [{ id: "doctor-a", fatigue: 40 }, { id: "doctor-b", fatigue: 12 }],
     summaryTitle: `День ${day} завершен`,
     summaryHtml: "Смена завершена."
-  }, { catalog });
+  }, { catalog, campaignIdentity });
   storage.setItem("pet-clinic-generator-mode", "tier-01-v2");
+}
+
+function realisticIdentityState(generator, journal, days, campaignIdentity) {
+  const visits = [];
+  for (let day = 1; day <= days; day += 1) {
+    visits.push(...generator.getOrGenerateDay(day).visits);
+  }
+  const patientByVisitId = new Map(visits.map((visit) => {
+    const patient = adapter.patientFromVisit(visit);
+    return [visit.visitId, patient];
+  }));
+  const enrichedJournal = journal.map((entry) => {
+    const patient = patientByVisitId.get(entry.visitId);
+    return {
+      ...compactApi.clone(entry),
+      identitySourceVisitId: identityRuntime.sourceVisitIdFor(patient)
+    };
+  });
+  const identityState = {
+    queue: [],
+    arrivalSchedule: [],
+    appointments: [],
+    longitudinalPatients: {},
+    caseJournal: enrichedJournal
+  };
+  const registry = identityRuntime.syncStateIdentityReferences(identityState, { campaignIdentity });
+  visits.forEach((visit) => {
+    const patient = patientByVisitId.get(visit.visitId);
+    ["visit_arrived", "visit_opened", "visit_completed"].forEach((type, index) => {
+      identityRuntime.appendVisitEvent(registry, patient, {
+        eventId: `visit:${visit.visitId}:${type}`,
+        at: (visit.day - 1) * 1440 + 480 + index,
+        type,
+        sourceVisitId: visit.visitId
+      });
+    });
+  });
+  identityState.identityRegistry = registry;
+  identityRuntime.syncStateIdentityReferences(identityState, { campaignIdentity });
+  return identityState;
 }
 
 function expandGeneratorSaveToVersion3(raw, catalog) {
@@ -203,7 +245,7 @@ async function simulateCampaign(catalog, days, seed) {
     journal.push(...opened.visits.map((visit) => makeJournalEntry(dayNumber, visit)));
     generator.closeDay(dayNumber, outcomesFor(opened));
   }
-  saveGameSummary(storage, catalog, days, journal);
+  saveGameSummary(storage, catalog, days, journal, generator.metadata(days).campaignSeed);
   return { storage, journal, generator };
 }
 
@@ -218,7 +260,7 @@ function createFirstDaySnapshot(catalog, seed) {
     queue: [],
     arrivalSchedule: [],
     caseJournal: []
-  }, { catalog });
+  }, { catalog, campaignIdentity: generator.metadata(1).campaignSeed });
   storage.setItem("pet-clinic-generator-mode", "tier-01-v2");
   return storage;
 }
@@ -385,10 +427,13 @@ async function main() {
     arrivalSchedule: [{ minute: futureTemplate.arrivalMinute, template: futureTemplate }],
     activeId: 17,
     caseJournal: []
-  }, { catalog });
+  }, { catalog, campaignIdentity: partialGenerator.metadata(1).campaignSeed });
   const compactGameRaw = partialStorage.getItem(namespaces.gameSaveKey("tier-01-v2"));
   assert.equal(compactGameRaw.includes("medicalContent"), false);
-  const partialReload = gameSaveApi.load(partialStorage, "tier-01-v2", { catalog });
+  const partialReload = gameSaveApi.load(partialStorage, "tier-01-v2", {
+    catalog,
+    campaignIdentity: partialGenerator.metadata(1).campaignSeed
+  });
   assert.deepEqual(partialReload.state.queue[0].asked, partialPatient.asked);
   assert.deepEqual(partialReload.state.queue[0].clinicalRecord, partialPatient.clinicalRecord);
   assert.deepEqual(partialReload.state.queue[0].clinicalActionState, partialPatient.clinicalActionState);
@@ -428,8 +473,11 @@ async function main() {
       arrivalSchedule: [],
       activeId: statePatient.id,
       caseJournal: []
-    }, { catalog });
-    const restored = gameSaveApi.load(stateStorage, "tier-01-v2", { catalog }).state.queue[0];
+    }, { catalog, campaignIdentity: partialGenerator.metadata(1).campaignSeed });
+    const restored = gameSaveApi.load(stateStorage, "tier-01-v2", {
+      catalog,
+      campaignIdentity: partialGenerator.metadata(1).campaignSeed
+    }).state.queue[0];
     assert.deepEqual(restored.diagnosticDecisions, statePatient.diagnosticDecisions);
     assert.deepEqual(restored.diagnosticUncertainty, statePatient.diagnosticUncertainty);
   }
@@ -442,8 +490,11 @@ async function main() {
   };
   const oldGameRaw = JSON.stringify(oldGameSnapshot);
   const gameMigrationStorage = memoryStorage({ [namespaces.gameSaveKey("tier-01-v2")]: oldGameRaw });
-  const migratedGame = gameSaveApi.load(gameMigrationStorage, "tier-01-v2", { catalog });
-  assert.equal(migratedGame.gameStateSaveVersion, 6);
+  const migratedGame = gameSaveApi.load(gameMigrationStorage, "tier-01-v2", {
+    catalog,
+    campaignIdentity: partialGenerator.metadata(1).campaignSeed
+  });
+  assert.equal(migratedGame.gameStateSaveVersion, 7);
   assert.ok(migratedGame.state.queue[0].v2Visit.medicalContent);
   assert.equal(gameMigrationStorage.getItem(namespaces.gameSaveKey("tier-01-v2")).includes("medicalContent"), false);
 
@@ -483,25 +534,37 @@ async function main() {
   impossibleGameSnapshot.state.queue[0].v2Visit.owner.profileId = "missing-owner-profile";
   const impossibleGameRaw = JSON.stringify(impossibleGameSnapshot);
   const impossibleGameStorage = memoryStorage({ [namespaces.gameSaveKey("tier-01-v2")]: impossibleGameRaw });
-  assert.throws(() => gameSaveApi.load(impossibleGameStorage, "tier-01-v2", { catalog }), /Unknown owner profile/);
+  assert.throws(() => gameSaveApi.load(impossibleGameStorage, "tier-01-v2", {
+    catalog,
+    campaignIdentity: partialGenerator.metadata(1).campaignSeed
+  }), /Unknown owner profile/);
   assert.equal(impossibleGameStorage.getItem(namespaces.gameSaveKey("tier-01-v2")), impossibleGameRaw);
 
   const incompatibleGame = JSON.parse(compactGameRaw);
   incompatibleGame.state.queue[0].v2Visit.contentPackHash = "incompatible-hash";
   const incompatibleGameRaw = JSON.stringify(incompatibleGame);
   const incompatibleGameStorage = memoryStorage({ [namespaces.gameSaveKey("tier-01-v2")]: incompatibleGameRaw });
-  assert.throws(() => gameSaveApi.load(incompatibleGameStorage, "tier-01-v2", { catalog }), /content pack mismatch/);
+  assert.throws(() => gameSaveApi.load(incompatibleGameStorage, "tier-01-v2", {
+    catalog,
+    campaignIdentity: partialGenerator.metadata(1).campaignSeed
+  }), /content pack mismatch/);
   assert.equal(incompatibleGameStorage.getItem(namespaces.gameSaveKey("tier-01-v2")), incompatibleGameRaw);
 
   const quotaGameMigrationStorage = quotaStorage({ [namespaces.gameSaveKey("tier-01-v2")]: oldGameRaw });
   quotaGameMigrationStorage.blockWrites();
-  assert.throws(() => gameSaveApi.load(quotaGameMigrationStorage, "tier-01-v2", { catalog }), { name: "QuotaExceededError" });
+  assert.throws(() => gameSaveApi.load(quotaGameMigrationStorage, "tier-01-v2", {
+    catalog,
+    campaignIdentity: partialGenerator.metadata(1).campaignSeed
+  }), { name: "QuotaExceededError" });
   assert.equal(quotaGameMigrationStorage.getItem(namespaces.gameSaveKey("tier-01-v2")), oldGameRaw);
 
   const previousGameRaw = partialStorage.getItem(namespaces.gameSaveKey("tier-01-v2"));
   const quotaGameStorage = quotaStorage({ [namespaces.gameSaveKey("tier-01-v2")]: previousGameRaw });
   quotaGameStorage.blockWrites();
-  assert.throws(() => gameSaveApi.save(quotaGameStorage, "tier-01-v2", { day: 2, queue: [partialPatient] }, { catalog }), { name: "QuotaExceededError" });
+  assert.throws(() => gameSaveApi.save(quotaGameStorage, "tier-01-v2", { day: 2, queue: [partialPatient] }, {
+    catalog,
+    campaignIdentity: partialGenerator.metadata(1).campaignSeed
+  }), { name: "QuotaExceededError" });
   assert.equal(quotaGameStorage.getItem(namespaces.gameSaveKey("tier-01-v2")), previousGameRaw);
 
   const week = await simulateCampaign(catalog, 7, "compact-size-week");
@@ -589,6 +652,30 @@ async function main() {
   assert.ok(compactSizes.day30 <= 2 * 1024 * 1024, `30-day save exceeds 2 MiB: ${compactSizes.day30}`);
   assert.ok(compactSizes.day30 <= 1.5 * 1024 * 1024, `30-day save exceeds preferred 1.5 MiB: ${compactSizes.day30}`);
 
+  const realisticCampaignIdentity = month.generator.metadata(30).campaignSeed;
+  const realisticIdentity = realisticIdentityState(
+    month.generator,
+    month.journal,
+    30,
+    realisticCampaignIdentity
+  );
+  const realisticHistoryStorage = memoryStorage({
+    [generatorApi.SAVE_KEY]: month.storage.getItem(generatorApi.SAVE_KEY)
+  });
+  saveGameSummary(
+    realisticHistoryStorage,
+    thirtyCatalog,
+    30,
+    realisticIdentity.caseJournal,
+    realisticCampaignIdentity,
+    realisticIdentity.identityRegistry
+  );
+  const realisticIdentityHistoryUtf16Bytes = utf16Bytes(realisticHistoryStorage);
+  assert.ok(
+    realisticIdentityHistoryUtf16Bytes <= 2 * 1024 * 1024,
+    `30-day save with authored identity profiles and visit history exceeds 2 MiB: ${realisticIdentityHistoryUtf16Bytes}`
+  );
+
   const monthState = JSON.parse(month.storage.getItem(generatorApi.SAVE_KEY));
   const missingStableIds = Object.values(monthState.generatedDays).flatMap(compactApi.missingStableIdReport);
   assert.equal(JSON.stringify(monthState).includes("medicalContent"), false);
@@ -611,6 +698,7 @@ async function main() {
     currentAndLegacyUnchanged: true,
     compactSizesUtf16Bytes: compactSizes,
     migrationPeakUtf16Bytes,
+    realisticIdentityHistoryUtf16Bytes,
     catalogGrowthSizesUtf16Bytes: catalogGrowthSizes,
     syntheticCatalogGrowthUtf8Bytes,
     catalogGrowthInvariant: true,

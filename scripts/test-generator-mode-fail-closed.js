@@ -87,6 +87,8 @@ async function main() {
   assert.match(indexSource, /systems\/research-orders-v3\.js\?v=20260715a/u);
   assert.match(indexSource, /systems\/referral-orders-v3\.js\?v=20260715a/u);
   assert.match(indexSource, /systems\/async-events-v3\.js\?v=20260715a/u);
+  assert.match(indexSource, /systems\/identity-behavior-v4\.js\?v=20260715a/u);
+  assert.match(indexSource, /systems\/identity-runtime-v4\.js\?v=20260715a/u);
   assert.match(indexSource, /generator\/atomic-save-migration\.js\?v=20260715a/u);
   assert.match(indexSource, /generator\/content-loader-v2\.js\?v=20260715c/u);
   assert.match(indexSource, /generator\/generator-mode\.js\?v=20260715b/u);
@@ -108,7 +110,9 @@ async function main() {
     "systems/device-queue-v3.js",
     "systems/research-orders-v3.js",
     "systems/referral-orders-v3.js",
-    "systems/async-events-v3.js"
+    "systems/async-events-v3.js",
+    "systems/identity-behavior-v4.js",
+    "systems/identity-runtime-v4.js"
   ]) {
     assert.ok(
       indexSource.indexOf(runtimeFile) < indexSource.indexOf("generator/game-state-save.js")

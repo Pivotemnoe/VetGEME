@@ -36,6 +36,8 @@
   const referralOrders = window.PET_CLINIC_REFERRAL_ORDERS_V3;
   const asyncEvents = window.PET_CLINIC_ASYNC_EVENTS_V3;
   const deviceQueue = window.PET_CLINIC_DEVICE_QUEUE_V3;
+  const identityBehavior = window.PET_CLINIC_IDENTITY_BEHAVIOR_V4;
+  const identityRuntime = window.PET_CLINIC_IDENTITY_RUNTIME_V4;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
   let appBootstrapComplete = false;
@@ -819,6 +821,7 @@
     referralOrders: [],
     asyncEvents: [],
     deviceQueues: { schemaVersion: 1, resources: {} },
+    identityRegistry: null,
     demandState: null,
     campaignOutcome: null,
     appointments: [],
@@ -889,8 +892,10 @@
     const now = Date.now();
     if (!force && now - lastGameSaveAt < 5000) return;
     try {
+      if (isTier01V2()) ensureP4RuntimeState();
       window.PET_CLINIC_GAME_STATE_SAVE.save(window.localStorage, generatorRuntime.mode, state, {
-        catalog: generatorRuntime.catalog
+        catalog: generatorRuntime.catalog,
+        campaignIdentity: isTier01V2() ? tierCampaignIdentity() : undefined
       });
       lastGameSaveAt = now;
     } catch (error) {
@@ -910,7 +915,8 @@
     if (!window.PET_CLINIC_GAME_STATE_SAVE || !window.localStorage) return false;
     try {
       const snapshot = window.PET_CLINIC_GAME_STATE_SAVE.load(window.localStorage, generatorRuntime.mode, {
-        catalog: generatorRuntime.catalog
+        catalog: generatorRuntime.catalog,
+        campaignIdentity: isTier01V2() ? tierCampaignIdentity() : undefined
       });
       if (!snapshot) return "empty";
       Object.assign(state, snapshot.state);
@@ -927,6 +933,7 @@
         ? state.deviceQueues
         : { schemaVersion: 1, resources: {} };
       ensureP3RuntimeState();
+      ensureP4RuntimeState();
       state.queue = Array.isArray(state.queue) ? state.queue : [];
       state.queue.forEach((patient) => {
         restoreRuntimePatient(patient);
@@ -2078,6 +2085,7 @@
     const patient = createPatient(forcedDiseaseId, isReturn, { ...overrides, flowState: "arrived" });
     patient.protectedFromLeaving = state.day === 1 && isFirstArrival;
     state.queue.push(patient);
+    recordIdentityVisitEvent(patient, patient.returnVisit ? "repeat_visit_arrived" : "visit_arrived");
     if (patient.appointmentId) {
       const appointment = state.appointments.find((item) => item.appointmentId === patient.appointmentId);
       if (appointment) {
@@ -2393,6 +2401,22 @@
     }
   }
 
+  function tierCampaignIdentity() {
+    const campaignIdentity = generatorRuntime.generator?.metadata(state.day)?.campaignSeed;
+    if (typeof campaignIdentity !== "string" || !campaignIdentity) {
+      throw new Error("Tier 01 v2 campaign identity is unavailable");
+    }
+    return campaignIdentity;
+  }
+
+  function ensureP4RuntimeState() {
+    if (!isTier01V2()) return null;
+    if (!identityBehavior || !identityRuntime) throw new Error("Identity runtime v4 is unavailable");
+    return identityRuntime.syncStateIdentityReferences(state, {
+      campaignIdentity: tierCampaignIdentity()
+    });
+  }
+
   function campaignMinuteAt(minute = state.minute) {
     const normalizedMinute = Math.max(0, Math.min(1439, Math.floor(minute)));
     return asyncEvents
@@ -2402,7 +2426,30 @@
 
   function stableVisitPatientId(patient) {
     const visitId = patient?.v2Visit?.visitId || patient?.visitId || patient?.id;
-    return String(patient?.persistentPatientId || `visit-${visitId}-patient`);
+    return String(patient?.persistentPatientId || patient?.patientId || `visit-${visitId}-patient`);
+  }
+
+  function recordIdentityVisitEvent(patient, type) {
+    if (!isTier01V2() || !patient?.v2Visit || !identityRuntime) return null;
+    const registry = ensureP4RuntimeState();
+    const visitId = patient.v2Visit.visitId;
+    const pair = identityRuntime.ensureIdentityPair(registry, patient);
+    const eventId = `visit:${visitId}:${type}`;
+    if (registry.owners[pair.ownerId].history.some((event) => event.eventId === `${eventId}:owner`)
+      && registry.patients[pair.patientId].history.some((event) => event.eventId === `${eventId}:patient`)) {
+      return pair;
+    }
+    return identityRuntime.appendVisitEvent(registry, patient, {
+      eventId,
+      at: campaignMinuteAt(),
+      type,
+      sourceVisitId: visitId
+    });
+  }
+
+  function authoredOwnerCuesFor(patient) {
+    if (!isTier01V2() || !identityRuntime || !state.identityRegistry) return [];
+    return identityRuntime.authoredOwnerCues(state.identityRegistry, patient);
   }
 
   function diagnosticCapabilityState(test) {
@@ -3329,9 +3376,17 @@
     const scheduledAppointments = patient.v2Visit?.visitId
       ? state.appointments.filter((appointment) => appointment.sourceVisitId === patient.v2Visit.visitId)
       : [];
+    recordIdentityVisitEvent(patient, "visit_completed");
     state.caseJournal.push({
       day: state.day,
       visitId: patient.v2Visit?.visitId || null,
+      identitySourceVisitId: patient.identitySourceVisitId || null,
+      persistentOwnerId: patient.persistentOwnerId || null,
+      persistentPatientId: patient.persistentPatientId || null,
+      ownerId: patient.ownerId || null,
+      patientId: patient.patientId || null,
+      ownerStateSnapshot: cloneData(patient.ownerStateSnapshot || {}),
+      patientStateSnapshot: cloneData(patient.patientStateSnapshot || {}),
       animal: patient.animal,
       species: patient.species,
       sex: patient.sex,
@@ -4113,6 +4168,7 @@
     state.activeId = patientId;
     const patient = activePatient();
     if (patient && patient.flowState !== "ready_for_discharge") visitState.markInConsultation(patient);
+    if (patient) recordIdentityVisitEvent(patient, patient.returnVisit ? "repeat_visit_opened" : "visit_opened");
     if (patient) activateTutorial(patient);
     if (patient && patient.motion !== "inCabinet") {
       patient.motion = "toCabinet";
@@ -4586,6 +4642,16 @@
     el.stressMeter.style.width = `${patient.stress}%`;
     el.visitTimeMeter.style.width = `${visitPercent}%`;
     el.patientFacts.innerHTML = `<strong>${patient.animal}</strong><span>${speciesLabels[patient.species]} · ${patient.sex} · ${patient.ageYears} г.</span><span>Состояние: ${patientStateLabel(patient)}</span>`;
+    const authoredOwnerCues = authoredOwnerCuesFor(patient);
+    if (authoredOwnerCues.length) {
+      const cue = document.createElement("span");
+      cue.className = "owner-observable-cue";
+      cue.textContent = `Наблюдение: ${authoredOwnerCues[0]}`;
+      el.patientFacts.appendChild(cue);
+    }
+    el.caseWindow.dataset.ownerIdentity = patient.persistentOwnerId || patient.ownerId || "";
+    el.caseWindow.dataset.patientIdentity = patient.persistentPatientId || patient.patientId || "";
+    el.caseWindow.dataset.ownerCueCount = String(authoredOwnerCues.length);
     el.ownerName.textContent = patient.owner;
     el.ownerBudget.textContent = patient.budgetAsked
       ? `${Math.max(100, Math.floor((patient.budget - 60) / 50) * 50)}–${Math.ceil((patient.budget + 60) / 50) * 50} V`
@@ -5900,6 +5966,7 @@
     const restoreStatus = restoreGameState();
     if (restoreStatus !== "restored") {
       ensureP3RuntimeState();
+      ensureP4RuntimeState();
       resetDayState();
       setLog(restoreStatus === "blocked"
         ? "Несовместимое сохранение этого режима не загружено и не перезаписано. Начата временная новая сессия."

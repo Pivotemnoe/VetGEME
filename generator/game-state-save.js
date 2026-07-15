@@ -27,6 +27,12 @@
   const deviceQueueApi = typeof module === "object" && module.exports
     ? require("../systems/device-queue-v3.js")
     : root.PET_CLINIC_DEVICE_QUEUE_V3;
+  const identityApi = typeof module === "object" && module.exports
+    ? require("../systems/identity-behavior-v4.js")
+    : root.PET_CLINIC_IDENTITY_BEHAVIOR_V4;
+  const identityRuntime = typeof module === "object" && module.exports
+    ? require("../systems/identity-runtime-v4.js")
+    : root.PET_CLINIC_IDENTITY_RUNTIME_V4;
   const api = factory(
     namespaces,
     compactApi,
@@ -36,7 +42,9 @@
     researchApi,
     referralApi,
     asyncEventApi,
-    deviceQueueApi
+    deviceQueueApi,
+    identityApi,
+    identityRuntime
   );
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_GAME_STATE_SAVE = api;
@@ -49,14 +57,17 @@
   researchApi,
   referralApi,
   asyncEventApi,
-  deviceQueueApi
+  deviceQueueApi,
+  identityApi,
+  identityRuntime
 ) {
   "use strict";
 
   const GAME_STATE_SAVE_VERSION = 1;
   const LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS = Object.freeze([1, 2, 3, 4]);
   const PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION = 5;
-  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 6;
+  const P3_TIER_01_V2_GAME_STATE_SAVE_VERSION = 6;
+  const TIER_01_V2_GAME_STATE_SAVE_VERSION = 7;
   const CAPABILITY_REGISTRY_ID = "vetgeme-clinic-capabilities";
   const CAPABILITY_REGISTRY_VERSION = "2026.07.14.38";
   const SERIALIZED_FIELDS = Object.freeze([
@@ -74,7 +85,7 @@
     "ownerTrust", "clinicalReliability", "awareness", "campaignFinance", "dailyLedger",
     "equipmentCapabilities", "demandState", "campaignOutcome", "appointments", "treatmentCourses",
     "longitudinalPatients", "attendanceEvents", "capabilityState", "researchOrders", "referralOrders",
-    "asyncEvents", "deviceQueues"
+    "asyncEvents", "deviceQueues", "identityRegistry"
   ]);
 
   function clone(value) {
@@ -113,7 +124,7 @@
       ...arrival,
       template: compactPatient(arrival.template, catalog)
     }));
-    return compact;
+    return identityRuntime.compactStateIdentityRegistry(compact);
   }
 
   function campaignDefaults(state = {}) {
@@ -190,6 +201,21 @@
     };
   }
 
+  function requireCampaignIdentity(options = {}) {
+    if (typeof options.campaignIdentity !== "string" || !options.campaignIdentity) {
+      throw new Error("Tier 01 v2 campaign identity is required");
+    }
+    return options.campaignIdentity;
+  }
+
+  function addP4Defaults(state, options = {}) {
+    const next = clone(state || {});
+    identityRuntime.syncStateIdentityReferences(next, {
+      campaignIdentity: requireCampaignIdentity(options)
+    });
+    return next;
+  }
+
   function hydratePatient(patient, catalog) {
     const hydrated = clone(patient);
     if (!hydrated.v2Visit) return hydrated;
@@ -207,7 +233,7 @@
       ...arrival,
       template: hydratePatient(arrival.template, catalog)
     }));
-    return hydrated;
+    return identityRuntime.hydrateStateIdentityRegistry(hydrated);
   }
 
   function migrateClinicalActionState(state, catalog) {
@@ -447,13 +473,73 @@
     return state;
   }
 
+  function validateP4State(state, options = {}) {
+    const campaignIdentity = requireCampaignIdentity(options);
+    const validation = identityApi.validateIdentityRegistry(state.identityRegistry);
+    if (!validation.valid) throw new Error(`Game save identityRegistry is invalid: ${validation.errors.join(", ")}`);
+    if (state.identityRegistry.campaignIdentity !== campaignIdentity) {
+      throw new Error("Game save identityRegistry belongs to a different campaign");
+    }
+    const validateStateSnapshot = (snapshot, allowedKeys, label) => {
+      if (!isRecord(snapshot)) throw new Error(`${label} is missing`);
+      Object.entries(snapshot).forEach(([key, score]) => {
+        if (!allowedKeys.includes(key) || !Number.isFinite(score) || score < 0 || score > 100) {
+          throw new Error(`${label} contains invalid state ${key}`);
+        }
+      });
+    };
+    const validateReference = (value, label, sourceIdentityOverride, requiresCurrentSnapshot = false) => {
+      if (!isRecord(value)) return;
+      const sourceIdentity = identityRuntime.sourceIdentityFor(value, { sourceIdentity: sourceIdentityOverride });
+      if (!sourceIdentity) return;
+      const ownerId = identityApi.stableIdentityId("owner", campaignIdentity, sourceIdentity);
+      const patientId = identityApi.stableIdentityId("patient", campaignIdentity, sourceIdentity);
+      const referencedOwnerId = value.persistentOwnerId || value.ownerId;
+      const referencedPatientId = value.persistentPatientId || value.patientId;
+      if (referencedOwnerId !== ownerId || referencedPatientId !== patientId) {
+        throw new Error(`${label} identity references do not match its stable source`);
+      }
+      if (!state.identityRegistry.owners[ownerId] || !state.identityRegistry.patients[patientId]) {
+        throw new Error(`${label} identity references are missing from identityRegistry`);
+      }
+      validateStateSnapshot(value.ownerStateSnapshot, identityApi.OWNER_STATE_KEYS, `${label} ownerStateSnapshot`);
+      validateStateSnapshot(value.patientStateSnapshot, identityApi.ANIMAL_STATE_KEYS, `${label} patientStateSnapshot`);
+      if (requiresCurrentSnapshot && JSON.stringify(value.ownerStateSnapshot)
+        !== JSON.stringify(state.identityRegistry.owners[ownerId].currentState)) {
+        throw new Error(`${label} ownerStateSnapshot is stale`);
+      }
+      if (requiresCurrentSnapshot && JSON.stringify(value.patientStateSnapshot)
+        !== JSON.stringify(state.identityRegistry.patients[patientId].currentState)) {
+        throw new Error(`${label} patientStateSnapshot is stale`);
+      }
+    };
+    (state.appointments || []).forEach((item, index) => validateReference(item, `Appointment ${index}`));
+    Object.entries(state.longitudinalPatients || {}).forEach(([id, item]) => validateReference(
+      item, `Longitudinal patient ${id}`, undefined, true
+    ));
+    (state.arrivalSchedule || []).forEach((arrival, index) => validateReference(
+      arrival.template, `Arrival ${index}`, undefined, true
+    ));
+    (state.queue || []).forEach((item, index) => validateReference(item, `Queue patient ${index}`, undefined, true));
+    const appointmentRoots = new Map((state.appointments || []).map((appointment) => [
+      appointment.appointmentId,
+      appointment.sourceVisitId || appointment.originalVisitId || null
+    ]));
+    (state.caseJournal || []).forEach((item, index) => validateReference(
+      item,
+      `Case journal ${index}`,
+      item.identitySourceVisitId || item.sourceVisitId || appointmentRoots.get(item.appointmentId) || item.visitId
+    ));
+    return state;
+  }
+
   function createSnapshot(mode, state, options = {}) {
     const snapshot = {
       gameStateSaveVersion: saveVersionForMode(mode),
       generatorMode: mode,
       savedAt: new Date().toISOString(),
       state: mode === "tier-01-v2"
-        ? addP3Defaults(compactTierState(state, options.catalog))
+        ? addP3Defaults(compactTierState(addP4Defaults(state, options), options.catalog))
         : snapshotState(state)
     };
     if (mode === "tier-01-v2") {
@@ -479,8 +565,10 @@
         || snapshot.capabilityRegistryVersion !== CAPABILITY_REGISTRY_VERSION) {
         throw new Error("Game save capability registry identity is missing or incompatible");
       }
-      validatePatientStateReferences(snapshot.state, options.catalog, "Game save");
-      validateP3State(snapshot.state, options);
+      const validationState = hydrateTierState(snapshot.state, options.catalog);
+      validatePatientStateReferences(validationState, options.catalog, "Game save");
+      validateP3State(validationState, options);
+      validateP4State(validationState, options);
     }
     return snapshot;
   }
@@ -489,13 +577,34 @@
     if (snapshot.generatorMode !== "tier-01-v2") {
       throw new Error(`Game save mode mismatch: expected tier-01-v2, got ${snapshot.generatorMode}`);
     }
-    const supportedVersions = [...LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS, PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION];
+    const supportedVersions = [
+      ...LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS,
+      PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION,
+      P3_TIER_01_V2_GAME_STATE_SAVE_VERSION
+    ];
     if (!supportedVersions.includes(snapshot.gameStateSaveVersion)) {
       throw new Error(`Unsupported game save version: ${snapshot.gameStateSaveVersion ?? "missing"}`);
     }
     if (!catalog) throw new Error(`Tier 01 v2 catalog is required to migrate game save version ${snapshot.gameStateSaveVersion}`);
     if (!isRecord(snapshot.state)) throw new Error("Game save state is missing");
     validatePatientStateReferences(snapshot.state, catalog, "Game migration source");
+    if (snapshot.gameStateSaveVersion === P3_TIER_01_V2_GAME_STATE_SAVE_VERSION) {
+      validateP3TierSnapshot(snapshot, catalog);
+    }
+    return snapshot;
+  }
+
+  function validateP3TierSnapshot(snapshot, catalog, options = {}) {
+    if (snapshot.gameStateSaveVersion !== P3_TIER_01_V2_GAME_STATE_SAVE_VERSION) {
+      throw new Error(`Expected P3 game save version ${P3_TIER_01_V2_GAME_STATE_SAVE_VERSION}`);
+    }
+    if (snapshot.generatorMode !== "tier-01-v2") throw new Error("P3 game save mode mismatch");
+    if (snapshot.capabilityRegistryId !== CAPABILITY_REGISTRY_ID
+      || snapshot.capabilityRegistryVersion !== CAPABILITY_REGISTRY_VERSION) {
+      throw new Error("P3 game save capability registry identity is missing or incompatible");
+    }
+    validatePatientStateReferences(snapshot.state, catalog, "P3 game save");
+    validateP3State(snapshot.state, { ...options, catalog });
     return snapshot;
   }
 
@@ -514,14 +623,13 @@
     };
   }
 
-  function migrateTierSnapshot(snapshot, catalog, options = {}) {
-    validateTierMigrationSource(snapshot, catalog);
+  function migrateTierSnapshotToV6(snapshot, catalog, options = {}) {
     const sourceV5 = snapshot.gameStateSaveVersion === PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION
       ? clone(snapshot)
       : migrateLegacyTierSnapshotToV5(snapshot, catalog);
     const migrated = {
       ...sourceV5,
-      gameStateSaveVersion: TIER_01_V2_GAME_STATE_SAVE_VERSION,
+      gameStateSaveVersion: P3_TIER_01_V2_GAME_STATE_SAVE_VERSION,
       capabilityRegistryId: CAPABILITY_REGISTRY_ID,
       capabilityRegistryVersion: CAPABILITY_REGISTRY_VERSION,
       state: addP3Defaults(sourceV5.state)
@@ -531,6 +639,44 @@
         throw new Error(`Game v5 migration changed active state field ${key}`);
       }
     });
+    validateP3TierSnapshot(migrated, catalog, options);
+    return migrated;
+  }
+
+  function assertExistingStatePreserved(source, candidate, path = "state") {
+    if (Array.isArray(source)) {
+      if (!Array.isArray(candidate) || candidate.length !== source.length) {
+        throw new Error(`Game v6 migration changed ${path} length`);
+      }
+      source.forEach((item, index) => assertExistingStatePreserved(item, candidate[index], `${path}[${index}]`));
+      return;
+    }
+    if (isRecord(source)) {
+      if (!isRecord(candidate)) throw new Error(`Game v6 migration changed ${path} type`);
+      Object.keys(source).forEach((key) => {
+        if (!Object.prototype.hasOwnProperty.call(candidate, key)) {
+          throw new Error(`Game v6 migration removed ${path}.${key}`);
+        }
+        assertExistingStatePreserved(source[key], candidate[key], `${path}.${key}`);
+      });
+      return;
+    }
+    if (!Object.is(source, candidate)) throw new Error(`Game v6 migration changed ${path}`);
+  }
+
+  function migrateTierSnapshot(snapshot, catalog, options = {}) {
+    validateTierMigrationSource(snapshot, catalog);
+    const sourceV6 = snapshot.gameStateSaveVersion === P3_TIER_01_V2_GAME_STATE_SAVE_VERSION
+      ? clone(snapshot)
+      : migrateTierSnapshotToV6(snapshot, catalog, options);
+    const hydratedState = hydrateTierState(sourceV6.state, catalog);
+    const linkedState = addP4Defaults(hydratedState, options);
+    const migrated = {
+      ...sourceV6,
+      gameStateSaveVersion: TIER_01_V2_GAME_STATE_SAVE_VERSION,
+      state: compactTierState(linkedState, catalog)
+    };
+    assertExistingStatePreserved(sourceV6.state, migrated.state);
     validateSnapshot(migrated, "tier-01-v2", { ...options, catalog });
     return migrated;
   }
@@ -558,7 +704,8 @@
     let compactSnapshot = parsed;
     if (mode === "tier-01-v2" && [
       ...LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS,
-      PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION
+      PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION,
+      P3_TIER_01_V2_GAME_STATE_SAVE_VERSION
     ].includes(parsed.gameStateSaveVersion)) {
       validateTierMigrationSource(parsed, options.catalog);
       compactSnapshot = atomicSaveMigration.migrate({
@@ -580,7 +727,8 @@
   function restoreMigrationBackup(storage, mode, sourceVersion, options = {}) {
     const supportedVersions = [
       ...LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS,
-      PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION
+      PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION,
+      P3_TIER_01_V2_GAME_STATE_SAVE_VERSION
     ];
     if (mode !== "tier-01-v2" || !supportedVersions.includes(sourceVersion)) {
       throw new Error(`Unsupported game migration backup: ${mode}/${sourceVersion}`);
@@ -607,6 +755,7 @@
     GAME_STATE_SAVE_VERSION,
     LEGACY_TIER_01_V2_GAME_STATE_SAVE_VERSIONS,
     PREVIOUS_TIER_01_V2_GAME_STATE_SAVE_VERSION,
+    P3_TIER_01_V2_GAME_STATE_SAVE_VERSION,
     TIER_01_V2_GAME_STATE_SAVE_VERSION,
     CAPABILITY_REGISTRY_ID,
     CAPABILITY_REGISTRY_VERSION,
@@ -623,12 +772,15 @@
     addCampaignDefaults,
     addLongitudinalDefaults,
     addP3Defaults,
+    addP4Defaults,
     hydratePatient,
     hydrateTierState,
     createSnapshot,
     validateSnapshot,
     validateP3State,
+    validateP4State,
     validateTierMigrationSource,
+    migrateTierSnapshotToV6,
     migrateTierSnapshot,
     migrationBackupKeyForVersion,
     restoreMigrationBackup,
