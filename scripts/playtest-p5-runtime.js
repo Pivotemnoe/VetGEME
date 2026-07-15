@@ -245,7 +245,7 @@ async function main() {
     assert.equal(ready.ready.operations.queuedTaskCount, 0);
     const fresh = await storageEvidence(page);
     assert.equal(fresh.gameVersion, fresh.expectedVersion);
-    assert.equal(fresh.gameVersion, 8);
+    assert.equal(fresh.gameVersion, 9);
     assert.equal(fresh.containsClinicalTruth, false);
 
     await page.evaluate((sentinels) => {

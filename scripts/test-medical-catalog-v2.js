@@ -156,7 +156,8 @@ async function main() {
   assert.doesNotMatch(serializedGeneratorSave, /vetgeme-master-medical|medicalCatalog|compatibilityRef/iu);
   assert.equal(JSON.parse(serializedGeneratorSave).saveVersion, generatorApi.SAVE_VERSION);
   assert.equal(generatorApi.SAVE_VERSION, 7);
-  assert.equal(gameSaveApi.TIER_01_V2_GAME_STATE_SAVE_VERSION, 8);
+  assert.equal(gameSaveApi.P5_TIER_01_V2_GAME_STATE_SAVE_VERSION, 8);
+  assert.equal(gameSaveApi.TIER_01_V2_GAME_STATE_SAVE_VERSION, 9);
   assert.equal(compactApi.COMPACT_VISIT_SCHEMA_VERSION, 1);
 
   console.log(JSON.stringify({

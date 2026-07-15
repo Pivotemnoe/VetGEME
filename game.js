@@ -41,6 +41,8 @@
   const resourceScheduler = window.PET_CLINIC_RESOURCE_SCHEDULER_V5;
   const operationsRuntimeFactory = window.PET_CLINIC_OPERATIONS_RUNTIME_V5;
   const operationsRuntime = operationsRuntimeFactory?.createOperationsRuntime?.(resourceScheduler) || null;
+  const economyRuntime = window.PET_CLINIC_ECONOMY_RUNTIME_V6;
+  const reputationRuntime = window.PET_CLINIC_REPUTATION_RUNTIME_V6;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
   let appBootstrapComplete = false;
@@ -826,6 +828,8 @@
     deviceQueues: { schemaVersion: 1, resources: {} },
     identityRegistry: null,
     operationsState: null,
+    economyState: null,
+    reputationState: null,
     demandState: null,
     campaignOutcome: null,
     appointments: [],
@@ -899,6 +903,7 @@
       if (isTier01V2()) {
         ensureP4RuntimeState();
         ensureP5RuntimeState();
+        ensureP6RuntimeState();
       }
       window.PET_CLINIC_GAME_STATE_SAVE.save(window.localStorage, generatorRuntime.mode, state, {
         catalog: generatorRuntime.catalog,
@@ -942,6 +947,7 @@
       ensureP3RuntimeState();
       ensureP4RuntimeState();
       ensureP5RuntimeState();
+      ensureP6RuntimeState();
       state.queue = Array.isArray(state.queue) ? state.queue : [];
       state.queue.forEach((patient) => {
         restoreRuntimePatient(patient);
@@ -2440,6 +2446,33 @@
   function operationsSummary() {
     if (!isTier01V2()) return null;
     return operationsRuntime.summarizeState(ensureP5RuntimeState());
+  }
+
+  function ensureP6RuntimeState() {
+    if (!isTier01V2()) return null;
+    if (!economyRuntime || !reputationRuntime) throw new Error("Economy/reputation runtime v6 is unavailable");
+    if (!state.economyState) state.economyState = economyRuntime.createState();
+    if (!state.reputationState) state.reputationState = reputationRuntime.createState();
+    const economyValidation = economyRuntime.validateState(state.economyState);
+    if (!economyValidation.valid) {
+      throw new Error(`Economy state is incompatible: ${economyValidation.errors.join(", ")}`);
+    }
+    const reputationValidation = reputationRuntime.validateState(state.reputationState);
+    if (!reputationValidation.valid) {
+      throw new Error(`Reputation state is incompatible: ${reputationValidation.errors.join(", ")}`);
+    }
+    state.economyState = economyRuntime.normalizeState(state.economyState);
+    state.reputationState = reputationRuntime.normalizeState(state.reputationState);
+    return { economyState: state.economyState, reputationState: state.reputationState };
+  }
+
+  function p6RuntimeSummary() {
+    if (!isTier01V2()) return null;
+    const runtimeState = ensureP6RuntimeState();
+    return {
+      economy: economyRuntime.summarizeState(runtimeState.economyState),
+      reputation: reputationRuntime.summarizeState(runtimeState.reputationState)
+    };
   }
 
   function campaignMinuteAt(minute = state.minute) {
@@ -5973,6 +6006,7 @@
 
     appBootstrapComplete = true;
     const operationStatus = operationsSummary();
+    const p6Status = p6RuntimeSummary();
     if (operationStatus) {
       document.documentElement.dataset.operationsSchema = String(operationStatus.schemaVersion);
       document.documentElement.dataset.operationsActiveTasks = String(operationStatus.activeTaskCount);
@@ -5982,12 +6016,21 @@
       delete document.documentElement.dataset.operationsActiveTasks;
       delete document.documentElement.dataset.operationsQueuedTasks;
     }
+    if (p6Status) {
+      document.documentElement.dataset.economySchema = String(p6Status.economy.schemaVersion);
+      document.documentElement.dataset.reputationSchema = String(p6Status.reputation.schemaVersion);
+    } else {
+      delete document.documentElement.dataset.economySchema;
+      delete document.documentElement.dataset.reputationSchema;
+    }
     const detail = Object.freeze({
       mode: generatorRuntime.mode,
       restoreStatus,
       activeId: state.activeId ?? null,
       visitId: activeVisitId(),
       operations: operationStatus,
+      economy: p6Status?.economy || null,
+      reputation: p6Status?.reputation || null,
       visualStatus: visualRenderer?.getStatus?.() || {
         enabled: false,
         ready: false,
@@ -6008,6 +6051,7 @@
       ensureP3RuntimeState();
       ensureP4RuntimeState();
       ensureP5RuntimeState();
+      ensureP6RuntimeState();
       resetDayState();
       setLog(restoreStatus === "blocked"
         ? "Несовместимое сохранение этого режима не загружено и не перезаписано. Начата временная новая сессия."

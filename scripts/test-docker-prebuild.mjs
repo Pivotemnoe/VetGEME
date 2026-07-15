@@ -37,6 +37,8 @@ const checks = [
   ["identity runtime v4", "scripts/test-identity-runtime-v4.js"],
   ["resource scheduler v5", "scripts/test-resource-scheduler-v5.js"],
   ["operations runtime v5", "scripts/test-operations-runtime-v5.js"],
+  ["economy runtime v6", "scripts/test-economy-runtime-v6.js"],
+  ["reputation runtime v6", "scripts/test-reputation-runtime-v6.js"],
   ["generator mode fail-closed", "scripts/test-generator-mode-fail-closed.js"],
   ["content divergence baseline", "scripts/report-content-divergence.mjs", "--summary"],
   ["Tier 01 content validator", "scripts/validate-tier-01-content.mjs"],

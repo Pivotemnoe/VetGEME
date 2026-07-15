@@ -9,6 +9,8 @@ const adapter = require("../generator/game-adapter-v2.js");
 const gameSaveApi = require("../generator/game-state-save.js");
 const namespaces = require("../generator/save-namespaces.js");
 const identityRuntime = require("../systems/identity-runtime-v4.js");
+const economyApi = require("../systems/economy-runtime-v6.js");
+const reputationApi = require("../systems/reputation-runtime-v6.js");
 
 function memoryStorage(initial = {}) {
   const values = new Map(Object.entries(initial).map(([key, value]) => [key, String(value)]));
@@ -57,6 +59,47 @@ function outcomesFor(day) {
     followUpAfterDays: 1,
     selectedPlanId: visit.medicalContent.planOptions[0]?.id || null
   }));
+}
+
+function populatedCompactEconomyState() {
+  return economyApi.postLedger(economyApi.createState(), {
+    commandId: "economy-compact-post-1",
+    sourceType: "synthetic_compact_test",
+    sourceId: "synthetic_visit_1",
+    postingId: "posting-compact-1",
+    postedAt: 530,
+    currencyId: "VETCOIN",
+    lines: [{
+      lineId: "posting-compact-1-debit",
+      accountId: "cash",
+      side: "debit",
+      amount: 90
+    }, {
+      lineId: "posting-compact-1-credit",
+      accountId: "synthetic_revenue",
+      side: "credit",
+      amount: 90
+    }]
+  }).state;
+}
+
+function populatedCompactReputationState() {
+  let state = reputationApi.initializeBaseline(reputationApi.createState(), {
+    commandId: "reputation-compact-baseline-1",
+    catalogId: "synthetic-reputation-compact-catalog",
+    catalogVersion: "test-v1",
+    status: "approved",
+    scores: { clinical: 51, communication: 52, accessibility: 53, organization: 54 }
+  }).state;
+  state = reputationApi.recordEvent(state, {
+    commandId: "reputation-compact-event-command-1",
+    eventId: "reputation-compact-event-1",
+    sourceType: "synthetic_compact_test",
+    sourceId: "synthetic_visit_1",
+    axis: "communication",
+    delta: 2
+  }).state;
+  return state;
 }
 
 function extendCatalogToThirtyDays(source) {
@@ -446,6 +489,45 @@ async function main() {
   assert.equal(partialReload.state.queue[0].v2Visit.complaint.text, partialPatient.v2Visit.complaint.text);
   assert.ok(partialReload.state.arrivalSchedule[0].template.v2Visit.medicalContent);
 
+  const compactP6EconomyState = populatedCompactEconomyState();
+  const compactP6ReputationState = populatedCompactReputationState();
+  const compactP6LegacyState = {
+    money: 1380,
+    reputation: 76.5,
+    campaignFinance: {
+      creditLimit: 2500,
+      debt: 20,
+      weeklyReview: { day: 1, closureRisk: "watch" },
+      closureRisk: "watch"
+    },
+    dailyLedger: [{ day: 1, status: "running", consultationRevenue: 0, diagnosticRevenue: 0 }],
+    ownerTrust: 71.25,
+    clinicalReliability: 79.75
+  };
+  gameSaveApi.save(partialStorage, "tier-01-v2", {
+    phase: "running",
+    day: 1,
+    queue: [partialPatient],
+    arrivalSchedule: [{ minute: futureTemplate.arrivalMinute, template: futureTemplate }],
+    activeId: 17,
+    caseJournal: [],
+    ...compactP6LegacyState,
+    economyState: compactP6EconomyState,
+    reputationState: compactP6ReputationState
+  }, { catalog, campaignIdentity: partialGenerator.metadata(1).campaignSeed });
+  const compactP6Raw = partialStorage.getItem(namespaces.gameSaveKey("tier-01-v2"));
+  assert.equal(compactP6Raw.includes("medicalContent"), false);
+  const compactP6Reload = gameSaveApi.load(partialStorage, "tier-01-v2", {
+    catalog,
+    campaignIdentity: partialGenerator.metadata(1).campaignSeed
+  });
+  assert.equal(compactP6Reload.gameStateSaveVersion, 9);
+  assert.deepEqual(compactP6Reload.state.economyState, compactP6EconomyState);
+  assert.deepEqual(compactP6Reload.state.reputationState, compactP6ReputationState);
+  for (const [field, expected] of Object.entries(compactP6LegacyState)) {
+    assert.deepEqual(compactP6Reload.state[field], expected, `compact P6 roundtrip changed ${field}`);
+  }
+
   const diagnosticReloadStates = [
     { decision: "asks_cost", noResult: true, noPayment: true, diagnosticUncertainty: false },
     { decision: "refused", noResult: true, noPayment: true, diagnosticUncertainty: true },
@@ -494,16 +576,27 @@ async function main() {
     catalog,
     campaignIdentity: partialGenerator.metadata(1).campaignSeed
   });
-  assert.equal(migratedGame.gameStateSaveVersion, 8);
+  assert.equal(gameSaveApi.P5_TIER_01_V2_GAME_STATE_SAVE_VERSION, 8);
+  assert.equal(gameSaveApi.TIER_01_V2_GAME_STATE_SAVE_VERSION, 9);
+  assert.equal(migratedGame.gameStateSaveVersion, 9);
   assert.ok(migratedGame.state.queue[0].v2Visit.medicalContent);
+  assert.deepEqual(migratedGame.state.economyState, economyApi.createState());
+  assert.deepEqual(migratedGame.state.reputationState, reputationApi.createState());
   assert.equal(gameMigrationStorage.getItem(namespaces.gameSaveKey("tier-01-v2")).includes("medicalContent"), false);
 
   for (const mode of ["current", "legacy-v1"]) {
     const isolated = memoryStorage();
-    gameSaveApi.save(isolated, mode, { day: 3, queue: [{ id: 1, animal: "Бакс" }] });
+    gameSaveApi.save(isolated, mode, {
+      day: 3,
+      queue: [{ id: 1, animal: "Бакс" }],
+      economyState: compactP6EconomyState,
+      reputationState: compactP6ReputationState
+    });
     const raw = JSON.parse(isolated.getItem(namespaces.gameSaveKey(mode)));
     assert.equal(raw.gameStateSaveVersion, 1);
     assert.deepEqual(raw.state.queue, [{ id: 1, animal: "Бакс" }]);
+    assert.equal(raw.state.economyState, undefined);
+    assert.equal(raw.state.reputationState, undefined);
   }
 
   const incompatibleGenerator = JSON.parse(migratedRaw);
