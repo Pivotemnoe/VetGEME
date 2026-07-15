@@ -12,7 +12,6 @@ COPY systems/ ./systems/
 COPY legacy/ ./legacy/
 COPY visual/ ./visual/
 COPY content/ ./content/
-COPY tier-01-v2/content/ ./tier-01-v2/content/
 COPY tier-01-v2/scripts/ ./tier-01-v2/scripts/
 COPY art/runtime-v2/ ./art/runtime-v2/
 COPY scripts/ ./scripts/

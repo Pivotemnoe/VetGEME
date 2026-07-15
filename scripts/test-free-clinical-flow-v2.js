@@ -10,9 +10,9 @@ function readCase(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(root, relativePath), "utf8"));
 }
 
-const wound = readCase("tier-01-v2/content/clinical/tier-01/trauma/superficial-wound.json");
-const ear = readCase("tier-01-v2/content/clinical/tier-01/ear/ear-mites.json");
-const skin = readCase("tier-01-v2/content/clinical/tier-01/skin/flea-infestation.json");
+const wound = readCase("content/packs/tier-01-v2/clinical/tier-01/trauma/superficial-wound.json");
+const ear = readCase("content/packs/tier-01-v2/clinical/tier-01/ear/ear-mites.json");
+const skin = readCase("content/packs/tier-01-v2/clinical/tier-01/skin/flea-infestation.json");
 
 for (const caseData of [wound, ear, skin]) {
   assert.ok(flow.actionsFor(caseData, "general").length >= 7, `${caseData.id}: general actions missing`);

@@ -8,7 +8,12 @@ const generatorApi = require("../generator/generator-v2.js");
 const PARASITE_DISCLOSURE = /(клещ|яйц|фрагмент|подвижн\S*\s+(?:светл|точ))/iu;
 
 async function main() {
-  const catalog = await loader.loadFromDirectory(path.resolve(__dirname, "../tier-01-v2/content"));
+  const catalog = await loader.loadFromDirectory(path.resolve(__dirname, ".."), {
+    packId: "tier-01-v2",
+    packVersion: "2026.07.12.2",
+    mode: "tier-01-v2",
+    context: "review"
+  });
   const earMites = catalog.casesById.EAR_MITES;
   const fleaCase = catalog.casesById.SKIN_FLEA_INFESTATION;
   const superficialWound = catalog.casesById.TRAUMA_SUPERFICIAL_WOUND;

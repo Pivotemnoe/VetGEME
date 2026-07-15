@@ -26,6 +26,8 @@
     "test:renderer-readiness:v2": "node scripts/test-renderer-readiness-v2.js",
     "test:renderer-scene:v2": "node scripts/test-renderer-scene-v2.js",
     "test:visual-browser:v2": "node scripts/playtest-visual-v2.js",
+    "test:content-registry": "node scripts/test-content-registry.js",
+    "test:generator-mode-fail-closed": "node scripts/test-generator-mode-fail-closed.js",
     "build:static-dist": "node scripts/build-static-dist.mjs",
     "test:docker:prebuild": "node scripts/test-docker-prebuild.mjs",
     "docker:build": "node scripts/docker-build.mjs",
@@ -35,6 +37,8 @@
     "test:docker:image": "node scripts/test-docker-image.mjs",
     "test:docker:browser": "node scripts/playtest-docker-runtime.js",
     "validate:visual-assets-v2": "node scripts/validate-visual-assets-v2.mjs",
+    "validate:content-registry": "node scripts/validate-content-registry.mjs",
+    "report:content-divergence": "node scripts/report-content-divergence.mjs",
     "validate:tier-01-content": "node scripts/validate-tier-01-content.mjs",
     "validate:tier-01-v2": "node tier-01-v2/scripts/validate-tier-01-content-v2.mjs"
   },

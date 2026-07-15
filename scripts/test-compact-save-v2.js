@@ -214,7 +214,12 @@ function createFirstDaySnapshot(catalog, seed) {
 }
 
 async function main() {
-  const catalog = await loader.loadFromDirectory(path.resolve(__dirname, "../tier-01-v2/content"));
+  const catalog = await loader.loadFromDirectory(path.resolve(__dirname, ".."), {
+    packId: "tier-01-v2",
+    packVersion: "2026.07.12.2",
+    mode: "tier-01-v2",
+    context: "review"
+  });
 
   const firstA = await simulateCampaign(catalog, 1, "compact-determinism");
   const firstB = await simulateCampaign(catalog, 1, "compact-determinism");

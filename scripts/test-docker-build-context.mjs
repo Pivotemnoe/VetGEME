@@ -29,6 +29,32 @@ try {
   assert.equal(userOwned.dirty, false, "user-owned art outside runtime-v2 polluted provenance");
   assert.equal(userOwned.contextSha256, clean.contextSha256);
 
+  await mkdir(path.join(fixture, "tier-01-v2", "content"), { recursive: true });
+  await writeFile(
+    path.join(fixture, "tier-01-v2", "content", "retired-copy.json"),
+    "{\"retired\":true}\n",
+  );
+  const retiredTierCopy = await collectDockerBuildProvenance(fixture);
+  assert.equal(
+    retiredTierCopy.dirty,
+    false,
+    "retired tier-01-v2/content copy polluted canonical Docker provenance",
+  );
+  assert.equal(retiredTierCopy.contextSha256, clean.contextSha256);
+
+  await mkdir(path.join(fixture, "content", "clinical"), { recursive: true });
+  await writeFile(
+    path.join(fixture, "content", "clinical", "retired-schema1.json"),
+    "{\"schemaVersion\":1}\n",
+  );
+  const retiredSchemaOne = await collectDockerBuildProvenance(fixture);
+  assert.equal(
+    retiredSchemaOne.dirty,
+    false,
+    "retired content/clinical schema-1 copy polluted canonical Docker provenance",
+  );
+  assert.equal(retiredSchemaOne.contextSha256, clean.contextSha256);
+
   await writeFile(path.join(fixture, "scripts", "ignored.tmp"), "ignored but copied\n");
   const ignored = await collectDockerBuildProvenance(fixture);
   assert.equal(ignored.dirty, true, "ignored build input was not reported dirty");
@@ -64,6 +90,8 @@ try {
     modifiedInputDetected: true,
     modeIncluded: true,
     userArtExcluded: true,
+    retiredTierContentExcluded: true,
+    retiredSchemaOneExcluded: true,
   }, null, 2));
 } finally {
   await rm(fixture, { recursive: true, force: true });
@@ -75,8 +103,7 @@ async function createFixture(root) {
     "systems",
     "legacy",
     "visual",
-    "content",
-    "tier-01-v2/content",
+    "content/packs/tier-01-v2",
     "tier-01-v2/scripts",
     "art/runtime-v2",
     "scripts",

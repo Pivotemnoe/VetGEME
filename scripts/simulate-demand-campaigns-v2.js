@@ -8,7 +8,13 @@ const demandApi = require("../generator/demand-director-v2.js");
 const generatorApi = require("../generator/generator-v2.js");
 const loader = require("../generator/content-loader-v2.js");
 
-const contentRoot = path.resolve(__dirname, "../tier-01-v2/content");
+const projectRoot = path.resolve(__dirname, "..");
+const contentOptions = {
+  packId: "tier-01-v2",
+  packVersion: "2026.07.12.2",
+  mode: "tier-01-v2",
+  context: "review"
+};
 const runs = Math.max(1, Number.parseInt(process.argv[2] || "10000", 10));
 const outputFlagIndex = process.argv.indexOf("--output");
 const outputPath = outputFlagIndex >= 0 && process.argv[outputFlagIndex + 1]
@@ -265,7 +271,7 @@ function checkRoutingSafety(catalog) {
 }
 
 async function main() {
-  const catalog = await loader.loadFromDirectory(contentRoot);
+  const catalog = await loader.loadFromDirectory(projectRoot, contentOptions);
   const overall = emptyAggregate();
   const byTrajectory = Object.fromEntries(TRAJECTORIES.map((trajectory) => [trajectory.id, emptyAggregate()]));
 

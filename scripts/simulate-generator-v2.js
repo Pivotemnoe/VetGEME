@@ -5,7 +5,13 @@ const loader = require("../generator/content-loader-v2.js");
 const generatorApi = require("../generator/generator-v2.js");
 
 const runs = Number(process.argv[2] || 1000);
-const root = path.resolve(__dirname, "../tier-01-v2/content");
+const projectRoot = path.resolve(__dirname, "..");
+const contentOptions = {
+  packId: "tier-01-v2",
+  packVersion: "2026.07.12.2",
+  mode: "tier-01-v2",
+  context: "review"
+};
 
 function outcomesFor(day) {
   return day.visits.map((visit, index) => ({
@@ -90,7 +96,7 @@ function jaccard(left, right) {
 }
 
 async function main() {
-  const catalog = await loader.loadFromDirectory(root);
+  const catalog = await loader.loadFromDirectory(projectRoot, contentOptions);
   const uniqueWeeks = new Set();
   const structuralUniqueWeeks = new Set();
   const caseCounts = {};

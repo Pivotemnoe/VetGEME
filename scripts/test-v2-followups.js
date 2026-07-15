@@ -14,7 +14,12 @@ async function generatorWithOpenedDayOne(catalog, seed) {
 }
 
 async function main() {
-  const catalog = await loader.loadFromDirectory(path.resolve(__dirname, "../tier-01-v2/content"));
+  const catalog = await loader.loadFromDirectory(path.resolve(__dirname, ".."), {
+    packId: "tier-01-v2",
+    packVersion: "2026.07.12.2",
+    mode: "tier-01-v2",
+    context: "review"
+  });
   const scenarios = [
     { id: "zero-completed-visits", outcome: () => [] },
     { id: "all-patients-left", outcome: (day) => day.visits.map((visit) => ({ visitId: visit.visitId, completed: false })) },

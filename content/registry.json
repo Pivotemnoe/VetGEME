@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "registryId": "vetgeme-content-registry",
+  "registryVersion": "2026.07.15.1",
+  "packs": [
+    {
+      "contentPackId": "tier-01-v2",
+      "contentPackVersion": "2026.07.12.2",
+      "contentPackHash": "b411ccf92a72f29058adda40e3a7146a00aa9fca155501da7934a4ad4b62afbd",
+      "root": "content/packs/tier-01-v2",
+      "manifestPath": "clinical/tier-01/manifest.json",
+      "status": "editorial_complete_pending_medical_review",
+      "integrationStatus": "not_connected",
+      "reviewPolicy": {
+        "reviewModeAllowed": true,
+        "productionEligible": false
+      },
+      "allowedModes": [
+        "tier-01-v2"
+      ]
+    }
+  ]
+}

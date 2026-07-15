@@ -44,7 +44,12 @@
 
   if (mode === "tier-01-v2") {
     window.PET_CLINIC_GENERATOR_READY = window.PET_CLINIC_CONTENT_V2
-      .loadFromFetch()
+      .loadFromFetch({
+        packId: "tier-01-v2",
+        packVersion: "2026.07.12.2",
+        mode: "tier-01-v2",
+        context: "review"
+      })
       .then((catalog) => {
         try {
           return {
@@ -55,7 +60,13 @@
         } catch (error) {
           return { mode: "tier-01-v2", catalog, generator: null, initializationError: error };
         }
-      });
+      })
+      .catch((error) => ({
+        mode: "tier-01-v2",
+        catalog: null,
+        generator: null,
+        initializationError: error
+      }));
   } else if (mode === "legacy-v1") {
     window.PET_CLINIC_GENERATOR_READY = loadLegacyV1();
   } else {

@@ -3,9 +3,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const clinicalRoot = path.join(root, "content/clinical/tier-01");
+const contentRoot = path.join(root, "legacy/content/tier-01-v1-review");
+const clinicalRoot = path.join(contentRoot, "clinical/tier-01");
 const manifestPath = path.join(clinicalRoot, "manifest.json");
-const campaignPath = path.join(root, "content/campaign/tier-01/seven-day-plan.json");
+const campaignPath = path.join(contentRoot, "campaign/tier-01/seven-day-plan.json");
 const prohibitedPhrases = ["дрожжевой отит", "дрожжевой наружный отит", "рабочая версия", "простой дерматит"];
 const allowedSources = new Set(["initial_complaint", "owner_history", "physical_exam", "diagnostic_test", "doctor_interpretation", "follow_up"]);
 const errors = [];
@@ -53,7 +54,7 @@ function allJsonFiles(directory) {
   });
 }
 
-const allContentFiles = allJsonFiles(path.join(root, "content"));
+const allContentFiles = allJsonFiles(contentRoot);
 allContentFiles.forEach((file) => {
   readJson(file);
   const raw = fs.readFileSync(file, "utf8").toLowerCase();
@@ -139,7 +140,7 @@ campaign?.days?.forEach((day) => {
   assert(!Object.hasOwn(day, "preliminaryUnplannedPatients"), campaignPath, `day ${day.day} exposes unplanned patients`);
 });
 
-const ownersRoot = path.join(root, "content/owners/tier-01");
+const ownersRoot = path.join(contentRoot, "owners/tier-01");
 const profiles = readJson(path.join(ownersRoot, "base-profiles.json"));
 const modifiers = readJson(path.join(ownersRoot, "modifiers.json"));
 const homeActions = readJson(path.join(ownersRoot, "home-treatment-actions.json"));

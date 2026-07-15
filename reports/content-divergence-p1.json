@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 1,
+  "reportId": "p1-canonical-content-divergence",
+  "comparedRoots": {
+    "frozenLegacy": "legacy/content/tier-01-v1-review",
+    "canonical": "content/packs/tier-01-v2"
+  },
+  "summary": {
+    "legacyJsonFiles": 44,
+    "canonicalJsonFiles": 56,
+    "sharedPaths": 44,
+    "differingSharedPaths": 44,
+    "identicalSharedPaths": 0,
+    "legacyOnlyPaths": 0,
+    "canonicalOnlyPaths": 12,
+    "shortForm": "44/0/12"
+  },
+  "interpretation": "shortForm = differing shared paths / identical shared paths / canonical-only paths",
+  "legacyOnlyPaths": [],
+  "canonicalOnlyPaths": [
+    "future/technical-infectious-course.json",
+    "multi-diagnosis/canine-cough-pneumonia.json",
+    "multi-diagnosis/cat-uri-conjunctivitis.json",
+    "multi-diagnosis/conjunctivitis-corneal-ulcer.json",
+    "multi-diagnosis/ear-foreign-body-bacterial.json",
+    "multi-diagnosis/ear-fungal-bacterial.json",
+    "multi-diagnosis/ear-mites-bacterial.json",
+    "multi-diagnosis/flea-allergy-pyoderma.json",
+    "multi-diagnosis/grooming-irritation-pyoderma.json",
+    "multi-diagnosis/manifest.json",
+    "multi-diagnosis/wound-fracture.json",
+    "multi-diagnosis/wound-soft-tissue-lameness.json"
+  ],
+  "identicalSharedPaths": [],
+  "differingSharedFiles": [
+    {
+      "path": "campaign/tier-01/day-goals.json",
+      "identical": false,
+      "legacySha256": "97e97f97d38271815d3f4ae0634b986fcda7bb71aaa5ff08b315bf5c01e0377f",
+      "canonicalSha256": "37bf3906eb72ebdeb408ab7c9f7d68804fb95d46b11c8b4cc3729b3e2164565b"
+    },
+    {
+      "path": "campaign/tier-01/doctor-shifts.json",
+      "identical": false,
+      "legacySha256": "845ba6df904a90bee2fa87402f310a9c38d44f29e0a9043101c24cf8ea9c6874",
+      "canonicalSha256": "8dcf7e683c4fbf3352d07b233550864a5c40d87a0b7e327c028c4066bd9cf770"
+    },
+    {
+      "path": "campaign/tier-01/seven-day-plan.json",
+      "identical": false,
+      "legacySha256": "f385708b8de1a9bddb8c40dabc725e8561b1e3332d1596815d54f02605ca6051",
+      "canonicalSha256": "41c5d6c4e761eec5887b0e26b6d9b5ab0f3c36c247abef303507605bc90333a5"
+    },
+    {
+      "path": "clinical/tier-01/ear/bacterial-otitis.json",
+      "identical": false,
+      "legacySha256": "1d0a40804d6c7362c27ed1c1553b8cee285b0b1ad339350c915363c47cd5fd99",
+      "canonicalSha256": "3fe77e78534ca8e985c45dc72d4a335be6f5741751ac809f0fe1fab12aa79266"
+    },
+    {
+      "path": "clinical/tier-01/ear/ear-foreign-body.json",
+      "identical": false,
+      "legacySha256": "7c292e13ff48c21656dbbc855199ccb21239336d866890300d01266d56121806",
+      "canonicalSha256": "cd78dbb1ce3109f632c51b45fabfa111d49773f6b9a982afaf0537a0d1b265e9"
+    },
+    {
+      "path": "clinical/tier-01/ear/ear-mites.json",
+      "identical": false,
+      "legacySha256": "96a72e64d7688fbb6fe04be12f736b519b7c210f6a6d23408d64885a89ece4b1",
+      "canonicalSha256": "d4e5efaa828b30ea7d34eab7c045c88251c0b46b4e00fb8504680253e64a7948"
+    },
+    {
+      "path": "clinical/tier-01/ear/fungal-otitis.json",
+      "identical": false,
+      "legacySha256": "b91674d7e77fbd1f020484f6b4129c5b84ff29872aa8ad87dca3f25b903cd017",
+      "canonicalSha256": "f0b830fa2f974f5eb11aac80d4d50b48566f50a61d385137fad233ddaccf9bd5"
+    },
+    {
+      "path": "clinical/tier-01/ear/recurrent-otitis.json",
+      "identical": false,
+      "legacySha256": "9ab69e3bdffb15ef6c96c5b77b6de1eb5b59b3a54a811a1f6e33318a933903e9",
+      "canonicalSha256": "67a02df7693940cd2513575bf6b0995033f2245817cf5c67821739eb3ab43681"
+    },
+    {
+      "path": "clinical/tier-01/eyes/corneal-ulcer.json",
+      "identical": false,
+      "legacySha256": "d4e608f7c83dde7217c1576de24f22e1c047d87cb70a6c7dc2e34a8920d277e9",
+      "canonicalSha256": "78de74fcd44c9112145e459456cd91906d566cc4cef1951c2d672ac1921a435f"
+    },
+    {
+      "path": "clinical/tier-01/eyes/uncomplicated-conjunctivitis.json",
+      "identical": false,
+      "legacySha256": "951c10ad39fd8728046620daabdb48b006ea7d7504d49c7633c4bb181d109a63",
+      "canonicalSha256": "8669b1d10545b8e177a93cd54e0a46369b181c6c7efde6c987d436fc5da33e9c"
+    },
+    {
+      "path": "clinical/tier-01/gastrointestinal/acute-gi-upset.json",
+      "identical": false,
+      "legacySha256": "fe1791a2ac3eab81623803049a301edb3d899daff1fbb354f0eea571b4afc0f3",
+      "canonicalSha256": "10bf4243ce4fbf54716cd220d1c47800386e7d1c41b32a071fe0f8d131861fc5"
+    },
+    {
+      "path": "clinical/tier-01/gastrointestinal/dietary-indiscretion.json",
+      "identical": false,
+      "legacySha256": "66bf9192e734910477f699a9557cf444f8a19603cdda73efb1549fa6b6a7c741",
+      "canonicalSha256": "c91a8ca7012232b1ecd6d7554cb52bd42cd0f317cb10cbf907ec832de77f2192"
+    },
+    {
+      "path": "clinical/tier-01/gastrointestinal/giardia.json",
+      "identical": false,
+      "legacySha256": "49d4d9e4a2109c5167e5f28d141d191fdd4359d984a885157eb1bcb880257e20",
+      "canonicalSha256": "aaee1c4e192b74242f60b5f53d564d7dfe65817348d2037669b1b60a20b1876d"
+    },
+    {
+      "path": "clinical/tier-01/gastrointestinal/intestinal-parasites.json",
+      "identical": false,
+      "legacySha256": "1fd5b300e010d930a2c6074b65965d12a246e6c67773e8f9f9ac7fbb02030fa0",
+      "canonicalSha256": "9f457184f2cf001473c5786e34a9c4f7a8d6256c444f2839d33f6733543b3ef6"
+    },
+    {
+      "path": "clinical/tier-01/gastrointestinal/regurgitation.json",
+      "identical": false,
+      "legacySha256": "982eeb79c8aceb6300f96b052a5c218cf449009c90258b4b96f73f5d1e6ca317",
+      "canonicalSha256": "590b5fd3102698e3e8c1d42e11419591149005d123e676692c395768a93f5633"
+    },
+    {
+      "path": "clinical/tier-01/gastrointestinal/suspected-foreign-body.json",
+      "identical": false,
+      "legacySha256": "f6a667be0752a27f046729a860963525c858db66c9e4cc22cd144b74b3423ea4",
+      "canonicalSha256": "e4da0fdf15f07fcb3ba1d713199496accefb4581facb98052d9d6250f087cded"
+    },
+    {
+      "path": "clinical/tier-01/manifest.json",
+      "identical": false,
+      "legacySha256": "2b46db9fcdc6a4c67ccac04ee71ef59060147afdb2ec2e3a69c23826fadb1364",
+      "canonicalSha256": "f00c249dde8203aa2962d550b93bd53a6e10f30dd07060412035081887e66d5a"
+    },
+    {
+      "path": "clinical/tier-01/perianal/anal-gland-impaction.json",
+      "identical": false,
+      "legacySha256": "305cf4fb908b97dbd2c479250b563a860b1682f4715ec5e2026732e0c901e231",
+      "canonicalSha256": "542b2b0b06b35fbcd5b056e24ad6a269c2e72a3c38c9b6ca755a0d9fc9007030"
+    },
+    {
+      "path": "clinical/tier-01/perianal/anal-gland-inflammation.json",
+      "identical": false,
+      "legacySha256": "af0f4f39aa04a121930e1b4a63537a5c3c9e742720938de29080b4cf17b84f71",
+      "canonicalSha256": "22f4524e6d3a9e35d833a9d1a76424ae3a02fe23bfa8b72834e31333c5b3117a"
+    },
+    {
+      "path": "clinical/tier-01/respiratory/canine-infectious-cough.json",
+      "identical": false,
+      "legacySha256": "c92a44544069ac2958464040b4ae0d0330982555e65fe5b4da3cf7995c59d914",
+      "canonicalSha256": "b0ab82c4aeda8b66cafb0ce03b991eed9a8016bba871879c13f411c1de5e32d8"
+    },
+    {
+      "path": "clinical/tier-01/respiratory/feline-upper-respiratory-infection.json",
+      "identical": false,
+      "legacySha256": "28f93bc50c584b7be81b111520825b34381f0f3677945daaa68a7c651b267032",
+      "canonicalSha256": "ba9587a7fbf7c04ab679543294387232316b96d1e50bbc8f8dc7575641bad195"
+    },
+    {
+      "path": "clinical/tier-01/respiratory/suspected-pneumonia.json",
+      "identical": false,
+      "legacySha256": "8e5f2b21c959196b536e61ded1533075db08251630779ed783d131e2e120e81f",
+      "canonicalSha256": "af9aafbff3c4983d6537fa40b69476a0cc40040331450d6a3a76e06568ef0bb2"
+    },
+    {
+      "path": "clinical/tier-01/skin/flea-allergy-dermatitis.json",
+      "identical": false,
+      "legacySha256": "cb4ff5ce2ec7b986940a0a46a44fbf489c69c43ac3a1f7459943cebb8bebe562",
+      "canonicalSha256": "9fc7f91fad64543e5306e174ea47828fc18d9713d22b12d4a34433cee95dfc3e"
+    },
+    {
+      "path": "clinical/tier-01/skin/flea-infestation.json",
+      "identical": false,
+      "legacySha256": "f8e225e2bd5cdf5de9bd9f1d0144b363e1cdee34548e54e34e256e9176d05153",
+      "canonicalSha256": "6a093e62d723986d0a55076051e536f170d98efe96c8b128e9960e8bfc328c4d"
+    },
+    {
+      "path": "clinical/tier-01/skin/fungal-dermatitis.json",
+      "identical": false,
+      "legacySha256": "171d9c92c4aa0105583adc3442f7bf67a7b6ec424ec2e2393ad6d00578e1d9b7",
+      "canonicalSha256": "15792db34db8cdd88974c532d08ee92cbc73a2f960ff4f1bdc4f50bf6db4bced"
+    },
+    {
+      "path": "clinical/tier-01/skin/grooming-irritation.json",
+      "identical": false,
+      "legacySha256": "a179f9e06a91b12b4c99913c18c2ce932c99e251a39f90334d2990094149fb58",
+      "canonicalSha256": "0f0d722cee7baffbf55e5b92d3fe925e96d2ef47b8efa543dfd6c77cde0dc519"
+    },
+    {
+      "path": "clinical/tier-01/skin/superficial-pyoderma.json",
+      "identical": false,
+      "legacySha256": "1af7c062328934ba9379ebb88b24e6898f1d85bcb22e4b43dd7316f85a0c7bec",
+      "canonicalSha256": "c3c9d7229ae9cb2a3de505e23891925f42ed225138a3e6dc63e92558e4278b4a"
+    },
+    {
+      "path": "clinical/tier-01/trauma/bite-wound-abscess.json",
+      "identical": false,
+      "legacySha256": "6bbf205ee8f9da891dcaa06c281c75082948716bc55a9c60cdc2bdb132a46b40",
+      "canonicalSha256": "e69451c435d476721b022ce86902c0c85607dfb20cc17217398023855af00cac"
+    },
+    {
+      "path": "clinical/tier-01/trauma/soft-tissue-lameness.json",
+      "identical": false,
+      "legacySha256": "3d47940fd1b9afcffb9c5c2453e8c2431b28919a9d8f653f5e24e0e7803c55d0",
+      "canonicalSha256": "055ac810fe312cd05d5c09a8ed0e8b91985f1f76dedbbc7038e60ee60df2cf62"
+    },
+    {
+      "path": "clinical/tier-01/trauma/superficial-wound.json",
+      "identical": false,
+      "legacySha256": "433dc14f8f67b982d79b8643c9fa8d17c4772ff82f3d8650cd3e46150e02e54d",
+      "canonicalSha256": "d27014bbad1b43437db9002b9568bedb4c84e1f02933e5e42d565416b49665e4"
+    },
+    {
+      "path": "clinical/tier-01/trauma/suspected-dislocation.json",
+      "identical": false,
+      "legacySha256": "1390ad89fd558c3dc929a813a0adc727169a2e331e710c61ce57148496cf0280",
+      "canonicalSha256": "c02116356114f9689ebeb4ffe459b147e15ddabeea4f85853a2fd973fad4fcdb"
+    },
+    {
+      "path": "clinical/tier-01/trauma/suspected-fracture.json",
+      "identical": false,
+      "legacySha256": "528c4a0ef2b9a87b8d138a63e9614dd8812682f954b065fd615e590563005284",
+      "canonicalSha256": "05771b6427558b88812d533b453e5a132308aade97f56d6640e5c5df881fdd6e"
+    },
+    {
+      "path": "clinical/tier-01/urinary/feline-lower-urinary-signs.json",
+      "identical": false,
+      "legacySha256": "29530ddcac031bfb583e445db094e2e784db01a66b00c8a88f2a527e494511a2",
+      "canonicalSha256": "660c317f054742482f2a99987a801fdac32bd6eb87dccb8155c71d10f51f4dab"
+    },
+    {
+      "path": "clinical/tier-01/urinary/feline-urethral-obstruction.json",
+      "identical": false,
+      "legacySha256": "6ed312fd008e70e58b22dbbac89b9e7661afceba6141b810e2bf87aa8e3785a0",
+      "canonicalSha256": "f8309237293a25ba71ef54812ef315a540ab82ff3ffe2c62baa9eada0d0fdedc"
+    },
+    {
+      "path": "owners/tier-01/anxiety-lines.json",
+      "identical": false,
+      "legacySha256": "285eca53e596f5c2e40a1165be8bc031ab87021482377afd57dd68380be778c6",
+      "canonicalSha256": "9030b54c921bb4488b8f83989067ed1cb1cb4c9f4e4566645cf3cd9678489345"
+    },
+    {
+      "path": "owners/tier-01/base-profiles.json",
+      "identical": false,
+      "legacySha256": "5d4966a1aa25065f56543232867d05c8c6d68c4724b6395f4c64c840f945ef5c",
+      "canonicalSha256": "acc7ec7ff3a997abdbb6b94ebaf42430db05893dfc31c3d12e6b3bb9237e6cc9"
+    },
+    {
+      "path": "owners/tier-01/budget-lines.json",
+      "identical": false,
+      "legacySha256": "b2c05c2bb37b4ff0983ac8bddb1ae99c0136d6627b9a07071bfaddc47ea1f9a3",
+      "canonicalSha256": "54eb81ac78f0c5bb9dc92c988de63c04d048e27f8b98fab739d60156e3ebea4d"
+    },
+    {
+      "path": "owners/tier-01/conflict-lines.json",
+      "identical": false,
+      "legacySha256": "b231a6e68c5bcc3a449ef12fe31844dd91452bd8ed15b3f9418f7b18f217d62a",
+      "canonicalSha256": "ed3e4a3f782191b448b6babd318d7fc4154a1298386979bb0592be5889dc6d56"
+    },
+    {
+      "path": "owners/tier-01/follow-up-lines.json",
+      "identical": false,
+      "legacySha256": "0dbe4d910b3ae1bb016bc78cb10b8b30f9c32de87e910b102b171def9960c256",
+      "canonicalSha256": "7d709cdad5a1d2b44925980a78ac47d91cf92579cf7fd998da16de9c54affa59"
+    },
+    {
+      "path": "owners/tier-01/home-treatment-actions.json",
+      "identical": false,
+      "legacySha256": "cd4d6e249eb82ff2ad4e465196e3452f195ca984671a896b3b3ed4a8ae02bb58",
+      "canonicalSha256": "75f0c39729023fe92be26ff64b20d44796ea233a4f993b911526f43052cb61ff"
+    },
+    {
+      "path": "owners/tier-01/humorous-lines.json",
+      "identical": false,
+      "legacySha256": "bdfe9afad80cb4030ad286eac2a599408d3dec502f7d4728b6e2af542436b7ac",
+      "canonicalSha256": "829bb251e4683e0871b7a2dc4eb9cc902fc2f22633c7660ee7d791d4cda802ad"
+    },
+    {
+      "path": "owners/tier-01/modifiers.json",
+      "identical": false,
+      "legacySha256": "882a964d297b273df577c6d942b047d2b2d1c600d00f76afbb7ea640d5ee2283",
+      "canonicalSha256": "ecfce21ff0ca98a8e393fb2ddcb63be31b10edc4af4d56c758477ef1249b6ba5"
+    },
+    {
+      "path": "ui/clinical-labels.json",
+      "identical": false,
+      "legacySha256": "90ce729e1f0cf0dacf0632d160ceb8a86ce98bb704f2812ce9ee35b93cd30627",
+      "canonicalSha256": "64fc06bc45e29b5ccb2d6e85872e2f8204d7ebefecebca04178b77d60692e6a7"
+    },
+    {
+      "path": "ui/tutorial-texts.json",
+      "identical": false,
+      "legacySha256": "7138c58d73be44b0fdba377358cc033684de8469019f3d25f21bcf0b7db86cc0",
+      "canonicalSha256": "970e1292854d456583db3a2d4762afd50b559ce8953a63d84189d8965ef4bcbf"
+    }
+  ]
+}

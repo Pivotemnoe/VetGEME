@@ -80,6 +80,22 @@ async function inspectDockerRuntime() {
   ]);
   const imageFiles = findOutput.split("\n").map((file) => file.trim()).filter(Boolean);
   assert.deepEqual(imageFiles, expected.files, `${webRoot} does not contain the exact runtime inventory`);
+  assert.ok(imageFiles.includes("content/registry.json"), "canonical content registry is absent from image");
+  assert.ok(
+    imageFiles.includes("content/packs/tier-01-v2/clinical/tier-01/manifest.json"),
+    "canonical Tier 01 v2 manifest is absent from image",
+  );
+  for (const forbiddenPrefix of [
+    "content/clinical/",
+    "legacy/content/",
+    "tier-01-v2/content/",
+    "content/packs/tier-01-v2/future/",
+  ]) {
+    assert.ok(
+      !imageFiles.some((file) => file.startsWith(forbiddenPrefix)),
+      `${webRoot} contains non-shipping content under ${forbiddenPrefix}`,
+    );
+  }
 
   const nginxConfig = docker([
     "run",

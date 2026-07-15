@@ -5,10 +5,10 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const EXPECTED_RUNTIME_FILE_COUNT = 142;
+export const EXPECTED_RUNTIME_FILE_COUNT = 143;
 export const EXPECTED_RUNTIME_GROUP_COUNTS = Object.freeze({
   base: 22,
-  tierContent: 55,
+  canonicalContent: 56,
   visual: 65,
 });
 
@@ -37,7 +37,11 @@ const EXPECTED_BASE_RUNTIME_FILES = Object.freeze([
   "visual/clinic-renderer-v2.js",
 ]);
 
-const TIER_CONTENT_ROOT = "tier-01-v2/content";
+const CONTENT_REGISTRY = "content/registry.json";
+const TIER_CONTENT_ROOT = "content/packs/tier-01-v2";
+const TIER_CONTENT_PACK_ID = "tier-01-v2";
+const TIER_CONTENT_PACK_VERSION = "2026.07.12.2";
+const EXPECTED_TIER_PACK_RUNTIME_JSON_COUNT = 55;
 const VISUAL_MANIFEST = "art/runtime-v2/manifest.json";
 const VISUAL_LAYOUT = "art/runtime-v2/scene-layout.json";
 const VISUAL_ASSET_ROOT = "art/runtime-v2/assets";
@@ -45,13 +49,17 @@ const VISUAL_ASSET_ROOT = "art/runtime-v2/assets";
 export async function collectStaticRuntimeInventory(root = PROJECT_ROOT) {
   const resolvedRoot = path.resolve(root);
   const base = await collectBaseRuntimeFiles(resolvedRoot);
-  const tierContent = await collectTierContentFiles(resolvedRoot);
+  const canonicalContent = await collectCanonicalContentFiles(resolvedRoot);
   const { files: visual, assetHashes } = await collectVisualFiles(resolvedRoot);
-  const files = [...base, ...tierContent, ...visual].sort();
+  const files = [...base, ...canonicalContent, ...visual].sort();
 
   assertUniqueFiles(files, "runtime inventory");
   assertCount("base runtime", base, EXPECTED_RUNTIME_GROUP_COUNTS.base);
-  assertCount("Tier 01 v2 runtime JSON", tierContent, EXPECTED_RUNTIME_GROUP_COUNTS.tierContent);
+  assertCount(
+    "canonical content runtime JSON",
+    canonicalContent,
+    EXPECTED_RUNTIME_GROUP_COUNTS.canonicalContent,
+  );
   assertCount("visual runtime", visual, EXPECTED_RUNTIME_GROUP_COUNTS.visual);
   assertCount("complete runtime", files, EXPECTED_RUNTIME_FILE_COUNT);
   const fileHashes = await hashRuntimeFiles(resolvedRoot, files);
@@ -60,7 +68,7 @@ export async function collectStaticRuntimeInventory(root = PROJECT_ROOT) {
     files: Object.freeze(files),
     groups: Object.freeze({
       base: Object.freeze(base),
-      tierContent: Object.freeze(tierContent),
+      canonicalContent: Object.freeze(canonicalContent),
       visual: Object.freeze(visual),
     }),
     assetHashes: Object.freeze(assetHashes),
@@ -213,27 +221,48 @@ async function collectBaseRuntimeFiles(root) {
   return derived;
 }
 
-async function collectTierContentFiles(root) {
+async function collectCanonicalContentFiles(root) {
+  await assertRegularFileWithoutSymlinks(root, CONTENT_REGISTRY);
+  await readJson(path.join(root, CONTENT_REGISTRY), CONTENT_REGISTRY);
+
   const loaderPath = path.join(root, "generator/content-loader-v2.js");
   await assertRegularFileWithoutSymlinks(root, "generator/content-loader-v2.js");
   const require = createRequire(import.meta.url);
   const resolvedLoader = require.resolve(loaderPath);
   delete require.cache[resolvedLoader];
   const loader = require(resolvedLoader);
-  if (typeof loader.loadCatalog !== "function") {
-    throw new Error("generator/content-loader-v2.js does not expose loadCatalog()");
+  if (typeof loader.loadRegisteredCatalog !== "function") {
+    throw new Error("generator/content-loader-v2.js does not expose loadRegisteredCatalog()");
   }
 
   const referencedFiles = new Set();
-  await loader.loadCatalog(async (requestedPath) => {
-    const relativeFile = normalizeRuntimePath(requestedPath, "Tier 01 v2 loader");
-    if (!relativeFile.startsWith(`${TIER_CONTENT_ROOT}/`) || !relativeFile.endsWith(".json")) {
+  await loader.loadRegisteredCatalog(async (requestedPath) => {
+    const relativeFile = normalizeRuntimePath(requestedPath, "canonical content loader");
+    const isRegistry = relativeFile === CONTENT_REGISTRY;
+    const isTierPackJson = (
+      relativeFile.startsWith(`${TIER_CONTENT_ROOT}/`) && relativeFile.endsWith(".json")
+    );
+    if (!isRegistry && !isTierPackJson) {
       throw new Error(`Tier 01 v2 loader referenced an unexpected path: ${relativeFile}`);
     }
     referencedFiles.add(relativeFile);
     return readJson(path.join(root, ...relativeFile.split("/")), relativeFile);
-  }, TIER_CONTENT_ROOT);
+  }, {
+    packId: TIER_CONTENT_PACK_ID,
+    packVersion: TIER_CONTENT_PACK_VERSION,
+    mode: "tier-01-v2",
+    context: "review",
+  });
 
+  if (!referencedFiles.has(CONTENT_REGISTRY)) {
+    throw new Error("canonical content loader did not request content/registry.json");
+  }
+
+  assertCount(
+    "Tier 01 v2 pack runtime JSON",
+    [...referencedFiles].filter((relativeFile) => relativeFile.startsWith(`${TIER_CONTENT_ROOT}/`)),
+    EXPECTED_TIER_PACK_RUNTIME_JSON_COUNT,
+  );
   return [...referencedFiles].sort();
 }
 
@@ -401,7 +430,7 @@ if (isMainModule()) {
     console.log(
       `Static runtime inventory: ${inventory.files.length} files ` +
         `(${inventory.groups.base.length} base/legacy, ` +
-        `${inventory.groups.tierContent.length} Tier 01 v2 JSON, ` +
+        `${inventory.groups.canonicalContent.length} canonical content JSON, ` +
         `${inventory.groups.visual.length} visual) — verified`,
     );
   } catch (error) {

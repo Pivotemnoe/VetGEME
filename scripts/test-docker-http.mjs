@@ -5,6 +5,7 @@ import { request as httpRequest } from "node:http";
 import { request as httpsRequest } from "node:https";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { collectStaticRuntimeInventory } from "./static-runtime-inventory.mjs";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const port = process.env.VETGEME_PORT || "5174";
@@ -14,13 +15,13 @@ const baseUrl = new URL(
     || process.env.VETGEME_BASE_URL
     || `http://127.0.0.1:${port}/`,
 );
+const runtimeInventory = await collectStaticRuntimeInventory(projectRoot);
 
-const sourceFiles = {
-  "/index.html": "index.html",
-  "/game.js": "game.js",
-  "/tier-01-v2/content/clinical/tier-01/manifest.json":
-    "tier-01-v2/content/clinical/tier-01/manifest.json",
-};
+const sourceFiles = Object.fromEntries([
+  ["/index.html", "index.html"],
+  ["/game.js", "game.js"],
+  ...runtimeInventory.groups.canonicalContent.map((relativeFile) => [`/${relativeFile}`, relativeFile]),
+]);
 
 try {
   const evidence = await runHttpSmoke();
@@ -86,8 +87,9 @@ async function runHttpSmoke() {
   const assets = [
     { path: "/styles.css", type: "text/css" },
     { path: "/game.js", type: "application/javascript" },
+    { path: "/content/registry.json", type: "application/json" },
     {
-      path: "/tier-01-v2/content/clinical/tier-01/manifest.json",
+      path: "/content/packs/tier-01-v2/clinical/tier-01/manifest.json",
       type: "application/json",
     },
     {
@@ -161,7 +163,13 @@ async function runHttpSmoke() {
     "/docker/nginx/default.conf",
     "/scripts/test-docker-http.mjs",
     "/content/clinical/tier-01/manifest.json",
+    "/content/not-runtime.json",
+    "/content/packs/not-a-pack/manifest.json",
+    "/content/packs/tier-01-v2/future/technical-infectious-course.json",
+    "/content/packs/tier-01-v2/not-shipped.json",
+    "/tier-01-v2/content/clinical/tier-01/manifest.json",
     "/tier-01-v2/scripts/validate-tier-01-content-v2.mjs",
+    "/legacy/content/tier-01-v1-review/clinical/tier-01/manifest.json",
     "/art/ASSET_MANIFEST.json",
     "/handoff/vetgeme-master-package/README.md",
     "/definitely-not-a-vetgeme-route",
@@ -215,12 +223,21 @@ async function rawRequest(urlPath, { method = "GET", headers = {}, body = Buffer
 }
 
 async function request(urlPath, { method = "GET", headers = {}, body } = {}) {
-  const response = await fetch(new URL(urlPath, baseUrl), {
-    method,
-    headers,
-    body,
-    redirect: "manual",
-  });
+  const url = new URL(urlPath, baseUrl);
+  let response;
+  try {
+    response = await fetch(url, {
+      method,
+      headers,
+      body,
+      redirect: "manual",
+    });
+  } catch (error) {
+    throw new Error(
+      `${method} ${url.href} failed: ${error.cause?.message || error.message}`,
+      { cause: error },
+    );
+  }
   return {
     status: response.status,
     headers: response.headers,

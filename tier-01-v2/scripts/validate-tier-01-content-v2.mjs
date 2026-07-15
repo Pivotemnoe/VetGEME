@@ -3,12 +3,14 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const clinicalRoot = path.join(root, "content/clinical/tier-01");
+const projectRoot = path.resolve(root, "..");
+const contentRoot = path.join(projectRoot, "content/packs/tier-01-v2");
+const clinicalRoot = path.join(contentRoot, "clinical/tier-01");
 const manifestPath = path.join(clinicalRoot, "manifest.json");
-const campaignPath = path.join(root, "content/campaign/tier-01/seven-day-plan.json");
-const tutorialPath = path.join(root, "content/ui/tutorial-texts.json");
-const ownersRoot = path.join(root, "content/owners/tier-01");
-const multiDiagnosisRoot = path.join(root, "content/multi-diagnosis");
+const campaignPath = path.join(contentRoot, "campaign/tier-01/seven-day-plan.json");
+const tutorialPath = path.join(contentRoot, "ui/tutorial-texts.json");
+const ownersRoot = path.join(contentRoot, "owners/tier-01");
+const multiDiagnosisRoot = path.join(contentRoot, "multi-diagnosis");
 const errors = [];
 const warnings = [];
 const stats = { jsonParsed: 0, clinicalFiles: 0, questions: 0, answers: 0, uniqueAnswerTexts: 0, homeActions: 0, urgentCases: 0 };
@@ -53,7 +55,7 @@ function checkSource(item, expected, file, location) {
   if (expected) assert(item?.source === expected, file, `${location} must use source ${expected}`);
 }
 
-for (const file of allJsonFiles(path.join(root, "content"))) {
+for (const file of allJsonFiles(contentRoot)) {
   readJson(file);
   const raw = fs.readFileSync(file, "utf8").toLowerCase();
   for (const phrase of prohibitedPhrases) assert(!raw.includes(phrase), file, `prohibited or placeholder phrase: ${phrase}`);

@@ -2,7 +2,7 @@
 
 const assert = require("node:assert/strict");
 const careApi = require("../systems/longitudinal-care-v2.js");
-const fungalOtitis = require("../tier-01-v2/content/clinical/tier-01/ear/fungal-otitis.json");
+const fungalOtitis = require("../content/packs/tier-01-v2/clinical/tier-01/ear/fungal-otitis.json");
 
 const ownerState = {
   attentiveness: 54,

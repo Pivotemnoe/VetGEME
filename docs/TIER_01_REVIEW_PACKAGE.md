@@ -1,6 +1,6 @@
 # Tier 01 Review Package
 
-Этот список предназначен для передачи пакета в отдельный ChatGPT-чат или ветеринарному редактору. Ничего из перечисленного пока не подключено к работающей игре.
+Этот список относится к замороженному пакету v1-review в `legacy/content/tier-01-v1-review`. Он сохранён только для сравнения и не подключён к работающей игре.
 
 ## 1. Сначала передать основные документы
 
@@ -13,34 +13,34 @@
 
 ## 2. Передать manifest и общие справочники
 
-- `content/clinical/tier-01/manifest.json`;
-- `content/owners/tier-01/base-profiles.json`;
-- `content/owners/tier-01/modifiers.json`;
-- `content/owners/tier-01/home-treatment-actions.json`;
-- `content/ui/clinical-labels.json`;
-- `content/ui/tutorial-texts.json`;
-- `content/campaign/tier-01/seven-day-plan.json`;
-- `content/campaign/tier-01/day-goals.json`;
-- `content/campaign/tier-01/doctor-shifts.json`.
+- `legacy/content/tier-01-v1-review/clinical/tier-01/manifest.json`;
+- `legacy/content/tier-01-v1-review/owners/tier-01/base-profiles.json`;
+- `legacy/content/tier-01-v1-review/owners/tier-01/modifiers.json`;
+- `legacy/content/tier-01-v1-review/owners/tier-01/home-treatment-actions.json`;
+- `legacy/content/tier-01-v1-review/ui/clinical-labels.json`;
+- `legacy/content/tier-01-v1-review/ui/tutorial-texts.json`;
+- `legacy/content/tier-01-v1-review/campaign/tier-01/seven-day-plan.json`;
+- `legacy/content/tier-01-v1-review/campaign/tier-01/day-goals.json`;
+- `legacy/content/tier-01-v1-review/campaign/tier-01/doctor-shifts.json`.
 
 ## 3. Минимум по одному клиническому файлу каждого семейства
 
-- ухо: `content/clinical/tier-01/ear/fungal-otitis.json`;
-- кожа: `content/clinical/tier-01/skin/grooming-irritation.json`;
-- ЖКТ: `content/clinical/tier-01/gastrointestinal/dietary-indiscretion.json`;
-- мочеиспускание: `content/clinical/tier-01/urinary/feline-urethral-obstruction.json`;
-- глаза: `content/clinical/tier-01/eyes/corneal-ulcer.json`;
-- дыхание: `content/clinical/tier-01/respiratory/canine-infectious-cough.json`;
-- параанальные железы: `content/clinical/tier-01/perianal/anal-gland-impaction.json`;
-- травмы: `content/clinical/tier-01/trauma/suspected-fracture.json`.
+- ухо: `legacy/content/tier-01-v1-review/clinical/tier-01/ear/fungal-otitis.json`;
+- кожа: `legacy/content/tier-01-v1-review/clinical/tier-01/skin/grooming-irritation.json`;
+- ЖКТ: `legacy/content/tier-01-v1-review/clinical/tier-01/gastrointestinal/dietary-indiscretion.json`;
+- мочеиспускание: `legacy/content/tier-01-v1-review/clinical/tier-01/urinary/feline-urethral-obstruction.json`;
+- глаза: `legacy/content/tier-01-v1-review/clinical/tier-01/eyes/corneal-ulcer.json`;
+- дыхание: `legacy/content/tier-01-v1-review/clinical/tier-01/respiratory/canine-infectious-cough.json`;
+- параанальные железы: `legacy/content/tier-01-v1-review/clinical/tier-01/perianal/anal-gland-impaction.json`;
+- травмы: `legacy/content/tier-01-v1-review/clinical/tier-01/trauma/suspected-fracture.json`.
 
 В этих файлах проверяются жалобы, вопросы, четыре типа ответов, данные осмотра, исследование, предварительные варианты, планы, красные флаги и источники каждой строки.
 
 ## 4. Для полной проверки
 
-Передать всю папку `content/clinical/tier-01/`. Полный перечень и относительные пути находятся в `manifest.json`; загрузка всех 30 файлов нужна для проверки повторов, терминологии, совместимости и различий между похожими состояниями.
+Передать всю папку `legacy/content/tier-01-v1-review/clinical/tier-01/`. Полный перечень и относительные пути находятся в `manifest.json`; загрузка всех 30 файлов нужна для проверки повторов, терминологии, совместимости и различий между похожими состояниями.
 
-Также передать все файлы из `content/owners/tier-01/`, чтобы проверить юмор, отказы, бюджет, тревогу, домашние действия и повторные обращения.
+Также передать все файлы из `legacy/content/tier-01-v1-review/owners/tier-01/`, чтобы проверить юмор, отказы, бюджет, тревогу, домашние действия и повторные обращения.
 
 ## 5. Вопросы проверяющему
 

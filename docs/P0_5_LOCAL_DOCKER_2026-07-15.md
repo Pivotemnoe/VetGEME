@@ -21,16 +21,19 @@ origin `http://127.0.0.1:5174/`. Это сохраняет границу browse
 
 Сборка выполняется на закреплённом digest `node:22.22.0-alpine3.23`, сначала запускает
 полный prebuild на хосте, затем повторяет его в изолированной build-stage. Финальный
-web-root состоит ровно из 142 runtime-файлов:
+web-root после P1 canonical-content integration состоит ровно из 143 runtime-файлов:
 
 - 22 base/current/legacy/runtime файла;
-- 55 JSON-файлов Tier 01 v2, реально загружаемых каталогом;
+- 56 canonical content JSON-файлов: `content/registry.json` и 55 файлов активного
+  `content/packs/tier-01-v2`, реально запрашиваемых registry-aware loader;
 - 65 visual runtime-файлов: manifest, layout и 63 PNG.
 
-Для всех 142 файлов проверяется полный SHA-256 после извлечения из image; для 63 PNG
+Для всех 143 файлов проверяется полный SHA-256 после извлечения из image; для 63 PNG
 дополнительно проверяются короткие хэши production manifest. В image отсутствуют
 `.git`, `node_modules`, тесты, документы, отчёты, `handoff/`, исходные art-файлы,
-секреты и validator-only content.
+секреты и validator-only content. Замороженный schema-1 review root
+`legacy/content/tier-01-v1-review/`, прежний `tier-01-v2/content/` и неиспользуемый
+`content/packs/tier-01-v2/future/` в web-root не попадают.
 
 ## Provenance и rollback
 
@@ -71,17 +74,17 @@ CSP оставляет два минимальных compatibility allowance с�
 
 1. `npm ci --ignore-scripts` — установлен pinned Playwright `1.61.1`.
 2. `npm run test:docker:prebuild`:
-   - 57 JavaScript syntax checks;
-   - 24 host content/generator/save/system/renderer/provenance checks;
-   - 23 тех же изолированных проверок в минимальном Node image; host-provenance test
+   - 61 JavaScript syntax checks;
+   - 28 host registry/content/generator/save/system/renderer/provenance checks;
+   - 27 тех же изолированных проверок в минимальном Node image; host-provenance test
      явно пропускается там, поскольку verifier намеренно не содержит Git;
-   - 142 runtime-файла.
+   - 143 runtime-файла.
 3. `npm run docker:build -- --no-cache --progress=plain` — host и isolated prebuild,
    затем exact static packaging.
 4. `npm run docker:up` — container перешёл в `healthy`.
-5. `npm run test:docker:http` — parity, cache, gzip, methods, body limit, CSP,
-   security headers, denied paths.
-6. `npm run test:docker:image` — provenance, non-root, healthcheck, exact 142/142
+5. `npm run test:docker:http` — source parity всех 56 canonical content JSON,
+   cache, gzip, methods, body limit, CSP, security headers и denied paths.
+6. `npm run test:docker:image` — provenance, non-root, healthcheck, exact 143/143
    SHA-256, 63 manifest hashes, read-only/caps/tmpfs/resources/loopback.
 7. `npm run test:docker:browser` в headless Chromium:
    - `current`;
@@ -115,5 +118,5 @@ Staging reverse-proxy оставлен отдельным выключенным
 - runtime продолжает задавать часть style attributes из JavaScript;
 - image локальный и одноузловой: здесь намеренно нет TLS, persistence volume,
   backend или server orchestration;
-- при дальнейшем изменении content/runtime allowlist и счётчик 142 должны обновляться
+- при дальнейшем изменении content/runtime allowlist и счётчик 143 должны обновляться
   атомарно вместе с Docker HTTP/image/browser тестами.

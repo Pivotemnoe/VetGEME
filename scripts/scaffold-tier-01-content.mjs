@@ -3,6 +3,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const legacyContentRoot = path.join(root, "legacy/content/tier-01-v1-review");
+const rebuildFlag = "--rebuild-frozen-legacy";
+
+if (!process.argv.includes(rebuildFlag)) {
+  throw new Error(`This archived scaffolder may only rebuild frozen legacy content; pass ${rebuildFlag} explicitly`);
+}
 
 const cases = [
   { id: "EAR_FUNGAL_OTITIS", family: "ear", file: "ear/fungal-otitis.json", title: "Грибковый наружный отит", day: 1, severity: "routine", species: ["dog", "cat", "rabbit"], complaints: ["Питомец чешет ухо, появился заметный запах.", "В ухе снова быстро накапливаются коричневые выделения.", "Животное трясет головой и не любит прикосновения к уху."], target: ["Слуховой проход умеренно покрасневший.", "Видны коричневые восковидные выделения.", "При осмотре отмечается умеренный дискомфорт."], tests: ["При микроскопии выявлены грибковые клетки; ушные клещи не обнаружены."], actions: ["general_exam", "otoscopy", "sample", "microscopy"], equipment: ["otoscope", "microscope"], redFlags: ["выраженная боль", "нарушение равновесия"], plan: "Местная противогрибковая схема, очистка уха и контроль выполнения.", humor: 1 },
@@ -126,7 +132,8 @@ function buildCase(definition) {
 }
 
 function writeJson(relativePath, value) {
-  const target = path.join(root, relativePath);
+  const legacyRelativePath = relativePath.replace(/^content\//u, "");
+  const target = path.join(legacyContentRoot, legacyRelativePath);
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.writeFileSync(target, `${JSON.stringify(value, null, 2)}\n`);
 }

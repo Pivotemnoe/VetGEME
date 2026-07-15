@@ -20,10 +20,11 @@
 !visual/**
 
 !content/
-!content/**
+!content/registry.json
+!content/packs/
+!content/packs/tier-01-v2/
+!content/packs/tier-01-v2/**
 !tier-01-v2/
-!tier-01-v2/content/
-!tier-01-v2/content/**
 !tier-01-v2/scripts/
 !tier-01-v2/scripts/**
 

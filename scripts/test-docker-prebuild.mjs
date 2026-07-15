@@ -25,6 +25,10 @@ for (const file of syntaxFiles) {
 }
 
 const checks = [
+  ["content registry validator", "scripts/validate-content-registry.mjs"],
+  ["content registry contract", "scripts/test-content-registry.js"],
+  ["generator mode fail-closed", "scripts/test-generator-mode-fail-closed.js"],
+  ["content divergence baseline", "scripts/report-content-divergence.mjs", "--summary"],
   ["Tier 01 content validator", "scripts/validate-tier-01-content.mjs"],
   ["Tier 01 v2 content validator", "tier-01-v2/scripts/validate-tier-01-content-v2.mjs"],
   ["visual asset validator", "scripts/validate-visual-assets-v2.mjs"],

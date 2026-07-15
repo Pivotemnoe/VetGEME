@@ -8,7 +8,7 @@ const root = path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const css = fs.readFileSync(path.join(root, "styles.css"), "utf8");
 const game = fs.readFileSync(path.join(root, "game.js"), "utf8");
-const tutorial = JSON.parse(fs.readFileSync(path.join(root, "tier-01-v2/content/ui/tutorial-texts.json"), "utf8"));
+const tutorial = JSON.parse(fs.readFileSync(path.join(root, "content/packs/tier-01-v2/ui/tutorial-texts.json"), "utf8"));
 
 assert.equal((html.match(/class="case-stage-card"/g) || []).length, 7, "guided map must contain seven clinical stages");
 for (const label of ["Жалоба владельца", "Анамнез", "Осмотр", "Исследования", "Предварительная оценка", "Назначения", "Выписка"]) {
