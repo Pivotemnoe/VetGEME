@@ -1,0 +1,25 @@
+services:
+  stage-proxy:
+    profiles:
+      - staging
+    image: nginxinc/nginx-unprivileged:1.28.1-alpine-slim@sha256:ce7786ca8aeaa99d6633bc65346b2dca33b098d41a1b670dcf78bb8f1489eded
+    user: "101:101"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m,uid=101,gid=101,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      web:
+        condition: service_healthy
+    ports:
+      - "${VETGEME_STAGE_BIND:-127.0.0.1}:${VETGEME_STAGE_PORT:-8443}:8443"
+    volumes:
+      - ./docker/staging/proxy.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/staging/certs/fullchain.pem:/run/secrets/vetgeme_stage_fullchain.pem:ro
+      - ./docker/staging/certs/privkey.pem:/run/secrets/vetgeme_stage_privkey.pem:ro
+    entrypoint: ["nginx"]
+    command: ["-g", "daemon off;"]
+    restart: "no"

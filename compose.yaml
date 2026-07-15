@@ -1,0 +1,35 @@
+name: vetgeme
+
+services:
+  web:
+    image: vetgeme-web:${VETGEME_IMAGE_TAG:-local}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+      args:
+        VCS_REF: ${VETGEME_VCS_REF:-unknown}
+        BUILD_DATE: ${VETGEME_BUILD_DATE:-unknown}
+        BUILD_CONTEXT_SHA: ${VETGEME_BUILD_CONTEXT_SHA:-unknown}
+        BUILD_DIRTY: ${VETGEME_BUILD_DIRTY:-unknown}
+    user: "101:101"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m,uid=101,gid=101,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 64
+    mem_limit: 128m
+    cpus: 0.50
+    ports:
+      - "127.0.0.1:${VETGEME_PORT:-5174}:8080"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/healthz"]
+      interval: 10s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+    restart: "no"
+    stop_grace_period: 10s

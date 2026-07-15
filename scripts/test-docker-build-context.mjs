@@ -1,0 +1,103 @@
+import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
+import { chmod, mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import {
+  DOCKER_BUILD_INPUT_PATHS,
+  assertSameDockerBuildProvenance,
+  collectDockerBuildProvenance,
+} from "./docker-build-context.mjs";
+
+const fixture = await mkdtemp(path.join(os.tmpdir(), "vetgeme-docker-context-"));
+
+try {
+  await createFixture(fixture);
+  git(fixture, ["init", "--quiet"]);
+  git(fixture, ["config", "user.email", "docker-context-test@invalid"]);
+  git(fixture, ["config", "user.name", "VetGEME Test"]);
+  git(fixture, ["add", "."]);
+  git(fixture, ["commit", "--quiet", "-m", "fixture"]);
+
+  const clean = await collectDockerBuildProvenance(fixture);
+  assert.equal(clean.dirty, false, "committed fixture was reported dirty");
+  assert.equal(clean.rollbackTag, clean.revision.slice(0, 12));
+
+  await mkdir(path.join(fixture, "art"), { recursive: true });
+  await writeFile(path.join(fixture, "art", "user-owned.txt"), "outside build context\n");
+  const userOwned = await collectDockerBuildProvenance(fixture);
+  assert.equal(userOwned.dirty, false, "user-owned art outside runtime-v2 polluted provenance");
+  assert.equal(userOwned.contextSha256, clean.contextSha256);
+
+  await writeFile(path.join(fixture, "scripts", "ignored.tmp"), "ignored but copied\n");
+  const ignored = await collectDockerBuildProvenance(fixture);
+  assert.equal(ignored.dirty, true, "ignored build input was not reported dirty");
+  assert.notEqual(ignored.contextSha256, clean.contextSha256);
+  assert.match(ignored.rollbackTag, /^dirty-[a-f0-9]{12}$/u);
+  assert.throws(
+    () => assertSameDockerBuildProvenance(clean, ignored),
+    /changed during the build/u,
+  );
+
+  await rm(path.join(fixture, "scripts", "ignored.tmp"));
+  await writeFile(path.join(fixture, "scripts", "new-runtime-test.js"), "new input\n");
+  const untracked = await collectDockerBuildProvenance(fixture);
+  assert.equal(untracked.dirty, true, "untracked build input was not reported dirty");
+  assert.notEqual(untracked.contextSha256, clean.contextSha256);
+
+  await rm(path.join(fixture, "scripts", "new-runtime-test.js"));
+  const trackedFile = path.join(fixture, "game.js");
+  await writeFile(trackedFile, "changed\n");
+  const modified = await collectDockerBuildProvenance(fixture);
+  assert.equal(modified.dirty, true, "modified build input was not reported dirty");
+  assert.notEqual(modified.contextSha256, clean.contextSha256);
+
+  await chmod(trackedFile, 0o755);
+  const modeChanged = await collectDockerBuildProvenance(fixture);
+  assert.notEqual(modeChanged.contextSha256, modified.contextSha256, "file mode is absent from context hash");
+
+  console.log(JSON.stringify({
+    status: "passed",
+    cleanContextSha256: clean.contextSha256,
+    ignoredInputDetected: true,
+    untrackedInputDetected: true,
+    modifiedInputDetected: true,
+    modeIncluded: true,
+    userArtExcluded: true,
+  }, null, 2));
+} finally {
+  await rm(fixture, { recursive: true, force: true });
+}
+
+async function createFixture(root) {
+  const directoryPaths = new Set([
+    "generator",
+    "systems",
+    "legacy",
+    "visual",
+    "content",
+    "tier-01-v2/content",
+    "tier-01-v2/scripts",
+    "art/runtime-v2",
+    "scripts",
+  ]);
+  await writeFile(path.join(root, ".gitignore"), "scripts/*.tmp\n");
+  for (const relativePath of DOCKER_BUILD_INPUT_PATHS) {
+    const absolutePath = path.join(root, ...relativePath.split("/"));
+    if (directoryPaths.has(relativePath)) {
+      await mkdir(absolutePath, { recursive: true });
+      await writeFile(path.join(absolutePath, "fixture.txt"), `${relativePath}\n`);
+    } else {
+      await mkdir(path.dirname(absolutePath), { recursive: true });
+      await writeFile(absolutePath, `${relativePath}\n`);
+    }
+  }
+}
+
+function git(root, args) {
+  return execFileSync("git", args, {
+    cwd: root,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+  }).trim();
+}
