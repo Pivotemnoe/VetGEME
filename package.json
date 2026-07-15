@@ -27,6 +27,7 @@
     "test:renderer-readiness:v2": "node scripts/test-renderer-readiness-v2.js",
     "test:renderer-scene:v2": "node scripts/test-renderer-scene-v2.js",
     "test:visual-browser:v2": "node scripts/playtest-visual-v2.js",
+    "audit:visual:p9": "node scripts/audit-visual-p9.js",
     "test:content-registry": "node scripts/test-content-registry.js",
     "test:medical-catalog:v2": "node scripts/test-medical-catalog-v2.js",
     "test:capability-registry:v3": "node scripts/test-capability-registry-v3.js",

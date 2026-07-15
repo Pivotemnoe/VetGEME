@@ -7,7 +7,9 @@ const path = require("node:path");
 const playwrightModule = process.env.PLAYWRIGHT_MODULE_PATH || "playwright";
 const { chromium } = require(playwrightModule);
 const root = path.resolve(__dirname, "..");
-const screenshots = path.join(root, "artifacts", "visual-p0v");
+const screenshots = path.resolve(
+  process.env.PLAYTEST_ARTIFACT_DIR || path.join(root, "artifacts", "visual-p0v")
+);
 const chromiumPath = process.env.PLAYWRIGHT_CHROMIUM_PATH || chromium.executablePath();
 const baseUrl = process.env.PLAYTEST_BASE_URL || "http://127.0.0.1:5174/";
 const viewports = [
@@ -43,6 +45,14 @@ async function waitForReady(page) {
   const ready = await page.evaluate(() => window.__PET_CLINIC_APP_READY__);
   assert.ok(ready, "readiness detail is missing");
   return ready;
+}
+
+async function ensureShiftStarted(page) {
+  const startButton = page.locator("#startShiftBtn");
+  if (await startButton.isVisible()) {
+    await startButton.click();
+  }
+  await page.locator("#nextPatientCard .queue-card").waitFor({ state: "visible", timeout: 30000 });
 }
 
 async function assertViewport(page, viewport, dpr) {
@@ -150,8 +160,7 @@ async function runMatrix(browser, dpr) {
   await page.goto(`${baseUrl}?generatorMode=tier-01-v2&visualMode=modular-v2&p0v=matrix-dpr${dpr}`, { waitUntil: "networkidle" });
   const ready = await waitForReady(page);
   assert.equal(ready.visualStatus.ready, true, "modular renderer did not become ready");
-  await page.locator("#startShiftBtn").click();
-  await page.locator("#nextPatientCard .queue-card").waitFor({ state: "visible", timeout: 30000 });
+  await ensureShiftStarted(page);
   const queueIdentity = await assertQueueIdentity(page);
 
   const matrix = [];
