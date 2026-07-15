@@ -2,21 +2,23 @@
 
 ## Scope
 
-This change affects only persistent data for `tier-01-v2`.
+This document describes only persistent data for `tier-01-v2`.
 
-- Generator save currently uses `saveVersion: 6`.
-- `generatorVersion` is `tier-01-v2.2.0`; the seeded namespace remains explicit and reproducible.
-- The `tier-01-v2` game-state save currently uses version 5.
+- Generator save currently uses `saveVersion: 7`.
+- `generatorVersion` is `tier-01-v2.3.0`; the seeded namespace remains explicit and reproducible.
+- The `tier-01-v2` game-state save currently uses version 10.
 - `current` and `legacy-v1` keep game-state save version 1.
-- Medical content, content-pack metadata, generation rules and runtime player behavior do not change.
+- This persistence contract does not approve medical content or activate pending catalog entries.
 
-## Generator Save Version 6
+## Generator Save Version 7
 
 The generator state keeps campaign-level fields unchanged:
 
 ```text
 saveVersion
 generatorVersion
+capabilityRegistryId
+capabilityRegistryVersion
 contentPackId
 contentPackVersion
 contentPackHash
@@ -25,6 +27,8 @@ generatedDays
 pendingFollowUps
 completedCases
 seenCaseCounts
+demandDirectorVersion
+demandState
 nextVisitId
 ```
 
@@ -55,16 +59,18 @@ Stable IDs are preferred. If an already selected content element has no stable I
 
 At runtime a compact visit is hydrated from the catalog selected by `caseId` and the exact content-pack identity. Hydrated `medicalContent` exists only in memory and is removed again before persistence.
 
-## Tier 01 v2 Game Save Version 5
+## Tier 01 v2 Game Save Version 10
 
-The game-state field list remains unchanged. Before serialization, `queue` and `arrivalSchedule` are compacted:
+Version 10 continues to compact `queue` and `arrivalSchedule` before serialization:
 
 - `v2Visit.medicalContent` is removed;
 - embedded owner content objects are replaced by their stable IDs;
 - runtime owner profile data is derived again after hydration;
 - clinical progress, selected actions, findings, clinical record, owner state and visit timing remain persisted.
 
-The version-5 whitelist also includes `appointments`, `treatmentCourses`, `longitudinalPatients` and `attendanceEvents`. Confirmed and rescheduled appointments are mirrored into generator `pendingFollowUps`; this is the generator's compact pending-recheck queue, rather than a second copy of medical content.
+The version-10 whitelist also includes longitudinal care, capability/research/referral state, persistent owner and patient identities, operations, economy, reputation and the gated campaign-director container. The exact version history and whitelist are defined in [GAME_STATE_SAVE.md](GAME_STATE_SAVE.md); this compact-save document does not duplicate or supersede that contract.
+
+Confirmed and rescheduled appointments are mirrored into generator `pendingFollowUps`; this is the generator's compact pending-recheck queue, rather than a second copy of medical content.
 
 After loading, queue patients and arrival templates are hydrated before the browser loop resumes. Hydrated objects are never written back without compaction.
 
@@ -74,8 +80,8 @@ Migration is copy-on-success:
 
 1. Parse the old value without mutating it.
 2. Verify generator version and content-pack identity.
-3. Build a separate version-6 state.
-4. Compact every visit in every generated day.
+3. Build a separate version-7 candidate through the source-version-specific path.
+4. Compact visits only for the older expanded formats that require it; already compact version-5 and version-6 days are not regenerated.
 5. Preserve `campaignSeed`, days, fingerprints, outcomes, pending follow-ups, completed cases, seen counts and the next visit ID.
 6. Validate that every compact visit can be hydrated from the unchanged catalog.
 7. Serialize the complete new snapshot.
@@ -83,7 +89,18 @@ Migration is copy-on-success:
 
 If parsing, compaction, validation, hydration or writing fails, the old key remains untouched and the error is propagated. An incompatible `contentPackHash` is not migrated.
 
-Generator save versions 2 and 3 first follow their existing metadata migration. Versions 4 and 5 are compacted directly to version 6, adding deterministic appointment defaults only where the old follow-up record has no longitudinal fields.
+The supported generator migration matrix is explicit:
+
+- version 2 receives the existing metadata, booking-reason and fingerprint migration, then follows the compact path;
+- version 3 is compacted before demand state is added;
+- version 4 is the pre-demand compact format: deterministic demand state, source categories and routing are added once before validation;
+- version 5 is already demand-aware at the campaign level: native version-5 day snapshots, all source categories, persisted routing, fingerprints, outcomes and visits remain unchanged; a day previously carried from version 4 keeps its older day namespace and lack of a snapshot; only the day schema marker advances to version 6 and missing version-6 longitudinal fields are defaulted on pending follow-ups;
+- version 6 keeps every persisted field unchanged and adds only the version-7 capability-registry identity;
+- every supported source finishes as a validated version-7 snapshot.
+
+Each migration retains the exact source bytes under `pet-clinic-generator-v2:migration-source:v<sourceVersion>` before replacing the primary key. A current version-7 reload performs no migration write.
+
+Version-5 input is accepted only with its historical top-level `tier-01-v2.2.0` namespace, compact pending-follow-up owners and no version-6 longitudinal visit fields. A day generated natively by version 5 uses `tier-01-v2.2.0` and a versioned demand snapshot. A day carried through the historical version-4 migration retains the `tier-01-v2.1.0` day namespace and omits `demandSnapshot`; its already persisted source category and routing are still authoritative and remain unchanged. One campaign may contain both forms. A forward-shaped or otherwise malformed combination fails closed and remains byte-for-byte untouched.
 
 ## Quota Failure
 

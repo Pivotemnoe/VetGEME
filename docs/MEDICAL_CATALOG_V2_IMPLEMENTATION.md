@@ -105,7 +105,10 @@ presentation в production-проекцию не копируются.
 `family + caseId + complaintId`. Он не содержит master family/variant/
 presentation mapping. Ref выбранной жалобы вычисляется при load/hydration.
 
-Новые refs не сохраняются. Не изменены:
+### Историческая граница P2
+
+При первоначальной поставке P2 новые refs не сохранялись и сам P2 не менял
+существовавшие на тот момент форматы:
 
 - generator save v6;
 - tier game save v5;
@@ -113,6 +116,12 @@ presentation mapping. Ref выбранной жалобы вычисляется
 - content pack ID/version/hash текущих 30 карточек;
 - seeded generator selection и порядок random-вызовов;
 - current и legacy-v1.
+
+Это исторический snapshot границы P2, а не текущие номера схем всей ветки. После
+отдельных этапов P3–P7 текущий generator save имеет версию 7, а tier game save —
+версию 10. Их актуальные контракты и миграции описаны в
+`docs/GENERATOR_V2_COMPACT_SAVE.md` и `docs/GAME_STATE_SAVE.md`. P8 preflight не
+меняет content-pack identity, seeded selection или порядок random-вызовов.
 
 10 multi-diagnosis bundles остаются `pending_content`, с
 `automaticPairingAllowed:false` и `approvedClinicalContent:null`.
@@ -137,7 +146,8 @@ P2 не мигрирует и не перезаписывает сохранен
 Безопасный code rollback состоит из удаления medical registration и P2 runtime
 module/script entrypoints вместе с каноническим `content/medical-packs/...`.
 После rollback текущие 30 карточек снова загружаются по прежнему pack identity;
-v6/v5/compact-v1 сохранения продолжают гидратироваться теми же ID.
+текущие v7/v10/compact-v1 snapshots и поддерживаемые migration sources продолжают
+гидратироваться теми же ID.
 
 Нельзя откатывать P2 частично, оставляя ссылку loader/index на удалённый registry
 или family JSON: registry-first loader намеренно остановится fail-closed.

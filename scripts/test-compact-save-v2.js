@@ -5,6 +5,7 @@ const path = require("node:path");
 const loader = require("../generator/content-loader-v2.js");
 const generatorApi = require("../generator/generator-v2.js");
 const compactApi = require("../generator/compact-visit-v2.js");
+const demandApi = require("../generator/demand-director-v2.js");
 const adapter = require("../generator/game-adapter-v2.js");
 const gameSaveApi = require("../generator/game-state-save.js");
 const namespaces = require("../generator/save-namespaces.js");
@@ -256,6 +257,97 @@ function expandGeneratorSaveToVersion3(raw, catalog) {
   return state;
 }
 
+function compactCapabilities(overrides = {}) {
+  return Object.fromEntries(Object.entries(demandApi.capabilityRegistry(overrides)).map(([id, capability]) => [id, {
+    owned: Boolean(capability.owned),
+    unlocked: Boolean(capability.unlocked),
+    operational: Boolean(capability.operational),
+    capacityPerDay: capability.capacityPerDay,
+    maintenanceCost: capability.maintenanceCost
+  }]));
+}
+
+function persistedRouting(visit) {
+  return {
+    missingEquipment: compactApi.clone(visit.missingEquipment),
+    requiresReferral: visit.requiresReferral,
+    safeReferralAvailable: visit.safeReferralAvailable
+  };
+}
+
+function buildHistoricalGeneratorSaveVersion5(raw, catalog) {
+  const state = JSON.parse(raw);
+  state.saveVersion = 5;
+  state.generatorVersion = generatorApi.PREVIOUS_GENERATOR_VERSION;
+  delete state.capabilityRegistryId;
+  delete state.capabilityRegistryVersion;
+  const dayEntries = Object.entries(state.generatedDays);
+  dayEntries.forEach(([dayNumber, day], index) => {
+    const microscopeOperational = index % 2 === 0;
+    const capabilities = compactCapabilities({
+      microscope: {
+        owned: microscopeOperational,
+        unlocked: microscopeOperational,
+        operational: microscopeOperational,
+        capacityPerDay: microscopeOperational ? 6 : 0,
+        maintenanceCost: microscopeOperational ? 35 : 0
+      }
+    });
+    day.schemaVersion = 5;
+    day.generatorVersion = generatorApi.PREVIOUS_GENERATOR_VERSION;
+    if (!day.demandSnapshot) throw new Error(`Historical v5 fixture day ${dayNumber} lacks demandSnapshot`);
+    day.demandSnapshot.capabilities = capabilities;
+    day.visits.forEach((visit) => {
+      [
+        "appointmentId",
+        "treatmentCourseId",
+        "appointmentReason",
+        "attendanceDecision",
+        "adherenceState",
+        "longitudinalState"
+      ].forEach((field) => { delete visit[field]; });
+      const routing = demandApi.routingForCase(catalog.casesById[visit.caseId], capabilities);
+      visit.missingEquipment = compactApi.clone(routing.missingEquipment);
+      visit.requiresReferral = routing.requiresReferral;
+      visit.safeReferralAvailable = routing.safeReferralAvailable;
+    });
+  });
+  state.pendingFollowUps = state.pendingFollowUps.map((item) => ({
+    id: item.id,
+    caseId: item.caseId,
+    originalVisitId: item.originalVisitId,
+    patient: item.patient,
+    owner: item.owner,
+    reason: item.reason,
+    eligibleDay: item.eligibleDay
+  }));
+  if (dayEntries.length) {
+    state.demandState.lastDecision = compactApi.clone(dayEntries[dayEntries.length - 1][1].demandSnapshot);
+  }
+  return state;
+}
+
+function expectedVersion7FromVersion5(source) {
+  const expected = compactApi.clone(source);
+  expected.saveVersion = generatorApi.SAVE_VERSION;
+  expected.generatorVersion = generatorApi.GENERATOR_VERSION;
+  expected.capabilityRegistryId = generatorApi.CAPABILITY_REGISTRY_ID;
+  expected.capabilityRegistryVersion = generatorApi.CAPABILITY_REGISTRY_VERSION;
+  Object.values(expected.generatedDays).forEach((day) => {
+    day.schemaVersion = generatorApi.PREVIOUS_SAVE_VERSION;
+  });
+  expected.pendingFollowUps = expected.pendingFollowUps.map((item) => ({
+    ...item,
+    scheduledTime: 660,
+    appointmentId: null,
+    treatmentCourseId: null,
+    attendanceDecision: "attended",
+    adherenceState: null,
+    longitudinalState: null
+  }));
+  return expected;
+}
+
 function exactVisitSnapshot(visit) {
   return {
     visitId: visit.visitId,
@@ -369,6 +461,144 @@ async function main() {
   assert.deepEqual(JSON.parse(migratedRaw).generatedDays["1"].outcomes, version3.generatedDays["1"].outcomes);
   assert.equal(JSON.parse(migratedRaw).generatedDays["1"].visits[0].selectedPlanId, version3.generatedDays["1"].outcomes[0].selectedPlanId);
   assert.deepEqual(JSON.parse(migratedRaw).generatedDays["1"].visits[0].outcome, version3.generatedDays["1"].outcomes[0]);
+
+  const version5 = buildHistoricalGeneratorSaveVersion5(compactRaw, catalog);
+  assert.ok(version5.pendingFollowUps.length > 0, "v5 migration fixture must exercise pending follow-ups");
+  assert.notDeepEqual(
+    version5.generatedDays["1"].demandSnapshot.capabilities,
+    version5.generatedDays["2"].demandSnapshot.capabilities,
+    "v5 migration fixture must use different per-day capabilities"
+  );
+  assert.ok(
+    version5.generatedDays["1"].visits.some((visit) => {
+      const lastDecisionRouting = demandApi.routingForCase(
+        catalog.casesById[visit.caseId],
+        version5.demandState.lastDecision.capabilities
+      );
+      return JSON.stringify(persistedRouting(visit)) !== JSON.stringify(persistedRouting(lastDecisionRouting));
+    }),
+    "v5 fixture does not expose the lastDecision routing regression"
+  );
+  Object.values(version5.generatedDays).forEach((day) => {
+    day.visits.forEach((visit) => {
+      [
+        "appointmentId",
+        "treatmentCourseId",
+        "appointmentReason",
+        "attendanceDecision",
+        "adherenceState",
+        "longitudinalState"
+      ].forEach((field) => {
+        assert.equal(Object.prototype.hasOwnProperty.call(visit, field), false, `historical v5 fixture retained ${field}`);
+      });
+    });
+  });
+  const version5Raw = JSON.stringify(version5, null, 2);
+  const version5Storage = memoryStorage({ [generatorApi.SAVE_KEY]: version5Raw });
+  const migratedFromVersion5 = generatorApi.createGenerator({
+    catalog,
+    seed: "v5-migration-must-preserve-source-seed",
+    storage: version5Storage
+  });
+  const version7FromVersion5Raw = version5Storage.getItem(generatorApi.SAVE_KEY);
+  const version7FromVersion5 = JSON.parse(version7FromVersion5Raw);
+  assert.deepEqual(
+    version7FromVersion5,
+    expectedVersion7FromVersion5(version5),
+    "v5 -> v7 migration changed persisted semantics outside allowed version/default fields"
+  );
+  assert.equal(version7FromVersion5Raw.includes("medicalContent"), false);
+  const hydratedMigratedDayOne = migratedFromVersion5.getOrGenerateDay(1);
+  hydratedMigratedDayOne.visits.forEach((visit, index) => {
+    assert.deepEqual(
+      persistedRouting(visit),
+      persistedRouting(version5.generatedDays["1"].visits[index]),
+      `v5 -> v7 migration changed hydrated routing for ${visit.visitId}`
+    );
+  });
+  assert.equal(
+    version5Storage.getItem(generatorApi.migrationBackupKeyForVersion(5)),
+    version5Raw,
+    "v5 -> v7 migration did not retain exact source bytes"
+  );
+  assert.equal(
+    version5Storage.setCalls.filter((call) => call.key === generatorApi.SAVE_KEY).length,
+    1,
+    "v5 -> v7 migration did not replace the primary key exactly once"
+  );
+  version5Storage.resetCalls();
+  generatorApi.createGenerator({ catalog, storage: version5Storage });
+  assert.equal(version5Storage.setCalls.length, 0, "reloading migrated v5 generator save performed a write");
+
+  const mixedHistoricalVersion5 = compactApi.clone(version5);
+  mixedHistoricalVersion5.generatedDays["1"].generatorVersion = generatorApi.LEGACY_GENERATOR_VERSION;
+  delete mixedHistoricalVersion5.generatedDays["1"].demandSnapshot;
+  const mixedHistoricalVersion5Raw = JSON.stringify(mixedHistoricalVersion5, null, 2);
+  const mixedHistoricalVersion5Storage = memoryStorage({
+    [generatorApi.SAVE_KEY]: mixedHistoricalVersion5Raw
+  });
+  const migratedMixedHistoricalVersion5 = generatorApi.createGenerator({
+    catalog,
+    storage: mixedHistoricalVersion5Storage
+  });
+  assert.deepEqual(
+    JSON.parse(mixedHistoricalVersion5Storage.getItem(generatorApi.SAVE_KEY)),
+    expectedVersion7FromVersion5(mixedHistoricalVersion5),
+    "v5 migration rejected or changed a day carried through the historical v4 migration"
+  );
+  assert.deepEqual(
+    persistedRouting(migratedMixedHistoricalVersion5.getOrGenerateDay(1).visits[0]),
+    persistedRouting(mixedHistoricalVersion5.generatedDays["1"].visits[0]),
+    "v5 migration changed routing for a day carried from version 4"
+  );
+  assert.equal(
+    mixedHistoricalVersion5Storage.getItem(generatorApi.migrationBackupKeyForVersion(5)),
+    mixedHistoricalVersion5Raw,
+    "v5 migration did not retain exact source bytes for a day carried from version 4"
+  );
+
+  const assertVersion5RejectedWithoutWrite = (candidate, pattern, label) => {
+    const raw = JSON.stringify(candidate);
+    const storage = memoryStorage({ [generatorApi.SAVE_KEY]: raw });
+    assert.throws(() => generatorApi.createGenerator({ catalog, storage }), pattern);
+    assert.equal(storage.getItem(generatorApi.SAVE_KEY), raw, `${label} changed the primary source`);
+    assert.equal(storage.setCalls.length, 0, `${label} performed a write`);
+  };
+  const forwardShapedVersion5 = compactApi.clone(version5);
+  forwardShapedVersion5.generatedDays["1"].visits[0].appointmentReason = "future-field-must-fail-closed";
+  assertVersion5RejectedWithoutWrite(
+    forwardShapedVersion5,
+    /contains future field appointmentReason/,
+    "invalid forward-shaped v5 source"
+  );
+  const unsupportedDayGeneratorVersion5 = compactApi.clone(version5);
+  unsupportedDayGeneratorVersion5.generatedDays["1"].generatorVersion = "tier-01-v2.future";
+  assertVersion5RejectedWithoutWrite(
+    unsupportedDayGeneratorVersion5,
+    /day 1 generator version is invalid/,
+    "v5 source with unsupported day generator version"
+  );
+  const nativeDayMissingDemandSnapshotVersion5 = compactApi.clone(version5);
+  delete nativeDayMissingDemandSnapshotVersion5.generatedDays["1"].demandSnapshot;
+  assertVersion5RejectedWithoutWrite(
+    nativeDayMissingDemandSnapshotVersion5,
+    /day 1 demand snapshot is invalid/,
+    "native v5 day without a demand snapshot"
+  );
+  const carriedDayWithUnexpectedSnapshotVersion5 = compactApi.clone(version5);
+  carriedDayWithUnexpectedSnapshotVersion5.generatedDays["1"].generatorVersion = generatorApi.LEGACY_GENERATOR_VERSION;
+  assertVersion5RejectedWithoutWrite(
+    carriedDayWithUnexpectedSnapshotVersion5,
+    /carried from version 4 has an unexpected demand snapshot/,
+    "v4-carried day with a future demand snapshot"
+  );
+  const expandedPendingOwnerVersion5 = compactApi.clone(version5);
+  expandedPendingOwnerVersion5.pendingFollowUps[0].owner.profile = { id: "must-not-be-normalized" };
+  assertVersion5RejectedWithoutWrite(
+    expandedPendingOwnerVersion5,
+    /pending follow-up 0 owner is not compact/,
+    "v5 source with a noncompact pending owner"
+  );
 
   const version6 = JSON.parse(compactRaw);
   version6.saveVersion = generatorApi.PREVIOUS_SAVE_VERSION;
@@ -787,6 +1017,10 @@ async function main() {
     differentSeedDifferent: true,
     reloadEveryDayStable: true,
     version3Migration: true,
+    generatorV5ToV7Migration: true,
+    generatorV5PerDayRoutingPreserved: true,
+    generatorV4CarriedDayInV5Migration: true,
+    malformedVersion5FailClosed: true,
     followUpPreserved: true,
     partialVisitPreserved: true,
     incompatibleContentPackBlocked: true,
