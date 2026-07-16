@@ -81,6 +81,10 @@ if (existsSync(reviewInputRegistry)) {
     ["operational authoring review input", "scripts/validate-operational-authoring-review-input.mjs"],
     ["operational authoring review contract", "scripts/test-operational-authoring-review-input.mjs"],
     ["operational authoring mismatch report", "scripts/report-operational-authoring-mismatches.mjs"],
+    ["P5 authoring review provenance", "scripts/refresh-p5-authoring-review-provenance.mjs"],
+    ["P5 authoring review input", "scripts/validate-p5-authoring-review-input.mjs"],
+    ["P5 authoring review contract", "scripts/test-p5-authoring-review-input.mjs"],
+    ["P5 authoring mismatch report", "scripts/report-p5-authoring-mismatches.mjs"],
   );
 } else {
   console.log(

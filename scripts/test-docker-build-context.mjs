@@ -101,6 +101,29 @@ try {
   );
   assert.equal(operationalReviewOnlyInput.contextSha256, clean.contextSha256);
 
+  await mkdir(
+    path.join(fixture, "content", "review-inputs", "p5-authoring", "source"),
+    { recursive: true },
+  );
+  await writeFile(
+    path.join(
+      fixture,
+      "content",
+      "review-inputs",
+      "p5-authoring",
+      "source",
+      "MANIFEST.json",
+    ),
+    "{\"reviewOnly\":true}\n",
+  );
+  const p5ReviewOnlyInput = await collectDockerBuildProvenance(fixture);
+  assert.equal(
+    p5ReviewOnlyInput.dirty,
+    false,
+    "review-only P5 authoring input polluted production Docker provenance",
+  );
+  assert.equal(p5ReviewOnlyInput.contextSha256, clean.contextSha256);
+
   await writeFile(
     path.join(fixture, "content/system-packs/vetgeme-master-2026-07-14/not-registered.json"),
     "{\"notRegistered\":true}\n",

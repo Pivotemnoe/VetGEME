@@ -136,6 +136,26 @@ authoring candidates, перечисленные выше как отсутст�
 
 Полный результат: `reports/OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md`.
 
+## Обновление после P5 authoring input 2026.07.16.1
+
+Отдельный review-only P5 input теперь предоставляет 10 сотрудников, 12
+помещений, 27 единиц оборудования, 14 visit-task templates и scheduler mappings
+для всех 447 capabilities, 361 research ID и 1 864 investigation usages. Это
+снимает прежний structural blocker «production staff/room/task catalog вообще
+отсутствует», но не делает medical input исполнимым:
+
+- все P5 catalogs имеют `runtimeEligible: false`;
+- девять records имеют start-active flags, но P5-local requirement-free срез
+  содержит семь records; на нём исполнимы только 13/14 visit и 124/361
+  research templates, а P6 ownership пяти room ещё не подтверждён;
+- P5/P6 lifecycle, ownership, initial maintenance и stock evidence не заданы;
+- четыре locked room не имеют P6 asset, роль `imaging_staff` не имеет P6 wage
+  record;
+- handoff и остальные operational policies не имеют production gate/bridge;
+- current 30-card crosswalk по-прежнему отсутствует и не создаётся.
+
+Полный результат: `reports/P5_AUTHORING_PREFLIGHT.md`.
+
 ## Намеренно не изменено
 
 - медицинские тексты и данные source package;

@@ -5,6 +5,12 @@
 > остаётся закрыт: package refs не имеют обязательного digest/approved envelope,
 > а exact evidence resolver к P3–P6 audit IDs не предоставлен. См.
 > `reports/OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md`.
+>
+> P5 authoring input `2026.07.16.1` добавляет recommended 30-day staffing и три
+> absence policy, но не становится P7 authority: ни одно из трёх absence type
+> не связано с exact P7 event, staffing остаётся рекомендацией до
+> product-owner acceptance, а lifecycle-команды отсутствуют. См.
+> `reports/P5_AUTHORING_PREFLIGHT.md`.
 
 Статус: `production_p7_blocked_catalogs_and_policies_missing`.
 

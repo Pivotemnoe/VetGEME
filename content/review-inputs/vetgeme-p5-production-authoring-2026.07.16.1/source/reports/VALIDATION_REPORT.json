@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "packageId": "vetgeme-p5-production-authoring",
+  "packageVersion": "2026.07.16.1",
+  "validatedAt": "2026-07-16",
+  "result": "pass",
+  "runtimeContract": {
+    "schedulerSchemaVersion": 1,
+    "resourcesValidated": 49,
+    "runtimeTasksValidated": 2606,
+    "handoffSaveReload": "pass",
+    "urgentOvercapacitySafeRoute": "pass"
+  },
+  "exactCoverage": {
+    "staff": 10,
+    "rooms": 12,
+    "equipmentResources": 27,
+    "staffSkills": 24,
+    "visitTasks": 14,
+    "capabilities": 447,
+    "researchTasks": 361,
+    "investigationUsages": 1864,
+    "scheduleDays": 30
+  },
+  "simulations": {
+    "campaigns": 10000,
+    "demandDays": 300000,
+    "urgentDemandDays": 53897,
+    "routineBlockedAtMaximumFatigue": 3070,
+    "deterministicSeed": "0x5eed1234",
+    "result": "pass"
+  },
+  "authorityBoundaries": {
+    "medicalTruth": "not_authored_by_p5",
+    "researchResults": "p3_and_medical_family_presentations",
+    "assetsInventoryMaintenanceLedger": "p6",
+    "eventsAndAbsences": "p7",
+    "visuals": "projection_only",
+    "saveSchemaChangedByPackage": false
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "packageId": "vetgeme-p5-production-authoring",
+  "packageVersion": "2026.07.16.1",
+  "createdAt": "2026-07-16",
+  "status": "author_validated_programmer_integration_required",
+  "runtimeEligible": false,
+  "activationRequires": [
+    "programmer_adapter",
+    "runtime_browser_smoke",
+    "save_reload_replay",
+    "product_owner_staffing_acceptance"
+  ],
+  "boundaries": {
+    "medicalTruthAllowed": false,
+    "rendererGrantsOwnership": false,
+    "fatigueChangesClinicalResult": false,
+    "p3OwnsResearchResults": true,
+    "p6OwnsInventoryAssetsAndMaintenanceLedger": true,
+    "p7OwnsEventTriggering": true,
+    "saveSchemaChange": false,
+    "newCampaignsOnly": true
+  },
+  "sources": {
+    "capabilityRegistryId": "vetgeme-clinic-capabilities",
+    "capabilityRegistryVersion": "2026.07.14.38",
+    "p3ResearchCatalogVersion": "2026.07.16.1",
+    "p3UsageCatalogVersion": "2026.07.16.1",
+    "p6EconomyCatalogVersion": "2026.07.16.1"
+  },
+  "counts": {
+    "staff": 10,
+    "rooms": 12,
+    "equipmentResources": 27,
+    "totalResources": 49,
+    "visitTaskTemplates": 14,
+    "capabilitiesMapped": 447,
+    "researchTasks": 361,
+    "investigationUsagesMapped": 1864,
+    "scheduleDays": 30,
+    "staffSkillsCovered": 24
+  },
+  "files": [
+    "MANIFEST.json",
+    "README.md",
+    "PROGRAMMER_HANDOFF.md",
+    "FINAL_COMPLETION_AUDIT.md",
+    "schemas/P5_AUTHORING_CONTRACT.md",
+    "source/p5-policy.json",
+    "scripts/build-p5-package.mjs",
+    "scripts/validate-p5-package.mjs",
+    "generated/resource-catalog.json",
+    "generated/visit-task-catalog.json",
+    "generated/capability-operations-map.json",
+    "generated/research-task-catalog.json",
+    "generated/investigation-usage-task-map.json",
+    "generated/recommended-30-day-staffing.json",
+    "generated/operational-policies.json",
+    "reports/ENGINE_COMPATIBILITY_REPORT.md",
+    "reports/VALIDATION_REPORT.json"
+  ]
+}

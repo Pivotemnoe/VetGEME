@@ -5,6 +5,13 @@
 > recovery. Он остаётся `runtimeEligible: false`; product-owner balance
 > acceptance, exact P5 resource mapping и runtime activation отсутствуют.
 > См. `reports/OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md`.
+>
+> P5 authoring input `2026.07.16.1` даёт resource candidates, но authoritative
+> P5/P6 crosswalk по-прежнему отсутствует: четыре locked room не имеют P6
+> asset, пять starting room не имеют P6 asset/ownership seed, роль
+> `imaging_staff` не имеет wage record, а initial maintenance/stock evidence для
+> стартового оборудования не определён. 312/447 duration values
+> имеют разные scheduler/economy semantics и не объединяются автоматически.
 
 Status: `technical_core_available_production_balance_and_activation_blocked`.
 

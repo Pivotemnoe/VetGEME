@@ -156,7 +156,11 @@ non-boundary matches сохранены в mismatch JSON. Adapter не испр�
 `p3-p5-resource-crosswalk.json` прямо задаёт
 `p5CatalogAuthority = runtime_p5_catalog_or_explicit_programmer_mapping_required`
 и `inferredP5Ids: false`. ID персонала, помещений и оборудования не выводятся
-из названий. Отдельный P5 ZIP обрабатывается следующим изолированным срезом.
+из названий. Отдельный P5 ZIP теперь подключён как review-only input; его
+preflight подтверждает 30 однозначных capability-кандидатов, но также четыре
+locked room без P6 asset и отсутствие authoritative crosswalk. См.
+`reports/P5_AUTHORING_PREFLIGHT.md`. Автоматическое сопоставление по-прежнему
+не создаётся.
 
 ### 8. P7: catalog records несовместимы с trust boundary runtime
 

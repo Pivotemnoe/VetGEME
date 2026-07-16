@@ -7,6 +7,14 @@
 > перепроверки, 12 defaulted fallback требуют явного утверждения, а local
 > ownership bridge и veterinary approval ещё отсутствуют. См.
 > `reports/OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md`.
+>
+> P5 authoring input `2026.07.16.1` теперь добавляет 361 scheduler task и
+> requirement-группы, но не снимает gate: девять records имеют start-active
+> flags; P5-local requirement-free срез содержит семь records и 124/361
+> research templates, но P6 ownership для пяти room всё ещё не доказан;
+> 27 external routes одновременно
+> требуют local physical resources, а 12 P3 fallback были подставлены
+> сборщиком. См. `reports/P5_AUTHORING_PREFLIGHT.md`.
 
 Date: 2026-07-15
 Status: mechanics and canonical registry can be integrated; full medical,

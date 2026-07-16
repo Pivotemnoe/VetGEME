@@ -23,6 +23,12 @@
 > `runtimeEligible: false`: обнаружены P3 provider-routing, P4
 > resource/safe-alternative/rule-precedence и P7 digest/evidence blockers.
 > Поэтому production verdict также не изменён.
+>
+> P5 authoring preflight от 16 июля 2026 года находится в
+> [P5_AUTHORING_PREFLIGHT.md](P5_AUTHORING_PREFLIGHT.md). Пакет предоставляет
+> 49 resource candidates и 2 606 task configurations, но остаётся review-only:
+> start-active pruning, lifecycle/ownership bridges, staffing acceptance,
+> handoff-policy enforcement и P6/P7 authority ещё блокируют activation.
 > Остальной текст сохранён как исторический P10 snapshot от 15 июля.
 
 ## Итоговое решение
