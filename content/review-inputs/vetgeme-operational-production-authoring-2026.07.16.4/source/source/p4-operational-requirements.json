@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p4-operational-requirements",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "capabilities": [
+    {
+      "capabilityId": "quiet_route",
+      "kind": "workflow",
+      "authority": "p5.scheduler",
+      "resolver": {
+        "anyRoomCapability": [
+          "room.consult",
+          "room.waiting"
+        ],
+        "staffCapability": "task.low_stress"
+      }
+    },
+    {
+      "capabilityId": "scheduled_recheck_slot",
+      "kind": "schedule",
+      "authority": "p5.scheduler",
+      "resolver": {
+        "command": "schedule_followup",
+        "requiresCapacity": true
+      }
+    },
+    {
+      "capabilityId": "referral_coordination",
+      "kind": "workflow",
+      "authority": "p5.scheduler",
+      "resolver": {
+        "staffCapability": "task.referral_coordination",
+        "roomCapability": "room.reception"
+      }
+    },
+    {
+      "capabilityId": "sampling_plan",
+      "kind": "workflow",
+      "authority": "p5.scheduler",
+      "resolver": {
+        "staffCapability": "task.sampling",
+        "anyRoomCapability": [
+          "room.sampling_basic",
+          "room.lab"
+        ]
+      }
+    },
+    {
+      "capabilityId": "comfort_surface",
+      "kind": "room_feature",
+      "authority": "p5.roomState",
+      "resolver": {
+        "anyRoomCapability": [
+          "room.consult",
+          "room.short_stay"
+        ]
+      }
+    },
+    {
+      "capabilityId": "infection_control_capacity",
+      "kind": "workflow",
+      "authority": "p5.scheduler",
+      "resolver": {
+        "staffSkill": "trained_infection_control",
+        "roomCapability": "task.isolation",
+        "inventoryCategoryId": "infection_control"
+      }
+    },
+    {
+      "capabilityId": "reviewed_sedation_protocol",
+      "kind": "staff_protocol",
+      "authority": "p5.staffAndShiftState",
+      "resolver": {
+        "staffSkill": "trained_anesthesia",
+        "roomCapability": "task.anesthesia"
+      }
+    },
+    {
+      "capabilityId": "monitoring_capacity",
+      "kind": "equipment_or_referral",
+      "authority": "p5.scheduler",
+      "resolver": {
+        "anyCapabilityId": [
+          "vital_monitor",
+          "pulse_oximeter"
+        ],
+        "fallbackRouteId": "safe_referral"
+      }
+    }
+  ],
+  "safeRoutes": [
+    {
+      "routeId": "safe_referral",
+      "providerResolver": "p3.researchRoute.primaryProviderId_or_ref_specialist_network",
+      "factOwner": "medical_family_result_only",
+      "command": "create_referral_task"
+    },
+    {
+      "routeId": "regulated_referral",
+      "providerId": "ref_public_health",
+      "factOwner": "medical_family_result_only",
+      "command": "create_regulated_referral_task"
+    },
+    {
+      "routeId": "external_sampling_referral",
+      "providerResolver": "p3.researchRoute.primaryProviderId_or_ref_clinical_pathology",
+      "factOwner": "medical_family_result_only",
+      "command": "create_external_sampling_task"
+    }
+  ]
+}

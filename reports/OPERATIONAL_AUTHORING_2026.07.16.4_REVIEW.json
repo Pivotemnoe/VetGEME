@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "reportId": "vetgeme-operational-authoring-v4-host-review",
+  "reportVersion": "2026.07.16.4",
+  "sourcePackage": "vetgeme-operational-production-authoring@2026.07.16.4",
+  "status": "immutable_review_only_import_valid_activation_blocked",
+  "boundaries": {
+    "sourceChangedByReview": false,
+    "correctionsInvented": false,
+    "supersedesV3AsAuthorSourceFor": [
+      "p3",
+      "p4",
+      "p7"
+    ],
+    "semanticDeltaFromV3": [
+      "p3_medical_result_authority_projection"
+    ],
+    "v2SourceAndMismatchReportPreserved": true,
+    "v3SourceAndReportsPreserved": true,
+    "currentThirtyCasePoolChanged": false,
+    "saveSchemaChanged": false,
+    "runtimeChanged": false,
+    "productionPool": 0,
+    "activationAllowed": false,
+    "reservationAuthority": false
+  },
+  "integrity": {
+    "sourceFiles": 40,
+    "sourceBytes": 12864215,
+    "archiveSha256": "0e2fed94349ddfd8b5ace8d19a3e2da723c13bf46ec894b067d56eff5c6854d5",
+    "provenanceSha256": "e4e60e12f66b5c84166b530ec0ad8da20073be95533be06a0d3940db2ad5a92a",
+    "aggregateSha256": "c7bb0bd0232ba765a5b3e8a8f0c093e7410e20a9aa435f1e3e3ece6c9f920764",
+    "priorV2ProvenanceSha256": "1134ba0ee80a6967b63764ff6e1466b5f5b97b3822bb36f577b391c3d65c6dbd",
+    "priorV2MismatchReportSha256": "85abd22977eec072dc756f9f7f15cb652909ff131fd3bca8425c3ab54c018b76",
+    "priorV3ProvenanceSha256": "105b5c037652eac183a29af7e4afdb6f044ebce6811e69a48199b2e7a37eb986",
+    "priorV3HostReviewSha256": "bbc05618dca89f577dc77cbc5f57ae3183cfd34c4e525d976cb211f61be69183",
+    "priorV3IntegrationReportSha256": "8bc93b72bbf426b583e0e76928057de99a35bbabbc7e28bb15cd596be613a185"
+  },
+  "summary": {
+    "p0": 0,
+    "openP1": 1,
+    "authorCorrectionsClosed": 5,
+    "runtimeEligible": false,
+    "nextSafeStep": "exact_p5_v2_join_then_preserve_medical_approval_and_runtime_activation_gates"
+  },
+  "closedAuthorFindings": [
+    {
+      "id": "p3_turnaround_collapsed_by_representative_usage",
+      "status": "author_closed_host_projection_verified",
+      "evidence": {
+        "usageLevelContracts": 1864,
+        "multiPolicyResearchIds": 46,
+        "representativeTurnaroundAllowed": false
+      }
+    },
+    {
+      "id": "p3_unmatched_urgency_and_classification_defaults",
+      "status": "author_closed_host_projection_verified",
+      "evidence": {
+        "urgencySourceValues": 206,
+        "classificationSourceValues": 875,
+        "fallbackAllowed": false,
+        "dynamicValuesFailClosed": 2
+      }
+    },
+    {
+      "id": "p3_medical_result_authority_projection_drift",
+      "status": "author_closed_host_projection_verified",
+      "evidence": {
+        "researchRecords": 361,
+        "explicitGeneratedExactMatches": 361,
+        "explicitGeneratedMismatches": 0,
+        "exactAuthority": "medical_family.presentation.investigations[].result_only",
+        "operationalPolicyMayGenerateResult": false,
+        "shortenedOrUnknownNamespaceAllowed": false
+      }
+    },
+    {
+      "id": "p4_safe_alternative_fact_binding_missing",
+      "status": "author_closed_host_projection_verified",
+      "evidence": {
+        "presentationHandlingBindings": 514,
+        "scopedMedicalFactReferences": 950,
+        "genericSyntheticFactReferences": 0
+      }
+    },
+    {
+      "id": "p7_digest_does_not_bind_resolver_or_day_semantics",
+      "status": "author_closed_host_projection_verified",
+      "evidence": {
+        "resolverRecords": 93,
+        "resolverDigest": "e5c756a3ccc158e509caa2a7e76654981b0ce7cb3f4951fa30c4eeec07123558",
+        "activationDigest": "a588b27bbcffb6e44dc01e135dac2f0aff926124d66b8008578960ef6b25e371",
+        "mutationChangesActivationDigest": true,
+        "outerCampaignAndAuthorityProjectionVerified": true
+      }
+    }
+  ],
+  "openFindings": [
+    {
+      "id": "p5_execution_join_unresolved",
+      "severity": "P1",
+      "status": "exact_p5_v2_join_required",
+      "requirement": "requirementGroups/anyOf/AND/units/duration/lifecycle/scheduler commands",
+      "reservationAuthority": false,
+      "flattenedResourceIdsCannotReserve": true
+    }
+  ],
+  "externalGates": [
+    "medical_family_external_veterinary_approval",
+    "product_owner_balance_acceptance",
+    "full_runtime_smoke_and_save_reload_before_activation"
+  ],
+  "knownRisks": [
+    "The two dynamic urgency resolver IDs require an external medical state resolver; no state-to-band policy is invented here.",
+    "The exact P5 .2 requirement-group/lifecycle/scheduler join is still absent, so the operational crosswalk cannot reserve resources.",
+    "The activation digest does not own outer day-catalog campaign/authority fields, so the host validates those projections separately.",
+    "Dependency root manifests are supplemented by trusted host archive/aggregate/provenance pins."
+  ],
+  "validationEvidence": {
+    "authorChecks": 64,
+    "simulatedCampaigns": 10000,
+    "simulatedDemandDays": 297717
+  },
+  "intentionallyUnchanged": [
+    "operational .2 source and mismatch report",
+    "operational .3 source, provenance, host review, and integration report",
+    "medical truth and investigation results",
+    "current 30 case IDs and generator pool",
+    "current/legacy-v1/tier-01-v2 save namespaces and schema",
+    "runtime economy and campaign state",
+    "renderer, design, and art"
+  ]
+}

@@ -1,0 +1,712 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p7-evidence-resolver",
+  "catalogVersion": "2026.07.16.3",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "goalEvidence": [
+    {
+      "evidenceId": "completed_followup_visit_ids",
+      "kind": "goal_evidence",
+      "authority": "p5",
+      "recordType": "visitState",
+      "fieldOrPredicate": "completedFollowupVisitIds",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "completed_visit_ids",
+      "kind": "goal_evidence",
+      "authority": "p5",
+      "recordType": "visitState",
+      "fieldOrPredicate": "completedVisitIds",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "inventory_audit_id",
+      "kind": "goal_evidence",
+      "authority": "p6",
+      "recordType": "inventoryState",
+      "fieldOrPredicate": "latestAuditId",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "ledger_close_id",
+      "kind": "goal_evidence",
+      "authority": "p6",
+      "recordType": "ledgerState",
+      "fieldOrPredicate": "latestCloseId",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "process_result_ids",
+      "kind": "goal_evidence",
+      "authority": "p4",
+      "recordType": "handlingActionState",
+      "fieldOrPredicate": "processResultIds",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "referral_order_ids",
+      "kind": "goal_evidence",
+      "authority": "p3",
+      "recordType": "referralState",
+      "fieldOrPredicate": "referralOrderIds",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "reviewed_order_ids",
+      "kind": "goal_evidence",
+      "authority": "p3",
+      "recordType": "resultObligationState",
+      "fieldOrPredicate": "reviewedOrderIds",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "shift_close_audit_id",
+      "kind": "goal_evidence",
+      "authority": "p5",
+      "recordType": "shiftAudit",
+      "fieldOrPredicate": "closedShiftAuditId",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "staff_rest_audit_id",
+      "kind": "goal_evidence",
+      "authority": "p5",
+      "recordType": "shiftAudit",
+      "fieldOrPredicate": "restComplianceAuditId",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "teach_back_fact_ids",
+      "kind": "goal_evidence",
+      "authority": "p4",
+      "recordType": "ownerCommunicationState",
+      "fieldOrPredicate": "teachBackFactIds",
+      "resolverMode": "exact_author_owned"
+    }
+  ],
+  "eventTriggers": [
+    {
+      "evidenceId": "asset_maintenance_due",
+      "kind": "event_trigger",
+      "authority": "p6",
+      "recordType": "maintenanceState",
+      "fieldOrPredicate": "dueAssetIds",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "campaign_day_30_complete",
+      "kind": "event_trigger",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "completedDay",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "cash_above_protected_reserve",
+      "kind": "event_trigger",
+      "authority": "p6",
+      "recordType": "ledgerState",
+      "fieldOrPredicate": "cashVsProtectedReserve",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "chapter_2_active",
+      "kind": "event_trigger",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "activeChapter",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "chapter_3_active",
+      "kind": "event_trigger",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "activeChapter",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "chapter_4_active",
+      "kind": "event_trigger",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "activeChapter",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "chapter_5_active",
+      "kind": "event_trigger",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "activeChapter",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "chapter_5_close",
+      "kind": "event_trigger",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "chapterClose",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "chapter_last_day",
+      "kind": "event_trigger",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "isChapterLastDay",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "critical_result_due",
+      "kind": "event_trigger",
+      "authority": "p3",
+      "recordType": "resultObligationState",
+      "fieldOrPredicate": "criticalDueOrderIds",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "day_close",
+      "kind": "event_trigger",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "dayClose",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "day_start",
+      "kind": "event_trigger",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "dayStart",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "external_result_due",
+      "kind": "event_trigger",
+      "authority": "p3",
+      "recordType": "resultObligationState",
+      "fieldOrPredicate": "externalDueOrderIds",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "first_owner_anxiety_gte_70",
+      "kind": "event_trigger",
+      "authority": "p4",
+      "recordType": "ownerState",
+      "fieldOrPredicate": "firstAnxietyAtLeast70",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "followup_visit_due",
+      "kind": "event_trigger",
+      "authority": "p5",
+      "recordType": "visitState",
+      "fieldOrPredicate": "dueFollowupVisitIds",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "inventory_below_reorder",
+      "kind": "event_trigger",
+      "authority": "p6",
+      "recordType": "inventoryState",
+      "fieldOrPredicate": "belowReorderCategoryIds",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "owner_cost_consent_lte_30",
+      "kind": "event_trigger",
+      "authority": "p4",
+      "recordType": "ownerState",
+      "fieldOrPredicate": "costConsentAtMost30",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "patient_fear_gte_70",
+      "kind": "event_trigger",
+      "authority": "p4",
+      "recordType": "patientState",
+      "fieldOrPredicate": "fearAtLeast70",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "procedure_demand_exceeds_capacity",
+      "kind": "event_trigger",
+      "authority": "p5",
+      "recordType": "scheduler",
+      "fieldOrPredicate": "procedureDemandExceedsCapacity",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "procurement_in_transit",
+      "kind": "event_trigger",
+      "authority": "p6",
+      "recordType": "assetState",
+      "fieldOrPredicate": "inTransitAssetIds",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "safe_local_route_missing",
+      "kind": "event_trigger",
+      "authority": "p3",
+      "recordType": "researchRouteState",
+      "fieldOrPredicate": "missingLocalRouteIds",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "shift_close",
+      "kind": "event_trigger",
+      "authority": "p5",
+      "recordType": "shiftState",
+      "fieldOrPredicate": "shiftClose",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "specialization_recorded",
+      "kind": "event_trigger",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "specializationId",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "three_or_more_owner_barriers",
+      "kind": "event_trigger",
+      "authority": "p4",
+      "recordType": "ownerState",
+      "fieldOrPredicate": "barrierCountAtLeast3",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "waiting_count_gte_3",
+      "kind": "event_trigger",
+      "authority": "p5",
+      "recordType": "queueState",
+      "fieldOrPredicate": "waitingCountAtLeast3",
+      "resolverMode": "exact_author_owned"
+    }
+  ],
+  "eventEffects": [
+    {
+      "effectId": "audit_delivery_training_stock_maintenance",
+      "authority": "p5_p6",
+      "commandResolver": "effect.audit_delivery_training_stock_maintenance",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "audit_owned_work",
+      "authority": "p5",
+      "commandResolver": "effect.audit_owned_work",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "axis_specific_goal",
+      "authority": "p7",
+      "commandResolver": "effect.axis_specific_goal",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "block_close_until_handoff",
+      "authority": "p5",
+      "commandResolver": "effect.block_close_until_handoff",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "chapter_axis_snapshot",
+      "authority": "p7",
+      "commandResolver": "effect.chapter_axis_snapshot",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "create_owned_review_task",
+      "authority": "p3_p5",
+      "commandResolver": "effect.create_owned_review_task",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "delay_one_day",
+      "authority": "p6",
+      "commandResolver": "effect.delay_one_day",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "explicit_procurement_choice",
+      "authority": "p6",
+      "commandResolver": "effect.explicit_procurement_choice",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "explicit_shift_choice",
+      "authority": "p5",
+      "commandResolver": "effect.explicit_shift_choice",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "freeze_final_axis_evidence",
+      "authority": "p7",
+      "commandResolver": "effect.freeze_final_axis_evidence",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "increase_arrivals_by_one",
+      "authority": "p5",
+      "commandResolver": "effect.increase_arrivals_by_one",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "isolation_capacity_audit",
+      "authority": "p4_p5_p6",
+      "commandResolver": "effect.isolation_capacity_audit",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "no_diagnosis_bias",
+      "authority": "p7_guard",
+      "commandResolver": "effect.no_diagnosis_bias",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "offer_full_staged_minimum_safe",
+      "authority": "p4",
+      "commandResolver": "effect.offer_full_staged_minimum_safe",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "offer_low_stress_action",
+      "authority": "p4_p5",
+      "commandResolver": "effect.offer_low_stress_action",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "offer_recovery_if_needed",
+      "authority": "p6_p7",
+      "commandResolver": "effect.offer_recovery_if_needed",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "offer_specialization_support_asset",
+      "authority": "p6_p7",
+      "commandResolver": "effect.offer_specialization_support_asset",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "offer_teach_back",
+      "authority": "p4",
+      "commandResolver": "effect.offer_teach_back",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "purchase_or_referral_tradeoff",
+      "authority": "p3_p6",
+      "commandResolver": "effect.purchase_or_referral_tradeoff",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "record_one_specialization",
+      "authority": "p7",
+      "commandResolver": "effect.record_one_specialization",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "require_feasible_plan_and_teach_back",
+      "authority": "p4_p5",
+      "commandResolver": "effect.require_feasible_plan_and_teach_back",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "require_referral_choice",
+      "authority": "p3_p5",
+      "commandResolver": "effect.require_referral_choice",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "retain_referral",
+      "authority": "p3",
+      "commandResolver": "effect.retain_referral",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "schedule_or_refer",
+      "authority": "p3_p5",
+      "commandResolver": "effect.schedule_or_refer",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "select_reachable_ending",
+      "authority": "p7",
+      "commandResolver": "effect.select_reachable_ending",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "show_system_boundaries",
+      "authority": "p7_ui_projection",
+      "commandResolver": "effect.show_system_boundaries",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "suspend_if_overdue",
+      "authority": "p6",
+      "commandResolver": "effect.suspend_if_overdue",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "time_pressure_only",
+      "authority": "p5",
+      "commandResolver": "effect.time_pressure_only",
+      "medicalGenerationBiasForbidden": true
+    },
+    {
+      "effectId": "use_existing_history",
+      "authority": "p4",
+      "commandResolver": "effect.use_existing_history",
+      "medicalGenerationBiasForbidden": true
+    }
+  ],
+  "milestoneAndRecoveryRequirements": [
+    {
+      "evidenceId": "cash_above_closure_floor",
+      "kind": "requirement",
+      "authority": "p6",
+      "recordType": "ledgerState",
+      "fieldOrPredicate": "cashAboveClosureFloor",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "due_result_review_rate_gte_0_8",
+      "kind": "requirement",
+      "authority": "p3",
+      "recordType": "resultObligationState",
+      "fieldOrPredicate": "dueReviewRateGte0.8",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "ending_evidence_complete",
+      "kind": "requirement",
+      "authority": "p7",
+      "recordType": "endingState",
+      "fieldOrPredicate": "evidenceComplete",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "fifteen_campaign_days",
+      "kind": "requirement",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "completedDayGte15",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "five_campaign_days",
+      "kind": "requirement",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "completedDayGte5",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "inventory_audit_recorded",
+      "kind": "requirement",
+      "authority": "p6",
+      "recordType": "inventoryState",
+      "fieldOrPredicate": "latestAuditIdExists",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "no_unowned_critical_work",
+      "kind": "requirement",
+      "authority": "p5",
+      "recordType": "schedulerAudit",
+      "fieldOrPredicate": "unownedCriticalWorkCountEq0",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "recovery_actions_exhausted",
+      "kind": "requirement",
+      "authority": "p6",
+      "recordType": "recoveryState",
+      "fieldOrPredicate": "actionsExhausted",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "rest_compliance_gte_0_8",
+      "kind": "requirement",
+      "authority": "p5",
+      "recordType": "shiftAudit",
+      "fieldOrPredicate": "restComplianceGte0.8",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "staff_rest_plan",
+      "kind": "requirement",
+      "authority": "p5",
+      "recordType": "shiftState",
+      "fieldOrPredicate": "futureRestPlanExists",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "ten_campaign_days",
+      "kind": "requirement",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "completedDayGte10",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "thirty_campaign_days",
+      "kind": "requirement",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "completedDayGte30",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "twenty_campaign_days",
+      "kind": "requirement",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "completedDayGte20",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "twenty_five_campaign_days",
+      "kind": "requirement",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "completedDayGte25",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "two_consecutive_critical_days",
+      "kind": "requirement",
+      "authority": "p6",
+      "recordType": "riskState",
+      "fieldOrPredicate": "consecutiveCriticalDaysGte2",
+      "resolverMode": "exact_author_owned"
+    }
+  ],
+  "specializationCapabilities": [
+    {
+      "evidenceId": "imaging_equipment",
+      "kind": "specialization_support",
+      "authority": "p6",
+      "recordType": "assetState",
+      "fieldOrPredicate": "ownedActiveCapabilityType:imaging_equipment",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "laboratory_equipment",
+      "kind": "specialization_support",
+      "authority": "p6",
+      "recordType": "assetState",
+      "fieldOrPredicate": "ownedActiveCapabilityType:laboratory_equipment",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "low_stress_zone",
+      "kind": "specialization_support",
+      "authority": "p5",
+      "recordType": "roomState",
+      "fieldOrPredicate": "readyCapability:quiet_route",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "referral_coordination",
+      "kind": "specialization_support",
+      "authority": "p5",
+      "recordType": "scheduler",
+      "fieldOrPredicate": "completedTask:visit.referral_coordination",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "staged_owner_plans",
+      "kind": "specialization_support",
+      "authority": "p4",
+      "recordType": "handlingActionState",
+      "fieldOrPredicate": "completedActionClass:staged_visit",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "trained_low_stress_handling",
+      "kind": "specialization_support",
+      "authority": "p5",
+      "recordType": "staffAndShiftState",
+      "fieldOrPredicate": "scheduledCapability:task.low_stress",
+      "resolverMode": "exact_author_owned"
+    }
+  ],
+  "endingPredicates": [
+    {
+      "evidenceId": "allAxesMinimum",
+      "kind": "ending_predicate",
+      "authority": "p7",
+      "recordType": "axisSnapshot",
+      "fieldOrPredicate": "allAxesMinimum",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "anyAxisMinimum",
+      "kind": "ending_predicate",
+      "authority": "p7",
+      "recordType": "axisSnapshot",
+      "fieldOrPredicate": "anyAxisMinimum",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "clinical_safetyMinimum",
+      "kind": "ending_predicate",
+      "authority": "p7",
+      "recordType": "axisSnapshot",
+      "fieldOrPredicate": "clinical_safety",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "closureReview",
+      "kind": "ending_predicate",
+      "authority": "p6_p7",
+      "recordType": "recoveryState",
+      "fieldOrPredicate": "closureReview",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "financial_resilienceMinimum",
+      "kind": "ending_predicate",
+      "authority": "p7",
+      "recordType": "axisSnapshot",
+      "fieldOrPredicate": "financial_resilience",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "owner_trustMinimum",
+      "kind": "ending_predicate",
+      "authority": "p7",
+      "recordType": "axisSnapshot",
+      "fieldOrPredicate": "owner_trust",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "specializationId",
+      "kind": "ending_predicate",
+      "authority": "p7",
+      "recordType": "campaignState",
+      "fieldOrPredicate": "specializationId",
+      "resolverMode": "exact_author_owned"
+    },
+    {
+      "evidenceId": "team_conditionMinimum",
+      "kind": "ending_predicate",
+      "authority": "p7",
+      "recordType": "axisSnapshot",
+      "fieldOrPredicate": "team_condition",
+      "resolverMode": "exact_author_owned"
+    }
+  ],
+  "activation": {
+    "authorApprovalRecorded": true,
+    "programmerAdapterValidated": false,
+    "productOwnerBalanceAccepted": false,
+    "medicalProductionPoolRequiredForCampaignActivation": true,
+    "runtimeEligible": false
+  }
+}

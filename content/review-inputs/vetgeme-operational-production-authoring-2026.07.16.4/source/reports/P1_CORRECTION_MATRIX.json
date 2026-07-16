@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "reportId": "vetgeme-operational-authoring-v4-p1-correction-matrix",
+  "reportVersion": "2026.07.16.4",
+  "status": "author_corrections_complete_exact_p5_join_pending",
+  "runtimeEligible": false,
+  "productionPoolChanged": false,
+  "findings": [
+    {
+      "id": "p3_turnaround_collapsed_by_representative_usage",
+      "previousStatus": "p1_open",
+      "currentStatus": "author_closed",
+      "evidence": {
+        "usagesWithExactTurnaround": 1864,
+        "researchIdsWithDistinctUrgencyTurnarounds": 46,
+        "representativeTurnaroundFields": 0
+      }
+    },
+    {
+      "id": "p3_unmatched_urgency_and_classification_defaults",
+      "previousStatus": "p1_open",
+      "currentStatus": "author_closed",
+      "evidence": {
+        "urgencySourceValues": 206,
+        "classificationSourceValues": 875,
+        "fallbackAllowed": false,
+        "dynamicUrgencyValuesFailClosed": [
+          "by_clinical_status",
+          "by_secondary_disease"
+        ]
+      }
+    },
+    {
+      "id": "p3_medical_result_authority_projection_drift",
+      "previousStatus": "p1_open_in_operational_v3_host_review",
+      "currentStatus": "author_closed",
+      "evidence": {
+        "researchRecords": 361,
+        "exactAuthority": "medical_family.presentation.investigations[].result_only",
+        "explicitGeneratedMismatches": 0,
+        "operationalPolicyMayGenerateResult": false
+      }
+    },
+    {
+      "id": "p4_safe_alternative_fact_binding_missing",
+      "previousStatus": "p1_open",
+      "currentStatus": "author_closed",
+      "evidence": {
+        "presentationHandlingBindings": 514,
+        "uniqueHandlingTags": 446,
+        "medicalFactReferences": 950,
+        "unknownMedicalFactReferences": 0,
+        "syntheticGenericFactIds": 0
+      }
+    },
+    {
+      "id": "p6_crosswalk_is_not_p5_execution_authority",
+      "previousStatus": "p1_open",
+      "currentStatus": "external_join_pending",
+      "evidence": {
+        "reservationAuthority": false,
+        "requiredJoin": "p5-production-authoring@2026.07.16.2 exact requirementGroups/anyOf/AND/units/duration/lifecycle/scheduler commands",
+        "silentReservationAllowed": false
+      }
+    },
+    {
+      "id": "p7_digest_does_not_bind_resolver_or_day_semantics",
+      "previousStatus": "p1_open",
+      "currentStatus": "author_closed",
+      "evidence": {
+        "resolverRecords": 93,
+        "resolverDigest": "e5c756a3ccc158e509caa2a7e76654981b0ce7cb3f4951fa30c4eeec07123558",
+        "activationDigest": "a588b27bbcffb6e44dc01e135dac2f0aff926124d66b8008578960ef6b25e371",
+        "mutationChangesDigest": true
+      }
+    }
+  ],
+  "activationGate": {
+    "authorP3P4P7CorrectionsComplete": true,
+    "exactP5V2JoinComplete": false,
+    "programmerAdapterValidated": false,
+    "medicalFamiliesVeterinaryApproved": false,
+    "runtimeActivationAllowed": false
+  }
+}

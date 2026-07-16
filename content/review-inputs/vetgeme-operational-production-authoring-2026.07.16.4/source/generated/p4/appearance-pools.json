@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p4-appearance-pools",
+  "catalogVersion": "2026.07.16.3",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "independenceRule": "appearance_seed_is_independent_from_behavior_seed",
+  "pools": {
+    "owner": {
+      "body": [
+        "owner_body_01",
+        "owner_body_02",
+        "owner_body_03",
+        "owner_body_04",
+        "owner_body_05",
+        "owner_body_06"
+      ],
+      "hair": [
+        "owner_hair_01",
+        "owner_hair_02",
+        "owner_hair_03",
+        "owner_hair_04",
+        "owner_hair_05",
+        "owner_hair_06",
+        "owner_hair_07",
+        "owner_hair_08"
+      ],
+      "clothes": [
+        "owner_clothes_01",
+        "owner_clothes_02",
+        "owner_clothes_03",
+        "owner_clothes_04",
+        "owner_clothes_05",
+        "owner_clothes_06",
+        "owner_clothes_07",
+        "owner_clothes_08"
+      ],
+      "accessory": [
+        "none",
+        "owner_accessory_01",
+        "owner_accessory_02",
+        "owner_accessory_03"
+      ]
+    },
+    "patient": {
+      "species": [
+        "dog",
+        "cat"
+      ],
+      "size": [
+        "small",
+        "medium",
+        "large"
+      ],
+      "coat": [
+        "short",
+        "medium",
+        "long",
+        "hairless"
+      ],
+      "pattern": [
+        "solid",
+        "bicolor",
+        "tricolor",
+        "tabby",
+        "spotted",
+        "point"
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "reportId": "vetgeme-cross-system-v2-author-matrix",
+  "reportVersion": "2026.07.16.2",
+  "counts": {
+    "p5ResourcesWithP6Authority": 49,
+    "canonicalCapabilitiesCrosswalked": 447,
+    "supplementalCapabilitiesCrosswalked": 8,
+    "goalEvidenceResolvers": 10,
+    "eventTriggerResolvers": 25,
+    "eventEffectResolvers": 29,
+    "requirementResolvers": 15,
+    "specializationResolvers": 6,
+    "endingResolvers": 8
+  },
+  "gates": {
+    "unresolvedP5Resource": false,
+    "unresolvedCanonicalCapability": false,
+    "tokenMatchingAllowed": false,
+    "rendererMayOwnState": false,
+    "campaignMayBiasMedicalGeneration": false
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p4-observable-cues",
+  "catalogVersion": "2026.07.16.3",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "rules": [
+    {
+      "ruleId": "cue_owner_anxiety_high",
+      "entity": "owner",
+      "when": {
+        "field": "anxiety",
+        "operator": "gte",
+        "value": 70
+      },
+      "cue": {
+        "cueId": "owner_repeats_questions_and_checks_animal"
+      }
+    },
+    {
+      "ruleId": "cue_owner_trust_low",
+      "entity": "owner",
+      "when": {
+        "field": "trust",
+        "operator": "lte",
+        "value": 30
+      },
+      "cue": {
+        "cueId": "owner_requests_justification_before_consent"
+      }
+    },
+    {
+      "ruleId": "cue_owner_understanding_low",
+      "entity": "owner",
+      "when": {
+        "field": "understanding",
+        "operator": "lte",
+        "value": 35
+      },
+      "cue": {
+        "cueId": "owner_cannot_repeat_plan"
+      }
+    },
+    {
+      "ruleId": "cue_owner_cost_consent_low",
+      "entity": "owner",
+      "when": {
+        "field": "costConsent",
+        "operator": "lte",
+        "value": 30
+      },
+      "cue": {
+        "cueId": "owner_asks_for_staged_options"
+      }
+    },
+    {
+      "ruleId": "cue_owner_leave_risk_high",
+      "entity": "owner",
+      "when": {
+        "field": "leaveRisk",
+        "operator": "gte",
+        "value": 70
+      },
+      "cue": {
+        "cueId": "owner_prepares_to_leave_before_handoff"
+      }
+    },
+    {
+      "ruleId": "cue_patient_fear_high",
+      "entity": "patient",
+      "when": {
+        "field": "fear",
+        "operator": "gte",
+        "value": 70
+      },
+      "cue": {
+        "cueId": "patient_avoids_contact_or_freezes"
+      }
+    },
+    {
+      "ruleId": "cue_patient_pain_high",
+      "entity": "patient",
+      "when": {
+        "field": "pain",
+        "operator": "gte",
+        "value": 70
+      },
+      "cue": {
+        "cueId": "patient_guards_painful_area"
+      }
+    },
+    {
+      "ruleId": "cue_patient_arousal_high",
+      "entity": "patient",
+      "when": {
+        "field": "arousal",
+        "operator": "gte",
+        "value": 75
+      },
+      "cue": {
+        "cueId": "patient_cannot_settle"
+      }
+    },
+    {
+      "ruleId": "cue_patient_handling_low",
+      "entity": "patient",
+      "when": {
+        "field": "handlingTolerance",
+        "operator": "lte",
+        "value": 25
+      },
+      "cue": {
+        "cueId": "patient_escalates_during_restraint"
+      }
+    },
+    {
+      "ruleId": "cue_sample_quality_low",
+      "entity": "patient",
+      "when": {
+        "field": "sampleQuality",
+        "operator": "lte",
+        "value": 35
+      },
+      "cue": {
+        "cueId": "sample_quality_warning_visible"
+      }
+    }
+  ]
+}
