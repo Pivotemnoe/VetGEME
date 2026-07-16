@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "contractId": "vetgeme-p7-activation-digest-contract",
+  "contractVersion": "2026.07.16.3",
+  "adapterVersion": "vetgeme-p7-evidence-adapter@2026.07.16.3",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "canonicalization": "recursive_object_keys_lexicographic_arrays_preserve_author_order_utf8_json",
+  "resolverSections": [
+    "goalEvidence",
+    "eventTriggers",
+    "eventEffects",
+    "milestoneAndRecoveryRequirements",
+    "specializationCapabilities",
+    "endingPredicates"
+  ],
+  "activationDigestScope": [
+    "adapterVersion",
+    "dayCatalog",
+    "axes",
+    "catalogEnvelopes",
+    "recovery",
+    "resolverEnvelope"
+  ],
+  "requirements": {
+    "everyResolverRecordHasContentDigest": true,
+    "everyDependentEnvelopeBindsResolverDigest": true,
+    "everyGoalBindsExactResolverRecordDigest": true,
+    "mutationOfAnyResolverSemanticChangesActivationDigest": true,
+    "programmerAdapterValidationRequired": true,
+    "productOwnerBalanceAcceptanceRequired": true,
+    "medicalProductionPoolRequired": true
+  }
+}

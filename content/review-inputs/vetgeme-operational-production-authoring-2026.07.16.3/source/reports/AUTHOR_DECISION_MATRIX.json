@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "reportId": "vetgeme-operational-v2-author-decision-matrix",
+  "reportVersion": "2026.07.16.2",
+  "medicalPackageVersion": "2026.07.16.40",
+  "counts": {
+    "researchRoutes": 361,
+    "localResearchRoutes": 230,
+    "externalResearchRoutes": 131,
+    "explicitFallbacks": 361,
+    "ownerModifiers": 463,
+    "temperamentTags": 128,
+    "handlingAlternatives": 446,
+    "supplementalOperationalCapabilities": 8,
+    "explicitCapabilityEconomics": 447
+  },
+  "ownerArchetypeDistribution": {
+    "owner_anxious_observant": 95,
+    "owner_budget_constrained": 21,
+    "owner_calm_collaborative": 86,
+    "owner_defensive_after_failure": 10,
+    "owner_distrustful": 12,
+    "owner_exhausted_caregiver": 22,
+    "owner_inconsistent": 17,
+    "owner_low_comprehension": 19,
+    "owner_overconfident": 148,
+    "owner_skeptical_evidence_seeking": 11,
+    "owner_time_constrained": 22
+  },
+  "temperamentDistribution": {
+    "patient_calm_social": 4,
+    "patient_cautious": 74,
+    "patient_familiar_staff": 2,
+    "patient_fearful": 9,
+    "patient_high_arousal": 9,
+    "patient_pain_defensive": 22,
+    "patient_shutdown": 8
+  },
+  "handlingPrimaryDistribution": {
+    "barrier_isolation": 17,
+    "comfort_positioning": 12,
+    "low_stress_general": 8,
+    "minimal_handling": 167,
+    "sampling_plan": 83,
+    "sedation_or_anesthesia": 14,
+    "specialist_or_external": 78,
+    "staged_visit": 67
+  },
+  "gates": {
+    "substringMatchingAllowedAtRuntime": false,
+    "generatedFallbackAllowed": false,
+    "medicalResultGenerationAllowed": false,
+    "missingCapabilityFailsClosed": true,
+    "safeReferralRetained": true
+  }
+}

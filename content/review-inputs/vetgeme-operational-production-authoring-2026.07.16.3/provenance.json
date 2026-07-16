@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "provenanceId": "vetgeme-operational-production-authoring-review-source",
+  "packageId": "vetgeme-operational-production-authoring",
+  "packageVersion": "2026.07.16.3",
+  "sourceArchive": "operational-production-authoring-2026.07.16.3.zip",
+  "sourceDirectory": "operational-production-authoring-2026.07.16.3",
+  "archive": {
+    "path": "operational-production-authoring-2026.07.16.3.zip",
+    "checksumPath": "operational-production-authoring-2026.07.16.3.zip.sha256",
+    "sha256": "5abee5242467e703561e0de2eefbb5050345448c90b21b97761d7ee60540a1df",
+    "zipEntryCount": 51,
+    "extractedFileCount": 40,
+    "extractedBytes": 12860948,
+    "keyFileHashes": {
+      "MANIFEST.json": "9d0803d02c200ded0911eb073509639ecced81361b239a28b438d7b4e6b3e751",
+      "schemas/OPERATIONAL_PACKAGE_CONTRACT.md": "b867edce7b2663a716bece8ae3f5e74a657ec27b3c863d2e7638d23227a9a1e3",
+      "scripts/validate-operational-package.mjs": "5940ac113a0504d034c584b3dd4e1fd75fb08488d03a98dd760d662d00d36a54",
+      "source/p3-explicit-research-routes.json": "fbda3ed7817aa93bf3f73274b53dbb3acf554ab58b29139617d0bc3535923552",
+      "source/p3-exact-source-crosswalk.json": "ac185625688fb1b1759c59ef74cf8229cac192d61042c78071be48d2a5a4e012",
+      "source/p4-explicit-behavior-crosswalk.json": "6869cd265bcfd699810388558f77aeed86c7dfcd5cb188db640c99f74e4ea818",
+      "source/p4-operational-requirements.json": "a47b9216f03fa481643d0561abc615fceb1ed85a228a1078d8fecc4406931c34",
+      "source/p4-presentation-medical-fact-crosswalk.json": "c4caa9560260b96aad2f0e866c45f764ed54ede44bb4683e6583caa299aa1ddb",
+      "source/p6-explicit-capability-economics.json": "778ba92a5e4df1535974ca5385f17af15b8ab6cca6a5a5169ff0ac226ac0359f",
+      "source/p6-p5-exact-resource-crosswalk.json": "61a44ff5096c2077635e26b9785a7cbeea0a525b4d6e0f9d395bc12d9f837598",
+      "source/p7-evidence-resolver.json": "068ce9034fff8875fd1c7e86c2475f4a3eda1dba96d253e1a3f1239f15512a28",
+      "source/p7-activation-digest-contract.json": "793589f645a249008cf76938f3fa169db22c44722c2bba916db9133ea7fdd5f3",
+      "generated/p7/director-catalog.json": "2ff697e0900bd1782635b4c6753df138afcfe0d702d3043df44ce7a8d4b7ea28",
+      "reports/P1_CORRECTION_MATRIX.json": "9a87ac645ab6aeb8637d7ba0ef398495b7dfd9f451c82b5734db012ed2ddabf9",
+      "reports/VALIDATION_REPORT.json": "15b139bfb518e2ce423d5e2c83a1b4655425344a5bb68c101376cb0b9b75e3b8"
+    }
+  },
+  "sourceFileCount": 40,
+  "sourceBytes": 12860948,
+  "aggregateSha256": "20e2b8768b1be7cdacefb11fdb1b2dc1139d0f007097c99188e0706bab685284",
+  "files": [
+    {
+      "path": "FINAL_COMPLETION_AUDIT.md",
+      "originPath": "operational-production-authoring-2026.07.16.3/FINAL_COMPLETION_AUDIT.md",
+      "bytes": 2390,
+      "sha256": "e75bcb3806e2ac47f5f0e08a224c3f7f125a5908e7d294375da2386b43505621"
+    },
+    {
+      "path": "generated/p3/investigation-usage-policy.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p3/investigation-usage-policy.json",
+      "bytes": 2809308,
+      "sha256": "2f89e496900893d7872965f7a75a456940eb0b785767fad3e47e5702449b8774"
+    },
+    {
+      "path": "generated/p3/provider-catalog.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p3/provider-catalog.json",
+      "bytes": 3178,
+      "sha256": "ec1cf00c2867389190fabd37e9d12fb16f1411bca0849051cdae9984242117a3"
+    },
+    {
+      "path": "generated/p3/research-catalog.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p3/research-catalog.json",
+      "bytes": 679115,
+      "sha256": "ddf1ad7661104ad3146ad5660766248bd766ca0836d5dde0eeafd1efd649e04a"
+    },
+    {
+      "path": "generated/p4/appearance-pools.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p4/appearance-pools.json",
+      "bytes": 1478,
+      "sha256": "e4370c8d04cf369564ad8b5c26311279a28fc9ba28781030d4937a4781e13bea"
+    },
+    {
+      "path": "generated/p4/behavior-crosswalk.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p4/behavior-crosswalk.json",
+      "bytes": 4815995,
+      "sha256": "ba1156f4f381ebafdf489535c1163e4d2f23769abc065dcd31c31b186b6bbdeb"
+    },
+    {
+      "path": "generated/p4/history-policy.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p4/history-policy.json",
+      "bytes": 3123,
+      "sha256": "95b1bd19719a77b258ffe771fd08afe27f4e6c229284f2e8224602122568d06d"
+    },
+    {
+      "path": "generated/p4/observable-cues.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p4/observable-cues.json",
+      "bytes": 2801,
+      "sha256": "e42ce6834c84f516769640807c80c99e51290446ea264cebefe8b6bced68ed7f"
+    },
+    {
+      "path": "generated/p4/owner-profile-catalog.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p4/owner-profile-catalog.json",
+      "bytes": 12756,
+      "sha256": "60336986618b7b59af11d8cafb079f0581e4a8e313359a6044c66355ed7ff355"
+    },
+    {
+      "path": "generated/p4/temperament-catalog.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p4/temperament-catalog.json",
+      "bytes": 6605,
+      "sha256": "65a8c138698c72c594ac442e9b61925664c8b3f7fdede639f4bc8ea84e7a8aa5"
+    },
+    {
+      "path": "generated/p6/economy-catalog.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p6/economy-catalog.json",
+      "bytes": 221631,
+      "sha256": "e3eff3abba3f4b3d7b9f07b1caa7335b5b01c391973dd1647a16ecf858dcd23f"
+    },
+    {
+      "path": "generated/p6/p3-p5-resource-crosswalk.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p6/p3-p5-resource-crosswalk.json",
+      "bytes": 394548,
+      "sha256": "f1d26238b40340526ac9b161687ea7fd94d985b77c181db1959ef6c2d3d5a015"
+    },
+    {
+      "path": "generated/p7/day-catalog.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p7/day-catalog.json",
+      "bytes": 67955,
+      "sha256": "57f8ae13fa8e07e26e91188cd09e8c6ec772169c444f5df407b2adabae6f106f"
+    },
+    {
+      "path": "generated/p7/director-catalog.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/generated/p7/director-catalog.json",
+      "bytes": 321545,
+      "sha256": "2ff697e0900bd1782635b4c6753df138afcfe0d702d3043df44ce7a8d4b7ea28"
+    },
+    {
+      "path": "MANIFEST.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/MANIFEST.json",
+      "bytes": 3859,
+      "sha256": "9d0803d02c200ded0911eb073509639ecced81361b239a28b438d7b4e6b3e751"
+    },
+    {
+      "path": "PROGRAMMER_HANDOFF.md",
+      "originPath": "operational-production-authoring-2026.07.16.3/PROGRAMMER_HANDOFF.md",
+      "bytes": 6498,
+      "sha256": "439da62a5f331dc92998aaa4aac8538d45b73717e4b74d25116e697ff9b27b15"
+    },
+    {
+      "path": "README.md",
+      "originPath": "operational-production-authoring-2026.07.16.3/README.md",
+      "bytes": 3794,
+      "sha256": "7e87a7bcc0b3e0677ae7aa1cbbea722deb63f6189a5e7252bc7bea7c376b37fb"
+    },
+    {
+      "path": "reports/AUTHOR_DECISION_MATRIX.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/reports/AUTHOR_DECISION_MATRIX.json",
+      "bytes": 1653,
+      "sha256": "9962ff4283b24ca138a3340b8a1c0a5188b52ca490cf504daad01c9d4fdd0087"
+    },
+    {
+      "path": "reports/CROSS_SYSTEM_V2_AUTHOR_MATRIX.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/reports/CROSS_SYSTEM_V2_AUTHOR_MATRIX.json",
+      "bytes": 664,
+      "sha256": "3910744cebe006320bfcecb6b74c83c5ac8290edbaa12c10fc0efcb7c0137e3a"
+    },
+    {
+      "path": "reports/P1_CORRECTION_MATRIX.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/reports/P1_CORRECTION_MATRIX.json",
+      "bytes": 2463,
+      "sha256": "9a87ac645ab6aeb8637d7ba0ef398495b7dfd9f451c82b5734db012ed2ddabf9"
+    },
+    {
+      "path": "reports/VALIDATION_REPORT.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/reports/VALIDATION_REPORT.json",
+      "bytes": 10689,
+      "sha256": "15b139bfb518e2ce423d5e2c83a1b4655425344a5bb68c101376cb0b9b75e3b8"
+    },
+    {
+      "path": "schemas/OPERATIONAL_PACKAGE_CONTRACT.md",
+      "originPath": "operational-production-authoring-2026.07.16.3/schemas/OPERATIONAL_PACKAGE_CONTRACT.md",
+      "bytes": 3291,
+      "sha256": "b867edce7b2663a716bece8ae3f5e74a657ec27b3c863d2e7638d23227a9a1e3"
+    },
+    {
+      "path": "scripts/author-v2-cross-system-contracts.mjs",
+      "originPath": "operational-production-authoring-2026.07.16.3/scripts/author-v2-cross-system-contracts.mjs",
+      "bytes": 13439,
+      "sha256": "f33417f73ad0da01243152e99e80dfafc0171e331c6cca9edc97767627086dac"
+    },
+    {
+      "path": "scripts/author-v2-explicit-contracts.mjs",
+      "originPath": "operational-production-authoring-2026.07.16.3/scripts/author-v2-explicit-contracts.mjs",
+      "bytes": 25447,
+      "sha256": "f6d13c858f33a7092be3acdc06c45f571e08c341185aadf9f80f629e012c15bd"
+    },
+    {
+      "path": "scripts/author-v3-exact-contracts.mjs",
+      "originPath": "operational-production-authoring-2026.07.16.3/scripts/author-v3-exact-contracts.mjs",
+      "bytes": 10833,
+      "sha256": "6c8932ac83aec9b3617f4a5063c111af01c9814093c4cba16ecd6b88c4ae4cdb"
+    },
+    {
+      "path": "scripts/build-operational-package.mjs",
+      "originPath": "operational-production-authoring-2026.07.16.3/scripts/build-operational-package.mjs",
+      "bytes": 29272,
+      "sha256": "18cf0b7a309382b2f6597a4fd1e7c30f2607a16561c6640e35d72c0d5ba7c7b5"
+    },
+    {
+      "path": "scripts/validate-operational-package.mjs",
+      "originPath": "operational-production-authoring-2026.07.16.3/scripts/validate-operational-package.mjs",
+      "bytes": 31134,
+      "sha256": "5940ac113a0504d034c584b3dd4e1fd75fb08488d03a98dd760d662d00d36a54"
+    },
+    {
+      "path": "source/p3-exact-source-crosswalk.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p3-exact-source-crosswalk.json",
+      "bytes": 362586,
+      "sha256": "ac185625688fb1b1759c59ef74cf8229cac192d61042c78071be48d2a5a4e012"
+    },
+    {
+      "path": "source/p3-explicit-research-routes.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p3-explicit-research-routes.json",
+      "bytes": 287834,
+      "sha256": "fbda3ed7817aa93bf3f73274b53dbb3acf554ab58b29139617d0bc3535923552"
+    },
+    {
+      "path": "source/p3-policy.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p3-policy.json",
+      "bytes": 7825,
+      "sha256": "ed9321ccab73c05fbc1f9ff91e01ad57212e3039c1840e4fb1182b1a1d8d1554"
+    },
+    {
+      "path": "source/p4-explicit-behavior-crosswalk.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p4-explicit-behavior-crosswalk.json",
+      "bytes": 423813,
+      "sha256": "6869cd265bcfd699810388558f77aeed86c7dfcd5cb188db640c99f74e4ea818"
+    },
+    {
+      "path": "source/p4-operational-requirements.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p4-operational-requirements.json",
+      "bytes": 3039,
+      "sha256": "a47b9216f03fa481643d0561abc615fceb1ed85a228a1078d8fecc4406931c34"
+    },
+    {
+      "path": "source/p4-policy.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p4-policy.json",
+      "bytes": 18413,
+      "sha256": "3af7aad7d63c156c7a8011c0167c6eea5f76c595bb9f64086da74457ba58e007"
+    },
+    {
+      "path": "source/p4-presentation-medical-fact-crosswalk.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p4-presentation-medical-fact-crosswalk.json",
+      "bytes": 1736988,
+      "sha256": "c4caa9560260b96aad2f0e866c45f764ed54ede44bb4683e6583caa299aa1ddb"
+    },
+    {
+      "path": "source/p6-balance.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p6-balance.json",
+      "bytes": 10793,
+      "sha256": "24cfbd1dcc9290e6868b19c372f50de91407a6e92438244314fa169b0e182591"
+    },
+    {
+      "path": "source/p6-explicit-capability-economics.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p6-explicit-capability-economics.json",
+      "bytes": 164684,
+      "sha256": "778ba92a5e4df1535974ca5385f17af15b8ab6cca6a5a5169ff0ac226ac0359f"
+    },
+    {
+      "path": "source/p6-p5-exact-resource-crosswalk.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p6-p5-exact-resource-crosswalk.json",
+      "bytes": 320213,
+      "sha256": "61a44ff5096c2077635e26b9785a7cbeea0a525b4d6e0f9d395bc12d9f837598"
+    },
+    {
+      "path": "source/p7-activation-digest-contract.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p7-activation-digest-contract.json",
+      "bytes": 1096,
+      "sha256": "793589f645a249008cf76938f3fa169db22c44722c2bba916db9133ea7fdd5f3"
+    },
+    {
+      "path": "source/p7-campaign.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p7-campaign.json",
+      "bytes": 16571,
+      "sha256": "d22b1e29f921361e35f45e902497b4bd7efc72251ab887ea3378d551da4d0621"
+    },
+    {
+      "path": "source/p7-evidence-resolver.json",
+      "originPath": "operational-production-authoring-2026.07.16.3/source/p7-evidence-resolver.json",
+      "bytes": 21629,
+      "sha256": "068ce9034fff8875fd1c7e86c2475f4a3eda1dba96d253e1a3f1239f15512a28"
+    }
+  ]
+}

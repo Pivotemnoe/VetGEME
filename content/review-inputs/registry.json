@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "vetgeme-review-input-registry",
-  "registryVersion": "2026.07.16.7",
+  "registryVersion": "2026.07.16.8",
   "reviewInputs": [
     {
       "reviewInputId": "vetgeme-medical-production-authoring",
@@ -189,6 +189,100 @@
         "provenanceSha256": "1134ba0ee80a6967b63764ff6e1466b5f5b97b3822bb36f577b391c3d65c6dbd",
         "aggregateSha256": "3a92755e321cb3151921f0d8f12b4f52ce3ea2fef136d15ba1014fce141bbd62",
         "archiveSha256": "0f271166547eb9dfa08f5bc195d6e5dba123f267353d2f09fbe7786b9bfb46f3"
+      },
+      "medicalReviewInput": {
+        "reviewInputId": "vetgeme-medical-production-authoring",
+        "reviewInputVersion": "2026.07.16.40",
+        "productionEligible": false,
+        "generatorEligible": false,
+        "sourceIntegrity": {
+          "provenanceSha256": "8dda49a530366c3b42f0d0c94bb5e7adf322e87b36df6e7d2d321a434012ecab",
+          "aggregateSha256": "3f3f89ab93e005a5100b39586328c38fa6b4fcf52887be63cabc41ac05c557c8",
+          "archiveSha256": "171659e929f4b8a83cf921a8fa689cd3f5ac632466c4c328dd047199fced71c5"
+        }
+      },
+      "p5ReviewInput": {
+        "reviewInputId": "vetgeme-p5-production-authoring",
+        "reviewInputVersion": "2026.07.16.2",
+        "reviewOnly": true,
+        "runtimeEligible": false,
+        "sourceIntegrity": {
+          "archiveSha256": "665183acc97096477dd9366b8116a65a11862e4919d02170278f8e97e241a7ab"
+        }
+      },
+      "capabilityRegistry": {
+        "registryId": "vetgeme-clinic-capabilities",
+        "registryVersion": "2026.07.14.38",
+        "path": "content/system-packs/vetgeme-master-2026-07-14/capability-registry.json",
+        "sha256": "16ff64c015a8edb302c15289540a4ed760cfc356d832bca31094f992b1da3c81"
+      }
+    },
+    {
+      "reviewInputId": "vetgeme-operational-production-authoring",
+      "reviewInputVersion": "2026.07.16.3",
+      "kind": "operational_authoring",
+      "packageId": "vetgeme-operational-production-authoring",
+      "packageVersion": "2026.07.16.3",
+      "root": "content/review-inputs/vetgeme-operational-production-authoring-2026.07.16.3",
+      "sourceRoot": "source",
+      "manifestPath": "source/MANIFEST.json",
+      "provenancePath": "provenance.json",
+      "status": "author_complete_validation_passed",
+      "reviewOnly": true,
+      "productionEligible": false,
+      "runtimeEligible": false,
+      "generatorEligible": false,
+      "allowCurrentCaseCrosswalk": false,
+      "allowRuntimeActivation": false,
+      "allowActivationManifest": false,
+      "authorSourceSupersession": {
+        "supersedesReviewInputVersion": "2026.07.16.2",
+        "scopes": [
+          "p3",
+          "p4",
+          "p7"
+        ],
+        "priorVersionPreserved": true,
+        "p5P6ReservationAuthorityJoined": false
+      },
+      "expectedCounts": {
+        "sourceFiles": 40,
+        "sourceBytes": 12860948,
+        "families": 39,
+        "variants": 215,
+        "presentations": 645,
+        "researchIds": 361,
+        "researchRoutesLocal": 230,
+        "researchRoutesExternal": 131,
+        "investigationUsages": 1864,
+        "providers": 6,
+        "ownerProfiles": 12,
+        "temperaments": 8,
+        "observableCues": 10,
+        "temperamentTags": 128,
+        "ownerModifierTags": 463,
+        "handlingAlternativeTags": 446,
+        "behaviorPresentations": 645,
+        "capabilities": 447,
+        "supplementalCapabilities": 8,
+        "p5ResourcesCrosswalked": 49,
+        "inventoryCategories": 10,
+        "reputationAxes": 4,
+        "p7EvidenceResolvers": 93,
+        "p4PresentationHandlingBindings": 514,
+        "campaignDays": 30,
+        "chapters": 6,
+        "goals": 60,
+        "events": 27,
+        "milestones": 6,
+        "specializations": 3,
+        "endings": 6,
+        "productionPool": 0
+      },
+      "sourceIntegrity": {
+        "provenanceSha256": "105b5c037652eac183a29af7e4afdb6f044ebce6811e69a48199b2e7a37eb986",
+        "aggregateSha256": "20e2b8768b1be7cdacefb11fdb1b2dc1139d0f007097c99188e0706bab685284",
+        "archiveSha256": "5abee5242467e703561e0de2eefbb5050345448c90b21b97761d7ee60540a1df"
       },
       "medicalReviewInput": {
         "reviewInputId": "vetgeme-medical-production-authoring",

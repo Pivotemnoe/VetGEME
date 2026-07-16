@@ -1,0 +1,429 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p4-owner-profiles",
+  "catalogVersion": "2026.07.16.3",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "profiles": [
+    {
+      "profileId": "owner_calm_collaborative",
+      "title": "Спокойный и включённый",
+      "traits": {
+        "patience": 82,
+        "baselineAnxiety": 20,
+        "observation": 76,
+        "clinicTrust": 72,
+        "conflictTendency": 12,
+        "medicalComprehension": 72,
+        "honesty": 84,
+        "responsibility": 80,
+        "financialFlexibility": 58,
+        "uncertaintySensitivity": 28,
+        "secondOpinionTendency": 18,
+        "complexPlanAdherence": 78
+      },
+      "runtimePersistentProfile": {
+        "profileId": "owner_calm_collaborative",
+        "traits": {
+          "patience": 82,
+          "baselineAnxiety": 20,
+          "observation": 76,
+          "clinicTrust": 72,
+          "conflictTendency": 12,
+          "medicalComprehension": 72,
+          "honesty": 84,
+          "responsibility": 80,
+          "financialFlexibility": 58,
+          "uncertaintySensitivity": 28,
+          "secondOpinionTendency": 18,
+          "complexPlanAdherence": 78
+        }
+      }
+    },
+    {
+      "profileId": "owner_anxious_observant",
+      "title": "Тревожный наблюдательный",
+      "traits": {
+        "patience": 55,
+        "baselineAnxiety": 82,
+        "observation": 88,
+        "clinicTrust": 58,
+        "conflictTendency": 24,
+        "medicalComprehension": 62,
+        "honesty": 82,
+        "responsibility": 78,
+        "financialFlexibility": 54,
+        "uncertaintySensitivity": 88,
+        "secondOpinionTendency": 35,
+        "complexPlanAdherence": 68
+      },
+      "runtimePersistentProfile": {
+        "profileId": "owner_anxious_observant",
+        "traits": {
+          "patience": 55,
+          "baselineAnxiety": 82,
+          "observation": 88,
+          "clinicTrust": 58,
+          "conflictTendency": 24,
+          "medicalComprehension": 62,
+          "honesty": 82,
+          "responsibility": 78,
+          "financialFlexibility": 54,
+          "uncertaintySensitivity": 88,
+          "secondOpinionTendency": 35,
+          "complexPlanAdherence": 68
+        }
+      }
+    },
+    {
+      "profileId": "owner_budget_constrained",
+      "title": "Ограниченный бюджет",
+      "traits": {
+        "patience": 65,
+        "baselineAnxiety": 62,
+        "observation": 64,
+        "clinicTrust": 60,
+        "conflictTendency": 22,
+        "medicalComprehension": 58,
+        "honesty": 74,
+        "responsibility": 70,
+        "financialFlexibility": 12,
+        "uncertaintySensitivity": 66,
+        "secondOpinionTendency": 28,
+        "complexPlanAdherence": 48
+      },
+      "runtimePersistentProfile": {
+        "profileId": "owner_budget_constrained",
+        "traits": {
+          "patience": 65,
+          "baselineAnxiety": 62,
+          "observation": 64,
+          "clinicTrust": 60,
+          "conflictTendency": 22,
+          "medicalComprehension": 58,
+          "honesty": 74,
+          "responsibility": 70,
+          "financialFlexibility": 12,
+          "uncertaintySensitivity": 66,
+          "secondOpinionTendency": 28,
+          "complexPlanAdherence": 48
+        }
+      }
+    },
+    {
+      "profileId": "owner_time_constrained",
+      "title": "Ограничен во времени",
+      "traits": {
+        "patience": 24,
+        "baselineAnxiety": 48,
+        "observation": 54,
+        "clinicTrust": 62,
+        "conflictTendency": 28,
+        "medicalComprehension": 68,
+        "honesty": 70,
+        "responsibility": 68,
+        "financialFlexibility": 60,
+        "uncertaintySensitivity": 52,
+        "secondOpinionTendency": 24,
+        "complexPlanAdherence": 45
+      },
+      "runtimePersistentProfile": {
+        "profileId": "owner_time_constrained",
+        "traits": {
+          "patience": 24,
+          "baselineAnxiety": 48,
+          "observation": 54,
+          "clinicTrust": 62,
+          "conflictTendency": 28,
+          "medicalComprehension": 68,
+          "honesty": 70,
+          "responsibility": 68,
+          "financialFlexibility": 60,
+          "uncertaintySensitivity": 52,
+          "secondOpinionTendency": 24,
+          "complexPlanAdherence": 45
+        }
+      }
+    },
+    {
+      "profileId": "owner_distrustful",
+      "title": "Недоверчивый",
+      "traits": {
+        "patience": 38,
+        "baselineAnxiety": 66,
+        "observation": 72,
+        "clinicTrust": 22,
+        "conflictTendency": 68,
+        "medicalComprehension": 56,
+        "honesty": 58,
+        "responsibility": 62,
+        "financialFlexibility": 48,
+        "uncertaintySensitivity": 76,
+        "secondOpinionTendency": 82,
+        "complexPlanAdherence": 38
+      },
+      "runtimePersistentProfile": {
+        "profileId": "owner_distrustful",
+        "traits": {
+          "patience": 38,
+          "baselineAnxiety": 66,
+          "observation": 72,
+          "clinicTrust": 22,
+          "conflictTendency": 68,
+          "medicalComprehension": 56,
+          "honesty": 58,
+          "responsibility": 62,
+          "financialFlexibility": 48,
+          "uncertaintySensitivity": 76,
+          "secondOpinionTendency": 82,
+          "complexPlanAdherence": 38
+        }
+      }
+    },
+    {
+      "profileId": "owner_low_comprehension",
+      "title": "Нуждается в простом объяснении",
+      "traits": {
+        "patience": 62,
+        "baselineAnxiety": 58,
+        "observation": 42,
+        "clinicTrust": 68,
+        "conflictTendency": 18,
+        "medicalComprehension": 22,
+        "honesty": 72,
+        "responsibility": 66,
+        "financialFlexibility": 46,
+        "uncertaintySensitivity": 64,
+        "secondOpinionTendency": 20,
+        "complexPlanAdherence": 32
+      },
+      "runtimePersistentProfile": {
+        "profileId": "owner_low_comprehension",
+        "traits": {
+          "patience": 62,
+          "baselineAnxiety": 58,
+          "observation": 42,
+          "clinicTrust": 68,
+          "conflictTendency": 18,
+          "medicalComprehension": 22,
+          "honesty": 72,
+          "responsibility": 66,
+          "financialFlexibility": 46,
+          "uncertaintySensitivity": 64,
+          "secondOpinionTendency": 20,
+          "complexPlanAdherence": 32
+        }
+      }
+    },
+    {
+      "profileId": "owner_overconfident",
+      "title": "Уверен в домашнем диагнозе",
+      "traits": {
+        "patience": 34,
+        "baselineAnxiety": 30,
+        "observation": 58,
+        "clinicTrust": 42,
+        "conflictTendency": 52,
+        "medicalComprehension": 46,
+        "honesty": 64,
+        "responsibility": 54,
+        "financialFlexibility": 56,
+        "uncertaintySensitivity": 20,
+        "secondOpinionTendency": 48,
+        "complexPlanAdherence": 38
+      },
+      "runtimePersistentProfile": {
+        "profileId": "owner_overconfident",
+        "traits": {
+          "patience": 34,
+          "baselineAnxiety": 30,
+          "observation": 58,
+          "clinicTrust": 42,
+          "conflictTendency": 52,
+          "medicalComprehension": 46,
+          "honesty": 64,
+          "responsibility": 54,
+          "financialFlexibility": 56,
+          "uncertaintySensitivity": 20,
+          "secondOpinionTendency": 48,
+          "complexPlanAdherence": 38
+        }
+      }
+    },
+    {
+      "profileId": "owner_exhausted_caregiver",
+      "title": "Истощён длительным уходом",
+      "traits": {
+        "patience": 44,
+        "baselineAnxiety": 72,
+        "observation": 76,
+        "clinicTrust": 58,
+        "conflictTendency": 34,
+        "medicalComprehension": 70,
+        "honesty": 78,
+        "responsibility": 74,
+        "financialFlexibility": 36,
+        "uncertaintySensitivity": 74,
+        "secondOpinionTendency": 32,
+        "complexPlanAdherence": 44
+      },
+      "runtimePersistentProfile": {
+        "profileId": "owner_exhausted_caregiver",
+        "traits": {
+          "patience": 44,
+          "baselineAnxiety": 72,
+          "observation": 76,
+          "clinicTrust": 58,
+          "conflictTendency": 34,
+          "medicalComprehension": 70,
+          "honesty": 78,
+          "responsibility": 74,
+          "financialFlexibility": 36,
+          "uncertaintySensitivity": 74,
+          "secondOpinionTendency": 32,
+          "complexPlanAdherence": 44
+        }
+      }
+    },
+    {
+      "profileId": "owner_defensive_after_failure",
+      "title": "Защищается после неудачи",
+      "traits": {
+        "patience": 32,
+        "baselineAnxiety": 74,
+        "observation": 62,
+        "clinicTrust": 34,
+        "conflictTendency": 70,
+        "medicalComprehension": 58,
+        "honesty": 40,
+        "responsibility": 52,
+        "financialFlexibility": 44,
+        "uncertaintySensitivity": 82,
+        "secondOpinionTendency": 66,
+        "complexPlanAdherence": 35
+      },
+      "runtimePersistentProfile": {
+        "profileId": "owner_defensive_after_failure",
+        "traits": {
+          "patience": 32,
+          "baselineAnxiety": 74,
+          "observation": 62,
+          "clinicTrust": 34,
+          "conflictTendency": 70,
+          "medicalComprehension": 58,
+          "honesty": 40,
+          "responsibility": 52,
+          "financialFlexibility": 44,
+          "uncertaintySensitivity": 82,
+          "secondOpinionTendency": 66,
+          "complexPlanAdherence": 35
+        }
+      }
+    },
+    {
+      "profileId": "owner_high_resource",
+      "title": "Готов к полному маршруту",
+      "traits": {
+        "patience": 70,
+        "baselineAnxiety": 42,
+        "observation": 70,
+        "clinicTrust": 68,
+        "conflictTendency": 18,
+        "medicalComprehension": 78,
+        "honesty": 80,
+        "responsibility": 82,
+        "financialFlexibility": 92,
+        "uncertaintySensitivity": 40,
+        "secondOpinionTendency": 25,
+        "complexPlanAdherence": 84
+      },
+      "runtimePersistentProfile": {
+        "profileId": "owner_high_resource",
+        "traits": {
+          "patience": 70,
+          "baselineAnxiety": 42,
+          "observation": 70,
+          "clinicTrust": 68,
+          "conflictTendency": 18,
+          "medicalComprehension": 78,
+          "honesty": 80,
+          "responsibility": 82,
+          "financialFlexibility": 92,
+          "uncertaintySensitivity": 40,
+          "secondOpinionTendency": 25,
+          "complexPlanAdherence": 84
+        }
+      }
+    },
+    {
+      "profileId": "owner_skeptical_evidence_seeking",
+      "title": "Просит доказательства",
+      "traits": {
+        "patience": 56,
+        "baselineAnxiety": 48,
+        "observation": 80,
+        "clinicTrust": 46,
+        "conflictTendency": 38,
+        "medicalComprehension": 86,
+        "honesty": 82,
+        "responsibility": 76,
+        "financialFlexibility": 62,
+        "uncertaintySensitivity": 58,
+        "secondOpinionTendency": 62,
+        "complexPlanAdherence": 66
+      },
+      "runtimePersistentProfile": {
+        "profileId": "owner_skeptical_evidence_seeking",
+        "traits": {
+          "patience": 56,
+          "baselineAnxiety": 48,
+          "observation": 80,
+          "clinicTrust": 46,
+          "conflictTendency": 38,
+          "medicalComprehension": 86,
+          "honesty": 82,
+          "responsibility": 76,
+          "financialFlexibility": 62,
+          "uncertaintySensitivity": 58,
+          "secondOpinionTendency": 62,
+          "complexPlanAdherence": 66
+        }
+      }
+    },
+    {
+      "profileId": "owner_inconsistent",
+      "title": "Непоследовательный",
+      "traits": {
+        "patience": 46,
+        "baselineAnxiety": 44,
+        "observation": 38,
+        "clinicTrust": 58,
+        "conflictTendency": 24,
+        "medicalComprehension": 52,
+        "honesty": 52,
+        "responsibility": 30,
+        "financialFlexibility": 50,
+        "uncertaintySensitivity": 44,
+        "secondOpinionTendency": 22,
+        "complexPlanAdherence": 18
+      },
+      "runtimePersistentProfile": {
+        "profileId": "owner_inconsistent",
+        "traits": {
+          "patience": 46,
+          "baselineAnxiety": 44,
+          "observation": 38,
+          "clinicTrust": 58,
+          "conflictTendency": 24,
+          "medicalComprehension": 52,
+          "honesty": 52,
+          "responsibility": 30,
+          "financialFlexibility": 50,
+          "uncertaintySensitivity": 44,
+          "secondOpinionTendency": 22,
+          "complexPlanAdherence": 18
+        }
+      }
+    }
+  ]
+}
