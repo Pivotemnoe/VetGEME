@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p4-identity-history-policy",
+  "catalogVersion": "2026.07.16.1",
+  "status": "author_complete_simulation_pending",
+  "runtimeEligible": false,
+  "policy": {
+    "timeAuthority": "campaignMinute",
+    "appendOnly": true,
+    "timeCannotMoveBackwards": true,
+    "duplicateEventIdMustBeByteEquivalent": true,
+    "sourceVisitIdRequiredForVisitEvents": true,
+    "sameSourceIdentityReusesStableIdentity": true,
+    "generatedDayPersistsIdentityRefsImmediately": true,
+    "reloadMayNotRegenerateIdentity": true,
+    "eventTypes": [
+      {
+        "type": "identity_created",
+        "entity": [
+          "owner",
+          "patient"
+        ],
+        "requiredPayloadKeys": [
+          "sourceIdentity"
+        ]
+      },
+      {
+        "type": "visit_arrived",
+        "entity": [
+          "owner",
+          "patient"
+        ],
+        "requiredPayloadKeys": [
+          "appointmentId"
+        ]
+      },
+      {
+        "type": "owner_disclosure",
+        "entity": [
+          "owner"
+        ],
+        "requiredPayloadKeys": [
+          "factId",
+          "disclosureState"
+        ]
+      },
+      {
+        "type": "consent_recorded",
+        "entity": [
+          "owner"
+        ],
+        "requiredPayloadKeys": [
+          "planId",
+          "decision"
+        ]
+      },
+      {
+        "type": "handling_action",
+        "entity": [
+          "patient"
+        ],
+        "requiredPayloadKeys": [
+          "actionId",
+          "processResultId"
+        ]
+      },
+      {
+        "type": "sample_attempt",
+        "entity": [
+          "patient"
+        ],
+        "requiredPayloadKeys": [
+          "orderId",
+          "sampleQuality"
+        ]
+      },
+      {
+        "type": "result_contact",
+        "entity": [
+          "owner",
+          "patient"
+        ],
+        "requiredPayloadKeys": [
+          "orderId",
+          "contactOutcome"
+        ]
+      },
+      {
+        "type": "plan_agreed",
+        "entity": [
+          "owner",
+          "patient"
+        ],
+        "requiredPayloadKeys": [
+          "planId",
+          "feasibilityTier"
+        ]
+      },
+      {
+        "type": "followup_scheduled",
+        "entity": [
+          "owner",
+          "patient"
+        ],
+        "requiredPayloadKeys": [
+          "appointmentId",
+          "dueAt"
+        ]
+      },
+      {
+        "type": "followup_missed",
+        "entity": [
+          "owner",
+          "patient"
+        ],
+        "requiredPayloadKeys": [
+          "appointmentId"
+        ]
+      },
+      {
+        "type": "referral_handoff",
+        "entity": [
+          "owner",
+          "patient"
+        ],
+        "requiredPayloadKeys": [
+          "referralOrderId",
+          "providerId"
+        ]
+      },
+      {
+        "type": "weight_recorded",
+        "entity": [
+          "patient"
+        ],
+        "requiredPayloadKeys": [
+          "weight",
+          "measurementId"
+        ]
+      }
+    ],
+    "forbiddenPayloadKeys": [
+      "diagnosis",
+      "diagnosisId",
+      "diagnosticTruth",
+      "medicalTruth",
+      "diseaseId"
+    ]
+  }
+}

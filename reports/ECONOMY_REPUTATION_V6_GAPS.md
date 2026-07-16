@@ -1,5 +1,11 @@
 # Economy and Reputation v6 — approved data gaps
 
+> Обновление 2026-07-16: получен полный quantitative balance authoring
+> candidate для 447 capabilities, inventory, четырёх reputation axes и
+> recovery. Он остаётся `runtimeEligible: false`; product-owner balance
+> acceptance, exact P5 resource mapping и runtime activation отсутствуют.
+> См. `reports/OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md`.
+
 Status: `technical_core_available_production_balance_and_activation_blocked`.
 
 This report separates the P6 audit primitives from balance and policy data. The

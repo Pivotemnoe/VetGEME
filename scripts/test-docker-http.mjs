@@ -173,6 +173,7 @@ async function runHttpSmoke() {
     "/content/clinical/tier-01/manifest.json",
     "/content/review-inputs/registry.json",
     "/content/review-inputs/vetgeme-medical-production-authoring-2026.07.16.39/source/MANIFEST.json",
+    "/content/review-inputs/vetgeme-operational-production-authoring-2026.07.16.1/source/MANIFEST.json",
     "/content/not-runtime.json",
     "/content/packs/not-a-pack/manifest.json",
     "/content/packs/tier-01-v2/future/technical-infectious-course.json",

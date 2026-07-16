@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p4-temperaments",
+  "catalogVersion": "2026.07.16.1",
+  "status": "author_complete_simulation_pending",
+  "runtimeEligible": false,
+  "temperaments": [
+    {
+      "temperamentId": "patient_calm_social",
+      "title": "Спокойный социальный",
+      "axes": {
+        "boldness": 72,
+        "excitability": 24,
+        "sociability": 82,
+        "touchSensitivity": 25,
+        "defensiveBehavior": 12,
+        "restraintTolerance": 78,
+        "stressRecovery": 82,
+        "familiarStaffTrust": 64,
+        "otherAnimalReactivity": 18
+      },
+      "runtimePatientProfileTemplate": {
+        "temperament": {
+          "boldness": 72,
+          "excitability": 24,
+          "sociability": 82,
+          "touchSensitivity": 25,
+          "defensiveBehavior": 12,
+          "restraintTolerance": 78,
+          "stressRecovery": 82,
+          "familiarStaffTrust": 64,
+          "otherAnimalReactivity": 18
+        }
+      }
+    },
+    {
+      "temperamentId": "patient_cautious",
+      "title": "Осторожный",
+      "axes": {
+        "boldness": 30,
+        "excitability": 52,
+        "sociability": 42,
+        "touchSensitivity": 54,
+        "defensiveBehavior": 38,
+        "restraintTolerance": 45,
+        "stressRecovery": 58,
+        "familiarStaffTrust": 62,
+        "otherAnimalReactivity": 35
+      },
+      "runtimePatientProfileTemplate": {
+        "temperament": {
+          "boldness": 30,
+          "excitability": 52,
+          "sociability": 42,
+          "touchSensitivity": 54,
+          "defensiveBehavior": 38,
+          "restraintTolerance": 45,
+          "stressRecovery": 58,
+          "familiarStaffTrust": 62,
+          "otherAnimalReactivity": 35
+        }
+      }
+    },
+    {
+      "temperamentId": "patient_fearful",
+      "title": "Боязливый",
+      "axes": {
+        "boldness": 14,
+        "excitability": 76,
+        "sociability": 22,
+        "touchSensitivity": 72,
+        "defensiveBehavior": 58,
+        "restraintTolerance": 18,
+        "stressRecovery": 24,
+        "familiarStaffTrust": 48,
+        "otherAnimalReactivity": 64
+      },
+      "runtimePatientProfileTemplate": {
+        "temperament": {
+          "boldness": 14,
+          "excitability": 76,
+          "sociability": 22,
+          "touchSensitivity": 72,
+          "defensiveBehavior": 58,
+          "restraintTolerance": 18,
+          "stressRecovery": 24,
+          "familiarStaffTrust": 48,
+          "otherAnimalReactivity": 64
+        }
+      }
+    },
+    {
+      "temperamentId": "patient_pain_defensive",
+      "title": "Защитная реакция на боль",
+      "axes": {
+        "boldness": 44,
+        "excitability": 70,
+        "sociability": 34,
+        "touchSensitivity": 92,
+        "defensiveBehavior": 86,
+        "restraintTolerance": 12,
+        "stressRecovery": 28,
+        "familiarStaffTrust": 44,
+        "otherAnimalReactivity": 45
+      },
+      "runtimePatientProfileTemplate": {
+        "temperament": {
+          "boldness": 44,
+          "excitability": 70,
+          "sociability": 34,
+          "touchSensitivity": 92,
+          "defensiveBehavior": 86,
+          "restraintTolerance": 12,
+          "stressRecovery": 28,
+          "familiarStaffTrust": 44,
+          "otherAnimalReactivity": 45
+        }
+      }
+    },
+    {
+      "temperamentId": "patient_high_arousal",
+      "title": "Легко возбуждается",
+      "axes": {
+        "boldness": 68,
+        "excitability": 92,
+        "sociability": 64,
+        "touchSensitivity": 48,
+        "defensiveBehavior": 42,
+        "restraintTolerance": 28,
+        "stressRecovery": 26,
+        "familiarStaffTrust": 52,
+        "otherAnimalReactivity": 78
+      },
+      "runtimePatientProfileTemplate": {
+        "temperament": {
+          "boldness": 68,
+          "excitability": 92,
+          "sociability": 64,
+          "touchSensitivity": 48,
+          "defensiveBehavior": 42,
+          "restraintTolerance": 28,
+          "stressRecovery": 26,
+          "familiarStaffTrust": 52,
+          "otherAnimalReactivity": 78
+        }
+      }
+    },
+    {
+      "temperamentId": "patient_shutdown",
+      "title": "Замирает от стресса",
+      "axes": {
+        "boldness": 8,
+        "excitability": 34,
+        "sociability": 12,
+        "touchSensitivity": 68,
+        "defensiveBehavior": 22,
+        "restraintTolerance": 34,
+        "stressRecovery": 18,
+        "familiarStaffTrust": 36,
+        "otherAnimalReactivity": 24
+      },
+      "runtimePatientProfileTemplate": {
+        "temperament": {
+          "boldness": 8,
+          "excitability": 34,
+          "sociability": 12,
+          "touchSensitivity": 68,
+          "defensiveBehavior": 22,
+          "restraintTolerance": 34,
+          "stressRecovery": 18,
+          "familiarStaffTrust": 36,
+          "otherAnimalReactivity": 24
+        }
+      }
+    },
+    {
+      "temperamentId": "patient_familiar_staff",
+      "title": "Доверяет знакомому персоналу",
+      "axes": {
+        "boldness": 48,
+        "excitability": 46,
+        "sociability": 54,
+        "touchSensitivity": 42,
+        "defensiveBehavior": 28,
+        "restraintTolerance": 62,
+        "stressRecovery": 68,
+        "familiarStaffTrust": 92,
+        "otherAnimalReactivity": 32
+      },
+      "runtimePatientProfileTemplate": {
+        "temperament": {
+          "boldness": 48,
+          "excitability": 46,
+          "sociability": 54,
+          "touchSensitivity": 42,
+          "defensiveBehavior": 28,
+          "restraintTolerance": 62,
+          "stressRecovery": 68,
+          "familiarStaffTrust": 92,
+          "otherAnimalReactivity": 32
+        }
+      }
+    },
+    {
+      "temperamentId": "patient_other_animal_reactive",
+      "title": "Реактивен к другим животным",
+      "axes": {
+        "boldness": 58,
+        "excitability": 82,
+        "sociability": 32,
+        "touchSensitivity": 40,
+        "defensiveBehavior": 52,
+        "restraintTolerance": 44,
+        "stressRecovery": 38,
+        "familiarStaffTrust": 58,
+        "otherAnimalReactivity": 94
+      },
+      "runtimePatientProfileTemplate": {
+        "temperament": {
+          "boldness": 58,
+          "excitability": 82,
+          "sociability": 32,
+          "touchSensitivity": 40,
+          "defensiveBehavior": 52,
+          "restraintTolerance": 44,
+          "stressRecovery": 38,
+          "familiarStaffTrust": 58,
+          "otherAnimalReactivity": 94
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p6-balance-catalog",
+  "catalogVersion": "2026.07.16.1",
+  "status": "author_complete_simulation_pending",
+  "runtimeEligible": false,
+  "currency": {"code": "V", "minorUnits": 1, "designUnitToCurrency": 200},
+  "newCampaign": {
+    "startingCash": 6000,
+    "creditLimit": 2500,
+    "protectedReserve": 1500,
+    "largePurchaseLockThroughDay": 4,
+    "closureDebtFloor": -2500,
+    "recoveryGrant": 600,
+    "recoveryGrantMaximumUses": 1
+  },
+  "dailyFixedCosts": [
+    {"costId": "rent", "amount": 180, "dueMinute": 1200},
+    {"costId": "utilities", "amount": 45, "dueMinute": 1200},
+    {"costId": "cleaning_waste", "amount": 35, "dueMinute": 1200},
+    {"costId": "communications", "amount": 15, "dueMinute": 1200},
+    {"costId": "insurance_regulatory", "amount": 25, "dueMinute": 1200},
+    {"costId": "maintenance_reserve", "amount": 35, "dueMinute": 1200}
+  ],
+  "staffWagesPerWorkedDay": [
+    {"roleId": "doctor", "amount": 720, "maximumShiftMinutes": 600, "mandatoryRestMinutes": 720},
+    {"roleId": "assistant", "amount": 340, "maximumShiftMinutes": 600, "mandatoryRestMinutes": 720},
+    {"roleId": "administrator", "amount": 290, "maximumShiftMinutes": 600, "mandatoryRestMinutes": 720},
+    {"roleId": "lab_staff", "amount": 410, "maximumShiftMinutes": 540, "mandatoryRestMinutes": 720},
+    {"roleId": "care_staff", "amount": 300, "maximumShiftMinutes": 600, "mandatoryRestMinutes": 720},
+    {"roleId": "manager", "amount": 500, "maximumShiftMinutes": 480, "mandatoryRestMinutes": 720}
+  ],
+  "servicePrices": [
+    {"serviceId": "consult_primary", "price": 260, "variableCost": 25, "durationMinutes": 30},
+    {"serviceId": "consult_repeat", "price": 160, "variableCost": 15, "durationMinutes": 20},
+    {"serviceId": "consult_urgent", "price": 390, "variableCost": 35, "durationMinutes": 35},
+    {"serviceId": "microscopy_simple", "price": 140, "variableCost": 32, "durationMinutes": 15},
+    {"serviceId": "rapid_test", "price": 220, "variableCost": 88, "durationMinutes": 15},
+    {"serviceId": "cbc", "price": 420, "variableCost": 125, "durationMinutes": 20},
+    {"serviceId": "biochemistry", "price": 580, "variableCost": 190, "durationMinutes": 25},
+    {"serviceId": "urinalysis", "price": 260, "variableCost": 64, "durationMinutes": 20},
+    {"serviceId": "radiography", "price": 820, "variableCost": 160, "durationMinutes": 35},
+    {"serviceId": "ultrasound", "price": 920, "variableCost": 110, "durationMinutes": 45},
+    {"serviceId": "short_procedure", "price": 620, "variableCost": 180, "durationMinutes": 45},
+    {"serviceId": "observation_block", "price": 280, "variableCost": 70, "durationMinutes": 60},
+    {"serviceId": "referral_coordination", "price": 90, "variableCost": 20, "durationMinutes": 12}
+  ],
+  "serviceClassRules": [
+    {"matchTokens": ["xray", "radiograph"], "serviceId": "radiography"},
+    {"matchTokens": ["ultrasound", "pocus", "echo"], "serviceId": "ultrasound"},
+    {"matchTokens": ["cbc", "hematology"], "serviceId": "cbc"},
+    {"matchTokens": ["biochem", "chemistry", "electrolyte"], "serviceId": "biochemistry"},
+    {"matchTokens": ["urinalysis", "urine"], "serviceId": "urinalysis"},
+    {"matchTokens": ["rapid", "antigen", "glucometer", "ketone"], "serviceId": "rapid_test"},
+    {"matchTokens": ["cytology", "microscop", "scrape", "smear", "trichogram"], "serviceId": "microscopy_simple"},
+    {"matchTokens": ["procedure", "surgery", "anesthesia", "sedation", "sampling", "catheter"], "serviceId": "short_procedure"},
+    {"matchTokens": ["monitor", "observation", "longitudinal"], "serviceId": "observation_block"},
+    {"matchTokens": ["external", "referral"], "serviceId": "referral_coordination"},
+    {"matchTokens": [], "serviceId": "consult_primary"}
+  ],
+  "inventoryCategories": [
+    {"categoryId": "general_exam", "reorderPoint": 20, "reorderQuantity": 60, "leadDays": [1, 2], "unitCost": 3, "shelfLifeDays": 180},
+    {"categoryId": "cytology", "reorderPoint": 18, "reorderQuantity": 60, "leadDays": [1, 2], "unitCost": 5, "shelfLifeDays": 365},
+    {"categoryId": "urine", "reorderPoint": 12, "reorderQuantity": 40, "leadDays": [1, 3], "unitCost": 7, "shelfLifeDays": 240},
+    {"categoryId": "blood", "reorderPoint": 12, "reorderQuantity": 40, "leadDays": [1, 3], "unitCost": 10, "shelfLifeDays": 240},
+    {"categoryId": "rapid_tests", "reorderPoint": 6, "reorderQuantity": 20, "leadDays": [2, 4], "unitCost": 42, "shelfLifeDays": 180},
+    {"categoryId": "wound_procedure", "reorderPoint": 10, "reorderQuantity": 30, "leadDays": [1, 2], "unitCost": 14, "shelfLifeDays": 365},
+    {"categoryId": "infusion", "reorderPoint": 8, "reorderQuantity": 24, "leadDays": [1, 3], "unitCost": 24, "shelfLifeDays": 365},
+    {"categoryId": "oxygen", "reorderPoint": 4, "reorderQuantity": 12, "leadDays": [1, 2], "unitCost": 35, "shelfLifeDays": 3650},
+    {"categoryId": "anesthesia", "reorderPoint": 5, "reorderQuantity": 15, "leadDays": [2, 4], "unitCost": 32, "shelfLifeDays": 365},
+    {"categoryId": "infection_control", "reorderPoint": 20, "reorderQuantity": 80, "leadDays": [1, 2], "unitCost": 4, "shelfLifeDays": 365}
+  ],
+  "consumableMappingRules": [
+    {"matchTokens": ["cytology", "skin", "fungal", "fecal", "sample"], "categoryId": "cytology", "unitsPerUse": 1},
+    {"matchTokens": ["urine"], "categoryId": "urine", "unitsPerUse": 1},
+    {"matchTokens": ["blood", "cbc", "chemistry", "electrolyte"], "categoryId": "blood", "unitsPerUse": 1},
+    {"matchTokens": ["test_kit", "rapid", "strip", "sensor"], "categoryId": "rapid_tests", "unitsPerUse": 1},
+    {"matchTokens": ["wound", "suture", "sterile_eye", "procedure"], "categoryId": "wound_procedure", "unitsPerUse": 1},
+    {"matchTokens": ["fluid", "infusion", "catheter"], "categoryId": "infusion", "unitsPerUse": 1},
+    {"matchTokens": ["oxygen"], "categoryId": "oxygen", "unitsPerUse": 1},
+    {"matchTokens": ["anesthesia", "sedation"], "categoryId": "anesthesia", "unitsPerUse": 1},
+    {"matchTokens": ["ppe", "isolation", "disinfection", "infection"], "categoryId": "infection_control", "unitsPerUse": 1},
+    {"matchTokens": [], "categoryId": "general_exam", "unitsPerUse": 1}
+  ],
+  "assetPricingByType": {
+    "small_equipment": {"purchasePrice": 900, "deliveryDays": 1, "trainingMinutes": 60, "maintenanceIntervalDays": 20, "maintenanceCost": 90},
+    "laboratory_equipment": {"purchasePrice": 3200, "deliveryDays": 2, "trainingMinutes": 180, "maintenanceIntervalDays": 15, "maintenanceCost": 180},
+    "imaging_equipment": {"purchasePrice": 21000, "deliveryDays": 4, "trainingMinutes": 360, "maintenanceIntervalDays": 10, "maintenanceCost": 420},
+    "treatment_equipment": {"purchasePrice": 4800, "deliveryDays": 2, "trainingMinutes": 180, "maintenanceIntervalDays": 15, "maintenanceCost": 210},
+    "room": {"purchasePrice": 11000, "deliveryDays": 5, "trainingMinutes": 120, "maintenanceIntervalDays": 20, "maintenanceCost": 260},
+    "room_capability": {"purchasePrice": 7000, "deliveryDays": 3, "trainingMinutes": 120, "maintenanceIntervalDays": 20, "maintenanceCost": 180},
+    "consumable_device": {"purchasePrice": 1200, "deliveryDays": 2, "trainingMinutes": 60, "maintenanceIntervalDays": 20, "maintenanceCost": 80}
+  },
+  "assetOverrides": [
+    {"capabilityId": "microscope", "purchasePrice": 2800, "deliveryDays": 0, "startsOwned": true},
+    {"capabilityId": "otoscope", "purchasePrice": 650, "deliveryDays": 0, "startsOwned": true},
+    {"capabilityId": "fecal_centrifuge", "purchasePrice": 3000},
+    {"capabilityId": "hematology_analyzer", "purchasePrice": 9000},
+    {"capabilityId": "biochemistry_analyzer", "purchasePrice": 12000},
+    {"capabilityId": "oxygen_station", "purchasePrice": 5200},
+    {"capabilityId": "xray_machine", "purchasePrice": 24000},
+    {"capabilityId": "ultrasound_machine", "purchasePrice": 20000},
+    {"capabilityId": "second_consult_room", "purchasePrice": 12000},
+    {"capabilityId": "low_stress_zone", "purchasePrice": 7500}
+  ],
+  "reputation": {
+    "axes": ["clinical", "communication", "accessibility", "organization"],
+    "baseline": {"clinical": 50, "communication": 50, "accessibility": 50, "organization": 50},
+    "bounds": {"minimum": 0, "maximum": 100},
+    "eventDeltas": [
+      {"eventId": "safe_plan_completed", "axis": "clinical", "delta": 2},
+      {"eventId": "critical_fact_missed", "axis": "clinical", "delta": -8},
+      {"eventId": "safe_referral_used", "axis": "clinical", "delta": 1},
+      {"eventId": "result_review_overdue", "axis": "clinical", "delta": -4},
+      {"eventId": "teach_back_success", "axis": "communication", "delta": 2},
+      {"eventId": "owner_left_without_handoff", "axis": "communication", "delta": -5},
+      {"eventId": "staged_plan_accepted", "axis": "accessibility", "delta": 2},
+      {"eventId": "no_safe_affordable_route", "axis": "accessibility", "delta": -6},
+      {"eventId": "shift_closed_cleanly", "axis": "organization", "delta": 1},
+      {"eventId": "reservation_or_order_orphaned", "axis": "organization", "delta": -6}
+    ],
+    "aggregateRule": "arithmetic_mean_for_reporting_only_not_runtime_authority"
+  },
+  "riskStates": [
+    {"stateId": "stable", "minCashInclusive": 1500, "maxOverdueObligations": 0, "maxStockoutCritical": 0, "maxMaintenanceOverdue": 0},
+    {"stateId": "watch", "minCashInclusive": 500, "maxOverdueObligations": 1, "maxStockoutCritical": 1, "maxMaintenanceOverdue": 1},
+    {"stateId": "elevated", "minCashInclusive": 0, "maxOverdueObligations": 2, "maxStockoutCritical": 2, "maxMaintenanceOverdue": 2},
+    {"stateId": "recovery", "minCashInclusive": -1500, "maxOverdueObligations": 3, "maxStockoutCritical": 3, "maxMaintenanceOverdue": 3},
+    {"stateId": "critical", "minCashInclusive": -2500, "maxOverdueObligations": 5, "maxStockoutCritical": 4, "maxMaintenanceOverdue": 4},
+    {"stateId": "closure_review", "minCashInclusive": -999999, "maxOverdueObligations": 999, "maxStockoutCritical": 999, "maxMaintenanceOverdue": 999}
+  ],
+  "recoveryPolicy": {
+    "graceDays": 2,
+    "closureRequiresTwoConsecutiveCriticalDays": true,
+    "singleErrorCannotCloseClinic": true,
+    "allowedActions": ["freeze_large_purchases", "staged_owner_plans", "referral_only_for_suspended_capability", "recovery_grant_once", "reduce_nonclinical_hours"],
+    "forbiddenActions": ["hide_required_diagnostic", "random_wrong_diagnosis", "silently_delete_obligation", "sell_reserved_resource"]
+  },
+  "migration": {"appliesTo": "new_campaigns_only", "legacyBalanceInference": false, "saveSchemaChange": false}
+}

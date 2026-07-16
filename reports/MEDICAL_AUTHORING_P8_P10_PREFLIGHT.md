@@ -118,6 +118,24 @@ visualization всё ещё невозможны: pool равен 0, а соот
 operational view-model inputs не утверждены и не подключены. Design freeze этой
 задачей не снят.
 
+## Обновление после operational authoring input 2026.07.16.1
+
+Отдельный review-only operational input теперь предоставляет P3/P4/P6/P7
+authoring candidates, перечисленные выше как отсутствовавшие. Это снимает
+прежний блокер «каталогов вообще нет», но не меняет activation verdict:
+
+- все operational catalogs имеют `runtimeEligible: false`;
+- 32 P3 provider routes требуют авторской перепроверки;
+- P4 содержит восемь неизвестных resource capability и теряет structured safe
+  alternatives в 446 runtime templates;
+- P4 first-match substring crosswalk имеет 5 owner и 183 handling ambiguities,
+  две точные лексические ошибки и один отдельный contextual risk;
+- P6 не содержит authoritative P5 resource IDs и не прошёл balance acceptance;
+- P7 не содержит approved digest envelopes или evidence resolver;
+- medical 39/215/645 по-прежнему veterinary pending.
+
+Полный результат: `reports/OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md`.
+
 ## Намеренно не изменено
 
 - медицинские тексты и данные source package;
@@ -127,7 +145,8 @@ operational view-model inputs не утверждены и не подключе
 - `current` и `legacy-v1`;
 - clinical UI, renderer, clinic visual и пользовательский `art/`;
 - пользовательские `handoff/`, исходный ZIP и распакованная source-папка;
-- переданный следующим этапом operational authoring package P3–P7;
+- source operational authoring package P3–P7 (tracked только как неизменяемая
+  review-копия, без runtime activation);
 - автоматические medical mappings и crosswalk.
 
 ## Выполненные проверки

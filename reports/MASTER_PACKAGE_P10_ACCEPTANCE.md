@@ -16,6 +16,13 @@
 > меняет production verdict: все veterinary statuses остаются pending,
 > production pool равен 0, а activation и P3–P7 production authorities не
 > утверждены и не подключены.
+>
+> Operational authoring preflight от 16 июля 2026 года находится в
+> [OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md](OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md).
+> Authoring candidates P3/P4/P6/P7 теперь получены и byte-pinned, но остаются
+> `runtimeEligible: false`: обнаружены P3 provider-routing, P4
+> resource/safe-alternative/rule-precedence и P7 digest/evidence blockers.
+> Поэтому production verdict также не изменён.
 > Остальной текст сохранён как исторический P10 snapshot от 15 июля.
 
 ## Итоговое решение
@@ -38,7 +45,9 @@ runtime evidence.
 - у 215 variants и 645 presentations нет собственных утверждённых lifecycle и
   eligibility-контрактов;
 - нет master activation manifests и crosswalk с действующими 30 карточками;
-- нет утверждённых production-каталогов и mappings для полного P3–P7 gameplay;
+- P3/P4/P6/P7 authoring candidates получены, но нет исправленных и утверждённых
+  production-каталогов, exact P5 mapping, activation manifests и runtime
+  adapters для полного P3–P7 gameplay;
 - нет production 30-day economy/campaign simulation на таких каталогах;
 - полная P9 state integration заблокирована теми же operational inputs и
   отдельно заморожена владельцем проекта до возобновления визуальной работы.

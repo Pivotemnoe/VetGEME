@@ -1,5 +1,13 @@
 # Identity and Behavior V4 — открытые данные и интеграционные границы
 
+> Обновление 2026-07-16: operational authoring candidate добавил profiles,
+> temperaments, cues, history policy и explicit 645-presentation crosswalk.
+> Production verdict не изменён: восемь resource IDs отсутствуют в canonical
+> registry, safe alternatives потеряны во всех 446 runtime action templates,
+> а first-match substring crosswalk содержит 5 owner и 183 handling conflicts
+> плюс две точные лексические ошибки temperament mapping.
+> См. `reports/OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md`.
+
 Статус: `runtime_integrated_data_catalogs_pending`.
 
 Ниже перечислены реальные несоответствия между каноническим P4-контрактом и

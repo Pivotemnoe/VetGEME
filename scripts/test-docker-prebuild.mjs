@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -67,6 +68,26 @@ const checks = [
   ["renderer readiness v2", "scripts/test-renderer-readiness-v2.js"],
   ["renderer scene v2", "scripts/test-renderer-scene-v2.js"],
 ];
+
+const reviewInputRegistry = path.join(root, "content/review-inputs/registry.json");
+if (existsSync(reviewInputRegistry)) {
+  checks.splice(
+    5,
+    0,
+    ["medical authoring review provenance", "scripts/refresh-medical-authoring-review-provenance.mjs"],
+    ["medical authoring review input", "scripts/validate-medical-authoring-review-input.mjs"],
+    ["medical authoring review contract", "scripts/test-medical-authoring-review-input.mjs"],
+    ["operational authoring review provenance", "scripts/refresh-operational-authoring-review-provenance.mjs"],
+    ["operational authoring review input", "scripts/validate-operational-authoring-review-input.mjs"],
+    ["operational authoring review contract", "scripts/test-operational-authoring-review-input.mjs"],
+    ["operational authoring mismatch report", "scripts/report-operational-authoring-mismatches.mjs"],
+  );
+} else {
+  console.log(
+    "\n[prebuild] Authoring review checks skipped: review-only inputs and reports " +
+      "are intentionally absent from the isolated Docker verifier",
+  );
+}
 
 if (commandExists("git")) {
   checks.splice(3, 0, ["Docker build context provenance", "scripts/test-docker-build-context.mjs"]);

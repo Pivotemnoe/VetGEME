@@ -44,3 +44,8 @@
 !docker/
 !docker/nginx/
 !docker/nginx/default.conf
+
+# Review-only authoring packages are validated on the host and never enter the
+# production Docker build context.
+content/review-inputs/
+content/review-inputs/**

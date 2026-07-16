@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "vetgeme-review-input-registry",
-  "registryVersion": "2026.07.16.1",
+  "registryVersion": "2026.07.16.2",
   "reviewInputs": [
     {
       "reviewInputId": "vetgeme-medical-production-authoring",
@@ -32,6 +32,61 @@
         "provenanceSha256": "207b901e1a2c0190fd366d5e135f4c43791b1922cc08031d1554fe21d6a36e87",
         "aggregateSha256": "e3341e533e09a6f00d09180f7b78808cdf1867406492a27cd17f9dca11bc626c",
         "archiveSha256": "54a6cec64406dd4e326aa5ff089cbd3878ef7cd17a4bb7ed01123c7a93da822c"
+      },
+      "capabilityRegistry": {
+        "registryId": "vetgeme-clinic-capabilities",
+        "registryVersion": "2026.07.14.38",
+        "path": "content/system-packs/vetgeme-master-2026-07-14/capability-registry.json",
+        "sha256": "16ff64c015a8edb302c15289540a4ed760cfc356d832bca31094f992b1da3c81"
+      }
+    },
+    {
+      "reviewInputId": "vetgeme-operational-production-authoring",
+      "reviewInputVersion": "2026.07.16.1",
+      "kind": "operational_authoring",
+      "packageId": "vetgeme-operational-production-authoring",
+      "packageVersion": "2026.07.16.1",
+      "root": "content/review-inputs/vetgeme-operational-production-authoring-2026.07.16.1",
+      "sourceRoot": "source",
+      "manifestPath": "source/MANIFEST.json",
+      "provenancePath": "provenance.json",
+      "status": "author_complete_validation_passed",
+      "reviewOnly": true,
+      "productionEligible": false,
+      "runtimeEligible": false,
+      "allowCurrentCaseCrosswalk": false,
+      "expectedCounts": {
+        "sourceFiles": 25,
+        "sourceBytes": 3925919,
+        "families": 39,
+        "variants": 215,
+        "presentations": 645,
+        "researchIds": 361,
+        "investigationUsages": 1864,
+        "providers": 6,
+        "ownerProfiles": 12,
+        "temperaments": 8,
+        "observableCues": 10,
+        "temperamentTags": 128,
+        "ownerModifierTags": 463,
+        "handlingAlternativeTags": 446,
+        "behaviorPresentations": 645,
+        "capabilities": 447,
+        "inventoryCategories": 10,
+        "reputationAxes": 4,
+        "campaignDays": 30,
+        "chapters": 6,
+        "goals": 60,
+        "events": 27,
+        "milestones": 6,
+        "specializations": 3,
+        "endings": 6,
+        "productionPool": 0
+      },
+      "sourceIntegrity": {
+        "provenanceSha256": "66a86e9dca078b58fcf905413390ee8132b7c572ce01ae8d6192576a03d2ce9c",
+        "aggregateSha256": "0a42bad7eccf70ba4eb3c18738c4b6653ab06d75056526ca828707b11e33f055",
+        "archiveSha256": "5d396f3ec56369a56e0113ec66b262c2726ed0a13a80571cdca8fc2516bde807"
       },
       "capabilityRegistry": {
         "registryId": "vetgeme-clinic-capabilities",

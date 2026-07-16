@@ -16,7 +16,8 @@ COPY tier-01-v2/scripts/ ./tier-01-v2/scripts/
 COPY art/runtime-v2/ ./art/runtime-v2/
 COPY scripts/ ./scripts/
 
-RUN npm run test:docker:prebuild
+RUN test ! -e content/review-inputs \
+    && npm run test:docker:prebuild
 
 FROM verify AS package
 

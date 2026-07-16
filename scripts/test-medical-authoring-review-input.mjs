@@ -24,10 +24,10 @@ const reviewInput = await loadMedicalAuthoringReviewInput(projectRoot, { context
 
 const registryWithAnotherReviewKind = clone(registry);
 registryWithAnotherReviewKind.reviewInputs.push({
-  reviewInputId: "vetgeme-operational-production-authoring",
-  reviewInputVersion: "2026.07.16.1",
-  kind: "operational_authoring",
-  root: "content/review-inputs/vetgeme-operational-production-authoring-2026.07.16.1",
+  reviewInputId: "vetgeme-review-fixture",
+  reviewInputVersion: "1.0.0",
+  kind: "test_review_fixture",
+  root: "content/review-inputs/vetgeme-review-fixture-1.0.0",
   status: "blocked_pending_review",
   reviewOnly: true,
   productionEligible: false,

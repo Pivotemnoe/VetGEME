@@ -1,5 +1,13 @@
 # Capability and Research v3 — activation gaps
 
+> Обновление 2026-07-16: versioned operational authoring candidate теперь
+> содержит 361 research contracts и 1 864 usage policies, поэтому прежний
+> structural mapping gap снят на review-уровне. Production verdict не изменён:
+> пакет `runtimeEligible: false`, 32 imaging-provider routes требуют авторской
+> перепроверки, 12 defaulted fallback требуют явного утверждения, а local
+> ownership bridge и veterinary approval ещё отсутствуют. См.
+> `reports/OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md`.
+
 Date: 2026-07-15
 Status: mechanics and canonical registry can be integrated; full medical,
 economic and referral activation remains blocked by missing authored data.

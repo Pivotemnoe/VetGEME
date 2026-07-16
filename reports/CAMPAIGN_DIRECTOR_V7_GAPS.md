@@ -1,5 +1,11 @@
 # Campaign Director V7 — блокирующие gaps полного P7
 
+> Обновление 2026-07-16: получен полный 30-day authoring candidate с 60 goals,
+> 27 events, 6 milestones, 3 specializations и 6 endings. Direct runtime import
+> остаётся закрыт: package refs не имеют обязательного digest/approved envelope,
+> а exact evidence resolver к P3–P6 audit IDs не предоставлен. См.
+> `reports/OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md`.
+
 Статус: `production_p7_blocked_catalogs_and_policies_missing`.
 
 ## 1. Результат аудита
