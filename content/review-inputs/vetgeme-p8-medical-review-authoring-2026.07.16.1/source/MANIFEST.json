@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "packageId": "vetgeme-p8-medical-review-authoring",
+  "packageVersion": "2026.07.16.1",
+  "status": "audit_complete_correction_required_activation_forbidden",
+  "activationAllowed": false,
+  "input": {
+    "packageId": "vetgeme-medical-production-authoring",
+    "packageVersion": "2026.07.16.39",
+    "archiveSha256": "54a6cec64406dd4e326aa5ff089cbd3878ef7cd17a4bb7ed01123c7a93da822c",
+    "sourceAggregateSha256": "e3341e533e09a6f00d09180f7b78808cdf1867406492a27cd17f9dca11bc626c"
+  },
+  "counts": {
+    "families": 39,
+    "variants": 215,
+    "presentations": 645,
+    "auditIssues": 5976,
+    "p0": 735,
+    "p1": 5241,
+    "ownerProfiles": 12,
+    "doctorSpeechFunctions": 15
+  },
+  "gates": {
+    "sourceAudit": "blocked",
+    "humanDialogueLibrary": "pass",
+    "correctionComplete": false,
+    "externalVeterinaryApproval": false,
+    "activationManifestPresent": false
+  },
+  "authoritativeFiles": [
+    "source/p8-review-policy.json",
+    "source/human-dialogue-library.json",
+    "source/reviewer-decision-template.json",
+    "generated/P8_SOURCE_AUDIT.json",
+    "generated/P8_DIALOGUE_VALIDATION.json",
+    "P8_REVIEW_MATRIX.md",
+    "SOURCE_REFRESH_NOTES.md",
+    "REVIEWER_GUIDE.md",
+    "PROGRAMMER_HANDOFF.md"
+  ],
+  "fileSha256": {
+    "source/p8-review-policy.json": "68a2faa475f058c2e3396c44418aef6cb4c3f794056f3866a1360088bb3218b1",
+    "source/human-dialogue-library.json": "a3bf989041f9fdfa4f07209e9b0ba936b4d8d23f04f4677f14ecd9fcd30c6fd5",
+    "source/reviewer-decision-template.json": "228204f848c32e99c3beb6731739fbdd3e804b7f69b3c1a564d9de03b8767b78",
+    "generated/P8_SOURCE_AUDIT.json": "68140eae1fb5fe67fce95aab4e236b0c490b98ab8dd01265a65504aab1407900",
+    "generated/P8_DIALOGUE_VALIDATION.json": "e07043fae4cf57e70cee3972a4d5465eb9ff4f8ee2538617964820da7192f33a",
+    "P8_REVIEW_MATRIX.md": "4f49139a4a538600d23ebf534f34d9ae2966a7779b516bb0fe82791c9cc4f571",
+    "SOURCE_REFRESH_NOTES.md": "cf923abcf58607a9d99dce0b829b437837da15099606111d5fdce45a8efba036",
+    "REVIEWER_GUIDE.md": "4741e6e6f09cfaa31a47019d2c9e198970e8167efc66241c0304f0b5f3d905d1",
+    "PROGRAMMER_HANDOFF.md": "06f414a43e5916826b1bede6a1077785aab6cd3dccdb989da4bae97ca4baaaef"
+  }
+}

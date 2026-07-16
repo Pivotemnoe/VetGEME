@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "decisionSetId": "replace-with-review-id",
+  "decisionSetVersion": "1.0.0",
+  "inputPackage": {
+    "packageId": "vetgeme-medical-production-authoring",
+    "packageVersion": "2026.07.16.39",
+    "sourceAggregateSha256": "e3341e533e09a6f00d09180f7b78808cdf1867406492a27cd17f9dca11bc626c"
+  },
+  "reviewer": {
+    "reviewerId": null,
+    "fullName": null,
+    "qualification": null,
+    "jurisdiction": null,
+    "conflictOfInterestDeclared": false
+  },
+  "reviewedAt": null,
+  "decisions": [
+    {
+      "recordType": "family",
+      "familyId": "replace-with-family-id",
+      "variantId": null,
+      "presentationId": null,
+      "exactVersion": "replace-with-exact-version",
+      "decision": "changes_required",
+      "medicalSeverity": "P0",
+      "languageSeverity": "P0",
+      "decisionDomains": {
+        "clinicalTruth": "changes_required",
+        "differentialsAndExclusions": "changes_required",
+        "investigationsAndInterpretation": "changes_required",
+        "safeAndUnsafeDecisions": "changes_required",
+        "equipmentAndReferral": "changes_required",
+        "followUpAndOutcomes": "changes_required",
+        "ownerAndDoctorLanguage": "changes_required",
+        "sourcesAndScope": "changes_required"
+      },
+      "issueIds": [],
+      "comment": "Указать конкретное противоречие, требуемую правку и источник. Не переписывать ID.",
+      "reviewerSignature": null
+    }
+  ],
+  "activationRecommendation": "forbidden_until_all_target_records_approved_and_clean_audit_passes"
+}

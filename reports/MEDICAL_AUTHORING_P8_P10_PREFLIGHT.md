@@ -4,12 +4,23 @@
 
 Вход: `vetgeme-medical-production-authoring@2026.07.16.39`.
 
-Статус: `review_input_passed_activation_blocked_as_designed`.
+Статус:
+`medical_structure_review_input_passed_p8_language_audit_blocked_activation_forbidden`.
+
+> Update 2026-07-16: отдельный
+> `vetgeme-p8-medical-review-authoring@2026.07.16.1` выполнил полный
+> player-facing source audit этого exact `.39` input. Результат — `blocked`:
+> 5 976 открытых дефектов (735 P0 и 5 241 P1) во всех 39 families. Поэтому
+> прежний `PASS` ниже относится только к structural authoring contract; он не
+> означает готовность медицинского текста, реплик или veterinary approval.
+> Полный результат находится в
+> [P8_MEDICAL_REVIEW_AUTHORING_PREFLIGHT.md](P8_MEDICAL_REVIEW_AUTHORING_PREFLIGHT.md).
 
 ## Итог
 
 - Подключение как отдельного review-only input: **PASS**.
-- P8 authoring/medical contract preflight: **PASS**.
+- P8 structural authoring/medical contract preflight: **PASS**.
+- P8 player-facing source/language audit: **BLOCKED** — 735 P0 и 5 241 P1.
 - P8 production activation: **BLOCKED AS DESIGNED** до veterinary approval и
   отдельного activation manifest.
 - P10 technical preflight для нового входа: **PASS**.

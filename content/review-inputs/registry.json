@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "vetgeme-review-input-registry",
-  "registryVersion": "2026.07.16.3",
+  "registryVersion": "2026.07.16.4",
   "reviewInputs": [
     {
       "reviewInputId": "vetgeme-medical-production-authoring",
@@ -155,6 +155,73 @@
           "p3Research": "ad2ad2784b697c63307b030013af95bf006586f2983f3bf3ac61fdbed783ba63",
           "p3Usages": "bc0e456a2c70e8108803a8f7ceb8b6d5fb17fab0efc8003798fe4675225bded1",
           "p6Economy": "9bebb845efad13f5717b1bf8c4e9d7e872acf0ab6e71f76a88f1e87a18e9cd32"
+        }
+      }
+    },
+    {
+      "reviewInputId": "vetgeme-p8-medical-review-authoring",
+      "reviewInputVersion": "2026.07.16.1",
+      "kind": "p8_medical_review_authoring",
+      "packageId": "vetgeme-p8-medical-review-authoring",
+      "packageVersion": "2026.07.16.1",
+      "root": "content/review-inputs/vetgeme-p8-medical-review-authoring-2026.07.16.1",
+      "sourceRoot": "source",
+      "manifestPath": "source/MANIFEST.json",
+      "provenancePath": "provenance.json",
+      "status": "audit_complete_correction_required_activation_forbidden",
+      "reviewOnly": true,
+      "productionEligible": false,
+      "runtimeEligible": false,
+      "generatorEligible": false,
+      "activationAllowed": false,
+      "allowCurrentCaseCrosswalk": false,
+      "allowRuntimeActivation": false,
+      "allowPlayerFacingDialogue": false,
+      "allowReviewerDecisionImport": false,
+      "allowActivationManifest": false,
+      "expectedCounts": {
+        "sourceFiles": 16,
+        "sourceBytes": 4561393,
+        "families": 39,
+        "variants": 215,
+        "presentations": 645,
+        "sourceEntries": 221,
+        "auditIssues": 5976,
+        "p0": 735,
+        "p1": 5241,
+        "p2": 0,
+        "p3": 0,
+        "ownerProfiles": 12,
+        "doctorSpeechFunctions": 15,
+        "rareAbsurdEvents": 4,
+        "p4Presentations": 645,
+        "productionPool": 0
+      },
+      "sourceIntegrity": {
+        "provenanceSha256": "3fd8cc0f563674ecdee7a8c1327f3739426788ef41091d227d24f73e88067ba5",
+        "aggregateSha256": "5047a9c35b07836603c3ef740610a76924cb9fc25e917f725f6cef2a9f27b6fe",
+        "archiveSha256": "1c7bd9da610cc03f08081023e613651b025bb677371a4ad3161e02960d6477eb"
+      },
+      "medicalReviewInput": {
+        "reviewInputId": "vetgeme-medical-production-authoring",
+        "reviewInputVersion": "2026.07.16.39",
+        "productionEligible": false,
+        "generatorEligible": false,
+        "sourceIntegrity": {
+          "archiveSha256": "54a6cec64406dd4e326aa5ff089cbd3878ef7cd17a4bb7ed01123c7a93da822c",
+          "aggregateSha256": "e3341e533e09a6f00d09180f7b78808cdf1867406492a27cd17f9dca11bc626c"
+        }
+      },
+      "operationalReviewInput": {
+        "reviewInputId": "vetgeme-operational-production-authoring",
+        "reviewInputVersion": "2026.07.16.1",
+        "runtimeEligible": false,
+        "sourceIntegrity": {
+          "aggregateSha256": "0a42bad7eccf70ba4eb3c18738c4b6653ab06d75056526ca828707b11e33f055"
+        },
+        "catalogSha256": {
+          "p4OwnerProfiles": "3e722abff5eb46e0161f714dd6fe2386e0f6f4c3997dc276bd0752930b682b9f",
+          "p4BehaviorCrosswalk": "0d211caf8b5af4ae64cda672a36836350411b82053c29cb6741252dbfcb65582"
         }
       }
     }

@@ -124,6 +124,29 @@ try {
   );
   assert.equal(p5ReviewOnlyInput.contextSha256, clean.contextSha256);
 
+  const p8ReviewOnlyRoot = path.join(
+    fixture,
+    "content",
+    "review-inputs",
+    "p8-authoring",
+  );
+  await mkdir(path.join(p8ReviewOnlyRoot, "source"), { recursive: true });
+  await writeFile(
+    path.join(p8ReviewOnlyRoot, "provenance.json"),
+    "{\"reviewOnly\":true}\n",
+  );
+  await writeFile(
+    path.join(p8ReviewOnlyRoot, "source", "MANIFEST.json"),
+    "{\"reviewOnly\":true}\n",
+  );
+  const p8ReviewOnlyInput = await collectDockerBuildProvenance(fixture);
+  assert.equal(
+    p8ReviewOnlyInput.dirty,
+    false,
+    "review-only P8 authoring provenance/source polluted production Docker provenance",
+  );
+  assert.equal(p8ReviewOnlyInput.contextSha256, clean.contextSha256);
+
   await writeFile(
     path.join(fixture, "content/system-packs/vetgeme-master-2026-07-14/not-registered.json"),
     "{\"notRegistered\":true}\n",
@@ -174,6 +197,7 @@ try {
     retiredTierContentExcluded: true,
     retiredSchemaOneExcluded: true,
     reviewOnlyAuthoringInputsExcluded: true,
+    p8ReviewOnlyProvenanceAndSourceExcluded: true,
     unregisteredSystemFileExcluded: true,
   }, null, 2));
 } finally {

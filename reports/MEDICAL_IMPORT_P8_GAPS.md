@@ -11,6 +11,13 @@
 > medical-side mapping gaps, но ничего не активирует: veterinary status остаётся
 > pending, production pool — 0. Остальной текст этого файла сохранён как снимок
 > исходного P8-аудита пакета 2026-07-14.
+>
+> Новый exact P8 audit package
+> `vetgeme-p8-medical-review-authoring@2026.07.16.1` отдельно зафиксирован в
+> [P8_MEDICAL_REVIEW_AUTHORING_PREFLIGHT.md](P8_MEDICAL_REVIEW_AUTHORING_PREFLIGHT.md).
+> Он подтвердил, что structural полнота `.39` не равна готовому тексту:
+> остаются 5 976 открытых player-facing дефектов (735 P0, 5 241 P1), correction
+> gate и external veterinary gate закрыты, activation запрещена.
 
 Этот файл перечисляет только фактически найденные несоответствия и недостающие
 решения. Медицинские формулировки, статусы, capabilities, crosswalk и runtime-поля

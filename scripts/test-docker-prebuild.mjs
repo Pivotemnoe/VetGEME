@@ -85,6 +85,10 @@ if (existsSync(reviewInputRegistry)) {
     ["P5 authoring review input", "scripts/validate-p5-authoring-review-input.mjs"],
     ["P5 authoring review contract", "scripts/test-p5-authoring-review-input.mjs"],
     ["P5 authoring mismatch report", "scripts/report-p5-authoring-mismatches.mjs"],
+    ["P8 authoring review provenance", "scripts/refresh-p8-authoring-review-provenance.mjs"],
+    ["P8 authoring bundled validator", "scripts/run-p8-authoring-bundled-validator.mjs"],
+    ["P8 authoring review input", "scripts/validate-p8-authoring-review-input.mjs"],
+    ["P8 authoring review contract", "scripts/test-p8-authoring-review-input.mjs"],
   );
 } else {
   console.log(

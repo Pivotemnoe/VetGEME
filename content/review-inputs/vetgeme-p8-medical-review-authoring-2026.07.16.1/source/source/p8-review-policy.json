@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "packageId": "vetgeme-p8-medical-review-authoring",
+  "packageVersion": "2026.07.16.1",
+  "status": "audit_in_progress_activation_forbidden",
+  "input": {
+    "packageId": "vetgeme-medical-production-authoring",
+    "packageVersion": "2026.07.16.39",
+    "archiveSha256": "54a6cec64406dd4e326aa5ff089cbd3878ef7cd17a4bb7ed01123c7a93da822c",
+    "sourceAggregateSha256": "e3341e533e09a6f00d09180f7b78808cdf1867406492a27cd17f9dca11bc626c"
+  },
+  "activation": {
+    "generatorEligible": false,
+    "productionPoolSize": 0,
+    "approvalMayBeGrantedByAutomation": false,
+    "approvalAuthority": "designated_external_veterinary_reviewer",
+    "activationManifestAllowedBeforeApproval": false
+  },
+  "playerFacingLanguage": {
+    "locale": "ru-RU",
+    "requiresCyrillicFields": [
+      "family.title",
+      "variant.title",
+      "presentation.complaint",
+      "presentation.historyAnswers.*",
+      "presentation.examFindings.*.finding",
+      "presentation.investigations.*.result",
+      "presentation.outcomes.*",
+      "presentation.ownerCommunication.*"
+    ],
+    "forbiddenServiceTokens": [
+      "authored",
+      "pattern fixed",
+      "fixed pattern",
+      "timeline fixed",
+      "result fixed",
+      "context fixed",
+      "author complete",
+      "to be reviewed",
+      "placeholder",
+      "tbd"
+    ],
+    "instructionPrefixesNotAcceptedAsDoctorSpeech": [
+      "объяснить",
+      "показать",
+      "попросить",
+      "дать владельцу",
+      "уточнить",
+      "предупредить",
+      "explain",
+      "ask",
+      "show",
+      "tell"
+    ],
+    "technicalTextMayRemainInternalOnly": true,
+    "playerFacingEnglishAllowed": false
+  },
+  "dialogue": {
+    "requiredFunctions": [
+      "arrival",
+      "complaint",
+      "timeline",
+      "critical_fact_answer",
+      "uncertainty",
+      "doctor_summary",
+      "doctor_next_step",
+      "doctor_risk_explanation",
+      "owner_consent_or_refusal",
+      "teach_back",
+      "follow_up"
+    ],
+    "conditionalFunctions": [
+      "home_treatment",
+      "budget",
+      "internet_diagnosis",
+      "anger",
+      "misunderstanding",
+      "gratitude",
+      "complaint_after_visit",
+      "rare_absurd_event"
+    ],
+    "ownerStyleMustRemainConsistentWithinVisit": true,
+    "appearanceIndependentFromBehavior": true,
+    "humorMayTargetAnimalSuffering": false,
+    "humorMayBeOnlyCriticalFactPath": false,
+    "rareAbsurdEventMaximumPerDay": 1,
+    "rareAbsurdEventBlockedUrgencyBands": ["emergency", "emergency_priority", "emergency_suspicion"],
+    "doctorMustUsePlainLanguage": true,
+    "doctorMayPromiseGuaranteedOutcome": false
+  },
+  "reviewSeverity": {
+    "P0": "blocks_medical_review_and_activation",
+    "P1": "blocks_player_facing_release",
+    "P2": "requires_editorial_correction_before_final_package",
+    "P3": "nonblocking_note"
+  },
+  "finalGate": {
+    "families": 39,
+    "variants": 215,
+    "presentations": 645,
+    "allowedP0": 0,
+    "allowedP1": 0,
+    "allowedServiceTokens": 0,
+    "allowedEnglishPlayerFacingStrings": 0,
+    "requiresFullDialogueCoverage": true,
+    "requiresSourceVerification": true,
+    "requiresVeterinaryDecisionForEveryActivatedVersion": true
+  }
+}

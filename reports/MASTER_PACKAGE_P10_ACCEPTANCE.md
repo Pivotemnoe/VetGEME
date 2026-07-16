@@ -29,6 +29,14 @@
 > 49 resource candidates и 2 606 task configurations, но остаётся review-only:
 > start-active pruning, lifecycle/ownership bridges, staffing acceptance,
 > handoff-policy enforcement и P6/P7 authority ещё блокируют activation.
+>
+> Exact P8 source/language audit пакета `.39` находится в
+> [P8_MEDICAL_REVIEW_AUTHORING_PREFLIGHT.md](P8_MEDICAL_REVIEW_AUTHORING_PREFLIGHT.md).
+> Он обнаружил 5 976 открытых дефектов (735 P0, 5 241 P1); dialogue library
+> прошла только structural validation и остаётся runtime-ineligible. Это
+> усиливает прежний fail-closed verdict: исправленный и допущенный к runtime
+> player-facing текст, reviewer approval и activation manifest отсутствуют,
+> production pool остаётся 0.
 > Остальной текст сохранён как исторический P10 snapshot от 15 июля.
 
 ## Итоговое решение
