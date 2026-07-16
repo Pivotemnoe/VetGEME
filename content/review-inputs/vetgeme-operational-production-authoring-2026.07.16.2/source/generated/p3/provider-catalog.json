@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p3-referral-providers",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "providers": [
+    {
+      "providerId": "ref_emergency_24h",
+      "title": "Круглосуточный стационар",
+      "serviceClasses": [
+        "emergency",
+        "intensive",
+        "surgery",
+        "oxygen",
+        "transfusion"
+      ],
+      "calendar": "always_open",
+      "baseDispatchMinutes": 15,
+      "reliability": 0.98
+    },
+    {
+      "providerId": "ref_imaging_center",
+      "title": "Центр визуальной диагностики",
+      "serviceClasses": [
+        "xray",
+        "ultrasound",
+        "ct",
+        "mri",
+        "endoscopy",
+        "echocardiography"
+      ],
+      "calendar": "external_workweek",
+      "baseDispatchMinutes": 45,
+      "reliability": 0.94
+    },
+    {
+      "providerId": "ref_clinical_pathology",
+      "title": "Лаборатория клинической патологии",
+      "serviceClasses": [
+        "cbc",
+        "biochemistry",
+        "cytology",
+        "histology",
+        "coagulation",
+        "endocrine"
+      ],
+      "calendar": "external_workweek",
+      "baseDispatchMinutes": 60,
+      "reliability": 0.96
+    },
+    {
+      "providerId": "ref_microbiology_pcr",
+      "title": "Лаборатория микробиологии и ПЦР",
+      "serviceClasses": [
+        "culture",
+        "susceptibility",
+        "pcr",
+        "serology",
+        "parasitology",
+        "mycology"
+      ],
+      "calendar": "external_workweek",
+      "baseDispatchMinutes": 60,
+      "reliability": 0.95
+    },
+    {
+      "providerId": "ref_specialist_network",
+      "title": "Сеть профильных специалистов",
+      "serviceClasses": [
+        "cardiology",
+        "neurology",
+        "ophthalmology",
+        "dermatology",
+        "oncology",
+        "dentistry",
+        "orthopedics",
+        "internal_medicine"
+      ],
+      "calendar": "external_workweek",
+      "baseDispatchMinutes": 90,
+      "reliability": 0.92
+    },
+    {
+      "providerId": "ref_public_health",
+      "title": "Регулируемый эпизоотологический маршрут",
+      "serviceClasses": [
+        "regulated",
+        "zoonotic",
+        "rabies",
+        "outbreak"
+      ],
+      "calendar": "always_open",
+      "baseDispatchMinutes": 10,
+      "reliability": 1
+    }
+  ],
+  "clock": {
+    "campaignDayStartMinute": 480,
+    "clinicCloseMinute": 1200,
+    "externalCutoffMinute": 840,
+    "externalWorkingWeekdays": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "sundayIsClosedForExternalProviders": true,
+    "deterministicRangeRule": "min_plus_fnv1a32_order_provider_catalog_mod_inclusive_range"
+  },
+  "activation": {
+    "visualPresenceNeverActivates": true,
+    "purchaseCreatesPendingAsset": true,
+    "deliveryRequired": true,
+    "trainingRequiredWhenCapabilityRequiresSkill": true,
+    "maintenanceCanSuspend": true,
+    "stockoutCanSuspend": true,
+    "safeReferralAlwaysRetained": true
+  }
+}

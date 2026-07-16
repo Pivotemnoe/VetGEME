@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 1,
+  "reportId": "vetgeme-operational-authoring-validation",
+  "reportVersion": "2026.07.16.2",
+  "validatedAt": "2026-07-16T11:43:18.210Z",
+  "status": "pass",
+  "activationStatus": "fail_closed_pending_programmer_adapter_runtime_smoke_and_product_owner_acceptance",
+  "checks": [
+    {
+      "id": "manifest_boundaries",
+      "status": "pass",
+      "evidence": "runtime/design/save/medical truth boundaries are explicit and false"
+    },
+    {
+      "id": "medical_family_count",
+      "status": "pass",
+      "evidence": "39/39"
+    },
+    {
+      "id": "medical_variant_count",
+      "status": "pass",
+      "evidence": "215/215"
+    },
+    {
+      "id": "medical_presentation_count",
+      "status": "pass",
+      "evidence": "645/645"
+    },
+    {
+      "id": "p3_research_coverage",
+      "status": "pass",
+      "evidence": "361/361"
+    },
+    {
+      "id": "p3_usage_coverage",
+      "status": "pass",
+      "evidence": "1864/1864"
+    },
+    {
+      "id": "p3_all_usage_contracts",
+      "status": "pass",
+      "evidence": "all investigation uses map to their family researchCapabilityMap"
+    },
+    {
+      "id": "p3_capability_registry",
+      "status": "pass",
+      "evidence": "0 unknown capability IDs"
+    },
+    {
+      "id": "p3_result_authority",
+      "status": "pass",
+      "evidence": "operational package cannot generate medical results"
+    },
+    {
+      "id": "p3_review_policy",
+      "status": "pass",
+      "evidence": "every usage has review/contact/shift-close policy"
+    },
+    {
+      "id": "p3_provider_catalog",
+      "status": "pass",
+      "evidence": "6 explicit provider routes including regulated and emergency"
+    },
+    {
+      "id": "p3_explicit_routes",
+      "status": "pass",
+      "evidence": "361 exact routes; no generated availability facts"
+    },
+    {
+      "id": "p3_lifecycle_predicates",
+      "status": "pass",
+      "evidence": "every research route has authored runtime predicates and fallback"
+    },
+    {
+      "id": "p4_temperament_coverage",
+      "status": "pass",
+      "evidence": "128/128"
+    },
+    {
+      "id": "p4_owner_coverage",
+      "status": "pass",
+      "evidence": "463/463"
+    },
+    {
+      "id": "p4_handling_coverage",
+      "status": "pass",
+      "evidence": "446/446"
+    },
+    {
+      "id": "p4_presentation_crosswalk",
+      "status": "pass",
+      "evidence": "645/645 unique presentation refs"
+    },
+    {
+      "id": "p4_identity_catalog",
+      "status": "pass",
+      "evidence": "12 owner archetypes and 8 patient temperament archetypes"
+    },
+    {
+      "id": "p4_cues",
+      "status": "pass",
+      "evidence": "10 explicit observable threshold cues"
+    },
+    {
+      "id": "p4_cues_runtime_contract",
+      "status": "pass",
+      "evidence": "all cue rules accepted by current P4 runtime"
+    },
+    {
+      "id": "p4_actions_runtime_contract",
+      "status": "pass",
+      "evidence": "all 446 action templates accepted by current P4 runtime"
+    },
+    {
+      "id": "p4_explicit_mapping_authority",
+      "status": "pass",
+      "evidence": "all compatibility tags use frozen author mappings"
+    },
+    {
+      "id": "p4_structured_safe_routes",
+      "status": "pass",
+      "evidence": "all safe routes own an explicit fact and command payload"
+    },
+    {
+      "id": "p4_appearance_independence",
+      "status": "pass",
+      "evidence": "appearance is not behavior authority"
+    },
+    {
+      "id": "p4_time_history",
+      "status": "pass",
+      "evidence": "append-only 12-event history uses campaign time and stable identity across reload"
+    },
+    {
+      "id": "p6_capability_coverage",
+      "status": "pass",
+      "evidence": "447/447"
+    },
+    {
+      "id": "p6_p5_exact_resources",
+      "status": "pass",
+      "evidence": "49/49 P5 resources have exact P6 authority"
+    },
+    {
+      "id": "p6_supplemental_crosswalk",
+      "status": "pass",
+      "evidence": "8/8 P4 supplemental requirements resolve through P5/P6"
+    },
+    {
+      "id": "p6_four_axis_reputation",
+      "status": "pass",
+      "evidence": "exact P6 axes preserved"
+    },
+    {
+      "id": "p6_inventory",
+      "status": "pass",
+      "evidence": "10 explicit stock categories with reorder/lead/cost/shelf-life"
+    },
+    {
+      "id": "p6_safe_recovery",
+      "status": "pass",
+      "evidence": "closure cannot follow one error"
+    },
+    {
+      "id": "p6_no_legacy_inference",
+      "status": "pass",
+      "evidence": "new campaigns only; no save migration"
+    },
+    {
+      "id": "p7_day_sequence",
+      "status": "pass",
+      "evidence": "days 1..30 without gaps"
+    },
+    {
+      "id": "p7_chapters",
+      "status": "pass",
+      "evidence": "6 chapters x 5 days"
+    },
+    {
+      "id": "p7_generic_goals",
+      "status": "pass",
+      "evidence": "60 goals selected after schedule without specific patient/family"
+    },
+    {
+      "id": "p7_event_references",
+      "status": "pass",
+      "evidence": "all day event slots resolve"
+    },
+    {
+      "id": "p7_catalog_envelopes",
+      "status": "pass",
+      "evidence": "27 events, 6 milestones, 3 specializations, 6 endings"
+    },
+    {
+      "id": "p7_catalog_digests",
+      "status": "pass",
+      "evidence": "all P7 envelopes have exact SHA-256 and author status"
+    },
+    {
+      "id": "p7_evidence_resolvers",
+      "status": "pass",
+      "evidence": "93 exact cross-system evidence contracts and 60 resolved goals"
+    },
+    {
+      "id": "p7_reload_rules",
+      "status": "pass",
+      "evidence": "persisted schedule and repeat-safe reload without schema change"
+    },
+    {
+      "id": "simulation_volume",
+      "status": "pass",
+      "evidence": "10000 campaigns / 297717 demand-days"
+    },
+    {
+      "id": "specialization_reachability",
+      "status": "pass",
+      "evidence": "{\"diagnostic_center\":2300,\"neighborhood_access\":2400,\"low_stress_communication\":2400}"
+    },
+    {
+      "id": "nonclosure_ending_reachability",
+      "status": "pass",
+      "evidence": "{\"closure_review\":112,\"recovery_continues\":387,\"balanced_clinic\":2401,\"neighborhood_path\":2400,\"low_stress_path\":2400,\"diagnostic_path\":2300}"
+    },
+    {
+      "id": "recovery_reachability",
+      "status": "pass",
+      "evidence": "580 simulated campaigns entered recovery"
+    },
+    {
+      "id": "closure_not_single_error",
+      "status": "pass",
+      "evidence": "policy requires two consecutive critical days"
+    }
+  ],
+  "simulation": {
+    "campaigns": 10000,
+    "demandDays": 297717,
+    "closedCampaigns": 112,
+    "recoveryCampaigns": 580,
+    "minimumCashObserved": -3831,
+    "endingCounts": {
+      "closure_review": 112,
+      "recovery_continues": 387,
+      "balanced_clinic": 2401,
+      "neighborhood_path": 2400,
+      "low_stress_path": 2400,
+      "diagnostic_path": 2300
+    },
+    "strategyCounts": {
+      "closure": 100,
+      "recovery": 500,
+      "neighborhood": 2400,
+      "low_stress": 2400,
+      "balanced": 2300,
+      "diagnostic": 2300
+    },
+    "specializationReachable": {
+      "diagnostic_center": 2300,
+      "neighborhood_access": 2400,
+      "low_stress_communication": 2400
+    },
+    "axisRanges": {
+      "clinical_safety": [
+        52.80394080291316,
+        95.75595526280131
+      ],
+      "owner_trust": [
+        47.397866666666665,
+        92.32239999999999
+      ],
+      "financial_resilience": [
+        34.757999999999996,
+        100
+      ],
+      "team_condition": [
+        44.599999999999994,
+        87
+      ]
+    }
+  },
+  "limitations": [
+    "The balance simulation is an authoring-level deterministic model, not a browser runtime playtest.",
+    "Medical family approval remains external to this package.",
+    "P5 resource IDs and P6 authority are exact; the programmer still has to implement the adapter and prove save/reload.",
+    "The existing 30-card generator remains the live compatibility pool until gated activation is approved."
+  ]
+}

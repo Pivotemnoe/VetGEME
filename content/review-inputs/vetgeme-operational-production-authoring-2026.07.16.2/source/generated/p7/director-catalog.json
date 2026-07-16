@@ -1,0 +1,1781 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p7-campaign-catalog",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "axes": [
+    {
+      "axisId": "clinical_safety",
+      "sources": [
+        "p6.reputation.clinical",
+        "p3.result_review_on_time",
+        "medical.safe_plan_completed"
+      ],
+      "weights": [
+        0.45,
+        0.25,
+        0.3
+      ]
+    },
+    {
+      "axisId": "owner_trust",
+      "sources": [
+        "p6.reputation.communication",
+        "p4.teach_back",
+        "p4.owner_handoff"
+      ],
+      "weights": [
+        0.5,
+        0.25,
+        0.25
+      ]
+    },
+    {
+      "axisId": "financial_resilience",
+      "sources": [
+        "p6.cash_reserve",
+        "p6.obligation_timeliness",
+        "p6.inventory_health"
+      ],
+      "weights": [
+        0.4,
+        0.3,
+        0.3
+      ]
+    },
+    {
+      "axisId": "team_condition",
+      "sources": [
+        "p5.shift_rest_compliance",
+        "p6.maintenance_health",
+        "p3.unowned_work_count"
+      ],
+      "weights": [
+        0.45,
+        0.25,
+        0.3
+      ]
+    }
+  ],
+  "catalogEnvelopes": {
+    "events": [
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "38e1b59235445b442a65ff4f56d11b8d7b1fcae39bd69cc1ad83479692c7ac47",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "opening_orientation",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "opening_orientation",
+          "window": [
+            1,
+            1
+          ],
+          "repeatability": "once",
+          "trigger": "day_start",
+          "effects": [
+            "show_system_boundaries"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "eddbdaa684f350d043c0ce8eb24370b443eb979f36829926f079afa0a91fa5d0",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "owner_questions",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "owner_questions",
+          "window": [
+            2,
+            4
+          ],
+          "repeatability": "once",
+          "trigger": "first_owner_anxiety_gte_70",
+          "effects": [
+            "offer_teach_back"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "dbe124c918671661696759d7282d1efa41c421d4ce58a5ae3a60f77a4c65a4fe",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "queue_pressure",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "queue_pressure",
+          "window": [
+            3,
+            30
+          ],
+          "repeatability": "cooldown_5_days",
+          "trigger": "waiting_count_gte_3",
+          "effects": [
+            "time_pressure_only"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "3ff44f4ddf6b37a85fa368df0bc0007fe8fce456554ff98126a03196b001a1a5",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "missing_capability",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "missing_capability",
+          "window": [
+            4,
+            30
+          ],
+          "repeatability": "cooldown_5_days",
+          "trigger": "safe_local_route_missing",
+          "effects": [
+            "require_referral_choice"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "ba02b2d16f5b551ddae96609abf3a91d9a4c00de78756828c2765f2a805a462c",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "chapter_review",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "chapter_review",
+          "window": [
+            5,
+            30
+          ],
+          "repeatability": "once_per_chapter",
+          "trigger": "chapter_last_day",
+          "effects": [
+            "chapter_axis_snapshot"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "9ae2af99692385f63b58ff26394198ee9f3acff4fbd8c004267d6601d7e21eab",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "supplier_offer",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "supplier_offer",
+          "window": [
+            6,
+            20
+          ],
+          "repeatability": "cooldown_7_days",
+          "trigger": "inventory_below_reorder",
+          "effects": [
+            "explicit_procurement_choice"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "f7f4b1b0ef5fc6f5df89fc24b4cf77c66f99e1732b46140aa4088520df2b9605",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "infection_control_drill",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "infection_control_drill",
+          "window": [
+            7,
+            15
+          ],
+          "repeatability": "once",
+          "trigger": "chapter_2_active",
+          "effects": [
+            "isolation_capacity_audit"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "da167476df9577cb89c94b350c0034b01cdc283cc7e17a14bd2b2a9553405ad8",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "external_result_arrives",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "external_result_arrives",
+          "window": [
+            8,
+            30
+          ],
+          "repeatability": "unbounded_by_distinct_order",
+          "trigger": "external_result_due",
+          "effects": [
+            "create_owned_review_task"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "c29218772cbdf3c06aae57a5b2e629afcb6fb5b42d0dd630b96cc6658d3a9c42",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "budget_tradeoff",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "budget_tradeoff",
+          "window": [
+            9,
+            30
+          ],
+          "repeatability": "cooldown_4_days",
+          "trigger": "owner_cost_consent_lte_30",
+          "effects": [
+            "offer_full_staged_minimum_safe"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "1f2264f70fa49a28c9b3ff1cddacdd4f21eff432d66392741aadf41b84b94c1c",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "staff_schedule_choice",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "staff_schedule_choice",
+          "window": [
+            11,
+            20
+          ],
+          "repeatability": "once",
+          "trigger": "chapter_3_active",
+          "effects": [
+            "explicit_shift_choice"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "08928127902536484e16523443d9d83ebbc177558dd9672c6e52560032884ed8",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "fearful_patient",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "fearful_patient",
+          "window": [
+            12,
+            30
+          ],
+          "repeatability": "cooldown_3_days",
+          "trigger": "patient_fear_gte_70",
+          "effects": [
+            "offer_low_stress_action"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "09a543728a3bb99745ccb8beb696768b35b45db3f155568becd3a2bd38d5ba8d",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "delivery_delay",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "delivery_delay",
+          "window": [
+            13,
+            24
+          ],
+          "repeatability": "once",
+          "trigger": "procurement_in_transit",
+          "effects": [
+            "delay_one_day",
+            "retain_referral"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "a8ec85a69d7adadffc5f018e0da4aadab43abc184c3f6cebbf3185c1a9c4df18",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "handoff_audit",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "handoff_audit",
+          "window": [
+            14,
+            29
+          ],
+          "repeatability": "once_per_chapter",
+          "trigger": "shift_close",
+          "effects": [
+            "audit_owned_work"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "3819f108452e6a4de7f1059bae252b19de86fdb8581ced5a2d136056073b1de2",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "lab_activation",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "lab_activation",
+          "window": [
+            16,
+            20
+          ],
+          "repeatability": "once",
+          "trigger": "chapter_4_active",
+          "effects": [
+            "audit_delivery_training_stock_maintenance"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "2b9731e85c5bb72322b4b1299d909520dfe9fe12a79ae03de5165c518b2cf3b9",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "critical_result_drill",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "critical_result_drill",
+          "window": [
+            17,
+            25
+          ],
+          "repeatability": "once",
+          "trigger": "critical_result_due",
+          "effects": [
+            "block_close_until_handoff"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "e115def0bfb3ab2bc2a1ac065ff4a74f186d5e8d7ad1ac9cfbc3bc36458bb525",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "maintenance_due",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "maintenance_due",
+          "window": [
+            18,
+            30
+          ],
+          "repeatability": "unbounded_by_distinct_asset",
+          "trigger": "asset_maintenance_due",
+          "effects": [
+            "suspend_if_overdue"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "681b865451974e1faac0bca4efa64a48cd7403b0596f32b9d8e38464a6b92cf6",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "longitudinal_return",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "longitudinal_return",
+          "window": [
+            19,
+            30
+          ],
+          "repeatability": "unbounded_by_distinct_visit",
+          "trigger": "followup_visit_due",
+          "effects": [
+            "use_existing_history"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "fd07820f5f402ab269ced50775e99557b4f13b062e9e9d81b0824565b0771ab0",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "imaging_choice",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "imaging_choice",
+          "window": [
+            21,
+            25
+          ],
+          "repeatability": "once",
+          "trigger": "chapter_5_active",
+          "effects": [
+            "purchase_or_referral_tradeoff"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "b7a842296cf9dfacca290ed5fa8cde718ea35463428cd939780f85610e5aedeb",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "procedure_capacity",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "procedure_capacity",
+          "window": [
+            22,
+            30
+          ],
+          "repeatability": "cooldown_5_days",
+          "trigger": "procedure_demand_exceeds_capacity",
+          "effects": [
+            "schedule_or_refer"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "7cd820e4a20f126b0859977145fe026b14d1417c4803f2ce924354a1dae9ca72",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "complex_owner_plan",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "complex_owner_plan",
+          "window": [
+            23,
+            30
+          ],
+          "repeatability": "once",
+          "trigger": "three_or_more_owner_barriers",
+          "effects": [
+            "require_feasible_plan_and_teach_back"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "88a76300be69b2827cf43dd9f835453fe6ae85c09e24ce08025dcd6d0b9fe864",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "investment_offer",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "investment_offer",
+          "window": [
+            24,
+            25
+          ],
+          "repeatability": "once",
+          "trigger": "cash_above_protected_reserve",
+          "effects": [
+            "offer_specialization_support_asset"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "e6b3b01128a59b70cb3f8dd7680c1e15a2cc2c720d84d971cbef392f217fc58d",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "specialization_choice",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "specialization_choice",
+          "window": [
+            25,
+            25
+          ],
+          "repeatability": "once",
+          "trigger": "chapter_5_close",
+          "effects": [
+            "record_one_specialization"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "5042b13ebebfa3dff5a07f41c9c89a1890e20632149c4ac7b461e95c425a3131",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "specialization_test",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "specialization_test",
+          "window": [
+            26,
+            29
+          ],
+          "repeatability": "once",
+          "trigger": "specialization_recorded",
+          "effects": [
+            "axis_specific_goal"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "fc856fa11c5a05f47ff7fb284cb9402edf70cd73456b1c64cc899c8d558985c3",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "demand_spike",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "demand_spike",
+          "window": [
+            27,
+            27
+          ],
+          "repeatability": "once",
+          "trigger": "day_start",
+          "effects": [
+            "increase_arrivals_by_one",
+            "no_diagnosis_bias"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "9083a7e3c9c69f8a7919e724c06d239f0be18216a639b2f9b41116972e0bdcb8",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "recovery_checkpoint",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "recovery_checkpoint",
+          "window": [
+            28,
+            28
+          ],
+          "repeatability": "once",
+          "trigger": "day_start",
+          "effects": [
+            "offer_recovery_if_needed"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "dc68960e7bb908ccf1abf3a86eada91204a179394281e29b1d9ee9e3c92e39b8",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "final_audit",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "final_audit",
+          "window": [
+            29,
+            29
+          ],
+          "repeatability": "once",
+          "trigger": "day_close",
+          "effects": [
+            "freeze_final_axis_evidence"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "event",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "3443810b2949486cde1533c023e40a4234d95ea793b649db5aba7fb0b8b93ad0",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "ending_selection",
+        "envelopeType": "event.record",
+        "runtimeEligible": false,
+        "payload": {
+          "eventId": "ending_selection",
+          "window": [
+            30,
+            30
+          ],
+          "repeatability": "once",
+          "trigger": "campaign_day_30_complete",
+          "effects": [
+            "select_reachable_ending"
+          ]
+        }
+      }
+    ],
+    "milestones": [
+      {
+        "catalogRef": {
+          "catalogKind": "milestone",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "63fba0d9df9b538dcdd29f7d210c4335ca4db59b8c75cfaa2a925e27988d5896",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "chapter_1_safe_opening",
+        "envelopeType": "milestone.record",
+        "runtimeEligible": false,
+        "payload": {
+          "milestoneId": "chapter_1_safe_opening",
+          "chapter": 1,
+          "requires": [
+            "five_campaign_days",
+            "no_unowned_critical_work"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "milestone",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "70f483f0cf67715aa6c748c2825ef1760256bfcd19d70c1966c2a5151bd56817",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "chapter_2_basic_diagnostics",
+        "envelopeType": "milestone.record",
+        "runtimeEligible": false,
+        "payload": {
+          "milestoneId": "chapter_2_basic_diagnostics",
+          "chapter": 2,
+          "requires": [
+            "ten_campaign_days",
+            "inventory_audit_recorded"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "milestone",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "cd7f032586624a569e8eb4ef3f3c6a74ae52dab8c4c12741bdbe7aeb9765d2e4",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "chapter_3_sustainable_team",
+        "envelopeType": "milestone.record",
+        "runtimeEligible": false,
+        "payload": {
+          "milestoneId": "chapter_3_sustainable_team",
+          "chapter": 3,
+          "requires": [
+            "fifteen_campaign_days",
+            "rest_compliance_gte_0_8"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "milestone",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "4fd3e9b31f5b35729c9eb6abd118d3ba224abc86d6fbfd86c34aaca5357534f2",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "chapter_4_result_governance",
+        "envelopeType": "milestone.record",
+        "runtimeEligible": false,
+        "payload": {
+          "milestoneId": "chapter_4_result_governance",
+          "chapter": 4,
+          "requires": [
+            "twenty_campaign_days",
+            "due_result_review_rate_gte_0_8"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "milestone",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "27a132a382388cd2d8d2553db2a1b10d4ae0ea92670cca17cb38cdb2e0a0f90f",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "chapter_5_specialization_ready",
+        "envelopeType": "milestone.record",
+        "runtimeEligible": false,
+        "payload": {
+          "milestoneId": "chapter_5_specialization_ready",
+          "chapter": 5,
+          "requires": [
+            "twenty_five_campaign_days",
+            "cash_above_closure_floor"
+          ]
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "milestone",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "7fe83f275cd30a6038177c246953b36522bb3a9388ce3d6c03750a595303aa88",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "chapter_6_campaign_complete",
+        "envelopeType": "milestone.record",
+        "runtimeEligible": false,
+        "payload": {
+          "milestoneId": "chapter_6_campaign_complete",
+          "chapter": 6,
+          "requires": [
+            "thirty_campaign_days",
+            "ending_evidence_complete"
+          ]
+        }
+      }
+    ],
+    "specializations": [
+      {
+        "catalogRef": {
+          "catalogKind": "specialization",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "ffd121c745b8e7ff19be462beaf562439b21b4619d2cfb046feb409ce8288765",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "diagnostic_center",
+        "envelopeType": "specialization.record",
+        "runtimeEligible": false,
+        "payload": {
+          "specializationId": "diagnostic_center",
+          "title": "Диагностический центр",
+          "selectionDay": 25,
+          "requiredAxisMinimums": {
+            "clinical_safety": 60,
+            "financial_resilience": 45
+          },
+          "supportingCapabilities": [
+            "laboratory_equipment",
+            "imaging_equipment"
+          ],
+          "requiresAllEquipment": false
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "specialization",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "036c8a66a1cc9bfa789658484d7184145af163ae8868dde15f197c6e263ce722",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "neighborhood_access",
+        "envelopeType": "specialization.record",
+        "runtimeEligible": false,
+        "payload": {
+          "specializationId": "neighborhood_access",
+          "title": "Доступная районная практика",
+          "selectionDay": 25,
+          "requiredAxisMinimums": {
+            "owner_trust": 55,
+            "financial_resilience": 50
+          },
+          "supportingCapabilities": [
+            "staged_owner_plans",
+            "referral_coordination"
+          ],
+          "requiresAllEquipment": false
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "specialization",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "d201e5dcda62a221051ded2e367ad476be3d0c7b0c8fd48eb9f8bb9971aee5b4",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "low_stress_communication",
+        "envelopeType": "specialization.record",
+        "runtimeEligible": false,
+        "payload": {
+          "specializationId": "low_stress_communication",
+          "title": "Коммуникация и низкий стресс",
+          "selectionDay": 25,
+          "requiredAxisMinimums": {
+            "owner_trust": 60,
+            "team_condition": 50
+          },
+          "supportingCapabilities": [
+            "low_stress_zone",
+            "trained_low_stress_handling"
+          ],
+          "requiresAllEquipment": false
+        }
+      }
+    ],
+    "endings": [
+      {
+        "catalogRef": {
+          "catalogKind": "ending",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "c76f61be6e4f73baca4a6570e58eaf898be0e8f84077ff486e0250e2abca8375",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "balanced_clinic",
+        "envelopeType": "ending.record",
+        "runtimeEligible": false,
+        "payload": {
+          "endingId": "balanced_clinic",
+          "priority": 10,
+          "requires": {
+            "allAxesMinimum": 55,
+            "closureReview": false
+          },
+          "freePlay": true
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "ending",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "ec96c38b77276964870d3162eb8fd4db8504abf603e3357058fd9f472827641a",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "diagnostic_path",
+        "envelopeType": "ending.record",
+        "runtimeEligible": false,
+        "payload": {
+          "endingId": "diagnostic_path",
+          "priority": 20,
+          "requires": {
+            "specializationId": "diagnostic_center",
+            "clinical_safetyMinimum": 65,
+            "financial_resilienceMinimum": 45
+          },
+          "freePlay": true
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "ending",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "9b28f01e82c9e65418f664af20a801a56bfd707dfc917bc0daf2fe104603bc02",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "neighborhood_path",
+        "envelopeType": "ending.record",
+        "runtimeEligible": false,
+        "payload": {
+          "endingId": "neighborhood_path",
+          "priority": 20,
+          "requires": {
+            "specializationId": "neighborhood_access",
+            "owner_trustMinimum": 65,
+            "financial_resilienceMinimum": 45
+          },
+          "freePlay": true
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "ending",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "665d839bdcba23beb688b5da379626a183973b59b77faf887a664fede1c1f054",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "low_stress_path",
+        "envelopeType": "ending.record",
+        "runtimeEligible": false,
+        "payload": {
+          "endingId": "low_stress_path",
+          "priority": 20,
+          "requires": {
+            "specializationId": "low_stress_communication",
+            "owner_trustMinimum": 65,
+            "team_conditionMinimum": 55
+          },
+          "freePlay": true
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "ending",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "a8f18d0c3c4aa0add2a526ebfdc38cf86bd0767623ad69a953e481a8afaf0af3",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "recovery_continues",
+        "envelopeType": "ending.record",
+        "runtimeEligible": false,
+        "payload": {
+          "endingId": "recovery_continues",
+          "priority": 5,
+          "requires": {
+            "closureReview": false,
+            "anyAxisMinimum": 35
+          },
+          "freePlay": true,
+          "freePlayStartsInRecovery": true
+        }
+      },
+      {
+        "catalogRef": {
+          "catalogKind": "ending",
+          "catalogId": "vetgeme-p7-campaign-catalog",
+          "catalogVersion": "2026.07.16.2",
+          "contentSha256": "e31b1897349aec9b3f5af242b9f164e4236bb9da31286440988fdee251f4292c",
+          "approvalStatus": "author_complete_programmer_adapter_required"
+        },
+        "itemId": "closure_review",
+        "envelopeType": "ending.record",
+        "runtimeEligible": false,
+        "payload": {
+          "endingId": "closure_review",
+          "priority": 100,
+          "requires": {
+            "closureReview": true
+          },
+          "freePlay": false
+        }
+      }
+    ]
+  },
+  "recovery": {
+    "states": [
+      "none",
+      "warning",
+      "active",
+      "stabilized",
+      "closure_review"
+    ],
+    "warningToActiveAfterDays": 2,
+    "activeToStabilizedRequires": [
+      "cash_above_closure_floor",
+      "no_unowned_critical_work",
+      "staff_rest_plan"
+    ],
+    "stabilizedToNoneAfterDays": 2,
+    "closureRequires": [
+      "two_consecutive_critical_days",
+      "recovery_actions_exhausted"
+    ]
+  },
+  "evidenceResolver": {
+    "schemaVersion": 1,
+    "catalogId": "vetgeme-p7-evidence-resolver",
+    "catalogVersion": "2026.07.16.2",
+    "status": "author_complete_programmer_adapter_required",
+    "runtimeEligible": false,
+    "goalEvidence": [
+      {
+        "evidenceId": "completed_followup_visit_ids",
+        "kind": "goal_evidence",
+        "authority": "p5",
+        "recordType": "visitState",
+        "fieldOrPredicate": "completedFollowupVisitIds",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "completed_visit_ids",
+        "kind": "goal_evidence",
+        "authority": "p5",
+        "recordType": "visitState",
+        "fieldOrPredicate": "completedVisitIds",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "inventory_audit_id",
+        "kind": "goal_evidence",
+        "authority": "p6",
+        "recordType": "inventoryState",
+        "fieldOrPredicate": "latestAuditId",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "ledger_close_id",
+        "kind": "goal_evidence",
+        "authority": "p6",
+        "recordType": "ledgerState",
+        "fieldOrPredicate": "latestCloseId",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "process_result_ids",
+        "kind": "goal_evidence",
+        "authority": "p4",
+        "recordType": "handlingActionState",
+        "fieldOrPredicate": "processResultIds",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "referral_order_ids",
+        "kind": "goal_evidence",
+        "authority": "p3",
+        "recordType": "referralState",
+        "fieldOrPredicate": "referralOrderIds",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "reviewed_order_ids",
+        "kind": "goal_evidence",
+        "authority": "p3",
+        "recordType": "resultObligationState",
+        "fieldOrPredicate": "reviewedOrderIds",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "shift_close_audit_id",
+        "kind": "goal_evidence",
+        "authority": "p5",
+        "recordType": "shiftAudit",
+        "fieldOrPredicate": "closedShiftAuditId",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "staff_rest_audit_id",
+        "kind": "goal_evidence",
+        "authority": "p5",
+        "recordType": "shiftAudit",
+        "fieldOrPredicate": "restComplianceAuditId",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "teach_back_fact_ids",
+        "kind": "goal_evidence",
+        "authority": "p4",
+        "recordType": "ownerCommunicationState",
+        "fieldOrPredicate": "teachBackFactIds",
+        "resolverMode": "exact_author_owned"
+      }
+    ],
+    "eventTriggers": [
+      {
+        "evidenceId": "asset_maintenance_due",
+        "kind": "event_trigger",
+        "authority": "p6",
+        "recordType": "maintenanceState",
+        "fieldOrPredicate": "dueAssetIds",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "campaign_day_30_complete",
+        "kind": "event_trigger",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "completedDay",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "cash_above_protected_reserve",
+        "kind": "event_trigger",
+        "authority": "p6",
+        "recordType": "ledgerState",
+        "fieldOrPredicate": "cashVsProtectedReserve",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "chapter_2_active",
+        "kind": "event_trigger",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "activeChapter",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "chapter_3_active",
+        "kind": "event_trigger",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "activeChapter",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "chapter_4_active",
+        "kind": "event_trigger",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "activeChapter",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "chapter_5_active",
+        "kind": "event_trigger",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "activeChapter",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "chapter_5_close",
+        "kind": "event_trigger",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "chapterClose",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "chapter_last_day",
+        "kind": "event_trigger",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "isChapterLastDay",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "critical_result_due",
+        "kind": "event_trigger",
+        "authority": "p3",
+        "recordType": "resultObligationState",
+        "fieldOrPredicate": "criticalDueOrderIds",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "day_close",
+        "kind": "event_trigger",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "dayClose",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "day_start",
+        "kind": "event_trigger",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "dayStart",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "external_result_due",
+        "kind": "event_trigger",
+        "authority": "p3",
+        "recordType": "resultObligationState",
+        "fieldOrPredicate": "externalDueOrderIds",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "first_owner_anxiety_gte_70",
+        "kind": "event_trigger",
+        "authority": "p4",
+        "recordType": "ownerState",
+        "fieldOrPredicate": "firstAnxietyAtLeast70",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "followup_visit_due",
+        "kind": "event_trigger",
+        "authority": "p5",
+        "recordType": "visitState",
+        "fieldOrPredicate": "dueFollowupVisitIds",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "inventory_below_reorder",
+        "kind": "event_trigger",
+        "authority": "p6",
+        "recordType": "inventoryState",
+        "fieldOrPredicate": "belowReorderCategoryIds",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "owner_cost_consent_lte_30",
+        "kind": "event_trigger",
+        "authority": "p4",
+        "recordType": "ownerState",
+        "fieldOrPredicate": "costConsentAtMost30",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "patient_fear_gte_70",
+        "kind": "event_trigger",
+        "authority": "p4",
+        "recordType": "patientState",
+        "fieldOrPredicate": "fearAtLeast70",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "procedure_demand_exceeds_capacity",
+        "kind": "event_trigger",
+        "authority": "p5",
+        "recordType": "scheduler",
+        "fieldOrPredicate": "procedureDemandExceedsCapacity",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "procurement_in_transit",
+        "kind": "event_trigger",
+        "authority": "p6",
+        "recordType": "assetState",
+        "fieldOrPredicate": "inTransitAssetIds",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "safe_local_route_missing",
+        "kind": "event_trigger",
+        "authority": "p3",
+        "recordType": "researchRouteState",
+        "fieldOrPredicate": "missingLocalRouteIds",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "shift_close",
+        "kind": "event_trigger",
+        "authority": "p5",
+        "recordType": "shiftState",
+        "fieldOrPredicate": "shiftClose",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "specialization_recorded",
+        "kind": "event_trigger",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "specializationId",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "three_or_more_owner_barriers",
+        "kind": "event_trigger",
+        "authority": "p4",
+        "recordType": "ownerState",
+        "fieldOrPredicate": "barrierCountAtLeast3",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "waiting_count_gte_3",
+        "kind": "event_trigger",
+        "authority": "p5",
+        "recordType": "queueState",
+        "fieldOrPredicate": "waitingCountAtLeast3",
+        "resolverMode": "exact_author_owned"
+      }
+    ],
+    "eventEffects": [
+      {
+        "effectId": "audit_delivery_training_stock_maintenance",
+        "authority": "p5_p6",
+        "commandResolver": "effect.audit_delivery_training_stock_maintenance",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "audit_owned_work",
+        "authority": "p5",
+        "commandResolver": "effect.audit_owned_work",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "axis_specific_goal",
+        "authority": "p7",
+        "commandResolver": "effect.axis_specific_goal",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "block_close_until_handoff",
+        "authority": "p5",
+        "commandResolver": "effect.block_close_until_handoff",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "chapter_axis_snapshot",
+        "authority": "p7",
+        "commandResolver": "effect.chapter_axis_snapshot",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "create_owned_review_task",
+        "authority": "p3_p5",
+        "commandResolver": "effect.create_owned_review_task",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "delay_one_day",
+        "authority": "p6",
+        "commandResolver": "effect.delay_one_day",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "explicit_procurement_choice",
+        "authority": "p6",
+        "commandResolver": "effect.explicit_procurement_choice",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "explicit_shift_choice",
+        "authority": "p5",
+        "commandResolver": "effect.explicit_shift_choice",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "freeze_final_axis_evidence",
+        "authority": "p7",
+        "commandResolver": "effect.freeze_final_axis_evidence",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "increase_arrivals_by_one",
+        "authority": "p5",
+        "commandResolver": "effect.increase_arrivals_by_one",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "isolation_capacity_audit",
+        "authority": "p4_p5_p6",
+        "commandResolver": "effect.isolation_capacity_audit",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "no_diagnosis_bias",
+        "authority": "p7_guard",
+        "commandResolver": "effect.no_diagnosis_bias",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "offer_full_staged_minimum_safe",
+        "authority": "p4",
+        "commandResolver": "effect.offer_full_staged_minimum_safe",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "offer_low_stress_action",
+        "authority": "p4_p5",
+        "commandResolver": "effect.offer_low_stress_action",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "offer_recovery_if_needed",
+        "authority": "p6_p7",
+        "commandResolver": "effect.offer_recovery_if_needed",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "offer_specialization_support_asset",
+        "authority": "p6_p7",
+        "commandResolver": "effect.offer_specialization_support_asset",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "offer_teach_back",
+        "authority": "p4",
+        "commandResolver": "effect.offer_teach_back",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "purchase_or_referral_tradeoff",
+        "authority": "p3_p6",
+        "commandResolver": "effect.purchase_or_referral_tradeoff",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "record_one_specialization",
+        "authority": "p7",
+        "commandResolver": "effect.record_one_specialization",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "require_feasible_plan_and_teach_back",
+        "authority": "p4_p5",
+        "commandResolver": "effect.require_feasible_plan_and_teach_back",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "require_referral_choice",
+        "authority": "p3_p5",
+        "commandResolver": "effect.require_referral_choice",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "retain_referral",
+        "authority": "p3",
+        "commandResolver": "effect.retain_referral",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "schedule_or_refer",
+        "authority": "p3_p5",
+        "commandResolver": "effect.schedule_or_refer",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "select_reachable_ending",
+        "authority": "p7",
+        "commandResolver": "effect.select_reachable_ending",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "show_system_boundaries",
+        "authority": "p7_ui_projection",
+        "commandResolver": "effect.show_system_boundaries",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "suspend_if_overdue",
+        "authority": "p6",
+        "commandResolver": "effect.suspend_if_overdue",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "time_pressure_only",
+        "authority": "p5",
+        "commandResolver": "effect.time_pressure_only",
+        "medicalGenerationBiasForbidden": true
+      },
+      {
+        "effectId": "use_existing_history",
+        "authority": "p4",
+        "commandResolver": "effect.use_existing_history",
+        "medicalGenerationBiasForbidden": true
+      }
+    ],
+    "milestoneAndRecoveryRequirements": [
+      {
+        "evidenceId": "cash_above_closure_floor",
+        "kind": "requirement",
+        "authority": "p6",
+        "recordType": "ledgerState",
+        "fieldOrPredicate": "cashAboveClosureFloor",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "due_result_review_rate_gte_0_8",
+        "kind": "requirement",
+        "authority": "p3",
+        "recordType": "resultObligationState",
+        "fieldOrPredicate": "dueReviewRateGte0.8",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "ending_evidence_complete",
+        "kind": "requirement",
+        "authority": "p7",
+        "recordType": "endingState",
+        "fieldOrPredicate": "evidenceComplete",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "fifteen_campaign_days",
+        "kind": "requirement",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "completedDayGte15",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "five_campaign_days",
+        "kind": "requirement",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "completedDayGte5",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "inventory_audit_recorded",
+        "kind": "requirement",
+        "authority": "p6",
+        "recordType": "inventoryState",
+        "fieldOrPredicate": "latestAuditIdExists",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "no_unowned_critical_work",
+        "kind": "requirement",
+        "authority": "p5",
+        "recordType": "schedulerAudit",
+        "fieldOrPredicate": "unownedCriticalWorkCountEq0",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "recovery_actions_exhausted",
+        "kind": "requirement",
+        "authority": "p6",
+        "recordType": "recoveryState",
+        "fieldOrPredicate": "actionsExhausted",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "rest_compliance_gte_0_8",
+        "kind": "requirement",
+        "authority": "p5",
+        "recordType": "shiftAudit",
+        "fieldOrPredicate": "restComplianceGte0.8",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "staff_rest_plan",
+        "kind": "requirement",
+        "authority": "p5",
+        "recordType": "shiftState",
+        "fieldOrPredicate": "futureRestPlanExists",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "ten_campaign_days",
+        "kind": "requirement",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "completedDayGte10",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "thirty_campaign_days",
+        "kind": "requirement",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "completedDayGte30",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "twenty_campaign_days",
+        "kind": "requirement",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "completedDayGte20",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "twenty_five_campaign_days",
+        "kind": "requirement",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "completedDayGte25",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "two_consecutive_critical_days",
+        "kind": "requirement",
+        "authority": "p6",
+        "recordType": "riskState",
+        "fieldOrPredicate": "consecutiveCriticalDaysGte2",
+        "resolverMode": "exact_author_owned"
+      }
+    ],
+    "specializationCapabilities": [
+      {
+        "evidenceId": "imaging_equipment",
+        "kind": "specialization_support",
+        "authority": "p6",
+        "recordType": "assetState",
+        "fieldOrPredicate": "ownedActiveCapabilityType:imaging_equipment",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "laboratory_equipment",
+        "kind": "specialization_support",
+        "authority": "p6",
+        "recordType": "assetState",
+        "fieldOrPredicate": "ownedActiveCapabilityType:laboratory_equipment",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "low_stress_zone",
+        "kind": "specialization_support",
+        "authority": "p5",
+        "recordType": "roomState",
+        "fieldOrPredicate": "readyCapability:quiet_route",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "referral_coordination",
+        "kind": "specialization_support",
+        "authority": "p5",
+        "recordType": "scheduler",
+        "fieldOrPredicate": "completedTask:visit.referral_coordination",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "staged_owner_plans",
+        "kind": "specialization_support",
+        "authority": "p4",
+        "recordType": "handlingActionState",
+        "fieldOrPredicate": "completedActionClass:staged_visit",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "trained_low_stress_handling",
+        "kind": "specialization_support",
+        "authority": "p5",
+        "recordType": "staffAndShiftState",
+        "fieldOrPredicate": "scheduledCapability:task.low_stress",
+        "resolverMode": "exact_author_owned"
+      }
+    ],
+    "endingPredicates": [
+      {
+        "evidenceId": "allAxesMinimum",
+        "kind": "ending_predicate",
+        "authority": "p7",
+        "recordType": "axisSnapshot",
+        "fieldOrPredicate": "allAxesMinimum",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "anyAxisMinimum",
+        "kind": "ending_predicate",
+        "authority": "p7",
+        "recordType": "axisSnapshot",
+        "fieldOrPredicate": "anyAxisMinimum",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "clinical_safetyMinimum",
+        "kind": "ending_predicate",
+        "authority": "p7",
+        "recordType": "axisSnapshot",
+        "fieldOrPredicate": "clinical_safety",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "closureReview",
+        "kind": "ending_predicate",
+        "authority": "p6_p7",
+        "recordType": "recoveryState",
+        "fieldOrPredicate": "closureReview",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "financial_resilienceMinimum",
+        "kind": "ending_predicate",
+        "authority": "p7",
+        "recordType": "axisSnapshot",
+        "fieldOrPredicate": "financial_resilience",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "owner_trustMinimum",
+        "kind": "ending_predicate",
+        "authority": "p7",
+        "recordType": "axisSnapshot",
+        "fieldOrPredicate": "owner_trust",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "specializationId",
+        "kind": "ending_predicate",
+        "authority": "p7",
+        "recordType": "campaignState",
+        "fieldOrPredicate": "specializationId",
+        "resolverMode": "exact_author_owned"
+      },
+      {
+        "evidenceId": "team_conditionMinimum",
+        "kind": "ending_predicate",
+        "authority": "p7",
+        "recordType": "axisSnapshot",
+        "fieldOrPredicate": "team_condition",
+        "resolverMode": "exact_author_owned"
+      }
+    ],
+    "activation": {
+      "authorApprovalRecorded": true,
+      "programmerAdapterValidated": false,
+      "productOwnerBalanceAccepted": false,
+      "medicalProductionPoolRequiredForCampaignActivation": true,
+      "runtimeEligible": false
+    }
+  },
+  "catalogDigest": "995378fea5529ff8babd7abb2af6c459f730591ae35e699ce39c1dbc38fef888"
+}

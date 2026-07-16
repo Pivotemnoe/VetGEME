@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "policyId": "vetgeme-p4-identity-behavior-policy",
+  "policyVersion": "2026.07.16.2",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "crosswalkAuthority": "source/p4-explicit-behavior-crosswalk.json",
+  "matchTokensRuntimeForbidden": true,
+  "independenceRules": {
+    "appearanceIndependentFromBehavior": true,
+    "ownerBehaviorCannotRevealClinicalTruth": true,
+    "temperamentCannotChangeDiagnosis": true,
+    "fatigueCannotCreateRandomWrongDiagnosis": true,
+    "behaviorMayChangeTimeCostConsentDisclosureAdherenceAndSampleQuality": true
+  },
+  "appearancePools": {
+    "owner": {"body": ["owner_body_01", "owner_body_02", "owner_body_03", "owner_body_04", "owner_body_05", "owner_body_06"], "hair": ["owner_hair_01", "owner_hair_02", "owner_hair_03", "owner_hair_04", "owner_hair_05", "owner_hair_06", "owner_hair_07", "owner_hair_08"], "clothes": ["owner_clothes_01", "owner_clothes_02", "owner_clothes_03", "owner_clothes_04", "owner_clothes_05", "owner_clothes_06", "owner_clothes_07", "owner_clothes_08"], "accessory": ["none", "owner_accessory_01", "owner_accessory_02", "owner_accessory_03"]},
+    "patient": {"species": ["dog", "cat"], "size": ["small", "medium", "large"], "coat": ["short", "medium", "long", "hairless"], "pattern": ["solid", "bicolor", "tricolor", "tabby", "spotted", "point"]}
+  },
+  "ownerArchetypes": [
+    {"profileId": "owner_calm_collaborative", "title": "Спокойный и включённый", "traits": {"patience": 82, "baselineAnxiety": 20, "observation": 76, "clinicTrust": 72, "conflictTendency": 12, "medicalComprehension": 72, "honesty": 84, "responsibility": 80, "financialFlexibility": 58, "uncertaintySensitivity": 28, "secondOpinionTendency": 18, "complexPlanAdherence": 78}},
+    {"profileId": "owner_anxious_observant", "title": "Тревожный наблюдательный", "traits": {"patience": 55, "baselineAnxiety": 82, "observation": 88, "clinicTrust": 58, "conflictTendency": 24, "medicalComprehension": 62, "honesty": 82, "responsibility": 78, "financialFlexibility": 54, "uncertaintySensitivity": 88, "secondOpinionTendency": 35, "complexPlanAdherence": 68}},
+    {"profileId": "owner_budget_constrained", "title": "Ограниченный бюджет", "traits": {"patience": 65, "baselineAnxiety": 62, "observation": 64, "clinicTrust": 60, "conflictTendency": 22, "medicalComprehension": 58, "honesty": 74, "responsibility": 70, "financialFlexibility": 12, "uncertaintySensitivity": 66, "secondOpinionTendency": 28, "complexPlanAdherence": 48}},
+    {"profileId": "owner_time_constrained", "title": "Ограничен во времени", "traits": {"patience": 24, "baselineAnxiety": 48, "observation": 54, "clinicTrust": 62, "conflictTendency": 28, "medicalComprehension": 68, "honesty": 70, "responsibility": 68, "financialFlexibility": 60, "uncertaintySensitivity": 52, "secondOpinionTendency": 24, "complexPlanAdherence": 45}},
+    {"profileId": "owner_distrustful", "title": "Недоверчивый", "traits": {"patience": 38, "baselineAnxiety": 66, "observation": 72, "clinicTrust": 22, "conflictTendency": 68, "medicalComprehension": 56, "honesty": 58, "responsibility": 62, "financialFlexibility": 48, "uncertaintySensitivity": 76, "secondOpinionTendency": 82, "complexPlanAdherence": 38}},
+    {"profileId": "owner_low_comprehension", "title": "Нуждается в простом объяснении", "traits": {"patience": 62, "baselineAnxiety": 58, "observation": 42, "clinicTrust": 68, "conflictTendency": 18, "medicalComprehension": 22, "honesty": 72, "responsibility": 66, "financialFlexibility": 46, "uncertaintySensitivity": 64, "secondOpinionTendency": 20, "complexPlanAdherence": 32}},
+    {"profileId": "owner_overconfident", "title": "Уверен в домашнем диагнозе", "traits": {"patience": 34, "baselineAnxiety": 30, "observation": 58, "clinicTrust": 42, "conflictTendency": 52, "medicalComprehension": 46, "honesty": 64, "responsibility": 54, "financialFlexibility": 56, "uncertaintySensitivity": 20, "secondOpinionTendency": 48, "complexPlanAdherence": 38}},
+    {"profileId": "owner_exhausted_caregiver", "title": "Истощён длительным уходом", "traits": {"patience": 44, "baselineAnxiety": 72, "observation": 76, "clinicTrust": 58, "conflictTendency": 34, "medicalComprehension": 70, "honesty": 78, "responsibility": 74, "financialFlexibility": 36, "uncertaintySensitivity": 74, "secondOpinionTendency": 32, "complexPlanAdherence": 44}},
+    {"profileId": "owner_defensive_after_failure", "title": "Защищается после неудачи", "traits": {"patience": 32, "baselineAnxiety": 74, "observation": 62, "clinicTrust": 34, "conflictTendency": 70, "medicalComprehension": 58, "honesty": 40, "responsibility": 52, "financialFlexibility": 44, "uncertaintySensitivity": 82, "secondOpinionTendency": 66, "complexPlanAdherence": 35}},
+    {"profileId": "owner_high_resource", "title": "Готов к полному маршруту", "traits": {"patience": 70, "baselineAnxiety": 42, "observation": 70, "clinicTrust": 68, "conflictTendency": 18, "medicalComprehension": 78, "honesty": 80, "responsibility": 82, "financialFlexibility": 92, "uncertaintySensitivity": 40, "secondOpinionTendency": 25, "complexPlanAdherence": 84}},
+    {"profileId": "owner_skeptical_evidence_seeking", "title": "Просит доказательства", "traits": {"patience": 56, "baselineAnxiety": 48, "observation": 80, "clinicTrust": 46, "conflictTendency": 38, "medicalComprehension": 86, "honesty": 82, "responsibility": 76, "financialFlexibility": 62, "uncertaintySensitivity": 58, "secondOpinionTendency": 62, "complexPlanAdherence": 66}},
+    {"profileId": "owner_inconsistent", "title": "Непоследовательный", "traits": {"patience": 46, "baselineAnxiety": 44, "observation": 38, "clinicTrust": 58, "conflictTendency": 24, "medicalComprehension": 52, "honesty": 52, "responsibility": 30, "financialFlexibility": 50, "uncertaintySensitivity": 44, "secondOpinionTendency": 22, "complexPlanAdherence": 18}}
+  ],
+  "temperamentArchetypes": [
+    {"temperamentId": "patient_calm_social", "title": "Спокойный социальный", "axes": {"boldness": 72, "excitability": 24, "sociability": 82, "touchSensitivity": 25, "defensiveBehavior": 12, "restraintTolerance": 78, "stressRecovery": 82, "familiarStaffTrust": 64, "otherAnimalReactivity": 18}},
+    {"temperamentId": "patient_cautious", "title": "Осторожный", "axes": {"boldness": 30, "excitability": 52, "sociability": 42, "touchSensitivity": 54, "defensiveBehavior": 38, "restraintTolerance": 45, "stressRecovery": 58, "familiarStaffTrust": 62, "otherAnimalReactivity": 35}},
+    {"temperamentId": "patient_fearful", "title": "Боязливый", "axes": {"boldness": 14, "excitability": 76, "sociability": 22, "touchSensitivity": 72, "defensiveBehavior": 58, "restraintTolerance": 18, "stressRecovery": 24, "familiarStaffTrust": 48, "otherAnimalReactivity": 64}},
+    {"temperamentId": "patient_pain_defensive", "title": "Защитная реакция на боль", "axes": {"boldness": 44, "excitability": 70, "sociability": 34, "touchSensitivity": 92, "defensiveBehavior": 86, "restraintTolerance": 12, "stressRecovery": 28, "familiarStaffTrust": 44, "otherAnimalReactivity": 45}},
+    {"temperamentId": "patient_high_arousal", "title": "Легко возбуждается", "axes": {"boldness": 68, "excitability": 92, "sociability": 64, "touchSensitivity": 48, "defensiveBehavior": 42, "restraintTolerance": 28, "stressRecovery": 26, "familiarStaffTrust": 52, "otherAnimalReactivity": 78}},
+    {"temperamentId": "patient_shutdown", "title": "Замирает от стресса", "axes": {"boldness": 8, "excitability": 34, "sociability": 12, "touchSensitivity": 68, "defensiveBehavior": 22, "restraintTolerance": 34, "stressRecovery": 18, "familiarStaffTrust": 36, "otherAnimalReactivity": 24}},
+    {"temperamentId": "patient_familiar_staff", "title": "Доверяет знакомому персоналу", "axes": {"boldness": 48, "excitability": 46, "sociability": 54, "touchSensitivity": 42, "defensiveBehavior": 28, "restraintTolerance": 62, "stressRecovery": 68, "familiarStaffTrust": 92, "otherAnimalReactivity": 32}},
+    {"temperamentId": "patient_other_animal_reactive", "title": "Реактивен к другим животным", "axes": {"boldness": 58, "excitability": 82, "sociability": 32, "touchSensitivity": 40, "defensiveBehavior": 52, "restraintTolerance": 44, "stressRecovery": 38, "familiarStaffTrust": 58, "otherAnimalReactivity": 94}}
+  ],
+  "ownerModifierRules": [
+    {"ruleId": "owner_budget", "matchTokens": ["budget", "cost", "financial", "low_resource", "limited_resources", "cannot_afford"], "archetypeId": "owner_budget_constrained", "stateEffects": {"anxiety": 10, "costConsent": -30, "adherenceIntent": -10}},
+    {"ruleId": "owner_anxiety", "matchTokens": ["anxious", "fear", "worried", "uncertain", "panic"], "archetypeId": "owner_anxious_observant", "stateEffects": {"anxiety": 25, "understanding": -8}},
+    {"ruleId": "owner_distrust", "matchTokens": ["distrust", "skept", "second_opinion", "conflict", "angry", "frustrated"], "archetypeId": "owner_distrustful", "stateEffects": {"trust": -25, "irritation": 18, "leaveRisk": 12}},
+    {"ruleId": "owner_adherence_low", "matchTokens": ["nonadherent", "low_adherence", "inconsistent", "missed", "stopped", "poor_compliance", "cannot_administer"], "archetypeId": "owner_inconsistent", "stateEffects": {"adherenceIntent": -28, "understanding": -6}},
+    {"ruleId": "owner_adherence_high", "matchTokens": ["high_adherence", "reliable", "engaged", "prepared", "compliant"], "archetypeId": "owner_calm_collaborative", "stateEffects": {"adherenceIntent": 18, "trust": 8}},
+    {"ruleId": "owner_comprehension", "matchTokens": ["low_comprehension", "language", "confused", "overwhelmed", "needs_simple"], "archetypeId": "owner_low_comprehension", "stateEffects": {"understanding": -25, "anxiety": 8}},
+    {"ruleId": "owner_time", "matchTokens": ["time_limited", "schedule", "transport", "distance", "availability"], "archetypeId": "owner_time_constrained", "stateEffects": {"adherenceIntent": -15, "irritation": 8}},
+    {"ruleId": "owner_exhausted", "matchTokens": ["exhausted", "caregiver", "chronic", "burnout", "fatigue", "grief"], "archetypeId": "owner_exhausted_caregiver", "stateEffects": {"anxiety": 15, "adherenceIntent": -12}},
+    {"ruleId": "owner_defensive", "matchTokens": ["defensive", "ashamed", "withholding", "home_treatment", "self_treated"], "archetypeId": "owner_defensive_after_failure", "stateEffects": {"homeTreatmentDisclosure": -24, "trust": -10}},
+    {"ruleId": "owner_high_resource", "matchTokens": ["high_resource", "full_workup", "flexible", "insured"], "archetypeId": "owner_high_resource", "stateEffects": {"costConsent": 25, "adherenceIntent": 12}},
+    {"ruleId": "owner_evidence", "matchTokens": ["evidence", "detailed", "medical", "research", "questions"], "archetypeId": "owner_skeptical_evidence_seeking", "stateEffects": {"understanding": 12, "trust": -4}},
+    {"ruleId": "owner_default", "matchTokens": [], "archetypeId": "owner_calm_collaborative", "stateEffects": {}}
+  ],
+  "temperamentTagRules": [
+    {"ruleId": "temp_pain_defensive", "matchTokens": ["pain", "defensive", "aggressive", "bite", "fractious", "touch_sensitive"], "archetypeId": "patient_pain_defensive"},
+    {"ruleId": "temp_fearful", "matchTokens": ["fear", "anxious", "timid", "avoidant", "stress", "neophobic"], "archetypeId": "patient_fearful"},
+    {"ruleId": "temp_shutdown", "matchTokens": ["shutdown", "freeze", "withdrawn", "depressed", "obtunded", "weak", "recumbent"], "archetypeId": "patient_shutdown"},
+    {"ruleId": "temp_aroused", "matchTokens": ["excitable", "aroused", "restless", "hyper", "reactive", "vocal"], "archetypeId": "patient_high_arousal"},
+    {"ruleId": "temp_other_animal", "matchTokens": ["other_animal", "dog_reactive", "cat_reactive"], "archetypeId": "patient_other_animal_reactive"},
+    {"ruleId": "temp_familiar", "matchTokens": ["familiar_staff", "known_staff", "repeat_visit"], "archetypeId": "patient_familiar_staff"},
+    {"ruleId": "temp_calm", "matchTokens": ["calm", "cooperative", "social", "tolerant"], "archetypeId": "patient_calm_social"},
+    {"ruleId": "temp_default", "matchTokens": [], "archetypeId": "patient_cautious"}
+  ],
+  "handlingActionClasses": [
+    {"actionClassId": "minimal_handling", "matchTokens": ["minimal", "stop_forced", "no_forced", "telephone_triage", "transfer", "referral"], "timeMinutes": 8, "resourceRequirements": ["quiet_route"], "effects": {"fear": -12, "arousal": -10, "handlingTolerance": 8, "sampleQuality": 4}, "safeAlternatives": ["safe_referral"]},
+    {"actionClassId": "staged_visit", "matchTokens": ["staged", "short_visit", "repeat", "video_first", "home", "separate_visits"], "timeMinutes": 15, "resourceRequirements": ["scheduled_recheck_slot"], "effects": {"fear": -10, "fatigue": -12, "staffTrust": 8}, "safeAlternatives": ["safe_referral"]},
+    {"actionClassId": "sedation_or_anesthesia", "matchTokens": ["sedation", "anesthesia", "chemical_restraint"], "timeMinutes": 30, "resourceRequirements": ["reviewed_sedation_protocol", "monitoring_capacity"], "effects": {"handlingTolerance": 35, "sampleQuality": 22, "physiologicalStability": -4}, "safeAlternatives": ["safe_referral"]},
+    {"actionClassId": "specialist_or_external", "matchTokens": ["specialist", "external", "image_guided", "endoscopy", "imaging"], "timeMinutes": 12, "resourceRequirements": ["referral_coordination"], "effects": {"staffTrust": 5, "sampleQuality": 15}, "safeAlternatives": ["safe_referral"]},
+    {"actionClassId": "barrier_isolation", "matchTokens": ["barrier", "isolation", "zoonotic", "ppe"], "timeMinutes": 12, "resourceRequirements": ["infection_control_capacity"], "effects": {"arousal": -10, "physiologicalStability": 2}, "safeAlternatives": ["regulated_referral"]},
+    {"actionClassId": "comfort_positioning", "matchTokens": ["position", "floor", "supported", "warm", "spinal", "head_safe", "oxygen"], "timeMinutes": 10, "resourceRequirements": ["comfort_surface"], "effects": {"pain": -8, "fear": -6, "handlingTolerance": 10}, "safeAlternatives": ["safe_referral"]},
+    {"actionClassId": "sampling_plan", "matchTokens": ["sampling", "sample", "low_volume", "site_specific", "collection"], "timeMinutes": 18, "resourceRequirements": ["sampling_plan"], "effects": {"sampleQuality": 20, "fear": -5}, "safeAlternatives": ["external_sampling_referral"]},
+    {"actionClassId": "low_stress_general", "matchTokens": [], "timeMinutes": 12, "resourceRequirements": ["quiet_route"], "effects": {"fear": -8, "arousal": -8, "staffTrust": 6, "handlingTolerance": 6}, "safeAlternatives": ["safe_referral"]}
+  ],
+  "observableCueRules": [
+    {"ruleId": "cue_owner_anxiety_high", "entity": "owner", "axis": "anxiety", "operator": "gte", "value": 70, "cueId": "owner_repeats_questions_and_checks_animal"},
+    {"ruleId": "cue_owner_trust_low", "entity": "owner", "axis": "trust", "operator": "lte", "value": 30, "cueId": "owner_requests_justification_before_consent"},
+    {"ruleId": "cue_owner_understanding_low", "entity": "owner", "axis": "understanding", "operator": "lte", "value": 35, "cueId": "owner_cannot_repeat_plan"},
+    {"ruleId": "cue_owner_cost_consent_low", "entity": "owner", "axis": "costConsent", "operator": "lte", "value": 30, "cueId": "owner_asks_for_staged_options"},
+    {"ruleId": "cue_owner_leave_risk_high", "entity": "owner", "axis": "leaveRisk", "operator": "gte", "value": 70, "cueId": "owner_prepares_to_leave_before_handoff"},
+    {"ruleId": "cue_patient_fear_high", "entity": "patient", "axis": "fear", "operator": "gte", "value": 70, "cueId": "patient_avoids_contact_or_freezes"},
+    {"ruleId": "cue_patient_pain_high", "entity": "patient", "axis": "pain", "operator": "gte", "value": 70, "cueId": "patient_guards_painful_area"},
+    {"ruleId": "cue_patient_arousal_high", "entity": "patient", "axis": "arousal", "operator": "gte", "value": 75, "cueId": "patient_cannot_settle"},
+    {"ruleId": "cue_patient_handling_low", "entity": "patient", "axis": "handlingTolerance", "operator": "lte", "value": 25, "cueId": "patient_escalates_during_restraint"},
+    {"ruleId": "cue_sample_quality_low", "entity": "patient", "axis": "sampleQuality", "operator": "lte", "value": 35, "cueId": "sample_quality_warning_visible"}
+  ],
+  "historyPolicy": {
+    "timeAuthority": "campaignMinute",
+    "appendOnly": true,
+    "timeCannotMoveBackwards": true,
+    "duplicateEventIdMustBeByteEquivalent": true,
+    "sourceVisitIdRequiredForVisitEvents": true,
+    "sameSourceIdentityReusesStableIdentity": true,
+    "generatedDayPersistsIdentityRefsImmediately": true,
+    "reloadMayNotRegenerateIdentity": true,
+    "eventTypes": [
+      {"type": "identity_created", "entity": ["owner", "patient"], "requiredPayloadKeys": ["sourceIdentity"]},
+      {"type": "visit_arrived", "entity": ["owner", "patient"], "requiredPayloadKeys": ["appointmentId"]},
+      {"type": "owner_disclosure", "entity": ["owner"], "requiredPayloadKeys": ["factId", "disclosureState"]},
+      {"type": "consent_recorded", "entity": ["owner"], "requiredPayloadKeys": ["planId", "decision"]},
+      {"type": "handling_action", "entity": ["patient"], "requiredPayloadKeys": ["actionId", "processResultId"]},
+      {"type": "sample_attempt", "entity": ["patient"], "requiredPayloadKeys": ["orderId", "sampleQuality"]},
+      {"type": "result_contact", "entity": ["owner", "patient"], "requiredPayloadKeys": ["orderId", "contactOutcome"]},
+      {"type": "plan_agreed", "entity": ["owner", "patient"], "requiredPayloadKeys": ["planId", "feasibilityTier"]},
+      {"type": "followup_scheduled", "entity": ["owner", "patient"], "requiredPayloadKeys": ["appointmentId", "dueAt"]},
+      {"type": "followup_missed", "entity": ["owner", "patient"], "requiredPayloadKeys": ["appointmentId"]},
+      {"type": "referral_handoff", "entity": ["owner", "patient"], "requiredPayloadKeys": ["referralOrderId", "providerId"]},
+      {"type": "weight_recorded", "entity": ["patient"], "requiredPayloadKeys": ["weight", "measurementId"]}
+    ],
+    "forbiddenPayloadKeys": ["diagnosis", "diagnosisId", "diagnosticTruth", "medicalTruth", "diseaseId"]
+  }
+}

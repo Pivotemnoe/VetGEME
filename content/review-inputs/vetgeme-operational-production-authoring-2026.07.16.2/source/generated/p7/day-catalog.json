@@ -1,0 +1,1524 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p7-campaign-catalog",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "campaign": {
+    "campaignId": "campaign_30d_v1",
+    "days": 30,
+    "chapters": 6,
+    "daysPerChapter": 5,
+    "endlessAfterEnding": true
+  },
+  "days": [
+    {
+      "day": 1,
+      "chapter": 1,
+      "title": "Открытие",
+      "loadTarget": [
+        3,
+        4
+      ],
+      "goalTypes": [
+        "complete_safe_visits",
+        "clean_shift_close"
+      ],
+      "eventSlots": [
+        "opening_orientation"
+      ],
+      "unlockCheckpoint": "start",
+      "dayId": "campaign_day_01",
+      "goals": [
+        {
+          "goalId": "day_01_goal_1_complete_safe_visits",
+          "goalType": "complete_safe_visits",
+          "evidence": "completed_visit_ids",
+          "evidenceResolver": {
+            "evidenceId": "completed_visit_ids",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "visitState",
+            "fieldOrPredicate": "completedVisitIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 2,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_01_goal_2_clean_shift_close",
+          "goalType": "clean_shift_close",
+          "evidence": "shift_close_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "shift_close_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "closedShiftAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "chapter": 1,
+      "title": "Первые повторные решения",
+      "loadTarget": [
+        3,
+        5
+      ],
+      "goalTypes": [
+        "complete_safe_visits",
+        "teach_back"
+      ],
+      "eventSlots": [
+        "owner_questions"
+      ],
+      "unlockCheckpoint": "start",
+      "dayId": "campaign_day_02",
+      "goals": [
+        {
+          "goalId": "day_02_goal_1_complete_safe_visits",
+          "goalType": "complete_safe_visits",
+          "evidence": "completed_visit_ids",
+          "evidenceResolver": {
+            "evidenceId": "completed_visit_ids",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "visitState",
+            "fieldOrPredicate": "completedVisitIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 2,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_02_goal_2_teach_back",
+          "goalType": "teach_back",
+          "evidence": "teach_back_fact_ids",
+          "evidenceResolver": {
+            "evidenceId": "teach_back_fact_ids",
+            "kind": "goal_evidence",
+            "authority": "p4",
+            "recordType": "ownerCommunicationState",
+            "fieldOrPredicate": "teachBackFactIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "chapter": 1,
+      "title": "Очередь и время",
+      "loadTarget": [
+        4,
+        5
+      ],
+      "goalTypes": [
+        "complete_safe_visits",
+        "protect_rest"
+      ],
+      "eventSlots": [
+        "queue_pressure"
+      ],
+      "unlockCheckpoint": "start",
+      "dayId": "campaign_day_03",
+      "goals": [
+        {
+          "goalId": "day_03_goal_1_complete_safe_visits",
+          "goalType": "complete_safe_visits",
+          "evidence": "completed_visit_ids",
+          "evidenceResolver": {
+            "evidenceId": "completed_visit_ids",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "visitState",
+            "fieldOrPredicate": "completedVisitIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 2,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_03_goal_2_protect_rest",
+          "goalType": "protect_rest",
+          "evidence": "staff_rest_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "staff_rest_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "restComplianceAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "chapter": 1,
+      "title": "Безопасная граница кабинета",
+      "loadTarget": [
+        4,
+        5
+      ],
+      "goalTypes": [
+        "use_safe_referral",
+        "clean_shift_close"
+      ],
+      "eventSlots": [
+        "missing_capability"
+      ],
+      "unlockCheckpoint": "start",
+      "dayId": "campaign_day_04",
+      "goals": [
+        {
+          "goalId": "day_04_goal_1_use_safe_referral",
+          "goalType": "use_safe_referral",
+          "evidence": "referral_order_ids",
+          "evidenceResolver": {
+            "evidenceId": "referral_order_ids",
+            "kind": "goal_evidence",
+            "authority": "p3",
+            "recordType": "referralState",
+            "fieldOrPredicate": "referralOrderIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_04_goal_2_clean_shift_close",
+          "goalType": "clean_shift_close",
+          "evidence": "shift_close_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "shift_close_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "closedShiftAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "chapter": 1,
+      "title": "Итог открытия",
+      "loadTarget": [
+        4,
+        6
+      ],
+      "goalTypes": [
+        "maintain_reserve",
+        "complete_safe_visits"
+      ],
+      "eventSlots": [
+        "chapter_review"
+      ],
+      "unlockCheckpoint": "chapter_1_close",
+      "dayId": "campaign_day_05",
+      "goals": [
+        {
+          "goalId": "day_05_goal_1_maintain_reserve",
+          "goalType": "maintain_reserve",
+          "evidence": "ledger_close_id",
+          "evidenceResolver": {
+            "evidenceId": "ledger_close_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "ledgerState",
+            "fieldOrPredicate": "latestCloseId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_05_goal_2_complete_safe_visits",
+          "goalType": "complete_safe_visits",
+          "evidence": "completed_visit_ids",
+          "evidenceResolver": {
+            "evidenceId": "completed_visit_ids",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "visitState",
+            "fieldOrPredicate": "completedVisitIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 2,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "chapter": 2,
+      "title": "Расходники и базовые тесты",
+      "loadTarget": [
+        4,
+        6
+      ],
+      "goalTypes": [
+        "inventory_prepared",
+        "complete_safe_visits"
+      ],
+      "eventSlots": [
+        "supplier_offer"
+      ],
+      "unlockCheckpoint": "chapter_2",
+      "dayId": "campaign_day_06",
+      "goals": [
+        {
+          "goalId": "day_06_goal_1_inventory_prepared",
+          "goalType": "inventory_prepared",
+          "evidence": "inventory_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "inventory_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "inventoryState",
+            "fieldOrPredicate": "latestAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_06_goal_2_complete_safe_visits",
+          "goalType": "complete_safe_visits",
+          "evidence": "completed_visit_ids",
+          "evidenceResolver": {
+            "evidenceId": "completed_visit_ids",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "visitState",
+            "fieldOrPredicate": "completedVisitIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 2,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "chapter": 2,
+      "title": "Изоляция",
+      "loadTarget": [
+        4,
+        6
+      ],
+      "goalTypes": [
+        "clean_shift_close",
+        "teach_back"
+      ],
+      "eventSlots": [
+        "infection_control_drill"
+      ],
+      "unlockCheckpoint": "chapter_2",
+      "dayId": "campaign_day_07",
+      "goals": [
+        {
+          "goalId": "day_07_goal_1_clean_shift_close",
+          "goalType": "clean_shift_close",
+          "evidence": "shift_close_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "shift_close_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "closedShiftAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_07_goal_2_teach_back",
+          "goalType": "teach_back",
+          "evidence": "teach_back_fact_ids",
+          "evidenceResolver": {
+            "evidenceId": "teach_back_fact_ids",
+            "kind": "goal_evidence",
+            "authority": "p4",
+            "recordType": "ownerCommunicationState",
+            "fieldOrPredicate": "teachBackFactIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 8,
+      "chapter": 2,
+      "title": "Отложенный результат",
+      "loadTarget": [
+        4,
+        6
+      ],
+      "goalTypes": [
+        "review_due_results",
+        "complete_followup"
+      ],
+      "eventSlots": [
+        "external_result_arrives"
+      ],
+      "unlockCheckpoint": "chapter_2",
+      "dayId": "campaign_day_08",
+      "goals": [
+        {
+          "goalId": "day_08_goal_1_review_due_results",
+          "goalType": "review_due_results",
+          "evidence": "reviewed_order_ids",
+          "evidenceResolver": {
+            "evidenceId": "reviewed_order_ids",
+            "kind": "goal_evidence",
+            "authority": "p3",
+            "recordType": "resultObligationState",
+            "fieldOrPredicate": "reviewedOrderIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_08_goal_2_complete_followup",
+          "goalType": "complete_followup",
+          "evidence": "completed_followup_visit_ids",
+          "evidenceResolver": {
+            "evidenceId": "completed_followup_visit_ids",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "visitState",
+            "fieldOrPredicate": "completedFollowupVisitIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 9,
+      "chapter": 2,
+      "title": "Доступный план",
+      "loadTarget": [
+        5,
+        6
+      ],
+      "goalTypes": [
+        "teach_back",
+        "maintain_reserve"
+      ],
+      "eventSlots": [
+        "budget_tradeoff"
+      ],
+      "unlockCheckpoint": "chapter_2",
+      "dayId": "campaign_day_09",
+      "goals": [
+        {
+          "goalId": "day_09_goal_1_teach_back",
+          "goalType": "teach_back",
+          "evidence": "teach_back_fact_ids",
+          "evidenceResolver": {
+            "evidenceId": "teach_back_fact_ids",
+            "kind": "goal_evidence",
+            "authority": "p4",
+            "recordType": "ownerCommunicationState",
+            "fieldOrPredicate": "teachBackFactIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_09_goal_2_maintain_reserve",
+          "goalType": "maintain_reserve",
+          "evidence": "ledger_close_id",
+          "evidenceResolver": {
+            "evidenceId": "ledger_close_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "ledgerState",
+            "fieldOrPredicate": "latestCloseId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 10,
+      "chapter": 2,
+      "title": "Итог базовой диагностики",
+      "loadTarget": [
+        5,
+        7
+      ],
+      "goalTypes": [
+        "review_due_results",
+        "clean_shift_close"
+      ],
+      "eventSlots": [
+        "chapter_review"
+      ],
+      "unlockCheckpoint": "chapter_2_close",
+      "dayId": "campaign_day_10",
+      "goals": [
+        {
+          "goalId": "day_10_goal_1_review_due_results",
+          "goalType": "review_due_results",
+          "evidence": "reviewed_order_ids",
+          "evidenceResolver": {
+            "evidenceId": "reviewed_order_ids",
+            "kind": "goal_evidence",
+            "authority": "p3",
+            "recordType": "resultObligationState",
+            "fieldOrPredicate": "reviewedOrderIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_10_goal_2_clean_shift_close",
+          "goalType": "clean_shift_close",
+          "evidence": "shift_close_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "shift_close_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "closedShiftAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 11,
+      "chapter": 3,
+      "title": "Нагрузка команды",
+      "loadTarget": [
+        5,
+        7
+      ],
+      "goalTypes": [
+        "protect_rest",
+        "complete_safe_visits"
+      ],
+      "eventSlots": [
+        "staff_schedule_choice"
+      ],
+      "unlockCheckpoint": "chapter_3",
+      "dayId": "campaign_day_11",
+      "goals": [
+        {
+          "goalId": "day_11_goal_1_protect_rest",
+          "goalType": "protect_rest",
+          "evidence": "staff_rest_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "staff_rest_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "restComplianceAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_11_goal_2_complete_safe_visits",
+          "goalType": "complete_safe_visits",
+          "evidence": "completed_visit_ids",
+          "evidenceResolver": {
+            "evidenceId": "completed_visit_ids",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "visitState",
+            "fieldOrPredicate": "completedVisitIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 2,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 12,
+      "chapter": 3,
+      "title": "Низкострессовый маршрут",
+      "loadTarget": [
+        5,
+        7
+      ],
+      "goalTypes": [
+        "low_stress_action",
+        "teach_back"
+      ],
+      "eventSlots": [
+        "fearful_patient"
+      ],
+      "unlockCheckpoint": "chapter_3",
+      "dayId": "campaign_day_12",
+      "goals": [
+        {
+          "goalId": "day_12_goal_1_low_stress_action",
+          "goalType": "low_stress_action",
+          "evidence": "process_result_ids",
+          "evidenceResolver": {
+            "evidenceId": "process_result_ids",
+            "kind": "goal_evidence",
+            "authority": "p4",
+            "recordType": "handlingActionState",
+            "fieldOrPredicate": "processResultIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_12_goal_2_teach_back",
+          "goalType": "teach_back",
+          "evidence": "teach_back_fact_ids",
+          "evidenceResolver": {
+            "evidenceId": "teach_back_fact_ids",
+            "kind": "goal_evidence",
+            "authority": "p4",
+            "recordType": "ownerCommunicationState",
+            "fieldOrPredicate": "teachBackFactIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 13,
+      "chapter": 3,
+      "title": "Поставка задерживается",
+      "loadTarget": [
+        5,
+        7
+      ],
+      "goalTypes": [
+        "inventory_prepared",
+        "use_safe_referral"
+      ],
+      "eventSlots": [
+        "delivery_delay"
+      ],
+      "unlockCheckpoint": "chapter_3",
+      "dayId": "campaign_day_13",
+      "goals": [
+        {
+          "goalId": "day_13_goal_1_inventory_prepared",
+          "goalType": "inventory_prepared",
+          "evidence": "inventory_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "inventory_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "inventoryState",
+            "fieldOrPredicate": "latestAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_13_goal_2_use_safe_referral",
+          "goalType": "use_safe_referral",
+          "evidence": "referral_order_ids",
+          "evidenceResolver": {
+            "evidenceId": "referral_order_ids",
+            "kind": "goal_evidence",
+            "authority": "p3",
+            "recordType": "referralState",
+            "fieldOrPredicate": "referralOrderIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 14,
+      "chapter": 3,
+      "title": "Владение задачей",
+      "loadTarget": [
+        5,
+        7
+      ],
+      "goalTypes": [
+        "clean_shift_close",
+        "review_due_results"
+      ],
+      "eventSlots": [
+        "handoff_audit"
+      ],
+      "unlockCheckpoint": "chapter_3",
+      "dayId": "campaign_day_14",
+      "goals": [
+        {
+          "goalId": "day_14_goal_1_clean_shift_close",
+          "goalType": "clean_shift_close",
+          "evidence": "shift_close_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "shift_close_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "closedShiftAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_14_goal_2_review_due_results",
+          "goalType": "review_due_results",
+          "evidence": "reviewed_order_ids",
+          "evidenceResolver": {
+            "evidenceId": "reviewed_order_ids",
+            "kind": "goal_evidence",
+            "authority": "p3",
+            "recordType": "resultObligationState",
+            "fieldOrPredicate": "reviewedOrderIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 15,
+      "chapter": 3,
+      "title": "Итог устойчивой команды",
+      "loadTarget": [
+        5,
+        7
+      ],
+      "goalTypes": [
+        "protect_rest",
+        "maintain_reserve"
+      ],
+      "eventSlots": [
+        "chapter_review"
+      ],
+      "unlockCheckpoint": "chapter_3_close",
+      "dayId": "campaign_day_15",
+      "goals": [
+        {
+          "goalId": "day_15_goal_1_protect_rest",
+          "goalType": "protect_rest",
+          "evidence": "staff_rest_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "staff_rest_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "restComplianceAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_15_goal_2_maintain_reserve",
+          "goalType": "maintain_reserve",
+          "evidence": "ledger_close_id",
+          "evidenceResolver": {
+            "evidenceId": "ledger_close_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "ledgerState",
+            "fieldOrPredicate": "latestCloseId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 16,
+      "chapter": 4,
+      "title": "Лабораторный контур",
+      "loadTarget": [
+        5,
+        7
+      ],
+      "goalTypes": [
+        "inventory_prepared",
+        "review_due_results"
+      ],
+      "eventSlots": [
+        "lab_activation"
+      ],
+      "unlockCheckpoint": "chapter_4",
+      "dayId": "campaign_day_16",
+      "goals": [
+        {
+          "goalId": "day_16_goal_1_inventory_prepared",
+          "goalType": "inventory_prepared",
+          "evidence": "inventory_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "inventory_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "inventoryState",
+            "fieldOrPredicate": "latestAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_16_goal_2_review_due_results",
+          "goalType": "review_due_results",
+          "evidence": "reviewed_order_ids",
+          "evidenceResolver": {
+            "evidenceId": "reviewed_order_ids",
+            "kind": "goal_evidence",
+            "authority": "p3",
+            "recordType": "resultObligationState",
+            "fieldOrPredicate": "reviewedOrderIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 17,
+      "chapter": 4,
+      "title": "Срочный результат",
+      "loadTarget": [
+        5,
+        7
+      ],
+      "goalTypes": [
+        "review_due_results",
+        "clean_shift_close"
+      ],
+      "eventSlots": [
+        "critical_result_drill"
+      ],
+      "unlockCheckpoint": "chapter_4",
+      "dayId": "campaign_day_17",
+      "goals": [
+        {
+          "goalId": "day_17_goal_1_review_due_results",
+          "goalType": "review_due_results",
+          "evidence": "reviewed_order_ids",
+          "evidenceResolver": {
+            "evidenceId": "reviewed_order_ids",
+            "kind": "goal_evidence",
+            "authority": "p3",
+            "recordType": "resultObligationState",
+            "fieldOrPredicate": "reviewedOrderIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_17_goal_2_clean_shift_close",
+          "goalType": "clean_shift_close",
+          "evidence": "shift_close_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "shift_close_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "closedShiftAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 18,
+      "chapter": 4,
+      "title": "Обслуживание оборудования",
+      "loadTarget": [
+        5,
+        7
+      ],
+      "goalTypes": [
+        "use_safe_referral",
+        "maintain_reserve"
+      ],
+      "eventSlots": [
+        "maintenance_due"
+      ],
+      "unlockCheckpoint": "chapter_4",
+      "dayId": "campaign_day_18",
+      "goals": [
+        {
+          "goalId": "day_18_goal_1_use_safe_referral",
+          "goalType": "use_safe_referral",
+          "evidence": "referral_order_ids",
+          "evidenceResolver": {
+            "evidenceId": "referral_order_ids",
+            "kind": "goal_evidence",
+            "authority": "p3",
+            "recordType": "referralState",
+            "fieldOrPredicate": "referralOrderIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_18_goal_2_maintain_reserve",
+          "goalType": "maintain_reserve",
+          "evidence": "ledger_close_id",
+          "evidenceResolver": {
+            "evidenceId": "ledger_close_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "ledgerState",
+            "fieldOrPredicate": "latestCloseId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 19,
+      "chapter": 4,
+      "title": "Возврат пациента",
+      "loadTarget": [
+        5,
+        8
+      ],
+      "goalTypes": [
+        "complete_followup",
+        "teach_back"
+      ],
+      "eventSlots": [
+        "longitudinal_return"
+      ],
+      "unlockCheckpoint": "chapter_4",
+      "dayId": "campaign_day_19",
+      "goals": [
+        {
+          "goalId": "day_19_goal_1_complete_followup",
+          "goalType": "complete_followup",
+          "evidence": "completed_followup_visit_ids",
+          "evidenceResolver": {
+            "evidenceId": "completed_followup_visit_ids",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "visitState",
+            "fieldOrPredicate": "completedFollowupVisitIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_19_goal_2_teach_back",
+          "goalType": "teach_back",
+          "evidence": "teach_back_fact_ids",
+          "evidenceResolver": {
+            "evidenceId": "teach_back_fact_ids",
+            "kind": "goal_evidence",
+            "authority": "p4",
+            "recordType": "ownerCommunicationState",
+            "fieldOrPredicate": "teachBackFactIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 20,
+      "chapter": 4,
+      "title": "Итог лабораторной главы",
+      "loadTarget": [
+        6,
+        8
+      ],
+      "goalTypes": [
+        "review_due_results",
+        "protect_rest"
+      ],
+      "eventSlots": [
+        "chapter_review"
+      ],
+      "unlockCheckpoint": "chapter_4_close",
+      "dayId": "campaign_day_20",
+      "goals": [
+        {
+          "goalId": "day_20_goal_1_review_due_results",
+          "goalType": "review_due_results",
+          "evidence": "reviewed_order_ids",
+          "evidenceResolver": {
+            "evidenceId": "reviewed_order_ids",
+            "kind": "goal_evidence",
+            "authority": "p3",
+            "recordType": "resultObligationState",
+            "fieldOrPredicate": "reviewedOrderIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_20_goal_2_protect_rest",
+          "goalType": "protect_rest",
+          "evidence": "staff_rest_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "staff_rest_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "restComplianceAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 21,
+      "chapter": 5,
+      "title": "Визуальная диагностика",
+      "loadTarget": [
+        6,
+        8
+      ],
+      "goalTypes": [
+        "use_safe_referral",
+        "maintain_reserve"
+      ],
+      "eventSlots": [
+        "imaging_choice"
+      ],
+      "unlockCheckpoint": "chapter_5",
+      "dayId": "campaign_day_21",
+      "goals": [
+        {
+          "goalId": "day_21_goal_1_use_safe_referral",
+          "goalType": "use_safe_referral",
+          "evidence": "referral_order_ids",
+          "evidenceResolver": {
+            "evidenceId": "referral_order_ids",
+            "kind": "goal_evidence",
+            "authority": "p3",
+            "recordType": "referralState",
+            "fieldOrPredicate": "referralOrderIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_21_goal_2_maintain_reserve",
+          "goalType": "maintain_reserve",
+          "evidence": "ledger_close_id",
+          "evidenceResolver": {
+            "evidenceId": "ledger_close_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "ledgerState",
+            "fieldOrPredicate": "latestCloseId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 22,
+      "chapter": 5,
+      "title": "Процедурный день",
+      "loadTarget": [
+        6,
+        8
+      ],
+      "goalTypes": [
+        "inventory_prepared",
+        "clean_shift_close"
+      ],
+      "eventSlots": [
+        "procedure_capacity"
+      ],
+      "unlockCheckpoint": "chapter_5",
+      "dayId": "campaign_day_22",
+      "goals": [
+        {
+          "goalId": "day_22_goal_1_inventory_prepared",
+          "goalType": "inventory_prepared",
+          "evidence": "inventory_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "inventory_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "inventoryState",
+            "fieldOrPredicate": "latestAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_22_goal_2_clean_shift_close",
+          "goalType": "clean_shift_close",
+          "evidence": "shift_close_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "shift_close_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "closedShiftAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 23,
+      "chapter": 5,
+      "title": "Сложный маршрут владельца",
+      "loadTarget": [
+        6,
+        8
+      ],
+      "goalTypes": [
+        "teach_back",
+        "low_stress_action"
+      ],
+      "eventSlots": [
+        "complex_owner_plan"
+      ],
+      "unlockCheckpoint": "chapter_5",
+      "dayId": "campaign_day_23",
+      "goals": [
+        {
+          "goalId": "day_23_goal_1_teach_back",
+          "goalType": "teach_back",
+          "evidence": "teach_back_fact_ids",
+          "evidenceResolver": {
+            "evidenceId": "teach_back_fact_ids",
+            "kind": "goal_evidence",
+            "authority": "p4",
+            "recordType": "ownerCommunicationState",
+            "fieldOrPredicate": "teachBackFactIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_23_goal_2_low_stress_action",
+          "goalType": "low_stress_action",
+          "evidence": "process_result_ids",
+          "evidenceResolver": {
+            "evidenceId": "process_result_ids",
+            "kind": "goal_evidence",
+            "authority": "p4",
+            "recordType": "handlingActionState",
+            "fieldOrPredicate": "processResultIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 24,
+      "chapter": 5,
+      "title": "Резерв и развитие",
+      "loadTarget": [
+        6,
+        8
+      ],
+      "goalTypes": [
+        "maintain_reserve",
+        "protect_rest"
+      ],
+      "eventSlots": [
+        "investment_offer"
+      ],
+      "unlockCheckpoint": "chapter_5",
+      "dayId": "campaign_day_24",
+      "goals": [
+        {
+          "goalId": "day_24_goal_1_maintain_reserve",
+          "goalType": "maintain_reserve",
+          "evidence": "ledger_close_id",
+          "evidenceResolver": {
+            "evidenceId": "ledger_close_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "ledgerState",
+            "fieldOrPredicate": "latestCloseId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_24_goal_2_protect_rest",
+          "goalType": "protect_rest",
+          "evidence": "staff_rest_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "staff_rest_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "restComplianceAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 25,
+      "chapter": 5,
+      "title": "Выбор специализации",
+      "loadTarget": [
+        6,
+        8
+      ],
+      "goalTypes": [
+        "complete_safe_visits",
+        "clean_shift_close"
+      ],
+      "eventSlots": [
+        "specialization_choice"
+      ],
+      "unlockCheckpoint": "chapter_5_close",
+      "dayId": "campaign_day_25",
+      "goals": [
+        {
+          "goalId": "day_25_goal_1_complete_safe_visits",
+          "goalType": "complete_safe_visits",
+          "evidence": "completed_visit_ids",
+          "evidenceResolver": {
+            "evidenceId": "completed_visit_ids",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "visitState",
+            "fieldOrPredicate": "completedVisitIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 2,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_25_goal_2_clean_shift_close",
+          "goalType": "clean_shift_close",
+          "evidence": "shift_close_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "shift_close_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "closedShiftAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 26,
+      "chapter": 6,
+      "title": "Проверка выбранного пути",
+      "loadTarget": [
+        6,
+        9
+      ],
+      "goalTypes": [
+        "complete_safe_visits",
+        "maintain_reserve"
+      ],
+      "eventSlots": [
+        "specialization_test"
+      ],
+      "unlockCheckpoint": "post_chapter_5",
+      "dayId": "campaign_day_26",
+      "goals": [
+        {
+          "goalId": "day_26_goal_1_complete_safe_visits",
+          "goalType": "complete_safe_visits",
+          "evidence": "completed_visit_ids",
+          "evidenceResolver": {
+            "evidenceId": "completed_visit_ids",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "visitState",
+            "fieldOrPredicate": "completedVisitIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 2,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_26_goal_2_maintain_reserve",
+          "goalType": "maintain_reserve",
+          "evidence": "ledger_close_id",
+          "evidenceResolver": {
+            "evidenceId": "ledger_close_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "ledgerState",
+            "fieldOrPredicate": "latestCloseId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 27,
+      "chapter": 6,
+      "title": "Непредвиденная нагрузка",
+      "loadTarget": [
+        6,
+        9
+      ],
+      "goalTypes": [
+        "protect_rest",
+        "review_due_results"
+      ],
+      "eventSlots": [
+        "demand_spike"
+      ],
+      "unlockCheckpoint": "post_chapter_5",
+      "dayId": "campaign_day_27",
+      "goals": [
+        {
+          "goalId": "day_27_goal_1_protect_rest",
+          "goalType": "protect_rest",
+          "evidence": "staff_rest_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "staff_rest_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "restComplianceAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_27_goal_2_review_due_results",
+          "goalType": "review_due_results",
+          "evidence": "reviewed_order_ids",
+          "evidenceResolver": {
+            "evidenceId": "reviewed_order_ids",
+            "kind": "goal_evidence",
+            "authority": "p3",
+            "recordType": "resultObligationState",
+            "fieldOrPredicate": "reviewedOrderIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 28,
+      "chapter": 6,
+      "title": "Восстановление или рост",
+      "loadTarget": [
+        6,
+        9
+      ],
+      "goalTypes": [
+        "inventory_prepared",
+        "use_safe_referral"
+      ],
+      "eventSlots": [
+        "recovery_checkpoint"
+      ],
+      "unlockCheckpoint": "post_chapter_5",
+      "dayId": "campaign_day_28",
+      "goals": [
+        {
+          "goalId": "day_28_goal_1_inventory_prepared",
+          "goalType": "inventory_prepared",
+          "evidence": "inventory_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "inventory_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "inventoryState",
+            "fieldOrPredicate": "latestAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_28_goal_2_use_safe_referral",
+          "goalType": "use_safe_referral",
+          "evidence": "referral_order_ids",
+          "evidenceResolver": {
+            "evidenceId": "referral_order_ids",
+            "kind": "goal_evidence",
+            "authority": "p3",
+            "recordType": "referralState",
+            "fieldOrPredicate": "referralOrderIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 29,
+      "chapter": 6,
+      "title": "Финальный аудит",
+      "loadTarget": [
+        6,
+        9
+      ],
+      "goalTypes": [
+        "clean_shift_close",
+        "complete_followup"
+      ],
+      "eventSlots": [
+        "final_audit"
+      ],
+      "unlockCheckpoint": "post_chapter_5",
+      "dayId": "campaign_day_29",
+      "goals": [
+        {
+          "goalId": "day_29_goal_1_clean_shift_close",
+          "goalType": "clean_shift_close",
+          "evidence": "shift_close_audit_id",
+          "evidenceResolver": {
+            "evidenceId": "shift_close_audit_id",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "shiftAudit",
+            "fieldOrPredicate": "closedShiftAuditId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_29_goal_2_complete_followup",
+          "goalType": "complete_followup",
+          "evidence": "completed_followup_visit_ids",
+          "evidenceResolver": {
+            "evidenceId": "completed_followup_visit_ids",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "visitState",
+            "fieldOrPredicate": "completedFollowupVisitIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    },
+    {
+      "day": 30,
+      "chapter": 6,
+      "title": "Итог клиники",
+      "loadTarget": [
+        6,
+        9
+      ],
+      "goalTypes": [
+        "complete_safe_visits",
+        "maintain_reserve"
+      ],
+      "eventSlots": [
+        "ending_selection"
+      ],
+      "unlockCheckpoint": "campaign_close",
+      "dayId": "campaign_day_30",
+      "goals": [
+        {
+          "goalId": "day_30_goal_1_complete_safe_visits",
+          "goalType": "complete_safe_visits",
+          "evidence": "completed_visit_ids",
+          "evidenceResolver": {
+            "evidenceId": "completed_visit_ids",
+            "kind": "goal_evidence",
+            "authority": "p5",
+            "recordType": "visitState",
+            "fieldOrPredicate": "completedVisitIds",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 2,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        },
+        {
+          "goalId": "day_30_goal_2_maintain_reserve",
+          "goalType": "maintain_reserve",
+          "evidence": "ledger_close_id",
+          "evidenceResolver": {
+            "evidenceId": "ledger_close_id",
+            "kind": "goal_evidence",
+            "authority": "p6",
+            "recordType": "ledgerState",
+            "fieldOrPredicate": "latestCloseId",
+            "resolverMode": "exact_author_owned"
+          },
+          "minimum": 1,
+          "selectionRule": "select_after_persisted_day_schedule_without_patient_or_family_requirement"
+        }
+      ]
+    }
+  ],
+  "authority": {
+    "dayScheduleCreatedOnceAndPersisted": true,
+    "goalsSelectedAfterPersistedSchedule": true,
+    "goalCannotRequireSpecificPatientOrFamily": true,
+    "eventCannotBiasDiagnosisGeneration": true,
+    "reloadCannotRepeatOnceEvent": true,
+    "saveSchemaChange": false
+  }
+}

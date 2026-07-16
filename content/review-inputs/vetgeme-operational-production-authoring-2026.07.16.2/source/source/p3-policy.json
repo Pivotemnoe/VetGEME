@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "policyId": "vetgeme-p3-operational-policy",
+  "policyVersion": "2026.07.16.2",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "clock": {
+    "campaignDayStartMinute": 480,
+    "clinicCloseMinute": 1200,
+    "externalCutoffMinute": 840,
+    "externalWorkingWeekdays": [1, 2, 3, 4, 5, 6],
+    "sundayIsClosedForExternalProviders": true,
+    "deterministicRangeRule": "min_plus_fnv1a32_order_provider_catalog_mod_inclusive_range"
+  },
+  "urgencyBands": [
+    {
+      "bandId": "emergency",
+      "matchTokens": ["critical", "emergency", "shock", "collapse", "resuscitation", "regulated_emergency", "postoperative_icu", "emergency_icu"],
+      "reviewWithinMinutes": 0,
+      "ownerContactWithinMinutes": 5,
+      "shiftClosePolicy": "block_until_reviewed_and_handed_off",
+      "queuePriority": 500
+    },
+    {
+      "bandId": "urgent",
+      "matchTokens": ["urgent", "same_day", "prompt", "priority_referral", "inpatient_priority", "postoperative_priority", "postprocedure_priority"],
+      "reviewWithinMinutes": 15,
+      "ownerContactWithinMinutes": 30,
+      "shiftClosePolicy": "block_until_reviewed_or_documented_handoff",
+      "queuePriority": 400
+    },
+    {
+      "bandId": "priority",
+      "matchTokens": ["priority", "outbreak", "public_health", "complex", "resulted", "decision"],
+      "reviewWithinMinutes": 60,
+      "ownerContactWithinMinutes": 120,
+      "shiftClosePolicy": "documented_handoff_allowed",
+      "queuePriority": 300
+    },
+    {
+      "bandId": "scheduled",
+      "matchTokens": ["scheduled", "elective", "specialist", "longitudinal", "follow_up", "followup"],
+      "reviewWithinMinutes": 240,
+      "ownerContactWithinMinutes": 480,
+      "shiftClosePolicy": "next_scheduled_work_block_allowed",
+      "queuePriority": 200
+    },
+    {
+      "bandId": "routine",
+      "matchTokens": ["routine", "stable"],
+      "reviewWithinMinutes": 240,
+      "ownerContactWithinMinutes": 480,
+      "shiftClosePolicy": "next_scheduled_work_block_allowed",
+      "queuePriority": 100
+    }
+  ],
+  "classificationBands": [
+    {
+      "bandId": "must_not_delay_safety",
+      "matchTokens": ["immediate", "emergency", "required_before", "required_for_safe", "required_to_exclude", "required_for_stabil", "required_airway", "required_continuous", "required_triage", "non_delaying", "parallel_urgent"],
+      "decisionWeight": 5,
+      "resultReviewClass": "critical"
+    },
+    {
+      "bandId": "required",
+      "matchTokens": ["required", "must", "confirmation_route", "imaging_required", "complete_if_not_yet_resolved"],
+      "decisionWeight": 4,
+      "resultReviewClass": "decision_changing"
+    },
+    {
+      "bandId": "recommended",
+      "matchTokens": ["recommended", "decision_changing", "changes_plan", "appropriate_rule_out", "targeted_confirmation", "corroboration"],
+      "decisionWeight": 3,
+      "resultReviewClass": "same_shift"
+    },
+    {
+      "bandId": "conditional",
+      "matchTokens": ["conditional", "if_", "by_", "when_", "after_", "only_", "alternative", "context", "integrated", "targeted", "followup", "follow_up", "recheck", "repeat"],
+      "decisionWeight": 2,
+      "resultReviewClass": "routine"
+    },
+    {
+      "bandId": "optional_or_low_value",
+      "matchTokens": ["optional", "low_value", "not_routine", "not_automatically", "may_be_negative"],
+      "decisionWeight": 1,
+      "resultReviewClass": "routine"
+    }
+  ],
+  "turnaroundCategories": {
+    "contextual": {"minutes": 240},
+    "emergency": {"minutes": 15},
+    "emergency_or_scheduled": {"minutesByUrgencyBand": {"emergency": 15, "urgent": 120, "priority": 360, "scheduled": 2880, "routine": 2880}},
+    "emergency_or_urgent": {"minutesByUrgencyBand": {"emergency": 15, "urgent": 120, "priority": 120, "scheduled": 120, "routine": 120}},
+    "same_day_or_scheduled": {"minutesByUrgencyBand": {"emergency": 180, "urgent": 360, "priority": 480, "scheduled": 2880, "routine": 2880}},
+    "same_day_or_urgent": {"minutesByUrgencyBand": {"emergency": 120, "urgent": 240, "priority": 480, "scheduled": 480, "routine": 480}},
+    "scheduled": {"minutes": 2880},
+    "scheduled_or_emergency": {"minutesByUrgencyBand": {"emergency": 15, "urgent": 240, "priority": 1440, "scheduled": 2880, "routine": 2880}},
+    "scheduled_or_urgent": {"minutesByUrgencyBand": {"emergency": 120, "urgent": 240, "priority": 1440, "scheduled": 2880, "routine": 2880}},
+    "urgent": {"minutes": 120},
+    "urgent_or_emergency": {"minutesByUrgencyBand": {"emergency": 15, "urgent": 120, "priority": 120, "scheduled": 120, "routine": 120}},
+    "urgent_or_scheduled": {"minutesByUrgencyBand": {"emergency": 120, "urgent": 240, "priority": 1440, "scheduled": 2880, "routine": 2880}}
+  },
+  "resultReviewClasses": {
+    "critical": {"reviewWithinMinutes": 0, "ownerContactWithinMinutes": 5, "shiftClosePolicy": "block_until_reviewed_and_handed_off"},
+    "decision_changing": {"reviewWithinMinutes": 15, "ownerContactWithinMinutes": 30, "shiftClosePolicy": "block_until_reviewed_or_documented_handoff"},
+    "same_shift": {"reviewWithinMinutes": 60, "ownerContactWithinMinutes": 120, "shiftClosePolicy": "documented_handoff_allowed"},
+    "routine": {"reviewWithinMinutes": 240, "ownerContactWithinMinutes": 480, "shiftClosePolicy": "next_scheduled_work_block_allowed"}
+  },
+  "providers": [
+    {"providerId": "ref_emergency_24h", "title": "Круглосуточный стационар", "serviceClasses": ["emergency", "intensive", "surgery", "oxygen", "transfusion"], "calendar": "always_open", "baseDispatchMinutes": 15, "reliability": 0.98},
+    {"providerId": "ref_imaging_center", "title": "Центр визуальной диагностики", "serviceClasses": ["xray", "ultrasound", "ct", "mri", "endoscopy", "echocardiography"], "calendar": "external_workweek", "baseDispatchMinutes": 45, "reliability": 0.94},
+    {"providerId": "ref_clinical_pathology", "title": "Лаборатория клинической патологии", "serviceClasses": ["cbc", "biochemistry", "cytology", "histology", "coagulation", "endocrine"], "calendar": "external_workweek", "baseDispatchMinutes": 60, "reliability": 0.96},
+    {"providerId": "ref_microbiology_pcr", "title": "Лаборатория микробиологии и ПЦР", "serviceClasses": ["culture", "susceptibility", "pcr", "serology", "parasitology", "mycology"], "calendar": "external_workweek", "baseDispatchMinutes": 60, "reliability": 0.95},
+    {"providerId": "ref_specialist_network", "title": "Сеть профильных специалистов", "serviceClasses": ["cardiology", "neurology", "ophthalmology", "dermatology", "oncology", "dentistry", "orthopedics", "internal_medicine"], "calendar": "external_workweek", "baseDispatchMinutes": 90, "reliability": 0.92},
+    {"providerId": "ref_public_health", "title": "Регулируемый эпизоотологический маршрут", "serviceClasses": ["regulated", "zoonotic", "rabies", "outbreak"], "calendar": "always_open", "baseDispatchMinutes": 10, "reliability": 1.0}
+  ],
+  "providerRoutingPrecedence": ["regulated", "rabies", "zoonotic", "outbreak", "emergency", "intensive", "surgery", "oxygen", "transfusion", "ct", "mri", "xray", "ultrasound", "endoscopy", "echocardiography", "culture", "susceptibility", "pcr", "serology", "histology", "cytology", "cardiology", "neurology", "ophthalmology", "dermatology", "oncology", "dentistry", "orthopedics", "internal_medicine", "clinical_pathology"],
+  "activation": {
+    "visualPresenceNeverActivates": true,
+    "purchaseCreatesPendingAsset": true,
+    "deliveryRequired": true,
+    "trainingRequiredWhenCapabilityRequiresSkill": true,
+    "maintenanceCanSuspend": true,
+    "stockoutCanSuspend": true,
+    "safeReferralAlwaysRetained": true
+  }
+}
