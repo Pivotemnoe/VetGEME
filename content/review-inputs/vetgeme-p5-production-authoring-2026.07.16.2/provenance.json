@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "provenanceId": "vetgeme-p5-production-authoring-review-source",
+  "packageId": "vetgeme-p5-production-authoring",
+  "packageVersion": "2026.07.16.2",
+  "sourceArchive": "p5-production-authoring-2026.07.16.2.zip",
+  "sourceDirectory": "p5-production-authoring-2026.07.16.2",
+  "archive": {
+    "path": "p5-production-authoring-2026.07.16.2.zip",
+    "checksumPath": "p5-production-authoring-2026.07.16.2.zip.sha256",
+    "sha256": "665183acc97096477dd9366b8116a65a11862e4919d02170278f8e97e241a7ab",
+    "zipEntryCount": 29,
+    "extractedFileCount": 23,
+    "extractedBytes": 4007080,
+    "keyFileHashes": {
+      "MANIFEST.json": "25730b20dcc3d0ac840082f353ccea14d11c35aa9c107bf2cb52ccd21e3e69c6",
+      "schemas/P5_AUTHORING_CONTRACT.md": "1a6f01f4917500e18ed8afc3c1f72e6be7156a18a62c556fc1a9bf40b07f9a04",
+      "scripts/validate-p5-package.mjs": "1d4f65b5dd7b4ad71d8b787c43f01efaadf91264f993ca203570be413a2998f5",
+      "scripts/author-v2-lifecycle-contracts.mjs": "9ee80f682a31082e8a1d28769429fa0efe4beb52c235fc25a2e32427be00235f",
+      "source/p5-exact-capability-resource-map.json": "728bf70ad0705df08b61bbdd442171e97706461f4965a75014deba849683b6de",
+      "source/p5-resource-lifecycle.json": "687abd42f8995ed43fbb4bc481474a104e818efc6d3203bb4075c83c1b7a60ff",
+      "source/p5-handoff-contract.json": "8c82819147f2a93b1d53f0586fb60462b2ca0cb687162af455bcc781b2a73679",
+      "generated/capability-operations-map.json": "9ffeba51794180f10645b52a3410e0bcdb31afb737526cfc18e07f5e3e0eb129",
+      "generated/resource-lifecycle-catalog.json": "62b49f14ddb213157c6a59879d33aa3fd65500078c05f3fdbc3b3ab4c491cbc6",
+      "reports/P5_V2_AUTHOR_DECISION_MATRIX.json": "73960687fda5198c13ff7e8e23b9b612d25072a2502f37b3d91a835a3438ca27",
+      "reports/VALIDATION_REPORT.json": "73c5d21e84aa969da949da4699178c4d716383bf23d16249377106b5e58ef5a7"
+    }
+  },
+  "sourceFileCount": 23,
+  "sourceBytes": 4007080,
+  "aggregateSha256": "db30b1feacd01fdab2cd6d750b59892c250d4e15eab01d1cd363c49b64dc6ad3",
+  "files": [
+    {
+      "path": "FINAL_COMPLETION_AUDIT.md",
+      "originPath": "p5-production-authoring-2026.07.16.2/FINAL_COMPLETION_AUDIT.md",
+      "bytes": 547,
+      "sha256": "34979a19163addaf72bbeb89d66e136ea3d2f75494660f376770200d64717b57"
+    },
+    {
+      "path": "generated/capability-operations-map.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/generated/capability-operations-map.json",
+      "bytes": 833238,
+      "sha256": "9ffeba51794180f10645b52a3410e0bcdb31afb737526cfc18e07f5e3e0eb129"
+    },
+    {
+      "path": "generated/investigation-usage-task-map.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/generated/investigation-usage-task-map.json",
+      "bytes": 1397172,
+      "sha256": "7b38c7246c99ff4dcef88237b6f0e4bce0c760a0a852198214036fe3332005a7"
+    },
+    {
+      "path": "generated/operational-policies.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/generated/operational-policies.json",
+      "bytes": 11010,
+      "sha256": "1610ae1941d9d108b22fa81fc61b4800d32104641f9ebdb0e53e8bba7f2fc09d"
+    },
+    {
+      "path": "generated/recommended-30-day-staffing.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/generated/recommended-30-day-staffing.json",
+      "bytes": 11284,
+      "sha256": "199b4f15f34e9b7061a0ae02970860d145f42e00f40ea48b8aef762969bfbfa9"
+    },
+    {
+      "path": "generated/research-task-catalog.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/generated/research-task-catalog.json",
+      "bytes": 710990,
+      "sha256": "f79c0e909da5128e44b49bd6822df5ca2d92a5bda42e27dc90226a9025730270"
+    },
+    {
+      "path": "generated/resource-catalog.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/generated/resource-catalog.json",
+      "bytes": 41443,
+      "sha256": "67503f3c3c8257a5a5765abe85319fd343f82e7a3e3c36198a6d9a26f534f34b"
+    },
+    {
+      "path": "generated/resource-lifecycle-catalog.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/generated/resource-lifecycle-catalog.json",
+      "bytes": 22375,
+      "sha256": "62b49f14ddb213157c6a59879d33aa3fd65500078c05f3fdbc3b3ab4c491cbc6"
+    },
+    {
+      "path": "generated/visit-task-catalog.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/generated/visit-task-catalog.json",
+      "bytes": 25695,
+      "sha256": "fab15fa36a2a87c0a02a6cf9ceb38d0869f9dea2c07407e48c615378f400d1d4"
+    },
+    {
+      "path": "MANIFEST.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/MANIFEST.json",
+      "bytes": 2439,
+      "sha256": "25730b20dcc3d0ac840082f353ccea14d11c35aa9c107bf2cb52ccd21e3e69c6"
+    },
+    {
+      "path": "PROGRAMMER_HANDOFF.md",
+      "originPath": "p5-production-authoring-2026.07.16.2/PROGRAMMER_HANDOFF.md",
+      "bytes": 2370,
+      "sha256": "af84524ab37c7291815d146de5abbc75ca2c207b1529e0595ff6cf0fe8ad383f"
+    },
+    {
+      "path": "README.md",
+      "originPath": "p5-production-authoring-2026.07.16.2/README.md",
+      "bytes": 1415,
+      "sha256": "b0ca9f7e1a4dd6c05e340fecf1a98059a49cf28178e2d42e13b02ce070443071"
+    },
+    {
+      "path": "reports/ENGINE_COMPATIBILITY_REPORT.md",
+      "originPath": "p5-production-authoring-2026.07.16.2/reports/ENGINE_COMPATIBILITY_REPORT.md",
+      "bytes": 922,
+      "sha256": "2ac259f3db079390d1ff6ccbfacb1481225779a903c2ac3c8493a06373c76033"
+    },
+    {
+      "path": "reports/P5_V2_AUTHOR_DECISION_MATRIX.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/reports/P5_V2_AUTHOR_DECISION_MATRIX.json",
+      "bytes": 5482,
+      "sha256": "73960687fda5198c13ff7e8e23b9b612d25072a2502f37b3d91a835a3438ca27"
+    },
+    {
+      "path": "reports/VALIDATION_REPORT.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/reports/VALIDATION_REPORT.json",
+      "bytes": 1226,
+      "sha256": "73c5d21e84aa969da949da4699178c4d716383bf23d16249377106b5e58ef5a7"
+    },
+    {
+      "path": "schemas/P5_AUTHORING_CONTRACT.md",
+      "originPath": "p5-production-authoring-2026.07.16.2/schemas/P5_AUTHORING_CONTRACT.md",
+      "bytes": 3812,
+      "sha256": "1a6f01f4917500e18ed8afc3c1f72e6be7156a18a62c556fc1a9bf40b07f9a04"
+    },
+    {
+      "path": "scripts/author-v2-lifecycle-contracts.mjs",
+      "originPath": "p5-production-authoring-2026.07.16.2/scripts/author-v2-lifecycle-contracts.mjs",
+      "bytes": 16099,
+      "sha256": "9ee80f682a31082e8a1d28769429fa0efe4beb52c235fc25a2e32427be00235f"
+    },
+    {
+      "path": "scripts/build-p5-package.mjs",
+      "originPath": "p5-production-authoring-2026.07.16.2/scripts/build-p5-package.mjs",
+      "bytes": 23547,
+      "sha256": "a30611b9109857cd1d38c38c17139c01210791976551fab267743e52c08271f4"
+    },
+    {
+      "path": "scripts/validate-p5-package.mjs",
+      "originPath": "p5-production-authoring-2026.07.16.2/scripts/validate-p5-package.mjs",
+      "bytes": 16311,
+      "sha256": "1d4f65b5dd7b4ad71d8b787c43f01efaadf91264f993ca203570be413a2998f5"
+    },
+    {
+      "path": "source/p5-exact-capability-resource-map.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/source/p5-exact-capability-resource-map.json",
+      "bytes": 833237,
+      "sha256": "728bf70ad0705df08b61bbdd442171e97706461f4965a75014deba849683b6de"
+    },
+    {
+      "path": "source/p5-handoff-contract.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/source/p5-handoff-contract.json",
+      "bytes": 1494,
+      "sha256": "8c82819147f2a93b1d53f0586fb60462b2ca0cb687162af455bcc781b2a73679"
+    },
+    {
+      "path": "source/p5-policy.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/source/p5-policy.json",
+      "bytes": 22619,
+      "sha256": "fea31caaaeba4b30ca97be8065aea05c749001a98f2c9358e4842c2d89154249"
+    },
+    {
+      "path": "source/p5-resource-lifecycle.json",
+      "originPath": "p5-production-authoring-2026.07.16.2/source/p5-resource-lifecycle.json",
+      "bytes": 22353,
+      "sha256": "687abd42f8995ed43fbb4bc481474a104e818efc6d3203bb4075c83c1b7a60ff"
+    }
+  ]
+}

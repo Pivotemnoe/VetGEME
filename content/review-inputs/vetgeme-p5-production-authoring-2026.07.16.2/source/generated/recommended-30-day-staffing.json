@@ -1,0 +1,400 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p5-recommended-staffing",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_validated_programmer_integration_required",
+  "runtimeEligible": false,
+  "authority": "recommendation_only_player_choice_persists_actual_shift",
+  "days": [
+    {
+      "day": 1,
+      "dayStartAt": 0,
+      "clinicOpenAt": 480,
+      "clinicCloseAt": 1200,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 480,
+        "endAt": 1080
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 2,
+      "dayStartAt": 1440,
+      "clinicOpenAt": 1920,
+      "clinicCloseAt": 2640,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 1920,
+        "endAt": 2520
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 3,
+      "dayStartAt": 2880,
+      "clinicOpenAt": 3360,
+      "clinicCloseAt": 4080,
+      "recommendedPrimaryStaffId": "staff.doctor.morozov",
+      "recommendedAlternateStaffId": "staff.doctor.sokolova",
+      "primaryShift": {
+        "startAt": 3360,
+        "endAt": 3960
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 4,
+      "dayStartAt": 4320,
+      "clinicOpenAt": 4800,
+      "clinicCloseAt": 5520,
+      "recommendedPrimaryStaffId": "staff.doctor.morozov",
+      "recommendedAlternateStaffId": "staff.doctor.sokolova",
+      "primaryShift": {
+        "startAt": 4800,
+        "endAt": 5400
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 5,
+      "dayStartAt": 5760,
+      "clinicOpenAt": 6240,
+      "clinicCloseAt": 6960,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 6240,
+        "endAt": 6840
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 6,
+      "dayStartAt": 7200,
+      "clinicOpenAt": 7680,
+      "clinicCloseAt": 8400,
+      "recommendedPrimaryStaffId": "staff.doctor.morozov",
+      "recommendedAlternateStaffId": "staff.doctor.sokolova",
+      "primaryShift": {
+        "startAt": 7680,
+        "endAt": 8280
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 7,
+      "dayStartAt": 8640,
+      "clinicOpenAt": 9120,
+      "clinicCloseAt": 9840,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 9120,
+        "endAt": 9720
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 8,
+      "dayStartAt": 10080,
+      "clinicOpenAt": 10560,
+      "clinicCloseAt": 11280,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 10560,
+        "endAt": 11160
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 9,
+      "dayStartAt": 11520,
+      "clinicOpenAt": 12000,
+      "clinicCloseAt": 12720,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 12000,
+        "endAt": 12600
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 10,
+      "dayStartAt": 12960,
+      "clinicOpenAt": 13440,
+      "clinicCloseAt": 14160,
+      "recommendedPrimaryStaffId": "staff.doctor.morozov",
+      "recommendedAlternateStaffId": "staff.doctor.sokolova",
+      "primaryShift": {
+        "startAt": 13440,
+        "endAt": 14040
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 11,
+      "dayStartAt": 14400,
+      "clinicOpenAt": 14880,
+      "clinicCloseAt": 15600,
+      "recommendedPrimaryStaffId": "staff.doctor.morozov",
+      "recommendedAlternateStaffId": "staff.doctor.sokolova",
+      "primaryShift": {
+        "startAt": 14880,
+        "endAt": 15480
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 12,
+      "dayStartAt": 15840,
+      "clinicOpenAt": 16320,
+      "clinicCloseAt": 17040,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 16320,
+        "endAt": 16920
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 13,
+      "dayStartAt": 17280,
+      "clinicOpenAt": 17760,
+      "clinicCloseAt": 18480,
+      "recommendedPrimaryStaffId": "staff.doctor.morozov",
+      "recommendedAlternateStaffId": "staff.doctor.sokolova",
+      "primaryShift": {
+        "startAt": 17760,
+        "endAt": 18360
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 14,
+      "dayStartAt": 18720,
+      "clinicOpenAt": 19200,
+      "clinicCloseAt": 19920,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 19200,
+        "endAt": 19800
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 15,
+      "dayStartAt": 20160,
+      "clinicOpenAt": 20640,
+      "clinicCloseAt": 21360,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 20640,
+        "endAt": 21240
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 16,
+      "dayStartAt": 21600,
+      "clinicOpenAt": 22080,
+      "clinicCloseAt": 22800,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 22080,
+        "endAt": 22680
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 17,
+      "dayStartAt": 23040,
+      "clinicOpenAt": 23520,
+      "clinicCloseAt": 24240,
+      "recommendedPrimaryStaffId": "staff.doctor.morozov",
+      "recommendedAlternateStaffId": "staff.doctor.sokolova",
+      "primaryShift": {
+        "startAt": 23520,
+        "endAt": 24120
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 18,
+      "dayStartAt": 24480,
+      "clinicOpenAt": 24960,
+      "clinicCloseAt": 25680,
+      "recommendedPrimaryStaffId": "staff.doctor.morozov",
+      "recommendedAlternateStaffId": "staff.doctor.sokolova",
+      "primaryShift": {
+        "startAt": 24960,
+        "endAt": 25560
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 19,
+      "dayStartAt": 25920,
+      "clinicOpenAt": 26400,
+      "clinicCloseAt": 27120,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 26400,
+        "endAt": 27000
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 20,
+      "dayStartAt": 27360,
+      "clinicOpenAt": 27840,
+      "clinicCloseAt": 28560,
+      "recommendedPrimaryStaffId": "staff.doctor.morozov",
+      "recommendedAlternateStaffId": "staff.doctor.sokolova",
+      "primaryShift": {
+        "startAt": 27840,
+        "endAt": 28440
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 21,
+      "dayStartAt": 28800,
+      "clinicOpenAt": 29280,
+      "clinicCloseAt": 30000,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 29280,
+        "endAt": 29880
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 22,
+      "dayStartAt": 30240,
+      "clinicOpenAt": 30720,
+      "clinicCloseAt": 31440,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 30720,
+        "endAt": 31320
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 23,
+      "dayStartAt": 31680,
+      "clinicOpenAt": 32160,
+      "clinicCloseAt": 32880,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 32160,
+        "endAt": 32760
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 24,
+      "dayStartAt": 33120,
+      "clinicOpenAt": 33600,
+      "clinicCloseAt": 34320,
+      "recommendedPrimaryStaffId": "staff.doctor.morozov",
+      "recommendedAlternateStaffId": "staff.doctor.sokolova",
+      "primaryShift": {
+        "startAt": 33600,
+        "endAt": 34200
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 25,
+      "dayStartAt": 34560,
+      "clinicOpenAt": 35040,
+      "clinicCloseAt": 35760,
+      "recommendedPrimaryStaffId": "staff.doctor.morozov",
+      "recommendedAlternateStaffId": "staff.doctor.sokolova",
+      "primaryShift": {
+        "startAt": 35040,
+        "endAt": 35640
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 26,
+      "dayStartAt": 36000,
+      "clinicOpenAt": 36480,
+      "clinicCloseAt": 37200,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 36480,
+        "endAt": 37080
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 27,
+      "dayStartAt": 37440,
+      "clinicOpenAt": 37920,
+      "clinicCloseAt": 38640,
+      "recommendedPrimaryStaffId": "staff.doctor.morozov",
+      "recommendedAlternateStaffId": "staff.doctor.sokolova",
+      "primaryShift": {
+        "startAt": 37920,
+        "endAt": 38520
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 28,
+      "dayStartAt": 38880,
+      "clinicOpenAt": 39360,
+      "clinicCloseAt": 40080,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 39360,
+        "endAt": 39960
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 29,
+      "dayStartAt": 40320,
+      "clinicOpenAt": 40800,
+      "clinicCloseAt": 41520,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 40800,
+        "endAt": 41400
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    },
+    {
+      "day": 30,
+      "dayStartAt": 41760,
+      "clinicOpenAt": 42240,
+      "clinicCloseAt": 42960,
+      "recommendedPrimaryStaffId": "staff.doctor.sokolova",
+      "recommendedAlternateStaffId": "staff.doctor.morozov",
+      "primaryShift": {
+        "startAt": 42240,
+        "endAt": 42840
+      },
+      "playerMayChooseOtherEligibleDoctor": true
+    }
+  ]
+}

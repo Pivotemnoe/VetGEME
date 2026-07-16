@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p5-operations-authoring",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_validated_programmer_integration_required",
+  "runtimeEligible": false,
+  "capabilityResourceAuthority": "source/p5-exact-capability-resource-map.json",
+  "lifecycleAuthority": "source/p5-resource-lifecycle.json",
+  "matchTokensRuntimeForbidden": true,
+  "boundaries": {
+    "medicalTruthAllowed": false,
+    "rendererGrantsOwnership": false,
+    "fatigueChangesClinicalResult": false,
+    "p3OwnsResearchResults": true,
+    "p6OwnsInventoryAssetsAndMaintenanceLedger": true,
+    "p7OwnsEventTriggering": true,
+    "saveSchemaChange": false,
+    "newCampaignsOnly": true
+  },
+  "clock": {
+    "dayLengthMinutes": 1440,
+    "clinicOpenMinute": 480,
+    "clinicCloseMinute": 1200,
+    "standardShiftMinutes": 600,
+    "maximumExtensionMinutes": 120,
+    "mandatoryRestMinutes": 720,
+    "maximumConsecutiveShifts": 3,
+    "breakAfterMinutes": 300,
+    "breakDurationMinutes": 30
+  },
+  "fatigueBands": [
+    {"minimum": 0, "maximum": 39, "durationMultiplier": 1.0, "routineStartAllowed": true, "urgentStartAllowed": true, "extensionAllowed": true},
+    {"minimum": 40, "maximum": 59, "durationMultiplier": 1.1, "routineStartAllowed": true, "urgentStartAllowed": true, "extensionAllowed": true},
+    {"minimum": 60, "maximum": 79, "durationMultiplier": 1.2, "routineStartAllowed": true, "urgentStartAllowed": true, "extensionAllowed": true},
+    {"minimum": 80, "maximum": 99, "durationMultiplier": 1.35, "routineStartAllowed": true, "urgentStartAllowed": true, "extensionAllowed": false},
+    {"minimum": 100, "maximum": 100, "durationMultiplier": 1.35, "routineStartAllowed": false, "urgentStartAllowed": true, "extensionAllowed": false}
+  ],
+  "staff": [
+    {
+      "staffId": "staff.doctor.sokolova",
+      "legacyId": "sokolova",
+      "name": "Вера Соколова",
+      "role": "doctor",
+      "unlock": "start",
+      "startsHired": true,
+      "capacity": 1,
+      "baseFatigue": 10,
+      "skills": ["trained_eye_exam", "trained_dermatology_sampling", "trained_diabetes_monitoring", "trained_blood_pressure", "trained_stabilization", "trained_orthopedic_exam"],
+      "operationalCapabilities": ["role.doctor", "task.history", "task.exam", "task.diagnosis", "task.plan", "task.owner_communication", "task.result_review", "task.sampling", "task.measurement", "task.lab_test", "task.procedure", "task.stabilization", "task.urgent_triage", "task.low_stress"]
+    },
+    {
+      "staffId": "staff.doctor.morozov",
+      "legacyId": "morozov",
+      "name": "Алексей Морозов",
+      "role": "doctor",
+      "unlock": "start",
+      "startsHired": true,
+      "capacity": 1,
+      "baseFatigue": 6,
+      "skills": ["trained_dermatology_sampling", "trained_parasitology", "trained_infection_control", "trained_urinary_procedure", "trained_urinary_emergency", "trained_perianal_procedure", "trained_wound_procedure", "trained_orthopedic_exam"],
+      "operationalCapabilities": ["role.doctor", "task.history", "task.exam", "task.diagnosis", "task.plan", "task.owner_communication", "task.result_review", "task.sampling", "task.measurement", "task.lab_test", "task.procedure", "task.stabilization", "task.urgent_triage"]
+    },
+    {
+      "staffId": "staff.assistant.volkova",
+      "legacyId": null,
+      "name": "Ирина Волкова",
+      "role": "assistant",
+      "unlock": "chapter_2",
+      "startsHired": false,
+      "capacity": 1,
+      "baseFatigue": 0,
+      "skills": ["trained_dermatology_sampling", "trained_parasitology", "trained_infection_control", "trained_pulse_oximetry", "trained_blood_pressure", "trained_perianal_procedure", "trained_feline_inhaler", "trained_fracture_first_aid", "trained_nutrition_support", "trained_wound_procedure"],
+      "operationalCapabilities": ["role.assistant", "task.checkin_support", "task.intake", "task.measurement", "task.sampling", "task.patient_handling", "task.cleaning_support", "task.owner_training"]
+    },
+    {
+      "staffId": "staff.administrator.lebedeva",
+      "legacyId": null,
+      "name": "Анна Лебедева",
+      "role": "administrator",
+      "unlock": "chapter_2",
+      "startsHired": false,
+      "capacity": 1,
+      "baseFatigue": 0,
+      "skills": [],
+      "operationalCapabilities": ["role.administrator", "task.checkin", "task.checkout", "task.schedule", "task.referral_coordination", "task.result_contact", "task.inventory_order", "task.owner_update"]
+    },
+    {
+      "staffId": "staff.lab.krylova",
+      "legacyId": null,
+      "name": "Марина Крылова",
+      "role": "lab_staff",
+      "unlock": "chapter_4",
+      "startsHired": false,
+      "capacity": 1,
+      "baseFatigue": 0,
+      "skills": ["trained_parasitology", "trained_diabetes_monitoring", "trained_hematology", "trained_transfusion", "trained_blood_pressure", "trained_lab_interpretation"],
+      "operationalCapabilities": ["role.lab_staff", "task.sample_processing", "task.lab_test", "task.lab_quality_control", "task.result_prepare", "task.sampling"]
+    },
+    {
+      "staffId": "staff.imaging.zhukova",
+      "legacyId": null,
+      "name": "Ольга Жукова",
+      "role": "imaging_staff",
+      "unlock": "chapter_5",
+      "startsHired": false,
+      "capacity": 1,
+      "baseFatigue": 0,
+      "skills": ["trained_pocus", "trained_radiography", "trained_ultrasound"],
+      "operationalCapabilities": ["role.imaging_staff", "task.imaging", "task.patient_positioning", "task.image_quality_control"]
+    },
+    {
+      "staffId": "staff.doctor.belov",
+      "legacyId": null,
+      "name": "Николай Белов",
+      "role": "doctor",
+      "unlock": "chapter_5",
+      "startsHired": false,
+      "capacity": 1,
+      "baseFatigue": 0,
+      "skills": ["trained_transfusion", "trained_stabilization", "trained_urinary_procedure", "trained_urinary_emergency", "trained_fracture_first_aid", "trained_pocus", "trained_anesthesia", "trained_wound_procedure", "trained_orthopedic_exam"],
+      "operationalCapabilities": ["role.doctor", "task.history", "task.exam", "task.diagnosis", "task.plan", "task.procedure", "task.anesthesia", "task.urgent_triage", "task.stabilization", "task.result_review"]
+    },
+    {
+      "staffId": "staff.care.romanova",
+      "legacyId": null,
+      "name": "Елена Романова",
+      "role": "care_staff",
+      "unlock": "chapter_5",
+      "startsHired": false,
+      "capacity": 1,
+      "baseFatigue": 0,
+      "skills": ["trained_infection_control", "trained_pulse_oximetry", "trained_stabilization", "trained_feline_inhaler", "trained_nutrition_support"],
+      "operationalCapabilities": ["role.care_staff", "task.patient_handling", "task.observation", "task.cleaning", "task.isolation", "task.owner_training"]
+    },
+    {
+      "staffId": "staff.dentist.orlova",
+      "legacyId": null,
+      "name": "Дарья Орлова",
+      "role": "doctor",
+      "unlock": "post_campaign",
+      "startsHired": false,
+      "capacity": 1,
+      "baseFatigue": 0,
+      "skills": ["trained_anesthesia", "trained_dentistry"],
+      "operationalCapabilities": ["role.doctor", "task.dentistry", "task.anesthesia", "task.plan", "task.result_review"]
+    },
+    {
+      "staffId": "staff.manager.smirnova",
+      "legacyId": null,
+      "name": "Ирина Смирнова",
+      "role": "manager",
+      "unlock": "post_chapter_5",
+      "startsHired": false,
+      "capacity": 1,
+      "baseFatigue": 0,
+      "skills": [],
+      "operationalCapabilities": ["role.manager", "task.schedule", "task.inventory_order", "task.maintenance_coordination", "task.staff_handoff", "task.owner_update"]
+    }
+  ],
+  "rooms": [
+    {"roomId": "room.reception.1", "title": "Ресепшен", "unlock": "start", "startsOwned": true, "capacity": 1, "capabilities": ["room.reception", "task.checkin", "task.checkout", "task.schedule", "task.staff_handoff"], "visualAlias": "room.reception"},
+    {"roomId": "room.waiting.1", "title": "Зал ожидания", "unlock": "start", "startsOwned": true, "capacity": 4, "capabilities": ["room.waiting", "task.waiting", "task.owner_update"], "visualAlias": "room.waiting"},
+    {"roomId": "room.consult.1", "title": "Кабинет приёма 1", "unlock": "start", "startsOwned": true, "capacity": 1, "capabilities": ["room.consult", "room.exam", "room.communication", "room.sampling_basic", "task.history", "task.exam", "task.measurement", "task.plan", "task.procedure", "task.owner_communication"], "visualAlias": "room.consultation"},
+    {"roomId": "room.lab.basic", "title": "Базовая лабораторная зона", "unlock": "start", "startsOwned": true, "capacity": 2, "capabilities": ["room.lab", "room.microscopy", "room.sample_processing", "task.lab_test", "task.sample_processing"], "visualAlias": "room.laboratory"},
+    {"roomId": "room.storage.1", "title": "Склад расходников", "unlock": "start", "startsOwned": true, "capacity": 1, "capabilities": ["room.storage", "task.inventory_order"], "visualAlias": null},
+    {"roomId": "room.isolation.1", "title": "Изоляционная зона", "unlock": "chapter_2", "startsOwned": false, "capacity": 1, "capabilities": ["room.isolation", "isolation_protocol", "task.isolation", "task.exam", "task.sampling"], "visualAlias": null},
+    {"roomId": "room.consult.2", "title": "Кабинет приёма 2", "unlock": "chapter_3", "startsOwned": false, "capacity": 1, "capabilities": ["room.consult", "room.exam", "room.communication", "room.sampling_basic", "task.history", "task.exam", "task.measurement", "task.plan", "task.procedure", "task.owner_communication"], "visualAlias": null},
+    {"roomId": "room.staff.1", "title": "Комната персонала", "unlock": "chapter_3", "startsOwned": false, "capacity": 3, "capabilities": ["room.staff", "task.staff_break", "task.staff_handoff", "task.training"], "visualAlias": null},
+    {"roomId": "room.procedure.1", "title": "Процедурная", "unlock": "chapter_5", "startsOwned": false, "capacity": 1, "capabilities": ["procedure_room", "room.procedure", "task.procedure", "task.anesthesia", "task.stabilization"], "visualAlias": null},
+    {"roomId": "room.imaging.1", "title": "Кабинет визуальной диагностики", "unlock": "chapter_5", "startsOwned": false, "capacity": 1, "capabilities": ["imaging_room", "room.imaging", "task.imaging"], "visualAlias": null},
+    {"roomId": "room.short_stay.1", "title": "Краткий стационар", "unlock": "chapter_5", "startsOwned": false, "capacity": 2, "capabilities": ["short_stay", "room.short_stay", "task.observation", "task.stabilization"], "visualAlias": null},
+    {"roomId": "room.dental.1", "title": "Стоматологическая зона", "unlock": "post_campaign", "startsOwned": false, "capacity": 1, "capabilities": ["room.dental", "task.dentistry", "task.anesthesia"], "visualAlias": null}
+  ],
+  "visitTaskTemplates": [
+    {"taskTemplateId": "visit.checkin", "durationMinutes": 6, "priority": 100, "urgency": "routine", "staffCapability": "task.checkin", "roomCapability": "task.checkin", "handoff": "not_allowed"},
+    {"taskTemplateId": "visit.intake", "durationMinutes": 8, "priority": 120, "urgency": "routine", "staffCapability": "task.intake", "roomCapability": "room.consult", "fallbackStaffCapability": "role.doctor", "handoff": "not_allowed"},
+    {"taskTemplateId": "visit.history", "durationMinutes": 10, "priority": 150, "urgency": "routine", "staffCapability": "task.history", "roomCapability": "task.history", "handoff": "not_allowed"},
+    {"taskTemplateId": "visit.exam", "durationMinutes": 15, "priority": 180, "urgency": "routine", "staffCapability": "task.exam", "roomCapability": "task.exam", "handoff": "not_allowed"},
+    {"taskTemplateId": "visit.urgent_triage", "durationMinutes": 8, "priority": 500, "urgency": "urgent", "staffCapability": "task.urgent_triage", "roomCapability": "task.exam", "handoff": "urgent_quarter_breakpoints"},
+    {"taskTemplateId": "visit.diagnosis_decision", "durationMinutes": 6, "priority": 190, "urgency": "routine", "staffCapability": "task.diagnosis", "roomCapability": "room.consult", "handoff": "not_allowed"},
+    {"taskTemplateId": "visit.plan", "durationMinutes": 8, "priority": 190, "urgency": "routine", "staffCapability": "task.plan", "roomCapability": "task.plan", "handoff": "not_allowed"},
+    {"taskTemplateId": "visit.owner_communication", "durationMinutes": 10, "priority": 170, "urgency": "routine", "staffCapability": "task.owner_communication", "roomCapability": "task.owner_communication", "handoff": "not_allowed"},
+    {"taskTemplateId": "visit.checkout", "durationMinutes": 6, "priority": 100, "urgency": "routine", "staffCapability": "task.checkout", "roomCapability": "task.checkout", "fallbackStaffCapability": "role.doctor", "handoff": "not_allowed"},
+    {"taskTemplateId": "visit.room_cleaning", "durationMinutes": 8, "priority": 90, "urgency": "routine", "staffCapability": "task.cleaning", "roomCapability": "room.consult", "fallbackStaffCapability": "role.doctor", "handoff": "midpoint"},
+    {"taskTemplateId": "visit.result_review", "durationMinutes": 8, "priority": 300, "urgency": "routine", "staffCapability": "task.result_review", "roomCapability": "room.consult", "handoff": "not_allowed"},
+    {"taskTemplateId": "visit.result_contact", "durationMinutes": 6, "priority": 280, "urgency": "routine", "staffCapability": "task.result_contact", "roomCapability": "room.reception", "fallbackStaffCapability": "task.owner_communication", "handoff": "not_allowed"},
+    {"taskTemplateId": "visit.referral_coordination", "durationMinutes": 12, "priority": 350, "urgency": "routine", "staffCapability": "task.referral_coordination", "roomCapability": "room.reception", "fallbackStaffCapability": "role.doctor", "handoff": "midpoint"},
+    {"taskTemplateId": "visit.shift_handoff", "durationMinutes": 10, "priority": 400, "urgency": "routine", "staffCapability": "task.staff_handoff", "roomCapability": "task.staff_handoff", "fallbackStaffCapability": "role.doctor", "handoff": "not_allowed"}
+  ],
+  "taskClassRules": [
+    {"classId": "external_coordination", "capabilityTypes": ["external_service"], "durationMinutes": 12, "priority": 300, "staffCapability": "task.referral_coordination", "roomCapability": "room.reception"},
+    {"classId": "imaging", "capabilityTypes": ["imaging_method"], "durationMinutes": 35, "priority": 260, "staffCapability": "task.imaging", "roomCapability": "task.imaging"},
+    {"classId": "clinical_procedure", "capabilityTypes": ["clinical_procedure"], "durationMinutes": 25, "priority": 240, "staffCapability": "task.procedure", "roomCapability": "task.procedure"},
+    {"classId": "treatment", "capabilityTypes": ["treatment_capability"], "durationMinutes": 25, "priority": 240, "staffCapability": "role.doctor", "roomCapability": "room.consult"},
+    {"classId": "research_local", "capabilityTypes": ["research_method"], "durationMinutes": 15, "priority": 220, "staffCapability": "task.lab_test", "roomCapability": "task.lab_test"},
+    {"classId": "measurement", "capabilityTypes": ["measurement"], "durationMinutes": 5, "priority": 200, "staffCapability": "task.measurement", "roomCapability": "room.consult"},
+    {"classId": "clinical_action", "capabilityTypes": ["clinical_action"], "durationMinutes": 10, "priority": 200, "staffCapability": "role.doctor", "roomCapability": "room.consult"},
+    {"classId": "longitudinal", "capabilityTypes": ["longitudinal_measurement", "longitudinal_action"], "durationMinutes": 10, "priority": 160, "staffCapability": "task.result_review", "roomCapability": "room.consult"},
+    {"classId": "protocol", "capabilityTypes": ["staff_protocol", "room_protocol"], "durationMinutes": 10, "priority": 230, "staffCapability": "role.assistant", "roomCapability": "room.consult"},
+    {"classId": "simulation_review", "capabilityTypes": ["simulation_capability", "requirement_group"], "durationMinutes": 6, "priority": 180, "staffCapability": "task.result_review", "roomCapability": "room.consult"},
+    {"classId": "non_task_resource", "capabilityTypes": ["small_equipment", "laboratory_equipment", "treatment_equipment", "imaging_equipment", "consumable_set", "consumable_device", "staff_skill", "room", "room_capability"], "durationMinutes": 1, "priority": 0, "staffCapability": "role.doctor", "roomCapability": "room.consult"}
+  ],
+  "durationOverrides": [
+    {"capabilityIds": ["ear_cytology", "skin_cytology", "skin_impression_cytology", "skin_tape_cytology", "ocular_cytology", "blood_smear", "cytology"], "durationMinutes": 15},
+    {"capabilityIds": ["fecal_microscopy", "fecal_flotation_centrifugal", "direct_fecal_smear", "urinalysis", "urine_sediment_microscopy"], "durationMinutes": 20},
+    {"capabilityIds": ["cbc", "biochemistry", "electrolytes", "coagulation"], "durationMinutes": 20},
+    {"capabilityIds": ["xray", "fracture_radiographic_planning", "gdv_radiography", "serial_thoracic_radiography", "serial_abdominal_radiography"], "durationMinutes": 30},
+    {"capabilityIds": ["ultrasound", "thoracic_pocus"], "durationMinutes": 45},
+    {"capabilityIds": ["anesthesia"], "durationMinutes": 45},
+    {"capabilityIds": ["short_stay", "respiratory_hospital_monitoring", "gdv_continuous_monitoring", "postoperative_monitoring"], "durationMinutes": 60},
+    {"capabilityIds": ["dental_cleaning_periodontal_therapy"], "durationMinutes": 90}
+  ],
+  "roomRoutingOverrides": [
+    {"capabilityIds": ["anesthesia", "dental_cleaning_periodontal_therapy", "dental_charting", "periodontal_assessment", "gdv_stabilization", "gdv_continuous_monitoring", "urinary_catheterization", "urinary_obstruction_stabilization"], "roomCapability": "task.procedure"},
+    {"capabilityIds": ["xray", "fracture_radiographic_planning", "gdv_radiography", "thoracic_pocus", "ultrasound", "dental_xray"], "roomCapability": "task.imaging"},
+    {"capabilityIds": ["short_stay", "respiratory_hospital_monitoring", "postoperative_monitoring"], "roomCapability": "task.observation"},
+    {"capabilityIds": ["ear_cytology", "skin_cytology", "skin_impression_cytology", "skin_tape_cytology", "ocular_cytology", "fecal_microscopy", "fecal_flotation_centrifugal", "direct_fecal_smear", "urinalysis", "urine_sediment_microscopy", "pcv_total_solids", "blood_smear", "reticulocyte_count", "cbc", "biochemistry", "electrolytes", "coagulation", "cytology"], "roomCapability": "task.lab_test"}
+  ],
+  "equipmentCapacityByType": {
+    "small_equipment": 1,
+    "laboratory_equipment": 1,
+    "treatment_equipment": 1,
+    "imaging_equipment": 1,
+    "consumable_device": 1
+  },
+  "scheduling": {
+    "playerChoosesPrimaryDoctorDaily": true,
+    "recommendedPrimaryPattern": ["staff.doctor.sokolova", "staff.doctor.sokolova", "staff.doctor.morozov", "staff.doctor.morozov", "staff.doctor.sokolova", "staff.doctor.morozov", "staff.doctor.sokolova"],
+    "oneDoctorUntilSecondConsultOwned": true,
+    "secondDoctorOverlapMaximumMinutes": 360,
+    "defaultStaffShift": {"startMinute": 480, "endMinute": 1080},
+    "administratorShift": {"startMinute": 450, "endMinute": 1050},
+    "labShift": {"startMinute": 540, "endMinute": 1020},
+    "careShift": {"startMinute": 480, "endMinute": 1080}
+  },
+  "delegation": {
+    "doctorOnlyCapabilities": ["task.diagnosis", "task.plan", "task.anesthesia", "task.result_review", "task.urgent_triage", "task.stabilization"],
+    "assistantAllowedCapabilities": ["task.intake", "task.measurement", "task.sampling", "task.patient_handling", "task.owner_training"],
+    "labAllowedCapabilities": ["task.sample_processing", "task.lab_test", "task.lab_quality_control", "task.result_prepare"],
+    "administratorAllowedCapabilities": ["task.checkin", "task.checkout", "task.schedule", "task.referral_coordination", "task.result_contact", "task.inventory_order", "task.owner_update"],
+    "careAllowedCapabilities": ["task.patient_handling", "task.observation", "task.cleaning", "task.isolation", "task.owner_training"],
+    "traineeMayWorkWithoutSupervisor": false,
+    "delegationNeverChangesMedicalResult": true
+  },
+  "handoffPolicies": [
+    {"policyId": "not_allowed", "allowedFractions": [], "minimumElapsedMinutes": 0, "requiresSameCapability": true},
+    {"policyId": "midpoint", "allowedFractions": [0.5], "minimumElapsedMinutes": 5, "requiresSameCapability": true},
+    {"policyId": "urgent_quarter_breakpoints", "allowedFractions": [0.25, 0.5, 0.75], "minimumElapsedMinutes": 2, "requiresSameCapability": true}
+  ],
+  "handoffRuntimeContract": {
+    "commandFields": ["commandId", "taskId", "at", "reassignments"],
+    "reassignmentFields": ["groupId", "fromResourceId", "toResourceId", "capabilityId", "units"],
+    "medicalPayloadForbidden": true
+  },
+  "absencePolicies": [
+    {"absenceTypeId": "planned_leave", "triggerAuthority": "p7_event_only", "noticeMinutes": 2880, "durationMinutes": [1440, 2880], "maximumConcurrentStaff": 1, "requiresReplacementOrReducedCapacity": true},
+    {"absenceTypeId": "unplanned_illness", "triggerAuthority": "p7_event_only", "noticeMinutes": 0, "durationMinutes": [1440, 1440], "maximumConcurrentStaff": 1, "requiresReplacementOrReducedCapacity": true},
+    {"absenceTypeId": "training_block", "triggerAuthority": "player_training_decision", "noticeMinutes": 0, "durationMinutes": [120, 240], "maximumConcurrentStaff": 2, "requiresReplacementOrReducedCapacity": false}
+  ],
+  "maintenancePolicy": {
+    "authority": "p6_maintenance_command_only",
+    "schedulerEffect": "append_exact_unavailable_window",
+    "duplicateMaintenanceStateForbidden": true,
+    "visualStateIsProjectionOnly": true,
+    "defaultDurationsByEquipmentType": {"small_equipment": 60, "laboratory_equipment": 120, "treatment_equipment": 120, "imaging_equipment": 240, "consumable_device": 60}
+  },
+  "urgentOvercapacity": {
+    "priority": 500,
+    "maximumLocalWaitMinutes": 15,
+    "attemptOrder": ["qualified_primary_resource", "qualified_alternate_resource", "explicit_stabilization_task", "safe_referral"],
+    "neverDropTask": true,
+    "safeRouteId": "safe_referral",
+    "cancellationReasonCode": "urgent_capacity_unavailable_referred",
+    "shiftCloseBlockedUntil": ["urgent_task_completed", "urgent_task_handed_off", "urgent_task_cancelled_with_safe_route"]
+  },
+  "activation": {
+    "staffRequiresHire": true,
+    "roomRequiresOwnershipDeliveryAndReadiness": true,
+    "equipmentRequiresOwnershipDeliveryTrainingMaintenanceAndStock": true,
+    "chapterUnlockAloneIsInsufficient": true,
+    "unknownResourceFailsClosed": true
+  }
+}

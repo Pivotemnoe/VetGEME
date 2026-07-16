@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "receiptSetId": "vetgeme-p5-authoring-v2-gate-receipts",
+  "reportVersion": "2026.07.16.2",
+  "receipts": [
+    {
+      "commandId": "p5_provenance_intake_v2",
+      "command": "npm run validate:p5-authoring-review-provenance:v2:intake",
+      "gate": "author_input",
+      "status": "passed",
+      "evidence": {
+        "exitCode": 0,
+        "observedOutput": "P5 .2 provenance intake comparison completed successfully in the current goal turn.",
+        "assertions": [
+          "archive and registered review-input provenance matched",
+          "immutable author source was not rewritten"
+        ]
+      }
+    },
+    {
+      "commandId": "p5_bundled_validator_v2",
+      "command": "npm run validate:p5-authoring-review:bundled:v2",
+      "gate": "author_input",
+      "status": "passed",
+      "evidence": {
+        "exitCode": 0,
+        "observedOutput": "Bundled P5 .2 author validator completed successfully in the current goal turn.",
+        "assertions": [
+          "bundled validator exited successfully",
+          "review-only source boundary remained intact"
+        ]
+      }
+    },
+    {
+      "commandId": "p5_input_validator_v2",
+      "command": "npm run validate:p5-authoring-review:v2",
+      "gate": "author_input",
+      "status": "passed",
+      "evidence": {
+        "exitCode": 0,
+        "observedOutput": "Host P5 .2 input validation completed successfully in the current goal turn.",
+        "assertions": [
+          "49 resources validated",
+          "production pool remained 0"
+        ]
+      }
+    },
+    {
+      "commandId": "p5_input_contract_v2",
+      "command": "npm run test:p5-authoring-review:v2",
+      "gate": "host_contract",
+      "status": "passed",
+      "evidence": {
+        "exitCode": 0,
+        "observedOutput": "P5 .2 review-input contract suite completed successfully in the current goal turn.",
+        "assertions": [
+          "exact review-only registration validated",
+          "runtime and generator eligibility remained false"
+        ]
+      }
+    },
+    {
+      "commandId": "p5_lifecycle_contract_v5",
+      "command": "npm run test:resource-lifecycle:v5",
+      "gate": "host_contract",
+      "status": "passed",
+      "evidence": {
+        "exitCode": 0,
+        "observedOutput": "Resource lifecycle v5: 13 commands, activation evidence, atomicity, replay and scheduler projection passed.",
+        "assertions": [
+          "13 lifecycle commands validated",
+          "save/reload and atomic replay validated",
+          "consult2 retirement cannot invalidate future doctor overlap"
+        ]
+      }
+    },
+    {
+      "commandId": "resource_scheduler_v5",
+      "command": "npm run test:resource-scheduler:v5",
+      "gate": "host_contract",
+      "status": "passed",
+      "evidence": {
+        "exitCode": 0,
+        "observedOutput": "Resource scheduler v5 contract suite completed successfully in the current goal turn.",
+        "assertions": [
+          "exact requirement groups and capacity validated",
+          "reservation segments and handoff invariants validated"
+        ]
+      }
+    },
+    {
+      "commandId": "operations_runtime_v5",
+      "command": "npm run test:operations-runtime:v5",
+      "gate": "host_contract",
+      "status": "passed",
+      "evidence": {
+        "exitCode": 0,
+        "observedOutput": "Operations runtime v5 contract suite completed successfully in the current goal turn.",
+        "assertions": [
+          "resource availability and safe-referral behavior validated",
+          "runtime review boundary remained fail-closed"
+        ]
+      }
+    },
+    {
+      "commandId": "campaign_mechanics_v2",
+      "command": "npm run test:campaign-mechanics:v2",
+      "gate": "host_regression",
+      "status": "passed",
+      "evidence": {
+        "exitCode": 0,
+        "observedOutput": "Campaign mechanics v2 regression suite completed successfully in the current goal turn.",
+        "assertions": [
+          "existing campaign mechanics remained valid",
+          "review-only P5 join did not activate production content"
+        ]
+      }
+    },
+    {
+      "commandId": "atomic_save_migration",
+      "command": "npm run test:atomic-save-migration",
+      "gate": "save_migration_regression",
+      "status": "passed",
+      "evidence": {
+        "exitCode": 0,
+        "observedOutput": "Atomic save-migration regression suite completed successfully in the current goal turn.",
+        "assertions": [
+          "atomic save migration behavior remained valid",
+          "P5 review slice did not change the live save schema"
+        ]
+      }
+    },
+    {
+      "commandId": "p5_adapter_contract_v2",
+      "command": "npm run test:p5-authoring-review:adapter:v2",
+      "gate": "host_contract",
+      "status": "passed",
+      "evidence": {
+        "exitCode": 0,
+        "observedOutput": "P5 .2 exact review-adapter suite completed successfully in the current goal turn.",
+        "assertions": [
+          "2606 task templates audited",
+          "10 affected templates and 15 reservation-predicate gaps detected",
+          "author-gap scheduling blocks atomically and returns safe_referral",
+          "handoff ownership and reload invariants validated"
+        ]
+      }
+    },
+    {
+      "commandId": "p5_browser_handoff_reload_v2",
+      "command": "npm run test:p5-authoring-review:browser:v2",
+      "gate": "browser",
+      "status": "passed",
+      "evidence": {
+        "exitCode": 0,
+        "observedOutput": "P5 .2 browser smoke completed successfully in the current goal turn.",
+        "assertions": [
+          "handoff reservation ownership changed at the exact breakpoint",
+          "ownership remained correct after reload",
+          "30 compatibility cases remained active and production pool remained 0",
+          "review-input request count remained 0"
+        ]
+      }
+    },
+    {
+      "commandId": "new_game_reset_mode_isolation",
+      "command": "npm run test:new-game-reset-browser",
+      "gate": "reset_cancel_mode_isolation",
+      "status": "passed",
+      "evidence": {
+        "exitCode": 0,
+        "observedOutput": "New-game reset browser matrix completed successfully in the current goal turn.",
+        "assertions": [
+          "cancel preserved the active save",
+          "confirmed reset changed the campaign seed and reopened day 1",
+          "current, legacy-v1 and tier-01-v2 save namespaces remained isolated"
+        ]
+      }
+    },
+  {
+    "commandId": "docker_prebuild",
+    "command": "npm run test:docker:prebuild",
+    "gate": "docker",
+    "status": "passed",
+    "evidence": {
+      "exitCode": 0,
+      "observedOutput": "Docker prebuild completed successfully in the current goal turn: 159 syntax files, 89 validation/test commands and 201 runtime files.",
+      "assertions": [
+        "P5 .2 input, lifecycle, scheduler, adapter and report contracts passed",
+        "all registered static JavaScript files passed syntax checks",
+        "production pool remained 0 and review-only activation gates remained closed"
+      ]
+    }
+  },
+  {
+    "commandId": "docker_build",
+    "command": "npm run docker:build",
+    "gate": "docker",
+    "status": "passed",
+    "evidence": {
+      "exitCode": 0,
+      "observedOutput": "Docker image vetgeme-web:local built successfully from final staged build context 71d8490e91729793f83b137561e1b2035d8205a3d43303afd6550e3657876a3b.",
+      "assertions": [
+        "container verify stage repeated the complete prebuild successfully",
+        "467 build input files were packaged",
+        "review-only authoring inputs remained outside the runtime image"
+      ]
+    }
+  },
+  {
+    "commandId": "docker_image",
+    "command": "npm run test:docker:image",
+    "gate": "docker",
+    "status": "passed",
+    "evidence": {
+      "exitCode": 0,
+      "observedOutput": "Docker image and live container metadata gate passed for vetgeme-web:local on 127.0.0.1:5184.",
+      "assertions": [
+        "201 runtime files and 63 assets matched the signed inventory",
+        "container was healthy, read-only and ran as 101:101",
+        "all Linux capabilities were dropped and no-new-privileges was enabled"
+      ]
+    }
+  },
+  {
+    "commandId": "docker_http",
+    "command": "npm run test:docker:http",
+    "gate": "docker",
+    "status": "passed",
+    "evidence": {
+      "exitCode": 0,
+      "observedOutput": "Docker HTTP parity, cache, health, method and denied-path matrix passed on 127.0.0.1:5184.",
+      "assertions": [
+        "current, legacy-v1 and tier-01-v2 served the same verified shell",
+        "P5 .2 provenance and source paths returned 404",
+        "health, cache policy, body limit and disallowed method checks passed"
+      ]
+    }
+  },
+  {
+    "commandId": "docker_browser",
+    "command": "npm run test:docker:browser",
+    "gate": "docker",
+    "status": "passed",
+    "evidence": {
+      "exitCode": 0,
+      "observedOutput": "Docker browser smoke passed for current, legacy-v1, tier-01-v2 and modular tier-01-v2 modes.",
+      "assertions": [
+        "all four modes reached ready state and restored their local-storage sentinels",
+        "tier-01-v2 kept 30 compatibility cases and a zero medical production pool",
+        "no browser mode requested review-input paths"
+      ]
+    }
+  },
+  {
+    "commandId": "git_diff_check",
+    "command": "git diff --check",
+    "gate": "repository_hygiene",
+    "status": "passed",
+    "evidence": {
+      "exitCode": 0,
+      "observedOutput": "git diff --check completed with no whitespace errors in the current goal turn.",
+      "assertions": [
+        "tracked P5 changes contain no whitespace errors",
+        "the final staged P5 file set is also checked with git diff --cached --check before commit"
+      ]
+    }
+  }
+  ]
+}

@@ -1,0 +1,916 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p5-resource-lifecycle",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "commands": [
+    {
+      "command": "hire_staff",
+      "authority": "p5.staffState",
+      "requiredFields": [
+        "commandId",
+        "staffId",
+        "hiredAt"
+      ],
+      "result": "staff_hired_not_scheduled"
+    },
+    {
+      "command": "assign_shift",
+      "authority": "p5.staffAndShiftState",
+      "requiredFields": [
+        "commandId",
+        "staffId",
+        "shiftId",
+        "startAt",
+        "endAt"
+      ],
+      "result": "shift_capacity_available_if_rest_valid"
+    },
+    {
+      "command": "update_shift",
+      "authority": "p5.staffAndShiftState",
+      "requiredFields": [
+        "commandId",
+        "shiftId",
+        "startAt",
+        "endAt"
+      ],
+      "result": "future_unreserved_capacity_updated"
+    },
+    {
+      "command": "remove_shift",
+      "authority": "p5.staffAndShiftState",
+      "requiredFields": [
+        "commandId",
+        "shiftId"
+      ],
+      "result": "future_unreserved_capacity_removed"
+    },
+    {
+      "command": "purchase_asset",
+      "authority": "p6.assetState",
+      "requiredFields": [
+        "commandId",
+        "assetCatalogId",
+        "purchasedAt",
+        "price"
+      ],
+      "result": "pending_delivery"
+    },
+    {
+      "command": "mark_delivery_complete",
+      "authority": "p6.assetState",
+      "requiredFields": [
+        "commandId",
+        "assetId",
+        "deliveredAt"
+      ],
+      "result": "delivered_not_ready"
+    },
+    {
+      "command": "complete_training",
+      "authority": "p5.trainingState",
+      "requiredFields": [
+        "commandId",
+        "assetId",
+        "staffId",
+        "completedAt"
+      ],
+      "result": "staff_asset_training_recorded"
+    },
+    {
+      "command": "mark_room_ready",
+      "authority": "p5.roomState",
+      "requiredFields": [
+        "commandId",
+        "roomId",
+        "readyAt"
+      ],
+      "result": "room_schedulable_if_owned_and_delivered"
+    },
+    {
+      "command": "start_maintenance",
+      "authority": "p6.maintenanceState",
+      "requiredFields": [
+        "commandId",
+        "assetId",
+        "startAt",
+        "endAt"
+      ],
+      "result": "resource_unavailable_window_appended"
+    },
+    {
+      "command": "complete_maintenance",
+      "authority": "p6.maintenanceState",
+      "requiredFields": [
+        "commandId",
+        "assetId",
+        "completedAt",
+        "nextDueAt"
+      ],
+      "result": "maintenance_current"
+    },
+    {
+      "command": "receive_stock",
+      "authority": "p6.inventoryState",
+      "requiredFields": [
+        "commandId",
+        "categoryId",
+        "units",
+        "receivedAt"
+      ],
+      "result": "inventory_incremented"
+    },
+    {
+      "command": "consume_stock",
+      "authority": "p6.inventoryState",
+      "requiredFields": [
+        "commandId",
+        "categoryId",
+        "units",
+        "reservationId"
+      ],
+      "result": "inventory_decremented_atomically"
+    },
+    {
+      "command": "retire_asset",
+      "authority": "p6.assetState",
+      "requiredFields": [
+        "commandId",
+        "assetId",
+        "retiredAt"
+      ],
+      "result": "future_use_forbidden"
+    }
+  ],
+  "roomAssets": [
+    {
+      "roomId": "room.reception.1",
+      "assetCatalogId": "asset.room.reception.1",
+      "unlock": "start",
+      "acquisitionMode": "baseline_leasehold",
+      "purchasePrice": 0,
+      "deliveryDays": 0,
+      "readyingDays": 0,
+      "startsOwned": true,
+      "startsDelivered": true,
+      "startsReady": true,
+      "visualPresenceGrantsOwnership": false,
+      "lifecycleAuthority": "p6.assetState_and_p5.roomState"
+    },
+    {
+      "roomId": "room.waiting.1",
+      "assetCatalogId": "asset.room.waiting.1",
+      "unlock": "start",
+      "acquisitionMode": "baseline_leasehold",
+      "purchasePrice": 0,
+      "deliveryDays": 0,
+      "readyingDays": 0,
+      "startsOwned": true,
+      "startsDelivered": true,
+      "startsReady": true,
+      "visualPresenceGrantsOwnership": false,
+      "lifecycleAuthority": "p6.assetState_and_p5.roomState"
+    },
+    {
+      "roomId": "room.consult.1",
+      "assetCatalogId": "asset.room.consult.1",
+      "unlock": "start",
+      "acquisitionMode": "baseline_leasehold",
+      "purchasePrice": 0,
+      "deliveryDays": 0,
+      "readyingDays": 0,
+      "startsOwned": true,
+      "startsDelivered": true,
+      "startsReady": true,
+      "visualPresenceGrantsOwnership": false,
+      "lifecycleAuthority": "p6.assetState_and_p5.roomState"
+    },
+    {
+      "roomId": "room.lab.basic",
+      "assetCatalogId": "asset.room.lab.basic",
+      "unlock": "start",
+      "acquisitionMode": "baseline_leasehold",
+      "purchasePrice": 0,
+      "deliveryDays": 0,
+      "readyingDays": 0,
+      "startsOwned": true,
+      "startsDelivered": true,
+      "startsReady": true,
+      "visualPresenceGrantsOwnership": false,
+      "lifecycleAuthority": "p6.assetState_and_p5.roomState"
+    },
+    {
+      "roomId": "room.storage.1",
+      "assetCatalogId": "asset.room.storage.1",
+      "unlock": "start",
+      "acquisitionMode": "baseline_leasehold",
+      "purchasePrice": 0,
+      "deliveryDays": 0,
+      "readyingDays": 0,
+      "startsOwned": true,
+      "startsDelivered": true,
+      "startsReady": true,
+      "visualPresenceGrantsOwnership": false,
+      "lifecycleAuthority": "p6.assetState_and_p5.roomState"
+    },
+    {
+      "roomId": "room.isolation.1",
+      "assetCatalogId": "asset.room.isolation.1",
+      "unlock": "chapter_2",
+      "acquisitionMode": "player_purchase",
+      "purchasePrice": 8500,
+      "deliveryDays": 3,
+      "readyingDays": 1,
+      "startsOwned": false,
+      "startsDelivered": false,
+      "startsReady": false,
+      "visualPresenceGrantsOwnership": false,
+      "lifecycleAuthority": "p6.assetState_and_p5.roomState"
+    },
+    {
+      "roomId": "room.consult.2",
+      "assetCatalogId": "asset.room.consult.2",
+      "unlock": "chapter_3",
+      "acquisitionMode": "player_purchase",
+      "purchasePrice": 12000,
+      "deliveryDays": 5,
+      "readyingDays": 1,
+      "startsOwned": false,
+      "startsDelivered": false,
+      "startsReady": false,
+      "visualPresenceGrantsOwnership": false,
+      "lifecycleAuthority": "p6.assetState_and_p5.roomState"
+    },
+    {
+      "roomId": "room.staff.1",
+      "assetCatalogId": "asset.room.staff.1",
+      "unlock": "chapter_3",
+      "acquisitionMode": "player_purchase",
+      "purchasePrice": 6000,
+      "deliveryDays": 3,
+      "readyingDays": 1,
+      "startsOwned": false,
+      "startsDelivered": false,
+      "startsReady": false,
+      "visualPresenceGrantsOwnership": false,
+      "lifecycleAuthority": "p6.assetState_and_p5.roomState"
+    },
+    {
+      "roomId": "room.procedure.1",
+      "assetCatalogId": "asset.room.procedure.1",
+      "unlock": "chapter_5",
+      "acquisitionMode": "player_purchase",
+      "purchasePrice": 16000,
+      "deliveryDays": 5,
+      "readyingDays": 2,
+      "startsOwned": false,
+      "startsDelivered": false,
+      "startsReady": false,
+      "visualPresenceGrantsOwnership": false,
+      "lifecycleAuthority": "p6.assetState_and_p5.roomState"
+    },
+    {
+      "roomId": "room.imaging.1",
+      "assetCatalogId": "asset.room.imaging.1",
+      "unlock": "chapter_5",
+      "acquisitionMode": "player_purchase",
+      "purchasePrice": 18000,
+      "deliveryDays": 5,
+      "readyingDays": 2,
+      "startsOwned": false,
+      "startsDelivered": false,
+      "startsReady": false,
+      "visualPresenceGrantsOwnership": false,
+      "lifecycleAuthority": "p6.assetState_and_p5.roomState"
+    },
+    {
+      "roomId": "room.short_stay.1",
+      "assetCatalogId": "asset.room.short_stay.1",
+      "unlock": "chapter_5",
+      "acquisitionMode": "player_purchase",
+      "purchasePrice": 14000,
+      "deliveryDays": 5,
+      "readyingDays": 2,
+      "startsOwned": false,
+      "startsDelivered": false,
+      "startsReady": false,
+      "visualPresenceGrantsOwnership": false,
+      "lifecycleAuthority": "p6.assetState_and_p5.roomState"
+    },
+    {
+      "roomId": "room.dental.1",
+      "assetCatalogId": "asset.room.dental.1",
+      "unlock": "post_campaign",
+      "acquisitionMode": "player_purchase",
+      "purchasePrice": 22000,
+      "deliveryDays": 6,
+      "readyingDays": 2,
+      "startsOwned": false,
+      "startsDelivered": false,
+      "startsReady": false,
+      "visualPresenceGrantsOwnership": false,
+      "lifecycleAuthority": "p6.assetState_and_p5.roomState"
+    }
+  ],
+  "startingInventory": [
+    {
+      "categoryId": "general_exam",
+      "units": 30
+    },
+    {
+      "categoryId": "cytology",
+      "units": 30
+    },
+    {
+      "categoryId": "urine",
+      "units": 15
+    },
+    {
+      "categoryId": "blood",
+      "units": 15
+    },
+    {
+      "categoryId": "rapid_tests",
+      "units": 6
+    },
+    {
+      "categoryId": "wound_procedure",
+      "units": 12
+    },
+    {
+      "categoryId": "infusion",
+      "units": 8
+    },
+    {
+      "categoryId": "oxygen",
+      "units": 4
+    },
+    {
+      "categoryId": "anesthesia",
+      "units": 5
+    },
+    {
+      "categoryId": "infection_control",
+      "units": 30
+    }
+  ],
+  "startingEquipmentEvidence": [
+    {
+      "resourceId": "equipment.otoscope",
+      "owned": true,
+      "delivered": true,
+      "trainedStaffIds": [
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "maintenanceCurrentThroughCampaignDay": 20,
+      "evidenceId": "new_campaign_baseline_otoscope_commissioning"
+    },
+    {
+      "resourceId": "equipment.microscope",
+      "owned": true,
+      "delivered": true,
+      "trainedStaffIds": [
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "maintenanceCurrentThroughCampaignDay": 15,
+      "evidenceId": "new_campaign_baseline_microscope_commissioning"
+    }
+  ],
+  "resourceLifecycleSeeds": [
+    {
+      "resourceId": "staff.doctor.sokolova",
+      "state": "hired_unscheduled",
+      "evidenceIds": [
+        "new_campaign_baseline_hire_sokolova"
+      ],
+      "activationRequires": [
+        "valid_shift"
+      ]
+    },
+    {
+      "resourceId": "staff.doctor.morozov",
+      "state": "hired_unscheduled",
+      "evidenceIds": [
+        "new_campaign_baseline_hire_morozov"
+      ],
+      "activationRequires": [
+        "valid_shift"
+      ]
+    },
+    {
+      "resourceId": "staff.assistant.volkova",
+      "state": "not_hired",
+      "evidenceIds": [],
+      "activationRequires": [
+        "hire_record",
+        "valid_shift"
+      ]
+    },
+    {
+      "resourceId": "staff.administrator.lebedeva",
+      "state": "not_hired",
+      "evidenceIds": [],
+      "activationRequires": [
+        "hire_record",
+        "valid_shift"
+      ]
+    },
+    {
+      "resourceId": "staff.lab.krylova",
+      "state": "not_hired",
+      "evidenceIds": [],
+      "activationRequires": [
+        "hire_record",
+        "valid_shift"
+      ]
+    },
+    {
+      "resourceId": "staff.imaging.zhukova",
+      "state": "not_hired",
+      "evidenceIds": [],
+      "activationRequires": [
+        "hire_record",
+        "valid_shift"
+      ]
+    },
+    {
+      "resourceId": "staff.doctor.belov",
+      "state": "not_hired",
+      "evidenceIds": [],
+      "activationRequires": [
+        "hire_record",
+        "valid_shift"
+      ]
+    },
+    {
+      "resourceId": "staff.care.romanova",
+      "state": "not_hired",
+      "evidenceIds": [],
+      "activationRequires": [
+        "hire_record",
+        "valid_shift"
+      ]
+    },
+    {
+      "resourceId": "staff.dentist.orlova",
+      "state": "not_hired",
+      "evidenceIds": [],
+      "activationRequires": [
+        "hire_record",
+        "valid_shift"
+      ]
+    },
+    {
+      "resourceId": "staff.manager.smirnova",
+      "state": "not_hired",
+      "evidenceIds": [],
+      "activationRequires": [
+        "hire_record",
+        "valid_shift"
+      ]
+    },
+    {
+      "resourceId": "room.reception.1",
+      "state": "owned_delivered_ready",
+      "evidenceIds": [
+        "new_campaign_baseline_room_room.reception.1"
+      ],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ]
+    },
+    {
+      "resourceId": "room.waiting.1",
+      "state": "owned_delivered_ready",
+      "evidenceIds": [
+        "new_campaign_baseline_room_room.waiting.1"
+      ],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ]
+    },
+    {
+      "resourceId": "room.consult.1",
+      "state": "owned_delivered_ready",
+      "evidenceIds": [
+        "new_campaign_baseline_room_room.consult.1"
+      ],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ]
+    },
+    {
+      "resourceId": "room.lab.basic",
+      "state": "owned_delivered_ready",
+      "evidenceIds": [
+        "new_campaign_baseline_room_room.lab.basic"
+      ],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ]
+    },
+    {
+      "resourceId": "room.storage.1",
+      "state": "owned_delivered_ready",
+      "evidenceIds": [
+        "new_campaign_baseline_room_room.storage.1"
+      ],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ]
+    },
+    {
+      "resourceId": "room.isolation.1",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ]
+    },
+    {
+      "resourceId": "room.consult.2",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ]
+    },
+    {
+      "resourceId": "room.staff.1",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ]
+    },
+    {
+      "resourceId": "room.procedure.1",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ]
+    },
+    {
+      "resourceId": "room.imaging.1",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ]
+    },
+    {
+      "resourceId": "room.short_stay.1",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ]
+    },
+    {
+      "resourceId": "room.dental.1",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ]
+    },
+    {
+      "resourceId": "equipment.otoscope",
+      "state": "owned_delivered_trained_maintained",
+      "evidenceIds": [
+        "new_campaign_baseline_otoscope_commissioning"
+      ],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.microscope",
+      "state": "owned_delivered_trained_maintained",
+      "evidenceIds": [
+        "new_campaign_baseline_microscope_commissioning"
+      ],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.tonometer",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.ophthalmoscope",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.fecal_centrifuge",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.wood_lamp",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.nebulizer",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.pulse_oximeter",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.glucometer",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.blood_ketone_meter",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.cgm_sensor",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.centrifuge",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.refractometer",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.hematology_analyzer",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.biochemistry_analyzer",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.electrolyte_analyzer",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.blood_pressure_monitor",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.oxygen_device",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.infusion_pump",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.vital_monitor",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.feline_inhaler_spacer",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.lactate_meter",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.xray_system",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.ultrasound_system",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.anesthesia_machine",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.dental_xray_system",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    },
+    {
+      "resourceId": "equipment.coagulation_analyzer",
+      "state": "not_owned",
+      "evidenceIds": [],
+      "activationRequires": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ]
+    }
+  ],
+  "invariants": {
+    "unlockIsNotOwnership": true,
+    "purchaseDoesNotActivate": true,
+    "visualPresenceDoesNotActivate": true,
+    "missingEvidenceFailsClosed": true,
+    "savePersistsCommandsAndDerivedResourceState": true,
+    "saveSchemaChangeAllowedWithoutMigration": false
+  }
+}

@@ -1,0 +1,1416 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p5-resource-catalog",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_validated_programmer_integration_required",
+  "runtimeEligible": false,
+  "resources": [
+    {
+      "resourceId": "staff.doctor.sokolova",
+      "resourceKind": "staff",
+      "title": "Вера Соколова",
+      "role": "doctor",
+      "unlock": "start",
+      "startsActive": false,
+      "activationRequirements": [
+        "valid_shift"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "staff.doctor.sokolova",
+        "capacity": 1,
+        "capabilities": [
+          "role.doctor",
+          "task.diagnosis",
+          "task.exam",
+          "task.history",
+          "task.lab_test",
+          "task.low_stress",
+          "task.measurement",
+          "task.owner_communication",
+          "task.plan",
+          "task.procedure",
+          "task.result_review",
+          "task.sampling",
+          "task.stabilization",
+          "task.urgent_triage",
+          "trained_blood_pressure",
+          "trained_dermatology_sampling",
+          "trained_diabetes_monitoring",
+          "trained_eye_exam",
+          "trained_orthopedic_exam",
+          "trained_stabilization"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "hired_unscheduled",
+      "initialEvidenceIds": [
+        "new_campaign_baseline_hire_sokolova"
+      ]
+    },
+    {
+      "resourceId": "staff.doctor.morozov",
+      "resourceKind": "staff",
+      "title": "Алексей Морозов",
+      "role": "doctor",
+      "unlock": "start",
+      "startsActive": false,
+      "activationRequirements": [
+        "valid_shift"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "staff.doctor.morozov",
+        "capacity": 1,
+        "capabilities": [
+          "role.doctor",
+          "task.diagnosis",
+          "task.exam",
+          "task.history",
+          "task.lab_test",
+          "task.measurement",
+          "task.owner_communication",
+          "task.plan",
+          "task.procedure",
+          "task.result_review",
+          "task.sampling",
+          "task.stabilization",
+          "task.urgent_triage",
+          "trained_dermatology_sampling",
+          "trained_infection_control",
+          "trained_orthopedic_exam",
+          "trained_parasitology",
+          "trained_perianal_procedure",
+          "trained_urinary_emergency",
+          "trained_urinary_procedure",
+          "trained_wound_procedure"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "hired_unscheduled",
+      "initialEvidenceIds": [
+        "new_campaign_baseline_hire_morozov"
+      ]
+    },
+    {
+      "resourceId": "staff.assistant.volkova",
+      "resourceKind": "staff",
+      "title": "Ирина Волкова",
+      "role": "assistant",
+      "unlock": "chapter_2",
+      "startsActive": false,
+      "activationRequirements": [
+        "hire_record",
+        "valid_shift"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "staff.assistant.volkova",
+        "capacity": 1,
+        "capabilities": [
+          "role.assistant",
+          "task.checkin_support",
+          "task.cleaning_support",
+          "task.intake",
+          "task.measurement",
+          "task.owner_training",
+          "task.patient_handling",
+          "task.sampling",
+          "trained_blood_pressure",
+          "trained_dermatology_sampling",
+          "trained_feline_inhaler",
+          "trained_fracture_first_aid",
+          "trained_infection_control",
+          "trained_nutrition_support",
+          "trained_parasitology",
+          "trained_perianal_procedure",
+          "trained_pulse_oximetry",
+          "trained_wound_procedure"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_hired",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "staff.administrator.lebedeva",
+      "resourceKind": "staff",
+      "title": "Анна Лебедева",
+      "role": "administrator",
+      "unlock": "chapter_2",
+      "startsActive": false,
+      "activationRequirements": [
+        "hire_record",
+        "valid_shift"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "staff.administrator.lebedeva",
+        "capacity": 1,
+        "capabilities": [
+          "role.administrator",
+          "task.checkin",
+          "task.checkout",
+          "task.inventory_order",
+          "task.owner_update",
+          "task.referral_coordination",
+          "task.result_contact",
+          "task.schedule"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_hired",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "staff.lab.krylova",
+      "resourceKind": "staff",
+      "title": "Марина Крылова",
+      "role": "lab_staff",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "activationRequirements": [
+        "hire_record",
+        "valid_shift"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "staff.lab.krylova",
+        "capacity": 1,
+        "capabilities": [
+          "role.lab_staff",
+          "task.lab_quality_control",
+          "task.lab_test",
+          "task.result_prepare",
+          "task.sample_processing",
+          "task.sampling",
+          "trained_blood_pressure",
+          "trained_diabetes_monitoring",
+          "trained_hematology",
+          "trained_lab_interpretation",
+          "trained_parasitology",
+          "trained_transfusion"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_hired",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "staff.imaging.zhukova",
+      "resourceKind": "staff",
+      "title": "Ольга Жукова",
+      "role": "imaging_staff",
+      "unlock": "chapter_5",
+      "startsActive": false,
+      "activationRequirements": [
+        "hire_record",
+        "valid_shift"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "staff.imaging.zhukova",
+        "capacity": 1,
+        "capabilities": [
+          "role.imaging_staff",
+          "task.image_quality_control",
+          "task.imaging",
+          "task.patient_positioning",
+          "trained_pocus",
+          "trained_radiography",
+          "trained_ultrasound"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_hired",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "staff.doctor.belov",
+      "resourceKind": "staff",
+      "title": "Николай Белов",
+      "role": "doctor",
+      "unlock": "chapter_5",
+      "startsActive": false,
+      "activationRequirements": [
+        "hire_record",
+        "valid_shift"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "staff.doctor.belov",
+        "capacity": 1,
+        "capabilities": [
+          "role.doctor",
+          "task.anesthesia",
+          "task.diagnosis",
+          "task.exam",
+          "task.history",
+          "task.plan",
+          "task.procedure",
+          "task.result_review",
+          "task.stabilization",
+          "task.urgent_triage",
+          "trained_anesthesia",
+          "trained_fracture_first_aid",
+          "trained_orthopedic_exam",
+          "trained_pocus",
+          "trained_stabilization",
+          "trained_transfusion",
+          "trained_urinary_emergency",
+          "trained_urinary_procedure",
+          "trained_wound_procedure"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_hired",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "staff.care.romanova",
+      "resourceKind": "staff",
+      "title": "Елена Романова",
+      "role": "care_staff",
+      "unlock": "chapter_5",
+      "startsActive": false,
+      "activationRequirements": [
+        "hire_record",
+        "valid_shift"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "staff.care.romanova",
+        "capacity": 1,
+        "capabilities": [
+          "role.care_staff",
+          "task.cleaning",
+          "task.isolation",
+          "task.observation",
+          "task.owner_training",
+          "task.patient_handling",
+          "trained_feline_inhaler",
+          "trained_infection_control",
+          "trained_nutrition_support",
+          "trained_pulse_oximetry",
+          "trained_stabilization"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_hired",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "staff.dentist.orlova",
+      "resourceKind": "staff",
+      "title": "Дарья Орлова",
+      "role": "doctor",
+      "unlock": "post_campaign",
+      "startsActive": false,
+      "activationRequirements": [
+        "hire_record",
+        "valid_shift"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "staff.dentist.orlova",
+        "capacity": 1,
+        "capabilities": [
+          "role.doctor",
+          "task.anesthesia",
+          "task.dentistry",
+          "task.plan",
+          "task.result_review",
+          "trained_anesthesia",
+          "trained_dentistry"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_hired",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "staff.manager.smirnova",
+      "resourceKind": "staff",
+      "title": "Ирина Смирнова",
+      "role": "manager",
+      "unlock": "post_chapter_5",
+      "startsActive": false,
+      "activationRequirements": [
+        "hire_record",
+        "valid_shift"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "staff.manager.smirnova",
+        "capacity": 1,
+        "capabilities": [
+          "role.manager",
+          "task.inventory_order",
+          "task.maintenance_coordination",
+          "task.owner_update",
+          "task.schedule",
+          "task.staff_handoff"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_hired",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "room.reception.1",
+      "resourceKind": "room",
+      "title": "Ресепшен",
+      "unlock": "start",
+      "startsActive": true,
+      "visualAlias": "room.reception",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "room.reception.1",
+        "capacity": 1,
+        "capabilities": [
+          "room.reception",
+          "task.checkin",
+          "task.checkout",
+          "task.schedule",
+          "task.staff_handoff"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "owned_delivered_ready",
+      "initialEvidenceIds": [
+        "new_campaign_baseline_room_room.reception.1"
+      ]
+    },
+    {
+      "resourceId": "room.waiting.1",
+      "resourceKind": "room",
+      "title": "Зал ожидания",
+      "unlock": "start",
+      "startsActive": true,
+      "visualAlias": "room.waiting",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "room.waiting.1",
+        "capacity": 4,
+        "capabilities": [
+          "room.waiting",
+          "task.owner_update",
+          "task.waiting"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "owned_delivered_ready",
+      "initialEvidenceIds": [
+        "new_campaign_baseline_room_room.waiting.1"
+      ]
+    },
+    {
+      "resourceId": "room.consult.1",
+      "resourceKind": "room",
+      "title": "Кабинет приёма 1",
+      "unlock": "start",
+      "startsActive": true,
+      "visualAlias": "room.consultation",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "room.consult.1",
+        "capacity": 1,
+        "capabilities": [
+          "room.communication",
+          "room.consult",
+          "room.exam",
+          "room.sampling_basic",
+          "task.exam",
+          "task.history",
+          "task.measurement",
+          "task.owner_communication",
+          "task.plan",
+          "task.procedure"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "owned_delivered_ready",
+      "initialEvidenceIds": [
+        "new_campaign_baseline_room_room.consult.1"
+      ]
+    },
+    {
+      "resourceId": "room.lab.basic",
+      "resourceKind": "room",
+      "title": "Базовая лабораторная зона",
+      "unlock": "start",
+      "startsActive": true,
+      "visualAlias": "room.laboratory",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "room.lab.basic",
+        "capacity": 2,
+        "capabilities": [
+          "room.lab",
+          "room.microscopy",
+          "room.sample_processing",
+          "task.lab_test",
+          "task.sample_processing"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "owned_delivered_ready",
+      "initialEvidenceIds": [
+        "new_campaign_baseline_room_room.lab.basic"
+      ]
+    },
+    {
+      "resourceId": "room.storage.1",
+      "resourceKind": "room",
+      "title": "Склад расходников",
+      "unlock": "start",
+      "startsActive": true,
+      "visualAlias": null,
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "room.storage.1",
+        "capacity": 1,
+        "capabilities": [
+          "room.storage",
+          "task.inventory_order"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "owned_delivered_ready",
+      "initialEvidenceIds": [
+        "new_campaign_baseline_room_room.storage.1"
+      ]
+    },
+    {
+      "resourceId": "room.isolation.1",
+      "resourceKind": "room",
+      "title": "Изоляционная зона",
+      "unlock": "chapter_2",
+      "startsActive": false,
+      "visualAlias": null,
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "room.isolation.1",
+        "capacity": 1,
+        "capabilities": [
+          "isolation_protocol",
+          "room.isolation",
+          "task.exam",
+          "task.isolation",
+          "task.sampling"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "room.consult.2",
+      "resourceKind": "room",
+      "title": "Кабинет приёма 2",
+      "unlock": "chapter_3",
+      "startsActive": false,
+      "visualAlias": null,
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "room.consult.2",
+        "capacity": 1,
+        "capabilities": [
+          "room.communication",
+          "room.consult",
+          "room.exam",
+          "room.sampling_basic",
+          "task.exam",
+          "task.history",
+          "task.measurement",
+          "task.owner_communication",
+          "task.plan",
+          "task.procedure"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "room.staff.1",
+      "resourceKind": "room",
+      "title": "Комната персонала",
+      "unlock": "chapter_3",
+      "startsActive": false,
+      "visualAlias": null,
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "room.staff.1",
+        "capacity": 3,
+        "capabilities": [
+          "room.staff",
+          "task.staff_break",
+          "task.staff_handoff",
+          "task.training"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "room.procedure.1",
+      "resourceKind": "room",
+      "title": "Процедурная",
+      "unlock": "chapter_5",
+      "startsActive": false,
+      "visualAlias": null,
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "room.procedure.1",
+        "capacity": 1,
+        "capabilities": [
+          "procedure_room",
+          "room.procedure",
+          "task.anesthesia",
+          "task.procedure",
+          "task.stabilization"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "room.imaging.1",
+      "resourceKind": "room",
+      "title": "Кабинет визуальной диагностики",
+      "unlock": "chapter_5",
+      "startsActive": false,
+      "visualAlias": null,
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "room.imaging.1",
+        "capacity": 1,
+        "capabilities": [
+          "imaging_room",
+          "room.imaging",
+          "task.imaging"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "room.short_stay.1",
+      "resourceKind": "room",
+      "title": "Краткий стационар",
+      "unlock": "chapter_5",
+      "startsActive": false,
+      "visualAlias": null,
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "room.short_stay.1",
+        "capacity": 2,
+        "capabilities": [
+          "room.short_stay",
+          "short_stay",
+          "task.observation",
+          "task.stabilization"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "room.dental.1",
+      "resourceKind": "room",
+      "title": "Стоматологическая зона",
+      "unlock": "post_campaign",
+      "startsActive": false,
+      "visualAlias": null,
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "room_ready"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "room.dental.1",
+        "capacity": 1,
+        "capabilities": [
+          "room.dental",
+          "task.anesthesia",
+          "task.dentistry"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.otoscope",
+      "resourceKind": "equipment",
+      "capabilityId": "otoscope",
+      "equipmentType": "small_equipment",
+      "unlock": "start",
+      "startsActive": true,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.otoscope",
+        "capacity": 1,
+        "capabilities": [
+          "otoscope"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "owned_delivered_trained_maintained",
+      "initialEvidenceIds": [
+        "new_campaign_baseline_otoscope_commissioning"
+      ]
+    },
+    {
+      "resourceId": "equipment.microscope",
+      "resourceKind": "equipment",
+      "capabilityId": "microscope",
+      "equipmentType": "laboratory_equipment",
+      "unlock": "start",
+      "startsActive": true,
+      "dailyThroughputReference": 6,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.microscope",
+        "capacity": 1,
+        "capabilities": [
+          "microscope"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "owned_delivered_trained_maintained",
+      "initialEvidenceIds": [
+        "new_campaign_baseline_microscope_commissioning"
+      ]
+    },
+    {
+      "resourceId": "equipment.tonometer",
+      "resourceKind": "equipment",
+      "capabilityId": "tonometer",
+      "equipmentType": "small_equipment",
+      "unlock": "chapter_2",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.tonometer",
+        "capacity": 1,
+        "capabilities": [
+          "tonometer"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.ophthalmoscope",
+      "resourceKind": "equipment",
+      "capabilityId": "ophthalmoscope",
+      "equipmentType": "small_equipment",
+      "unlock": "chapter_2",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.ophthalmoscope",
+        "capacity": 1,
+        "capabilities": [
+          "ophthalmoscope"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.fecal_centrifuge",
+      "resourceKind": "equipment",
+      "capabilityId": "fecal_centrifuge",
+      "equipmentType": "laboratory_equipment",
+      "unlock": "chapter_2",
+      "startsActive": false,
+      "dailyThroughputReference": 8,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.fecal_centrifuge",
+        "capacity": 1,
+        "capabilities": [
+          "fecal_centrifuge"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.wood_lamp",
+      "resourceKind": "equipment",
+      "capabilityId": "wood_lamp",
+      "equipmentType": "small_equipment",
+      "unlock": "chapter_2",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.wood_lamp",
+        "capacity": 1,
+        "capabilities": [
+          "wood_lamp"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.nebulizer",
+      "resourceKind": "equipment",
+      "capabilityId": "nebulizer",
+      "equipmentType": "treatment_equipment",
+      "unlock": "chapter_2",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.nebulizer",
+        "capacity": 1,
+        "capabilities": [
+          "nebulizer"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.pulse_oximeter",
+      "resourceKind": "equipment",
+      "capabilityId": "pulse_oximeter",
+      "equipmentType": "small_equipment",
+      "unlock": "chapter_2",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.pulse_oximeter",
+        "capacity": 1,
+        "capabilities": [
+          "pulse_oximeter"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.glucometer",
+      "resourceKind": "equipment",
+      "capabilityId": "glucometer",
+      "equipmentType": "small_equipment",
+      "unlock": "chapter_2",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.glucometer",
+        "capacity": 1,
+        "capabilities": [
+          "glucometer"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.blood_ketone_meter",
+      "resourceKind": "equipment",
+      "capabilityId": "blood_ketone_meter",
+      "equipmentType": "small_equipment",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.blood_ketone_meter",
+        "capacity": 1,
+        "capabilities": [
+          "blood_ketone_meter"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.cgm_sensor",
+      "resourceKind": "equipment",
+      "capabilityId": "cgm_sensor",
+      "equipmentType": "consumable_device",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.cgm_sensor",
+        "capacity": 1,
+        "capabilities": [
+          "cgm_sensor"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.centrifuge",
+      "resourceKind": "equipment",
+      "capabilityId": "centrifuge",
+      "equipmentType": "laboratory_equipment",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.centrifuge",
+        "capacity": 1,
+        "capabilities": [
+          "centrifuge"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.refractometer",
+      "resourceKind": "equipment",
+      "capabilityId": "refractometer",
+      "equipmentType": "small_equipment",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.refractometer",
+        "capacity": 1,
+        "capabilities": [
+          "refractometer"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.hematology_analyzer",
+      "resourceKind": "equipment",
+      "capabilityId": "hematology_analyzer",
+      "equipmentType": "laboratory_equipment",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "dailyThroughputReference": 8,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.hematology_analyzer",
+        "capacity": 1,
+        "capabilities": [
+          "hematology_analyzer"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.biochemistry_analyzer",
+      "resourceKind": "equipment",
+      "capabilityId": "biochemistry_analyzer",
+      "equipmentType": "laboratory_equipment",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "dailyThroughputReference": 8,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.biochemistry_analyzer",
+        "capacity": 1,
+        "capabilities": [
+          "biochemistry_analyzer"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.electrolyte_analyzer",
+      "resourceKind": "equipment",
+      "capabilityId": "electrolyte_analyzer",
+      "equipmentType": "laboratory_equipment",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "dailyThroughputReference": 8,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.electrolyte_analyzer",
+        "capacity": 1,
+        "capabilities": [
+          "electrolyte_analyzer"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.blood_pressure_monitor",
+      "resourceKind": "equipment",
+      "capabilityId": "blood_pressure_monitor",
+      "equipmentType": "small_equipment",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.blood_pressure_monitor",
+        "capacity": 1,
+        "capabilities": [
+          "blood_pressure_monitor"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.oxygen_device",
+      "resourceKind": "equipment",
+      "capabilityId": "oxygen_device",
+      "equipmentType": "treatment_equipment",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.oxygen_device",
+        "capacity": 1,
+        "capabilities": [
+          "oxygen_device"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.infusion_pump",
+      "resourceKind": "equipment",
+      "capabilityId": "infusion_pump",
+      "equipmentType": "treatment_equipment",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.infusion_pump",
+        "capacity": 1,
+        "capabilities": [
+          "infusion_pump"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.vital_monitor",
+      "resourceKind": "equipment",
+      "capabilityId": "vital_monitor",
+      "equipmentType": "treatment_equipment",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.vital_monitor",
+        "capacity": 1,
+        "capabilities": [
+          "vital_monitor"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.feline_inhaler_spacer",
+      "resourceKind": "equipment",
+      "capabilityId": "feline_inhaler_spacer",
+      "equipmentType": "small_equipment",
+      "unlock": "chapter_5",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.feline_inhaler_spacer",
+        "capacity": 1,
+        "capabilities": [
+          "feline_inhaler_spacer"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.lactate_meter",
+      "resourceKind": "equipment",
+      "capabilityId": "lactate_meter",
+      "equipmentType": "small_equipment",
+      "unlock": "chapter_5",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.lactate_meter",
+        "capacity": 1,
+        "capabilities": [
+          "lactate_meter"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.xray_system",
+      "resourceKind": "equipment",
+      "capabilityId": "xray_system",
+      "equipmentType": "imaging_equipment",
+      "unlock": "chapter_5",
+      "startsActive": false,
+      "dailyThroughputReference": 6,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.xray_system",
+        "capacity": 1,
+        "capabilities": [
+          "xray_system"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.ultrasound_system",
+      "resourceKind": "equipment",
+      "capabilityId": "ultrasound_system",
+      "equipmentType": "imaging_equipment",
+      "unlock": "chapter_5",
+      "startsActive": false,
+      "dailyThroughputReference": 5,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.ultrasound_system",
+        "capacity": 1,
+        "capabilities": [
+          "ultrasound_system"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.anesthesia_machine",
+      "resourceKind": "equipment",
+      "capabilityId": "anesthesia_machine",
+      "equipmentType": "treatment_equipment",
+      "unlock": "chapter_5",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.anesthesia_machine",
+        "capacity": 1,
+        "capabilities": [
+          "anesthesia_machine"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.dental_xray_system",
+      "resourceKind": "equipment",
+      "capabilityId": "dental_xray_system",
+      "equipmentType": "imaging_equipment",
+      "unlock": "post_campaign",
+      "startsActive": false,
+      "dailyThroughputReference": null,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.dental_xray_system",
+        "capacity": 1,
+        "capabilities": [
+          "dental_xray_system"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    },
+    {
+      "resourceId": "equipment.coagulation_analyzer",
+      "resourceKind": "equipment",
+      "capabilityId": "coagulation_analyzer",
+      "equipmentType": "laboratory_equipment",
+      "unlock": "chapter_4",
+      "startsActive": false,
+      "dailyThroughputReference": 6,
+      "concurrentCapacity": 1,
+      "capacityConversionSource": "p5_authored_concurrent_capacity_not_capacityPerDay",
+      "activationRequirements": [
+        "owned",
+        "delivery_complete",
+        "training_complete",
+        "maintenance_current"
+      ],
+      "runtimeResourceTemplate": {
+        "id": "equipment.coagulation_analyzer",
+        "capacity": 1,
+        "capabilities": [
+          "coagulation_analyzer"
+        ],
+        "unavailableWindows": []
+      },
+      "initialLifecycleState": "not_owned",
+      "initialEvidenceIds": []
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "reportId": "vetgeme-p5-v2-author-decision-matrix",
+  "reportVersion": "2026.07.16.2",
+  "counts": {
+    "canonicalCapabilities": 447,
+    "supplementalCapabilities": 8,
+    "resources": 49,
+    "lifecycleCommands": 13,
+    "roomAssets": 12,
+    "startingInventoryCategories": 10,
+    "startingEquipmentEvidence": 2,
+    "staffSkills": 24,
+    "uncoveredStaffSkills": 0
+  },
+  "staffingCoverage": [
+    {
+      "skillId": "trained_anesthesia",
+      "eligibleStaffIds": [
+        "staff.dentist.orlova",
+        "staff.doctor.belov"
+      ],
+      "earliestUnlock": "chapter_5"
+    },
+    {
+      "skillId": "trained_blood_pressure",
+      "eligibleStaffIds": [
+        "staff.assistant.volkova",
+        "staff.doctor.sokolova",
+        "staff.lab.krylova"
+      ],
+      "earliestUnlock": "chapter_2"
+    },
+    {
+      "skillId": "trained_dentistry",
+      "eligibleStaffIds": [
+        "staff.dentist.orlova"
+      ],
+      "earliestUnlock": "post_campaign"
+    },
+    {
+      "skillId": "trained_dermatology_sampling",
+      "eligibleStaffIds": [
+        "staff.assistant.volkova",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "earliestUnlock": "chapter_2"
+    },
+    {
+      "skillId": "trained_diabetes_monitoring",
+      "eligibleStaffIds": [
+        "staff.doctor.sokolova",
+        "staff.lab.krylova"
+      ],
+      "earliestUnlock": "chapter_4"
+    },
+    {
+      "skillId": "trained_eye_exam",
+      "eligibleStaffIds": [
+        "staff.doctor.sokolova"
+      ],
+      "earliestUnlock": "start"
+    },
+    {
+      "skillId": "trained_feline_inhaler",
+      "eligibleStaffIds": [
+        "staff.assistant.volkova",
+        "staff.care.romanova"
+      ],
+      "earliestUnlock": "chapter_2"
+    },
+    {
+      "skillId": "trained_fracture_first_aid",
+      "eligibleStaffIds": [
+        "staff.assistant.volkova",
+        "staff.doctor.belov"
+      ],
+      "earliestUnlock": "chapter_2"
+    },
+    {
+      "skillId": "trained_hematology",
+      "eligibleStaffIds": [
+        "staff.lab.krylova"
+      ],
+      "earliestUnlock": "chapter_4"
+    },
+    {
+      "skillId": "trained_infection_control",
+      "eligibleStaffIds": [
+        "staff.assistant.volkova",
+        "staff.care.romanova",
+        "staff.doctor.morozov"
+      ],
+      "earliestUnlock": "chapter_2"
+    },
+    {
+      "skillId": "trained_lab_interpretation",
+      "eligibleStaffIds": [
+        "staff.lab.krylova"
+      ],
+      "earliestUnlock": "chapter_4"
+    },
+    {
+      "skillId": "trained_nutrition_support",
+      "eligibleStaffIds": [
+        "staff.assistant.volkova",
+        "staff.care.romanova"
+      ],
+      "earliestUnlock": "chapter_2"
+    },
+    {
+      "skillId": "trained_orthopedic_exam",
+      "eligibleStaffIds": [
+        "staff.doctor.belov",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "earliestUnlock": "chapter_5"
+    },
+    {
+      "skillId": "trained_parasitology",
+      "eligibleStaffIds": [
+        "staff.assistant.volkova",
+        "staff.doctor.morozov",
+        "staff.lab.krylova"
+      ],
+      "earliestUnlock": "chapter_2"
+    },
+    {
+      "skillId": "trained_perianal_procedure",
+      "eligibleStaffIds": [
+        "staff.assistant.volkova",
+        "staff.doctor.morozov"
+      ],
+      "earliestUnlock": "chapter_2"
+    },
+    {
+      "skillId": "trained_pocus",
+      "eligibleStaffIds": [
+        "staff.doctor.belov",
+        "staff.imaging.zhukova"
+      ],
+      "earliestUnlock": "chapter_5"
+    },
+    {
+      "skillId": "trained_pulse_oximetry",
+      "eligibleStaffIds": [
+        "staff.assistant.volkova",
+        "staff.care.romanova"
+      ],
+      "earliestUnlock": "chapter_2"
+    },
+    {
+      "skillId": "trained_radiography",
+      "eligibleStaffIds": [
+        "staff.imaging.zhukova"
+      ],
+      "earliestUnlock": "chapter_5"
+    },
+    {
+      "skillId": "trained_stabilization",
+      "eligibleStaffIds": [
+        "staff.care.romanova",
+        "staff.doctor.belov",
+        "staff.doctor.sokolova"
+      ],
+      "earliestUnlock": "chapter_5"
+    },
+    {
+      "skillId": "trained_transfusion",
+      "eligibleStaffIds": [
+        "staff.doctor.belov",
+        "staff.lab.krylova"
+      ],
+      "earliestUnlock": "chapter_4"
+    },
+    {
+      "skillId": "trained_ultrasound",
+      "eligibleStaffIds": [
+        "staff.imaging.zhukova"
+      ],
+      "earliestUnlock": "chapter_5"
+    },
+    {
+      "skillId": "trained_urinary_emergency",
+      "eligibleStaffIds": [
+        "staff.doctor.belov",
+        "staff.doctor.morozov"
+      ],
+      "earliestUnlock": "chapter_5"
+    },
+    {
+      "skillId": "trained_urinary_procedure",
+      "eligibleStaffIds": [
+        "staff.doctor.belov",
+        "staff.doctor.morozov"
+      ],
+      "earliestUnlock": "chapter_5"
+    },
+    {
+      "skillId": "trained_wound_procedure",
+      "eligibleStaffIds": [
+        "staff.assistant.volkova",
+        "staff.doctor.belov",
+        "staff.doctor.morozov"
+      ],
+      "earliestUnlock": "chapter_2"
+    }
+  ],
+  "productOwnerDecision": {
+    "recommendation": "accept_as_30_day_candidate_then_tune_only_from_simulation_evidence",
+    "accepted": false,
+    "reason": "product_owner_acceptance_is_external_to_author_package"
+  },
+  "gates": {
+    "capabilityTokenMatchingAllowed": false,
+    "lifecycleStateMayBeInferredFromVisual": false,
+    "handoffMayMutateMedicalPayload": false,
+    "unknownResourceFailsClosed": true
+  }
+}

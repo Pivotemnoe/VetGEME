@@ -1,0 +1,442 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p5-operational-policies",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_validated_programmer_integration_required",
+  "runtimeEligible": false,
+  "clock": {
+    "dayLengthMinutes": 1440,
+    "clinicOpenMinute": 480,
+    "clinicCloseMinute": 1200,
+    "standardShiftMinutes": 600,
+    "maximumExtensionMinutes": 120,
+    "mandatoryRestMinutes": 720,
+    "maximumConsecutiveShifts": 3,
+    "breakAfterMinutes": 300,
+    "breakDurationMinutes": 30
+  },
+  "fatigueBands": [
+    {
+      "minimum": 0,
+      "maximum": 39,
+      "durationMultiplier": 1,
+      "routineStartAllowed": true,
+      "urgentStartAllowed": true,
+      "extensionAllowed": true
+    },
+    {
+      "minimum": 40,
+      "maximum": 59,
+      "durationMultiplier": 1.1,
+      "routineStartAllowed": true,
+      "urgentStartAllowed": true,
+      "extensionAllowed": true
+    },
+    {
+      "minimum": 60,
+      "maximum": 79,
+      "durationMultiplier": 1.2,
+      "routineStartAllowed": true,
+      "urgentStartAllowed": true,
+      "extensionAllowed": true
+    },
+    {
+      "minimum": 80,
+      "maximum": 99,
+      "durationMultiplier": 1.35,
+      "routineStartAllowed": true,
+      "urgentStartAllowed": true,
+      "extensionAllowed": false
+    },
+    {
+      "minimum": 100,
+      "maximum": 100,
+      "durationMultiplier": 1.35,
+      "routineStartAllowed": false,
+      "urgentStartAllowed": true,
+      "extensionAllowed": false
+    }
+  ],
+  "scheduling": {
+    "playerChoosesPrimaryDoctorDaily": true,
+    "recommendedPrimaryPattern": [
+      "staff.doctor.sokolova",
+      "staff.doctor.sokolova",
+      "staff.doctor.morozov",
+      "staff.doctor.morozov",
+      "staff.doctor.sokolova",
+      "staff.doctor.morozov",
+      "staff.doctor.sokolova"
+    ],
+    "oneDoctorUntilSecondConsultOwned": true,
+    "secondDoctorOverlapMaximumMinutes": 360,
+    "defaultStaffShift": {
+      "startMinute": 480,
+      "endMinute": 1080
+    },
+    "administratorShift": {
+      "startMinute": 450,
+      "endMinute": 1050
+    },
+    "labShift": {
+      "startMinute": 540,
+      "endMinute": 1020
+    },
+    "careShift": {
+      "startMinute": 480,
+      "endMinute": 1080
+    }
+  },
+  "delegation": {
+    "doctorOnlyCapabilities": [
+      "task.diagnosis",
+      "task.plan",
+      "task.anesthesia",
+      "task.result_review",
+      "task.urgent_triage",
+      "task.stabilization"
+    ],
+    "assistantAllowedCapabilities": [
+      "task.intake",
+      "task.measurement",
+      "task.sampling",
+      "task.patient_handling",
+      "task.owner_training"
+    ],
+    "labAllowedCapabilities": [
+      "task.sample_processing",
+      "task.lab_test",
+      "task.lab_quality_control",
+      "task.result_prepare"
+    ],
+    "administratorAllowedCapabilities": [
+      "task.checkin",
+      "task.checkout",
+      "task.schedule",
+      "task.referral_coordination",
+      "task.result_contact",
+      "task.inventory_order",
+      "task.owner_update"
+    ],
+    "careAllowedCapabilities": [
+      "task.patient_handling",
+      "task.observation",
+      "task.cleaning",
+      "task.isolation",
+      "task.owner_training"
+    ],
+    "traineeMayWorkWithoutSupervisor": false,
+    "delegationNeverChangesMedicalResult": true
+  },
+  "handoffPolicies": [
+    {
+      "policyId": "not_allowed",
+      "allowedFractions": [],
+      "minimumElapsedMinutes": 0,
+      "requiresSameCapability": true
+    },
+    {
+      "policyId": "midpoint",
+      "allowedFractions": [
+        0.5
+      ],
+      "minimumElapsedMinutes": 5,
+      "requiresSameCapability": true
+    },
+    {
+      "policyId": "urgent_quarter_breakpoints",
+      "allowedFractions": [
+        0.25,
+        0.5,
+        0.75
+      ],
+      "minimumElapsedMinutes": 2,
+      "requiresSameCapability": true
+    }
+  ],
+  "handoffRuntimeContract": {
+    "schemaVersion": 1,
+    "contractId": "vetgeme-p5-handoff-contract",
+    "contractVersion": "2026.07.16.2",
+    "allowedTaskStates": [
+      "active"
+    ],
+    "commandFields": [
+      "commandId",
+      "taskId",
+      "at",
+      "reassignments"
+    ],
+    "reassignmentFields": [
+      "groupId",
+      "fromResourceId",
+      "toResourceId",
+      "capabilityId",
+      "units"
+    ],
+    "medicalPayloadForbidden": true,
+    "policyBreakpoints": [
+      {
+        "policyId": "not_allowed",
+        "allowedFractions": [],
+        "minimumElapsedMinutes": 0,
+        "requiresSameCapability": true
+      },
+      {
+        "policyId": "midpoint",
+        "allowedFractions": [
+          0.5
+        ],
+        "minimumElapsedMinutes": 5,
+        "requiresSameCapability": true
+      },
+      {
+        "policyId": "urgent_quarter_breakpoints",
+        "allowedFractions": [
+          0.25,
+          0.5,
+          0.75
+        ],
+        "minimumElapsedMinutes": 2,
+        "requiresSameCapability": true
+      }
+    ],
+    "invariants": [
+      "target_resource_must_be_active_available_and_capable",
+      "source_reservation_owned_before_command",
+      "all_reassignments_validate_before_any_mutation",
+      "release_and_reserve_are_atomic",
+      "elapsed_work_and_medical_payload_are_unchanged",
+      "command_id_is_idempotent",
+      "reload_reconstructs_same_reservation_ownership"
+    ],
+    "forbidden": [
+      "handoff_before_task_start",
+      "handoff_after_task_completion",
+      "partial_reassignment_commit",
+      "renderer_owned_reservation",
+      "medical_result_mutation"
+    ]
+  },
+  "absencePolicies": [
+    {
+      "absenceTypeId": "planned_leave",
+      "triggerAuthority": "p7_event_only",
+      "noticeMinutes": 2880,
+      "durationMinutes": [
+        1440,
+        2880
+      ],
+      "maximumConcurrentStaff": 1,
+      "requiresReplacementOrReducedCapacity": true
+    },
+    {
+      "absenceTypeId": "unplanned_illness",
+      "triggerAuthority": "p7_event_only",
+      "noticeMinutes": 0,
+      "durationMinutes": [
+        1440,
+        1440
+      ],
+      "maximumConcurrentStaff": 1,
+      "requiresReplacementOrReducedCapacity": true
+    },
+    {
+      "absenceTypeId": "training_block",
+      "triggerAuthority": "player_training_decision",
+      "noticeMinutes": 0,
+      "durationMinutes": [
+        120,
+        240
+      ],
+      "maximumConcurrentStaff": 2,
+      "requiresReplacementOrReducedCapacity": false
+    }
+  ],
+  "maintenancePolicy": {
+    "authority": "p6_maintenance_command_only",
+    "schedulerEffect": "append_exact_unavailable_window",
+    "duplicateMaintenanceStateForbidden": true,
+    "visualStateIsProjectionOnly": true,
+    "defaultDurationsByEquipmentType": {
+      "small_equipment": 60,
+      "laboratory_equipment": 120,
+      "treatment_equipment": 120,
+      "imaging_equipment": 240,
+      "consumable_device": 60
+    }
+  },
+  "urgentOvercapacity": {
+    "priority": 500,
+    "maximumLocalWaitMinutes": 15,
+    "attemptOrder": [
+      "qualified_primary_resource",
+      "qualified_alternate_resource",
+      "explicit_stabilization_task",
+      "safe_referral"
+    ],
+    "neverDropTask": true,
+    "safeRouteId": "safe_referral",
+    "cancellationReasonCode": "urgent_capacity_unavailable_referred",
+    "shiftCloseBlockedUntil": [
+      "urgent_task_completed",
+      "urgent_task_handed_off",
+      "urgent_task_cancelled_with_safe_route"
+    ]
+  },
+  "activation": {
+    "staffRequiresHire": true,
+    "roomRequiresOwnershipDeliveryAndReadiness": true,
+    "equipmentRequiresOwnershipDeliveryTrainingMaintenanceAndStock": true,
+    "chapterUnlockAloneIsInsufficient": true,
+    "unknownResourceFailsClosed": true
+  },
+  "lifecycleCommands": [
+    {
+      "command": "hire_staff",
+      "authority": "p5.staffState",
+      "requiredFields": [
+        "commandId",
+        "staffId",
+        "hiredAt"
+      ],
+      "result": "staff_hired_not_scheduled"
+    },
+    {
+      "command": "assign_shift",
+      "authority": "p5.staffAndShiftState",
+      "requiredFields": [
+        "commandId",
+        "staffId",
+        "shiftId",
+        "startAt",
+        "endAt"
+      ],
+      "result": "shift_capacity_available_if_rest_valid"
+    },
+    {
+      "command": "update_shift",
+      "authority": "p5.staffAndShiftState",
+      "requiredFields": [
+        "commandId",
+        "shiftId",
+        "startAt",
+        "endAt"
+      ],
+      "result": "future_unreserved_capacity_updated"
+    },
+    {
+      "command": "remove_shift",
+      "authority": "p5.staffAndShiftState",
+      "requiredFields": [
+        "commandId",
+        "shiftId"
+      ],
+      "result": "future_unreserved_capacity_removed"
+    },
+    {
+      "command": "purchase_asset",
+      "authority": "p6.assetState",
+      "requiredFields": [
+        "commandId",
+        "assetCatalogId",
+        "purchasedAt",
+        "price"
+      ],
+      "result": "pending_delivery"
+    },
+    {
+      "command": "mark_delivery_complete",
+      "authority": "p6.assetState",
+      "requiredFields": [
+        "commandId",
+        "assetId",
+        "deliveredAt"
+      ],
+      "result": "delivered_not_ready"
+    },
+    {
+      "command": "complete_training",
+      "authority": "p5.trainingState",
+      "requiredFields": [
+        "commandId",
+        "assetId",
+        "staffId",
+        "completedAt"
+      ],
+      "result": "staff_asset_training_recorded"
+    },
+    {
+      "command": "mark_room_ready",
+      "authority": "p5.roomState",
+      "requiredFields": [
+        "commandId",
+        "roomId",
+        "readyAt"
+      ],
+      "result": "room_schedulable_if_owned_and_delivered"
+    },
+    {
+      "command": "start_maintenance",
+      "authority": "p6.maintenanceState",
+      "requiredFields": [
+        "commandId",
+        "assetId",
+        "startAt",
+        "endAt"
+      ],
+      "result": "resource_unavailable_window_appended"
+    },
+    {
+      "command": "complete_maintenance",
+      "authority": "p6.maintenanceState",
+      "requiredFields": [
+        "commandId",
+        "assetId",
+        "completedAt",
+        "nextDueAt"
+      ],
+      "result": "maintenance_current"
+    },
+    {
+      "command": "receive_stock",
+      "authority": "p6.inventoryState",
+      "requiredFields": [
+        "commandId",
+        "categoryId",
+        "units",
+        "receivedAt"
+      ],
+      "result": "inventory_incremented"
+    },
+    {
+      "command": "consume_stock",
+      "authority": "p6.inventoryState",
+      "requiredFields": [
+        "commandId",
+        "categoryId",
+        "units",
+        "reservationId"
+      ],
+      "result": "inventory_decremented_atomically"
+    },
+    {
+      "command": "retire_asset",
+      "authority": "p6.assetState",
+      "requiredFields": [
+        "commandId",
+        "assetId",
+        "retiredAt"
+      ],
+      "result": "future_use_forbidden"
+    }
+  ],
+  "lifecycleInvariants": {
+    "unlockIsNotOwnership": true,
+    "purchaseDoesNotActivate": true,
+    "visualPresenceDoesNotActivate": true,
+    "missingEvidenceFailsClosed": true,
+    "savePersistsCommandsAndDerivedResourceState": true,
+    "saveSchemaChangeAllowedWithoutMigration": false
+  }
+}

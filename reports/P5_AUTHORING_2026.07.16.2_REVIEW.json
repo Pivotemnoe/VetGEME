@@ -1,0 +1,858 @@
+{
+  "schemaVersion": 2,
+  "reportId": "vetgeme-p5-authoring-v2-host-review",
+  "reportVersion": "2026.07.16.2",
+  "sourcePackage": "vetgeme-p5-production-authoring@2026.07.16.2",
+  "status": "blocked_by_p1_findings",
+  "boundaries": {
+    "sourceChangedByReview": false,
+    "correctionsInvented": false,
+    "priorV1SourceAndMismatchReportPreserved": true,
+    "operationalV4SourceAndReviewPreserved": true,
+    "reviewOnly": true,
+    "currentThirtyCasePoolChanged": false,
+    "currentCaseCrosswalkCreated": false,
+    "medicalTruthAuthorityGrantedToP5": false,
+    "saveSchemaChanged": false,
+    "liveRuntimeChanged": false,
+    "reviewAdapterReservationAuthority": true,
+    "liveRuntimeReservationAuthority": false,
+    "lifecycleInferredFromVisual": false,
+    "productionPool": 0,
+    "liveRuntimeActivationAllowed": false
+  },
+  "integrity": {
+    "sourceFiles": 23,
+    "sourceBytes": 4007080,
+    "archiveSha256": "665183acc97096477dd9366b8116a65a11862e4919d02170278f8e97e241a7ab",
+    "provenanceSha256": "f5f54786a0a670d3c9fa1fc8c27b003dc76b2593772b61c21a07523121b829e5",
+    "aggregateSha256": "db30b1feacd01fdab2cd6d750b59892c250d4e15eab01d1cd363c49b64dc6ad3",
+    "manifestSha256": "25730b20dcc3d0ac840082f353ccea14d11c35aa9c107bf2cb52ccd21e3e69c6",
+    "priorV1ProvenanceSha256": "a209237103632c3fa9f410c4d6a794739e7877f51ad3bc777c11b38cf95358c7",
+    "priorV1MismatchReportSha256": "ca030e6823a02b2134ca9aeef90a632a9397c4b01694f8a33065318ee803f5eb",
+    "operationalV4ProvenanceSha256": "e4e60e12f66b5c84166b530ec0ad8da20073be95533be06a0d3940db2ad5a92a",
+    "operationalV4ReviewSha256": "0954af29ed78640dad27a8fbc972f6f713382ab9c9dd7dfec84dec39682f7136",
+    "lifecycleRuntimeSha256": "8e29accba6d1c973150bf00fba9ba684d49ee746c3c83cf3b25ed6bb766a4655",
+    "reviewAdapterSha256": "9f5c5e0dd937ec1bab34330fc63c809e2b39c5c426a84a9c07a76c83e405aaf7",
+    "gateReceiptSetSha256": "762550585c6a40514735bc374ec9af7b62de0b772c1009add1d86171669a6f3b"
+  },
+  "summary": {
+    "p0": 0,
+    "p1": 1,
+    "findingCountsComputedFromOpenFindings": true,
+    "exactExecutionJoinClosedInReviewAdapter": true,
+    "lifecycleAndHandoffPrimitiveImplemented": true,
+    "allRequiredGateReceiptsConfirmed": true,
+    "immutableAuthorPredicateGapsClosed": false,
+    "runtimeEligible": false,
+    "nextSafeStep": "author_corrects_10_templates_15_predicates_then_all_required_gates_are_rerun_and_reviewed"
+  },
+  "findings": [
+    {
+      "id": "p5_immutable_author_reservation_predicate_gaps",
+      "severity": "p1",
+      "status": "open_authoring_activation_gate",
+      "scope": "immutable_author_source",
+      "summary": "Ten immutable P5 .2 task templates expose 15 lifecycle predicates that are not guaranteed by their reservation groups.",
+      "evidence": {
+        "taskTemplatesAudited": 2606,
+        "affectedTaskTemplates": 10,
+        "gapCount": 15
+      }
+    }
+  ],
+  "authorReservationPredicateAudit": {
+    "status": "unresolved_immutable_authoring_activation_p1",
+    "taskTemplatesAudited": 2606,
+    "affectedTaskTemplates": 10,
+    "gapCount": 15,
+    "findings": [
+      {
+        "kind": "capability",
+        "sourceId": "gdv_postoperative_monitoring",
+        "capabilityId": "procedure_room",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.procedure.1"
+        ]
+      },
+      {
+        "kind": "capability",
+        "sourceId": "gdv_postoperative_monitoring",
+        "capabilityId": "short_stay",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.short_stay.1"
+        ]
+      },
+      {
+        "kind": "research",
+        "sourceId": "gdv_postoperative_reperfusion_arrhythmia_and_organ_monitoring",
+        "capabilityId": "procedure_room",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.procedure.1"
+        ]
+      },
+      {
+        "kind": "research",
+        "sourceId": "gdv_postoperative_reperfusion_arrhythmia_and_organ_monitoring",
+        "capabilityId": "short_stay",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.short_stay.1"
+        ]
+      },
+      {
+        "kind": "research",
+        "sourceId": "pancreatitis_radiography_for_differentials",
+        "capabilityId": "imaging_room",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.imaging.1"
+        ]
+      },
+      {
+        "kind": "research",
+        "sourceId": "pyometra_radiography_for_differentials",
+        "capabilityId": "imaging_room",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.imaging.1"
+        ]
+      },
+      {
+        "kind": "usage",
+        "sourceId": "gi_gdv.gdv_confirmed_or_highly_suspected_volvulus.p2_gastric_wall_or_splenic_compromise_risk.gdv_postoperative_reperfusion_arrhythmia_and_organ_monitoring.3",
+        "capabilityId": "procedure_room",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.procedure.1"
+        ]
+      },
+      {
+        "kind": "usage",
+        "sourceId": "gi_gdv.gdv_confirmed_or_highly_suspected_volvulus.p2_gastric_wall_or_splenic_compromise_risk.gdv_postoperative_reperfusion_arrhythmia_and_organ_monitoring.3",
+        "capabilityId": "short_stay",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.short_stay.1"
+        ]
+      },
+      {
+        "kind": "usage",
+        "sourceId": "gi_gdv.gdv_confirmed_or_highly_suspected_volvulus.p3_delayed_collapse_arrhythmia_or_multiorgan_risk.gdv_postoperative_reperfusion_arrhythmia_and_organ_monitoring.3",
+        "capabilityId": "procedure_room",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.procedure.1"
+        ]
+      },
+      {
+        "kind": "usage",
+        "sourceId": "gi_gdv.gdv_confirmed_or_highly_suspected_volvulus.p3_delayed_collapse_arrhythmia_or_multiorgan_risk.gdv_postoperative_reperfusion_arrhythmia_and_organ_monitoring.3",
+        "capabilityId": "short_stay",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.short_stay.1"
+        ]
+      },
+      {
+        "kind": "usage",
+        "sourceId": "gi_gdv.gdv_postoperative_recurrence_or_prevention.p1_postoperative_arrhythmia_perfusion_and_incision_monitoring.gdv_postoperative_reperfusion_arrhythmia_and_organ_monitoring.1",
+        "capabilityId": "procedure_room",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.procedure.1"
+        ]
+      },
+      {
+        "kind": "usage",
+        "sourceId": "gi_gdv.gdv_postoperative_recurrence_or_prevention.p1_postoperative_arrhythmia_perfusion_and_incision_monitoring.gdv_postoperative_reperfusion_arrhythmia_and_organ_monitoring.1",
+        "capabilityId": "short_stay",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.short_stay.1"
+        ]
+      },
+      {
+        "kind": "usage",
+        "sourceId": "gi_pancreas_acute.pancreatitis_chronic_or_recurrent.p2_acute_on_chronic_episode.pancreatitis_radiography_for_differentials.2",
+        "capabilityId": "imaging_room",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.imaging.1"
+        ]
+      },
+      {
+        "kind": "usage",
+        "sourceId": "gi_pancreas_acute.pancreatitis_dog_acute_stable.p1_vomiting_abdominal_pain_after_nonspecific_trigger.pancreatitis_radiography_for_differentials.3",
+        "capabilityId": "imaging_room",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.imaging.1"
+        ]
+      },
+      {
+        "kind": "usage",
+        "sourceId": "repro_pyometra.pyometra_closed_cervix.p2_abdominal_distension_and_fluid_filled_uterus.pyometra_radiography_for_differentials.2",
+        "capabilityId": "imaging_room",
+        "predicate": "ready_room_available",
+        "resourceKind": "room",
+        "eligibleResourceIds": [
+          "room.imaging.1"
+        ]
+      }
+    ],
+    "technicalSafeReferralContainment": {
+      "status": "verified_in_review_adapter",
+      "schedulerMayAllocatePartialReservation": false,
+      "blockedTaskReturnsSafeRoute": true,
+      "authorSourceCorrectedByHost": false,
+      "liveActivationAllowed": false,
+      "receiptCommandId": "p5_adapter_contract_v2"
+    }
+  },
+  "priorV1BlockerResolutionMatrix": {
+    "sourceReport": "reports/P5_AUTHORING_MISMATCHES.json",
+    "blockerCount": 23,
+    "exactCoverage": true,
+    "resolutions": [
+      {
+        "id": "activation_requirements_unsatisfied",
+        "priorStatus": "blocked",
+        "priorSummary": "P5 declares four external activation gates and remains review-only.",
+        "resolutionStatus": "partially_closed_review_only_activation_still_blocked",
+        "evidence": "The exact adapter and lifecycle primitives exist, while required receipts and external activation acceptance remain explicit gates.",
+        "remainingBoundary": "No live activation is allowed from this review-only report."
+      },
+      {
+        "id": "p5_upstream_operational_catalogs_review_only",
+        "priorStatus": "blocked",
+        "priorSummary": "P3/P6/P7 authoring dependencies are validated review inputs, not runtime-eligible production catalogs.",
+        "resolutionStatus": "intentionally_preserved_review_only_boundary",
+        "evidence": "The join uses immutable operational .4 provenance and does not promote P3/P6/P7 authoring to runtime authority.",
+        "remainingBoundary": "A later authorized activation slice is still required."
+      },
+      {
+        "id": "p5_resource_lifecycle_resolver_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "The scheduler has no command surface that atomically activates/deactivates authored potential resources from ownership, hire, delivery, training, readiness, maintenance, stock and shift evidence.",
+        "resolutionStatus": "closed_in_dormant_review_primitive",
+        "evidence": "The versioned lifecycle primitive implements the exact 13 authored commands and atomic scheduler reprojection.",
+        "remainingBoundary": "The primitive is not embedded into the live save schema."
+      },
+      {
+        "id": "p5_p6_room_asset_mapping_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "Four locked P5 rooms requiring P6 ownership have no exact P6 assetCatalogId mapping.",
+        "resolutionStatus": "closed_by_exact_v2_v4_join",
+        "evidence": "All 12 rooms participate in the exact 49-resource P5/P6 crosswalk with explicit asset IDs.",
+        "remainingBoundary": "Review-only crosswalk authority is not live activation authority."
+      },
+      {
+        "id": "p5_starting_room_ownership_seed_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "Five starting rooms have no P5 activation requirements, but P6 is the ownership authority and provides neither exact asset mappings nor a new-campaign ownership seed/exception; the cross-system activatable set is unresolved.",
+        "resolutionStatus": "closed_by_exact_v2_lifecycle_seed",
+        "evidence": "Five authored starting rooms are explicitly owned, delivered and ready in lifecycle evidence.",
+        "remainingBoundary": "Renderer state is not ownership evidence."
+      },
+      {
+        "id": "p5_starting_equipment_readiness_stock_mapping_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "The two starting devices still require maintenance/stock evidence, while all 27 equipment stock gates lack an exact P6 inventory policy mapping.",
+        "resolutionStatus": "closed_by_exact_v2_lifecycle_and_inventory_contract",
+        "evidence": "Otoscope and microscope have explicit starting evidence; 10 inventory categories and exact per-task consumption are joined atomically.",
+        "remainingBoundary": "No live economy/save migration is authorized."
+      },
+      {
+        "id": "p5_p6_imaging_wage_role_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "P5 authors imaging_staff, but P6 has no wage row for that role.",
+        "resolutionStatus": "closed_by_exact_v4_resource_economics",
+        "evidence": "The exact crosswalk supplies economic records for all 10 staff resources, including imaging staff.",
+        "remainingBoundary": "Product-owner staffing balance acceptance remains external."
+      },
+      {
+        "id": "p5_day1_checkin_unavailable",
+        "priorStatus": "blocked",
+        "priorSummary": "visit.checkin can only reserve the inactive administrator and has no authored doctor fallback.",
+        "resolutionStatus": "activation_gated_by_explicit_staffing",
+        "evidence": "The adapter correctly keeps the administrator unavailable until an explicit hire and shift command; it does not invent a doctor fallback.",
+        "remainingBoundary": "Day-one production staffing flow requires product-owner acceptance before activation."
+      },
+      {
+        "id": "p5_inactive_anyof_filtering_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "Generated anyOf lists contain potential inactive resources; importing startsActive resources without an explicit filter leaves empty requirement groups and unknown resource IDs.",
+        "resolutionStatus": "closed_by_full_resource_projection",
+        "evidence": "All 49 exact resources are projected and inactive alternatives remain known but unavailable instead of being string-filtered or dropped.",
+        "remainingBoundary": "Availability is lifecycle authority, never renderer inference."
+      },
+      {
+        "id": "p5_skill_requirement_double_reservation",
+        "priorStatus": "blocked",
+        "priorSummary": "Thirty-three research tasks create separate skill groups; five multi-skill tasks can reserve extra staff even when the base staff already owns part of the qualification, conflicting with capacity=1 and the single-qualified-staff rule.",
+        "resolutionStatus": "closed_by_exact_requirement_group_authority",
+        "evidence": "P5 .2 requirement groups are preserved as independent AND groups; the adapter neither merges them nor infers a single-worker shortcut.",
+        "remainingBoundary": "Any staffing balance change must be authored, not inferred by the adapter."
+      },
+      {
+        "id": "p5_day1_referral_no_doctor_fallback",
+        "priorStatus": "blocked",
+        "priorSummary": "All 11 research safe-route capabilities require the inactive administrator for referral coordination and have no doctor fallback on day one.",
+        "resolutionStatus": "technically_closed_by_direct_safe_referral",
+        "evidence": "Unavailable exact tasks return their authored safe route without requiring an invented local referral-coordinator reservation.",
+        "remainingBoundary": "A local staffing fallback is not invented."
+      },
+      {
+        "id": "p5_handoff_policy_gate_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "The runtime exposes the safe atomic handoff primitive but does not enforce P5 not_allowed/midpoint/urgent-quarter policy IDs.",
+        "resolutionStatus": "closed_in_exact_handoff_gate",
+        "evidence": "The adapter enforces not_allowed, midpoint and urgent-quarter policies before atomic reservation reassignment.",
+        "remainingBoundary": "Only active tasks at exact authored breakpoints may hand off."
+      },
+      {
+        "id": "p5_capability_handoff_policy_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "None of 447 capability mappings, including all 367 task-bearing capability configurations, declares a handoff policy; independent capability tasks cannot safely infer one.",
+        "resolutionStatus": "closed_at_task_template_authority",
+        "evidence": "Handoff policy is resolved from the exact visit/research/usage task template rather than inferred from a capability token.",
+        "remainingBoundary": "Capability-only policy inference remains forbidden."
+      },
+      {
+        "id": "p5_handoff_rounding_undefined",
+        "priorStatus": "blocked",
+        "priorSummary": "Authored fractional handoff breakpoints have no minute-rounding rule, so the adapter cannot choose a deterministic valid minute without new policy.",
+        "resolutionStatus": "safe_closed_without_invented_rounding",
+        "evidence": "Fractional authored breakpoints are rejected; the adapter never rounds them to a campaign minute.",
+        "remainingBoundary": "An author-supplied rounding rule is required to enable those handoffs."
+      },
+      {
+        "id": "p5_safe_route_precedence_ambiguous",
+        "priorStatus": "blocked",
+        "priorSummary": "Research tasks declare 11 route IDs while urgent-overcapacity declares generic safe_referral; runtimeOverrides carry no route ID and precedence is unspecified.",
+        "resolutionStatus": "closed_by_exact_task_safe_route",
+        "evidence": "The exact task safeRouteId is preserved and returned on unavailability; no generic route replaces an authored route.",
+        "remainingBoundary": "Unknown or missing route authority fails closed."
+      },
+      {
+        "id": "p5_p3_route_branching_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "Twelve null P3 fallbacks are defaulted to safe_referral, and 27 of 135 external-coordination tasks retain local physical requirements without an explicit local-versus-external branch contract.",
+        "resolutionStatus": "safe_closed_without_branch_inference",
+        "evidence": "The adapter does not choose between local and external execution without exact authored reservation authority and returns the exact safe route when blocked.",
+        "remainingBoundary": "No automatic local-versus-external policy is introduced."
+      },
+      {
+        "id": "p5_stabilization_route_mapping_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "urgentOvercapacity names explicit_stabilization_task but does not map it to an authored visit task template.",
+        "resolutionStatus": "safe_closed_to_referral",
+        "evidence": "When no exact stabilization task can reserve, urgent work remains blocked and exposes safe_referral instead of inventing a stabilization mapping.",
+        "remainingBoundary": "An explicit stabilization mapping is still required for that optional branch."
+      },
+      {
+        "id": "p5_inventory_scheduler_transaction_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "All 21 used consumable capabilities map to P6 inventory policies, but there are no starting lots, no atomic scheduler/economy transaction, and no exact queued/in-flight stock ownership-transfer contract.",
+        "resolutionStatus": "closed_in_atomic_review_envelope",
+        "evidence": "Exact inventory reservations and lifecycle consumption commit with scheduler activation or do not mutate state; reload rejects half-applied ledgers.",
+        "remainingBoundary": "The live economy/save schema remains unchanged."
+      },
+      {
+        "id": "p5_p3_device_migration_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "cgm_sensor is authored as a reusable P5 equipment resource and P6 asset despite canonical consumable_device semantics; no approved migration rule exists.",
+        "resolutionStatus": "preserved_as_explicit_v2_author_model",
+        "evidence": "The adapter follows the immutable .2 resource and lifecycle declarations for cgm_sensor and performs no automatic device/consumable migration.",
+        "remainingBoundary": "Any semantic migration requires a new author source and activation review."
+      },
+      {
+        "id": "p5_clock_queue_driver_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "P5 clock and queue policies are data only; no runtime driver advances campaign minutes and schedules queued work against them.",
+        "resolutionStatus": "closed_for_explicit_command_review_adapter",
+        "evidence": "Queue scheduling is driven only by explicit command minutes inside a persisted horizon; no automatic policy is invented.",
+        "remainingBoundary": "The existing live browser clock is intentionally not replaced or rewired."
+      },
+      {
+        "id": "p5_shift_policy_bridge_missing",
+        "priorStatus": "blocked",
+        "priorSummary": "The 30-day staffing catalog is recommendation-only and no hire/shift/absence bridge binds player choice and P6 wages to scheduler availability.",
+        "resolutionStatus": "closed_in_lifecycle_and_absence_primitives",
+        "evidence": "Hire, shift assignment/update/removal and explicit absence projection are persisted and reloaded atomically.",
+        "remainingBoundary": "Recommended staffing remains recommendation-only until player commands exist in an authorized runtime slice."
+      },
+      {
+        "id": "p5_runtime_operational_policies_unwired",
+        "priorStatus": "blocked",
+        "priorSummary": "P5 supplies fatigue bands and per-staff baseFatigue values (10, 6 and 0), but all 10 authored baseFatigue values are dropped from the generated resource projection and no explicit contract defines whether or how they seed runtime fatigue. Accumulation/recovery, delegation, absence, maintenance, urgent-overcapacity, activation and the transition from the two legacy doctors also remain unwired.",
+        "resolutionStatus": "partially_closed_review_adapter_product_gate_remains",
+        "evidence": "Exact fatigue bands, activation, maintenance, absence, delegation limits and urgent fallback are validated in the review adapter.",
+        "remainingBoundary": "Fatigue accumulation/recovery balance and live legacy transition remain outside this review-only slice."
+      },
+      {
+        "id": "p5_p6_duration_semantic_divergence",
+        "priorStatus": "blocked",
+        "priorSummary": "P5 execution durations and P6 economy durations differ for 312 capabilities; the adapter needs an explicit two-clock authority rule and must not merge them automatically.",
+        "resolutionStatus": "closed_by_separate_clock_authorities",
+        "evidence": "P5 authoredDurationMinutes drives reservation time while P6 economic durations remain separate economic metadata and are never merged.",
+        "remainingBoundary": "Changing either clock requires its own author authority."
+      }
+    ]
+  },
+  "gateReceipts": {
+    "contract": "reports/P5_AUTHORING_2026.07.16.2_GATE_RECEIPTS.json",
+    "receiptSetId": "vetgeme-p5-authoring-v2-gate-receipts",
+    "requiredCommandIds": [
+      "p5_provenance_intake_v2",
+      "p5_bundled_validator_v2",
+      "p5_input_validator_v2",
+      "p5_input_contract_v2",
+      "p5_lifecycle_contract_v5",
+      "resource_scheduler_v5",
+      "operations_runtime_v5",
+      "campaign_mechanics_v2",
+      "atomic_save_migration",
+      "p5_adapter_contract_v2",
+      "p5_browser_handoff_reload_v2",
+      "new_game_reset_mode_isolation",
+      "docker_prebuild",
+      "docker_build",
+      "docker_image",
+      "docker_http",
+      "docker_browser",
+      "git_diff_check"
+    ],
+    "confirmedCommandIds": [
+      "p5_provenance_intake_v2",
+      "p5_bundled_validator_v2",
+      "p5_input_validator_v2",
+      "p5_input_contract_v2",
+      "p5_lifecycle_contract_v5",
+      "resource_scheduler_v5",
+      "operations_runtime_v5",
+      "campaign_mechanics_v2",
+      "atomic_save_migration",
+      "p5_adapter_contract_v2",
+      "p5_browser_handoff_reload_v2",
+      "new_game_reset_mode_isolation",
+      "docker_prebuild",
+      "docker_build",
+      "docker_image",
+      "docker_http",
+      "docker_browser",
+      "git_diff_check"
+    ],
+    "pendingCommandIds": [],
+    "receipts": [
+      {
+        "commandId": "p5_provenance_intake_v2",
+        "command": "npm run validate:p5-authoring-review-provenance:v2:intake",
+        "gate": "author_input",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "P5 .2 provenance intake comparison completed successfully in the current goal turn.",
+          "assertions": [
+            "archive and registered review-input provenance matched",
+            "immutable author source was not rewritten"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "p5_bundled_validator_v2",
+        "command": "npm run validate:p5-authoring-review:bundled:v2",
+        "gate": "author_input",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "Bundled P5 .2 author validator completed successfully in the current goal turn.",
+          "assertions": [
+            "bundled validator exited successfully",
+            "review-only source boundary remained intact"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "p5_input_validator_v2",
+        "command": "npm run validate:p5-authoring-review:v2",
+        "gate": "author_input",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "Host P5 .2 input validation completed successfully in the current goal turn.",
+          "assertions": [
+            "49 resources validated",
+            "production pool remained 0"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "p5_input_contract_v2",
+        "command": "npm run test:p5-authoring-review:v2",
+        "gate": "host_contract",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "P5 .2 review-input contract suite completed successfully in the current goal turn.",
+          "assertions": [
+            "exact review-only registration validated",
+            "runtime and generator eligibility remained false"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "p5_lifecycle_contract_v5",
+        "command": "npm run test:resource-lifecycle:v5",
+        "gate": "host_contract",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "Resource lifecycle v5: 13 commands, activation evidence, atomicity, replay and scheduler projection passed.",
+          "assertions": [
+            "13 lifecycle commands validated",
+            "save/reload and atomic replay validated",
+            "consult2 retirement cannot invalidate future doctor overlap"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "resource_scheduler_v5",
+        "command": "npm run test:resource-scheduler:v5",
+        "gate": "host_contract",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "Resource scheduler v5 contract suite completed successfully in the current goal turn.",
+          "assertions": [
+            "exact requirement groups and capacity validated",
+            "reservation segments and handoff invariants validated"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "operations_runtime_v5",
+        "command": "npm run test:operations-runtime:v5",
+        "gate": "host_contract",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "Operations runtime v5 contract suite completed successfully in the current goal turn.",
+          "assertions": [
+            "resource availability and safe-referral behavior validated",
+            "runtime review boundary remained fail-closed"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "campaign_mechanics_v2",
+        "command": "npm run test:campaign-mechanics:v2",
+        "gate": "host_regression",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "Campaign mechanics v2 regression suite completed successfully in the current goal turn.",
+          "assertions": [
+            "existing campaign mechanics remained valid",
+            "review-only P5 join did not activate production content"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "atomic_save_migration",
+        "command": "npm run test:atomic-save-migration",
+        "gate": "save_migration_regression",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "Atomic save-migration regression suite completed successfully in the current goal turn.",
+          "assertions": [
+            "atomic save migration behavior remained valid",
+            "P5 review slice did not change the live save schema"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "p5_adapter_contract_v2",
+        "command": "npm run test:p5-authoring-review:adapter:v2",
+        "gate": "host_contract",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "P5 .2 exact review-adapter suite completed successfully in the current goal turn.",
+          "assertions": [
+            "2606 task templates audited",
+            "10 affected templates and 15 reservation-predicate gaps detected",
+            "author-gap scheduling blocks atomically and returns safe_referral",
+            "handoff ownership and reload invariants validated"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "p5_browser_handoff_reload_v2",
+        "command": "npm run test:p5-authoring-review:browser:v2",
+        "gate": "browser",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "P5 .2 browser smoke completed successfully in the current goal turn.",
+          "assertions": [
+            "handoff reservation ownership changed at the exact breakpoint",
+            "ownership remained correct after reload",
+            "30 compatibility cases remained active and production pool remained 0",
+            "review-input request count remained 0"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "new_game_reset_mode_isolation",
+        "command": "npm run test:new-game-reset-browser",
+        "gate": "reset_cancel_mode_isolation",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "New-game reset browser matrix completed successfully in the current goal turn.",
+          "assertions": [
+            "cancel preserved the active save",
+            "confirmed reset changed the campaign seed and reopened day 1",
+            "current, legacy-v1 and tier-01-v2 save namespaces remained isolated"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "docker_prebuild",
+        "command": "npm run test:docker:prebuild",
+        "gate": "docker",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "Docker prebuild completed successfully in the current goal turn: 159 syntax files, 89 validation/test commands and 201 runtime files.",
+          "assertions": [
+            "P5 .2 input, lifecycle, scheduler, adapter and report contracts passed",
+            "all registered static JavaScript files passed syntax checks",
+            "production pool remained 0 and review-only activation gates remained closed"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "docker_build",
+        "command": "npm run docker:build",
+        "gate": "docker",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "Docker image vetgeme-web:local built successfully from final staged build context 71d8490e91729793f83b137561e1b2035d8205a3d43303afd6550e3657876a3b.",
+          "assertions": [
+            "container verify stage repeated the complete prebuild successfully",
+            "467 build input files were packaged",
+            "review-only authoring inputs remained outside the runtime image"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "docker_image",
+        "command": "npm run test:docker:image",
+        "gate": "docker",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "Docker image and live container metadata gate passed for vetgeme-web:local on 127.0.0.1:5184.",
+          "assertions": [
+            "201 runtime files and 63 assets matched the signed inventory",
+            "container was healthy, read-only and ran as 101:101",
+            "all Linux capabilities were dropped and no-new-privileges was enabled"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "docker_http",
+        "command": "npm run test:docker:http",
+        "gate": "docker",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "Docker HTTP parity, cache, health, method and denied-path matrix passed on 127.0.0.1:5184.",
+          "assertions": [
+            "current, legacy-v1 and tier-01-v2 served the same verified shell",
+            "P5 .2 provenance and source paths returned 404",
+            "health, cache policy, body limit and disallowed method checks passed"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "docker_browser",
+        "command": "npm run test:docker:browser",
+        "gate": "docker",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "Docker browser smoke passed for current, legacy-v1, tier-01-v2 and modular tier-01-v2 modes.",
+          "assertions": [
+            "all four modes reached ready state and restored their local-storage sentinels",
+            "tier-01-v2 kept 30 compatibility cases and a zero medical production pool",
+            "no browser mode requested review-input paths"
+          ]
+        },
+        "confirmed": true
+      },
+      {
+        "commandId": "git_diff_check",
+        "command": "git diff --check",
+        "gate": "repository_hygiene",
+        "status": "passed",
+        "evidence": {
+          "exitCode": 0,
+          "observedOutput": "git diff --check completed with no whitespace errors in the current goal turn.",
+          "assertions": [
+            "tracked P5 changes contain no whitespace errors",
+            "the final staged P5 file set is also checked with git diff --cached --check before commit"
+          ]
+        },
+        "confirmed": true
+      }
+    ]
+  },
+  "exactJoin": {
+    "resources": 49,
+    "staff": 10,
+    "rooms": 12,
+    "equipment": 27,
+    "lifecycleCommands": 13,
+    "canonicalCapabilities": 447,
+    "supplementalCapabilities": 8,
+    "researchTasks": 361,
+    "investigationUsages": 1864,
+    "runtimeTaskTemplates": 2606,
+    "inventoryCapabilities": 26,
+    "statePredicates": 293,
+    "requirementGroupsAuthority": "exact_p5_v2_review_adapter_only",
+    "flattenedOperationalResourceIdsAreReservationAuthority": false,
+    "activePhysicalResources": [
+      "equipment.microscope",
+      "equipment.otoscope",
+      "room.consult.1",
+      "room.lab.basic",
+      "room.reception.1",
+      "room.storage.1",
+      "room.waiting.1"
+    ],
+    "activeStaffAtStart": 0,
+    "hiredUnscheduledDoctors": [
+      "staff.doctor.morozov",
+      "staff.doctor.sokolova"
+    ]
+  },
+  "medicalAuthorityBoundary": {
+    "p5ResearchSentinel": "medical_family_presentation_investigation_result",
+    "p5SentinelIsMedicalAuthority": false,
+    "operationalMedicalAuthority": "medical_family.presentation.investigations[].result_only",
+    "operationalPolicyMayGenerateResult": false,
+    "normalizationAllowed": false,
+    "exactResearchRecordsCompared": 361
+  },
+  "closedTechnicalFindings": [
+    {
+      "id": "p5_execution_join_unresolved",
+      "status": "implemented_in_exact_review_adapter",
+      "evidenceReceiptCommandId": "p5_adapter_contract_v2"
+    },
+    {
+      "id": "p5_lifecycle_primitive_missing",
+      "status": "implemented_in_dormant_review_primitive",
+      "evidenceReceiptCommandId": "p5_lifecycle_contract_v5"
+    },
+    {
+      "id": "p5_lifecycle_scheduler_atomicity_missing",
+      "status": "implemented_in_versioned_review_adapter_envelope",
+      "evidenceReceiptCommandId": "p5_adapter_contract_v2"
+    },
+    {
+      "id": "p5_atomic_handoff_and_reload_missing",
+      "status": "implemented_unit_receipt_and_browser_receipt_required",
+      "evidenceReceiptCommandIds": [
+        "p5_adapter_contract_v2",
+        "p5_browser_handoff_reload_v2"
+      ]
+    }
+  ],
+  "externalGates": [
+    {
+      "id": "product_owner_staffing_acceptance_pending",
+      "status": "unresolved_external_gate"
+    },
+    {
+      "id": "medical_family_external_veterinary_approval",
+      "status": "unresolved_external_gate"
+    },
+    {
+      "id": "live_runtime_activation_and_save_migration_plan",
+      "status": "not_authorized_in_this_review_only_slice"
+    }
+  ],
+  "knownRisks": [
+    "The immutable .2 author source has 15 reservation-predicate gaps across 10 templates; host code blocks and refers safely but must not repair author semantics.",
+    "Authored fractional handoff breakpoints have no rounding rule and therefore fail closed.",
+    "The day-one recommended flow cannot make administrator-owned work schedulable until the administrator is explicitly hired and shifted.",
+    "Product-owner staffing and fatigue balance acceptance remains external.",
+    "The independent lifecycle ledger is intentionally not embedded into the current game save without a versioned migration plan."
+  ],
+  "validationEvidence": {
+    "authorPackageBundledClaims": {
+      "resourcesValidated": 49,
+      "runtimeTasksValidated": 2606,
+      "handoffSaveReload": "pass",
+      "urgentOvercapacitySafeRoute": "pass",
+      "simulatedCampaigns": 10000,
+      "simulatedDemandDays": 300000
+    },
+    "hostGateEvidenceComesOnlyFromReceiptSet": true,
+    "browserClaimAllowed": true,
+    "resetCancelClaimAllowed": true,
+    "dockerClaimsAllowed": true
+  },
+  "intentionallyUnchanged": [
+    "P5 .1 source, provenance, and mismatch report",
+    "operational .2, .3, and .4 immutable author sources and reports",
+    "immutable P5 .2 author files, including the reported 10-template/15-predicate gap",
+    "medical truth, medical texts, and investigation results",
+    "current 30 case IDs and generator pool",
+    "current/legacy-v1/tier-01-v2 save namespaces and schema",
+    "generator randomness and persisted generated day",
+    "runtime economy, queue, and campaign state",
+    "renderer, clinic design, and user art"
+  ]
+}
