@@ -184,12 +184,12 @@
 @media (max-width: 760px) {
   .p9-review-controls {
     top: auto;
-    right: 10px;
-    bottom: 88px;
+    right: auto;
+    bottom: 120px;
     left: 10px;
     display: block;
-    width: auto;
-    max-width: none;
+    width: min(144px, calc(22vw - 12px));
+    max-width: 144px;
   }
 
   .p9-review-summary {
@@ -199,7 +199,9 @@
   .p9-review-chip {
     width: 100%;
     min-height: 44px;
-    font-size: 16px;
+    padding: 4px 3px;
+    font-size: 13px;
+    line-height: 1.1;
   }
 
   .p9-review-drawer {

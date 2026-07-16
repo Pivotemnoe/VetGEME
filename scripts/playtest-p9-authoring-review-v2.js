@@ -499,7 +499,9 @@ async function inspectClosedSurface(page, viewport) {
     const chip = document.querySelector(".p9-review-chip");
     const summary = document.querySelector(".p9-review-summary");
     const drawer = document.querySelector(".p9-review-drawer");
+    const bottomHud = document.querySelector(".bottom-hud");
     const controlsRect = rect(controls);
+    const bottomHudRect = rect(bottomHud);
     const center = {
       left: innerWidth * 0.22,
       right: innerWidth * 0.78,
@@ -509,6 +511,7 @@ async function inspectClosedSurface(page, viewport) {
     return {
       viewport: { width: innerWidth, height: innerHeight },
       controls: controlsRect,
+      bottomHud: bottomHudRect,
       chip: rect(chip),
       chipText: chip.textContent,
       chipExpanded: chip.getAttribute("aria-expanded"),
@@ -523,6 +526,10 @@ async function inspectClosedSurface(page, viewport) {
         && controlsRect.left < center.right
         && controlsRect.bottom > center.top
         && controlsRect.top < center.bottom,
+      bottomHudOverlap: controlsRect.right > bottomHudRect.left
+        && controlsRect.left < bottomHudRect.right
+        && controlsRect.bottom > bottomHudRect.top
+        && controlsRect.top < bottomHudRect.bottom,
       documentWidth: {
         client: document.documentElement.clientWidth,
         scroll: document.documentElement.scrollWidth,
@@ -535,6 +542,7 @@ async function inspectClosedSurface(page, viewport) {
   assert.equal(evidence.visibleControlButtons, 1, `${viewport.width}: expected one collapsed control`);
   assert.ok(evidence.chip.left >= -1 && evidence.chip.right <= viewport.width + 1, `${viewport.width}: chip is clipped`);
   assert.ok(evidence.chip.top >= -1 && evidence.chip.bottom <= viewport.height + 1, `${viewport.width}: chip is vertically clipped`);
+  assert.equal(evidence.bottomHudOverlap, false, `${viewport.width}: review controls overlap the bottom HUD`);
   assert.match(evidence.chipText, /^Ресурсы · \d+\/49$/u);
   if (viewport.width <= 760) {
     assert.equal(evidence.summaryDisplay, "none", "mobile review state did not collapse to one chip");

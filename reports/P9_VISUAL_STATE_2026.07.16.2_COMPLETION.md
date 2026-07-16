@@ -43,7 +43,7 @@ Status: **explicit_review_harness_validated_activation_forbidden**. Это за�
 - Explicit review harness: 49 P5 resources, 12 rooms, 27 equipment, 10 staff, 9 HUD surfaces; one active task and two reservations were projected from the canonical scheduler.
 - Reload restored an exact projection from the serialized P5 lifecycle/scheduler shape.
 - Save schema remained `10`; campaign day, campaign seed, persisted generated day and foreign-mode keys were unchanged.
-- Five viewport checks, open drawer and reduced-motion pass produced 8 screenshots with 0 console/page/network issues and no protected-center overlap.
+- Five viewport checks, open drawer and reduced-motion pass produced 8 screenshots with 0 console/page/network issues, no protected-center overlap and no overlap between the collapsed mobile review control and the persistent bottom HUD.
 - The `room.waiting.1 → pending_delivery` transition drew `progression.delivery-pallet` and `progression.stacked-boxes` at explicit anchors. Pixel evidence: `rendererDrawCountDelta = 21`, `changedCanvasPixels = 1867`.
 - Existing diploma, clock and bench placements were not duplicated: all four placement-overlay counters remained `0`.
 - Secretary/receptionist Canvas requests: `0`. Staff remains roster-only in this P9 review surface.

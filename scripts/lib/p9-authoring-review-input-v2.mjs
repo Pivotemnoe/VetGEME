@@ -86,11 +86,11 @@ const HOST_REVIEW_HARNESS = Object.freeze({
     }),
     surfaceStyles: Object.freeze({
       path: "visual/p9-review-surface-v2.css",
-      sha256: "0d648d61a8922de31fed1d9a41c23f264e6bc6fd04906a52c378189b4a4d3290",
+      sha256: "4dc0b7c9f7bf6570f4a73c5d604559d612397d5acf5d1a630a1a4ff2469911b3",
     }),
     browserSmoke: Object.freeze({
       path: "scripts/playtest-p9-authoring-review-v2.js",
-      sha256: "bbab2c5bec507929a7d6d46c037cdb1da9abc9e32788ad83cd34ef454e9f9174",
+      sha256: "f6937bf409edeacae9d3a9489b734edc4bc82cb9f2092fc61d1dc1ff2d8a774e",
     }),
     runtimeManifest: Object.freeze({
       path: "art/runtime-v2/manifest.json",

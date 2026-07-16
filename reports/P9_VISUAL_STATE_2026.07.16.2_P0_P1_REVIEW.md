@@ -33,7 +33,9 @@ Final verdict: **PASS**. `P0 = 0`, `P1 = 0`. Production/runtime activation remai
 ### Final repeated review
 
 - P0 findings: none.
-- P1 findings: none.
+- A later P10 independent mobile review found P1-3: at 390×844 the collapsed resource control used `bottom: 88px` and overlapped the 112 px persistent bottom HUD.
+- P1-3 was corrected with a 120 px bottom offset and an edge-docked mobile width outside the protected center. Browser evidence now records the actual `.bottom-hud` rectangle and fails on any rectangle intersection at every tested viewport.
+- Final P1 findings after this correction: none.
 - Transition evidence confirms visible pallet/boxes: 21 renderer draws and 1,867 changed canvas pixels.
 - Placement overlay counts for diploma, clock and both waiting benches are all zero, proving the duplicate path is gone.
 - 8 fresh screenshots contain 0 browser issues; ordinary runtime performs 0 P9 review requests.
