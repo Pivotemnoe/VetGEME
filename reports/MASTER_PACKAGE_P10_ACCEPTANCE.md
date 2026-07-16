@@ -1,307 +1,282 @@
-# VetGEME master package 2026-07-14 — P10 acceptance audit
+# VetGEME master package — P10 final acceptance report
 
-Дата: 15 июля 2026 года.
+Дата: 17 июля 2026 года.
 
 Ветка: `codex/tier-01-v2-integration`.
 
-Проверенный технический HEAD: `b973f94712d480a36e53cc493834b758b0485364`.
+Проверенный pre-report HEAD: `cebf36a` (`fix: keep p9 review controls above hud`),
+локальная ветка совпадала с `origin/codex/tier-01-v2-integration`.
 
 Статус:
-`technical_runtime_matrix_complete_p0_repository_evidence_partial_full_master_acceptance_blocked`.
+`technical_review_only_integration_complete_full_production_acceptance_blocked`.
 
-> Повторный P8/P10 preflight от 16 июля 2026 года для нового versioned
-> medical-authoring input находится в
-> [MEDICAL_AUTHORING_P8_P10_PREFLIGHT.md](MEDICAL_AUTHORING_P8_P10_PREFLIGHT.md).
-> Он закрывает прежние authoring structural и medical-side mapping gaps, но не
-> меняет production verdict: все veterinary statuses остаются pending,
-> production pool равен 0, а activation и P3–P7 production authorities не
-> утверждены и не подключены.
->
-> Operational authoring preflight от 16 июля 2026 года находится в
-> [OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md](OPERATIONAL_AUTHORING_P3_P7_PREFLIGHT.md).
-> Authoring candidates P3/P4/P6/P7 теперь получены и byte-pinned, но остаются
-> `runtimeEligible: false`: обнаружены P3 provider-routing, P4
-> resource/safe-alternative/rule-precedence и P7 digest/evidence blockers.
-> Поэтому production verdict также не изменён.
->
-> P5 authoring preflight от 16 июля 2026 года находится в
-> [P5_AUTHORING_PREFLIGHT.md](P5_AUTHORING_PREFLIGHT.md). Пакет предоставляет
-> 49 resource candidates и 2 606 task configurations, но остаётся review-only:
-> start-active pruning, lifecycle/ownership bridges, staffing acceptance,
-> handoff-policy enforcement и P6/P7 authority ещё блокируют activation.
->
-> Exact P8 source/language audit пакета `.39` находится в
-> [P8_MEDICAL_REVIEW_AUTHORING_PREFLIGHT.md](P8_MEDICAL_REVIEW_AUTHORING_PREFLIGHT.md).
-> Он обнаружил 5 976 открытых дефектов (735 P0, 5 241 P1); dialogue library
-> прошла только structural validation и остаётся runtime-ineligible. Это
-> усиливает прежний fail-closed verdict: исправленный и допущенный к runtime
-> player-facing текст, reviewer approval и activation manifest отсутствуют,
-> production pool остаётся 0.
-> Остальной текст сохранён как исторический P10 snapshot от 15 июля.
+- `programmer_review_only_technical_integration: PASS`;
+- `full_master_production_acceptance: BLOCKED`.
 
 ## Итоговое решение
 
-Технический вертикальный срез P0-R–P7, fail-closed граница P8, текущий opt-in
-визуальный runtime P9 и технические проверки P10 собраны и воспроизводимы. Три
-режима сохранений изолированы, миграции и reset проходят, Docker-образ привязан к
-точному commit и browser smoke не показывает ошибок. При этом отдельный P0
-baseline report не сохранён в репозитории; это явно отделено ниже от последующей
-runtime evidence.
+Полный технический контур P0-R–P10 собран и проверен как fail-closed,
+review-only интеграция. Versioned источники medical `.40`, P8 `.2`, operational
+`.4`, P5 `.2` и P9 `.2` зарегистрированы отдельно, их provenance закреплён,
+прежние версии не перезаписаны. Действующий 30-case runtime, три режима
+сохранений, deterministic generation, persisted day, reset и safe-referral
+границы не нарушены.
 
-Полная P10-приёмка master package **не пройдена**. Это не тестовый сбой:
-обязательные production-входы отсутствуют в handoff и не могут быть придуманы
-программистом.
+Полная production-приёмка P10 **не пройдена и не должна считаться пройденной**.
+Это ожидаемый безопасный результат, а не скрытый тестовый сбой:
 
-- 39 из 39 master families остаются pending veterinary review;
-- `approved` families: 0;
-- production pool: 0 families, 0 variants, 0 presentations;
-- generator-eligible families: 0;
-- у 215 variants и 645 presentations нет собственных утверждённых lifecycle и
-  eligibility-контрактов;
-- нет master activation manifests и crosswalk с действующими 30 карточками;
-- P3/P4/P6/P7 authoring candidates получены, но нет исправленных и утверждённых
-  production-каталогов, exact P5 mapping, activation manifests и runtime
-  adapters для полного P3–P7 gameplay;
-- нет production 30-day economy/campaign simulation на таких каталогах;
-- полная P9 state integration заблокирована теми же operational inputs и
-  отдельно заморожена владельцем проекта до возобновления визуальной работы.
+- внешнее ветеринарное решение отсутствует;
+- 39 families, 215 variants и 645 presentations остаются review-only;
+- `approved = 0`, `generatorEligible = false`, production pool = `0`;
+- activation manifest не создан;
+- автоматический crosswalk между нынешними 30 case ID и 215 variants не создан;
+- immutable P5 `.2` author source имеет один открытый P1: 15 reservation
+  lifecycle predicate gaps в 10 из 2 606 task templates;
+- product-owner acceptance для staffing/fatigue, P6 balance и P9 live visual
+  state отсутствует;
+- production 30-day simulation нового master pool невозможна, пока этот pool
+  корректно равен нулю.
 
-Поэтому ветка остаётся безопасно fail-closed: она не активирует master medical
-content и не подменяет отсутствующие данные заглушками.
+Review adapters содержат опасные или неполные состояния fail closed и дают
+safe referral. Они не исправляют immutable author source и не превращают
+техническую проверку в медицинское или продуктовое одобрение.
 
-## Отклонение P0 evidence
+P0 был принят владельцем в task thread. Поздние slices содержат отдельные
+branch/HEAD/status/overlap audits, однако standalone tracked baseline report
+исходного момента P0 отсутствует; первоначальное remote/worktree состояние
+нельзя ретроспективно выдать за fresh repository evidence.
 
-Владелец проекта отдельно написал в задаче `P0 принимаю` до запуска полного
-пакета. Однако текущий repository audit не нашёл самостоятельного tracked P0
-baseline deliverable, который содержал бы все пункты
-`00_PROGRAMMER_HANDOFF_PLAN.md`: свежие на тот момент remote refs/worktrees,
-полную карту `main..HEAD`, overlap/ownership matrix, storage/version matrix,
-исходный test inventory, browser reload smoke и контрольный save size.
+## Актуальная цепочка versioned inputs
 
-`9d6c4df` является историческим pre-v2 checkpoint от 12 июля, а не заменой этого
-отчёта. Текущий P10 audit повторно подтверждает доступную часть состояния —
-ветку/HEAD/upstream, commit map, режимы и storage isolation, test/browser matrix
-и save sizes — но не выдаёт ретроспективную проверку original remote/worktree
-state за свежую исходную проверку. Поэтому P0 имеет recorded owner acceptance,
-но его repository evidence остаётся частичной.
+| Слой | Текущая review-only версия | Коммит | Результат |
+|---|---|---:|---|
+| Medical authoring | `2026.07.16.40` | `dc98524` | 39/215/645; 1 864 непустых результатов; P0/P1 source audit 0/0; veterinary pending |
+| P8 medical review | `2026.07.16.2` | `dc98524` | 9 847 player-facing полей; language/source/package gates проходят; activation false |
+| P3/P4/P6/P7 operational | `2026.07.16.4` | `78256b1` | 361/361 exact result-authority projections; 64 author checks; runtime false |
+| P5 operations | `2026.07.16.2` | `2b26bcc` | exact `.4` join, 49 resources, 13 lifecycle commands; host review P0=0/P1=1 |
+| P9 visual state | `2026.07.16.2` | `9c93005`, `cebf36a` | explicit review harness, P0/P1 0/0; ordinary runtime activation forbidden |
 
-## Карта этапов и коммитов
+Сохранены как отдельные immutable версии: medical `.39`, operational
+`.1/.2/.3`, P5 `.1` и P8 `.1`. Operational `.4` supersede `.3` только как
+author source для P3/P4/P7 semantics; P5 `.2` подключает exact review join, но
+не присваивает live reservation authority.
 
-| Этап | Основной результат | Коммит / доказательство | Статус |
-|---|---|---|---|
-| P0 | Исходная архитектура и границы существующего browser loop | owner acceptance в task thread; исторический snapshot `9d6c4df`; standalone tracked report отсутствует | Принято владельцем, repository evidence частичная |
-| P0-R | Readiness contract после reload, явный fallback | `e2e9e6f` | Пройдено |
-| P0-V | Стабилизация принятого modular prototype без смены медицинской логики | `2112172` | Базовый V0–V1 пройден; дальнейший дизайн заморожен |
-| P0.5 | Воспроизводимый read-only Docker runtime и provenance | `5de3252` | Пройдено |
-| P1 | Канонический content registry и fail-closed load context | `543c848` | Пройдено |
-| P2 | Family / Variant / Presentation review index | `dfafd74` | Технический индекс пройден; production pool заблокирован |
-| P3 | Capability registry, research/referral lifecycle и safe routing | `4b5a3a7` | Технический primitive пройден; production mappings отсутствуют |
-| P4 | Постоянные owner/patient identities и compact history | `99be0db` | Технический primitive пройден; полный authored catalog отсутствует |
-| P5 | Resource scheduler, atomic reservations и explicit handoff | `a7abb4d` | Технический primitive пройден; production catalogs/policies отсутствуют |
-| P6 | Economy/reputation audit core | `35577bb` | Технический primitive пройден; production balance catalogs отсутствуют |
-| P7 | Campaign Director audit core | `c8be4ae` | Технический primitive пройден; production campaign catalogs отсутствуют |
-| P8 | Medical import preflight и строгий activation gate | `a9bd9aa`, `reports/MEDICAL_IMPORT_P8_GAPS.md` | Заблокировано внешним veterinary approval; ничего не активировано |
-| P9 | Feature flag, fallback, reload/DPR/performance/a11y evidence | `5c4d55b`, `reports/VISUAL_P9_GAPS.md` | Текущий слой проверен; V2–V4 full state integration заблокирована |
-| P10 | Migration/reset matrix и итоговый acceptance audit | `b973f94` + этот отчёт | Техническая матрица пройдена; full master acceptance заблокирован |
+## Карта этапов
+
+| Этап | Реализованный результат | Коммит | Статус |
+|---|---|---:|---|
+| P0 | Owner acceptance плюс повторные branch/HEAD/status/overlap audits каждого позднего slice | task evidence + versioned reports | Принято; текущий baseline повторно проверен |
+| P0-R | Readiness contract после reload и явный fallback | `e2e9e6f` | PASS |
+| P0-V | Стабилизация modular prototype без смены медицинской логики | `2112172` | PASS в принятой границе; редизайн заморожен |
+| P0.5 | Read-only Docker runtime и provenance | `5de3252` | PASS |
+| P1 | Canonical content registry и fail-closed load context | `543c848` | PASS |
+| P2 | Family/Variant/Presentation review index | `dfafd74` | PASS review-only; production pool 0 |
+| P3 | Capability/research/referral primitive и exact operational `.4` projection | `4b5a3a7`, `78256b1` | PASS review-only |
+| P4 | Persistent identity/history и exact author bindings | `99be0db`, `78256b1` | PASS review-only |
+| P5 | Atomic scheduler/handoff primitive и P5 `.2` review join | `a7abb4d`, `2b26bcc` | Технический primitive PASS; author P1 открыт |
+| P6 | Economy/reputation audit core и author review contracts | `35577bb`, `78256b1` | PASS review-only; balance acceptance pending |
+| P7 | Campaign Director audit core и 93 evidence contracts | `c8be4ae`, `78256b1` | PASS review-only; activation pending |
+| P8 | Medical `.40`/P8 `.2` review gates и long-text browser matrix | `dc98524` | Технически PASS; veterinary approval pending |
+| P9 | Exact state projection, DOM fallbacks, browser review harness | `9c93005`, `cebf36a` | P0/P1 0/0 review-only; live activation pending |
+| P10 | Полная validation/browser/save/reset/prebuild матрица и этот отчёт | этот отдельный report commit | Technical review-only PASS; production BLOCKED |
 
 ## Матрица требований P10
 
-| № | Требование handoff | Фактическое доказательство | Вердикт |
+| № | Требование | Фактическое доказательство | Вердикт |
 |---:|---|---|---|
-| 1 | Все используемые medical variants имеют `approved` | Master variants не используются production-генератором; 39/39 families pending, 0 approved, 0 generator-eligible, production pool 0/0/0 | **BLOCKED** — безопасный gate работает, но полное условие не выполнено |
-| 2 | Полный validator без ошибок | Package validator: 39 families, 215 variants, 645 presentations, 447 capabilities, 0 warnings/errors; registry/source/catalog/capability validators проходят | **PASS для review/preflight**, **BLOCKED для production** из-за отсутствующих утверждённых child contracts и crosswalk |
-| 3 | Generator simulations | 10 000/10 000 уникальных недель, 30 compatibility cases, deterministic/reload/migration guards; demand simulation 10 000 campaigns × 30 days = 300 000 days | **PASS для действующего compatibility pool**, **BLOCKED для master pool**, потому что он пуст |
-| 4 | 30-day economy/campaign simulations | Demand-only 30-day simulation проходит; P6/P7 pure cores проходят synthetic resolver tests | **BLOCKED** — это не production economy/campaign acceptance на утверждённых P6/P7 каталогах |
-| 5 | Save migration matrix | Generator v3→v7, historical mixed v5→v7 и game v1→v10; fail-closed malformed/future cases; exact source backup; zero-write current reload; current/legacy unchanged | **PASS** |
-| 6 | Browser smoke всех затронутых потоков | P3, P4, P5, P6, P7 browser tests проходят с reload, mode isolation и `browserIssues: []`; Docker smoke проходит current/legacy-v1/tier-01-v2/modular | **PASS для реализованных технических потоков**; отсутствующий production gameplay проверить невозможно |
-| 7 | New game сбрасывает только активный режим | Cancel оставляет `localStorage` byte-for-byte; confirm удаляет active game/generator namespace и его migration backups, сохраняет foreign modes и mode preference; day 1 и новый seed устойчивы после reload | **PASS** во всех трёх режимах |
-| 8 | Visual feature flag и rollback | `modular-v2` opt-in; classic/unknown не грузят modular runtime; failed required asset даёт classic fallback; DPR 1/2, reload и renderer switch проходят | **PASS для текущего V0–V1 runtime**, full P9 V2–V4 остаётся **BLOCKED** |
-| 9 | `git diff --check` | Выполняется перед report-коммитом; пользовательские untracked каталоги исключены | **PASS** |
-| 10 | Итоговый отчёт | Этот файл отделяет технические pass от production blockers и перечисляет rollback/risks | **PASS** как deliverable; не превращает общий verdict в pass |
+| 1 | Используемые medical variants имеют `approved` | Master variants не используются production generator; 39/39 pending, approved 0, pool 0 | **BLOCKED для production**, fail-closed boundary **PASS** |
+| 2 | Полный validator без ошибок | Scoped master structural validator: 39/215/645, 447 capabilities, 0 warnings/errors; provenance/host commands завершаются корректно, но P5 host report намеренно возвращает открытый P1 finding | **PASS review/preflight containment**, unified production validator **BLOCKED** |
+| 3 | Generator simulations | Active 30-case pool: 10 000 seeded runs, deterministic/reload/migration guards; full demand: 10 000 campaigns × 30 days | **PASS active pool**, **BLOCKED master pool** |
+| 4 | 30-day economy/campaign simulations | Operational author simulation: 10 000 campaigns, 297 717 demand-days; active demand simulation: 300 000 days | **PASS review evidence**; production balance acceptance **BLOCKED** |
+| 5 | Save migration matrix | Generator v3→v7, game v1→v10, malformed/future fail closed, exact backup, current reload zero writes, current/legacy unchanged | **PASS** для существующей schema; live P5/P9 потребует отдельного version+migration plan |
+| 6 | Browser smoke affected flows | P3–P7, P5 `.2`, P8 `.2`, P9 `.2`, visual runtime, all mode/reload checks проходят без browser issues | **PASS implemented/review flows**; production master gameplay пока отсутствует |
+| 7 | New game сбрасывает только active mode | Cancel byte-stable; confirm удаляет active namespace/backups, сохраняет foreign modes, открывает day 1 с новым seed и reload parity | **PASS** current/legacy-v1/tier-01-v2 |
+| 8 | Visual flag/rollback | Existing modular opt-in/fallback проходит; P9 требует explicit harness marker, ordinary runtime ничего не запрашивает; mobile HUD overlap исправлен | **PASS review-only**, live product activation **BLOCKED** |
+| 9 | `git diff --check` и scope | Tracked diff проверяется; user `art/`, raw `handoff/`, ZIPs и author workdirs не staged | **PASS** |
+| 10 | Итоговый отчёт | Этот файл разделяет technical completion, immutable source findings и external gates | **PASS deliverable**, общий production verdict остаётся **BLOCKED** |
 
-## Изменённое поведение на P10
+## Что завершено в поздних authoring slice
 
-Коммит `b973f94` закрыл два технических пробела приёмки.
+### Medical `.40` и P8 `.2`
 
-1. Историческая generator migration v5→v7 больше не пересчитывает persisted
-   routing каждого старого дня из последнего capability decision. Она принимает
-   обе реально существовавшие формы дней в одной кампании:
-   - carried v4 day: generator `tier-01-v2.1.0`, без `demandSnapshot`;
-   - native v5 day: generator `tier-01-v2.2.0`, с валидным `demandSnapshot`.
-2. Visits, fingerprints, outcomes, source categories и routing сохраняются
-   byte-stable за исключением разрешённого schema marker/default additions.
-3. Повреждённые namespace/snapshot-комбинации и future longitudinal fields
-   блокируются без записи; исходник сохраняется в точном migration backup.
-4. Browser reset matrix теперь проверяет cancel, active-only deletion, все
-   migration backups, foreign-mode preservation, day 1, новый seed и reload.
-5. P5 browser smoke проверяет не только `handoffCount`, а фактическое владение
-   staff-reservation: `doctor-a [500,523)` до передачи и непрерывные сегменты
-   `doctor-a [500,505)`, `doctor-b [505,523)` после передачи и reload.
+- Archive SHA-256 medical `.40`:
+  `171659e929f4b8a83cf921a8fa689cd3f5ac632466c4c328dd047199fced71c5`.
+- 39 families, 215 variants, 645 presentations, 447 capabilities.
+- 1 864 investigation results, пустых результатов `0`.
+- 9 847 player-facing fields, source/display P0/P1 `0/0`.
+- Все 39 families проверены в browser review на 1920/1440/1280 при DPR 1/2;
+  emergency humour disabled и safe-referral contract сохранён.
+- P8 меняет только форму реплики и не получает authority менять medical truth,
+  result, consent, cost, time или outcome.
+
+Это снимает прежние authoring structural/language blockers, но не заменяет
+внешний veterinary review.
+
+P8 `.2` exact-pinned к medical `.40` и operational `.1`. Чистый P8
+language/structure review не одобряет operational `.4` или P5 `.2`; production
+decision должен быть связан с точным итоговым dependency graph.
+
+### Operational `.4`
+
+- Archive SHA-256:
+  `0e2fed94349ddfd8b5ace8d19a3e2da723c13bf46ec894b067d56eff5c6854d5`.
+- 1 864 usage-level turnaround contracts.
+- 206 urgency и 875 classification source values имеют exact source crosswalk
+  без runtime default.
+- 514 presentation/handling bindings привязаны к medical `.40` fact IDs.
+- 361/361 explicit/generated authority records совпадают точно с
+  `medical_family.presentation.investigations[].result_only`; сокращённый
+  namespace даёт blocker, `operationalPolicyMayGenerateResult=false`.
+- 93 resolver semantics связаны combined digest.
+- Bundled result: 64 checks, 10 000 campaigns, 297 717 demand-days.
+
+Operational `.4` не активирует generator/runtime. Его прежний P5 join blocker
+закрыт exact P5 `.2` review join, после чего независимый P5 audit обнаружил
+более узкий author-source P1 ниже.
+
+### P5 `.2`
+
+- Archive SHA-256:
+  `665183acc97096477dd9366b8116a65a11862e4919d02170278f8e97e241a7ab`.
+- 49 resources, 12 rooms, 27 equipment, 13 lifecycle commands и exact 447+8
+  capability mapping подключены как dormant review primitives.
+- Explicit handoff атомарно передаёт requirement groups; reservation segments
+  непрерывны, не перекрываются и сохраняются после reload.
+- Browser smoke проверяет фактического владельца reservation до и после handoff,
+  а не только `handoffCount`.
+- Purchase/unlock/visual presence не активируют ресурс; врачи начинают
+  `hired_unscheduled`; активны только семь явно заданных автором стартовых
+  физических ресурсов: пять базовых комнат, otoscope и microscope.
+
+Независимый host report
+`P5_AUTHORING_2026.07.16.2_REVIEW.json` имеет статус
+`blocked_by_p1_findings`: `P0=0`, `P1=1`. В 10 из 2 606 immutable task
+templates отсутствуют 15 reservation lifecycle predicates. Review adapter
+запрещает partial reservation и возвращает safe route, но source не исправляет.
+Bundled author validator с exit code 0 является integrity check и не отменяет
+этот P1.
+
+### P9 `.2`
+
+- Archive SHA-256:
+  `049f554c54dd10ba6c2b141af92f9a327b09d715dd93d6b7b98874e8b5ea2284`.
+- Exact projection: 12 rooms, 27 equipment, 10 staff, 9 HUD surfaces; 20 exact
+  anchors, 31 asset aliases.
+- DOM показывает human-readable state/fallback; Canvas остаётся владельцем
+  сцены. Renderer не может активировать ownership/readiness/capability.
+- Ordinary runtime не подключает review surface; explicit harness требует query
+  и marker одновременно.
+- Browser matrix: 1920×1080, 1440×900, 1280×720, 960×720 и 390×844; 8
+  screenshots, 0 browser issues.
+- Независимый P10 review нашёл mobile overlap с bottom HUD. Коммит `cebf36a`
+  поднял edge-docked control над HUD и добавил обязательную rectangle assertion;
+  повторный review: P0/P1 `0/0`.
 
 ## Выполненные проверки
 
-### Статические и unit/integration
+### Source, provenance и host gates
 
-- `npm run test:docker:prebuild`
-  - 96 JavaScript syntax files;
-  - 42 validation/test commands на host;
-  - 201 runtime files;
-  - все проверки завершены с кодом 0.
-- `npm run test:compact-save:v2`:
-  - generator save v7, tier game save v10;
-  - historical v5 per-day routing preserved;
-  - carried v4 day inside v5 preserved;
-  - malformed v5 fail-closed;
-  - current/legacy unchanged.
-- `npm run test:atomic-save-migration` — passed.
-- `npm run test:save-isolation` — passed.
-- `npm run test:generator:v2:full`:
-  - 10 000 runs;
-  - 10 000 full unique weeks;
-  - 10 000 structural unique weeks;
-  - 30 compatibility cases covered;
-  - deterministic, reload and migration guards passed.
-- `npm run test:demand:v2:full`:
-  - 10 000 campaigns × 30 days = 300 000 generated days;
-  - deterministic demand, conservation and safe routing passed.
-  - Эта проверка относится к demand compatibility и не заменяет production
-    P6/P7 simulation.
-- `node handoff/vetgeme-master-package/validation/validate-package.mjs`:
-  - `ok: true`;
-  - 39 families, 215 variants, 645 presentations, 447 capabilities;
-  - 0 generator-eligible families;
-  - 0 warnings, 0 errors.
+- Medical `.40`: exact ZIP/source intake, bundled rebuild, host validator.
+- P8 `.2`: exact intake, source/display/dialogue/package validators, service
+  review и browser matrix.
+- Operational `.4`: exact intake, bundled rebuild, host validator, adapter и
+  report determinism; 361 authority mismatches = 0.
+- P5 `.2`: exact intake, bundled rebuild, host validator, lifecycle/scheduler/
+  operations/adapter suites и host P1 report.
+- P9 `.2`: exact intake, bundled rebuild, host/adapter/crosswalk/renderer suites
+  и independent P0/P1 review.
+- Master package validator: `ok: true`, 39/215/645, 447 capabilities,
+  generator-eligible families 0, warnings 0, errors 0.
 
-### Browser smoke на локальном runtime `127.0.0.1:5175`
+### Runtime, save и browser gates
 
-- `npm run test:p3-browser` — critical result gate и review после reload.
-- `npm run test:p4-browser` — stable owner/patient identity, authored cues,
-  generated day unchanged.
-- `npm run test:p5-browser` — active task, exact reservation ownership/handoff
-  segments, urgent safe route и reload.
-- `npm run test:p6-browser` — economy/reputation audit restoration и idempotent
-  replay.
-- `npm run test:p7-browser` — campaign structure restoration, exact retry,
-  fail-closed catalog gate и atomic failure.
-- `npm run test:new-game-reset-browser` — current, legacy-v1 и tier-01-v2.
-- `npm run test:visual-browser:v2` — 1920×1200, 1440×900, 1280×720, DPR 1/2,
-  renderer switch, reload identity и fallback.
-- `npm run audit:visual:p9` — save v10, readiness 697.3 ms, 22 resources,
-  3 600 371 transfer bytes, 120 frames mean 8.33 ms / p95 9.80 ms /
-  max 10.20 ms, 0 gaps >50 ms, 0 observed long tasks.
+- `npm run test:generator:v2:full` — 10 000 seeded runs; active 30-case pool,
+  deterministic/reload/migration guards.
+- `npm run test:demand:v2:full` — 10 000 campaigns, 300 000 demand-days,
+  deterministic conservation и safe routing.
+- P3/P4/P5/P6/P7 browser smokes — state, persistence, fail-closed behavior,
+  mode isolation и `browserIssues: []`.
+- `npm run test:p5-authoring-review:browser:v2` — exact lifecycle and
+  reservation ownership/segments before handoff and after reload.
+- `npm run test:p8-authoring-review:browser:v2` — 39/215/645/1 864, 234 matrix
+  states, 6 screenshots.
+- `npm run test:p9-authoring-review:browser:v2` — 5 viewports, 8 screenshots,
+  bottom-HUD non-overlap, ordinary P9 requests 0.
+- `npm run test:new-game-reset-browser` — all three modes, cancel/confirm,
+  foreign-key preservation, day 1/new seed/reload.
+- `npm run test:visual-browser:v2` — 1920/1440/1280, DPR 1/2, switch/reload/
+  fallback.
+- `npm run audit:visual:p9` — 120 frames mean 8.33 ms, p95 9.20 ms, max 9.90
+  ms, gaps >50 ms = 0, long tasks = 0.
 
-Последние P9 числа взяты из JSON текущего запуска:
-`/tmp/vetgeme-p10-p9-audit-final/report.json` (`generatedAt`
-`2026-07-15T20:55:38.196Z`). Они дополняют, а не переписывают более ранний
-snapshot в `reports/VISUAL_P9_GAPS.md`.
+### Full clean prebuild
 
-P3–P7 и reset вернули `browserIssues: []`; visual scripts отдельно прошли свои
-assertions отсутствия console/page errors. Представительные кадры P3–P7, трёх
-режимов, modular runtime и reset до/после просмотрены. Новых P0/P1 наложений или
-ошибок загрузки не обнаружено. Ранее зафиксированные P9 ограничения 760/960 px и
-accessibility symbols не исправлялись из-за заморозки дизайна.
+`npm run test:docker:prebuild` завершился с кодом 0:
 
-### Изолированный Docker runtime
+- 170 JavaScript syntax files;
+- 96 validation/test commands;
+- 201 runtime files.
 
-Существующий пользовательский контейнер на 5174 не заменялся. Для точного HEAD
-создан отдельный Compose project `vetgeme-p10-b973f94` на `127.0.0.1:5176`.
-
-- image: `vetgeme-web:b973f94712d4`;
-- revision: `b973f94712d480a36e53cc493834b758b0485364`;
-- build context SHA-256:
-  `118a7b6eaff4d615b6a4c17b173db5eec89cc853b4ed4116b69f2877d088f945`;
-- `buildDirty: false`;
-- 201/201 runtime files and hashes verified;
-- 63/63 asset hashes verified;
-- non-root `101:101`, read-only root filesystem, all capabilities dropped,
-  no-new-privileges, healthcheck passed.
-
-Пройдены:
-
-- `npm run docker:build -- --progress=plain`;
-- isolated `npm run docker:up` on port 5176;
-- `npm run test:docker:http` — HTTP/source byte parity, cache/security routes;
-- `npm run test:docker:image` — exact provenance/inventory/hardening;
-- `npm run test:docker:browser` — current, legacy-v1, tier-01-v2 и modular;
-- `npm run test:new-game-reset-browser` непосредственно против Docker runtime.
+Final exact-HEAD Docker build/image/HTTP/browser/reset matrix выполняется после
+создания report commit: только тогда OCI revision может совпасть с точным
+финальным Git HEAD. Сам commit не считается полностью переданным до прохождения
+этого post-commit gate; его точные receipts сообщаются в финальном handoff и не
+встраиваются в собственное содержимое commit.
 
 ## Намеренно не изменено
 
-- Медицинские тексты, diagnoses, treatment facts и source files.
-- Veterinary statuses, variant/presentation lifecycle и eligibility.
-- Generator randomness или состав действующего 30-card compatibility pool.
-- Save schema versions: P10 исправляет contract существующей миграции, а не
-  вводит новую версию.
-- Поведение и данные режимов `current` и `legacy-v1`.
-- Visual scene, изображения, geometry, animation и CSS после явной остановки
-  дизайн-работ владельцем проекта.
-- Пользовательские каталоги `art/`, `handoff/` и
-  `medical-production-authoring/`; они не staged и не входят в Docker runtime.
-- Автоматические правила выбора участника/времени handoff: реализован только
+- Нынешние 30 active clinical cases и их IDs.
+- Medical truth, результаты исследований и clinical texts действующего runtime.
+- Generator randomness, seed contract и уже persisted generated day.
+- Save schema и существующие saves; ключи current/legacy-v1/tier-01-v2.
+- Runtime time, queue, economy, reputation и campaign rules.
+- Semantic crosswalk 30 case ID → 215 variants.
+- Medical `.39`, operational `.1/.2/.3`, P5 `.1`, P8 `.1` и их provenance.
+- Existing clinic design и все tracked файлы `art/runtime-v2`.
+- User-owned untracked `art/`, raw `handoff/`, ZIPs и extracted author workdirs.
+- Secretary/receptionist не добавлен в live scene.
+- Автоматическая policy того, кто и когда делает handoff: реализован только
   безопасный explicit primitive.
 
-## Известные риски и блокеры
+## Известные риски и обязательные следующие gates
 
-1. Review-validator с нулём ошибок доказывает source integrity, но не veterinary
-   correctness и не production eligibility.
-2. 39 расхождений `coreCapabilities` между family registry и family files нельзя
-   разрешить автоматически.
-3. Из 354 ссылок master medical data 352 не имеют утверждённого точного P3
-   research/capability mapping; activation policy поэтому остаётся false.
-4. P4 не имеет полного approved behavior/temperament/low-stress/cue/source
-   identity catalog и crosswalk.
-5. P5 не имеет production staff/room/task/duration/requirement/policy catalog.
-6. P6 не имеет approved balance, reputation, inventory, assets, maintenance и
-   recovery catalogs/mappings.
-7. P7 не имеет approved goals, events, specialization, ending, recovery и
-   campaign-axis mappings.
-8. Полная P9 state visualization не может корректно отображать отсутствующие
-   operational/economy/campaign states; performance и accessibility budgets не
-   утверждены.
-9. Текущий technical core не является доказательством balance, reachability или
-   fun полного 30-дневного production campaign.
-10. P3 не имеет утверждённых criticality/contact, exact due-time, external
-    scheduling и referral provider/outcome policies; технический lifecycle не
-    должен выводить их из диагноза или текста результата.
-11. Реалистичный P4 identity history уже превышает preferred save-size budget
-    1.5 MiB, хотя остаётся ниже hard 2 MiB; новые большие payload требуют
-    отдельного size-budget решения.
-12. P7 `catalogResolver` является внешней trust boundary. Resolver, который сам
-    объявляет произвольные items `approved`, нельзя считать production authority.
-13. P0 был принят владельцем в task thread, но полный standalone baseline report
-    не сохранён в репозитории; original remote/worktree state задним числом
-    доказать как fresh check невозможно.
-
-## Что требуется для продолжения
-
-Полную P10-приёмку можно повторить после получения versioned, машиночитаемых и
-утверждённых входов:
-
-1. `approved` отдельно для каждого активируемого family, variant и presentation;
-2. собственные versions/status/eligibility для 215 variants и 645 presentations;
-3. единый исправленный capability mapping и решение по 39 registry/family
-   расхождениям;
-4. точный crosswalk или утверждённый новый namespace;
-5. восемь activation manifests с migration/rollback fixtures;
-6. production catalogs/mappings P3, P4, P5, P6 и P7;
-7. operational view-model/cue/alias contracts и разрешение возобновить P9;
-8. acceptance thresholds для 30-day balance/reachability, performance и
-   accessibility.
-
-После этого каждый medical package выпускается отдельным activation-коммитом с
-validator, generator smoke, save/reload проверкой и только затем участвует в
-production P6/P7/P9/P10 acceptance.
+1. Внешний veterinary reviewer должен принять точные versions каждой
+   активируемой family/variant/presentation; family approval не наследуется
+   автоматически дочерними объектами.
+2. После исправления P5 author source необходимо повторно проверить 10 templates
+   и 15 predicates, затем повторить P5 и P10 gates.
+3. Три P3 research task не используются ни одной presentation:
+   `gi_abdominal_palpation`,
+   `parasite_risk_and_prevention_history`,
+   `vestibular_owner_home_environment_and_emergency_red_flag_plan`.
+4. Два dynamic urgency resolver ID остаются fail closed до внешнего
+   state-to-band policy; host не придумывает этот mapping.
+5. Product owner должен отдельно принять staffing/fatigue, P6 economy balance,
+   P7 campaign semantics и P9 visual direction.
+6. P9 остаётся explicit review harness. Для ordinary live integration нужен
+   отдельный save schema version/migration plan и activation slice.
+7. Для 1 room и 13 equipment resources нет отдельного base art; 8 rooms,
+   26 equipment и 10 staff честно представлены DOM fallback/roster state.
+8. Existing live scene сохраняет прежнюю minimum width 760 px. Mobile review
+   control больше не пересекает HUD, но это не означает production mobile UX
+   acceptance.
+9. Ни один технический PASS этого отчёта не разрешает medical production pool.
 
 ## Rollback
 
-- Этот отчёт не меняет runtime; его rollback — revert report-коммита.
-- `modular-v2` остаётся opt-in. Отключение flag мгновенно возвращает classic
-  renderer без миграции сохранения; asset failure уже имеет tested fallback.
-- Docker rollback pin: `vetgeme-web:b973f94712d4` для проверенного technical
-  HEAD; существующий контейнер пользователя на 5174 не изменён.
-- Code rollback `b973f94` технически возможен до появления новых migrated saves,
-  но не рекомендуется: он вернёт доказанный per-day routing migration bug.
-  Migration backups сохраняют точный исходник, если совместимая миграция не
-  проходит.
-- Master medical activation rollback не требуется: ни одно семейство не было
-  активировано.
+- Все поздние authoring packages зарегистрированы отдельными versioned inputs;
+  rollback выполняется выбором прежней версии/удалением отдельного integration
+  commit, без изменения immutable source прошлых версий.
+- Ordinary runtime не зависит от P9 review surface.
+- Production pool остаётся 0, поэтому rollback review-only inputs не требует
+  миграции активных 39-family campaigns.
+- Current/legacy-v1/tier-01-v2 сохраняют раздельные namespaces.
+
+## Финальный вердикт
+
+**PASS**: техническая, reproducible, fail-closed review-only интеграция всего
+переданного пакета и P0-R–P10 primitives.
+
+**BLOCKED**: production activation master medical/operational/visual pool до
+исправления P5 author P1, внешнего veterinary approval, product-owner gates,
+activation manifest и отдельной live migration/acceptance процедуры.
