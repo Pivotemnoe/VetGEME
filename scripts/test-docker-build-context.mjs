@@ -55,6 +55,29 @@ try {
   );
   assert.equal(retiredSchemaOne.contextSha256, clean.contextSha256);
 
+  await mkdir(
+    path.join(fixture, "content", "review-inputs", "medical-authoring", "source"),
+    { recursive: true },
+  );
+  await writeFile(
+    path.join(
+      fixture,
+      "content",
+      "review-inputs",
+      "medical-authoring",
+      "source",
+      "MANIFEST.json",
+    ),
+    "{\"reviewOnly\":true}\n",
+  );
+  const reviewOnlyInput = await collectDockerBuildProvenance(fixture);
+  assert.equal(
+    reviewOnlyInput.dirty,
+    false,
+    "review-only medical authoring input polluted production Docker provenance",
+  );
+  assert.equal(reviewOnlyInput.contextSha256, clean.contextSha256);
+
   await writeFile(
     path.join(fixture, "content/system-packs/vetgeme-master-2026-07-14/not-registered.json"),
     "{\"notRegistered\":true}\n",
@@ -104,6 +127,7 @@ try {
     userArtExcluded: true,
     retiredTierContentExcluded: true,
     retiredSchemaOneExcluded: true,
+    reviewOnlyMedicalInputExcluded: true,
     unregisteredSystemFileExcluded: true,
   }, null, 2));
 } finally {

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "registryId": "vetgeme-review-input-registry",
+  "registryVersion": "2026.07.16.1",
+  "reviewInputs": [
+    {
+      "reviewInputId": "vetgeme-medical-production-authoring",
+      "reviewInputVersion": "2026.07.16.39",
+      "kind": "medical_authoring",
+      "packageId": "vetgeme-medical-production-authoring",
+      "packageVersion": "2026.07.16.39",
+      "root": "content/review-inputs/vetgeme-medical-production-authoring-2026.07.16.39",
+      "sourceRoot": "source",
+      "manifestPath": "source/MANIFEST.json",
+      "provenancePath": "provenance.json",
+      "status": "blocked_pending_external_veterinary_review",
+      "veterinaryReviewStatus": "external_veterinary_review_pending",
+      "reviewOnly": true,
+      "productionEligible": false,
+      "generatorEligible": false,
+      "allowCrosswalk": false,
+      "expectedCounts": {
+        "families": 39,
+        "variants": 215,
+        "presentations": 645,
+        "productionPool": 0,
+        "sourceFiles": 85,
+        "sourceBytes": 3194211,
+        "capabilities": 447
+      },
+      "sourceIntegrity": {
+        "provenanceSha256": "207b901e1a2c0190fd366d5e135f4c43791b1922cc08031d1554fe21d6a36e87",
+        "aggregateSha256": "e3341e533e09a6f00d09180f7b78808cdf1867406492a27cd17f9dca11bc626c",
+        "archiveSha256": "54a6cec64406dd4e326aa5ff089cbd3878ef7cd17a4bb7ed01123c7a93da822c"
+      },
+      "capabilityRegistry": {
+        "registryId": "vetgeme-clinic-capabilities",
+        "registryVersion": "2026.07.14.38",
+        "path": "content/system-packs/vetgeme-master-2026-07-14/capability-registry.json",
+        "sha256": "16ff64c015a8edb302c15289540a4ed760cfc356d832bca31094f992b1da3c81"
+      }
+    }
+  ]
+}

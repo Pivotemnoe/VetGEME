@@ -77,6 +77,15 @@ async function waitForReady(page) {
     runtimeMode: window.__PET_CLINIC_RUNTIME__?.mode || null,
     hasCatalog: Boolean(window.__PET_CLINIC_RUNTIME__?.catalog),
     hasGenerator: Boolean(window.__PET_CLINIC_RUNTIME__?.generator),
+    catalogCaseCount: window.__PET_CLINIC_RUNTIME__?.catalog?.cases?.length ?? null,
+    medicalLoadContext: window.__PET_CLINIC_RUNTIME__?.catalog?.medicalCatalog?.loadContext ?? null,
+    medicalProductionPool: window.__PET_CLINIC_RUNTIME__?.catalog?.medicalCatalog
+      ? {
+          families: window.__PET_CLINIC_RUNTIME__.catalog.medicalCatalog.productionPool?.families?.length ?? null,
+          variants: window.__PET_CLINIC_RUNTIME__.catalog.medicalCatalog.productionPool?.variants?.length ?? null,
+          presentations: window.__PET_CLINIC_RUNTIME__.catalog.medicalCatalog.productionPool?.presentations?.length ?? null,
+        }
+      : null,
     initializationError: window.__PET_CLINIC_RUNTIME__?.initializationError?.message || null,
     appStatus: document.documentElement.dataset.appStatus,
     shellBusy: document.querySelector(".game-shell")?.getAttribute("aria-busy"),
@@ -93,6 +102,21 @@ function assertReady(evidence, mode) {
   assert.equal(evidence.saveKey, mode.saveKey, `${mode.id}: save namespace changed`);
   assert.equal(evidence.hasCatalog, mode.catalog, `${mode.id}: unexpected catalog readiness`);
   assert.equal(evidence.hasGenerator, mode.generator, `${mode.id}: unexpected generator readiness`);
+  assert.equal(
+    evidence.catalogCaseCount,
+    mode.catalog ? 30 : null,
+    `${mode.id}: active compatibility case count changed`,
+  );
+  assert.equal(
+    evidence.medicalLoadContext,
+    mode.catalog ? "review" : null,
+    `${mode.id}: medical load context changed`,
+  );
+  assert.deepEqual(
+    evidence.medicalProductionPool,
+    mode.catalog ? { families: 0, variants: 0, presentations: 0 } : null,
+    `${mode.id}: pending medical content entered the production pool`,
+  );
   assert.equal(evidence.initializationError, null, `${mode.id}: generator initialization failed`);
   assert.equal(evidence.appStatus, "ready", `${mode.id}: HTML is not ready`);
   assert.equal(evidence.shellBusy, "false", `${mode.id}: shell is still busy`);
@@ -144,6 +168,14 @@ async function testMode(browser, mode) {
     assert.deepEqual(cspViolations, [], `${mode.id}: CSP violations detected`);
     assert.deepEqual(observed.issues, [], `${mode.id}: browser issues detected:\n${observed.issues.join("\n")}`);
     assert.ok(observed.requests.length > 0, `${mode.id}: no browser requests were observed`);
+    const reviewInputRequests = observed.requests.filter((request) => (
+      new URL(request.url).pathname.startsWith("/content/review-inputs/")
+    ));
+    assert.deepEqual(
+      reviewInputRequests,
+      [],
+      `${mode.id}: review-only authoring input was requested by the browser runtime`,
+    );
     for (const request of observed.requests) {
       assert.ok(["GET", "HEAD"].includes(request.method), `${mode.id}: ${request.method} ${request.url}`);
       const requestUrl = new URL(request.url);
@@ -181,6 +213,7 @@ async function testMode(browser, mode) {
       sentinel: { key: sentinelKey, value: persisted },
       requestCount: observed.requests.length,
       requestMethods: [...new Set(observed.requests.map((request) => request.method))].sort(),
+      reviewInputRequestCount: reviewInputRequests.length,
       screenshot,
     };
   } finally {

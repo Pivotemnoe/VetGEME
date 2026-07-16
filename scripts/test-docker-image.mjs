@@ -103,6 +103,7 @@ async function inspectDockerRuntime() {
   );
   for (const forbiddenPrefix of [
     "content/clinical/",
+    "content/review-inputs/",
     "legacy/content/",
     "tier-01-v2/content/",
     "content/packs/tier-01-v2/future/",

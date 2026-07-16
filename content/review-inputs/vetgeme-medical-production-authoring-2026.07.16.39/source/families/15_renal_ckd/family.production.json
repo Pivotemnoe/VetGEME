@@ -1,0 +1,3509 @@
+{
+  "schemaVersion": 1,
+  "familyId": "renal_ckd",
+  "familyVersion": "2026.07.15.1",
+  "title": "Хроническая болезнь почек",
+  "campaignPhase": "chapter_4_to_post_chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "diagnosisBeforeStage": "IRIS stage применяется только после диагностики хронической почечной патологии",
+    "stabilityRule": "стадируется стабильный адекватно гидратированный пациент; acute, pre-renal и post-renal компоненты отделяются",
+    "substageRule": "stage, persistent renal proteinuria substage и blood-pressure/target-organ substage хранятся отдельно с treatment-state",
+    "markerRule": "creatinine интерпретируется с muscle mass, fasted state и методом; discordant SDMA не усредняется",
+    "snapshotRule": "новая стадия не переписывает старые лабораторные и treatment snapshots",
+    "protocolRule": "числовые границы, препараты, дозы, диетический состав, infusion и biopsy technique подключаются только версионированным reviewed protocol"
+  },
+  "coreCapabilities": [
+    "general_exam",
+    "hydration_assessment",
+    "body_weight",
+    "body_condition_score",
+    "muscle_condition_score",
+    "biochemistry",
+    "urinalysis",
+    "blood_pressure",
+    "longitudinal_care"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "renal_function_or_referral",
+      "anyOf": [
+        "biochemistry",
+        "sdma_external",
+        "renal_referral",
+        "safe_referral"
+      ],
+      "purpose": "stable_creatinine_sdma_assessment"
+    },
+    {
+      "id": "urine_upc_or_referral",
+      "anyOf": [
+        "urinalysis",
+        "urine_protein_creatinine_ratio_external",
+        "urine_culture_external",
+        "renal_referral",
+        "safe_referral"
+      ],
+      "purpose": "urine_concentration_sediment_culture_and_persistent_renal_proteinuria"
+    },
+    {
+      "id": "blood_pressure_target_route",
+      "anyOf": [
+        "blood_pressure",
+        "target_organ_damage_exam",
+        "ophthalmoscopy",
+        "neurologic_exam",
+        "safe_referral"
+      ],
+      "purpose": "standardized_series_and_target_organ_damage"
+    },
+    {
+      "id": "renal_imaging_or_referral",
+      "anyOf": [
+        "ultrasound",
+        "renal_imaging_external",
+        "renal_referral",
+        "safe_referral"
+      ],
+      "purpose": "structural_kidney_urinary_and_obstruction_question"
+    },
+    {
+      "id": "renal_complication_lab_or_referral",
+      "anyOf": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "blood_gas_external",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "anemia_phosphorus_potassium_calcium_and_acid_base_context"
+    },
+    {
+      "id": "acute_on_chronic_hospital_route",
+      "anyOf": [
+        "hospital_referral",
+        "intensive_care_referral",
+        "renal_referral",
+        "safe_referral"
+      ],
+      "purpose": "shock_oliguria_anuria_uremia_or_rapid_baseline_change"
+    },
+    {
+      "id": "protein_loss_specialist_route",
+      "anyOf": [
+        "coagulation",
+        "renal_referral",
+        "renal_biopsy_referral",
+        "infectious_disease_referral",
+        "safe_referral"
+      ],
+      "purpose": "hypoalbuminemia_edema_thrombotic_risk_and_trigger"
+    },
+    {
+      "id": "renal_longitudinal_qol_route",
+      "anyOf": [
+        "renal_home_monitoring",
+        "renal_quality_of_life_assessment",
+        "longitudinal_care",
+        "safe_referral"
+      ],
+      "purpose": "weight_appetite_stage_substage_and_quality_of_life_followup"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "renal_chronicity_and_baseline_timeline",
+      "requires": [
+        "longitudinal_care"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "renal_hydration_weight_and_muscle_assessment",
+      "requires": [
+        "hydration_assessment",
+        "body_weight",
+        "body_condition_score",
+        "muscle_condition_score"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "renal_creatinine_sdma_and_stability",
+      "requires": [
+        "biochemistry",
+        "sdma_external"
+      ],
+      "availability": "local_and_external_chapter_4",
+      "fallback": "renal_referral"
+    },
+    {
+      "researchId": "renal_urinalysis_specific_gravity_and_culture",
+      "requires": [
+        "urinalysis",
+        "urine_culture_external"
+      ],
+      "availability": "local_and_external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "renal_upc_and_proteinuria_persistence",
+      "requires": [
+        "urine_protein_creatinine_ratio_external",
+        "longitudinal_care"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "renal_referral"
+    },
+    {
+      "researchId": "renal_blood_pressure_and_target_organ_exam",
+      "requires": [
+        "blood_pressure",
+        "target_organ_damage_exam"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "renal_cbc_biochemistry_electrolytes_phosphorus",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "blood_gas_external"
+      ],
+      "availability": "local_and_external_chapter_4",
+      "fallback": "hospital_referral"
+    },
+    {
+      "researchId": "renal_imaging_and_structure",
+      "requires": [
+        "renal_imaging_external"
+      ],
+      "availability": "external_chapter_4_or_local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "renal_serial_stage_substage_and_quality_of_life",
+      "requires": [
+        "renal_home_monitoring",
+        "renal_quality_of_life_assessment",
+        "longitudinal_care"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "pupd_chronicity",
+      "text": "Когда изменились жажда и мочеиспускание: недели/месяцы или внезапно?"
+    },
+    {
+      "id": "weight_muscle_trend",
+      "text": "Как менялись масса и мышечная кондиция?"
+    },
+    {
+      "id": "appetite_nausea_vomiting",
+      "text": "Какой аппетит, есть ли тошнота или рвота?"
+    },
+    {
+      "id": "volume_loss_event",
+      "text": "Были ли обезвоживание, жара, диарея, анестезия или плохое питьё?"
+    },
+    {
+      "id": "prior_renal_snapshots",
+      "text": "Есть ли датированные creatinine, SDMA, моча, давление или imaging?"
+    },
+    {
+      "id": "urine_sample_sediment",
+      "text": "Как собрали мочу и был ли активный осадок, кровь или инфекция?"
+    },
+    {
+      "id": "blood_pressure_context",
+      "text": "Как, сколько раз и в какой обстановке измеряли давление?"
+    },
+    {
+      "id": "target_organ_signs",
+      "text": "Есть ли внезапное изменение зрения, дезориентация, судороги или слабость?"
+    },
+    {
+      "id": "medication_nephrotoxin_list",
+      "text": "Какие лекарства и добавки получает пациент и когда?"
+    },
+    {
+      "id": "renal_comorbidity",
+      "text": "Есть ли диабет, гипертиреоз, инфекция, камни, воспаление или опухоль?"
+    },
+    {
+      "id": "actual_diet_intake",
+      "text": "Что и сколько пациент фактически ест?"
+    },
+    {
+      "id": "home_monitoring_capacity",
+      "text": "Что владелец реально может отслеживать дома: воду, еду, массу, мочу, хорошие и плохие дни?"
+    },
+    {
+      "id": "urine_output_current",
+      "text": "Какой текущий объём мочи, нет ли олигурии, анурии или затруднения?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "hydration_perfusion_before_azotemia",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "hydration_assessment"
+      ]
+    },
+    {
+      "id": "serial_weight_bcs_mcs",
+      "source": "physical_exam",
+      "requires": [
+        "body_weight",
+        "body_condition_score",
+        "muscle_condition_score"
+      ]
+    },
+    {
+      "id": "kidney_bladder_abdominal_exam",
+      "source": "physical_exam",
+      "requires": [
+        "abdominal_palpation"
+      ]
+    },
+    {
+      "id": "oral_gi_uremic_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "standardized_bp_series",
+      "source": "measurement",
+      "requires": [
+        "blood_pressure",
+        "trained_blood_pressure"
+      ]
+    },
+    {
+      "id": "retinal_neurologic_target_exam",
+      "source": "physical_exam",
+      "requires": [
+        "target_organ_damage_exam"
+      ]
+    },
+    {
+      "id": "dated_stable_creatinine_sdma",
+      "source": "diagnostic_test",
+      "requires": [
+        "biochemistry",
+        "sdma_external"
+      ]
+    },
+    {
+      "id": "complete_urine_sediment_culture_context",
+      "source": "diagnostic_test",
+      "requires": [
+        "urinalysis",
+        "urine_culture_external"
+      ]
+    },
+    {
+      "id": "serial_upc_with_inactive_sediment",
+      "source": "diagnostic_test",
+      "requires": [
+        "urine_protein_creatinine_ratio_external",
+        "longitudinal_care"
+      ]
+    },
+    {
+      "id": "renal_complication_panel",
+      "source": "diagnostic_test",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "electrolytes"
+      ]
+    },
+    {
+      "id": "renal_structure_imaging_review",
+      "source": "diagnostic_test",
+      "requires": [
+        "renal_imaging_external"
+      ]
+    },
+    {
+      "id": "same_episode_stage_substage_qol_review",
+      "source": "follow_up",
+      "requires": [
+        "renal_home_monitoring",
+        "renal_quality_of_life_assessment",
+        "longitudinal_care"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "early_nonazotemic_ckd_plan",
+      "fullPlan": [
+        "confirm_persistent_renal_abnormality",
+        "exclude_prerenal_postrenal_and_extra_renal_causes",
+        "document_hydration_weight_and_muscle",
+        "stable_creatinine_sdma_urine_bp_upc_context",
+        "structural_imaging_if_indicated",
+        "assign_reviewed_stage_and_separate_substages",
+        "longitudinal_monitoring"
+      ],
+      "stagedPlan": [
+        "confirm_persistence",
+        "localize_renal_origin",
+        "stage_and_substage",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "normal_creatinine_does_not_exclude",
+        "one_dilute_sample_or_dipstick_not_enough",
+        "hydration_and_muscle_documented",
+        "scheduled_repeat"
+      ],
+      "stabilizeAndRefer": [
+        "refer_if_structure_obstruction_or_progressive_marker_unclear",
+        "safe_monitoring_if_imaging_deferred"
+      ],
+      "unsafeOrInadequate": [
+        "single_sdma_or_dilute_urine_confirms",
+        "incidental_cyst_equals_ckd",
+        "protein_dipstick_equals_renal_upc",
+        "numeric_threshold_hardcoded"
+      ]
+    },
+    {
+      "id": "stable_mild_ckd_plan",
+      "fullPlan": [
+        "confirm_chronicity_and_stable_hydrated_function",
+        "stage_from_current_reviewed_table",
+        "separate_upc_and_bp_substages",
+        "baseline_urine_and_targeted_culture",
+        "nutrition_weight_and_home_monitoring",
+        "dated_lab_and_clinical_followup"
+      ],
+      "stagedPlan": [
+        "confirm_stability",
+        "stage_substage",
+        "nutrition_monitor",
+        "repeat"
+      ],
+      "minimumSafePlan": [
+        "clinically_well_does_not_mean_normal_kidneys",
+        "bp_and_upc_not_omitted",
+        "muscle_mass_interpretation",
+        "red_flag_return"
+      ],
+      "stabilizeAndRefer": [
+        "renal_referral_for_discordant_or_progressive_state",
+        "safe_external_labs"
+      ],
+      "unsafeOrInadequate": [
+        "stage_before_hydration",
+        "average_creatinine_sdma",
+        "diet_replaces_substage_monitoring",
+        "rewrite_prior_stage"
+      ]
+    },
+    {
+      "id": "moderate_symptomatic_ckd_plan",
+      "fullPlan": [
+        "separate_stable_ckd_from_acute_component",
+        "assess_hydration_nausea_oral_gi_and_comorbidity",
+        "complication_cbc_chem_electrolyte_acid_base",
+        "reviewed_nutrition_and_symptom_protocol",
+        "stage_and_substage_after_stability",
+        "short_weight_appetite_lab_followup"
+      ],
+      "stagedPlan": [
+        "triage_acute_component",
+        "complication_assessment",
+        "reviewed_support",
+        "restage_followup"
+      ],
+      "minimumSafePlan": [
+        "symptoms_not_automatically_uremic",
+        "dehydrated_peak_not_baseline_stage",
+        "short_recheck",
+        "hospital_route_if_worsening"
+      ],
+      "stabilizeAndRefer": [
+        "hospital_or_renal_referral_if_persistent_vomiting_or_perfusion_risk",
+        "support_before_restaging"
+      ],
+      "unsafeOrInadequate": [
+        "restage_on_dehydrated_peak",
+        "assume_all_anemia_renal",
+        "generic_diet_only",
+        "delay_acute_on_chronic_route"
+      ]
+    },
+    {
+      "id": "advanced_acute_on_chronic_plan",
+      "fullPlan": [
+        "immediate_perfusion_output_obstruction_and_mentation_triage",
+        "compare_documented_baseline",
+        "serial_electrolyte_acid_base_and_renal_values",
+        "search_reversible_volume_infection_obstruction_toxin_factor",
+        "hospital_or_renal_referral",
+        "new_baseline_after_stabilization",
+        "serial_quality_of_life_and_owner_choice"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "acute_on_chronic_differential",
+        "hospital_monitoring",
+        "new_baseline_and_qol"
+      ],
+      "minimumSafePlan": [
+        "no_routine_wait_for_oliguria_anuria_uremia",
+        "old_snapshot_preserved",
+        "owner_choice_without_hidden_penalty",
+        "return_or_referral"
+      ],
+      "stabilizeAndRefer": [
+        "intensive_care_or_renal_referral",
+        "safe_support_without_delayed_staging"
+      ],
+      "unsafeOrInadequate": [
+        "stage_before_stabilization",
+        "ignore_obstruction_or_toxin",
+        "expensive_referral_only_moral_choice",
+        "lab_number_only_qol"
+      ]
+    },
+    {
+      "id": "proteinuric_glomerular_plan",
+      "fullPlan": [
+        "confirm_persistent_proteinuria",
+        "exclude_prerenal_and_postrenal_sources",
+        "serial_upc_in_inactive_sediment",
+        "bp_albumin_edema_and_thrombotic_context",
+        "regional_trigger_workup_by_hypothesis",
+        "reviewed_antiproteinuric_and_risk_plan",
+        "specialist_biopsy_only_if_actionable",
+        "serial_upc_stage_and_qol"
+      ],
+      "stagedPlan": [
+        "localize_and_repeat",
+        "risk_assessment",
+        "trigger_workup",
+        "specialist_or_monitor"
+      ],
+      "minimumSafePlan": [
+        "dipstick_not_upc",
+        "active_sediment_not_renal_substage",
+        "hypoalbuminemia_alternatives",
+        "biopsy_refusal_keeps_safe_plan"
+      ],
+      "stabilizeAndRefer": [
+        "urgent_route_for_edema_effusion_or_thrombotic_signs",
+        "renal_specialist_route"
+      ],
+      "unsafeOrInadequate": [
+        "one_upc_defines_etiology",
+        "automatic_glomerular_diagnosis",
+        "universal_infectious_panel",
+        "generator_selects_antithrombotic_or_biopsy"
+      ]
+    },
+    {
+      "id": "hypertensive_ckd_plan",
+      "fullPlan": [
+        "standardized_low_stress_bp_series",
+        "document_current_ckd_stage_and_bp_substage",
+        "target_organ_eye_neuro_cardiac_exam",
+        "reviewed_hypertension_protocol",
+        "same_method_timed_recheck",
+        "treatment_state_preserves_baseline"
+      ],
+      "stagedPlan": [
+        "series_and_context",
+        "target_organ_screen",
+        "reviewed_plan",
+        "serial_treatment_state"
+      ],
+      "minimumSafePlan": [
+        "one_stress_value_not_persistent_hypertension",
+        "target_damage_overrides_long_confirmation",
+        "same_measurement_protocol",
+        "vision_or_neuro_emergency_route"
+      ],
+      "stabilizeAndRefer": [
+        "urgent_ophthalmology_renal_or_hospital_route_for_target_damage",
+        "do_not_delay_for_weeks_of_series"
+      ],
+      "unsafeOrInadequate": [
+        "creatinine_predicts_bp",
+        "renderer_invents_retinal_result",
+        "rapid_drop_equals_victory",
+        "overwrite_untreated_baseline"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "renal_ckd_early_nonazotemic",
+      "version": "2026.07.15.1",
+      "title": "Ранняя неазотемическая хроническая болезнь почек",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Хроническая почечная аномалия может быть подтверждена стойким renal concentrating defect, renal proteinuria, persistent functional marker or structural disease даже при reference creatinine.",
+      "exclusions": [
+        "single_dilute_urine",
+        "transient_sdma_change",
+        "active_sediment_postrenal_proteinuria",
+        "incidental_imaging_variant_without_corroboration"
+      ],
+      "planBundleId": "early_nonazotemic_ckd_plan",
+      "sourceIds": [
+        "iris_ckd_staging_current",
+        "iris_early_diagnosis",
+        "iris_marker_utility"
+      ],
+      "presentations": [
+        {
+          "id": "p1_persistent_concentrating_defect",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "routine_follow_up",
+          "workload": 1.5,
+          "complaint": "Несколько анализов показывают несоответствующе разбавленную мочу, хотя креатинин ещё в референсе.",
+          "historyAnswers": {
+            "pupd_chronicity": "Persistent or absent PU/PD authored.",
+            "prior_renal_snapshots": "Multiple dated urine snapshots.",
+            "volume_loss_event": "No current dehydration explaining concentration.",
+            "renal_comorbidity": "Endocrine, diet, water and medication causes assessed.",
+            "weight_muscle_trend": "Stable baseline documented."
+          },
+          "examFindings": [
+            {
+              "factId": "persistent_inappropriate_concentrating_defect",
+              "source": "longitudinal_record",
+              "finding": "Repeated appropriate samples show persistent renal-compatible concentrating defect."
+            },
+            {
+              "factId": "extra_renal_dilution_causes_excluded",
+              "source": "clinical_reasoning",
+              "finding": "Water, drugs, endocrine and pre/postrenal causes are assessed before CKD label."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "persistent_inappropriate_concentrating_defect",
+              "discoveryPaths": [
+                "prior_renal_snapshots",
+                "pupd_chronicity",
+                "complete_urine_sediment_culture_context"
+              ]
+            },
+            {
+              "factId": "extra_renal_dilution_causes_excluded",
+              "discoveryPaths": [
+                "renal_comorbidity",
+                "medication_nephrotoxin_list",
+                "hydration_perfusion_before_azotemia"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_urinalysis_specific_gravity_and_culture",
+              "classification": "required_serial",
+              "result": "Authored persistent concentration and sediment context."
+            },
+            {
+              "id": "renal_creatinine_sdma_and_stability",
+              "classification": "recommended_stable_repeat",
+              "result": "Reference creatinine with authored SDMA/trend."
+            },
+            {
+              "id": "renal_blood_pressure_and_target_organ_exam",
+              "classification": "required_substage_context",
+              "result": "Authored BP series."
+            },
+            {
+              "id": "renal_imaging_and_structure",
+              "classification": "recommended_if_persistence_unexplained",
+              "result": null
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "persistent_inappropriate_concentrating_defect",
+              "extra_renal_dilution_causes_excluded"
+            ],
+            "confirmedDiagnosisRequires": [
+              "persistent_renal_abnormality_with_extra_renal_causes_excluded"
+            ],
+            "dangerStates": [
+              "diabetes",
+              "hyperthyroidism",
+              "infection",
+              "postrenal_obstruction"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "urinalysis",
+              "body_weight",
+              "blood_pressure",
+              "longitudinal_care"
+            ],
+            "external": [
+              "sdma_external",
+              "renal_imaging_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "renal_function_or_referral",
+              "renal_imaging_or_referral",
+              "blood_pressure_target_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "early_nonazotemic_ckd_plan",
+          "followUp": {
+            "timing": "authored stable repeat and early CKD trend",
+            "required": true,
+            "targets": [
+              "urine_concentration",
+              "creatinine",
+              "sdma",
+              "weight",
+              "bp",
+              "pupd"
+            ]
+          },
+          "outcomes": {
+            "safe": "Early CKD remains possible without azotemia but requires persistence.",
+            "unsafe": "One dilute sample or normal creatinine decides the case."
+          },
+          "ownerCommunication": [
+            "Explain why repeat and exclusion are needed before staging."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "low_stress_sampling_or_external_route",
+            "ownerModifiers": [
+              "screening_anxiety",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_persistent_renal_proteinuria_or_sdma_signal",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_routine",
+          "workload": 1.75,
+          "complaint": "Креатинин нормален, но SDMA или UPC остаются повышенными в повторных подходящих образцах.",
+          "historyAnswers": {
+            "prior_renal_snapshots": "Persistent marker sequence documented.",
+            "urine_sample_sediment": "Inactive sediment and collection method documented.",
+            "renal_comorbidity": "Prerenal protein and systemic causes assessed.",
+            "blood_pressure_context": "Standardized series available.",
+            "weight_muscle_trend": "Muscle mass documented."
+          },
+          "examFindings": [
+            {
+              "factId": "persistent_function_or_renal_protein_signal",
+              "source": "longitudinal_record",
+              "finding": "Persistent SDMA and/or renal-origin UPC supports early kidney disease."
+            },
+            {
+              "factId": "protein_origin_and_marker_specificity_reviewed",
+              "source": "clinical_reasoning",
+              "finding": "Active sediment, infection, blood, systemic protein and marker limitations are excluded/flagged."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "persistent_function_or_renal_protein_signal",
+              "discoveryPaths": [
+                "prior_renal_snapshots",
+                "serial_upc_with_inactive_sediment",
+                "dated_stable_creatinine_sdma"
+              ]
+            },
+            {
+              "factId": "protein_origin_and_marker_specificity_reviewed",
+              "discoveryPaths": [
+                "urine_sample_sediment",
+                "renal_comorbidity",
+                "complete_urine_sediment_culture_context"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_upc_and_proteinuria_persistence",
+              "classification": "required_if_protein_signal",
+              "result": "Authored serial UPC with inactive sediment."
+            },
+            {
+              "id": "renal_creatinine_sdma_and_stability",
+              "classification": "required_serial",
+              "result": "Authored stable discordant or concordant marker trend."
+            },
+            {
+              "id": "renal_blood_pressure_and_target_organ_exam",
+              "classification": "required",
+              "result": "Authored BP substage context."
+            },
+            {
+              "id": "renal_imaging_and_structure",
+              "classification": "recommended_corroboration",
+              "result": null
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "persistent_function_or_renal_protein_signal",
+              "protein_origin_and_marker_specificity_reviewed"
+            ],
+            "confirmedDiagnosisRequires": [
+              "persistent_renal_origin_abnormality_in_stable_patient"
+            ],
+            "dangerStates": [
+              "glomerular_protein_loss",
+              "active_uti",
+              "hypertension"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "urinalysis",
+              "blood_pressure",
+              "longitudinal_care"
+            ],
+            "external": [
+              "sdma_external",
+              "urine_protein_creatinine_ratio_external",
+              "urine_culture_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "renal_function_or_referral",
+              "urine_upc_or_referral",
+              "blood_pressure_target_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "early_nonazotemic_ckd_plan",
+          "followUp": {
+            "timing": "serial marker and substage checkpoint",
+            "required": true,
+            "targets": [
+              "sdma",
+              "creatinine",
+              "upc",
+              "sediment",
+              "bp",
+              "weight"
+            ]
+          },
+          "outcomes": {
+            "safe": "Marker signal is corroborated and localized.",
+            "unsafe": "One SDMA or dipstick becomes a complete CKD/glomerular diagnosis."
+          },
+          "ownerCommunication": [
+            "Explain why protein source matters before kidney labeling."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "staged_external_tests_or_referral",
+            "ownerModifiers": [
+              "budget_limited",
+              "wants_stage_now"
+            ]
+          }
+        },
+        {
+          "id": "p3_structural_renal_abnormality_on_imaging",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "routine_priority",
+          "workload": 1.5,
+          "complaint": "Визуализация показывает хронически совместимое изменение почек, хотя функция ещё сохранена.",
+          "historyAnswers": {
+            "prior_renal_snapshots": "Imaging report and date stored.",
+            "pupd_chronicity": "Clinical signs authored separately.",
+            "weight_muscle_trend": "Baseline documented.",
+            "renal_comorbidity": "Congenital, inflammatory, obstructive and incidental possibilities assessed.",
+            "urine_output_current": "Output and obstruction red flags checked."
+          },
+          "examFindings": [
+            {
+              "factId": "structural_abnormality_can_support_nonazotemic_ckd",
+              "source": "imaging_report",
+              "finding": "Authored bilateral/renal structural pattern supports chronic disease."
+            },
+            {
+              "factId": "incidental_structure_requires_correlation",
+              "source": "clinical_reasoning",
+              "finding": "A solitary cyst or anatomic variant does not automatically create CKD."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "structural_abnormality_can_support_nonazotemic_ckd",
+              "discoveryPaths": [
+                "prior_renal_snapshots",
+                "renal_structure_imaging_review",
+                "kidney_bladder_abdominal_exam"
+              ]
+            },
+            {
+              "factId": "incidental_structure_requires_correlation",
+              "discoveryPaths": [
+                "renal_comorbidity",
+                "dated_stable_creatinine_sdma",
+                "complete_urine_sediment_culture_context"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_imaging_and_structure",
+              "classification": "required_authored_report",
+              "result": "Authored chronic-compatible or incidental finding."
+            },
+            {
+              "id": "renal_creatinine_sdma_and_stability",
+              "classification": "required_function_context",
+              "result": "Authored preserved/stable function."
+            },
+            {
+              "id": "renal_urinalysis_specific_gravity_and_culture",
+              "classification": "required",
+              "result": "Authored urine context."
+            },
+            {
+              "id": "renal_serial_stage_substage_and_quality_of_life",
+              "classification": "required_followup_baseline",
+              "result": "Baseline created."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "structural_abnormality_can_support_nonazotemic_ckd",
+              "incidental_structure_requires_correlation"
+            ],
+            "confirmedDiagnosisRequires": [
+              "interpreted_chronic_renal_structure_plus_clinical_correlation"
+            ],
+            "dangerStates": [
+              "obstruction",
+              "mass",
+              "infection",
+              "congenital_progressive_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "urinalysis",
+              "longitudinal_care"
+            ],
+            "external": [
+              "renal_imaging_external",
+              "sdma_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "renal_imaging_or_referral",
+              "renal_function_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "early_nonazotemic_ckd_plan",
+          "followUp": {
+            "timing": "authored imaging/function trend",
+            "required": true,
+            "targets": [
+              "structure",
+              "function",
+              "urine",
+              "bp",
+              "growth_or_progression"
+            ]
+          },
+          "outcomes": {
+            "safe": "Imaging is interpreted as evidence, not rendered diagnosis.",
+            "unsafe": "Renderer converts any cyst into CKD."
+          },
+          "ownerCommunication": [
+            "Explain what is structural evidence versus incidental finding."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "juvenile_wiggly"
+            ],
+            "requiredHandlingAlternative": "trained_ultrasound_or_external_referral",
+            "ownerModifiers": [
+              "imaging_anxiety",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "renal_ckd_stable_mild_azotemia",
+      "version": "2026.07.15.1",
+      "title": "Стабильная хроническая болезнь почек с лёгкой азотемией",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Повторяемая renal azotemia or SDMA in an adequately hydrated stable patient with chronic kidney evidence supports staging; apparent wellness does not negate CKD.",
+      "exclusions": [
+        "single_dehydrated_azotemia",
+        "acute_kidney_injury",
+        "postrenal_azotemia",
+        "unconfirmed_chronicity"
+      ],
+      "planBundleId": "stable_mild_ckd_plan",
+      "sourceIds": [
+        "iris_ckd_staging_current",
+        "iris_marker_utility",
+        "merck_renal_dysfunction"
+      ],
+      "presentations": [
+        {
+          "id": "p1_incidental_senior_screening",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "routine_priority",
+          "workload": 1.75,
+          "complaint": "Пожилой пациент чувствует себя обычно, но скрининг и повтор показывают стабильную renal dysfunction.",
+          "historyAnswers": {
+            "prior_renal_snapshots": "Repeated stable results.",
+            "volume_loss_event": "Adequately hydrated and no acute volume loss.",
+            "weight_muscle_trend": "Baseline muscle documented.",
+            "urine_sample_sediment": "Urine concentration/sediment authored.",
+            "blood_pressure_context": "Standard series planned or available."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_hydrated_chronic_function_loss_on_screening",
+              "source": "diagnostic_record",
+              "finding": "Repeated stable renal markers plus urine/chronic evidence."
+            },
+            {
+              "factId": "complete_staging_card_requires_two_substages",
+              "source": "clinical_reasoning",
+              "finding": "UPC and BP/target-organ fields are separately completed or explicitly pending."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stable_hydrated_chronic_function_loss_on_screening",
+              "discoveryPaths": [
+                "prior_renal_snapshots",
+                "hydration_perfusion_before_azotemia",
+                "dated_stable_creatinine_sdma"
+              ]
+            },
+            {
+              "factId": "complete_staging_card_requires_two_substages",
+              "discoveryPaths": [
+                "urine_sample_sediment",
+                "blood_pressure_context",
+                "same_episode_stage_substage_qol_review"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_creatinine_sdma_and_stability",
+              "classification": "required_stable_serial",
+              "result": "Authored reviewed stage evidence."
+            },
+            {
+              "id": "renal_urinalysis_specific_gravity_and_culture",
+              "classification": "required",
+              "result": "Authored urine and culture-if-indicated."
+            },
+            {
+              "id": "renal_upc_and_proteinuria_persistence",
+              "classification": "required_or_pending_reason",
+              "result": "Authored UPC substage or pending flag."
+            },
+            {
+              "id": "renal_blood_pressure_and_target_organ_exam",
+              "classification": "required",
+              "result": "Authored BP substage."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stable_hydrated_chronic_function_loss_on_screening",
+              "complete_staging_card_requires_two_substages"
+            ],
+            "confirmedDiagnosisRequires": [
+              "stable_chronic_renal_disease_and_reviewed_stage"
+            ],
+            "dangerStates": [
+              "hypertension",
+              "proteinuria",
+              "occult_infection"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "body_weight",
+              "biochemistry",
+              "urinalysis",
+              "blood_pressure"
+            ],
+            "external": [
+              "sdma_external",
+              "urine_protein_creatinine_ratio_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "renal_function_or_referral",
+              "urine_upc_or_referral",
+              "blood_pressure_target_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "stable_mild_ckd_plan",
+          "followUp": {
+            "timing": "stage-specific reviewed interval with clinical baseline",
+            "required": true,
+            "targets": [
+              "stage",
+              "upc",
+              "bp",
+              "weight",
+              "appetite",
+              "pupd"
+            ]
+          },
+          "outcomes": {
+            "safe": "Asymptomatic CKD receives complete baseline and proportionate follow-up.",
+            "unsafe": "Eating well is used to declare normal kidneys."
+          },
+          "ownerCommunication": [
+            "Explain stage versus current quality of life."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "frail"
+            ],
+            "requiredHandlingAlternative": "staged_low_stress_measurements",
+            "ownerModifiers": [
+              "screening_surprise",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_pupd_with_stable_stage_pattern",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Жажда и мочеиспускание изменены месяцами, но масса и renal markers относительно стабильны.",
+          "historyAnswers": {
+            "pupd_chronicity": "Chronic months-long pattern.",
+            "prior_renal_snapshots": "Stable repeated stage evidence.",
+            "weight_muscle_trend": "Relatively stable.",
+            "renal_comorbidity": "Diabetes, hyperthyroidism and other PU/PD causes assessed.",
+            "actual_diet_intake": "Actual intake documented."
+          },
+          "examFindings": [
+            {
+              "factId": "chronic_pupd_matches_stable_ckd_context",
+              "source": "clinical_record",
+              "finding": "PU/PD is compatible with stable CKD but not specific."
+            },
+            {
+              "factId": "coexisting_pupd_causes_are_not_erased",
+              "source": "clinical_reasoning",
+              "finding": "Diabetes, hyperthyroidism and other conditions may coexist and remain authored differentials."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "chronic_pupd_matches_stable_ckd_context",
+              "discoveryPaths": [
+                "pupd_chronicity",
+                "prior_renal_snapshots",
+                "dated_stable_creatinine_sdma"
+              ]
+            },
+            {
+              "factId": "coexisting_pupd_causes_are_not_erased",
+              "discoveryPaths": [
+                "renal_comorbidity",
+                "renal_complication_panel",
+                "complete_urine_sediment_culture_context"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_chronicity_and_baseline_timeline",
+              "classification": "required",
+              "result": "Authored stable timeline."
+            },
+            {
+              "id": "renal_creatinine_sdma_and_stability",
+              "classification": "required",
+              "result": "Authored stable stage."
+            },
+            {
+              "id": "renal_cbc_biochemistry_electrolytes_phosphorus",
+              "classification": "baseline_by_stage",
+              "result": "Authored complications or none."
+            },
+            {
+              "id": "renal_serial_stage_substage_and_quality_of_life",
+              "classification": "required",
+              "result": "Clinical and home baseline."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "chronic_pupd_matches_stable_ckd_context",
+              "coexisting_pupd_causes_are_not_erased"
+            ],
+            "confirmedDiagnosisRequires": [
+              "stable_ckd_evidence_plus_clinical_context"
+            ],
+            "dangerStates": [
+              "diabetes",
+              "hyperthyroidism",
+              "infection",
+              "progression"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "biochemistry",
+              "urinalysis",
+              "blood_pressure",
+              "longitudinal_care"
+            ],
+            "external": [
+              "sdma_external",
+              "urine_protein_creatinine_ratio_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "renal_complication_lab_or_referral",
+              "renal_longitudinal_qol_route",
+              "urine_upc_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "stable_mild_ckd_plan",
+          "followUp": {
+            "timing": "stage-specific clinical and laboratory review",
+            "required": true,
+            "targets": [
+              "pupd",
+              "weight",
+              "stage",
+              "substage",
+              "diet",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "CKD and coexisting PU/PD causes are evaluated together.",
+            "unsafe": "One diagnosis hides another."
+          },
+          "ownerCommunication": [
+            "Explain why nutrition/home monitoring do not replace lab substaging."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "low_stress_longitudinal_route",
+            "ownerModifiers": [
+              "chronic_care_fatigue",
+              "diet_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_creatinine_sdma_discrepancy_requires_context",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority",
+          "workload": 1.5,
+          "complaint": "Creatinine и SDMA у стабильного CKD-пациента указывают на разные стадии.",
+          "historyAnswers": {
+            "weight_muscle_trend": "Low/high muscle mass documented.",
+            "prior_renal_snapshots": "Same-method trends available.",
+            "volume_loss_event": "Stable hydrated repeat.",
+            "actual_diet_intake": "Fasting/meat context documented.",
+            "renal_comorbidity": "Breed, thyroid/adrenal and lab confounders assessed."
+          },
+          "examFindings": [
+            {
+              "factId": "discordant_markers_require_context_and_repeat",
+              "source": "diagnostic_record",
+              "finding": "Muscle, fasting, breed, hemolysis, assay and biologic variation are reviewed."
+            },
+            {
+              "factId": "persistent_discrepancy_is_not_averaged",
+              "source": "safety_rule",
+              "finding": "No mathematical mean; uncertainty persists and reviewed precaution considers the higher stage."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "discordant_markers_require_context_and_repeat",
+              "discoveryPaths": [
+                "weight_muscle_trend",
+                "prior_renal_snapshots",
+                "serial_weight_bcs_mcs"
+              ]
+            },
+            {
+              "factId": "persistent_discrepancy_is_not_averaged",
+              "discoveryPaths": [
+                "actual_diet_intake",
+                "renal_comorbidity",
+                "dated_stable_creatinine_sdma"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_creatinine_sdma_and_stability",
+              "classification": "required_same_method_repeat",
+              "result": "Authored persistent/resolved discrepancy."
+            },
+            {
+              "id": "renal_hydration_weight_and_muscle_assessment",
+              "classification": "required",
+              "result": "Authored hydration/MCS context."
+            },
+            {
+              "id": "renal_serial_stage_substage_and_quality_of_life",
+              "classification": "required_uncertainty_flag",
+              "result": "Higher-stage precaution or specialist review recorded."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "discordant_markers_require_context_and_repeat",
+              "persistent_discrepancy_is_not_averaged"
+            ],
+            "confirmedDiagnosisRequires": [
+              "preexisting_ckd_plus_contextual_reviewed_stage"
+            ],
+            "dangerStates": [
+              "rapid_change",
+              "assay_error",
+              "extra_renal_marker_effect"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "hydration_assessment",
+              "body_weight",
+              "muscle_condition_score",
+              "biochemistry",
+              "longitudinal_care"
+            ],
+            "external": [
+              "sdma_external",
+              "renal_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "renal_function_or_referral",
+              "renal_longitudinal_qol_route"
+            ],
+            "referralFallback": "renal_referral"
+          },
+          "carePlanId": "stable_mild_ckd_plan",
+          "followUp": {
+            "timing": "stable same-method repeat and specialist review if persistent",
+            "required": true,
+            "targets": [
+              "creatinine",
+              "sdma",
+              "muscle",
+              "hydration",
+              "assay",
+              "stage_uncertainty"
+            ]
+          },
+          "outcomes": {
+            "safe": "Discordance is explicit and conservatively interpreted.",
+            "unsafe": "Values are averaged or the lower stage chosen for convenience."
+          },
+          "ownerCommunication": [
+            "Explain why two imperfect markers can disagree."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "external_same_lab_repeat",
+            "ownerModifiers": [
+              "confused_by_numbers",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "renal_ckd_moderate_symptomatic",
+      "version": "2026.07.15.1",
+      "title": "Умеренно выраженная симптомная хроническая болезнь почек",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Симптомная стабильная CKD имеет осложнения и клиническую нагрузку, но любое ухудшение сначала проверяется на acute, volume-responsive и иные обратимые компоненты.",
+      "exclusions": [
+        "unstable_acute_on_chronic",
+        "primary_gi_disease_only",
+        "single_dehydrated_azotemia",
+        "unlocalized_anemia"
+      ],
+      "planBundleId": "moderate_symptomatic_ckd_plan",
+      "sourceIds": [
+        "iris_guidelines_current",
+        "iris_ckd_staging_current",
+        "merck_renal_dysfunction"
+      ],
+      "presentations": [
+        {
+          "id": "p1_weight_or_muscle_loss_and_reduced_appetite",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "У CKD-пациента постепенно снижаются аппетит, масса и мышцы, но нет шока или непрекращающейся рвоты.",
+          "historyAnswers": {
+            "appetite_nausea_vomiting": "Reduced/selective appetite and nausea authored.",
+            "weight_muscle_trend": "Gradual loss documented.",
+            "volume_loss_event": "No severe acute volume loss.",
+            "actual_diet_intake": "Actual intake, not prescribed diet only.",
+            "renal_comorbidity": "Oral, GI and systemic alternatives assessed."
+          },
+          "examFindings": [
+            {
+              "factId": "progressive_nutrition_and_qol_burden",
+              "source": "physical_exam",
+              "finding": "Documented weight/MCS/appetite decline in stable CKD."
+            },
+            {
+              "factId": "symptoms_require_nonrenal_differential",
+              "source": "clinical_reasoning",
+              "finding": "Oral, GI, endocrine, neoplastic and other causes remain evaluated."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "progressive_nutrition_and_qol_burden",
+              "discoveryPaths": [
+                "appetite_nausea_vomiting",
+                "weight_muscle_trend",
+                "serial_weight_bcs_mcs"
+              ]
+            },
+            {
+              "factId": "symptoms_require_nonrenal_differential",
+              "discoveryPaths": [
+                "renal_comorbidity",
+                "oral_gi_uremic_exam",
+                "renal_complication_panel"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_hydration_weight_and_muscle_assessment",
+              "classification": "required_serial",
+              "result": "Authored weight/BCS/MCS and hydration."
+            },
+            {
+              "id": "renal_cbc_biochemistry_electrolytes_phosphorus",
+              "classification": "required_by_symptoms",
+              "result": "Authored complications and alternatives."
+            },
+            {
+              "id": "renal_serial_stage_substage_and_quality_of_life",
+              "classification": "required",
+              "result": "Authored appetite/QoL baseline."
+            },
+            {
+              "id": "renal_imaging_and_structure",
+              "classification": "targeted_if_new_pain_or_change",
+              "result": null
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "progressive_nutrition_and_qol_burden",
+              "symptoms_require_nonrenal_differential"
+            ],
+            "confirmedDiagnosisRequires": [
+              "stable_ckd_plus_documented_complication_context"
+            ],
+            "dangerStates": [
+              "acute_on_chronic",
+              "severe_malnutrition",
+              "oral_ulcers",
+              "gi_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "body_weight",
+              "muscle_condition_score",
+              "cbc",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "blood_gas_external",
+              "renal_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "renal_complication_lab_or_referral",
+              "renal_longitudinal_qol_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "moderate_symptomatic_ckd_plan",
+          "followUp": {
+            "timing": "short appetite/weight and complication review",
+            "required": true,
+            "targets": [
+              "intake",
+              "weight",
+              "muscle",
+              "nausea",
+              "hydration",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Clinical burden and alternatives guide reviewed support.",
+            "unsafe": "All appetite loss is called uremia and handled by diet only."
+          },
+          "ownerCommunication": [
+            "Track what is actually eaten and good/bad days without moralizing."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "frail"
+            ],
+            "requiredHandlingAlternative": "staged_low_stress_labs_or_referral",
+            "ownerModifiers": [
+              "feeding_anxiety",
+              "care_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p2_dehydration_masks_baseline",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_priority",
+          "workload": 2,
+          "complaint": "Creatinine выше прежнего на фоне рвоты, плохого питья или обезвоживания.",
+          "historyAnswers": {
+            "volume_loss_event": "Acute volume loss documented.",
+            "prior_renal_snapshots": "Stable baseline exists.",
+            "appetite_nausea_vomiting": "Current illness authored.",
+            "urine_output_current": "Output and obstruction checked.",
+            "medication_nephrotoxin_list": "Full current list reviewed."
+          },
+          "examFindings": [
+            {
+              "factId": "dehydrated_peak_is_not_new_stable_stage",
+              "source": "physical_exam",
+              "finding": "Volume depletion can raise renal markers and must be stabilized before restaging."
+            },
+            {
+              "factId": "acute_component_needs_reversible_cause_search",
+              "source": "clinical_reasoning",
+              "finding": "GI loss, infection, obstruction, toxin and drug exposure are assessed."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "dehydrated_peak_is_not_new_stable_stage",
+              "discoveryPaths": [
+                "volume_loss_event",
+                "hydration_perfusion_before_azotemia",
+                "dated_stable_creatinine_sdma"
+              ]
+            },
+            {
+              "factId": "acute_component_needs_reversible_cause_search",
+              "discoveryPaths": [
+                "urine_output_current",
+                "medication_nephrotoxin_list",
+                "kidney_bladder_abdominal_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_hydration_weight_and_muscle_assessment",
+              "classification": "required_first",
+              "result": "Authored dehydration/perfusion."
+            },
+            {
+              "id": "renal_creatinine_sdma_and_stability",
+              "classification": "required_before_and_after_stabilization",
+              "result": "Peak and new stable value stored separately."
+            },
+            {
+              "id": "renal_urinalysis_specific_gravity_and_culture",
+              "classification": "required_by_context",
+              "result": "Authored infection/postrenal context."
+            },
+            {
+              "id": "renal_imaging_and_structure",
+              "classification": "urgent_if_obstruction_or_pain",
+              "result": null
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "dehydrated_peak_is_not_new_stable_stage",
+              "acute_component_needs_reversible_cause_search"
+            ],
+            "confirmedDiagnosisRequires": [
+              "preexisting_ckd_plus_poststabilization_baseline"
+            ],
+            "dangerStates": [
+              "shock",
+              "oliguria",
+              "obstruction",
+              "pyelonephritis",
+              "toxin"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "hospital_referral",
+              "renal_imaging_external",
+              "renal_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "acute_on_chronic_hospital_route",
+              "renal_function_or_referral",
+              "renal_imaging_or_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "moderate_symptomatic_ckd_plan",
+          "followUp": {
+            "timing": "during stabilization and after hydration for new baseline",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "urine_output",
+              "creatinine",
+              "sdma",
+              "cause",
+              "baseline"
+            ]
+          },
+          "outcomes": {
+            "safe": "Peak and stable baseline remain separate snapshots.",
+            "unsafe": "Dehydrated peak permanently raises stage."
+          },
+          "ownerCommunication": [
+            "Explain why the stage cannot be decided from the sick-day value."
+          ],
+          "compatibility": {
+            "temperament": [
+              "lethargic",
+              "painful_defensive"
+            ],
+            "requiredHandlingAlternative": "hospital_or_renal_referral",
+            "ownerModifiers": [
+              "anxious",
+              "cost_crisis"
+            ]
+          }
+        },
+        {
+          "id": "p3_anemia_phosphorus_or_acid_base_complication",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "У стабильного CKD-пациента выявлены анемия, фосфорный, калиевый или кислотно-основный сдвиг.",
+          "historyAnswers": {
+            "appetite_nausea_vomiting": "Symptoms authored.",
+            "prior_renal_snapshots": "Complication trend available.",
+            "medication_nephrotoxin_list": "Treatments/supplements documented.",
+            "renal_comorbidity": "Blood loss, inflammation, nutrition and other causes assessed.",
+            "weight_muscle_trend": "Clinical impact documented."
+          },
+          "examFindings": [
+            {
+              "factId": "stage_related_complication_requires_serial_context",
+              "source": "diagnostic_record",
+              "finding": "Authored anemia/mineral/electrolyte/acid-base pattern linked to stable CKD."
+            },
+            {
+              "factId": "alternative_complication_causes_are_not_erased",
+              "source": "clinical_reasoning",
+              "finding": "Blood loss, inflammation, hemolysis, diet and medication effects remain assessed."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stage_related_complication_requires_serial_context",
+              "discoveryPaths": [
+                "prior_renal_snapshots",
+                "renal_complication_panel",
+                "same_episode_stage_substage_qol_review"
+              ]
+            },
+            {
+              "factId": "alternative_complication_causes_are_not_erased",
+              "discoveryPaths": [
+                "renal_comorbidity",
+                "medication_nephrotoxin_list",
+                "oral_gi_uremic_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_cbc_biochemistry_electrolytes_phosphorus",
+              "classification": "required_serial",
+              "result": "Authored complication and trend."
+            },
+            {
+              "id": "renal_creatinine_sdma_and_stability",
+              "classification": "required_stage_context",
+              "result": "Stable stage documented."
+            },
+            {
+              "id": "renal_serial_stage_substage_and_quality_of_life",
+              "classification": "required_clinical_response",
+              "result": "Authored symptoms and tolerability."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stage_related_complication_requires_serial_context",
+              "alternative_complication_causes_are_not_erased"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_complication_after_alternative_review"
+            ],
+            "dangerStates": [
+              "severe_anemia",
+              "dangerous_electrolyte_shift",
+              "acidosis",
+              "bleeding"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "biochemistry",
+              "electrolytes",
+              "longitudinal_care"
+            ],
+            "external": [
+              "blood_gas_external",
+              "renal_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "renal_complication_lab_or_referral",
+              "renal_longitudinal_qol_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "moderate_symptomatic_ckd_plan",
+          "followUp": {
+            "timing": "reviewed complication-specific and clinical checkpoint",
+            "required": true,
+            "targets": [
+              "cbc",
+              "phosphorus_context",
+              "potassium",
+              "acid_base",
+              "appetite",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Complication is treated as specific longitudinal problem.",
+            "unsafe": "One abnormality generates a drug/diet protocol or is assumed renal."
+          },
+          "ownerCommunication": [
+            "Explain why the same laboratory abnormality can have more than one cause."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "frail"
+            ],
+            "requiredHandlingAlternative": "staged_sampling_or_referral",
+            "ownerModifiers": [
+              "lab_fatigue",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "renal_ckd_advanced_or_acute_on_chronic",
+      "version": "2026.07.15.1",
+      "title": "Продвинутая CKD или острое ухудшение на её фоне",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Uremic/advanced CKD and abrupt decline from documented baseline require immediate perfusion, urine-output, electrolyte, acid-base and obstruction assessment before stage decisions.",
+      "exclusions": [
+        "stable_mild_ckd",
+        "simple_dehydration_without_intrinsic_change",
+        "postrenal_obstruction_unmanaged",
+        "primary_gi_or_neuro_disease_only"
+      ],
+      "planBundleId": "advanced_acute_on_chronic_plan",
+      "sourceIds": [
+        "iris_ckd_staging_current",
+        "iris_guidelines_current",
+        "merck_renal_dysfunction"
+      ],
+      "presentations": [
+        {
+          "id": "p1_uremic_signs_and_severe_azotemia",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2.5,
+          "complaint": "CKD-пациент не ест, повторно рвёт, обезвожен, имеет язвы или изменённое сознание.",
+          "historyAnswers": {
+            "appetite_nausea_vomiting": "Severe current burden.",
+            "urine_output_current": "Output quantified; oliguria/anuria and obstruction checked.",
+            "prior_renal_snapshots": "Chronic baseline documented or absent flag.",
+            "volume_loss_event": "Current dehydration/perfusion risk.",
+            "target_organ_signs": "Mentation/neurologic signs authored."
+          },
+          "examFindings": [
+            {
+              "factId": "uremic_systemic_instability_needs_immediate_support",
+              "source": "physical_exam",
+              "finding": "Perfusion, hydration, mentation and urine output require emergency route."
+            },
+            {
+              "factId": "staging_does_not_delay_obstruction_and_metabolic_assessment",
+              "source": "safety_rule",
+              "finding": "Electrolytes, acid-base and obstruction are assessed before planned staging."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "uremic_systemic_instability_needs_immediate_support",
+              "discoveryPaths": [
+                "appetite_nausea_vomiting",
+                "hydration_perfusion_before_azotemia",
+                "oral_gi_uremic_exam"
+              ]
+            },
+            {
+              "factId": "staging_does_not_delay_obstruction_and_metabolic_assessment",
+              "discoveryPaths": [
+                "urine_output_current",
+                "kidney_bladder_abdominal_exam",
+                "renal_complication_panel"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_cbc_biochemistry_electrolytes_phosphorus",
+              "classification": "required_immediate_serial",
+              "result": "Authored severe metabolic burden."
+            },
+            {
+              "id": "renal_urinalysis_specific_gravity_and_culture",
+              "classification": "required_if_safe",
+              "result": "Authored urine/infection context."
+            },
+            {
+              "id": "renal_imaging_and_structure",
+              "classification": "urgent_if_obstruction_or_pain",
+              "result": "Authored external result or immediate referral."
+            },
+            {
+              "id": "renal_serial_stage_substage_and_quality_of_life",
+              "classification": "after_stabilization",
+              "result": "Current QoL and later stage snapshot."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "uremic_systemic_instability_needs_immediate_support",
+              "staging_does_not_delay_obstruction_and_metabolic_assessment"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_ckd_or_acute_on_chronic_after_stabilization"
+            ],
+            "dangerStates": [
+              "anuria",
+              "hyperkalemia",
+              "severe_acidosis",
+              "shock",
+              "obstruction"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "hospital_referral",
+              "intensive_care_referral",
+              "renal_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "acute_on_chronic_hospital_route",
+              "renal_complication_lab_or_referral",
+              "renal_imaging_or_referral"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "advanced_acute_on_chronic_plan",
+          "followUp": {
+            "timing": "continuous hospital trend then new stable baseline",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "urine_output",
+              "electrolytes",
+              "acid_base",
+              "intake",
+              "mentation",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Emergency support and reversible-cause search precede restaging.",
+            "unsafe": "Patient waits for routine SDMA/UPC while unstable."
+          },
+          "ownerCommunication": [
+            "Separate immediate stabilization, prognosis and later stage discussion."
+          ],
+          "compatibility": {
+            "temperament": [
+              "lethargic",
+              "obtunded",
+              "painful_defensive"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_intensive_care_route",
+            "ownerModifiers": [
+              "cost_crisis",
+              "prognosis_anxiety"
+            ]
+          }
+        },
+        {
+          "id": "p2_abrupt_rise_from_documented_baseline",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2,
+          "complaint": "Renal values резко выросли относительно сохранённого стабильного CKD baseline.",
+          "historyAnswers": {
+            "prior_renal_snapshots": "Old stable snapshot and current values linked.",
+            "volume_loss_event": "Dehydration/anesthesia/GI loss authored.",
+            "medication_nephrotoxin_list": "Toxin/drug risk documented.",
+            "urine_output_current": "Output/obstruction assessed.",
+            "renal_comorbidity": "Infection and other triggers assessed."
+          },
+          "examFindings": [
+            {
+              "factId": "documented_baseline_proves_acute_on_chronic_change",
+              "source": "longitudinal_record",
+              "finding": "Current rapid deviation is preserved beside old stable snapshot."
+            },
+            {
+              "factId": "reversible_trigger_search_is_mandatory",
+              "source": "clinical_reasoning",
+              "finding": "Volume, infection, obstruction, toxin/drug and other acute causes are evaluated."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "documented_baseline_proves_acute_on_chronic_change",
+              "discoveryPaths": [
+                "prior_renal_snapshots",
+                "dated_stable_creatinine_sdma",
+                "same_episode_stage_substage_qol_review"
+              ]
+            },
+            {
+              "factId": "reversible_trigger_search_is_mandatory",
+              "discoveryPaths": [
+                "volume_loss_event",
+                "medication_nephrotoxin_list",
+                "kidney_bladder_abdominal_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_chronicity_and_baseline_timeline",
+              "classification": "required",
+              "result": "Old and current snapshots preserved."
+            },
+            {
+              "id": "renal_cbc_biochemistry_electrolytes_phosphorus",
+              "classification": "required_serial",
+              "result": "Authored acute trend."
+            },
+            {
+              "id": "renal_urinalysis_specific_gravity_and_culture",
+              "classification": "required",
+              "result": "Authored infection/urine context."
+            },
+            {
+              "id": "renal_imaging_and_structure",
+              "classification": "urgent_by_obstruction_risk",
+              "result": null
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "documented_baseline_proves_acute_on_chronic_change",
+              "reversible_trigger_search_is_mandatory"
+            ],
+            "confirmedDiagnosisRequires": [
+              "documented_rapid_change_on_preexisting_ckd"
+            ],
+            "dangerStates": [
+              "obstruction",
+              "pyelonephritis",
+              "toxin",
+              "shock"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "biochemistry",
+              "electrolytes",
+              "urinalysis",
+              "longitudinal_care"
+            ],
+            "external": [
+              "urine_culture_external",
+              "renal_imaging_external",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "acute_on_chronic_hospital_route",
+              "renal_imaging_or_referral",
+              "urine_upc_or_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "advanced_acute_on_chronic_plan",
+          "followUp": {
+            "timing": "acute trend and post-stabilization new baseline",
+            "required": true,
+            "targets": [
+              "trigger",
+              "urine_output",
+              "renal_values",
+              "electrolytes",
+              "old_baseline",
+              "new_baseline"
+            ]
+          },
+          "outcomes": {
+            "safe": "Old record remains immutable and new baseline is created later.",
+            "unsafe": "Current stage retroactively overwrites prior visits."
+          },
+          "ownerCommunication": [
+            "Explain which part may be reversible versus chronic."
+          ],
+          "compatibility": {
+            "temperament": [
+              "lethargic",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "hospital_or_renal_referral",
+            "ownerModifiers": [
+              "anxious",
+              "wants_prognosis_now"
+            ]
+          }
+        },
+        {
+          "id": "p3_quality_of_life_and_referral_decision",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_urgent_by_symptoms",
+          "workload": 2,
+          "complaint": "Тяжёлая хроническая болезнь требует честного разговора о симптомах, прогнозе, referral и качестве жизни.",
+          "historyAnswers": {
+            "appetite_nausea_vomiting": "Current symptom burden.",
+            "home_monitoring_capacity": "Good/bad days, interaction, mobility, food/water tracked.",
+            "actual_diet_intake": "Actual intake documented.",
+            "prior_renal_snapshots": "Trajectory available.",
+            "target_organ_signs": "Pain/mentation/vision flags assessed."
+          },
+          "examFindings": [
+            {
+              "factId": "qol_is_multidimensional_not_a_lab_value",
+              "source": "owner_clinician_assessment",
+              "finding": "Pain, nausea, food, hydration, mobility, interaction and good/bad days are serially assessed."
+            },
+            {
+              "factId": "referral_and_palliative_routes_are_value_neutral",
+              "source": "ethics_rule",
+              "finding": "Costly referral is not the only moral choice; safe supportive/palliative route has no hidden punishment."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "qol_is_multidimensional_not_a_lab_value",
+              "discoveryPaths": [
+                "home_monitoring_capacity",
+                "appetite_nausea_vomiting",
+                "same_episode_stage_substage_qol_review"
+              ]
+            },
+            {
+              "factId": "referral_and_palliative_routes_are_value_neutral",
+              "discoveryPaths": [
+                "actual_diet_intake",
+                "prior_renal_snapshots",
+                "oral_gi_uremic_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_serial_stage_substage_and_quality_of_life",
+              "classification": "required_serial",
+              "result": "Authored QoL trend and owner goals."
+            },
+            {
+              "id": "renal_cbc_biochemistry_electrolytes_phosphorus",
+              "classification": "targeted_if_changes_decision",
+              "result": null
+            },
+            {
+              "id": "renal_imaging_and_structure",
+              "classification": "optional_only_if_actionable_and_safe",
+              "result": null
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "qol_is_multidimensional_not_a_lab_value",
+              "referral_and_palliative_routes_are_value_neutral"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_ckd_trajectory_and_current_clinical_burden"
+            ],
+            "dangerStates": [
+              "uncontrolled_pain",
+              "persistent_vomiting",
+              "anuria",
+              "distress"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "renal_quality_of_life_assessment",
+              "longitudinal_care"
+            ],
+            "external": [
+              "renal_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "renal_longitudinal_qol_route",
+              "acute_on_chronic_hospital_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "advanced_acute_on_chronic_plan",
+          "followUp": {
+            "timing": "short symptom/QoL review agreed with owner",
+            "required": true,
+            "targets": [
+              "pain",
+              "nausea",
+              "intake",
+              "hydration",
+              "interaction",
+              "good_bad_days",
+              "owner_goals"
+            ]
+          },
+          "outcomes": {
+            "safe": "Plan matches patient comfort and informed owner goals.",
+            "unsafe": "Laboratory improvement or expensive referral is the sole victory condition."
+          },
+          "ownerCommunication": [
+            "Offer honest options, costs and burdens without coercion."
+          ],
+          "compatibility": {
+            "temperament": [
+              "frail",
+              "fearful",
+              "lethargic"
+            ],
+            "requiredHandlingAlternative": "minimal_burden_qol_assessment",
+            "ownerModifiers": [
+              "cost_limited",
+              "anticipatory_grief"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "renal_ckd_proteinuric_glomerular_pattern",
+      "version": "2026.07.15.1",
+      "title": "Протеинурический или гломерулярный почечный паттерн",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Renal proteinuria is persistent protein loss after pre-renal and post-renal sources are excluded; magnitude may suggest glomerular involvement but does not define etiology without further workup.",
+      "exclusions": [
+        "single_dipstick_protein",
+        "active_sediment_or_uti",
+        "hematuria_postrenal_protein",
+        "overflow_prerenal_protein",
+        "unconfirmed_transient_proteinuria"
+      ],
+      "planBundleId": "proteinuric_glomerular_plan",
+      "sourceIds": [
+        "iris_ckd_staging_current",
+        "iris_early_diagnosis",
+        "iris_marker_utility"
+      ],
+      "presentations": [
+        {
+          "id": "p1_persistent_inactive_sediment_proteinuria",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Несколько UPC в подходящих образцах остаются повышенными при неактивном осадке.",
+          "historyAnswers": {
+            "urine_sample_sediment": "Method, inactive sediment and culture context documented.",
+            "prior_renal_snapshots": "Serial UPC with dates.",
+            "blood_pressure_context": "Standard series available.",
+            "renal_comorbidity": "Systemic/inflammatory/infectious triggers assessed.",
+            "medication_nephrotoxin_list": "Relevant medication list documented."
+          },
+          "examFindings": [
+            {
+              "factId": "persistent_renal_origin_proteinuria",
+              "source": "longitudinal_record",
+              "finding": "Serial UPC in inactive samples supports renal proteinuria."
+            },
+            {
+              "factId": "upc_substage_does_not_name_glomerular_etiology",
+              "source": "safety_rule",
+              "finding": "Substage and cause are kept separate."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "persistent_renal_origin_proteinuria",
+              "discoveryPaths": [
+                "urine_sample_sediment",
+                "prior_renal_snapshots",
+                "serial_upc_with_inactive_sediment"
+              ]
+            },
+            {
+              "factId": "upc_substage_does_not_name_glomerular_etiology",
+              "discoveryPaths": [
+                "renal_comorbidity",
+                "complete_urine_sediment_culture_context",
+                "same_episode_stage_substage_qol_review"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_upc_and_proteinuria_persistence",
+              "classification": "required_serial",
+              "result": "Authored persistent renal UPC pattern."
+            },
+            {
+              "id": "renal_urinalysis_specific_gravity_and_culture",
+              "classification": "required_exclusion_context",
+              "result": "Inactive sediment/culture context."
+            },
+            {
+              "id": "renal_blood_pressure_and_target_organ_exam",
+              "classification": "required",
+              "result": "Authored BP substage."
+            },
+            {
+              "id": "renal_cbc_biochemistry_electrolytes_phosphorus",
+              "classification": "required_albumin_systemic_context",
+              "result": "Authored albumin and complications."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "persistent_renal_origin_proteinuria",
+              "upc_substage_does_not_name_glomerular_etiology"
+            ],
+            "confirmedDiagnosisRequires": [
+              "persistent_upc_after_pre_and_postrenal_exclusion"
+            ],
+            "dangerStates": [
+              "hypoalbuminemia",
+              "edema",
+              "thrombosis",
+              "systemic_hypertension"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "urinalysis",
+              "blood_pressure",
+              "biochemistry",
+              "longitudinal_care"
+            ],
+            "external": [
+              "urine_protein_creatinine_ratio_external",
+              "urine_culture_external",
+              "renal_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urine_upc_or_referral",
+              "blood_pressure_target_route",
+              "protein_loss_specialist_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "proteinuric_glomerular_plan",
+          "followUp": {
+            "timing": "same-method UPC, albumin, BP and stage trend",
+            "required": true,
+            "targets": [
+              "upc",
+              "sediment",
+              "albumin",
+              "bp",
+              "stage",
+              "treatment_state"
+            ]
+          },
+          "outcomes": {
+            "safe": "Renal proteinuria is substaged without inventing etiology.",
+            "unsafe": "Dipstick or one UPC creates glomerulonephritis."
+          },
+          "ownerCommunication": [
+            "Explain substage versus underlying disease."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "staged_samples_or_external_route",
+            "ownerModifiers": [
+              "number_anxiety",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_hypoalbuminemia_edema_or_thrombotic_risk",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_priority",
+          "workload": 2,
+          "complaint": "Протеинурия сопровождается низким альбумином, отёком/выпотом или признаками возможного тромботического риска.",
+          "historyAnswers": {
+            "prior_renal_snapshots": "Protein and albumin trend.",
+            "renal_comorbidity": "Liver, GI, inflammation and neoplasia alternatives assessed.",
+            "target_organ_signs": "Respiratory/neuro/limb acute signs checked.",
+            "weight_muscle_trend": "Edema versus tissue mass distinguished.",
+            "urine_sample_sediment": "Renal source documented."
+          },
+          "examFindings": [
+            {
+              "factId": "systemic_protein_loss_consequences_raise_urgency",
+              "source": "physical_exam",
+              "finding": "Hypoalbuminemia with edema/effusion or thrombotic concern requires specialist risk route."
+            },
+            {
+              "factId": "hypoalbuminemia_is_not_automatically_renal",
+              "source": "clinical_reasoning",
+              "finding": "Hepatic synthesis, GI loss and inflammation are considered."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "systemic_protein_loss_consequences_raise_urgency",
+              "discoveryPaths": [
+                "target_organ_signs",
+                "serial_weight_bcs_mcs",
+                "renal_complication_panel"
+              ]
+            },
+            {
+              "factId": "hypoalbuminemia_is_not_automatically_renal",
+              "discoveryPaths": [
+                "renal_comorbidity",
+                "urine_sample_sediment",
+                "complete_urine_sediment_culture_context"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_upc_and_proteinuria_persistence",
+              "classification": "required",
+              "result": "Authored renal protein loss trend."
+            },
+            {
+              "id": "renal_cbc_biochemistry_electrolytes_phosphorus",
+              "classification": "required_systemic_context",
+              "result": "Authored albumin and organ impact."
+            },
+            {
+              "id": "renal_blood_pressure_and_target_organ_exam",
+              "classification": "required",
+              "result": "Authored BP/target-organ risk."
+            },
+            {
+              "id": "renal_imaging_and_structure",
+              "classification": "targeted_by_effusion_or_differential",
+              "result": null
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "systemic_protein_loss_consequences_raise_urgency",
+              "hypoalbuminemia_is_not_automatically_renal"
+            ],
+            "confirmedDiagnosisRequires": [
+              "persistent_renal_protein_loss_plus_systemic_consequence_context"
+            ],
+            "dangerStates": [
+              "thromboembolism",
+              "respiratory_effusion",
+              "severe_edema",
+              "systemic_inflammation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "biochemistry",
+              "urinalysis",
+              "blood_pressure"
+            ],
+            "external": [
+              "coagulation",
+              "renal_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "protein_loss_specialist_route",
+              "acute_on_chronic_hospital_route",
+              "renal_complication_lab_or_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "proteinuric_glomerular_plan",
+          "followUp": {
+            "timing": "urgent risk result then serial protein/clinical review",
+            "required": true,
+            "targets": [
+              "albumin",
+              "edema",
+              "respiration",
+              "thrombotic_signs",
+              "upc",
+              "bp"
+            ]
+          },
+          "outcomes": {
+            "safe": "Systemic risk and alternative causes are addressed.",
+            "unsafe": "Generator invents antithrombotic treatment or assumes every low albumin is renal."
+          },
+          "ownerCommunication": [
+            "Explain urgent signs without promising a specific prophylactic protocol."
+          ],
+          "compatibility": {
+            "temperament": [
+              "frail",
+              "lethargic",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_specialist_route",
+            "ownerModifiers": [
+              "anxious",
+              "cost_crisis"
+            ]
+          }
+        },
+        {
+          "id": "p3_search_for_underlying_trigger_and_specialist_route",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Стойкая renal proteinuria требует поиска инфекционного, воспалительного или неопластического триггера и обсуждения specialist route.",
+          "historyAnswers": {
+            "renal_comorbidity": "Regional exposure, inflammation, neoplasia and infection clues authored.",
+            "prior_renal_snapshots": "Persistent UPC and stage.",
+            "urine_sample_sediment": "Postrenal sources excluded.",
+            "blood_pressure_context": "Substage documented.",
+            "home_monitoring_capacity": "Biopsy/referral preferences and feasible monitoring documented."
+          },
+          "examFindings": [
+            {
+              "factId": "trigger_workup_is_hypothesis_and_region_driven",
+              "source": "clinical_reasoning",
+              "finding": "No universal panel; tests follow authored exposure/systemic clues."
+            },
+            {
+              "factId": "biopsy_is_actionability_and_risk_decision",
+              "source": "specialist_plan",
+              "finding": "Biopsy is discussed only if result changes care and risk is acceptable; refusal preserves monitoring."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "trigger_workup_is_hypothesis_and_region_driven",
+              "discoveryPaths": [
+                "renal_comorbidity",
+                "prior_renal_snapshots",
+                "renal_complication_panel"
+              ]
+            },
+            {
+              "factId": "biopsy_is_actionability_and_risk_decision",
+              "discoveryPaths": [
+                "home_monitoring_capacity",
+                "target_organ_signs",
+                "same_episode_stage_substage_qol_review"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_upc_and_proteinuria_persistence",
+              "classification": "required",
+              "result": "Persistent renal proteinuria."
+            },
+            {
+              "id": "renal_cbc_biochemistry_electrolytes_phosphorus",
+              "classification": "required_systemic_clues",
+              "result": "Authored trigger clues."
+            },
+            {
+              "id": "renal_imaging_and_structure",
+              "classification": "recommended_by_question",
+              "result": null
+            },
+            {
+              "id": "renal_serial_stage_substage_and_quality_of_life",
+              "classification": "required_if_biopsy_deferred",
+              "result": "Safe monitoring plan."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "trigger_workup_is_hypothesis_and_region_driven",
+              "biopsy_is_actionability_and_risk_decision"
+            ],
+            "confirmedDiagnosisRequires": [
+              "specific_trigger_test_or_specialist_pathology_if_performed"
+            ],
+            "dangerStates": [
+              "rapid_progression",
+              "severe_hypoalbuminemia",
+              "thrombotic_event",
+              "systemic_infection"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "cbc",
+              "biochemistry",
+              "urinalysis",
+              "longitudinal_care"
+            ],
+            "external": [
+              "renal_referral",
+              "renal_biopsy_referral",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "protein_loss_specialist_route",
+              "renal_imaging_or_referral",
+              "renal_longitudinal_qol_route"
+            ],
+            "referralFallback": "renal_referral"
+          },
+          "carePlanId": "proteinuric_glomerular_plan",
+          "followUp": {
+            "timing": "targeted result or serial UPC/stage plan if biopsy declined",
+            "required": true,
+            "targets": [
+              "trigger",
+              "upc",
+              "albumin",
+              "stage",
+              "bp",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Declining biopsy does not erase safe monitoring.",
+            "unsafe": "Universal panel or biopsy is the only accepted answer."
+          },
+          "ownerCommunication": [
+            "Discuss what each test could change and its burden."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "frail"
+            ],
+            "requiredHandlingAlternative": "specialist_consult_without_forced_biopsy",
+            "ownerModifiers": [
+              "procedure_averse",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "renal_ckd_hypertensive_pattern",
+      "version": "2026.07.15.1",
+      "title": "Гипертензивный паттерн при хронической болезни почек",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Systemic blood-pressure substage is based on standardized serial measurements and target-organ risk, independent of CKD stage; established target-organ damage permits urgent action without prolonged confirmation.",
+      "exclusions": [
+        "single_stress_measurement_without_damage",
+        "renderer_inferred_retinopathy",
+        "unconfirmed_device_or_cuff_error",
+        "primary_eye_or_neuro_disease_unassessed"
+      ],
+      "planBundleId": "hypertensive_ckd_plan",
+      "sourceIds": [
+        "iris_ckd_staging_current",
+        "iris_early_diagnosis",
+        "iris_guidelines_current"
+      ],
+      "presentations": [
+        {
+          "id": "p1_persistent_high_pressure_without_target_damage",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Стандартизованные серии давления остаются высокими, но поражения органов-мишеней не найдено.",
+          "historyAnswers": {
+            "blood_pressure_context": "Repeated acclimatized same-protocol series.",
+            "target_organ_signs": "No acute vision/neuro signs.",
+            "prior_renal_snapshots": "CKD stage and previous BP preserved.",
+            "medication_nephrotoxin_list": "Current treatment state documented.",
+            "renal_comorbidity": "Other hypertension causes assessed."
+          },
+          "examFindings": [
+            {
+              "factId": "persistent_standardized_high_bp_substage",
+              "source": "measurement_record",
+              "finding": "Repeated standardized series supports hypertensive risk substage."
+            },
+            {
+              "factId": "no_target_damage_does_not_remove_followup",
+              "source": "clinical_reasoning",
+              "finding": "No current damage still requires reviewed plan and same-method recheck."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "persistent_standardized_high_bp_substage",
+              "discoveryPaths": [
+                "blood_pressure_context",
+                "standardized_bp_series",
+                "prior_renal_snapshots"
+              ]
+            },
+            {
+              "factId": "no_target_damage_does_not_remove_followup",
+              "discoveryPaths": [
+                "target_organ_signs",
+                "retinal_neurologic_target_exam",
+                "same_episode_stage_substage_qol_review"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_blood_pressure_and_target_organ_exam",
+              "classification": "required_serial",
+              "result": "Authored persistent BP and absent damage."
+            },
+            {
+              "id": "renal_creatinine_sdma_and_stability",
+              "classification": "required_stage_context",
+              "result": "Current stable CKD stage."
+            },
+            {
+              "id": "renal_serial_stage_substage_and_quality_of_life",
+              "classification": "required_treatment_state",
+              "result": "Baseline and current substage stored."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "persistent_standardized_high_bp_substage",
+              "no_target_damage_does_not_remove_followup"
+            ],
+            "confirmedDiagnosisRequires": [
+              "persistent_standardized_bp_series_or_reviewed_risk_classification"
+            ],
+            "dangerStates": [
+              "retinal_damage",
+              "neurologic_damage",
+              "rapid_renal_change"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "blood_pressure",
+              "trained_blood_pressure",
+              "target_organ_damage_exam",
+              "longitudinal_care"
+            ],
+            "external": [
+              "renal_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "blood_pressure_target_route",
+              "renal_longitudinal_qol_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "hypertensive_ckd_plan",
+          "followUp": {
+            "timing": "reviewed same-method BP and renal function checkpoint",
+            "required": true,
+            "targets": [
+              "bp",
+              "target_organs",
+              "stage",
+              "treatment_state",
+              "weakness"
+            ]
+          },
+          "outcomes": {
+            "safe": "BP substage is independent and reproducible.",
+            "unsafe": "One stressed value becomes chronic hypertension."
+          },
+          "ownerCommunication": [
+            "Explain acclimatization, series and target-organ risk."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "acclimatized_low_stress_repeat_or_referral",
+            "ownerModifiers": [
+              "measurement_anxiety",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_acute_vision_change_or_retinal_target_damage",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2,
+          "complaint": "У CKD-пациента внезапно ухудшилось зрение, найдена retinal lesion или появились неврологические признаки.",
+          "historyAnswers": {
+            "target_organ_signs": "Acute blindness, disorientation or seizure authored.",
+            "blood_pressure_context": "Immediate series with context; long confirmation not required if damage present.",
+            "prior_renal_snapshots": "CKD/BP baseline preserved.",
+            "medication_nephrotoxin_list": "Current treatment state documented.",
+            "volume_loss_event": "Perfusion/hydration assessed."
+          },
+          "examFindings": [
+            {
+              "factId": "target_organ_damage_overrides_long_persistence_wait",
+              "source": "physical_exam",
+              "finding": "Authored retinal/neurologic damage plus high BP triggers urgent route."
+            },
+            {
+              "factId": "retinal_result_is_authored_not_renderer_inferred",
+              "source": "data_integrity_rule",
+              "finding": "Ophthalmic finding is a fixed exam result, not derived from BP number by UI."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "target_organ_damage_overrides_long_persistence_wait",
+              "discoveryPaths": [
+                "target_organ_signs",
+                "retinal_neurologic_target_exam",
+                "standardized_bp_series"
+              ]
+            },
+            {
+              "factId": "retinal_result_is_authored_not_renderer_inferred",
+              "discoveryPaths": [
+                "blood_pressure_context",
+                "prior_renal_snapshots",
+                "same_episode_stage_substage_qol_review"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_blood_pressure_and_target_organ_exam",
+              "classification": "required_immediate",
+              "result": "Authored BP and retinal/neuro damage."
+            },
+            {
+              "id": "renal_creatinine_sdma_and_stability",
+              "classification": "required_renal_context_without_delay",
+              "result": "Authored current renal function."
+            },
+            {
+              "id": "renal_cbc_biochemistry_electrolytes_phosphorus",
+              "classification": "required_by_emergency_context",
+              "result": "Authored systemic context."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "target_organ_damage_overrides_long_persistence_wait",
+              "retinal_result_is_authored_not_renderer_inferred"
+            ],
+            "confirmedDiagnosisRequires": [
+              "high_bp_with_compatible_authored_target_organ_damage"
+            ],
+            "dangerStates": [
+              "retinal_detachment",
+              "hypertensive_encephalopathy",
+              "seizure",
+              "acute_kidney_decline"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "blood_pressure",
+              "target_organ_damage_exam",
+              "ophthalmoscopy",
+              "neurologic_exam"
+            ],
+            "external": [
+              "ophthalmology_referral",
+              "renal_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "blood_pressure_target_route",
+              "acute_on_chronic_hospital_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "hypertensive_ckd_plan",
+          "followUp": {
+            "timing": "urgent target-organ and BP/renal trend",
+            "required": true,
+            "targets": [
+              "vision",
+              "retina",
+              "neurology",
+              "bp",
+              "renal_function",
+              "treatment_state"
+            ]
+          },
+          "outcomes": {
+            "safe": "Urgent plan starts without weeks of confirmation.",
+            "unsafe": "Blindness waits because only one visit series exists."
+          },
+          "ownerCommunication": [
+            "Explain target-organ emergency and uncertain visual recovery without promise."
+          ],
+          "compatibility": {
+            "temperament": [
+              "visually_impaired",
+              "fearful",
+              "seizing"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_ophthalmology_hospital_route",
+            "ownerModifiers": [
+              "panic_about_blindness",
+              "cost_crisis"
+            ]
+          }
+        },
+        {
+          "id": "p3_treated_substage_requires_serial_measurement",
+          "version": "2026.07.15.1",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "follow_up_priority",
+          "workload": 1.5,
+          "complaint": "Давление изменилось после утверждённого плана; нужно обновить текущую подстадию, не потеряв исходную серию.",
+          "historyAnswers": {
+            "blood_pressure_context": "Same-method current series and old untreated series.",
+            "target_organ_signs": "Vision/neuro changes absent or authored.",
+            "medication_nephrotoxin_list": "Current reviewed treatment state.",
+            "prior_renal_snapshots": "Renal function before and after preserved.",
+            "appetite_nausea_vomiting": "Weakness or poor intake checked."
+          },
+          "examFindings": [
+            {
+              "factId": "treated_bp_substage_preserves_untreated_baseline",
+              "source": "longitudinal_record",
+              "finding": "Current designation includes treatment-state and old series remains immutable."
+            },
+            {
+              "factId": "rapid_drop_or_renal_worsening_requires_review",
+              "source": "safety_rule",
+              "finding": "Weakness, hypotensive pattern or marked renal change is not automatic victory."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "treated_bp_substage_preserves_untreated_baseline",
+              "discoveryPaths": [
+                "blood_pressure_context",
+                "prior_renal_snapshots",
+                "same_episode_stage_substage_qol_review"
+              ]
+            },
+            {
+              "factId": "rapid_drop_or_renal_worsening_requires_review",
+              "discoveryPaths": [
+                "appetite_nausea_vomiting",
+                "hydration_perfusion_before_azotemia",
+                "dated_stable_creatinine_sdma"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "renal_blood_pressure_and_target_organ_exam",
+              "classification": "required_same_method_serial",
+              "result": "Current treated BP/target-organ state."
+            },
+            {
+              "id": "renal_creatinine_sdma_and_stability",
+              "classification": "required_after_reviewed_change",
+              "result": "Authored renal trend."
+            },
+            {
+              "id": "renal_serial_stage_substage_and_quality_of_life",
+              "classification": "required_snapshot_update",
+              "result": "Old and current treatment-state preserved."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "treated_bp_substage_preserves_untreated_baseline",
+              "rapid_drop_or_renal_worsening_requires_review"
+            ],
+            "confirmedDiagnosisRequires": [
+              "same_protocol_serial_treated_bp_context"
+            ],
+            "dangerStates": [
+              "hypotensive_weakness",
+              "acute_renal_decline",
+              "persistent_target_damage"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "blood_pressure",
+              "trained_blood_pressure",
+              "biochemistry",
+              "longitudinal_care"
+            ],
+            "external": [
+              "sdma_external",
+              "renal_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "blood_pressure_target_route",
+              "renal_function_or_referral",
+              "renal_longitudinal_qol_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "hypertensive_ckd_plan",
+          "followUp": {
+            "timing": "same-method serial BP and renal function",
+            "required": true,
+            "targets": [
+              "bp",
+              "treatment_state",
+              "weakness",
+              "creatinine",
+              "sdma",
+              "target_organs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Response is tracked without losing baseline or ignoring harm.",
+            "unsafe": "Fast drop is marked win and old substage overwritten."
+          },
+          "ownerCommunication": [
+            "Explain why current substage includes treatment-state."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "frail"
+            ],
+            "requiredHandlingAlternative": "same_low_stress_measurement_protocol",
+            "ownerModifiers": [
+              "number_anxiety",
+              "care_fatigue"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "iris_ckd_staging_current",
+      "title": "IRIS Staging System for CKD",
+      "url": "https://www.iris-kidney.com/iris-staging-system",
+      "scope": "diagnosis before staging, stable hydrated patient, creatinine/SDMA, discordance, UPC and blood-pressure substaging"
+    },
+    {
+      "id": "iris_guidelines_current",
+      "title": "IRIS CKD Guidelines and Treatment Recommendations",
+      "url": "https://www.iris-kidney.com/iris-guidelines-1",
+      "scope": "current versioned staging and species/stage treatment boundaries"
+    },
+    {
+      "id": "iris_early_diagnosis",
+      "title": "IRIS CKD Early Diagnosis",
+      "url": "https://www.iris-kidney.com/ckd-early-diagnosis",
+      "scope": "nonazotemic disease, proteinuria, concentrating defect, hypertension and structural evidence"
+    },
+    {
+      "id": "iris_marker_utility",
+      "title": "IRIS Utility of Creatinine, UPC and SDMA in Early CKD",
+      "url": "https://www.iris-kidney.com/utility-of-creatinine-upc-and-sdma-in-the-early-diagnosis-of-ckd-in-dogs-and-cats",
+      "scope": "marker limitations, muscle mass, discordance, repeat testing and higher-stage precaution"
+    },
+    {
+      "id": "merck_renal_dysfunction",
+      "title": "Merck Veterinary Manual: Renal Dysfunction in Dogs and Cats",
+      "url": "https://www.merckvetmanual.com/urinary-system/noninfectious-diseases-of-the-urinary-system-in-small-animals/renal-dysfunction-in-small-animals",
+      "scope": "clinical progression, uremia, hydration, differential and longitudinal monitoring"
+    }
+  ],
+  "familyValidationRules": [
+    "ckd_must_be_diagnosed_before_iris_stage",
+    "only_stable_adequately_hydrated_ckd_is_staged",
+    "single_azotemia_during_dehydration_cannot_confirm_ckd",
+    "early_ckd_cannot_be_excluded_by_reference_creatinine",
+    "creatinine_requires_muscle_fasted_and_method_context",
+    "creatinine_and_sdma_cannot_be_mechanically_averaged",
+    "persistent_discordance_keeps_uncertainty_and_reviewed_precaution",
+    "renal_proteinuria_requires_exclusion_of_prerenal_and_postrenal_sources",
+    "dipstick_alone_cannot_assign_upc_substage",
+    "bp_requires_standardized_series_unless_target_organ_damage_present",
+    "target_organ_damage_triggers_urgent_route_without_long_confirmation",
+    "stage_and_two_substages_keep_dates_versions_and_treatment_state",
+    "acute_on_chronic_preserves_old_and_new_baseline_snapshots",
+    "qol_includes_clinical_function_and_owner_observation_not_labs_only",
+    "external_sdma_upc_and_imaging_keep_turnaround_and_episode_snapshot",
+    "no_drug_dose_threshold_diet_composition_infusion_or_biopsy_technique_is_generated",
+    "all_levels_remain_generator_ineligible_until_external_veterinary_approval"
+  ]
+}

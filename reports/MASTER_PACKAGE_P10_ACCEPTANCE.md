@@ -9,6 +9,15 @@
 Статус:
 `technical_runtime_matrix_complete_p0_repository_evidence_partial_full_master_acceptance_blocked`.
 
+> Повторный P8/P10 preflight от 16 июля 2026 года для нового versioned
+> medical-authoring input находится в
+> [MEDICAL_AUTHORING_P8_P10_PREFLIGHT.md](MEDICAL_AUTHORING_P8_P10_PREFLIGHT.md).
+> Он закрывает прежние authoring structural и medical-side mapping gaps, но не
+> меняет production verdict: все veterinary statuses остаются pending,
+> production pool равен 0, а activation и P3–P7 production authorities не
+> утверждены и не подключены.
+> Остальной текст сохранён как исторический P10 snapshot от 15 июля.
+
 ## Итоговое решение
 
 Технический вертикальный срез P0-R–P7, fail-closed граница P8, текущий opt-in

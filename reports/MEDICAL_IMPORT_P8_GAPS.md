@@ -4,6 +4,14 @@
 
 Статус: `blocked_external_veterinary_approval_no_activation`.
 
+> Повторный preflight от 16 июля 2026 года для нового
+> `vetgeme-medical-production-authoring@2026.07.16.39` находится в
+> [MEDICAL_AUTHORING_P8_P10_PREFLIGHT.md](MEDICAL_AUTHORING_P8_P10_PREFLIGHT.md).
+> Новый review-only input снимает перечисленные ниже исторические structural и
+> medical-side mapping gaps, но ничего не активирует: veterinary status остаётся
+> pending, production pool — 0. Остальной текст этого файла сохранён как снимок
+> исходного P8-аудита пакета 2026-07-14.
+
 Этот файл перечисляет только фактически найденные несоответствия и недостающие
 решения. Медицинские формулировки, статусы, capabilities, crosswalk и runtime-поля
 здесь не дополняются и не угадываются.
