@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "packageId": "vetgeme-p9-visual-state-authoring",
+  "packageVersion": "2026.07.16.2",
+  "createdAt": "2026-07-16",
+  "status": "author_complete_validation_passed",
+  "runtimeEligible": false,
+  "activationRequires": [
+    "programmer_projection_adapter",
+    "1280x720_browser_smoke",
+    "mobile_collapse_smoke",
+    "save_reload_visual_parity"
+  ],
+  "boundaries": {
+    "runtimeChanged": false,
+    "designChanged": false,
+    "saveSchemaChanged": false,
+    "simulationAuthorityChanged": false,
+    "artFilesChanged": false
+  },
+  "sources": {
+    "artPackId": "vetgeme-modular-clinic-art-v1",
+    "p5ResourceCatalogVersion": "2026.07.16.2",
+    "p5LifecycleCatalogVersion": "2026.07.16.2"
+  },
+  "counts": {
+    "artAssetsAvailable": 133,
+    "rooms": 12,
+    "roomsWithBaseAsset": 11,
+    "equipment": 27,
+    "equipmentWithBaseAsset": 14,
+    "equipmentMissingBaseAsset": 13,
+    "staff": 10,
+    "hudSurfaces": 9
+  },
+  "files": [
+    "MANIFEST.json",
+    "README.md",
+    "PROGRAMMER_TASK.md",
+    "source/visual-policy.json",
+    "scripts/build-p9-package.mjs",
+    "scripts/validate-p9-package.mjs",
+    "generated/room-visual-state-catalog.json",
+    "generated/equipment-visual-state-catalog.json",
+    "generated/staff-visual-state-catalog.json",
+    "generated/hud-data-contract.json",
+    "reports/ASSET_GAPS.json",
+    "reports/VALIDATION_REPORT.json"
+  ],
+  "validation": {
+    "status": "pass",
+    "report": "reports/VALIDATION_REPORT.json",
+    "referencedAssets": 31
+  }
+}

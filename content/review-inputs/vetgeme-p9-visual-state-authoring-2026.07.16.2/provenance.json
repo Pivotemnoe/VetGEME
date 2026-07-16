@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "provenanceId": "vetgeme-p9-visual-state-authoring-review-source",
+  "packageId": "vetgeme-p9-visual-state-authoring",
+  "packageVersion": "2026.07.16.2",
+  "sourceArchive": "p9-visual-state-authoring-2026.07.16.2.zip",
+  "sourceDirectory": "p9-visual-state-authoring-2026.07.16.2",
+  "archive": {
+    "path": "p9-visual-state-authoring-2026.07.16.2.zip",
+    "checksumPath": "p9-visual-state-authoring-2026.07.16.2.zip.sha256",
+    "sha256": "049f554c54dd10ba6c2b141af92f9a327b09d715dd93d6b7b98874e8b5ea2284",
+    "zipEntryCount": 17,
+    "extractedFileCount": 12,
+    "extractedBytes": 134143,
+    "keyFileHashes": {
+      "MANIFEST.json": "7f940f8ba3df745670fc5b4c262a6f79caf5db9edd4f3068a379f18ec4327515",
+      "source/visual-policy.json": "8f8cebd0860fae8d21f71583d7039163a1fede43817cb443584baba8ba437499",
+      "scripts/build-p9-package.mjs": "b3c6f4acd8981b26c2af7c70cc2d739c636c8e5818614e9da70f9e2d2c43ca48",
+      "scripts/validate-p9-package.mjs": "cfad54dd0daf6232ac2fb62a9c102c32d5a76d8a8dc7fd6947d73388bf5c4878",
+      "generated/room-visual-state-catalog.json": "25241dc75767be5b767149ed0337318650babc3b7cb99b4382e2ac4e47675b94",
+      "generated/equipment-visual-state-catalog.json": "a8e3214c165c7350d27eae08c756f7719f48a19fa77c87607abb568e5b415e8b",
+      "generated/staff-visual-state-catalog.json": "f346037f8dfa2079c537bae818abf707521ba1d1881f11a71b13be566e36d1aa",
+      "generated/hud-data-contract.json": "1be394e082c13dc4007fda01407f8db03b85cc39b22a13485ceb02f10035c751",
+      "reports/ASSET_GAPS.json": "82dd66514b2170419c911c697974fcb6e9398bffea12ac7e21e6b94f246c18ff",
+      "reports/VALIDATION_REPORT.json": "cac4c0a0730bd1c800fb2400113e15bb7090712a35da90f2f71376c36d934129"
+    }
+  },
+  "sourceFileCount": 12,
+  "sourceBytes": 134143,
+  "aggregateSha256": "99bf856f6ebb3fc1cdf4491c770fc330a26f63e5f450a1a9da12a03d9c65e907",
+  "files": [
+    {
+      "path": "generated/equipment-visual-state-catalog.json",
+      "originPath": "p9-visual-state-authoring-2026.07.16.2/generated/equipment-visual-state-catalog.json",
+      "bytes": 66637,
+      "sha256": "a8e3214c165c7350d27eae08c756f7719f48a19fa77c87607abb568e5b415e8b"
+    },
+    {
+      "path": "generated/hud-data-contract.json",
+      "originPath": "p9-visual-state-authoring-2026.07.16.2/generated/hud-data-contract.json",
+      "bytes": 2617,
+      "sha256": "1be394e082c13dc4007fda01407f8db03b85cc39b22a13485ceb02f10035c751"
+    },
+    {
+      "path": "generated/room-visual-state-catalog.json",
+      "originPath": "p9-visual-state-authoring-2026.07.16.2/generated/room-visual-state-catalog.json",
+      "bytes": 17002,
+      "sha256": "25241dc75767be5b767149ed0337318650babc3b7cb99b4382e2ac4e47675b94"
+    },
+    {
+      "path": "generated/staff-visual-state-catalog.json",
+      "originPath": "p9-visual-state-authoring-2026.07.16.2/generated/staff-visual-state-catalog.json",
+      "bytes": 12088,
+      "sha256": "f346037f8dfa2079c537bae818abf707521ba1d1881f11a71b13be566e36d1aa"
+    },
+    {
+      "path": "MANIFEST.json",
+      "originPath": "p9-visual-state-authoring-2026.07.16.2/MANIFEST.json",
+      "bytes": 1521,
+      "sha256": "7f940f8ba3df745670fc5b4c262a6f79caf5db9edd4f3068a379f18ec4327515"
+    },
+    {
+      "path": "PROGRAMMER_TASK.md",
+      "originPath": "p9-visual-state-authoring-2026.07.16.2/PROGRAMMER_TASK.md",
+      "bytes": 3051,
+      "sha256": "6e5c1b896f75a49f213ebc961524a3775ba4cb1511a5c855a400944c7531bbd2"
+    },
+    {
+      "path": "README.md",
+      "originPath": "p9-visual-state-authoring-2026.07.16.2/README.md",
+      "bytes": 1281,
+      "sha256": "376d8fb0814c9d53d9d1056b4263c70b2727eb5cc9e2f4e27fd1e0ad942f644c"
+    },
+    {
+      "path": "reports/ASSET_GAPS.json",
+      "originPath": "p9-visual-state-authoring-2026.07.16.2/reports/ASSET_GAPS.json",
+      "bytes": 6903,
+      "sha256": "82dd66514b2170419c911c697974fcb6e9398bffea12ac7e21e6b94f246c18ff"
+    },
+    {
+      "path": "reports/VALIDATION_REPORT.json",
+      "originPath": "p9-visual-state-authoring-2026.07.16.2/reports/VALIDATION_REPORT.json",
+      "bytes": 748,
+      "sha256": "cac4c0a0730bd1c800fb2400113e15bb7090712a35da90f2f71376c36d934129"
+    },
+    {
+      "path": "scripts/build-p9-package.mjs",
+      "originPath": "p9-visual-state-authoring-2026.07.16.2/scripts/build-p9-package.mjs",
+      "bytes": 15396,
+      "sha256": "b3c6f4acd8981b26c2af7c70cc2d739c636c8e5818614e9da70f9e2d2c43ca48"
+    },
+    {
+      "path": "scripts/validate-p9-package.mjs",
+      "originPath": "p9-visual-state-authoring-2026.07.16.2/scripts/validate-p9-package.mjs",
+      "bytes": 4193,
+      "sha256": "cfad54dd0daf6232ac2fb62a9c102c32d5a76d8a8dc7fd6947d73388bf5c4878"
+    },
+    {
+      "path": "source/visual-policy.json",
+      "originPath": "p9-visual-state-authoring-2026.07.16.2/source/visual-policy.json",
+      "bytes": 2706,
+      "sha256": "8f8cebd0860fae8d21f71583d7039163a1fede43817cb443584baba8ba437499"
+    }
+  ]
+}

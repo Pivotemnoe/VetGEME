@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "vetgeme-review-input-registry",
-  "registryVersion": "2026.07.16.10",
+  "registryVersion": "2026.07.16.11",
   "reviewInputs": [
     {
       "reviewInputId": "vetgeme-medical-production-authoring",
@@ -686,6 +686,122 @@
         "catalogSha256": {
           "p4OwnerProfiles": "3e722abff5eb46e0161f714dd6fe2386e0f6f4c3997dc276bd0752930b682b9f",
           "p4BehaviorCrosswalk": "0d211caf8b5af4ae64cda672a36836350411b82053c29cb6741252dbfcb65582"
+        }
+      }
+    },
+    {
+      "reviewInputId": "vetgeme-p9-visual-state-authoring",
+      "reviewInputVersion": "2026.07.16.2",
+      "kind": "p9_visual_state_authoring",
+      "packageId": "vetgeme-p9-visual-state-authoring",
+      "packageVersion": "2026.07.16.2",
+      "root": "content/review-inputs/vetgeme-p9-visual-state-authoring-2026.07.16.2",
+      "sourceRoot": "source",
+      "manifestPath": "source/MANIFEST.json",
+      "provenancePath": "provenance.json",
+      "status": "author_complete_validation_passed",
+      "reviewOnly": true,
+      "productionEligible": false,
+      "runtimeEligible": false,
+      "generatorEligible": false,
+      "activationAllowed": false,
+      "allowRuntimeActivation": false,
+      "allowActivationManifest": false,
+      "allowSimulationMutation": false,
+      "allowVisualCapabilityGrant": false,
+      "allowArtMutation": false,
+      "expectedCounts": {
+        "sourceFiles": 12,
+        "sourceBytes": 134143,
+        "artAssetsAvailable": 133,
+        "referencedAssets": 31,
+        "rooms": 12,
+        "roomsWithBaseAsset": 11,
+        "equipment": 27,
+        "equipmentWithBaseAsset": 14,
+        "equipmentMissingBaseAsset": 13,
+        "staff": 10,
+        "hudSurfaces": 9,
+        "productionPool": 0
+      },
+      "sourceIntegrity": {
+        "provenanceSha256": "ab998c36bc8e0db55a2f0938ada9ab00b4de5fc81ea7a4960e319c9705597d97",
+        "aggregateSha256": "99bf856f6ebb3fc1cdf4491c770fc330a26f63e5f450a1a9da12a03d9c65e907",
+        "archiveSha256": "049f554c54dd10ba6c2b141af92f9a327b09d715dd93d6b7b98874e8b5ea2284",
+        "manifestSha256": "7f940f8ba3df745670fc5b4c262a6f79caf5db9edd4f3068a379f18ec4327515"
+      },
+      "p5ReviewInput": {
+        "reviewInputId": "vetgeme-p5-production-authoring",
+        "reviewInputVersion": "2026.07.16.2",
+        "reviewOnly": true,
+        "runtimeEligible": false,
+        "sourceIntegrity": {
+          "provenanceSha256": "f5f54786a0a670d3c9fa1fc8c27b003dc76b2593772b61c21a07523121b829e5",
+          "aggregateSha256": "db30b1feacd01fdab2cd6d750b59892c250d4e15eab01d1cd363c49b64dc6ad3",
+          "archiveSha256": "665183acc97096477dd9366b8116a65a11862e4919d02170278f8e97e241a7ab"
+        },
+        "resourceCatalogSha256": "67503f3c3c8257a5a5765abe85319fd343f82e7a3e3c36198a6d9a26f534f34b",
+        "resourceLifecycleCatalogSha256": "62b49f14ddb213157c6a59879d33aa3fd65500078c05f3fdbc3b3ab4c491cbc6"
+      },
+      "authorAssetIdIndex": {
+        "path": "content/review-inputs/vetgeme-p9-visual-state-authoring-2026.07.16.2/host/author-asset-id-index.json",
+        "sha256": "d609cfdbb76dce9fd2d505fdc83d32e5ea478e1f44d8f0c3cf0a87e40cf7ae0e",
+        "sourcePackId": "vetgeme-modular-clinic-art-v1",
+        "sourceAssetManifestSha256": "9a209ac734297e2e01308f6be1a68e32d8c92515290de4aab1997f11185fc7b1",
+        "assets": 133
+      },
+      "hostReviewHarness": {
+        "status": "host_review_harness_validation_passed_activation_forbidden",
+        "integrationStatus": "explicit_review_harness_only",
+        "browserAcceptanceStatus": "passed",
+        "explicitReviewOnly": true,
+        "ordinaryRuntimeConnected": false,
+        "ordinaryRuntimeLoads": false,
+        "runtimeEligible": false,
+        "activationAllowed": false,
+        "artifacts": {
+          "assetCrosswalk": {
+            "path": "content/review-inputs/vetgeme-p9-visual-state-authoring-2026.07.16.2/host/runtime-v2-crosswalk.json",
+            "sha256": "8114a14340690523843f6ca19dd0cc7d4e7a48b5261bcb504cb605b6febc9e4a"
+          },
+          "adapter": {
+            "path": "systems/p9-visual-state-adapter-v2.js",
+            "sha256": "92f06aa646dad512359bca965d89ee1d1a8c456bfb1a0a07d838c831c54515f6"
+          },
+          "renderer": {
+            "path": "visual/clinic-renderer-v2.js",
+            "sha256": "478cc81de32ededb566b3b6c5c93e466340fd834dba8cb4fcbc7059d4b765b6b"
+          },
+          "surfaceScript": {
+            "path": "visual/p9-review-surface-v2.js",
+            "sha256": "e93591b2cd0bc122886a3c856cfe9392b1e554ed05042a5130e6ec3c5b0ec4cb"
+          },
+          "surfaceStyles": {
+            "path": "visual/p9-review-surface-v2.css",
+            "sha256": "0d648d61a8922de31fed1d9a41c23f264e6bc6fd04906a52c378189b4a4d3290"
+          },
+          "browserSmoke": {
+            "path": "scripts/playtest-p9-authoring-review-v2.js",
+            "sha256": "bbab2c5bec507929a7d6d46c037cdb1da9abc9e32788ad83cd34ef454e9f9174"
+          },
+          "runtimeManifest": {
+            "path": "art/runtime-v2/manifest.json",
+            "sha256": "04679357ad52782466dd8d1747d341a52a651bc804d67c8fc2eb3e3570b4f719"
+          },
+          "sceneLayout": {
+            "path": "art/runtime-v2/scene-layout.json",
+            "sha256": "de71c885b5f54b2a199b65228a0000106d8be02e6a0b61b8141ed533ee2eec90"
+          }
+        },
+        "bindings": {
+          "assetAliases": 31,
+          "canvasRooms": 4,
+          "canvasEquipment": 1,
+          "canvasStaff": 0,
+          "explicitRoomOverlayAnchors": 20,
+          "domRooms": 8,
+          "domEquipment": 26,
+          "domStaff": 10
         }
       }
     }

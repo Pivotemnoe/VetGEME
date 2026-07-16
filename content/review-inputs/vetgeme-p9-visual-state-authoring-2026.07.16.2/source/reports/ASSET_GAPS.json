@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "reportId": "vetgeme-p9-asset-gaps",
+  "reportVersion": "2026.07.16.2",
+  "status": "non_blocking_dom_fallback_authored",
+  "missingRoomAssets": [
+    {
+      "resourceId": "room.staff.1",
+      "title": "Комната персонала",
+      "fallback": {
+        "renderMode": "locked_or_dom_label_until_room_art_exists",
+        "label": "Помещение запланировано, но для него ещё нет отдельной картинки",
+        "capabilityMustRemainStateDriven": true
+      }
+    }
+  ],
+  "missingEquipmentAssets": [
+    {
+      "resourceId": "equipment.tonometer",
+      "capabilityId": "tonometer",
+      "title": "Тонометр для глаз",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Тонометр для глаз: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    },
+    {
+      "resourceId": "equipment.ophthalmoscope",
+      "capabilityId": "ophthalmoscope",
+      "title": "Офтальмоскоп",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Офтальмоскоп: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    },
+    {
+      "resourceId": "equipment.wood_lamp",
+      "capabilityId": "wood_lamp",
+      "title": "Лампа Вуда",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Лампа Вуда: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    },
+    {
+      "resourceId": "equipment.nebulizer",
+      "capabilityId": "nebulizer",
+      "title": "Небулайзер",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Небулайзер: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    },
+    {
+      "resourceId": "equipment.pulse_oximeter",
+      "capabilityId": "pulse_oximeter",
+      "title": "Пульсоксиметр",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Пульсоксиметр: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    },
+    {
+      "resourceId": "equipment.glucometer",
+      "capabilityId": "glucometer",
+      "title": "Глюкометр",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Глюкометр: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    },
+    {
+      "resourceId": "equipment.blood_ketone_meter",
+      "capabilityId": "blood_ketone_meter",
+      "title": "Измеритель кетонов",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Измеритель кетонов: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    },
+    {
+      "resourceId": "equipment.cgm_sensor",
+      "capabilityId": "cgm_sensor",
+      "title": "Система непрерывного контроля глюкозы",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Система непрерывного контроля глюкозы: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    },
+    {
+      "resourceId": "equipment.refractometer",
+      "capabilityId": "refractometer",
+      "title": "Рефрактометр",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Рефрактометр: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    },
+    {
+      "resourceId": "equipment.blood_pressure_monitor",
+      "capabilityId": "blood_pressure_monitor",
+      "title": "Монитор артериального давления",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Монитор артериального давления: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    },
+    {
+      "resourceId": "equipment.feline_inhaler_spacer",
+      "capabilityId": "feline_inhaler_spacer",
+      "title": "Спейсер для кошек",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Спейсер для кошек: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    },
+    {
+      "resourceId": "equipment.lactate_meter",
+      "capabilityId": "lactate_meter",
+      "title": "Измеритель лактата",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Измеритель лактата: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    },
+    {
+      "resourceId": "equipment.anesthesia_machine",
+      "capabilityId": "anesthesia_machine",
+      "title": "Наркозный аппарат",
+      "fallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Наркозный аппарат: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      }
+    }
+  ],
+  "sharedShellVariants": [
+    {
+      "kind": "room",
+      "resourceId": "room.short_stay.1",
+      "title": "Краткий стационар"
+    },
+    {
+      "kind": "room",
+      "resourceId": "room.dental.1",
+      "title": "Стоматологическая зона"
+    },
+    {
+      "kind": "equipment",
+      "resourceId": "equipment.biochemistry_analyzer",
+      "title": "Биохимический анализатор"
+    },
+    {
+      "kind": "equipment",
+      "resourceId": "equipment.electrolyte_analyzer",
+      "title": "Анализатор электролитов"
+    },
+    {
+      "kind": "equipment",
+      "resourceId": "equipment.coagulation_analyzer",
+      "title": "Коагулометр"
+    }
+  ],
+  "rule": "Missing art never changes simulation availability and never permits a misleading substitute without a human label."
+}

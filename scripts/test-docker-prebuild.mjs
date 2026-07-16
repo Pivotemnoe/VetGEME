@@ -142,6 +142,13 @@ if (existsSync(reviewInputRegistry)) {
     ["P8 authoring .2 review input", "scripts/validate-p8-authoring-review-input-v2.mjs"],
     ["P8 authoring .2 review contract", "scripts/test-p8-authoring-review-input-v2.mjs"],
     ["P8 authoring .2 medical review service view", "scripts/test-medical-review-service-view.mjs"],
+    ["P9 authoring .2 review provenance", "scripts/refresh-p9-authoring-review-provenance-v2.mjs"],
+    ["P9 authoring .2 bundled validator", "scripts/run-p9-authoring-bundled-validator-v2.mjs"],
+    ["P9 authoring .2 review input", "scripts/validate-p9-authoring-review-input-v2.mjs"],
+    ["P9 authoring .2 review contract", "scripts/test-p9-authoring-review-input-v2.mjs"],
+    ["P9 authoring .2 visual-state adapter", "scripts/test-p9-visual-state-adapter-v2.js"],
+    ["P9 authoring .2 runtime-v2 crosswalk", "scripts/test-p9-runtime-v2-crosswalk.js"],
+    ["P9 authoring .2 renderer contract", "scripts/test-p9-renderer-contract-v2.js"],
   );
 } else {
   console.log(

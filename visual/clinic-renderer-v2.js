@@ -5,6 +5,8 @@
   const LOAD_TIMEOUT_MS = 15000;
   const params = new URLSearchParams(window.location.search);
   const enabled = params.get("visualMode") === MODE_ID;
+  const p9ReviewEnabled = params.get("p9") === "review-v2"
+    && window.__VETGEME_P9_REVIEW_HARNESS__ === true;
   const assetPackVersion = "20260715d";
   const manifestUrl = `art/runtime-v2/manifest.json?v=${assetPackVersion}`;
   const layoutUrl = `art/runtime-v2/scene-layout.json?v=${assetPackVersion}`;
@@ -99,6 +101,11 @@
       "animation.veterinarian-female",
       "animation.veterinarian-male"
     ].forEach((assetId) => required.add(assetId));
+    if (p9ReviewEnabled) {
+      manifest.assets
+        .filter((asset) => asset.category === "progression")
+        .forEach((asset) => required.add(asset.id));
+    }
     return [...required];
   }
 
@@ -219,6 +226,60 @@
     context.drawImage(image, room.position.x, room.position.y, room.logicalBox.width, room.logicalBox.height);
   }
 
+  function p9SceneProjection(options) {
+    if (!p9ReviewEnabled) return null;
+    const scene = options?.visualState?.scene;
+    return scene && typeof scene === "object" && !Array.isArray(scene) ? scene : null;
+  }
+
+  function p9Record(records, id) {
+    if (!records || typeof records !== "object" || Array.isArray(records)) return null;
+    const record = records[id];
+    return record && typeof record === "object" && !Array.isArray(record) ? record : null;
+  }
+
+  function p9OverlayAssetIds(record) {
+    if (!Array.isArray(record?.overlayAssetIds)) return [];
+    return record.overlayAssetIds.filter((assetId) => typeof assetId === "string" && assets.has(assetId));
+  }
+
+  function p9RoomOverlayAnchor(record, assetId) {
+    const anchors = record?.overlayAnchorsByAssetId;
+    if (!anchors || typeof anchors !== "object" || Array.isArray(anchors)) return null;
+    const anchor = anchors[assetId];
+    if (!anchor || typeof anchor !== "object" || Array.isArray(anchor)) return null;
+    if (![anchor.x, anchor.y, anchor.zFootY, anchor.scale].every(Number.isFinite)) return null;
+    if (anchor.x < 0 || anchor.y < 0 || anchor.zFootY < 0 || anchor.scale <= 0) return null;
+    return anchor;
+  }
+
+  function addP9RoomOverlays(depthDrawables, context, room, record) {
+    p9OverlayAssetIds(record).forEach((assetId, index) => {
+      const anchor = p9RoomOverlayAnchor(record, assetId);
+      if (!anchor) return;
+      depthDrawables.push({
+        id: `p9-room-${room.id}-${assetId}-${index}`,
+        zFootY: anchor.zFootY,
+        drawOrder: 90 + index,
+        draw: () => drawAsset(context, assetId, anchor.x, anchor.y, { scale: anchor.scale })
+      });
+    });
+  }
+
+  function addP9PlacementOverlays(depthDrawables, context, placement, record) {
+    p9OverlayAssetIds(record).forEach((assetId, index, overlayIds) => {
+      const spacing = 34;
+      const x = placement.x + (index - (overlayIds.length - 1) / 2) * spacing;
+      const y = placement.y;
+      depthDrawables.push({
+        id: `p9-placement-${placement.id}-${assetId}-${index}`,
+        zFootY: placement.zFootY,
+        drawOrder: 80 + index,
+        draw: () => drawAsset(context, assetId, x, y, { scale: 0.34 })
+      });
+    });
+  }
+
   function drawRoomForeground(context, room) {
     const image = imageFor(room.assetId);
     if (!image || !room.foregroundSlice) return;
@@ -267,11 +328,19 @@
 
   function drawScene(context, options = {}) {
     if (!ready) return false;
+    const p9Scene = p9SceneProjection(options);
+    const p9Rooms = p9Scene?.roomsBySceneId || null;
+    const p9Placements = p9Scene?.placementsById || null;
     context.imageSmoothingEnabled = false;
     drawCorridor(context, "underlay");
-    layout.rooms.forEach((room) => drawRoom(context, room));
+    layout.rooms.forEach((room) => {
+      const projection = p9Record(p9Rooms, room.id);
+      if (projection?.showBase === false) return;
+      drawRoom(context, room);
+    });
     layout.placements
       .filter((placement) => placement.layer === "wall")
+      .filter((placement) => p9Record(p9Placements, placement.id)?.showBase !== false)
       .forEach((placement) => drawAsset(context, placement.assetId, placement.x, placement.y, {
         scale: placement.scale || 1
       }));
@@ -281,6 +350,7 @@
     const depthDrawables = [];
     layout.placements
       .filter((placement) => placement.layer === "floor")
+      .filter((placement) => p9Record(p9Placements, placement.id)?.showBase !== false)
       .forEach((placement) => depthDrawables.push({
         id: placement.id,
         zFootY: placement.zFootY,
@@ -291,12 +361,21 @@
       }));
     layout.rooms
       .filter((room) => room.foregroundSlice)
+      .filter((room) => p9Record(p9Rooms, room.id)?.showBase !== false)
       .forEach((room) => depthDrawables.push({
         id: `foreground-${room.id}`,
         zFootY: room.foregroundSlice.zFootY,
         drawOrder: room.foregroundSlice.drawOrder ?? 100,
         draw: () => drawRoomForeground(context, room)
       }));
+    if (p9Scene) {
+      layout.rooms.forEach((room) => {
+        addP9RoomOverlays(depthDrawables, context, room, p9Record(p9Rooms, room.id));
+      });
+      layout.placements.forEach((placement) => {
+        addP9PlacementOverlays(depthDrawables, context, placement, p9Record(p9Placements, placement.id));
+      });
+    }
     layout.staticActors.forEach((actor) => depthDrawables.push({
       id: actor.id,
       zFootY: actor.zFootY,

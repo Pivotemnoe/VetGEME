@@ -1,0 +1,2035 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p9-equipment-visual-states",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "equipment": [
+    {
+      "resourceId": "equipment.otoscope",
+      "capabilityId": "otoscope",
+      "title": "Отоскоп",
+      "baseAssetIds": [
+        "equipment.diagnostic.otoscope-station"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.microscope",
+      "capabilityId": "microscope",
+      "title": "Микроскоп",
+      "baseAssetIds": [
+        "equipment.diagnostic.microscope"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.tonometer",
+      "capabilityId": "tonometer",
+      "title": "Тонометр для глаз",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Тонометр для глаз: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.ophthalmoscope",
+      "capabilityId": "ophthalmoscope",
+      "title": "Офтальмоскоп",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Офтальмоскоп: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.fecal_centrifuge",
+      "capabilityId": "fecal_centrifuge",
+      "title": "Центрифуга для анализа кала",
+      "baseAssetIds": [
+        "equipment.diagnostic.centrifuge"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.wood_lamp",
+      "capabilityId": "wood_lamp",
+      "title": "Лампа Вуда",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Лампа Вуда: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.nebulizer",
+      "capabilityId": "nebulizer",
+      "title": "Небулайзер",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Небулайзер: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.pulse_oximeter",
+      "capabilityId": "pulse_oximeter",
+      "title": "Пульсоксиметр",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Пульсоксиметр: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.glucometer",
+      "capabilityId": "glucometer",
+      "title": "Глюкометр",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Глюкометр: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.blood_ketone_meter",
+      "capabilityId": "blood_ketone_meter",
+      "title": "Измеритель кетонов",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Измеритель кетонов: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.cgm_sensor",
+      "capabilityId": "cgm_sensor",
+      "title": "Система непрерывного контроля глюкозы",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Система непрерывного контроля глюкозы: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.centrifuge",
+      "capabilityId": "centrifuge",
+      "title": "Лабораторная центрифуга",
+      "baseAssetIds": [
+        "equipment.diagnostic.centrifuge"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.refractometer",
+      "capabilityId": "refractometer",
+      "title": "Рефрактометр",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Рефрактометр: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.hematology_analyzer",
+      "capabilityId": "hematology_analyzer",
+      "title": "Гематологический анализатор",
+      "baseAssetIds": [
+        "equipment.diagnostic.hematology-analyzer"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.biochemistry_analyzer",
+      "capabilityId": "biochemistry_analyzer",
+      "title": "Биохимический анализатор",
+      "baseAssetIds": [
+        "equipment.diagnostic.hematology-analyzer"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": true,
+      "variantLabelRequired": true,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.electrolyte_analyzer",
+      "capabilityId": "electrolyte_analyzer",
+      "title": "Анализатор электролитов",
+      "baseAssetIds": [
+        "equipment.diagnostic.hematology-analyzer"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": true,
+      "variantLabelRequired": true,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.blood_pressure_monitor",
+      "capabilityId": "blood_pressure_monitor",
+      "title": "Монитор артериального давления",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Монитор артериального давления: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.oxygen_device",
+      "capabilityId": "oxygen_device",
+      "title": "Кислородное оборудование",
+      "baseAssetIds": [
+        "equipment.procedural.oxygen-cage"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.infusion_pump",
+      "capabilityId": "infusion_pump",
+      "title": "Инфузионный насос",
+      "baseAssetIds": [
+        "equipment.procedural.infusion-pumps"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.vital_monitor",
+      "capabilityId": "vital_monitor",
+      "title": "Монитор жизненных показателей",
+      "baseAssetIds": [
+        "equipment.diagnostic.vital-sign-monitor"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.feline_inhaler_spacer",
+      "capabilityId": "feline_inhaler_spacer",
+      "title": "Спейсер для кошек",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Спейсер для кошек: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.lactate_meter",
+      "capabilityId": "lactate_meter",
+      "title": "Измеритель лактата",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Измеритель лактата: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.xray_system",
+      "capabilityId": "xray_system",
+      "title": "Рентгеновская система",
+      "baseAssetIds": [
+        "equipment.procedural.xray-table",
+        "equipment.procedural.xray-console"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.ultrasound_system",
+      "capabilityId": "ultrasound_system",
+      "title": "УЗИ-аппарат",
+      "baseAssetIds": [
+        "equipment.diagnostic.ultrasound-machine"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.anesthesia_machine",
+      "capabilityId": "anesthesia_machine",
+      "title": "Наркозный аппарат",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_dom_label_required",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": {
+        "renderMode": "dom_interaction_label_no_fake_sprite",
+        "label": "Наркозный аппарат: отдельная картинка ещё не подготовлена",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.dental_xray_system",
+      "capabilityId": "dental_xray_system",
+      "title": "Стоматологический рентген",
+      "baseAssetIds": [
+        "equipment.procedural.dental-station",
+        "equipment.procedural.xray-console"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": false,
+      "variantLabelRequired": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "equipment.coagulation_analyzer",
+      "capabilityId": "coagulation_analyzer",
+      "title": "Коагулометр",
+      "baseAssetIds": [
+        "equipment.diagnostic.hematology-analyzer"
+      ],
+      "baseAssetStatus": "available",
+      "sharedAnalyzerShell": true,
+      "variantLabelRequired": true,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "visibleInClinic": false,
+          "visibleInShop": true,
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "training_pending": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.covered-equipment"
+          ],
+          "label": "Нужно обучить сотрудника"
+        },
+        "maintenance_due": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.safety-barrier"
+          ],
+          "label": "Пора провести обслуживание"
+        },
+        "maintenance_active": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.renovation-cart",
+            "progression.safety-barrier"
+          ],
+          "label": "Сейчас на обслуживании"
+        },
+        "stock_blocked": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Закончились нужные расходники"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    }
+  ]
+}

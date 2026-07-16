@@ -1,0 +1,563 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p9-room-visual-states",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "rooms": [
+    {
+      "resourceId": "room.reception.1",
+      "title": "Ресепшен",
+      "baseAssetIds": [
+        "room-reception-empty"
+      ],
+      "baseAssetStatus": "available",
+      "sharedShellVariant": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.locked-door-overlay"
+          ],
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "room.waiting.1",
+      "title": "Зал ожидания",
+      "baseAssetIds": [
+        "room-waiting-empty"
+      ],
+      "baseAssetStatus": "available",
+      "sharedShellVariant": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.locked-door-overlay"
+          ],
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "room.consult.1",
+      "title": "Кабинет приёма 1",
+      "baseAssetIds": [
+        "room-doctor-office-empty"
+      ],
+      "baseAssetStatus": "available",
+      "sharedShellVariant": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.locked-door-overlay"
+          ],
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "room.lab.basic",
+      "title": "Базовая лабораторная зона",
+      "baseAssetIds": [
+        "room-laboratory-empty"
+      ],
+      "baseAssetStatus": "available",
+      "sharedShellVariant": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.locked-door-overlay"
+          ],
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "room.storage.1",
+      "title": "Склад расходников",
+      "baseAssetIds": [
+        "room-pharmacy-empty"
+      ],
+      "baseAssetStatus": "available",
+      "sharedShellVariant": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.locked-door-overlay"
+          ],
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "room.isolation.1",
+      "title": "Изоляционная зона",
+      "baseAssetIds": [
+        "room-isolation-empty"
+      ],
+      "baseAssetStatus": "available",
+      "sharedShellVariant": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.locked-door-overlay"
+          ],
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "room.consult.2",
+      "title": "Кабинет приёма 2",
+      "baseAssetIds": [
+        "room-exam-02-empty"
+      ],
+      "baseAssetStatus": "available",
+      "sharedShellVariant": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.locked-door-overlay"
+          ],
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "room.staff.1",
+      "title": "Комната персонала",
+      "baseAssetIds": [],
+      "baseAssetStatus": "missing_requires_art_or_dom_fallback",
+      "sharedShellVariant": false,
+      "missingAssetFallback": {
+        "renderMode": "locked_or_dom_label_until_room_art_exists",
+        "label": "Помещение запланировано, но для него ещё нет отдельной картинки",
+        "capabilityMustRemainStateDriven": true
+      },
+      "visualStates": {
+        "not_owned": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.locked-door-overlay"
+          ],
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "room.procedure.1",
+      "title": "Процедурная",
+      "baseAssetIds": [
+        "room-procedure-empty"
+      ],
+      "baseAssetStatus": "available",
+      "sharedShellVariant": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.locked-door-overlay"
+          ],
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "room.imaging.1",
+      "title": "Кабинет визуальной диагностики",
+      "baseAssetIds": [
+        "room-imaging-empty"
+      ],
+      "baseAssetStatus": "available",
+      "sharedShellVariant": false,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.locked-door-overlay"
+          ],
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "room.short_stay.1",
+      "title": "Краткий стационар",
+      "baseAssetIds": [
+        "room-procedure-empty"
+      ],
+      "baseAssetStatus": "available",
+      "sharedShellVariant": true,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.locked-door-overlay"
+          ],
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    },
+    {
+      "resourceId": "room.dental.1",
+      "title": "Стоматологическая зона",
+      "baseAssetIds": [
+        "room-procedure-empty"
+      ],
+      "baseAssetStatus": "available",
+      "sharedShellVariant": true,
+      "missingAssetFallback": null,
+      "visualStates": {
+        "not_owned": {
+          "showBase": false,
+          "overlayAssetIds": [
+            "progression.locked-door-overlay"
+          ],
+          "label": "Пока не куплено"
+        },
+        "pending_delivery": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.delivery-pallet",
+            "progression.stacked-boxes"
+          ],
+          "label": "Уже заказано — ждём доставку"
+        },
+        "delivered_not_ready": {
+          "showBase": true,
+          "overlayAssetIds": [
+            "progression.opened-crates",
+            "progression.covered-equipment"
+          ],
+          "label": "Доставлено, но ещё не готово к работе"
+        },
+        "ready": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "label": "Готово к работе"
+        },
+        "busy": {
+          "showBase": true,
+          "overlayAssetIds": [],
+          "domStatus": true,
+          "label": "Сейчас занято"
+        }
+      }
+    }
+  ]
+}

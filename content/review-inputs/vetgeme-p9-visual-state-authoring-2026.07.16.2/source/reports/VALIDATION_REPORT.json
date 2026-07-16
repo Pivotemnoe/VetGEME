@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "reportId": "vetgeme-p9-visual-state-validation",
+  "reportVersion": "2026.07.16.2",
+  "validatedAt": "2026-07-16",
+  "status": "pass",
+  "checks": {
+    "roomCoverage": 12,
+    "equipmentCoverage": 27,
+    "staffCoverage": 10,
+    "referencedAssets": 31,
+    "missingAssetReferences": 0,
+    "hudSurfaces": 9,
+    "redesignPerformed": false,
+    "runtimeChanged": false
+  },
+  "limitations": [
+    "This package specifies projections and human-readable states; it does not edit the live scene.",
+    "One staff room and several small devices intentionally use DOM fallback labels until separate art exists.",
+    "Shared analyzer and procedure-room shells require a visible human label so they cannot be confused."
+  ]
+}

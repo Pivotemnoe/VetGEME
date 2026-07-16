@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "policyId": "vetgeme-p9-visual-state-policy",
+  "policyVersion": "2026.07.16.2",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "direction": {
+    "fantasy": "Живая районная ветеринарная клиника, где игрок видит поток пациентов и развитие кабинетов",
+    "view": "cutaway_top_down_pseudo_isometric",
+    "materialLanguage": "detailed_pixel_art_warm_rooms_blue_medical_dom_hud",
+    "motionTone": "restrained_state_change_only",
+    "redesignAllowed": false,
+    "existingClinicCompositionPreserved": true
+  },
+  "renderBoundaries": {
+    "canvasOwns": ["room_shells", "furniture", "equipment_sprites", "people", "animals", "state_overlays"],
+    "domOwns": ["human_text", "queue_cards", "goals", "money", "clock", "speed", "trust", "reputation", "alerts", "drawers"],
+    "rendererMayMutateSimulation": false,
+    "visualPresenceMayGrantOwnership": false,
+    "missingAssetMayGrantCapability": false
+  },
+  "playfieldProtection": {
+    "desktopPersistentRightRailMaxViewportPercent": 18,
+    "desktopPersistentBottomHudMaxViewportPercent": 12,
+    "desktopTopLeftClusterMaxViewportPercent": 16,
+    "centerPlayfieldMustRemainClear": true,
+    "lowerMiddlePlayfieldMustRemainClear": true,
+    "longTextUsesDrawer": true,
+    "mobilePersistentPanelsCollapseToChips": true
+  },
+  "accessibility": {
+    "stateNeverColorOnly": true,
+    "statusHasTextAndIcon": true,
+    "reducedMotionSupported": true,
+    "minimumDomBodyTextPxDesktop": 14,
+    "minimumDomBodyTextPxMobile": 16
+  },
+  "stateLabels": {
+    "not_owned": "Пока не куплено",
+    "pending_delivery": "Уже заказано — ждём доставку",
+    "delivered_not_ready": "Доставлено, но ещё не готово к работе",
+    "training_pending": "Нужно обучить сотрудника",
+    "maintenance_due": "Пора провести обслуживание",
+    "maintenance_active": "Сейчас на обслуживании",
+    "stock_blocked": "Закончились нужные расходники",
+    "unavailable_no_shift": "Сейчас нет подходящего сотрудника",
+    "ready": "Готово к работе",
+    "busy": "Сейчас занято"
+  },
+  "humanTextRules": {
+    "rawIdsPlayerVisible": false,
+    "technicalReasonCodesPlayerVisible": false,
+    "ownerAndDoctorSpeechUsesConversationalRussian": true,
+    "humorMayHideCriticalFact": false,
+    "criticalAlertPattern": "Что случилось → что это меняет → что можно сделать сейчас"
+  }
+}
