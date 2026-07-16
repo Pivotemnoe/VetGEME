@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vetgeme.local/schemas/p8-reviewer-decision-envelope-2026.07.16.2.json",
+  "title": "VetGEME P8 external veterinary reviewer decision envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "decisionSetId",
+    "decisionSetVersion",
+    "reviewPackage",
+    "inputPackage",
+    "reviewer",
+    "reviewedAt",
+    "decisions",
+    "activationRecommendation"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "decisionSetId": { "type": "string", "minLength": 1, "not": { "const": "replace-with-review-id" } },
+    "decisionSetVersion": { "type": "string", "minLength": 1 },
+    "reviewPackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packageId", "packageVersion", "archiveSha256", "provenanceSha256", "sourceAggregateSha256"],
+      "properties": {
+        "packageId": { "const": "vetgeme-p8-medical-review-authoring" },
+        "packageVersion": { "const": "2026.07.16.2" },
+        "archiveSha256": { "const": "2fb059e9a85c632d6f37b66f05ff8f93065aea7e92eda06e1fafb1dff55d5031" },
+        "provenanceSha256": { "const": "97d4b8ad902afafe541f06dbd55cfbaa699b4816a5061a9ba217dc708bdae24d" },
+        "sourceAggregateSha256": { "const": "785bd77cfda14e5846e13de7d219c1635714d16fbbabb6c04c88221f9d449093" }
+      }
+    },
+    "inputPackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packageId", "packageVersion", "sourceAggregateSha256"],
+      "properties": {
+        "packageId": { "const": "vetgeme-medical-production-authoring" },
+        "packageVersion": { "const": "2026.07.16.40" },
+        "sourceAggregateSha256": { "const": "3f3f89ab93e005a5100b39586328c38fa6b4fcf52887be63cabc41ac05c557c8" }
+      }
+    },
+    "reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewerId", "fullName", "qualification", "jurisdiction", "conflictOfInterestDeclared"],
+      "properties": {
+        "reviewerId": { "type": "string", "minLength": 1 },
+        "fullName": { "type": "string", "minLength": 1 },
+        "qualification": { "type": "string", "minLength": 1 },
+        "jurisdiction": { "type": "string", "minLength": 1 },
+        "conflictOfInterestDeclared": { "const": true }
+      }
+    },
+    "reviewedAt": { "type": "string", "format": "date-time" },
+    "decisions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/decision" }
+    },
+    "activationRecommendation": {
+      "const": "forbidden_until_all_target_records_approved_and_clean_audit_passes"
+    }
+  },
+  "$defs": {
+    "domainValue": {
+      "enum": ["approved", "changes_required", "rejected", "not_reviewed"]
+    },
+    "decisionDomains": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clinicalTruth",
+        "differentialsAndExclusions",
+        "investigationsAndInterpretation",
+        "safeAndUnsafeDecisions",
+        "equipmentAndReferral",
+        "followUpAndOutcomes",
+        "ownerAndDoctorLanguage",
+        "sourcesAndScope"
+      ],
+      "properties": {
+        "clinicalTruth": { "$ref": "#/$defs/domainValue" },
+        "differentialsAndExclusions": { "$ref": "#/$defs/domainValue" },
+        "investigationsAndInterpretation": { "$ref": "#/$defs/domainValue" },
+        "safeAndUnsafeDecisions": { "$ref": "#/$defs/domainValue" },
+        "equipmentAndReferral": { "$ref": "#/$defs/domainValue" },
+        "followUpAndOutcomes": { "$ref": "#/$defs/domainValue" },
+        "ownerAndDoctorLanguage": { "$ref": "#/$defs/domainValue" },
+        "sourcesAndScope": { "$ref": "#/$defs/domainValue" }
+      }
+    },
+    "hasChangesRequiredDomain": {
+      "anyOf": [
+        { "properties": { "clinicalTruth": { "const": "changes_required" } } },
+        { "properties": { "differentialsAndExclusions": { "const": "changes_required" } } },
+        { "properties": { "investigationsAndInterpretation": { "const": "changes_required" } } },
+        { "properties": { "safeAndUnsafeDecisions": { "const": "changes_required" } } },
+        { "properties": { "equipmentAndReferral": { "const": "changes_required" } } },
+        { "properties": { "followUpAndOutcomes": { "const": "changes_required" } } },
+        { "properties": { "ownerAndDoctorLanguage": { "const": "changes_required" } } },
+        { "properties": { "sourcesAndScope": { "const": "changes_required" } } }
+      ]
+    },
+    "hasRejectedDomain": {
+      "anyOf": [
+        { "properties": { "clinicalTruth": { "const": "rejected" } } },
+        { "properties": { "differentialsAndExclusions": { "const": "rejected" } } },
+        { "properties": { "investigationsAndInterpretation": { "const": "rejected" } } },
+        { "properties": { "safeAndUnsafeDecisions": { "const": "rejected" } } },
+        { "properties": { "equipmentAndReferral": { "const": "rejected" } } },
+        { "properties": { "followUpAndOutcomes": { "const": "rejected" } } },
+        { "properties": { "ownerAndDoctorLanguage": { "const": "rejected" } } },
+        { "properties": { "sourcesAndScope": { "const": "rejected" } } }
+      ]
+    },
+    "hasNotReviewedDomain": {
+      "anyOf": [
+        { "properties": { "clinicalTruth": { "const": "not_reviewed" } } },
+        { "properties": { "differentialsAndExclusions": { "const": "not_reviewed" } } },
+        { "properties": { "investigationsAndInterpretation": { "const": "not_reviewed" } } },
+        { "properties": { "safeAndUnsafeDecisions": { "const": "not_reviewed" } } },
+        { "properties": { "equipmentAndReferral": { "const": "not_reviewed" } } },
+        { "properties": { "followUpAndOutcomes": { "const": "not_reviewed" } } },
+        { "properties": { "ownerAndDoctorLanguage": { "const": "not_reviewed" } } },
+        { "properties": { "sourcesAndScope": { "const": "not_reviewed" } } }
+      ]
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recordType",
+        "familyId",
+        "variantId",
+        "presentationId",
+        "exactVersion",
+        "decision",
+        "medicalSeverity",
+        "languageSeverity",
+        "decisionDomains",
+        "issueIds",
+        "comment",
+        "reviewerSignature"
+      ],
+      "properties": {
+        "recordType": { "enum": ["family", "variant", "presentation"] },
+        "familyId": { "type": "string", "minLength": 1 },
+        "variantId": { "type": ["string", "null"] },
+        "presentationId": { "type": ["string", "null"] },
+        "exactVersion": { "type": "string", "minLength": 1 },
+        "decision": { "$ref": "#/$defs/domainValue" },
+        "medicalSeverity": { "enum": ["P0", "P1", "P2", "P3"] },
+        "languageSeverity": { "enum": ["P0", "P1", "P2", "P3"] },
+        "decisionDomains": { "$ref": "#/$defs/decisionDomains" },
+        "issueIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "comment": { "type": "string", "minLength": 1 },
+        "reviewerSignature": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "recordType": { "const": "family" } }, "required": ["recordType"] },
+          "then": {
+            "properties": {
+              "variantId": { "type": "null" },
+              "presentationId": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "recordType": { "const": "variant" } }, "required": ["recordType"] },
+          "then": {
+            "properties": {
+              "variantId": { "type": "string", "minLength": 1 },
+              "presentationId": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "recordType": { "const": "presentation" } }, "required": ["recordType"] },
+          "then": {
+            "properties": {
+              "variantId": { "type": "string", "minLength": 1 },
+              "presentationId": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "decision": { "const": "approved" } }, "required": ["decision"] },
+          "then": {
+            "properties": {
+              "decisionDomains": {
+                "properties": {
+                  "clinicalTruth": { "const": "approved" },
+                  "differentialsAndExclusions": { "const": "approved" },
+                  "investigationsAndInterpretation": { "const": "approved" },
+                  "safeAndUnsafeDecisions": { "const": "approved" },
+                  "equipmentAndReferral": { "const": "approved" },
+                  "followUpAndOutcomes": { "const": "approved" },
+                  "ownerAndDoctorLanguage": { "const": "approved" },
+                  "sourcesAndScope": { "const": "approved" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "decision": { "const": "changes_required" } }, "required": ["decision"] },
+          "then": {
+            "properties": {
+              "issueIds": { "minItems": 1 },
+              "decisionDomains": { "$ref": "#/$defs/hasChangesRequiredDomain" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "decision": { "const": "rejected" } }, "required": ["decision"] },
+          "then": {
+            "properties": {
+              "decisionDomains": { "$ref": "#/$defs/hasRejectedDomain" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "decision": { "const": "not_reviewed" } }, "required": ["decision"] },
+          "then": {
+            "properties": {
+              "decisionDomains": { "$ref": "#/$defs/hasNotReviewedDomain" }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

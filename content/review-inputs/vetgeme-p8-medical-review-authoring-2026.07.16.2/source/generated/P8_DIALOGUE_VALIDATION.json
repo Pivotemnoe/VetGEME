@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "2026.07.16.1",
+  "status": "pass",
+  "counts": {
+    "expectedOwnerProfiles": 12,
+    "actualOwnerProfiles": 12,
+    "ownerFunctionsPerProfile": 8,
+    "doctorFunctions": 15,
+    "rareAbsurdEvents": 4,
+    "issues": 0
+  },
+  "safetyRules": {
+    "spokenTextOnly": true,
+    "internalIdsAreNotPlayerFacing": true,
+    "criticalFactMustExistOutsideHumor": true,
+    "ownerBehaviorCannotRevealClinicalTruth": true,
+    "doctorDoesNotShameOwner": true,
+    "doctorNamesUncertaintyHonestly": true,
+    "refusalAlwaysKeepsSafeRoute": true,
+    "rareAbsurdityForbiddenDuringEmergency": true,
+    "maxRareAbsurdEventsPerDay": 1
+  },
+  "issues": []
+}

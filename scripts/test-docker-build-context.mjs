@@ -78,6 +78,29 @@ try {
   );
   assert.equal(reviewOnlyInput.contextSha256, clean.contextSha256);
 
+  const medicalV40ReviewOnlyRoot = path.join(
+    fixture,
+    "content",
+    "review-inputs",
+    "vetgeme-medical-production-authoring-2026.07.16.40",
+  );
+  await mkdir(path.join(medicalV40ReviewOnlyRoot, "source"), { recursive: true });
+  await writeFile(
+    path.join(medicalV40ReviewOnlyRoot, "provenance.json"),
+    "{\"reviewOnly\":true,\"version\":\"2026.07.16.40\"}\n",
+  );
+  await writeFile(
+    path.join(medicalV40ReviewOnlyRoot, "source", "MANIFEST.json"),
+    "{\"reviewOnly\":true,\"version\":\"2026.07.16.40\"}\n",
+  );
+  const medicalV40ReviewOnlyInput = await collectDockerBuildProvenance(fixture);
+  assert.equal(
+    medicalV40ReviewOnlyInput.dirty,
+    false,
+    "versioned medical .40 review input polluted production Docker provenance",
+  );
+  assert.equal(medicalV40ReviewOnlyInput.contextSha256, clean.contextSha256);
+
   await mkdir(
     path.join(fixture, "content", "review-inputs", "operational-authoring", "source"),
     { recursive: true },
@@ -147,6 +170,29 @@ try {
   );
   assert.equal(p8ReviewOnlyInput.contextSha256, clean.contextSha256);
 
+  const p8V2ReviewOnlyRoot = path.join(
+    fixture,
+    "content",
+    "review-inputs",
+    "vetgeme-p8-medical-review-authoring-2026.07.16.2",
+  );
+  await mkdir(path.join(p8V2ReviewOnlyRoot, "source"), { recursive: true });
+  await writeFile(
+    path.join(p8V2ReviewOnlyRoot, "provenance.json"),
+    "{\"reviewOnly\":true,\"version\":\"2026.07.16.2\"}\n",
+  );
+  await writeFile(
+    path.join(p8V2ReviewOnlyRoot, "source", "MANIFEST.json"),
+    "{\"reviewOnly\":true,\"version\":\"2026.07.16.2\"}\n",
+  );
+  const p8V2ReviewOnlyInput = await collectDockerBuildProvenance(fixture);
+  assert.equal(
+    p8V2ReviewOnlyInput.dirty,
+    false,
+    "versioned P8 .2 review input polluted production Docker provenance",
+  );
+  assert.equal(p8V2ReviewOnlyInput.contextSha256, clean.contextSha256);
+
   await writeFile(
     path.join(fixture, "content/system-packs/vetgeme-master-2026-07-14/not-registered.json"),
     "{\"notRegistered\":true}\n",
@@ -197,7 +243,9 @@ try {
     retiredTierContentExcluded: true,
     retiredSchemaOneExcluded: true,
     reviewOnlyAuthoringInputsExcluded: true,
+    medicalV40ReviewOnlyInputExcluded: true,
     p8ReviewOnlyProvenanceAndSourceExcluded: true,
+    p8V2ReviewOnlyInputExcluded: true,
     unregisteredSystemFileExcluded: true,
   }, null, 2));
 } finally {

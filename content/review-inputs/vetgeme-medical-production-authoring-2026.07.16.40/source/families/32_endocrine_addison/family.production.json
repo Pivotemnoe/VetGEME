@@ -1,0 +1,2413 @@
+{
+  "schemaVersion": 1,
+  "familyId": "endocrine_addison",
+  "familyVersion": "2026.07.16.40",
+  "title": "Гипоадренокортицизм",
+  "campaignPhase": "chapter_5",
+  "species": [
+    "dog"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": [
+    "Болезнь Аддисона строго обозначает первичный гипоадренокортицизм; вторичная и ятрогенная надпочечниковая недостаточность остаются связанными, но разными путями.",
+    "Усиление и ослабление желудочно-кишечного тракта, вялость, слабость и изменения веса неспецифичны, но становятся значимыми при сохраненной продольной картине.",
+    "Гипонатриемия, гиперкалиемия, низкое соотношение натрий:калий, азотемия, гипогликемия и отсутствие стресс-лейкограммы подтверждают подозрение, но не являются индивидуально патогномоничными.",
+    "Нормальный уровень натрия и калия не исключает первичного или вторичного заболевания, вызванного дефицитом глюкокортикоидов.",
+    "Соответствующий уровень кортизола в состоянии покоя может исключить заболевание, но низкое значение не может его подтвердить.",
+    "Для окончательного подтверждения требуется интерпретируемый тест стимуляции АКТГ с сохранением образца, времени и экзогенного стероидного контекста.",
+    "Классификация первичных, вторичных и минералокортикоидов требует подтверждения и может оставаться неопределенной до рассмотрения специалистами.",
+    "В условиях кризиса жизненно необходимая стабилизация происходит при сохранении диагностических образцов, когда это возможно, и никогда не ждет каждого результата.",
+    "Реагирующая на жидкость азотемия или резкое улучшение сами по себе не доказывают болезнь Аддисона; почки, желудочно-кишечный тракт, сепсис и другие симптомы остаются.",
+    "Каждый путь введения глюкокортикоидов и воздействие лечения по Кушингу подробно перечисляются; резкая отмена небезопасна.",
+    "Стабильный мониторинг замещения использует индивидуальные симптомы, вес и электролиты, а не один универсальный интервал.",
+    "Никакой жидкости, электролитов, глюкокортикоидов, минералокортикоидов, стресс-доз, АКТГ-теста или протокола экстренной помощи не назначается автоматически."
+  ],
+  "coreCapabilities": [
+    "cbc",
+    "biochemistry",
+    "electrolytes",
+    "acth_test_external",
+    "emergency_stabilization",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "addison_core_route",
+      "anyOf": [
+        "addison_core_assessment",
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "safe_referral"
+      ],
+      "purpose": "history_exam_cbc_chemistry_electrolytes_glucose_and_urine_pattern"
+    },
+    {
+      "id": "addison_baseline_route",
+      "anyOf": [
+        "baseline_cortisol_external",
+        "endocrinology_referral",
+        "safe_referral"
+      ],
+      "purpose": "appropriate_resting_cortisol_rule_out_only"
+    },
+    {
+      "id": "addison_acth_route",
+      "anyOf": [
+        "acth_test_external",
+        "endocrinology_referral",
+        "safe_referral"
+      ],
+      "purpose": "interpretable_acth_stimulation_confirmation"
+    },
+    {
+      "id": "addison_classification_route",
+      "anyOf": [
+        "addison_classification_external",
+        "endocrinology_referral",
+        "safe_referral"
+      ],
+      "purpose": "primary_secondary_and_mineralocorticoid_classification"
+    },
+    {
+      "id": "addison_crisis_route",
+      "anyOf": [
+        "addison_crisis_stabilization",
+        "emergency_stabilization",
+        "safe_referral"
+      ],
+      "purpose": "perfusion_ecg_glucose_electrolyte_and_acid_base_safety"
+    },
+    {
+      "id": "addison_mimic_route",
+      "anyOf": [
+        "addison_mimic_review",
+        "biochemistry",
+        "safe_referral"
+      ],
+      "purpose": "acute_kidney_gi_sepsis_and_other_mimic_review"
+    },
+    {
+      "id": "addison_exposure_route",
+      "anyOf": [
+        "cushing_clinical_inventory",
+        "safe_referral"
+      ],
+      "purpose": "all_route_glucocorticoid_and_cushing_treatment_inventory"
+    },
+    {
+      "id": "addison_longitudinal_route",
+      "anyOf": [
+        "addison_longitudinal_monitoring",
+        "electrolytes",
+        "safe_referral"
+      ],
+      "purpose": "individual_symptom_weight_electrolyte_and_replacement_response"
+    },
+    {
+      "id": "addison_owner_plan_route",
+      "anyOf": [
+        "addison_owner_emergency_plan",
+        "safe_referral"
+      ],
+      "purpose": "reviewed_stress_illness_missed_dose_and_emergency_teach_back"
+    },
+    {
+      "id": "addison_discordant_route",
+      "anyOf": [
+        "endocrinology_referral",
+        "addison_classification_external",
+        "safe_referral"
+      ],
+      "purpose": "discordant_rare_secondary_or_evolving_case_review"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "addison_history_exam_cbc_chemistry_electrolytes_glucose_and_urinalysis",
+      "requires": [
+        "addison_core_assessment"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "addison_baseline_cortisol_as_rule_out_not_confirmation",
+      "requires": [
+        "baseline_cortisol_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "addison_acth_stimulation_confirmation",
+      "requires": [
+        "acth_test_external"
+      ],
+      "availability": "external_timed_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "addison_primary_secondary_and_mineralocorticoid_classification",
+      "requires": [
+        "addison_classification_external"
+      ],
+      "availability": "external_post_confirmation_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "addison_crisis_perfusion_ecg_glucose_electrolyte_and_acid_base_monitoring",
+      "requires": [
+        "addison_crisis_stabilization"
+      ],
+      "availability": "emergency_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "addison_acute_kidney_gi_sepsis_and_other_mimic_review",
+      "requires": [
+        "addison_mimic_review"
+      ],
+      "availability": "local_plus_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "addison_glucocorticoid_exposure_and_endocrine_treatment_inventory",
+      "requires": [
+        "cushing_clinical_inventory"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "addison_longitudinal_electrolyte_clinical_and_weight_monitoring",
+      "requires": [
+        "addison_longitudinal_monitoring"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "addison_owner_stress_event_and_emergency_plan",
+      "requires": [
+        "addison_owner_emergency_plan"
+      ],
+      "availability": "home_longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "addison_endocrinology_referral_for_discordant_cases",
+      "requires": [
+        "endocrinology_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "episodic_gi_lethargy_and_stress_triggers",
+      "prompt": "Были ли эпизоды рвота, диарея, вялость и связь со стресс?"
+    },
+    {
+      "id": "weight_appetite_water_urine_trend",
+      "prompt": "Как менялись масса тела, аппетит, вода и моча?"
+    },
+    {
+      "id": "collapse_weakness_melena_tremor_now",
+      "prompt": "Есть ли сейчас коллапс, слабость, мелена или тремор?"
+    },
+    {
+      "id": "all_glucocorticoid_and_cushing_treatment_exposure",
+      "prompt": "Какие глюкокортикоид маршруты и гиперадренокортицизм лечения использовались?"
+    },
+    {
+      "id": "prior_sodium_potassium_glucose_creatinine_urine",
+      "prompt": "Каковы прошлые натрий, калий, глюкоза, креатинин и моча результаты?"
+    },
+    {
+      "id": "baseline_cortisol_or_acth_protocol_result",
+      "prompt": "Каковы исходное состояние кортизол или АКТГ протокол, проба, срок и результат?"
+    },
+    {
+      "id": "missed_replacement_new_illness_or_stress",
+      "prompt": "Были ли пропущенный замена, новая болезнь или стресс событие?"
+    },
+    {
+      "id": "prior_fluid_response_without_diagnosis",
+      "prompt": "Как менялись перфузия и азотемия после инфузионная терапия без диагностического вывода?"
+    },
+    {
+      "id": "renal_gi_parasite_sepsis_context",
+      "prompt": "Есть ли почечный, желудочно-кишечный тракт, паразит, с потерей белка или сепсис доказательства?"
+    },
+    {
+      "id": "primary_secondary_classification_history",
+      "prompt": "Подтверждались ли первичный, вторичный или минералокортикоид состояние?"
+    },
+    {
+      "id": "current_replacement_actual_use_and_adverse_signs",
+      "prompt": "Как фактически выполняется замена и есть ли признаки при дефицит или избыток?"
+    },
+    {
+      "id": "owner_emergency_plan_and_referral_feasibility",
+      "prompt": "Есть ли проверенный экстренный план, проверка понимания, перевозка и направление доступ?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "waxing_waning_pattern_and_current_severity_record",
+      "source": "physical_exam",
+      "requires": [
+        "addison_core_assessment"
+      ]
+    },
+    {
+      "id": "cbc_chemistry_electrolyte_glucose_urine_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "addison_core_assessment"
+      ]
+    },
+    {
+      "id": "baseline_cortisol_rule_out_record",
+      "source": "external_report",
+      "requires": [
+        "baseline_cortisol_external"
+      ]
+    },
+    {
+      "id": "acth_pre_post_sample_protocol_record",
+      "source": "external_report",
+      "requires": [
+        "acth_test_external"
+      ]
+    },
+    {
+      "id": "primary_secondary_mineralocorticoid_classification_record",
+      "source": "external_report",
+      "requires": [
+        "addison_classification_external"
+      ]
+    },
+    {
+      "id": "perfusion_ecg_glucose_electrolyte_acid_base_record",
+      "source": "emergency_record",
+      "requires": [
+        "addison_crisis_stabilization"
+      ]
+    },
+    {
+      "id": "renal_gi_sepsis_and_other_mimic_record",
+      "source": "diagnostic_review",
+      "requires": [
+        "addison_mimic_review"
+      ]
+    },
+    {
+      "id": "all_route_exposure_and_endocrine_treatment_record",
+      "source": "medication_inventory",
+      "requires": [
+        "cushing_clinical_inventory"
+      ]
+    },
+    {
+      "id": "same_patient_clinical_weight_electrolyte_response_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "addison_longitudinal_monitoring"
+      ]
+    },
+    {
+      "id": "reviewed_stress_missed_dose_emergency_teach_back_record",
+      "source": "owner_plan",
+      "requires": [
+        "addison_owner_emergency_plan"
+      ]
+    },
+    {
+      "id": "fluid_response_without_endocrine_proof_record",
+      "source": "emergency_record",
+      "requires": [
+        "addison_mimic_review"
+      ]
+    },
+    {
+      "id": "discordant_endocrinology_review_record",
+      "source": "external_review",
+      "requires": [
+        "endocrinology_referral"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "primary_electrolyte_plan",
+      "fullPlan": [
+        "preserve_episodic_timeline",
+        "core_lab_and_perfusion_pattern",
+        "interpret_electrolytes_as_supportive",
+        "baseline_rule_out_if_appropriate",
+        "acth_confirmation",
+        "classify_after_confirmation",
+        "mimic_review_and_monitor"
+      ],
+      "stagedPlan": [
+        "suspect",
+        "screen_or_confirm",
+        "classify",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "na_k_not_pathognomonic",
+        "acth_confirmation",
+        "renal_gi_mimics",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "crisis_stabilization",
+        "endocrinology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "ratio_diagnoses",
+        "fluid_response_diagnoses",
+        "generated_replacement"
+      ]
+    },
+    {
+      "id": "eunatremic_secondary_plan",
+      "fullPlan": [
+        "recognize_normal_electrolyte_pattern",
+        "core_and_mimic_review",
+        "baseline_rule_out_only",
+        "acth_confirmation",
+        "primary_secondary_classification",
+        "future_electrolyte_monitoring",
+        "specialist_discordance_route"
+      ],
+      "stagedPlan": [
+        "maintain_suspicion",
+        "confirm",
+        "classify",
+        "monitor_evolution"
+      ],
+      "minimumSafePlan": [
+        "normal_electrolytes_not_exclusion",
+        "low_baseline_not_confirmation",
+        "secondary_distinct",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "manage_current_illness",
+        "endocrinology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "normal_electrolytes_close_case",
+        "low_cortisol_treats",
+        "atypical_label_without_classification"
+      ]
+    },
+    {
+      "id": "addisonian_crisis_plan",
+      "fullPlan": [
+        "immediate_perfusion_glucose_electrolyte_ecg_triage",
+        "preserve_samples_when_safe",
+        "stabilize_without_waiting",
+        "monitor_authored_trajectory",
+        "review_aki_gi_sepsis_mimics",
+        "acth_confirmation_when_possible",
+        "icu_and_postcrisis_plan"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "monitor",
+        "confirm",
+        "classify_after_recovery"
+      ],
+      "minimumSafePlan": [
+        "results_do_not_delay_stabilization",
+        "fluid_response_not_proof",
+        "ecg_glucose_electrolyte_safety",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "emergency_stabilization",
+        "icu_referral"
+      ],
+      "unsafeOrInadequate": [
+        "wait_for_external_acth",
+        "generated_fluid_or_electrolyte_protocol",
+        "send_home_in_crisis"
+      ]
+    },
+    {
+      "id": "iatrogenic_longitudinal_plan",
+      "fullPlan": [
+        "complete_exposure_and_treatment_inventory",
+        "separate_iatrogenic_from_primary",
+        "reviewed_change_without_abrupt_withdrawal",
+        "individual_clinical_weight_electrolyte_monitoring",
+        "evolving_mineralocorticoid_status",
+        "reviewed_stress_emergency_plan",
+        "teach_back_and_same_patient_continuity"
+      ],
+      "stagedPlan": [
+        "reconcile",
+        "classify",
+        "monitor",
+        "prepare_emergency_route"
+      ],
+      "minimumSafePlan": [
+        "all_routes_count",
+        "no_abrupt_change",
+        "no_universal_interval",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "hypoadrenal_emergency_route",
+        "endocrinology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "generated_stress_dose",
+        "missed_dose_random_collapse",
+        "one_schedule_every_dog"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_addison_2024",
+      "title": "Merck Veterinary Manual: Addison Disease in Animals",
+      "url": "https://www.merckvetmanual.com/endocrine-system/the-adrenal-glands/addison-disease-hypoadrenocorticism-in-animals",
+      "scope": "waxing_waning_signs_electrolytes_baseline_limit_acth_confirmation_crisis_and_monitoring"
+    },
+    {
+      "id": "aaha_addison_categorical_2023",
+      "title": "2023 AAHA Categorical Diagnostic Approach",
+      "url": "https://www.aaha.org/resources/2023-aaha-selected-endocrinopathies-of-dogs-and-cats-guidelines/categorical-approach-to-diagnosis-based-on-clinical-presentation-3/",
+      "scope": "classic_atypical_crisis_and_incidental_lab_routes"
+    },
+    {
+      "id": "aaha_addison_testing_2023",
+      "title": "2023 AAHA Diagnostic Testing and Monitoring",
+      "url": "https://www.aaha.org/resources/2023-aaha-selected-endocrinopathies-of-dogs-and-cats-guidelines/diagnostic-testing-and-monitoring-3/",
+      "scope": "baseline_cortisol_acth_classification_and_longitudinal_monitoring"
+    },
+    {
+      "id": "spontaneous_hypoadrenocorticism_review",
+      "title": "Diagnosis of Canine Spontaneous Hypoadrenocorticism",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9066729/",
+      "scope": "diagnostic_accuracy_atypical_primary_secondary_and_mimics"
+    },
+    {
+      "id": "addison_management_review",
+      "title": "Management of Hypoadrenocorticism in Dogs",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6055912/",
+      "scope": "crisis_longitudinal_replacement_monitoring_and_owner_planning"
+    }
+  ],
+  "variants": [
+    {
+      "id": "addison_primary_with_electrolyte_changes",
+      "version": "2026.07.16.40",
+      "title": "Первичный гипоадренокортицизм с дефицитом минералокортикоидов",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Первичный гипоадренокортицизм с дефицитом минералокортикоидов подозревается на основании сохраненной клинической картины роста или уменьшения и поддерживающего стандартного лабораторного анализа или электролитного профиля, но натрий:калий, азотемия, гипогликемия, реакция породы и жидкости не являются диагностическими показателями; подтверждение требует интерпретируемой стимуляции АКТГ и мимического анализа.",
+      "exclusions": [
+        "na_k_ratio_as_diagnosis",
+        "fluid_response_as_proof",
+        "renal_or_gi_mimics_erased"
+      ],
+      "planBundleId": "primary_electrolyte_plan",
+      "sourceIds": [
+        "merck_addison_2024",
+        "aaha_addison_categorical_2023",
+        "aaha_addison_testing_2023",
+        "spontaneous_hypoadrenocorticism_review"
+      ],
+      "presentations": [
+        {
+          "id": "p1_waxing_waning_gi_lethargy_and_weight_loss",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_current_state",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что периодическая рвота, диарея, плохой аппетит, вялость и потеря веса то усиливаются, то ослабевают, часто в связи со стрессом.",
+          "historyAnswers": {
+            "episodic_gi_lethargy_and_stress_triggers": "По нашим наблюдениям, повторные эпизоды и ассоциации со стрессом.",
+            "weight_appetite_water_urine_trend": "Дома мы заметили, что зарегистрировано снижение веса или аппетита и изменение количества воды или мочи.",
+            "collapse_weakness_melena_tremor_now": "Насколько мы можем судить, текущая серьезность проверена.",
+            "prior_sodium_potassium_glucose_creatinine_urine": "Мы записали, что в выписке сохранены предыдущие значения натрия, калия, глюкозы, креатинина и анализа мочи."
+          },
+          "examFindings": [
+            {
+              "factId": "waxing_waning_nonspecific_signs_gain_value_through_longitudinal_pattern",
+              "source": "history_rule",
+              "finding": "Эпизоды остаются одной траекторией пациента."
+            },
+            {
+              "factId": "vague_gi_signs_require_core_lab_and_mimic_review_before_endocrine_assignment",
+              "source": "differential_rule",
+              "finding": "Сохраняются желудочно-кишечные, почечные, паразитарные пути и пути потери белка."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "waxing_waning_nonspecific_signs_gain_value_through_longitudinal_pattern",
+              "discoveryPaths": [
+                "episodic_gi_lethargy_and_stress_triggers",
+                "waxing_waning_pattern_and_current_severity_record"
+              ]
+            },
+            {
+              "factId": "vague_gi_signs_require_core_lab_and_mimic_review_before_endocrine_assignment",
+              "discoveryPaths": [
+                "renal_gi_parasite_sepsis_context",
+                "cbc_chemistry_electrolyte_glucose_urine_record",
+                "renal_gi_sepsis_and_other_mimic_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "addison_history_exam_cbc_chemistry_electrolytes_glucose_and_urinalysis",
+              "classification": "required_first",
+              "result": "В анализе мочи: совместимый или неспецифический динамическая картина."
+            },
+            {
+              "id": "addison_acute_kidney_gi_sepsis_and_other_mimic_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: конкурирующие доказательства заболевания."
+            },
+            {
+              "id": "addison_baseline_cortisol_as_rule_out_not_confirmation",
+              "classification": "appropriate_rule_out_or_acth_directly",
+              "result": "В лабораторных показателях крови: исключение только в случае необходимости."
+            },
+            {
+              "id": "addison_acth_stimulation_confirmation",
+              "classification": "required_if_not_ruled_out",
+              "result": "В лабораторных показателях крови: интерпретируемое подтверждение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "waxing_waning_nonspecific_signs_gain_value_through_longitudinal_pattern",
+              "vague_gi_signs_require_core_lab_and_mimic_review_before_endocrine_assignment"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_context_plus_interpretable_acth_confirmation"
+            ],
+            "dangerStates": [
+              "collapse",
+              "hypovolemia",
+              "hypoglycemia",
+              "melena"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "biochemistry",
+              "electrolytes",
+              "addison_core_assessment"
+            ],
+            "external": [
+              "baseline_cortisol_external",
+              "acth_test_external",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "addison_core_route",
+              "addison_mimic_route",
+              "addison_baseline_route",
+              "addison_acth_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "primary_electrolyte_plan",
+          "followUp": {
+            "timing": "После проверки ядра или имитатора и подтверждения АКТГ.",
+            "required": true,
+            "targets": [
+              "episodes",
+              "weight",
+              "appetite",
+              "electrolytes",
+              "glucose",
+              "acth_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "динамическая картина подсказывает полный подтверждающий маршрут.",
+            "unsafe": "Смутные признаки со стороны желудочно-кишечного тракта или само по себе развитие становятся болезнью Аддисона."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: повторяющаяся картина имеет значение, но некоторые заболевания могут имитировать ее."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "nauseated",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "low_stress_sampling_and_external_acth_route",
+            "ownerModifiers": [
+              "normalizes_recurrent_gi_signs",
+              "cost_concern"
+            ]
+          }
+        },
+        {
+          "id": "p2_hyponatremia_hyperkalemia_azotemia_or_hypoglycemia_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_or_emergency_by_perfusion_rhythm_glucose",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что гипонатриемия, гиперкалиемия, азотемия, гипогликемия или низкое соотношение натрий:калий сопровождают совместимое заболевание.",
+          "historyAnswers": {
+            "collapse_weakness_melena_tremor_now": "По нашим наблюдениям, текущая опасность перфузии или глюкозы или ритма.",
+            "prior_sodium_potassium_glucose_creatinine_urine": "Дома мы заметили, что тенденция и контекст выборки сохранены.",
+            "episodic_gi_lethargy_and_stress_triggers": "Насколько мы можем судить, зарегистрирована совместимая клиническая картина.",
+            "renal_gi_parasite_sepsis_context": "Мы записали, что мимики остаются активными."
+          },
+          "examFindings": [
+            {
+              "factId": "electrolyte_constellation_supports_suspicion_but_is_not_pathognomonic",
+              "source": "lab_interpretation_rule",
+              "finding": "натрий:калий не соответствует критериям подтверждения."
+            },
+            {
+              "factId": "azotemia_hypoglycemia_and_electrolytes_are_managed_by_current_safety_state",
+              "source": "triage_rule",
+              "finding": "Экстренная стабилизация может предшествовать окончательному диагнозу."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "electrolyte_constellation_supports_suspicion_but_is_not_pathognomonic",
+              "discoveryPaths": [
+                "prior_sodium_potassium_glucose_creatinine_urine",
+                "cbc_chemistry_electrolyte_glucose_urine_record"
+              ]
+            },
+            {
+              "factId": "azotemia_hypoglycemia_and_electrolytes_are_managed_by_current_safety_state",
+              "discoveryPaths": [
+                "collapse_weakness_melena_tremor_now",
+                "perfusion_ecg_glucose_electrolyte_acid_base_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "addison_history_exam_cbc_chemistry_electrolytes_glucose_and_urinalysis",
+              "classification": "required_immediate",
+              "result": "В анализе мочи: поддерживающее сочетание признаков и тяжесть."
+            },
+            {
+              "id": "addison_crisis_perfusion_ecg_glucose_electrolyte_and_acid_base_monitoring",
+              "classification": "required_by_instability",
+              "result": "На электрокардиограмме: динамика перфузии или ритма или глюкозы."
+            },
+            {
+              "id": "addison_acth_stimulation_confirmation",
+              "classification": "required_when_samples_safe",
+              "result": "В лабораторных показателях крови: эндокринное подтверждение."
+            },
+            {
+              "id": "addison_acute_kidney_gi_sepsis_and_other_mimic_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: неэндокринные альтернативы."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "electrolyte_constellation_supports_suspicion_but_is_not_pathognomonic",
+              "azotemia_hypoglycemia_and_electrolytes_are_managed_by_current_safety_state"
+            ],
+            "confirmedDiagnosisRequires": [
+              "acth_confirmation_not_na_k_ratio"
+            ],
+            "dangerStates": [
+              "hyperkalemic_arrhythmia",
+              "hypoglycemia",
+              "shock",
+              "severe_hyponatremia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "biochemistry",
+              "electrolytes",
+              "addison_crisis_stabilization",
+              "emergency_stabilization"
+            ],
+            "external": [
+              "acth_test_external",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "addison_core_route",
+              "addison_crisis_route",
+              "addison_acth_route",
+              "addison_mimic_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "primary_electrolyte_plan",
+          "followUp": {
+            "timing": "Непрерывно, если нестабильно, то АКТГ и контрольная точка классификации.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "ecg",
+              "sodium",
+              "potassium",
+              "glucose",
+              "renal",
+              "acth_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Опасные отклонения стабилизируются, но требуется подтверждение АКТГ.",
+            "unsafe": "Соотношение или быстрая реакция на жидкость считаются диагностическим доказательством."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: ситуация тревожная и неотложная, но все же требует подтверждающего анализа на гормоны."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "collapsed",
+              "nauseated"
+            ],
+            "requiredHandlingAlternative": "emergency_stabilization_and_sample_preserving_referral",
+            "ownerModifiers": [
+              "panicked",
+              "transport_barrier"
+            ]
+          }
+        },
+        {
+          "id": "p3_mimics_renal_gi_or_other_chronic_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_mimic",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что почечные, желудочно-кишечные, паразитарные, белково-теряющие, септические или другие хронические заболевания могут частично воспроизводить картина Аддисона.",
+          "historyAnswers": {
+            "renal_gi_parasite_sepsis_context": "По нашим наблюдениям, сопоставлены конкурирующие доказательства.",
+            "prior_fluid_response_without_diagnosis": "Дома мы заметили, что ответ сохранился без эндокринного вмешательства.",
+            "prior_sodium_potassium_glucose_creatinine_urine": "Насколько мы можем судить, фиксированная тенденция к почкам или моче.",
+            "episodic_gi_lethargy_and_stress_triggers": "Мы записали, что общие неспецифические признаки сохранены."
+          },
+          "examFindings": [
+            {
+              "factId": "renal_gi_sepsis_and_other_mimics_remain_until_specific_discriminators",
+              "source": "differential_rule",
+              "finding": "Никакого ярлыка для великого подражателя."
+            },
+            {
+              "factId": "fluid_responsive_azotemia_does_not_confirm_addison",
+              "source": "response_limit_rule",
+              "finding": "Реакция меняет физиологию, а не только диагноз."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "renal_gi_sepsis_and_other_mimics_remain_until_specific_discriminators",
+              "discoveryPaths": [
+                "renal_gi_parasite_sepsis_context",
+                "renal_gi_sepsis_and_other_mimic_record"
+              ]
+            },
+            {
+              "factId": "fluid_responsive_azotemia_does_not_confirm_addison",
+              "discoveryPaths": [
+                "prior_fluid_response_without_diagnosis",
+                "fluid_response_without_endocrine_proof_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "addison_acute_kidney_gi_sepsis_and_other_mimic_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: мимические доказательства."
+            },
+            {
+              "id": "addison_history_exam_cbc_chemistry_electrolytes_glucose_and_urinalysis",
+              "classification": "required",
+              "result": "В анализе мочи: общие и различительные стандартные результаты."
+            },
+            {
+              "id": "addison_acth_stimulation_confirmation",
+              "classification": "required_if_suspicion_persists",
+              "result": "В лабораторных показателях крови: эндокринное подтверждение или отклонение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "renal_gi_sepsis_and_other_mimics_remain_until_specific_discriminators",
+              "fluid_responsive_azotemia_does_not_confirm_addison"
+            ],
+            "confirmedDiagnosisRequires": [
+              "interpetable_acth_confirmation_and_mimic_review"
+            ],
+            "dangerStates": [
+              "sepsis",
+              "acute_kidney_injury",
+              "gi_catastrophe",
+              "protein_losing_crisis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "biochemistry",
+              "electrolytes",
+              "addison_mimic_review"
+            ],
+            "external": [
+              "acth_test_external",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "addison_core_route",
+              "addison_mimic_route",
+              "addison_acth_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "primary_electrolyte_plan",
+          "followUp": {
+            "timing": "Повторная оценка, специфичная для мимики, и заключение АКТГ.",
+            "required": true,
+            "targets": [
+              "renal",
+              "urine",
+              "gi",
+              "infection",
+              "protein",
+              "acth_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Эндокринный и мимический пути остаются проверяемыми одновременно.",
+            "unsafe": "Резкий ответ или низкое соотношение устраняет заболевание почек, желудочно-кишечного тракта или септическое заболевание."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему Аддисон называют имитатором и какой тест отличает его от существующих альтернатив."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "nauseated",
+              "painful"
+            ],
+            "requiredHandlingAlternative": "stabilize_dangerous_mimic_and_coordinate_acth_testing",
+            "ownerModifiers": [
+              "expects_single_explanation",
+              "cost_concern"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "addison_eunatremic_eukalemic_or_secondary",
+      "version": "2026.07.16.40",
+      "title": "Эунатремический или эукалемический первичный или вторичный гипоадренокортицизм",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Нормальные показатели натрия и калия не исключают изолированного первичного или вторичного гипоадренокортицизма с дефицитом глюкокортикоидов; низкий уровень кортизола в состоянии покоя требует подтверждения АКТГ, после чего отслеживают первичную или вторичную классификацию и возможную будущую эволюцию минералокортикоидов.",
+      "exclusions": [
+        "normal_electrolytes_exclude",
+        "low_baseline_confirms",
+        "atypical_label_replaces_classification"
+      ],
+      "planBundleId": "eunatremic_secondary_plan",
+      "sourceIds": [
+        "merck_addison_2024",
+        "aaha_addison_categorical_2023",
+        "aaha_addison_testing_2023",
+        "spontaneous_hypoadrenocorticism_review"
+      ],
+      "presentations": [
+        {
+          "id": "p1_recurrent_gi_or_weakness_without_classic_electrolytes",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_current_state",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что рецидивирующие симптомы со стороны желудочно-кишечного тракта, слабость или потеря веса сохраняются, несмотря на нормальный уровень натрия и калия.",
+          "historyAnswers": {
+            "episodic_gi_lethargy_and_stress_triggers": "По нашим наблюдениям, подтверждена совместимая повторяющаяся картина.",
+            "prior_sodium_potassium_glucose_creatinine_urine": "Дома мы заметили, что нормальные электролиты документированы, а не исключены.",
+            "weight_appetite_water_urine_trend": "Насколько мы можем судить, хроническое течение сохранено.",
+            "renal_gi_parasite_sepsis_context": "Мы записали, что мимика рассмотрена."
+          },
+          "examFindings": [
+            {
+              "factId": "normal_electrolytes_do_not_exclude_glucocorticoid_deficient_disease",
+              "source": "electrolyte_limit_rule",
+              "finding": "Первичные изолированные или второстепенные маршруты остаются."
+            },
+            {
+              "factId": "appropriate_suspicion_depends_on_clinical_pattern_and_mimic_review",
+              "source": "pretest_probability_rule",
+              "finding": "Обычные электролиты не вызывают случайного тестирования АКТГ."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "normal_electrolytes_do_not_exclude_glucocorticoid_deficient_disease",
+              "discoveryPaths": [
+                "prior_sodium_potassium_glucose_creatinine_urine",
+                "cbc_chemistry_electrolyte_glucose_urine_record"
+              ]
+            },
+            {
+              "factId": "appropriate_suspicion_depends_on_clinical_pattern_and_mimic_review",
+              "discoveryPaths": [
+                "episodic_gi_lethargy_and_stress_triggers",
+                "renal_gi_sepsis_and_other_mimic_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "addison_history_exam_cbc_chemistry_electrolytes_glucose_and_urinalysis",
+              "classification": "required",
+              "result": "В анализе мочи: совместимый неклассический рисунок."
+            },
+            {
+              "id": "addison_acute_kidney_gi_sepsis_and_other_mimic_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: конкурирующая оценка заболевания."
+            },
+            {
+              "id": "addison_baseline_cortisol_as_rule_out_not_confirmation",
+              "classification": "appropriate_rule_out",
+              "result": "В лабораторных показателях крови: маршрут исключения или АКТГ."
+            },
+            {
+              "id": "addison_acth_stimulation_confirmation",
+              "classification": "required_if_low_or_high_suspicion",
+              "result": "В лабораторных показателях крови: подтверждение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "normal_electrolytes_do_not_exclude_glucocorticoid_deficient_disease",
+              "appropriate_suspicion_depends_on_clinical_pattern_and_mimic_review"
+            ],
+            "confirmedDiagnosisRequires": [
+              "interpetable_acth_confirmation"
+            ],
+            "dangerStates": [
+              "progressive_weakness",
+              "hypoglycemia",
+              "acute_gi_loss"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "biochemistry",
+              "electrolytes",
+              "addison_core_assessment",
+              "addison_mimic_review"
+            ],
+            "external": [
+              "baseline_cortisol_external",
+              "acth_test_external",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "addison_core_route",
+              "addison_mimic_route",
+              "addison_baseline_route",
+              "addison_acth_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "eunatremic_secondary_plan",
+          "followUp": {
+            "timing": "Заключение АКТГ, затем классификация и эволюция электролитов.",
+            "required": true,
+            "targets": [
+              "episodes",
+              "weight",
+              "glucose",
+              "electrolytes",
+              "acth_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неклассическое заболевание остается обнаруживаемым без неизбирательного тестирования.",
+            "unsafe": "Нормальные электролиты ложно закрывают эндокринный путь."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: нормальный натрий и калий устраняют один признак, но не все формы дефицита кортизола."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "staged_rule_out_and_external_acth_testing",
+            "ownerModifiers": [
+              "reassured_by_normal_electrolytes",
+              "diagnostic_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p2_low_baseline_cortisol_requires_acth_confirmation",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_state",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что у соответствующего пациента обнаружен низкий уровень кортизола покоя, но он не может подтвердить гипоадренокортицизм.",
+          "historyAnswers": {
+            "baseline_cortisol_or_acth_protocol_result": "По нашим наблюдениям, низкие базовые показатели выборки или лаборатории или времени.",
+            "all_glucocorticoid_and_cushing_treatment_exposure": "Дома мы заметили, что рассмотрение мешающего или подавляющего воздействия.",
+            "episodic_gi_lethargy_and_stress_triggers": "Насколько мы можем судить, претестовый клинический контекст сохранен.",
+            "collapse_weakness_melena_tremor_now": "Мы записали, что текущее право на участие в кризисной ситуации проверено."
+          },
+          "examFindings": [
+            {
+              "factId": "low_baseline_cortisol_opens_acth_confirmation_and_never_confirms_alone",
+              "source": "screen_limit_rule",
+              "finding": "Активация лечения заблокирована в ожидании доказательств АКТГ."
+            },
+            {
+              "factId": "baseline_result_requires_sample_exposure_and_illness_context",
+              "source": "interpretability_rule",
+              "finding": "Нет ярлыка для изолированного номера."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "low_baseline_cortisol_opens_acth_confirmation_and_never_confirms_alone",
+              "discoveryPaths": [
+                "baseline_cortisol_or_acth_protocol_result",
+                "baseline_cortisol_rule_out_record",
+                "acth_pre_post_sample_protocol_record"
+              ]
+            },
+            {
+              "factId": "baseline_result_requires_sample_exposure_and_illness_context",
+              "discoveryPaths": [
+                "all_glucocorticoid_and_cushing_treatment_exposure",
+                "all_route_exposure_and_endocrine_treatment_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "addison_baseline_cortisol_as_rule_out_not_confirmation",
+              "classification": "screen_only",
+              "result": "В лабораторных показателях крови: низкий, неподтверждающий результат."
+            },
+            {
+              "id": "addison_glucocorticoid_exposure_and_endocrine_treatment_inventory",
+              "classification": "required_interpretability",
+              "result": "При уточнении анамнеза: контекст экспозиции."
+            },
+            {
+              "id": "addison_acth_stimulation_confirmation",
+              "classification": "required_next",
+              "result": "В лабораторных показателях крови: до или после подтверждения или отклонения АКТГ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "low_baseline_cortisol_opens_acth_confirmation_and_never_confirms_alone",
+              "baseline_result_requires_sample_exposure_and_illness_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "interpetable_acth_stimulation_result"
+            ],
+            "dangerStates": [
+              "false_confirmation",
+              "crisis_waits_for_test",
+              "exposure_not_disclosed"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "addison_core_assessment",
+              "cushing_clinical_inventory"
+            ],
+            "external": [
+              "baseline_cortisol_external",
+              "acth_test_external",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "addison_baseline_route",
+              "addison_exposure_route",
+              "addison_acth_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "eunatremic_secondary_plan",
+          "followUp": {
+            "timing": "Подтверждение АКТГ по времени без небезопасной задержки в случае нестабильности.",
+            "required": true,
+            "targets": [
+              "sample_identity",
+              "exposure",
+              "acth_response",
+              "clinical_state"
+            ]
+          },
+          "outcomes": {
+            "safe": "Недорогой скрининг соответственно приводит к окончательному подтверждению.",
+            "unsafe": "Низкое значение покоя непосредственно активирует диагностику или лечение."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: достаточно высокий результат может исключить заболевание, но низкий результат имеет множество причин и требует тестирования АКТГ."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "external_timed_acth_route_or_emergency_referral",
+            "ownerModifiers": [
+              "expects_low_value_to_confirm",
+              "test_cost_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_primary_vs_secondary_classification_and_future_electrolyte_monitoring",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_deficiency",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что подтвержденный АКТГ дефицит глюкокортикоидов требует первичной и вторичной классификации и последующего мониторинга уровня электролитов.",
+          "historyAnswers": {
+            "primary_secondary_classification_history": "По нашим наблюдениям, классификационные доказательства и достоверность фиксированы.",
+            "prior_sodium_potassium_glucose_creatinine_urine": "Дома мы заметили, что первоначально сохранялись нормальные электролиты.",
+            "all_glucocorticoid_and_cushing_treatment_exposure": "Насколько мы можем судить, оценен ятрогенный путь.",
+            "current_replacement_actual_use_and_adverse_signs": "Мы записали, что идентичность продольного плана сохранена."
+          },
+          "examFindings": [
+            {
+              "factId": "acth_confirmation_of_deficiency_does_not_by_itself_classify_primary_secondary_or_mineralocorticoid_status",
+              "source": "classification_rule",
+              "finding": "Требуется подтверждение после подтверждения."
+            },
+            {
+              "factId": "initially_normal_electrolytes_in_primary_disease_require_future_monitoring",
+              "source": "evolution_rule",
+              "finding": "Может развиться дефицит минералокортикоидов."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "acth_confirmation_of_deficiency_does_not_by_itself_classify_primary_secondary_or_mineralocorticoid_status",
+              "discoveryPaths": [
+                "acth_pre_post_sample_protocol_record",
+                "primary_secondary_mineralocorticoid_classification_record"
+              ]
+            },
+            {
+              "factId": "initially_normal_electrolytes_in_primary_disease_require_future_monitoring",
+              "discoveryPaths": [
+                "prior_sodium_potassium_glucose_creatinine_urine",
+                "same_patient_clinical_weight_electrolyte_response_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "addison_acth_stimulation_confirmation",
+              "classification": "required_preserved",
+              "result": "В лабораторных показателях крови: дефицит глюкокортикоидов подтвержден."
+            },
+            {
+              "id": "addison_primary_secondary_and_mineralocorticoid_classification",
+              "classification": "required",
+              "result": "Целевое исследование показало: первичная или вторичная уверенность и статус минералокортикоидов."
+            },
+            {
+              "id": "addison_longitudinal_electrolyte_clinical_and_weight_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: эволюция и реакция замещения."
+            },
+            {
+              "id": "addison_endocrinology_referral_for_discordant_cases",
+              "classification": "required_if_uncertain",
+              "result": "По итогам консультации специалиста: классификация специалистов."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "acth_confirmation_of_deficiency_does_not_by_itself_classify_primary_secondary_or_mineralocorticoid_status",
+              "initially_normal_electrolytes_in_primary_disease_require_future_monitoring"
+            ],
+            "confirmedDiagnosisRequires": [
+              "acth_confirmation_plus_post_confirmation_classification"
+            ],
+            "dangerStates": [
+              "wrong_primary_label",
+              "missed_electrolyte_evolution",
+              "iatrogenic_history_missed"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "electrolytes",
+              "addison_longitudinal_monitoring",
+              "cushing_clinical_inventory"
+            ],
+            "external": [
+              "acth_test_external",
+              "addison_classification_external",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "addison_acth_route",
+              "addison_classification_route",
+              "addison_longitudinal_route",
+              "addison_discordant_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "eunatremic_secondary_plan",
+          "followUp": {
+            "timing": "Классификация после подтверждения и индивидуальная динамика электролита.",
+            "required": true,
+            "targets": [
+              "classification",
+              "sodium",
+              "potassium",
+              "weight",
+              "clinical_response"
+            ]
+          },
+          "outcomes": {
+            "safe": "Классификация и возможная эволюция остаются явными и продольными.",
+            "unsafe": "Каждый случай с нормальным электролитом навсегда считается атипичным первичным заболеванием."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему подтверждение дефицита кортизола и выявление его причины — это два отдельных этапа."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable",
+              "weak",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "coordinated_external_classification_and_home_monitoring",
+            "ownerModifiers": [
+              "confused_by_primary_secondary_terms",
+              "monitoring_fatigue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "addisonian_crisis",
+      "version": "2026.07.16.40",
+      "title": "Аддисонический криз",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Аддисоновский криз представляет собой опасное для жизни гиповолемическое или метаболическое состояние, требующее немедленной перфузии, ЭКГ, стабилизации глюкозы, электролитов и кислотно-щелочного баланса; диагностические образцы сохраняются, когда это возможно, но лечение не откладывает, а ОПП, сепсис, желудочно-кишечные катастрофы и другие симптомы остаются до тех пор, пока не подтвердятся.",
+      "exclusions": [
+        "wait_for_acth_before_stabilization",
+        "fluid_response_confirms",
+        "send_home_awaiting_external_result"
+      ],
+      "planBundleId": "addisonian_crisis_plan",
+      "sourceIds": [
+        "merck_addison_2024",
+        "aaha_addison_categorical_2023",
+        "aaha_addison_testing_2023",
+        "addison_management_review"
+      ],
+      "presentations": [
+        {
+          "id": "p1_hypovolemic_shock_collapse_or_severe_gi_loss",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "critical_emergency",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что коллапс, гипотензия или гиповолемия или сильная рвота или диарея создают дифференциал аддисонианского криза.",
+          "historyAnswers": {
+            "collapse_weakness_melena_tremor_now": "По нашим наблюдениям, выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного.",
+            "episodic_gi_lethargy_and_stress_triggers": "Дома мы заметили, что предыдущая эпизодическая картина сохраняется, если таковая имеется.",
+            "all_glucocorticoid_and_cushing_treatment_exposure": "Насколько мы можем судить, контекст воздействия или лечения записывался параллельно.",
+            "owner_emergency_plan_and_referral_feasibility": "Мы записали, что возможность немедленной транспортировки или отделения интенсивной терапии."
+          },
+          "examFindings": [
+            {
+              "factId": "life_saving_stabilization_does_not_wait_for_complete_endocrine_results",
+              "source": "emergency_rule",
+              "finding": "Образцы сохраняются только в том случае, если они не задерживают уход."
+            },
+            {
+              "factId": "crisis_patient_is_not_discharged_while_waiting_for_external_acth_result",
+              "source": "disposition_rule",
+              "finding": "Требуется больница или отделение интенсивной терапии или безопасный перевод."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "life_saving_stabilization_does_not_wait_for_complete_endocrine_results",
+              "discoveryPaths": [
+                "collapse_weakness_melena_tremor_now",
+                "perfusion_ecg_glucose_electrolyte_acid_base_record"
+              ]
+            },
+            {
+              "factId": "crisis_patient_is_not_discharged_while_waiting_for_external_acth_result",
+              "discoveryPaths": [
+                "owner_emergency_plan_and_referral_feasibility",
+                "reviewed_stress_missed_dose_emergency_teach_back_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "addison_crisis_perfusion_ecg_glucose_electrolyte_and_acid_base_monitoring",
+              "classification": "required_immediate",
+              "result": "На электрокардиограмме: шок и метаболическая динамика."
+            },
+            {
+              "id": "addison_history_exam_cbc_chemistry_electrolytes_glucose_and_urinalysis",
+              "classification": "required_parallel",
+              "result": "В анализе мочи: основная модель кризиса."
+            },
+            {
+              "id": "addison_acth_stimulation_confirmation",
+              "classification": "samples_if_safe_confirmation_after_stabilization",
+              "result": "В лабораторных показателях крови: внешнее подтверждение без задержек."
+            },
+            {
+              "id": "addison_acute_kidney_gi_sepsis_and_other_mimic_review",
+              "classification": "required_parallel",
+              "result": "Целевое исследование показало: конкурирующие угрозы жизни."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "life_saving_stabilization_does_not_wait_for_complete_endocrine_results",
+              "crisis_patient_is_not_discharged_while_waiting_for_external_acth_result"
+            ],
+            "confirmedDiagnosisRequires": [
+              "acth_confirmation_when_possible_plus_crisis_context"
+            ],
+            "dangerStates": [
+              "shock",
+              "collapse",
+              "severe_gi_loss",
+              "hypoglycemia",
+              "arrhythmia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "emergency_stabilization",
+              "addison_crisis_stabilization",
+              "cbc",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "acth_test_external",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "addison_crisis_route",
+              "addison_core_route",
+              "addison_acth_route",
+              "addison_mimic_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "addisonian_crisis_plan",
+          "followUp": {
+            "timing": "Непрерывная стабилизация посредством передачи в отделение интенсивной терапии с последующим подтверждением или классификацией.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "bp",
+              "ecg",
+              "glucose",
+              "electrolytes",
+              "urine",
+              "acth_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неотложная помощь и диагностическая консервация осуществляются параллельно.",
+            "unsafe": "Пациент ждет внешнего результата или идет домой."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: состояние шоковое, поэтому стабилизацию нужно начать сейчас; необходимые образцы для подтверждения эндокринного диагноза возьмём параллельно, если это не задержит помощь."
+          ],
+          "compatibility": {
+            "temperament": [
+              "collapsed",
+              "obtunded",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "resuscitation_and_immediate_hospital_transfer",
+            "ownerModifiers": [
+              "panicked",
+              "financial_constraint",
+              "transport_barrier"
+            ]
+          }
+        },
+        {
+          "id": "p2_hyperkalemic_bradyarrhythmia_hypoglycemia_or_acidosis",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "critical_emergency",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что подозрение на криз сопровождают гиперкалиемическая брадиаритмия, гипогликемия, ацидоз или быстрая смена электролитов.",
+          "historyAnswers": {
+            "collapse_weakness_melena_tremor_now": "По нашим наблюдениям, слабость или коллапс или тремор.",
+            "prior_sodium_potassium_glucose_creatinine_urine": "Дома мы заметили, что текущая и предыдущая динамика сохранена.",
+            "prior_fluid_response_without_diagnosis": "Насколько мы можем судить, ответ не устанавливает причину.",
+            "all_glucocorticoid_and_cushing_treatment_exposure": "Мы записали, что контекст подавления или лечения сохранен."
+          },
+          "examFindings": [
+            {
+              "factId": "ecg_glucose_electrolyte_perfusion_and_acid_base_drive_emergency_safety",
+              "source": "monitoring_rule",
+              "finding": "Повторяется по клинической необходимости, а не по фиксированному графику."
+            },
+            {
+              "factId": "specific_fluid_electrolyte_or_hormone_protocol_remains_clinician_reviewed",
+              "source": "scope_rule",
+              "finding": "Пациента направляют за неотложной помощью; конкретный протокол выбирает врач."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "ecg_glucose_electrolyte_perfusion_and_acid_base_drive_emergency_safety",
+              "discoveryPaths": [
+                "collapse_weakness_melena_tremor_now",
+                "perfusion_ecg_glucose_electrolyte_acid_base_record"
+              ]
+            },
+            {
+              "factId": "specific_fluid_electrolyte_or_hormone_protocol_remains_clinician_reviewed",
+              "discoveryPaths": [
+                "owner_emergency_plan_and_referral_feasibility",
+                "all_glucocorticoid_and_cushing_treatment_exposure"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "addison_crisis_perfusion_ecg_glucose_electrolyte_and_acid_base_monitoring",
+              "classification": "required_continuous_by_state",
+              "result": "На электрокардиограмме: ритмическая или метаболическая или перфузионная реакция."
+            },
+            {
+              "id": "addison_acth_stimulation_confirmation",
+              "classification": "preserve_samples_if_safe",
+              "result": "В лабораторных показателях крови: подтверждение после немедленной безопасности."
+            },
+            {
+              "id": "addison_glucocorticoid_exposure_and_endocrine_treatment_inventory",
+              "classification": "required_parallel",
+              "result": "При уточнении анамнеза: ятрогенный или интерпретируемый контекст."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "ecg_glucose_electrolyte_perfusion_and_acid_base_drive_emergency_safety",
+              "specific_fluid_electrolyte_or_hormone_protocol_remains_clinician_reviewed"
+            ],
+            "confirmedDiagnosisRequires": [
+              "crisis_stabilization_plus_interpretable_acth_confirmation"
+            ],
+            "dangerStates": [
+              "bradyarrhythmia",
+              "hyperkalemia",
+              "hypoglycemia",
+              "acidosis",
+              "shock"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "addison_crisis_stabilization",
+              "emergency_stabilization",
+              "electrolytes",
+              "biochemistry"
+            ],
+            "external": [
+              "acth_test_external",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "addison_crisis_route",
+              "addison_acth_route",
+              "addison_exposure_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "addisonian_crisis_plan",
+          "followUp": {
+            "timing": "Непрерывный мониторинг ритма или метаболизма или перфузии посредством стабилизации.",
+            "required": true,
+            "targets": [
+              "ecg",
+              "potassium",
+              "sodium",
+              "glucose",
+              "acid_base",
+              "perfusion"
+            ]
+          },
+          "outcomes": {
+            "safe": "Физиологические угрозы требуют пересмотра неотложной помощи без задержки подтверждения.",
+            "unsafe": "Опасно автоматически выбирать скорость коррекции, инфузионный раствор или дозу гормонов без врача и постоянного мониторинга."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: непосредственными рисками являются сердечный ритм, уровень сахара в крови и шок, пока причина не подтверждена."
+          ],
+          "compatibility": {
+            "temperament": [
+              "collapsed",
+              "weak",
+              "bradycardic"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_continuous_monitoring_and_icu",
+            "ownerModifiers": [
+              "overwhelmed",
+              "asks_for_exact_prognosis"
+            ]
+          }
+        },
+        {
+          "id": "p3_crisis_mimics_acute_kidney_injury_sepsis_or_gi_catastrophe",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "critical_emergency",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что оПП, сепсис, катастрофа желудочно-кишечного тракта, кровотечение или другое шоковое состояние имитирует аддисоновский криз.",
+          "historyAnswers": {
+            "renal_gi_parasite_sepsis_context": "По нашим наблюдениям, конкурирующие угрозы жизни.",
+            "prior_fluid_response_without_diagnosis": "Дома мы заметили, что ответ отслеживается без признания ответа подтверждением диагноза.",
+            "collapse_weakness_melena_tremor_now": "Насколько мы можем судить, текущая опасность устранена.",
+            "prior_sodium_potassium_glucose_creatinine_urine": "Мы записали, что данные о почках или моче или электролитах сохранены."
+          },
+          "examFindings": [
+            {
+              "factId": "life_threatening_mimics_are_treated_and_investigated_in_parallel",
+              "source": "differential_emergency_rule",
+              "finding": "Подозрение на эндокринную систему не подавляет пути развития сепсиса или ОПП или ЖКТ."
+            },
+            {
+              "factId": "dramatic_fluid_response_does_not_prove_addison_or_erase_mimics",
+              "source": "response_limit_rule",
+              "finding": "Такая же реакция может возникнуть при гиповолемии других причин."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "life_threatening_mimics_are_treated_and_investigated_in_parallel",
+              "discoveryPaths": [
+                "renal_gi_parasite_sepsis_context",
+                "renal_gi_sepsis_and_other_mimic_record"
+              ]
+            },
+            {
+              "factId": "dramatic_fluid_response_does_not_prove_addison_or_erase_mimics",
+              "discoveryPaths": [
+                "prior_fluid_response_without_diagnosis",
+                "fluid_response_without_endocrine_proof_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "addison_crisis_perfusion_ecg_glucose_electrolyte_and_acid_base_monitoring",
+              "classification": "required_immediate",
+              "result": "На электрокардиограмме: общая физиология шока."
+            },
+            {
+              "id": "addison_acute_kidney_gi_sepsis_and_other_mimic_review",
+              "classification": "required_parallel",
+              "result": "Целевое исследование показало: мимические доказательства."
+            },
+            {
+              "id": "addison_acth_stimulation_confirmation",
+              "classification": "required_when_safe",
+              "result": "В лабораторных показателях крови: эндокринное подтверждение или отвержение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "life_threatening_mimics_are_treated_and_investigated_in_parallel",
+              "dramatic_fluid_response_does_not_prove_addison_or_erase_mimics"
+            ],
+            "confirmedDiagnosisRequires": [
+              "acth_confirmation_and_competing_cause_review"
+            ],
+            "dangerStates": [
+              "sepsis",
+              "aki",
+              "gi_perforation_or_hemorrhage",
+              "shock"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "emergency_stabilization",
+              "addison_crisis_stabilization",
+              "addison_mimic_review",
+              "cbc",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "acth_test_external",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "addison_crisis_route",
+              "addison_mimic_route",
+              "addison_acth_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "addisonian_crisis_plan",
+          "followUp": {
+            "timing": "Непрерывная оценка общего шока до тех пор, пока не будут установлены причина и динамика.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "renal",
+              "urine",
+              "sepsis",
+              "abdomen",
+              "acth_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Все опасные мимикрии остаются видимыми до тех пор, пока не будут убедительны доказательства.",
+            "unsafe": "Реакция только на жидкости завершает случай болезни Аддисона."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: некоторые чрезвычайные ситуации изначально выглядят одинаково и их необходимо лечить, пока тесты их разделяют."
+          ],
+          "compatibility": {
+            "temperament": [
+              "collapsed",
+              "painful",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "parallel_resuscitation_diagnostics_and_hospital_transfer",
+            "ownerModifiers": [
+              "expects_immediate_label",
+              "financial_constraint"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "addison_iatrogenic_or_longitudinal_management",
+      "version": "2026.07.16.40",
+      "title": "Ятрогенная супрессия или продольное ведение",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Ятрогенная супрессия надпочечников и стабильное продольное замещение отличаются от первичной болезни Аддисона; всестороннее воздействие и история лечения по методу Кушинга, индивидуальный клинический мониторинг или мониторинг веса или электролитов, а также проверенный план действий в случае болезни или стресса или пропущенной дозы сохраняют непрерывность без необходимости введения доз или интервалов.",
+      "exclusions": [
+        "iatrogenic_called_primary_addison",
+        "one_schedule_every_dog",
+        "generated_stress_dose"
+      ],
+      "planBundleId": "iatrogenic_longitudinal_plan",
+      "sourceIds": [
+        "merck_addison_2024",
+        "aaha_addison_testing_2023",
+        "addison_management_review"
+      ],
+      "presentations": [
+        {
+          "id": "p1_glucocorticoid_withdrawal_or_cushing_treatment_suppression",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_or_emergency_by_deficiency",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что отмена глюкокортикоидов или лечение по Кушингу предшествуют появлению признаков, связанных с подавлением оси гипоталамо-гипофизарно-надпочечниковая ось.",
+          "historyAnswers": {
+            "all_glucocorticoid_and_cushing_treatment_exposure": "По нашим наблюдениям, каждый путь введения, лечение и смена терапии фиксированы.",
+            "current_replacement_actual_use_and_adverse_signs": "Дома мы заметили, что фактическое использование и признаки дефицита или избытка фиксируются.",
+            "collapse_weakness_melena_tremor_now": "Насколько мы можем судить, сегодня появились коллапс, выраженная слабость и дрожь; состояние заметно хуже обычного.",
+            "baseline_cortisol_or_acth_protocol_result": "Мы записали, что интерпретируемость теста или воздействия сохранена."
+          },
+          "examFindings": [
+            {
+              "factId": "iatrogenic_suppression_is_distinct_from_primary_addison_disease",
+              "source": "terminology_rule",
+              "finding": "Причина и ожидания минералокортикоидов остаются отдельными."
+            },
+            {
+              "factId": "abrupt_glucocorticoid_or_cushing_treatment_change_is_not_declared_safe",
+              "source": "withdrawal_safety_rule",
+              "finding": "Требуется пересмотренный план."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "iatrogenic_suppression_is_distinct_from_primary_addison_disease",
+              "discoveryPaths": [
+                "all_glucocorticoid_and_cushing_treatment_exposure",
+                "all_route_exposure_and_endocrine_treatment_record"
+              ]
+            },
+            {
+              "factId": "abrupt_glucocorticoid_or_cushing_treatment_change_is_not_declared_safe",
+              "discoveryPaths": [
+                "current_replacement_actual_use_and_adverse_signs",
+                "same_patient_clinical_weight_electrolyte_response_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "addison_glucocorticoid_exposure_and_endocrine_treatment_inventory",
+              "classification": "required_first",
+              "result": "При уточнении анамнеза: причина или время подавления."
+            },
+            {
+              "id": "addison_acth_stimulation_confirmation",
+              "classification": "reviewed_if_needed_and_interpretable",
+              "result": "В лабораторных показателях крови: реакция оси в контексте."
+            },
+            {
+              "id": "addison_endocrinology_referral_for_discordant_cases",
+              "classification": "required_if_uncertain_or_ill",
+              "result": "По итогам консультации специалиста: классификация специалиста или маршрут изменения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "iatrogenic_suppression_is_distinct_from_primary_addison_disease",
+              "abrupt_glucocorticoid_or_cushing_treatment_change_is_not_declared_safe"
+            ],
+            "confirmedDiagnosisRequires": [
+              "verified_exposure_or_treatment_change_plus_specialist_axis_assessment"
+            ],
+            "dangerStates": [
+              "withdrawal_crisis",
+              "hypoglycemia",
+              "collapse",
+              "overcorrected_cushing_treatment"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cushing_clinical_inventory",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "acth_test_external",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "addison_exposure_route",
+              "addison_acth_route",
+              "addison_discordant_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "iatrogenic_longitudinal_plan",
+          "followUp": {
+            "timing": "Рассмотрены контрольные точки изменения лечения и оси или клинической безопасности.",
+            "required": true,
+            "targets": [
+              "exposure",
+              "strength",
+              "appetite",
+              "glucose",
+              "electrolytes",
+              "axis_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Лекарственное подавление надпочечников отличают от первичного гипоадренокортицизма; снижение препарата планирует врач.",
+            "unsafe": "Опасно объявлять резкий вывод безопасным или автоматически назначает замену."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: подавление, связанное с приемом лекарств, может имитировать эффект Аддисона, но имеет другую причину и план."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "medication_reconciliation_and_endocrine_referral",
+            "ownerModifiers": [
+              "stopped_medication",
+              "multiple_prescribers"
+            ]
+          }
+        },
+        {
+          "id": "p2_stable_replacement_monitoring_and_individualized_interval",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_deficiency_or_excess",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что подтвержденный стабильный пациент требует индивидуального контроля заместительной реакции, веса и уровня электролитов.",
+          "historyAnswers": {
+            "current_replacement_actual_use_and_adverse_signs": "По нашим наблюдениям, фактический план и признаки дефицита или переизбытка.",
+            "weight_appetite_water_urine_trend": "Дома мы заметили, что сохраняется домашний тренд того же определения.",
+            "prior_sodium_potassium_glucose_creatinine_urine": "Насколько мы можем судить, фиксированная продольная тенденция электролит или почки.",
+            "owner_emergency_plan_and_referral_feasibility": "Мы записали, что записано осуществимость мониторинга."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_monitoring_interval_and_adjustment_are_individualized_and_reviewed",
+              "source": "monitoring_rule",
+              "finding": "Универсального расписания не создано."
+            },
+            {
+              "factId": "clinical_signs_weight_and_electrolytes_are_interpreted_together",
+              "source": "integration_rule",
+              "finding": "Одна цифра не может диктовать весь план."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stable_monitoring_interval_and_adjustment_are_individualized_and_reviewed",
+              "discoveryPaths": [
+                "current_replacement_actual_use_and_adverse_signs",
+                "same_patient_clinical_weight_electrolyte_response_record"
+              ]
+            },
+            {
+              "factId": "clinical_signs_weight_and_electrolytes_are_interpreted_together",
+              "discoveryPaths": [
+                "weight_appetite_water_urine_trend",
+                "prior_sodium_potassium_glucose_creatinine_urine"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "addison_longitudinal_electrolyte_clinical_and_weight_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: индивидуальный ответ и безопасность."
+            },
+            {
+              "id": "addison_owner_stress_event_and_emergency_plan",
+              "classification": "required_maintenance",
+              "result": "Целевое исследование показало: проверена готовность к чрезвычайным ситуациям."
+            },
+            {
+              "id": "addison_primary_secondary_and_mineralocorticoid_classification",
+              "classification": "recheck_if_trajectory_discordant",
+              "result": "Целевое исследование показало: классификация остается совместимой."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stable_monitoring_interval_and_adjustment_are_individualized_and_reviewed",
+              "clinical_signs_weight_and_electrolytes_are_interpreted_together"
+            ],
+            "confirmedDiagnosisRequires": [
+              "original_confirmation_and_classification_preserved"
+            ],
+            "dangerStates": [
+              "deficiency_signs",
+              "iatrogenic_excess",
+              "electrolyte_drift",
+              "missed_monitoring"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "electrolytes",
+              "biochemistry",
+              "addison_longitudinal_monitoring",
+              "addison_owner_emergency_plan"
+            ],
+            "external": [
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "addison_longitudinal_route",
+              "addison_owner_plan_route",
+              "addison_classification_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "iatrogenic_longitudinal_plan",
+          "followUp": {
+            "timing": "Индивидуальный интервал проверки с домашними и лабораторными контрольными точками.",
+            "required": true,
+            "targets": [
+              "appetite",
+              "weight",
+              "water",
+              "strength",
+              "sodium",
+              "potassium",
+              "adverse_signs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Мониторинг адаптируется к реакции и безопасности одного и того же пациента.",
+            "unsafe": "Каждая собака получает один сгенерированный интервал или правило корректировки."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какие домашние признаки и лабораторные тенденции определяют следующую контрольную точку."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "coordinated_home_log_and_low_stress_monitoring",
+            "ownerModifiers": [
+              "monitoring_fatigue",
+              "schedule_barrier"
+            ]
+          }
+        },
+        {
+          "id": "p3_stress_illness_missed_dose_or_owner_emergency_plan",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_or_emergency_by_signs",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что новое заболевание, стресс или пропущенная замена требуют пересмотренного плана действий в чрезвычайных ситуациях, сортировки с тревожными флажками и обратного обучения владельца.",
+          "historyAnswers": {
+            "missed_replacement_new_illness_or_stress": "По нашим наблюдениям, фиксировано точное событие, время и знаки.",
+            "owner_emergency_plan_and_referral_feasibility": "Дома мы заметили, что план доступа и обратное обучение записываются.",
+            "current_replacement_actual_use_and_adverse_signs": "Насколько мы можем судить, фактическое использование плана согласовано без вины.",
+            "collapse_weakness_melena_tremor_now": "Мы записали, что тревожные признаки."
+          },
+          "examFindings": [
+            {
+              "factId": "stress_illness_or_missed_replacement_remains_same_patient_continuity_not_random_collapse",
+              "source": "continuity_rule",
+              "finding": "Событие зависит от а экспозиции, времени и состояния."
+            },
+            {
+              "factId": "stress_dose_and_emergency_details_require_reviewed_plan_and_teach_back",
+              "source": "scope_rule",
+              "finding": "Поверхности двигателя направляют или тревожные признаки, а не дозы."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stress_illness_or_missed_replacement_remains_same_patient_continuity_not_random_collapse",
+              "discoveryPaths": [
+                "missed_replacement_new_illness_or_stress",
+                "same_patient_clinical_weight_electrolyte_response_record"
+              ]
+            },
+            {
+              "factId": "stress_dose_and_emergency_details_require_reviewed_plan_and_teach_back",
+              "discoveryPaths": [
+                "owner_emergency_plan_and_referral_feasibility",
+                "reviewed_stress_missed_dose_emergency_teach_back_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "addison_owner_stress_event_and_emergency_plan",
+              "classification": "required",
+              "result": "Целевое исследование показало: пересмотренный план действий или предупреждающих действий и обратное обучение."
+            },
+            {
+              "id": "addison_longitudinal_electrolyte_clinical_and_weight_monitoring",
+              "classification": "required_by_state",
+              "result": "При динамическом наблюдении: текущая индивидуальная динамика."
+            },
+            {
+              "id": "addison_crisis_perfusion_ecg_glucose_electrolyte_and_acid_base_monitoring",
+              "classification": "required_if_red_flags",
+              "result": "На электрокардиограмме: экстренная физиология."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stress_illness_or_missed_replacement_remains_same_patient_continuity_not_random_collapse",
+              "stress_dose_and_emergency_details_require_reviewed_plan_and_teach_back"
+            ],
+            "confirmedDiagnosisRequires": [
+              "original_addison_or_suppression_diagnosis_plus_current_event"
+            ],
+            "dangerStates": [
+              "vomiting",
+              "collapse",
+              "weakness",
+              "missed_replacement",
+              "unable_to_keep_plan"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "addison_owner_emergency_plan",
+              "addison_longitudinal_monitoring",
+              "electrolytes"
+            ],
+            "external": [
+              "endocrinology_referral",
+              "safe_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "addison_owner_plan_route",
+              "addison_longitudinal_route",
+              "addison_crisis_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "iatrogenic_longitudinal_plan",
+          "followUp": {
+            "timing": "Срочный контакт по конкретному событию, а затем обучение по плану после мероприятия.",
+            "required": true,
+            "targets": [
+              "illness",
+              "stress",
+              "missed_dose",
+              "vomiting",
+              "strength",
+              "plan_access"
+            ]
+          },
+          "outcomes": {
+            "safe": "Владелец использует проверенный план для конкретного пациента с видимыми порогами экстренной помощи.",
+            "unsafe": "Опасно самостоятельно назначать стрессовую дозу или считать любой коллапс следствием пропуска препарата без обследования."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: используйте обратную связь: попросите владельца описать, к кому следует обратиться и какие знаки означают неотложную неотложную помощь."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "stable_or_declining"
+            ],
+            "requiredHandlingAlternative": "telephone_triage_and_safe_emergency_referral",
+            "ownerModifiers": [
+              "forgot_plan",
+              "medication_access_problem",
+              "transport_barrier"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if Na:K, breed, low baseline cortisol or fluid response alone proves disease.",
+    "Reject if normal electrolytes exclude hypoadrenocorticism or secondary/iatrogenic disease is mislabeled primary Addison disease.",
+    "Reject if crisis waits for all results before stabilization or is discharged awaiting an external test.",
+    "Reject if exogenous steroid/Cushing-treatment exposure is omitted or abrupt withdrawal is safe.",
+    "Reject if monitoring uses one universal interval or a missed dose creates an unrelated random patient event.",
+    "Reject if code generates fluid, electrolyte, glucocorticoid/mineralocorticoid, stress-dose or ACTH-test protocol."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "packageId": "vetgeme-p8-medical-review-authoring",
+  "packageVersion": "2026.07.16.2",
+  "status": "pass",
+  "exactChecks": {
+    "familyCount": true,
+    "variantCount": true,
+    "presentationCount": true,
+    "investigationCount": true,
+    "sourceAuditClean": true,
+    "displayLanguageClean": true,
+    "correctionComplete": true,
+    "externalApprovalNotClaimed": true,
+    "activationForbidden": true,
+    "dialogueGatePasses": true,
+    "humanProfilesComplete": true
+  },
+  "sourceDefectsRemainOpen": 0,
+  "displayDefectsRemainOpen": 0,
+  "activationAllowed": false,
+  "issues": []
+}

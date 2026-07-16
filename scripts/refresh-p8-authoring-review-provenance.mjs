@@ -8,40 +8,65 @@ import { fileURLToPath } from "node:url";
 
 const execFileAsync = promisify(execFile);
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const requestedVersionArgument = process.argv.find((argument) => argument.startsWith("--version="));
+const requestedVersion = requestedVersionArgument?.slice("--version=".length) || "2026.07.16.1";
+const archiveProfiles = Object.freeze({
+  "2026.07.16.1": Object.freeze({
+    reviewRoot: "content/review-inputs/vetgeme-p8-medical-review-authoring-2026.07.16.1",
+    path: "p8-medical-review-authoring-2026.07.16.1.zip",
+    checksumPath: "p8-medical-review-authoring-2026.07.16.1.zip.sha256",
+    sourceDirectory: "p8-medical-review-authoring",
+    sha256: "1c7bd9da610cc03f08081023e613651b025bb677371a4ad3161e02960d6477eb",
+    zipEntryCount: 20,
+    extractedFileCount: 16,
+    extractedBytes: 4561393,
+    keyFileHashes: Object.freeze({
+      "MANIFEST.json": "cdba8797106767b12b4af0da632f66d3b3fc7eeedc889716372dce4ee4931133",
+      "generated/P8_SOURCE_AUDIT.json": "68140eae1fb5fe67fce95aab4e236b0c490b98ab8dd01265a65504aab1407900",
+      "source/p8-review-policy.json": "68a2faa475f058c2e3396c44418aef6cb4c3f794056f3866a1360088bb3218b1",
+      "source/reviewer-decision-template.json": "228204f848c32e99c3beb6731739fbdd3e804b7f69b3c1a564d9de03b8767b78",
+      "scripts/validate-p8-package.mjs": "2fcb3d4aabd54b296b651336c6827249ec279db49c998e467483252f08895c58",
+    }),
+  }),
+  "2026.07.16.2": Object.freeze({
+    reviewRoot: "content/review-inputs/vetgeme-p8-medical-review-authoring-2026.07.16.2",
+    path: "p8-medical-review-authoring-2026.07.16.2.zip",
+    checksumPath: "p8-medical-review-authoring-2026.07.16.2.zip.sha256",
+    sourceDirectory: "p8-medical-review-authoring",
+    sha256: "2fb059e9a85c632d6f37b66f05ff8f93065aea7e92eda06e1fafb1dff55d5031",
+    zipEntryCount: 33,
+    extractedFileCount: 29,
+    extractedBytes: 488589,
+    keyFileHashes: Object.freeze({
+      "MANIFEST.json": "077833463f6926a16de93b5ffc647f9588e3193f7fa2fa5d18bd8e09673fc502",
+      "generated/P8_SOURCE_AUDIT.json": "739cba25f918d326986ac3303d71912251f59878bbc2d3a1b7391618378d04de",
+      "generated/P8_DISPLAY_LANGUAGE_AUDIT_2026.07.16.40.json": "2a09161661f593de46a47479f5e0eef2d11c6a7d9c9ae6c24239a9a7bb094dfd",
+      "source/p8-review-policy.json": "5b008d7868f651b2369b5732910363bc462d3e860ae03687986e8467c326f71d",
+      "source/reviewer-decision-template.json": "53a8bce8cb45972c6f83e387f971bbd74576867b85fc6d33bb2adf5392b7f12a",
+      "scripts/validate-p8-package.mjs": "2ff1e49d630ad6ad62a545fc8cd2849c85393e5092f07c4229330195de50e6c3",
+    }),
+  }),
+});
+const archiveIdentity = archiveProfiles[requestedVersion];
+if (!archiveIdentity) throw new Error(`Unsupported P8 review input version: ${requestedVersion}`);
 const reviewInputRoot = path.join(
   projectRoot,
-  "content/review-inputs/vetgeme-p8-medical-review-authoring-2026.07.16.1",
+  archiveIdentity.reviewRoot,
 );
 const sourceRoot = path.join(reviewInputRoot, "source");
 const provenancePath = path.join(reviewInputRoot, "provenance.json");
-const sourceArchivePath = path.join(projectRoot, "p8-medical-review-authoring-2026.07.16.1.zip");
+const sourceArchivePath = path.join(projectRoot, archiveIdentity.path);
 const sourceArchiveChecksumPath = `${sourceArchivePath}.sha256`;
 const write = process.argv.includes("--write");
 const compareSource = process.argv.includes("--compare-source") || process.argv.includes("--compare-archive");
 const unknownArguments = process.argv
   .slice(2)
-  .filter((argument) => !["--write", "--compare-source", "--compare-archive"].includes(argument));
+  .filter((argument) => !["--write", "--compare-source", "--compare-archive"].includes(argument)
+    && !argument.startsWith("--version="));
 
 if (unknownArguments.length > 0) {
   throw new Error(`Unknown argument(s): ${unknownArguments.join(", ")}`);
 }
-
-const archiveIdentity = Object.freeze({
-  path: "p8-medical-review-authoring-2026.07.16.1.zip",
-  checksumPath: "p8-medical-review-authoring-2026.07.16.1.zip.sha256",
-  sourceDirectory: "p8-medical-review-authoring",
-  sha256: "1c7bd9da610cc03f08081023e613651b025bb677371a4ad3161e02960d6477eb",
-  zipEntryCount: 20,
-  extractedFileCount: 16,
-  extractedBytes: 4561393,
-  keyFileHashes: Object.freeze({
-    "MANIFEST.json": "cdba8797106767b12b4af0da632f66d3b3fc7eeedc889716372dce4ee4931133",
-    "generated/P8_SOURCE_AUDIT.json": "68140eae1fb5fe67fce95aab4e236b0c490b98ab8dd01265a65504aab1407900",
-    "source/p8-review-policy.json": "68a2faa475f058c2e3396c44418aef6cb4c3f794056f3866a1360088bb3218b1",
-    "source/reviewer-decision-template.json": "228204f848c32e99c3beb6731739fbdd3e804b7f69b3c1a564d9de03b8767b78",
-    "scripts/validate-p8-package.mjs": "2fcb3d4aabd54b296b651336c6827249ec279db49c998e467483252f08895c58",
-  }),
-});
 
 const provenance = await buildProvenance();
 const serializedProvenance = `${JSON.stringify(provenance, null, 2)}\n`;

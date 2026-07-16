@@ -10,8 +10,10 @@ const execFileAsync = promisify(execFile);
 const scriptPath = fileURLToPath(import.meta.url);
 const projectRoot = path.resolve(path.dirname(scriptPath), "..");
 
-export async function runMedicalAuthoringBundledValidator() {
-  const reviewInput = await loadMedicalAuthoringReviewInput(projectRoot, { context: "review" });
+export async function runMedicalAuthoringBundledValidator(options = {}) {
+  const loadOptions = { context: "review" };
+  if (options.reviewInputVersion) loadOptions.reviewInputVersion = options.reviewInputVersion;
+  const reviewInput = await loadMedicalAuthoringReviewInput(projectRoot, loadOptions);
   const temporaryRoot = await mkdtemp(path.join(os.tmpdir(), "vetgeme-medical-authoring-validator-"));
   const packageRoot = path.join(temporaryRoot, "medical-production-authoring");
   const sourceRoot = path.join(
@@ -62,5 +64,10 @@ export async function runMedicalAuthoringBundledValidator() {
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === scriptPath) {
-  await runMedicalAuthoringBundledValidator();
+  const versionArgument = process.argv.find((argument) => argument.startsWith("--version="));
+  const unknownArguments = process.argv.slice(2).filter((argument) => !argument.startsWith("--version="));
+  if (unknownArguments.length > 0) throw new Error(`Unknown argument(s): ${unknownArguments.join(", ")}`);
+  await runMedicalAuthoringBundledValidator({
+    reviewInputVersion: versionArgument?.slice("--version=".length),
+  });
 }

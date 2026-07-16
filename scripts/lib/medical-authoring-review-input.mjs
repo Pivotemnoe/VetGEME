@@ -5,6 +5,7 @@ import path from "node:path";
 export const REVIEW_INPUT_REGISTRY_PATH = "content/review-inputs/registry.json";
 export const DEFAULT_REVIEW_INPUT_ID = "vetgeme-medical-production-authoring";
 export const DEFAULT_REVIEW_INPUT_VERSION = "2026.07.16.39";
+export const MEDICAL_REVIEW_INPUT_V40_VERSION = "2026.07.16.40";
 export const REVIEW_CONTEXT = "review";
 export const BLOCKED_STATUS = "blocked_pending_external_veterinary_review";
 export const PENDING_VETERINARY_STATUS = "external_veterinary_review_pending";
@@ -23,6 +24,38 @@ const FORBIDDEN_GENERATED_MEDICAL_KEYS = new Set([
   "transfusionRate",
 ]);
 const CAPABILITY_ARRAY_FIELDS = ["requiredLocal", "external", "missingLocalRoute"];
+const CAPABILITY_REGISTRY_PATH =
+  "content/system-packs/vetgeme-master-2026-07-14/capability-registry.json";
+const CAPABILITY_REGISTRY_SHA256 =
+  "16ff64c015a8edb302c15289540a4ed760cfc356d832bca31094f992b1da3c81";
+const MEDICAL_REVIEW_INPUT_PROFILES = Object.freeze({
+  [DEFAULT_REVIEW_INPUT_VERSION]: Object.freeze({
+    root: "content/review-inputs/vetgeme-medical-production-authoring-2026.07.16.39",
+    sourceArchive: "medical-production-authoring-2026.07.16.39.zip",
+    checksumPath: "medical-production-authoring-2026.07.16.39.zip.sha256",
+    zipEntryCount: 129,
+    sourceFiles: 85,
+    sourceBytes: 3194211,
+    provenanceSha256: "207b901e1a2c0190fd366d5e135f4c43791b1922cc08031d1554fe21d6a36e87",
+    aggregateSha256: "e3341e533e09a6f00d09180f7b78808cdf1867406492a27cd17f9dca11bc626c",
+    archiveSha256: "54a6cec64406dd4e326aa5ff089cbd3878ef7cd17a4bb7ed01123c7a93da822c",
+    requireFamilySha256: false,
+    investigationResults: null,
+  }),
+  [MEDICAL_REVIEW_INPUT_V40_VERSION]: Object.freeze({
+    root: "content/review-inputs/vetgeme-medical-production-authoring-2026.07.16.40",
+    sourceArchive: "medical-production-authoring-2026.07.16.40.zip",
+    checksumPath: "medical-production-authoring-2026.07.16.40.zip.sha256",
+    zipEntryCount: 129,
+    sourceFiles: 85,
+    sourceBytes: 5250732,
+    provenanceSha256: "8dda49a530366c3b42f0d0c94bb5e7adf322e87b36df6e7d2d321a434012ecab",
+    aggregateSha256: "3f3f89ab93e005a5100b39586328c38fa6b4fcf52887be63cabc41ac05c557c8",
+    archiveSha256: "171659e929f4b8a83cf921a8fa689cd3f5ac632466c4c328dd047199fced71c5",
+    requireFamilySha256: true,
+    investigationResults: 1864,
+  }),
+});
 
 function fail(message) {
   throw new Error(`Medical authoring review input validation failed: ${message}`);
@@ -30,6 +63,12 @@ function fail(message) {
 
 function check(condition, message) {
   if (!condition) fail(message);
+}
+
+function medicalProfile(version) {
+  const profile = MEDICAL_REVIEW_INPUT_PROFILES[version];
+  check(profile, `unsupported medical review input version ${String(version)}`);
+  return profile;
 }
 
 function isObject(value) {
@@ -132,11 +171,12 @@ function findForbiddenKeys(value, location, found = []) {
 export function validateReviewInputRegistration(registration) {
   check(isObject(registration), "review input registration must be an object");
   check(registration.reviewInputId === DEFAULT_REVIEW_INPUT_ID, "unexpected reviewInputId");
-  check(registration.reviewInputVersion === DEFAULT_REVIEW_INPUT_VERSION, "unexpected reviewInputVersion");
+  const profile = medicalProfile(registration.reviewInputVersion);
   check(registration.kind === "medical_authoring", "review input kind must be medical_authoring");
   check(registration.packageId === DEFAULT_REVIEW_INPUT_ID, "packageId mismatch");
-  check(registration.packageVersion === DEFAULT_REVIEW_INPUT_VERSION, "packageVersion mismatch");
+  check(registration.packageVersion === registration.reviewInputVersion, "packageVersion mismatch");
   checkSafePath(registration.root, "root");
+  check(registration.root === profile.root, "versioned medical review root mismatch");
   check(registration.root.startsWith("content/review-inputs/"), "root must stay under content/review-inputs");
   checkSafePath(registration.sourceRoot, "sourceRoot");
   checkSafePath(registration.manifestPath, "manifestPath");
@@ -169,18 +209,33 @@ export function validateReviewInputRegistration(registration) {
   check(registration.expectedCounts.variants === 215, "expected variant count must be 215");
   check(registration.expectedCounts.presentations === 645, "expected presentation count must be 645");
   check(registration.expectedCounts.capabilities === 447, "expected capability count must be 447");
+  check(registration.expectedCounts.sourceFiles === profile.sourceFiles, "expected source file count mismatch");
+  check(registration.expectedCounts.sourceBytes === profile.sourceBytes, "expected source byte count mismatch");
+  if (profile.investigationResults !== null) {
+    checkInteger(registration.expectedCounts.investigationResults, "expectedCounts.investigationResults");
+    checkInteger(registration.expectedCounts.nullInvestigationResults, "expectedCounts.nullInvestigationResults");
+    check(
+      registration.expectedCounts.investigationResults === profile.investigationResults,
+      `expected investigation result count must be ${profile.investigationResults}`,
+    );
+    check(registration.expectedCounts.nullInvestigationResults === 0, "expected null investigation result count must be 0");
+  }
 
   check(isObject(registration.sourceIntegrity), "sourceIntegrity is required");
   check(SHA256_PATTERN.test(registration.sourceIntegrity.provenanceSha256 || ""), "provenance SHA-256 is invalid");
   check(SHA256_PATTERN.test(registration.sourceIntegrity.aggregateSha256 || ""), "source aggregate SHA-256 is invalid");
   check(SHA256_PATTERN.test(registration.sourceIntegrity.archiveSha256 || ""), "archive SHA-256 is invalid");
+  check(registration.sourceIntegrity.provenanceSha256 === profile.provenanceSha256, "provenance digest mismatch");
+  check(registration.sourceIntegrity.aggregateSha256 === profile.aggregateSha256, "provenance aggregate digest mismatch");
+  check(registration.sourceIntegrity.archiveSha256 === profile.archiveSha256, "archive digest mismatch");
 
   check(isObject(registration.capabilityRegistry), "capabilityRegistry is required");
   check(registration.capabilityRegistry.registryId === "vetgeme-clinic-capabilities", "capability registry ID mismatch");
   check(registration.capabilityRegistry.registryVersion === "2026.07.14.38", "capability registry version mismatch");
   checkSafePath(registration.capabilityRegistry.path, "capabilityRegistry.path");
-  check(registration.capabilityRegistry.path.startsWith("content/system-packs/"), "capability registry must stay under content/system-packs");
+  check(registration.capabilityRegistry.path === CAPABILITY_REGISTRY_PATH, "capability registry path mismatch");
   check(SHA256_PATTERN.test(registration.capabilityRegistry.sha256 || ""), "capability registry SHA-256 is invalid");
+  check(registration.capabilityRegistry.sha256 === CAPABILITY_REGISTRY_SHA256, "capability registry SHA-256 mismatch");
   return registration;
 }
 
@@ -282,22 +337,23 @@ export function createFileSystemReviewInputReader(projectRoot) {
 }
 
 export function validateSourceProvenance(registration, provenance, sourceFiles, sourceBytesByPath) {
+  const profile = medicalProfile(registration.reviewInputVersion);
   const identity = `${registration.reviewInputId}@${registration.reviewInputVersion}`;
   check(isObject(provenance), `${identity}: provenance is missing`);
   check(provenance.schemaVersion === 1, `${identity}: provenance schemaVersion must be 1`);
   check(provenance.provenanceId === "vetgeme-medical-production-authoring-review-source", `${identity}: provenanceId mismatch`);
   check(provenance.packageId === registration.packageId, `${identity}: provenance packageId mismatch`);
   check(provenance.packageVersion === registration.packageVersion, `${identity}: provenance packageVersion mismatch`);
-  check(provenance.sourceArchive === "medical-production-authoring-2026.07.16.39.zip", `${identity}: source archive identity mismatch`);
+  check(provenance.sourceArchive === profile.sourceArchive, `${identity}: source archive identity mismatch`);
   check(provenance.sourceDirectory === "medical-production-authoring", `${identity}: source directory identity mismatch`);
   check(isObject(provenance.archive), `${identity}: archive provenance is missing`);
   check(provenance.archive.path === provenance.sourceArchive, `${identity}: archive path mismatch`);
   check(
-    provenance.archive.checksumPath === "medical-production-authoring-2026.07.16.39.zip.sha256",
+    provenance.archive.checksumPath === profile.checksumPath,
     `${identity}: archive checksum path mismatch`,
   );
   check(provenance.archive.sha256 === registration.sourceIntegrity.archiveSha256, `${identity}: archive digest mismatch`);
-  check(provenance.archive.zipEntryCount === 129, `${identity}: archive entry count mismatch`);
+  check(provenance.archive.zipEntryCount === profile.zipEntryCount, `${identity}: archive entry count mismatch`);
   check(provenance.archive.extractedFileCount === registration.expectedCounts.sourceFiles, `${identity}: archive file count mismatch`);
   check(provenance.archive.extractedBytes === registration.expectedCounts.sourceBytes, `${identity}: archive byte count mismatch`);
   check(provenance.sourceFileCount === registration.expectedCounts.sourceFiles, `${identity}: provenance file count mismatch`);
@@ -384,10 +440,12 @@ export function validateMedicalAuthoringPackage({
   manifest,
   familiesByPath,
   sourceFiles,
+  sourceBytesByPath,
   capabilityRegistry,
   capabilityBytes,
 }) {
   validateReviewInputRegistration(registration);
+  const profile = medicalProfile(registration.reviewInputVersion);
   const capabilityIds = validateCapabilityRegistry(registration, capabilityRegistry, capabilityBytes);
   check(isObject(manifest), "authoring manifest is missing");
   check(manifest.schemaVersion === 1, "authoring manifest schemaVersion must be 1");
@@ -400,6 +458,15 @@ export function validateMedicalAuthoringPackage({
   check(manifest.variantTargetCount === registration.expectedCounts.variants, "authoring manifest variant target mismatch");
   check(manifest.presentationTargetCount === registration.expectedCounts.presentations, "authoring manifest presentation target mismatch");
   check(manifest.familiesAuthored === registration.expectedCounts.families, "authoring manifest authored family count mismatch");
+  if (profile.investigationResults !== null) {
+    check(
+      manifest.status === "author_corrected_zero_tolerance_audit_passed"
+        && manifest.authoringStatus === "author_corrected_zero_tolerance_audit_passed",
+      "corrected authoring status mismatch",
+    );
+    check(manifest.investigationResultCount === profile.investigationResults, "manifest investigation result count mismatch");
+    check(manifest.investigationNullResultCount === 0, "manifest null investigation result count must remain 0");
+  }
   check(Array.isArray(manifest.families), "authoring manifest families must be an array");
   check(manifest.families.length === registration.expectedCounts.families, "authoring manifest family entry count mismatch");
 
@@ -434,6 +501,7 @@ export function validateMedicalAuthoringPackage({
     planBundles: 0,
     researchMappings: 0,
     investigations: 0,
+    nullInvestigationResults: 0,
     criticalFacts: 0,
     capabilityReferences: 0,
     uniqueCapabilityReferences: new Set(),
@@ -463,6 +531,12 @@ export function validateMedicalAuthoringPackage({
     check(family.familyId === manifestFamily.familyId, `${familyLabel}: manifest familyId mismatch`);
     check(isNonEmptyString(family.familyVersion), `${familyLabel}: familyVersion is missing`);
     check(family.familyVersion === manifestFamily.familyVersion, `${familyLabel}: manifest familyVersion mismatch`);
+    if (profile.requireFamilySha256) {
+      const familyBytes = sourceBytesByPath?.get(manifestFamily.path);
+      check(familyBytes !== undefined, `${familyLabel}: family source bytes are missing`);
+      check(SHA256_PATTERN.test(manifestFamily.sha256 || ""), `${familyLabel}: manifest family SHA-256 is invalid`);
+      check(sha256(familyBytes) === manifestFamily.sha256, `${familyLabel}: manifest family SHA-256 mismatch`);
+    }
     assertReviewState(family.review, familyLabel);
     check(manifestFamily.authorStatus === AUTHOR_COMPLETE_STATUS, `${familyLabel}: manifest author status mismatch`);
     check(manifestFamily.sourceStatus === SOURCE_CHECKED_STATUS, `${familyLabel}: manifest source status mismatch`);
@@ -620,6 +694,12 @@ export function validateMedicalAuthoringPackage({
           check(researchIds.includes(investigation.id), `${presentationLabel}: unmapped investigation ${investigation.id}`);
           check(isNonEmptyString(investigation.classification), `${presentationLabel}/${investigation.id}: classification is missing`);
           check(Object.prototype.hasOwnProperty.call(investigation, "result"), `${presentationLabel}/${investigation.id}: authored result state is missing`);
+          if (investigation.result === null || investigation.result === undefined) {
+            audit.nullInvestigationResults += 1;
+          }
+          if (profile.investigationResults !== null) {
+            check(isNonEmptyString(investigation.result), `${presentationLabel}/${investigation.id}: authored result must be non-empty text`);
+          }
         }
 
         check(isObject(presentation.equipment), `${presentationLabel}: equipment contract is missing`);
@@ -662,6 +742,10 @@ export function validateMedicalAuthoringPackage({
   check(audit.variants === registration.expectedCounts.variants, "validated variant count mismatch");
   check(audit.presentations === registration.expectedCounts.presentations, "validated presentation count mismatch");
   check(audit.generatorEligibleRecords === registration.expectedCounts.productionPool, "production pool must remain 0");
+  if (profile.investigationResults !== null) {
+    check(audit.investigations === profile.investigationResults, "validated investigation result count mismatch");
+    check(audit.nullInvestigationResults === 0, "validated null investigation result count must remain 0");
+  }
   check(audit.safeRoutes.familyDeclarations === audit.families, "every family must declare a safe route capability");
   check(audit.safeRoutes.presentationsCovered === audit.presentations, "every presentation must have a safe route");
 
@@ -674,6 +758,7 @@ export function validateMedicalAuthoringPackage({
     planBundles: audit.planBundles,
     researchMappings: audit.researchMappings,
     investigations: audit.investigations,
+    nullInvestigationResults: audit.nullInvestigationResults,
     criticalFacts: audit.criticalFacts,
     capabilityRegistryEntries: capabilityIds.size,
     capabilityReferences: audit.capabilityReferences,
@@ -717,6 +802,7 @@ export async function loadMedicalAuthoringReviewInputFromReader(reader, registry
     manifest,
     familiesByPath,
     sourceFiles,
+    sourceBytesByPath,
     capabilityRegistry,
     capabilityBytes,
   });

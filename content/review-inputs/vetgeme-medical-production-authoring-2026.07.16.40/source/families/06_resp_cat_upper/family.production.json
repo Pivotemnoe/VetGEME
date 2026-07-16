@@ -1,0 +1,2616 @@
+{
+  "schemaVersion": 1,
+  "familyId": "resp_cat_upper",
+  "familyVersion": "2026.07.16.40",
+  "title": "Синдромы верхних дыхательных путей кошек",
+  "campaignPhase": "chapter_1_to_chapter_5",
+  "species": [
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "syndromeRule": "Чихание, ринит, конъюнктивит и язвы рта задают синдром или фенотип, а не автоматически конкретного возбудителя.",
+    "pcrRule": "ПЦР интерпретируется вместе с местом и временем отбора, вакцинацией, носительством и клиническим соответствием.",
+    "isolationRule": "Заразно-совместимый пациент изолируется до общей очереди независимо от внешности.",
+    "antimicrobialRule": "Антимикробный компонент не является автоматическим ответом на острый вирусоподобный инфекция верхних дыхательных путей.",
+    "doseRule": "Ветеринарный врач выбирает препараты, дозы, интервалы, кислородный или нутритивный протокол."
+  },
+  "coreCapabilities": [
+    "general_exam",
+    "respiratory_exam",
+    "isolation_protocol"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "resp_exam_or_referral",
+      "anyOf": [
+        "respiratory_exam",
+        "safe_referral"
+      ],
+      "purpose": "breathing_and_airway_assessment"
+    },
+    {
+      "id": "eye_corneal_route",
+      "anyOf": [
+        "fluorescein",
+        "ophthalmology_referral",
+        "safe_referral"
+      ],
+      "purpose": "painful_eye_integrity"
+    },
+    {
+      "id": "feline_resp_testing_or_referral",
+      "anyOf": [
+        "feline_respiratory_testing_external",
+        "pcr_external",
+        "safe_referral"
+      ],
+      "purpose": "targeted_respiratory_testing"
+    },
+    {
+      "id": "resp_ocular_sampling_or_referral",
+      "anyOf": [
+        "ocular_cytology",
+        "culture_external",
+        "ophthalmology_referral",
+        "safe_referral"
+      ],
+      "purpose": "conjunctival_cytology_or_culture"
+    },
+    {
+      "id": "nutrition_support_or_referral",
+      "anyOf": [
+        "assisted_nutrition",
+        "feeding_tube_referral",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "anorexia_support"
+    },
+    {
+      "id": "oxygen_hospital_or_referral",
+      "anyOf": [
+        "oxygen",
+        "respiratory_hospital_monitoring",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "respiratory_distress"
+    },
+    {
+      "id": "thoracic_imaging_or_referral",
+      "anyOf": [
+        "xray_or_referral",
+        "safe_referral"
+      ],
+      "purpose": "lower_airway_assessment"
+    },
+    {
+      "id": "advanced_nasal_route",
+      "anyOf": [
+        "advanced_imaging_referral",
+        "airway_endoscopy_referral",
+        "safe_referral"
+      ],
+      "purpose": "chronic_unilateral_or_bloody_disease"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "resp_cat_isolation_triage",
+      "requires": [
+        "isolation_protocol",
+        "respiratory_exam"
+      ],
+      "availability": "local_from_start",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_cat_upper_airway_exam",
+      "requires": [
+        "respiratory_exam"
+      ],
+      "availability": "local_from_start",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_cat_eye_oral_exam",
+      "requires": [
+        "eye_exam",
+        "oral_exam",
+        "fluorescein"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_cat_hydration_nutrition_assessment",
+      "requires": [
+        "hydration_assessment",
+        "body_weight",
+        "nutritional_assessment"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_cat_targeted_pcr",
+      "requires": [
+        "respiratory_sample_collection",
+        "pcr_external"
+      ],
+      "availability": "external_chapter_3",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_cat_cytology_or_culture",
+      "requires": [
+        "ocular_cytology",
+        "culture_external"
+      ],
+      "availability": "local_external_chapter_3",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_cat_cbc_biochemistry",
+      "requires": [
+        "cbc",
+        "biochemistry"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_cat_thoracic_imaging",
+      "requires": [
+        "xray_or_referral"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "onset_course",
+      "text": "Когда началось, сколько длится и ухудшается ли?"
+    },
+    {
+      "id": "resting_breathing",
+      "text": "Как дышит в покое: носом, шумно, с усилием или открытым ртом?"
+    },
+    {
+      "id": "nasal_laterality",
+      "text": "Один или оба носовых хода?"
+    },
+    {
+      "id": "discharge_character",
+      "text": "Выделения серозные, слизисто-гнойные, кровянистые или с корками?"
+    },
+    {
+      "id": "eye_pain",
+      "text": "Есть ли выделения из глаз, хемоз, прищур или помутнение?"
+    },
+    {
+      "id": "oral_pain_ulcers",
+      "text": "Есть ли слюнотечение, язвы или боль при еде?"
+    },
+    {
+      "id": "food_water_smell",
+      "text": "Ест, пьёт и чувствует ли запах пищи?"
+    },
+    {
+      "id": "systemic_signs",
+      "text": "Есть ли лихорадка, вялость, хромота, отёки, кожа или желтуха?"
+    },
+    {
+      "id": "housing_contacts",
+      "text": "Дом, несколько кошек, приют или передержка и кто контактировал?"
+    },
+    {
+      "id": "vaccination",
+      "text": "Каков вакцинальный статус?"
+    },
+    {
+      "id": "cluster_signal",
+      "text": "Есть ли другие заболевшие или внезапные смерти?"
+    },
+    {
+      "id": "previous_treatment",
+      "text": "Что уже применяли и когда?"
+    },
+    {
+      "id": "home_care_feasibility",
+      "text": "Можно ли безопасно изолировать, очищать выделения и поддерживать питание дома?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "observe_breathing_before_handling",
+      "source": "observation",
+      "requires": [
+        "respiratory_exam"
+      ]
+    },
+    {
+      "id": "general_vitals_hydration",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "hydration_assessment"
+      ]
+    },
+    {
+      "id": "upper_airway_and_auscultation",
+      "source": "physical_exam",
+      "requires": [
+        "respiratory_exam"
+      ]
+    },
+    {
+      "id": "bilateral_eye_exam",
+      "source": "physical_exam",
+      "requires": [
+        "eye_exam"
+      ]
+    },
+    {
+      "id": "fluorescein_if_pain",
+      "source": "diagnostic_test",
+      "requires": [
+        "fluorescein"
+      ]
+    },
+    {
+      "id": "oral_cavity_exam",
+      "source": "physical_exam",
+      "requires": [
+        "oral_exam"
+      ]
+    },
+    {
+      "id": "weight_and_nutrition",
+      "source": "measurement",
+      "requires": [
+        "body_weight",
+        "nutritional_assessment"
+      ]
+    },
+    {
+      "id": "contact_record",
+      "source": "record",
+      "requires": [
+        "isolation_protocol"
+      ]
+    },
+    {
+      "id": "respiratory_pcr_sample",
+      "source": "diagnostic_test",
+      "requires": [
+        "respiratory_sample_collection",
+        "pcr_external"
+      ]
+    },
+    {
+      "id": "ocular_cytology_or_culture",
+      "source": "diagnostic_test",
+      "requires": [
+        "ocular_cytology",
+        "culture_external"
+      ]
+    },
+    {
+      "id": "cbc_biochemistry",
+      "source": "diagnostic_test",
+      "requires": [
+        "cbc",
+        "biochemistry"
+      ]
+    },
+    {
+      "id": "thoracic_xray",
+      "source": "diagnostic_test",
+      "requires": [
+        "xray_or_referral"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "acute_uri_support_and_isolation",
+      "fullPlan": [
+        "isolate_before_common_waiting",
+        "breathing_first",
+        "eyes_nose_mouth_and_systemic_exam",
+        "hydration_nutrition_support",
+        "targeted_testing_only_if_changes_plan_or_group",
+        "no_automatic_antimicrobial",
+        "written_red_flags_and_recheck"
+      ],
+      "stagedPlan": [
+        "isolation_and_triage",
+        "minimum_exam",
+        "support",
+        "defined_recheck"
+      ],
+      "minimumSafePlan": [
+        "isolation",
+        "breathing",
+        "eye_oral_nutrition_screen",
+        "feasible_support",
+        "red_flags"
+      ],
+      "stabilizeAndRefer": [
+        "minimal_handling",
+        "oxygen_if_indicated",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "common_waiting_room",
+        "antibiotic_for_every_uri",
+        "vaccination_excludes_infection",
+        "panel_for_every_mild_home_cat"
+      ]
+    },
+    {
+      "id": "conjunctivitis_uri_corneal_gate",
+      "fullPlan": [
+        "isolation",
+        "bilateral_eye_and_respiratory_exam",
+        "fluorescein_when_pain_or_clouding",
+        "correct_sample_before_material_changing_therapy",
+        "interpret_pcr_with_context",
+        "support_and_contact_plan",
+        "eye_surface_branch_if_ulcer"
+      ],
+      "stagedPlan": [
+        "corneal_gate",
+        "isolation",
+        "targeted_sample",
+        "followup"
+      ],
+      "minimumSafePlan": [
+        "isolate",
+        "exclude_corneal_ulcer",
+        "support",
+        "eye_red_flags"
+      ],
+      "stabilizeAndRefer": [
+        "protect_painful_eye",
+        "minimal_handling",
+        "ophthalmology_or_safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "agent_from_discharge_color",
+        "ignore_squint",
+        "pcr_equals_entire_cause",
+        "repeat_eye_drop_without_corneal_check"
+      ]
+    },
+    {
+      "id": "oral_ulcer_pain_nutrition",
+      "fullPlan": [
+        "isolation_and_breathing",
+        "oral_exam",
+        "pain_and_swallowing_assessment",
+        "hydration_weight_and_anorexia_duration",
+        "reviewed_analgesia_and_nutrition_route",
+        "targeted_testing_by_group_or_severity",
+        "recheck"
+      ],
+      "stagedPlan": [
+        "oral_pain_and_intake",
+        "support",
+        "targeted_test",
+        "recheck"
+      ],
+      "minimumSafePlan": [
+        "oral_exam",
+        "pain_route",
+        "prove_ability_to_eat_and_drink",
+        "red_flags"
+      ],
+      "stabilizeAndRefer": [
+        "support_hydration",
+        "nutrition_or_hospital_route",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "oral_ulcer_proves_fcv",
+        "assume_anorexia_only_from_smell",
+        "no_weight_or_duration",
+        "automatic_antimicrobial"
+      ]
+    },
+    {
+      "id": "severe_uri_stabilize_and_escalate",
+      "fullPlan": [
+        "strict_isolation",
+        "observe_before_restraint",
+        "oxygen_and_minimal_handling_if_distress",
+        "hydration_and_nutrition_stabilization",
+        "blood_and_imaging_after_initial_stability",
+        "outbreak_protocol_if_cluster",
+        "hospital_or_referral"
+      ],
+      "stagedPlan": [
+        "isolate_and_abc",
+        "stabilize",
+        "targeted_tests",
+        "hospital_route"
+      ],
+      "minimumSafePlan": [
+        "do_not_stress_distressed_cat",
+        "oxygen_or_referral",
+        "hydration_nutrition_route",
+        "documented_handoff"
+      ],
+      "stabilizeAndRefer": [
+        "minimal_handling",
+        "oxygen",
+        "urgent_hospital_referral"
+      ],
+      "unsafeOrInadequate": [
+        "full_history_before_oxygen",
+        "xray_before_stability",
+        "home_wait_with_open_mouth_breathing",
+        "ordinary_flow_for_systemic_cluster"
+      ]
+    },
+    {
+      "id": "chronic_uri_expanded_workup",
+      "fullPlan": [
+        "new_isolation_and_severity_triage",
+        "repeat_eye_oral_nasal_exam",
+        "verify_duration_laterality_and_blood",
+        "correct_targeted_sampling",
+        "dental_systemic_and_retroviral_route_by_risk",
+        "advanced_imaging_endoscopy_or_biopsy_referral",
+        "stop_endless_empirical_cycles"
+      ],
+      "stagedPlan": [
+        "retriage",
+        "first_high_yield_test",
+        "external_diagnostic_route",
+        "cause_specific_followup"
+      ],
+      "minimumSafePlan": [
+        "recheck_breathing_cornea_nutrition",
+        "identify_unilateral_blood_red_flags",
+        "offer_diagnostic_or_referral_route"
+      ],
+      "stabilizeAndRefer": [
+        "support_by_state",
+        "protect_airway_nutrition",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "stress_proves_fhv",
+        "another_empirical_antimicrobial_only",
+        "chronic_unilateral_equals_herpes",
+        "no_imaging_or_referral"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "resp_cat_uri_acute_uncomplicated",
+      "version": "2026.07.16.40",
+      "title": "Острый неосложнённый синдром верхних дыхательных путей кошки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Острый лёгкий или умеренный инфекция верхних дыхательных путей без дыхательной недостаточности, тяжёлой дегидратации, язвы роговицы, длительной анорексии или системного осложнения; этиология может остаться вероятностной.",
+      "primaryDiagnosisId": "dx_feline_acute_uri_syndrome",
+      "differentials": [
+        "dx_fhv1_infection",
+        "dx_fcv_infection",
+        "dx_chlamydia_felis",
+        "dx_mycoplasma_felis",
+        "dx_secondary_bacterial_uri"
+      ],
+      "planBundleId": "acute_uri_support_and_isolation",
+      "sourceIds": [
+        "merck_feline_respiratory_complex",
+        "abcd_fhv",
+        "abcd_fcv",
+        "iscaid_respiratory_2017"
+      ],
+      "presentations": [
+        {
+          "id": "p1_mild_sneeze_serous_discharge",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine_or_priority_with_isolation",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что кошка чихает, из носа и глаз серозные выделения, но она активна и ест.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, несколько дней без быстрого ухудшения.",
+            "resting_breathing": "Дома мы заметили, что дышит носом без грудного усилия.",
+            "food_water_smell": "Насколько мы можем судить, ест и пьёт.",
+            "systemic_signs": "Мы записали, что тяжёлых системных признаков нет."
+          },
+          "examFindings": [
+            {
+              "factId": "mild_stable_uri_exam",
+              "source": "physical_exam",
+              "finding": "Нормальная или умеренно изменённая температура, стабильная гидратация, верхнедыхательный шум без нижнедыхательного усилия."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "breathing_stable",
+              "discoveryPaths": [
+                "resting_breathing",
+                "observe_breathing_before_handling",
+                "upper_airway_and_auscultation"
+              ]
+            },
+            {
+              "factId": "mild_stable_uri_exam",
+              "discoveryPaths": [
+                "general_vitals_hydration",
+                "weight_and_nutrition"
+              ]
+            },
+            {
+              "factId": "eye_oral_red_flags_absent",
+              "discoveryPaths": [
+                "bilateral_eye_exam",
+                "oral_cavity_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_isolation_triage",
+              "classification": "required_before_common_queue",
+              "result": "Клиническая оценка показала: совместимая заразная картина; отдельный маршрут."
+            },
+            {
+              "id": "resp_cat_upper_airway_exam",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: нижнедыхательных тревожные признаки нет."
+            },
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "optional_low_value_if_it_does_not_change_individual_or_group_plan",
+              "result": "Целевое лабораторное исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "breathing_stable",
+              "mild_stable_uri_exam",
+              "eye_oral_red_flags_absent"
+            ],
+            "confirmedDiagnosisRequires": [
+              "syndrome_only_or_contextual_etiology"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "isolation_protocol",
+              "eye_exam",
+              "oral_exam"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_uri_support_and_isolation",
+          "followUp": {
+            "timing": "Повторный осмотр через 48 часов; при боли, отказе от еды или затруднённом дыхании — раньше.",
+            "required": true,
+            "targets": [
+              "breathing",
+              "appetite_water",
+              "temperature",
+              "eye_pain",
+              "oral_pain"
+            ]
+          },
+          "outcomes": {
+            "safe": "Поддержка и изоляция применены без ненужного этиологического ярлыка.",
+            "unsafe": "Каждое чихание получает антимикробный компонент или идёт через общую очередь."
+          },
+          "ownerCommunication": [
+            "Я дам вам конкретные признаки дыхательного ухудшения и анорексии."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "expecting_antibiotic",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_multi_cat_contact_stable",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority_infection_control",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что после приюта или передержки кошка чихает; дома есть другие кошки, сама пациентка стабильна.",
+          "historyAnswers": {
+            "housing_contacts": "По нашим наблюдениям, недавняя группа и домашние контакты.",
+            "cluster_signal": "Дома мы заметили, что один или несколько контактов под риском.",
+            "resting_breathing": "Насколько мы можем судить, без усилия.",
+            "food_water_smell": "Мы записали, что ест и пьёт."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_group_exposure_uri",
+              "source": "physical_exam",
+              "finding": "Лёгкий инфекция верхних дыхательных путей без системной нестабильности; эпидемиологическая ценность теста выше индивидуальной."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stable_group_exposure_uri",
+              "discoveryPaths": [
+                "housing_contacts",
+                "general_vitals_hydration",
+                "observe_breathing_before_handling"
+              ]
+            },
+            {
+              "factId": "contact_list_available",
+              "discoveryPaths": [
+                "cluster_signal",
+                "contact_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_isolation_triage",
+              "classification": "required",
+              "result": "Клиническая оценка показала: изоляция и журнал контактов активированы."
+            },
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "recommended_changes_group_plan",
+              "result": "Целевое лабораторное исследование показало: проба или день болезни и результат сохранены; интерпретация контекстная."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stable_group_exposure_uri",
+              "contact_list_available"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_pattern_plus_contextual_test_if_etiology_needed"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "isolation_protocol"
+            ],
+            "conditional": [
+              "feline_resp_testing_or_referral"
+            ],
+            "external": [
+              "pcr_external"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_uri_support_and_isolation",
+          "followUp": {
+            "timing": "Состояние больного животного проверяют отдельно, а контактную группу ежедневно осматривают на новые симптомы.",
+            "required": true,
+            "targets": [
+              "new_cases",
+              "breathing",
+              "appetite",
+              "test_result",
+              "isolation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Тест используется для управления группой, контакты не получают автоматически тот же диагноз.",
+            "unsafe": "Изоляция пропущена или всем контактам назначена одинаковая болезнь."
+          },
+          "ownerCommunication": [
+            "Я дам вам план раздельных ресурсов, гигиены и наблюдения каждой кошки."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "multi_pet",
+              "shelter_adopter",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_early_recheck_improving",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "follow_up",
+          "workload": 0.75,
+          "complaint": "Мы обратились, потому что на раннем контроле аппетит и активность возвращаются, выделений меньше.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, улучшение.",
+            "resting_breathing": "Дома мы заметили, что нормальное.",
+            "food_water_smell": "Насколько мы можем судить, ест и пьёт лучше.",
+            "home_care_feasibility": "Мы записали, что изоляция и уход выполняются."
+          },
+          "examFindings": [
+            {
+              "factId": "objective_uri_improvement",
+              "source": "physical_exam",
+              "finding": "Масса стабильна, гидратация и дыхание нормальны, глаза или рот без новых осложнений."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "objective_uri_improvement",
+              "discoveryPaths": [
+                "general_vitals_hydration",
+                "weight_and_nutrition",
+                "upper_airway_and_auscultation"
+              ]
+            },
+            {
+              "factId": "no_new_eye_or_oral_complication",
+              "discoveryPaths": [
+                "bilateral_eye_exam",
+                "oral_cavity_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_upper_airway_exam",
+              "classification": "required_recheck",
+              "result": "Клиническая оценка показала: объективное улучшение без нижнедыхательного перехода."
+            },
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "low_value_if_no_group_or_plan_question",
+              "result": "Целевое лабораторное исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "objective_uri_improvement",
+              "no_new_eye_or_oral_complication"
+            ],
+            "confirmedDiagnosisRequires": [
+              "original_snapshot_and_current_course"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "isolation_protocol",
+              "eye_exam",
+              "oral_exam"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_uri_support_and_isolation",
+          "followUp": {
+            "timing": "Контроль продолжают до клинического выздоровления и выполнения критериев отмены изоляции.",
+            "required": true,
+            "targets": [
+              "breathing",
+              "appetite",
+              "discharge",
+              "isolation_end"
+            ]
+          },
+          "outcomes": {
+            "safe": "Доступное оборудование не превращается в ненужные анализы.",
+            "unsafe": "Изоляция прекращается по одному исчезнувшему чиху."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: критерии завершения изоляции по протоколу."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "adherent",
+              "anxious"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_cat_uri_conjunctivitis_dominant",
+      "version": "2026.07.16.40",
+      "title": "Конъюнктивально-доминантный респираторный синдром",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "При инфекции верхних дыхательных путей основным проявлением может быть воспаление конъюнктивы. По внешнему виду нельзя надёжно различить герпесвирус кошек, Chlamydia felis, Mycoplasma felis и сочетанные инфекции.",
+      "primaryDiagnosisId": "dx_feline_uri_conjunctivitis_dominant",
+      "differentials": [
+        "dx_fhv1_infection",
+        "dx_chlamydia_felis",
+        "dx_mycoplasma_felis",
+        "dx_corneal_ulcer",
+        "dx_noninfectious_conjunctivitis"
+      ],
+      "planBundleId": "conjunctivitis_uri_corneal_gate",
+      "sourceIds": [
+        "merck_feline_respiratory_complex",
+        "abcd_fhv",
+        "abcd_chlamydia",
+        "abcd_mycoplasma"
+      ],
+      "presentations": [
+        {
+          "id": "p1_unilateral_then_bilateral",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что сначала воспалился один глаз, затем второй; есть редкие чихи.",
+          "historyAnswers": {
+            "eye_pain": "По нашим наблюдениям, выделения или хемоз без выраженного прищура либо боль отдельно.",
+            "onset_course": "Дома мы заметили, что последовательное поражение глаз.",
+            "housing_contacts": "Насколько мы можем судить, группа или домашний контакт зафиксирован в этом случае.",
+            "previous_treatment": "Мы записали, что проба ещё не искажена либо влияние лечения записано."
+          },
+          "examFindings": [
+            {
+              "factId": "bilateral_conjunctival_uri_pattern",
+              "source": "physical_exam",
+              "finding": "Конъюнктивальное воспаление доминирует, роговица требует отдельной проверки."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "bilateral_conjunctival_uri_pattern",
+              "discoveryPaths": [
+                "bilateral_eye_exam",
+                "eye_pain"
+              ]
+            },
+            {
+              "factId": "corneal_integrity_known",
+              "discoveryPaths": [
+                "fluorescein_if_pain"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_eye_oral_exam",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: роговица и рот проверены."
+            },
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "recommended_by_severity_group_or_recurrence",
+              "result": "Целевое лабораторное исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "resp_cat_cytology_or_culture",
+              "classification": "recommended_changes_plan",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "bilateral_conjunctival_uri_pattern",
+              "corneal_integrity_known"
+            ],
+            "confirmedDiagnosisRequires": [
+              "syndrome_or_contextual_agent_evidence"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "isolation_protocol",
+              "eye_exam",
+              "oral_exam",
+              "fluorescein"
+            ],
+            "conditional": [
+              "feline_resp_testing_or_referral"
+            ],
+            "external": [
+              "pcr_external",
+              "culture_external"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "conjunctivitis_uri_corneal_gate",
+          "followUp": {
+            "timing": "На повторном осмотре оценивают глаза, носовое дыхание и частоту дыхания в покое.",
+            "required": true,
+            "targets": [
+              "cornea",
+              "chemosis",
+              "respiratory_signs",
+              "test_result"
+            ]
+          },
+          "outcomes": {
+            "safe": "Возбудитель не выводится из гноя, язва не пропущена.",
+            "unsafe": "По выделениям объявлена бактериальная причина."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: возможные сочетания и границы теста."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "anxious",
+              "multi_pet"
+            ]
+          }
+        },
+        {
+          "id": "p2_marked_chemosis_young_cat",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что у молодой кошки из группы выраженный отёк конъюнктивы и выделения.",
+          "historyAnswers": {
+            "housing_contacts": "По нашим наблюдениям, приют или несколько кошек.",
+            "eye_pain": "Дома мы заметили, что выраженный хемоз; степень боли проверяется.",
+            "systemic_signs": "Насколько мы можем судить, умеренные или отсутствуют.",
+            "cluster_signal": "Мы записали, что другие кошки могут иметь разные фенотипы."
+          },
+          "examFindings": [
+            {
+              "factId": "marked_chemosis_group_pattern",
+              "source": "physical_exam",
+              "finding": "Выраженный конъюнктивальный отёк с совместимым инфекция верхних дыхательных путей, без автоматического выбора одного агента."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "marked_chemosis_group_pattern",
+              "discoveryPaths": [
+                "bilateral_eye_exam",
+                "housing_contacts"
+              ]
+            },
+            {
+              "factId": "sample_before_treatment_context",
+              "discoveryPaths": [
+                "previous_treatment",
+                "ocular_cytology_or_culture",
+                "respiratory_pcr_sample"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_eye_oral_exam",
+              "classification": "required",
+              "result": "Клиническая оценка показала: роговичный статус."
+            },
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "recommended_changes_group_plan",
+              "result": "Целевое лабораторное исследование показало: результат с местом или днём отбора."
+            },
+            {
+              "id": "resp_cat_cytology_or_culture",
+              "classification": "recommended_changes_plan",
+              "result": "По результатам посева и определения чувствительности: материал допускает коинфекцию."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "marked_chemosis_group_pattern",
+              "sample_before_treatment_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_pattern_plus_contextual_test_if_agent_needed"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "isolation_protocol",
+              "eye_exam",
+              "fluorescein",
+              "respiratory_sample_collection"
+            ],
+            "conditional": [
+              "resp_ocular_sampling_or_referral",
+              "feline_resp_testing_or_referral"
+            ],
+            "external": [
+              "pcr_external",
+              "culture_external"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "conjunctivitis_uri_corneal_gate",
+          "followUp": {
+            "timing": "Через 24–48 часов проверяют состояние глаз у пациента и появление похожих признаков у контактных кошек.",
+            "required": true,
+            "targets": [
+              "cornea",
+              "chemosis",
+              "new_cases",
+              "results"
+            ]
+          },
+          "outcomes": {
+            "safe": "Коинфекция допускается и группа управляется по данным.",
+            "unsafe": "Внешний вид заставляет выбрать один агент."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: не обещать, что один результат объяснит все признаки всех кошек."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "calm",
+              "defensive"
+            ],
+            "ownerModifiers": [
+              "shelter_worker",
+              "multi_pet",
+              "overwhelmed"
+            ]
+          }
+        },
+        {
+          "id": "p3_ocular_pain_requires_corneal_branch",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что на фоне инфекция верхних дыхательных путей кошка прищуривает глаз, боится света или роговица мутная.",
+          "historyAnswers": {
+            "eye_pain": "По нашим наблюдениям, прищур или светобоязнь или помутнение.",
+            "onset_course": "Дома мы заметили, что боль появилась или усилилась.",
+            "previous_treatment": "Насколько мы можем судить, старые глазные средства могли применяться.",
+            "resting_breathing": "Мы записали, что дыхательная стабильность отдельно."
+          },
+          "examFindings": [
+            {
+              "factId": "painful_cornea_uri_context",
+              "source": "physical_exam",
+              "finding": "Глазная боль требует отдельного роговичного решения, а не только лечения конъюнктивита."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "painful_cornea_uri_context",
+              "discoveryPaths": [
+                "eye_pain",
+                "bilateral_eye_exam"
+              ]
+            },
+            {
+              "factId": "fluorescein_branch_result",
+              "discoveryPaths": [
+                "fluorescein_if_pain"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_eye_oral_exam",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: флуоресцеиновый результат создаёт связанную глаз_поверхностный клинический вариант."
+            },
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "secondary_not_delay_corneal_route",
+              "result": "Целевое лабораторное исследование показало: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "painful_cornea_uri_context",
+              "fluorescein_branch_result"
+            ],
+            "confirmedDiagnosisRequires": [
+              "linked_eye_surface_snapshot_if_defect"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "fluorescein",
+              "isolation_protocol"
+            ],
+            "conditional": [
+              "eye_corneal_route"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "conjunctivitis_uri_corneal_gate",
+          "followUp": {
+            "timing": "Боль в глазу проверяют срочно по офтальмологическому маршруту; респираторные симптомы контролируют отдельно.",
+            "required": true,
+            "targets": [
+              "ulcer_map",
+              "pain",
+              "vision",
+              "respiratory_state"
+            ]
+          },
+          "outcomes": {
+            "safe": "Роговичная боль получает собственную клинический вариант.",
+            "unsafe": "Простой конъюнктивальный план пропускает язву."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: глазная боль меняет срочность даже при обычном насморке."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "low_stress_or_referral",
+            "ownerModifiers": [
+              "inattentive",
+              "self_medicating",
+              "anxious"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_cat_uri_oral_ulcer_phenotype",
+      "version": "2026.07.16.40",
+      "title": "Респираторный синдром с язвами ротовой полости",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "инфекция верхних дыхательных путей с язвами рта или гиперсаливацией совместим в том числе с калицивирус кошек, но одна язва этиологически его не подтверждает.",
+      "primaryDiagnosisId": "dx_feline_uri_oral_ulcer_phenotype",
+      "differentials": [
+        "dx_fcv_infection",
+        "dx_feline_stomatitis",
+        "dx_oral_foreign_body",
+        "dx_caustic_injury",
+        "dx_systemic_ulcerative_disease"
+      ],
+      "planBundleId": "oral_ulcer_pain_nutrition",
+      "sourceIds": [
+        "merck_feline_respiratory_complex",
+        "abcd_fcv"
+      ],
+      "presentations": [
+        {
+          "id": "p1_oral_ulcer_hypersalivation",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что кошка чихает, слюнотечёт и болезненно ест; на языке или нёбе видна язва.",
+          "historyAnswers": {
+            "oral_pain_ulcers": "По нашим наблюдениям, боль и язва подтверждены.",
+            "food_water_smell": "Дома мы заметили, что интерес к еде есть, объём снижен.",
+            "resting_breathing": "Насколько мы можем судить, без усилия.",
+            "systemic_signs": "Мы записали, что тяжёлых признаков нет."
+          },
+          "examFindings": [
+            {
+              "factId": "oral_ulcer_uri_phenotype",
+              "source": "physical_exam",
+              "finding": "Язва рта и гиперсаливация при стабильном дыхании."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "oral_ulcer_uri_phenotype",
+              "discoveryPaths": [
+                "oral_pain_ulcers",
+                "oral_cavity_exam"
+              ]
+            },
+            {
+              "factId": "intake_hydration_state",
+              "discoveryPaths": [
+                "food_water_smell",
+                "general_vitals_hydration",
+                "weight_and_nutrition"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_eye_oral_exam",
+              "classification": "required",
+              "result": "Клиническая оценка показала: язва и глотание оценены; роговица проверена по признакам."
+            },
+            {
+              "id": "resp_cat_hydration_nutrition_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: дефицит или масса и способность есть."
+            },
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "optional_or_recommended_by_group_severity",
+              "result": "Целевое лабораторное исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "oral_ulcer_uri_phenotype",
+              "intake_hydration_state"
+            ],
+            "confirmedDiagnosisRequires": [
+              "phenotype_only_or_contextual_agent_evidence"
+            ],
+            "mustNotAssume": [
+              "fcv_from_single_ulcer"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "isolation_protocol",
+              "oral_exam",
+              "general_exam",
+              "hydration_assessment",
+              "body_weight"
+            ],
+            "conditional": [
+              "feline_resp_testing_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "oral_ulcer_pain_nutrition",
+          "followUp": {
+            "timing": "Через 24–48 часов повторно оценивают боль во рту, фактический объём еды и массу тела.",
+            "required": true,
+            "targets": [
+              "oral_pain",
+              "food_water",
+              "weight",
+              "hydration"
+            ]
+          },
+          "outcomes": {
+            "safe": "Боль и питание имеют приоритет, агент не выдуман.",
+            "unsafe": "Одна язва объявлена калицивирус кошек и питание не измеряется."
+          },
+          "ownerCommunication": [
+            "Пожалуйста, записывать фактический объём еды или воды."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "painful_defensive"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_kitten_fever_transient_lameness",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что у котёнка лихорадка, перемежающаяся хромота и возможные респираторные или оральные признаки.",
+          "historyAnswers": {
+            "systemic_signs": "По нашим наблюдениям, лихорадка и перемежающаяся болезненность конечностей.",
+            "oral_pain_ulcers": "Дома мы заметили, что язва может присутствовать или отсутствовать.",
+            "vaccination": "Насколько мы можем судить, недавняя вакцинация или неполный курс учитываются, но не определяют причину.",
+            "housing_contacts": "Мы записали, что групповой риск задан."
+          },
+          "examFindings": [
+            {
+              "factId": "kitten_fever_lameness_phenotype",
+              "source": "physical_exam",
+              "finding": "Общий и ортопедический осмотр отделяет преходящий фенотип от травмы или септического процесса."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "kitten_fever_lameness_phenotype",
+              "discoveryPaths": [
+                "systemic_signs",
+                "general_vitals_hydration"
+              ]
+            },
+            {
+              "factId": "resp_or_oral_context",
+              "discoveryPaths": [
+                "upper_airway_and_auscultation",
+                "oral_cavity_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_upper_airway_exam",
+              "classification": "required",
+              "result": "Клиническая оценка показала: респираторный контекст."
+            },
+            {
+              "id": "resp_cat_cbc_biochemistry",
+              "classification": "recommended_changes_plan_by_systemic_state",
+              "result": "В лабораторных показателях крови: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "recommended_by_cluster_or_severity",
+              "result": "Целевое лабораторное исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "kitten_fever_lameness_phenotype",
+              "resp_or_oral_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "phenotype_plus_exclusion_of_urgent_orthopedic_or_systemic_risk"
+            ],
+            "mustNotAssume": [
+              "specific_fcv_strain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "oral_exam",
+              "isolation_protocol"
+            ],
+            "conditional": [
+              "feline_resp_testing_or_referral"
+            ],
+            "external": [
+              "cbc",
+              "biochemistry"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "oral_ulcer_pain_nutrition",
+          "followUp": {
+            "timing": "Через 24 часа повторно измеряют температуру и оценивают походку и дыхание.",
+            "required": true,
+            "targets": [
+              "temperature",
+              "lameness",
+              "joints",
+              "respiratory_signs",
+              "intake"
+            ]
+          },
+          "outcomes": {
+            "safe": "Фенотип связан с инфекционной клиническим вариантом без доказательства штамма.",
+            "unsafe": "Хромота списана на инфекция верхних дыхательных путей без исключения иной срочной причины."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: связь вероятна, но не заменяет осмотр конечностей и общего состояния."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "calm",
+              "painful"
+            ],
+            "ownerModifiers": [
+              "anxious",
+              "shelter_adopter"
+            ]
+          }
+        },
+        {
+          "id": "p3_pain_limits_eating",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_duration_and_state",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что кошка подходит к пахучей еде, но отходит из-за боли во рту и почти не ест.",
+          "historyAnswers": {
+            "food_water_smell": "По нашим наблюдениям, интерес к запаху есть, фактическое потребление минимально.",
+            "oral_pain_ulcers": "Дома мы заметили, что боль ограничивает захват или глотание.",
+            "onset_course": "Насколько мы можем судить, длительность анорексии.",
+            "home_care_feasibility": "Мы записали, что домашняя нутритивная поддержка возможна или нет."
+          },
+          "examFindings": [
+            {
+              "factId": "pain_driven_anorexia",
+              "source": "physical_exam",
+              "finding": "Оральная боль и язвы при измеримой потере потребления или массы; дыхание оценено отдельно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "pain_driven_anorexia",
+              "discoveryPaths": [
+                "food_water_smell",
+                "oral_cavity_exam"
+              ]
+            },
+            {
+              "factId": "nutrition_risk",
+              "discoveryPaths": [
+                "weight_and_nutrition",
+                "general_vitals_hydration"
+              ]
+            },
+            {
+              "factId": "home_support_feasibility",
+              "discoveryPaths": [
+                "home_care_feasibility"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_hydration_nutrition_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: масса, гидратация, длительность и объём потребления."
+            },
+            {
+              "id": "resp_cat_cbc_biochemistry",
+              "classification": "recommended_by_duration_or_systemic_state",
+              "result": "В лабораторных показателях крови: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "pain_driven_anorexia",
+              "nutrition_risk",
+              "home_support_feasibility"
+            ],
+            "confirmedDiagnosisRequires": [
+              "oral_pain_and_measured_intake_context"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oral_exam",
+              "body_weight",
+              "hydration_assessment",
+              "nutritional_assessment"
+            ],
+            "conditional": [
+              "nutrition_support_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "oral_ulcer_pain_nutrition",
+          "followUp": {
+            "timing": "До улучшения ежедневно записывают объём съеденного; массу тела и обезвоживание проверяют на ближайшем осмотре.",
+            "required": true,
+            "targets": [
+              "caloric_intake",
+              "water",
+              "weight",
+              "pain",
+              "ability_to_swallow"
+            ]
+          },
+          "outcomes": {
+            "safe": "Питание и боль получают отдельный маршрут.",
+            "unsafe": "Анорексия считается только потерей запаха и ведётся очисткой носа."
+          },
+          "ownerCommunication": [
+            "Я дам вам измеримый план потребления и момент стационара или направления."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "weak",
+              "calm"
+            ],
+            "ownerModifiers": [
+              "overwhelmed",
+              "budget_limited",
+              "observant"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_cat_uri_severe_obstructive_or_systemic",
+      "version": "2026.07.16.40",
+      "title": "Тяжёлый ринит с обструкцией, анорексией или системными признаками",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Тяжёлое течение включает обструкцию верхних дыхательных путей, дегидратацию, длительную анорексию, нижнедыхательное или системное осложнение; тесты не задерживают стабилизацию.",
+      "primaryDiagnosisId": "dx_feline_uri_severe_syndrome",
+      "differentials": [
+        "dx_feline_pneumonia",
+        "dx_virulent_systemic_fcv_suspected",
+        "dx_nasal_obstruction",
+        "dx_sepsis",
+        "dx_noninfectious_airway_disease"
+      ],
+      "planBundleId": "severe_uri_stabilize_and_escalate",
+      "sourceIds": [
+        "merck_feline_respiratory_complex",
+        "abcd_fcv",
+        "iscaid_respiratory_2017"
+      ],
+      "presentations": [
+        {
+          "id": "p1_nasal_obstruction_dehydration",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что нос забит корками или густыми выделениями, кошка не чувствует запах, почти не ест и обезвожена.",
+          "historyAnswers": {
+            "resting_breathing": "По нашим наблюдениям, шумное носовое дыхание без грудной декомпенсации.",
+            "food_water_smell": "Дома мы заметили, что не ест или пьёт, длительность задана.",
+            "onset_course": "Насколько мы можем судить, ухудшается несколько дней.",
+            "home_care_feasibility": "Мы записали, что домашняя поддержка недостаточна или сомнительна."
+          },
+          "examFindings": [
+            {
+              "factId": "upper_obstruction_dehydration_anorexia",
+              "source": "physical_exam",
+              "finding": "Верхнедыхательная обструкция, измеримая дегидратация или потеря массы и анорексия без текущей нижнедыхательной недостаточности."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "upper_obstruction_dehydration_anorexia",
+              "discoveryPaths": [
+                "upper_airway_and_auscultation",
+                "general_vitals_hydration",
+                "weight_and_nutrition"
+              ]
+            },
+            {
+              "factId": "no_current_lower_distress",
+              "discoveryPaths": [
+                "observe_breathing_before_handling"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_hydration_nutrition_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: тяжесть требует стационара или направления либо интенсивного выполнимого плана."
+            },
+            {
+              "id": "resp_cat_cbc_biochemistry",
+              "classification": "recommended_changes_plan_by_severity",
+              "result": "В лабораторных показателях крови: системные или метаболические изменения."
+            },
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "after_stabilization_if_changes_plan",
+              "result": "Целевое лабораторное исследование показало: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "upper_obstruction_dehydration_anorexia",
+              "no_current_lower_distress"
+            ],
+            "confirmedDiagnosisRequires": [
+              "severe_uri_syndrome"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "isolation_protocol",
+              "respiratory_exam",
+              "hydration_assessment",
+              "body_weight",
+              "nutritional_assessment"
+            ],
+            "conditional": [
+              "nutrition_support_or_referral"
+            ],
+            "external": [
+              "cbc",
+              "biochemistry"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "severe_uri_stabilize_and_escalate",
+          "followUp": {
+            "timing": "При тяжёлом состоянии требуется непрерывное наблюдение; при стабильном — повторный осмотр в точно назначенное время.",
+            "required": true,
+            "targets": [
+              "breathing",
+              "hydration",
+              "weight",
+              "intake",
+              "temperature"
+            ]
+          },
+          "outcomes": {
+            "safe": "Гидратация и питание стабилизируются до потери резерва.",
+            "unsafe": "Домашняя очистка носа заменяет необходимый стационарный маршрут."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: самостоятельный риск длительной анорексии у кошки."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "defensive"
+            ],
+            "requiredHandlingAlternative": "staged_minimal_handling",
+            "ownerModifiers": [
+              "budget_limited",
+              "overwhelmed"
+            ]
+          }
+        },
+        {
+          "id": "p2_lower_airway_red_flags",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что на фоне инфекция верхних дыхательных путей кошка дышит часто или с усилием, открывает рот или синеет.",
+          "historyAnswers": {
+            "resting_breathing": "По нашим наблюдениям, открытое ротовое дыхание или грудное усилие.",
+            "systemic_signs": "Дома мы заметили, что вялость, возможна лихорадка.",
+            "onset_course": "Насколько мы можем судить, быстрое ухудшение.",
+            "food_water_smell": "Мы записали, что потребление снижено."
+          },
+          "examFindings": [
+            {
+              "factId": "lower_airway_distress",
+              "source": "observation",
+              "finding": "Тахипноэ, усилие, цианоз или аномальная аускультация; фиксация минимальна."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "lower_airway_distress",
+              "discoveryPaths": [
+                "resting_breathing",
+                "observe_breathing_before_handling",
+                "upper_airway_and_auscultation"
+              ]
+            },
+            {
+              "factId": "systemic_stability",
+              "discoveryPaths": [
+                "general_vitals_hydration"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_isolation_triage",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: экстренный отдельный маршрут."
+            },
+            {
+              "id": "resp_cat_thoracic_imaging",
+              "classification": "after_initial_stabilization_if_tolerated",
+              "result": "Целевое исследование показало: выявлены признаки поражения нижних дыхательных путей; случай нужно вести по сценарию пневмонии."
+            },
+            {
+              "id": "resp_cat_cbc_biochemistry",
+              "classification": "after_or_parallel_to_stabilization",
+              "result": "В лабораторных показателях крови: тахипноэ, усилие, цианоз или аномальная аускультация; фиксация минимальна."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "lower_airway_distress",
+              "systemic_stability"
+            ],
+            "confirmedDiagnosisRequires": [
+              "respiratory_distress_syndrome"
+            ],
+            "dangerStates": [
+              "hypoxemia",
+              "pneumonia",
+              "pulmonary_edema"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "isolation_protocol",
+              "respiratory_exam",
+              "respiratory_distress_minimal_handling"
+            ],
+            "conditional": [
+              "oxygen_hospital_or_referral",
+              "thoracic_imaging_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "severe_uri_stabilize_and_escalate",
+          "followUp": {
+            "timing": "До стабилизации требуется непрерывный контроль дыхания, кровообращения и сознания.",
+            "required": true,
+            "targets": [
+              "respiratory_effort",
+              "oxygenation",
+              "temperature",
+              "imaging_after_stability"
+            ]
+          },
+          "outcomes": {
+            "safe": "Кислород и минимальная манипуляция предшествуют рентгену.",
+            "unsafe": "Анкета, ПЦР или фиксация ухудшают дыхание до помощи."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: кратко назвать дыхательное состояние экстренным."
+          ],
+          "compatibility": {
+            "temperament": [
+              "panic",
+              "weak",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "oxygen_minimal_handling_immediate_referral",
+            "ownerModifiers": [
+              "anxious",
+              "overwhelmed"
+            ]
+          }
+        },
+        {
+          "id": "p3_cluster_with_virulent_systemic_warning",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency_outbreak",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что в группе несколько тяжело заболевших кошек: высокая температура, депрессия, отёки или кожные изменения, желтуха или смерти.",
+          "historyAnswers": {
+            "cluster_signal": "По нашим наблюдениям, множественные тяжёлые случаи или смерть.",
+            "systemic_signs": "Дома мы заметили, что системные красные флаги.",
+            "housing_contacts": "Насколько мы можем судить, приют или питомник или многокошачье помещение.",
+            "vaccination": "Мы записали, что не исключает вспышку."
+          },
+          "examFindings": [
+            {
+              "factId": "severe_systemic_cluster_signal",
+              "source": "physical_exam",
+              "finding": "Тяжёлое системное состояние у индексного пациента с подтверждённым кластером; один признак не утверждает вирулентный системный калицивирус кошек."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "severe_systemic_cluster_signal",
+              "discoveryPaths": [
+                "cluster_signal",
+                "systemic_signs",
+                "general_vitals_hydration"
+              ]
+            },
+            {
+              "factId": "contact_network",
+              "discoveryPaths": [
+                "housing_contacts",
+                "contact_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_isolation_triage",
+              "classification": "required_strict_outbreak_route",
+              "result": "Клиническая оценка показала: строгая изоляция и журнал контактов."
+            },
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "required_or_recommended_by_outbreak_protocol_after_stabilization",
+              "result": "Целевое лабораторное исследование показало: проба не считается единственным доказательством вирулентного варианта."
+            },
+            {
+              "id": "resp_cat_cbc_biochemistry",
+              "classification": "required_by_systemic_severity",
+              "result": "В лабораторных показателях крови: нейтрофильный лейкоцитоз и признаки воспаления подтверждают системное вовлечение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "severe_systemic_cluster_signal",
+              "contact_network"
+            ],
+            "confirmedDiagnosisRequires": [
+              "outbreak_investigation_not_single_sign"
+            ],
+            "dangerStates": [
+              "sepsis",
+              "virulent_systemic_fcv_suspected",
+              "high_consequence_outbreak"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "isolation_protocol",
+              "general_exam",
+              "respiratory_exam"
+            ],
+            "conditional": [
+              "oxygen_hospital_or_referral",
+              "feline_resp_testing_or_referral"
+            ],
+            "external": [
+              "cbc",
+              "biochemistry",
+              "pcr_external",
+              "infectious_disease_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "severe_uri_stabilize_and_escalate",
+          "followUp": {
+            "timing": "Пациента наблюдают непрерывно, а в группе ежедневно отмечают новые случаи и тяжесть симптомов.",
+            "required": true,
+            "targets": [
+              "patient_stability",
+              "new_cases",
+              "deaths",
+              "contacts",
+              "lab_context"
+            ]
+          },
+          "outcomes": {
+            "safe": "Высокопоследственный кластер не проходит через обычный поток и не ждёт дома.",
+            "unsafe": "Один ПЦР либо один отёк объявляет диагноз или, наоборот, кластер игнорируется."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: меры для группы без преждевременного заявления конкретного штамма."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "painful",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "shelter_manager",
+              "overwhelmed",
+              "anxious"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_cat_uri_chronic_or_recurrent",
+      "version": "2026.07.16.40",
+      "title": "Хронический или рецидивирующий синдром верхних дыхательных путей",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Симптомы дольше ожидаемой острой клинического варианта или рецидив требуют новой оценки; реактивация или поствирусные изменения возможны, но не исключают механическую, грибковую, опухолевую, стоматологическую и системную причины.",
+      "primaryDiagnosisId": "dx_feline_chronic_recurrent_uri_syndrome",
+      "differentials": [
+        "dx_fhv1_reactivation",
+        "dx_chronic_postviral_rhinitis",
+        "dx_nasal_foreign_body",
+        "dx_nasal_neoplasia",
+        "dx_fungal_rhinitis",
+        "dx_nasopharyngeal_polyp",
+        "dx_dental_nasal_disease"
+      ],
+      "planBundleId": "chronic_uri_expanded_workup",
+      "sourceIds": [
+        "merck_feline_respiratory_complex",
+        "abcd_fhv",
+        "abcd_fcv"
+      ],
+      "presentations": [
+        {
+          "id": "p1_stress_linked_recurrence",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что после переезда, операции или новой кошки вновь появились чихание и глазные признаки.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, рецидив после завершившегося эпизода.",
+            "housing_contacts": "Дома мы заметили, что новый контакт или изменение среды.",
+            "eye_pain": "Насколько мы можем судить, текущая роговичная боль проверяется заново.",
+            "resting_breathing": "Мы записали, что по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrent_uri_current_state",
+              "source": "physical_exam",
+              "finding": "Новый полный осмотр задаёт текущую тяжесть; стресс поддерживает вероятность реактивации, но не доказывает её."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "recurrent_uri_current_state",
+              "discoveryPaths": [
+                "onset_course",
+                "upper_airway_and_auscultation",
+                "general_vitals_hydration"
+              ]
+            },
+            {
+              "factId": "current_corneal_status",
+              "discoveryPaths": [
+                "eye_pain",
+                "bilateral_eye_exam",
+                "fluorescein_if_pain"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_upper_airway_exam",
+              "classification": "required_new_triage",
+              "result": "Клиническая оценка показала: текущая тяжесть."
+            },
+            {
+              "id": "resp_cat_eye_oral_exam",
+              "classification": "required_by_eye_signs",
+              "result": "Клиническая оценка показала: новая роговичная оценка."
+            },
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "optional_or_recommended_by_group_or_course",
+              "result": "Целевое лабораторное исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "recurrent_uri_current_state",
+              "current_corneal_status"
+            ],
+            "confirmedDiagnosisRequires": [
+              "recurrent_syndrome_not_stress_only"
+            ],
+            "mustNotAssume": [
+              "fhv_reactivation_from_stress_alone"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "isolation_protocol",
+              "respiratory_exam",
+              "eye_exam",
+              "fluorescein"
+            ],
+            "conditional": [
+              "feline_resp_testing_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "chronic_uri_expanded_workup",
+          "followUp": {
+            "timing": "Срок повторного осмотра определяют по сегодняшней тяжести и частоте прежних эпизодов.",
+            "required": true,
+            "targets": [
+              "cornea",
+              "breathing",
+              "duration",
+              "new_specific_signs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Старый диагноз не копируется без нового триажа.",
+            "unsafe": "Любой стресс объявляет герпес и закрывает другие причины."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: вероятностную связь со стрессом и необходимость заново проверить опасные признаки."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "calm"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_persistent_over_ten_days",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что чихание или выделения сохраняются больше десяти дней или не отвечают на первоначальный план.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, затяжное течение или нет ожидаемой динамики.",
+            "previous_treatment": "Дома мы заметили, что эмпирическая помощь и её фактический эффект записаны.",
+            "nasal_laterality": "Насколько мы можем судить, одно- или двусторонность уточнена.",
+            "systemic_signs": "Мы записали, что риск системной болезни."
+          },
+          "examFindings": [
+            {
+              "factId": "persistent_uri_needs_expansion",
+              "source": "physical_exam",
+              "finding": "Повторный полный осмотр не позволяет безопасно продолжить только симптоматический цикл."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "persistent_uri_needs_expansion",
+              "discoveryPaths": [
+                "onset_course",
+                "previous_treatment",
+                "upper_airway_and_auscultation"
+              ]
+            },
+            {
+              "factId": "expanded_risk_context",
+              "discoveryPaths": [
+                "nasal_laterality",
+                "systemic_signs",
+                "oral_cavity_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "recommended_with_correct_sample_context",
+              "result": "Целевое лабораторное исследование показало: результат не исключает неинфекционные причины."
+            },
+            {
+              "id": "resp_cat_cbc_biochemistry",
+              "classification": "recommended_by_systemic_or_chronic_context",
+              "result": "В лабораторных показателях крови: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "resp_cat_thoracic_imaging",
+              "classification": "recommended_if_lower_signs",
+              "result": "Целевое исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "persistent_uri_needs_expansion",
+              "expanded_risk_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cause_specific_workup_or_chronic_syndrome"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "isolation_protocol",
+              "oral_exam",
+              "eye_exam"
+            ],
+            "conditional": [
+              "feline_resp_testing_or_referral",
+              "advanced_nasal_route"
+            ],
+            "external": [
+              "cbc",
+              "biochemistry",
+              "advanced_imaging_referral",
+              "airway_endoscopy_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "chronic_uri_expanded_workup",
+          "followUp": {
+            "timing": "Следующий осмотр назначают сразу после получения результата первого исследования, которое способно изменить решение.",
+            "required": true,
+            "targets": [
+              "duration",
+              "sample_context",
+              "dental_nasal_route",
+              "systemic_risk"
+            ]
+          },
+          "outcomes": {
+            "safe": "Затяжной случай получает расширенный маршрут.",
+            "unsafe": "Один антимикробный компонент бесконечно меняется на другой."
+          },
+          "ownerCommunication": [
+            "Мы можем начать с минимального обследования или сразу перейти к расширенному; я объясню, на какие разные вопросы отвечает каждый вариант."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "defensive"
+            ],
+            "ownerModifiers": [
+              "budget_limited",
+              "frustrated",
+              "skeptical"
+            ]
+          }
+        },
+        {
+          "id": "p3_unilateral_chronic_red_flag",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_or_priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что стойкие односторонние выделения, кровь, деформация или локальная боль прогрессируют.",
+          "historyAnswers": {
+            "nasal_laterality": "По нашим наблюдениям, стойко один носовой ход.",
+            "discharge_character": "Дома мы заметили, что кровь или односторонний патологический секрет.",
+            "onset_course": "Насколько мы можем судить, хронически прогрессирует.",
+            "previous_treatment": "Мы записали, что повторная симптоматическая помощь не решила проблему."
+          },
+          "examFindings": [
+            {
+              "factId": "unilateral_bloody_progressive_red_flag",
+              "source": "physical_exam",
+              "finding": "Стойкая односторонность или кровь или деформация расширяет неинфекционные дифференциалы."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "unilateral_bloody_progressive_red_flag",
+              "discoveryPaths": [
+                "nasal_laterality",
+                "discharge_character",
+                "onset_course",
+                "upper_airway_and_auscultation"
+              ]
+            },
+            {
+              "factId": "advanced_route_needed",
+              "discoveryPaths": [
+                "oral_cavity_exam",
+                "general_vitals_hydration"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_cat_upper_airway_exam",
+              "classification": "required",
+              "result": "Клиническая оценка показала: локализация и поток воздуха."
+            },
+            {
+              "id": "resp_cat_targeted_pcr",
+              "classification": "secondary_not_sufficient",
+              "result": "Целевое лабораторное исследование показало: стойкая односторонность или кровь или деформация расширяет неинфекционные дифференциалы."
+            },
+            {
+              "id": "resp_cat_cbc_biochemistry",
+              "classification": "recommended_by_systemic_and_procedural_context",
+              "result": "В лабораторных показателях крови: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "unilateral_bloody_progressive_red_flag",
+              "advanced_route_needed"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_imaging_endoscopy_or_tissue_result"
+            ],
+            "unexcludedRisks": [
+              "foreign_body",
+              "neoplasia",
+              "fungal_disease",
+              "dental_disease",
+              "polyp"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "oral_exam"
+            ],
+            "conditional": [
+              "advanced_nasal_route"
+            ],
+            "external": [
+              "advanced_imaging_referral",
+              "airway_endoscopy_referral",
+              "respiratory_fungal_testing_external"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "chronic_uri_expanded_workup",
+          "followUp": {
+            "timing": "Пациента без промедления передают на углублённую диагностику.",
+            "required": true,
+            "targets": [
+              "imaging",
+              "endoscopy_or_tissue",
+              "bleeding",
+              "airflow",
+              "pain"
+            ]
+          },
+          "outcomes": {
+            "safe": "Односторонний красный флаг не маскируется как хронический герпес.",
+            "unsafe": "Эмпирическая схема задерживает выявление инородного тела, опухоли или гриба."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему стойкая односторонность требует другого уровня диагностики."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "defensive"
+            ],
+            "requiredHandlingAlternative": "staged_exam_or_referral",
+            "ownerModifiers": [
+              "budget_limited",
+              "delay_prone",
+              "anxious"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_feline_respiratory_complex",
+      "title": "Merck Veterinary Manual: Feline Respiratory Disease Complex",
+      "url": "https://www.merckvetmanual.com/respiratory-system/respiratory-diseases-of-small-animals/feline-respiratory-disease-complex",
+      "scope": "syndrome, major agents, eye/nose/mouth phenotypes, supportive care and complications"
+    },
+    {
+      "id": "abcd_fhv",
+      "title": "ABCD Guideline for Feline Herpesvirus Infection",
+      "url": "https://www.abcdcatsvets.org/guideline-for-feline-herpesvirus-infection/",
+      "scope": "FHV presentation, latency/reactivation, diagnosis and prevention context"
+    },
+    {
+      "id": "abcd_fcv",
+      "title": "ABCD Guideline for Feline Calicivirus Infection",
+      "url": "https://www.abcdcatsvets.org/guideline-for-feline-calicivirus-infection/",
+      "scope": "oral, respiratory, limping and severe systemic FCV context"
+    },
+    {
+      "id": "abcd_chlamydia",
+      "title": "ABCD Guideline for Chlamydia felis",
+      "url": "https://www.abcdcatsvets.org/guideline-for-chlamydia-felis/",
+      "scope": "conjunctivitis phenotype, sampling and group context"
+    },
+    {
+      "id": "abcd_mycoplasma",
+      "title": "ABCD Guideline for Feline Respiratory Mycoplasma Infections",
+      "url": "https://www.abcdcatsvets.org/guideline-for-feline-respiratory-mycoplasma-infections/",
+      "scope": "mycoplasma respiratory/conjunctival context and interpretation"
+    },
+    {
+      "id": "iscaid_respiratory_2017",
+      "title": "ISCAID Antimicrobial Use Guidelines for Respiratory Tract Disease in Dogs and Cats",
+      "url": "https://academic.oup.com/jvim/article/31/2/279/8449357",
+      "scope": "bacterial indications, stewardship and respiratory sampling"
+    },
+    {
+      "id": "aafp_aaha_antimicrobial_2022",
+      "title": "2022 AAFP/AAHA Antimicrobial Stewardship Guidelines",
+      "url": "https://catvets.com/2022-aafp-aaha-antimicrobial-guidelines-pdf/",
+      "scope": "antimicrobial decision and stewardship framework"
+    }
+  ],
+  "familyValidationRules": [
+    "species_must_be_cat",
+    "compatible_uri_requires_isolation_before_common_queue",
+    "respiratory_distress_cannot_wait_for_history_pcr_or_xray",
+    "eye_pain_requires_fluorescein_or_linked_eye_surface_route",
+    "anorexia_requires_duration_weight_and_nutrition_route",
+    "acute_uri_cannot_auto_receive_antimicrobial_component",
+    "vaccination_cannot_exclude_fhv_or_fcv",
+    "pcr_requires_sample_time_site_and_clinical_context",
+    "oral_ulcer_cannot_auto_confirm_fcv",
+    "severe_cluster_requires_strict_isolation_and_outbreak_route",
+    "chronic_unilateral_or_bloody_disease_requires_advanced_route",
+    "all_levels_remain_generator_ineligible_until_external_veterinary_approval"
+  ]
+}

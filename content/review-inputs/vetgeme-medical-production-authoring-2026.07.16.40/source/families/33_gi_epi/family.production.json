@@ -1,0 +1,2434 @@
+{
+  "schemaVersion": 1,
+  "familyId": "gi_epi",
+  "familyVersion": "2026.07.16.40",
+  "title": "Экзокринная недостаточность поджелудочной железы",
+  "campaignPhase": "chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": [
+    "ЭПИ — синдром недостаточной секреции экзокринных ферментов поджелудочной железы, вызывающий нарушение пищеварения с возможной вторичной мальабсорбцией.",
+    "Потеря веса, объем стула, изменение аппетита, порода и анамнез поджелудочной железы вызывают подозрения, но не заменяют видоспецифический сывороточный трипсиноподобная иммунореактивность.",
+    "Обычная липаза или амилаза, УЗИ, внешний вид стула или реакция на исследование фермента не подтверждают экзокринная недостаточность поджелудочной железы.",
+    "Трипсиноподобную иммунореактивность интерпретируют с учётом вида животного, метода, образца и референсного интервала; результат из внешней лаборатории приходит не сразу.",
+    "Кобаламин и фолат оцениваются явно; Дефицит кобаламина является отдельной клинически значимой проблемой и фактором неблагоприятного исхода.",
+    "Ацинарная атрофия, связанная с молодой породой, и приобретенная хроническая панкреатическая атрофия у взрослых остаются разными, в то время как порода меняет только априорную вероятность.",
+    "экзокринная недостаточность поджелудочной железы у кошек и атипичные проявления требуют широкого анализа коморбидных заболеваний поджелудочной железы, кишечника, эндокринной системы и опухолей.",
+    "Отсутствие полифагии, явной стеатореи или явной диареи не исключает подходящего пути введения трипсиноподобная иммунореактивность.",
+    "Плохая реакция сначала приводит к проверке продукта, хранения, приема пищи, фактического использования, кобаламина и диеты, прежде чем наносить огнеупорную маркировку.",
+    "Сопутствующая хроническая энтеропатия или дисбиоз требуют доказательств и не создают автоматического пути применения противомикробных препаратов.",
+    "Стабильное заболевание сохраняет трипсиноподобная иммунореактивность, кобаламин, причину поджелудочной железы, фактическое лечение, реакцию веса или стула и повторяющуюся нагрузку на снабжение в продольном направлении.",
+    "Никакие ферменты, витамины, диеты, противомикробные препараты, лекарства, дозы или графики не создаются."
+  ],
+  "coreCapabilities": [
+    "cbc",
+    "biochemistry",
+    "tli_external",
+    "cobalamin_external",
+    "longitudinal_care",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "epi_core_route",
+      "anyOf": [
+        "epi_core_assessment",
+        "cbc",
+        "biochemistry",
+        "safe_referral"
+      ],
+      "purpose": "serial_weight_bcs_mcs_stool_appetite_and_diet_inventory"
+    },
+    {
+      "id": "epi_mimic_route",
+      "anyOf": [
+        "epi_mimic_screen",
+        "cbc",
+        "biochemistry",
+        "safe_referral"
+      ],
+      "purpose": "routine_lab_urine_and_malabsorption_mimic_screen"
+    },
+    {
+      "id": "epi_tli_route",
+      "anyOf": [
+        "tli_external",
+        "gi_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "species_specific_serum_tli_confirmation"
+    },
+    {
+      "id": "epi_cobalamin_route",
+      "anyOf": [
+        "cobalamin_folate_external",
+        "cobalamin_external",
+        "safe_referral"
+      ],
+      "purpose": "cobalamin_and_folate_status"
+    },
+    {
+      "id": "epi_comorbidity_route",
+      "anyOf": [
+        "epi_comorbidity_review",
+        "gi_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "pancreatic_intestinal_endocrine_parasitic_and_neoplastic_review"
+    },
+    {
+      "id": "epi_longitudinal_route",
+      "anyOf": [
+        "epi_longitudinal_monitoring",
+        "longitudinal_care",
+        "safe_referral"
+      ],
+      "purpose": "same_definition_weight_stool_appetite_and_condition_response"
+    },
+    {
+      "id": "epi_adherence_route",
+      "anyOf": [
+        "epi_owner_adherence_review",
+        "safe_referral"
+      ],
+      "purpose": "product_storage_meal_actual_use_diet_and_batch_audit"
+    },
+    {
+      "id": "epi_poor_response_route",
+      "anyOf": [
+        "gi_specialist_referral",
+        "epi_comorbidity_review",
+        "safe_referral"
+      ],
+      "purpose": "chronic_enteropathy_dysbiosis_or_other_refractory_workup"
+    },
+    {
+      "id": "epi_owner_plan_route",
+      "anyOf": [
+        "epi_owner_home_plan",
+        "safe_referral"
+      ],
+      "purpose": "lifelong_supply_monitoring_red_flags_and_teach_back"
+    },
+    {
+      "id": "epi_referral_route",
+      "anyOf": [
+        "gi_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "discordant_refractory_feline_or_red_flag_internal_medicine_route"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "epi_history_weight_body_condition_stool_and_diet_inventory",
+      "requires": [
+        "epi_core_assessment"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "epi_cbc_biochemistry_urinalysis_and_malabsorption_mimic_screen",
+      "requires": [
+        "epi_mimic_screen"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "epi_species_specific_serum_tli_confirmation",
+      "requires": [
+        "tli_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "epi_serum_cobalamin_and_folate_assessment",
+      "requires": [
+        "cobalamin_folate_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "epi_pancreatic_and_intestinal_comorbidity_review",
+      "requires": [
+        "epi_comorbidity_review"
+      ],
+      "availability": "local_plus_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "epi_structured_response_weight_stool_and_appetite_monitoring",
+      "requires": [
+        "epi_longitudinal_monitoring"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "epi_adherence_storage_meal_and_product_review",
+      "requires": [
+        "epi_owner_adherence_review"
+      ],
+      "availability": "local_home_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "epi_chronic_enteropathy_or_dysbiosis_workup_when_poor_response",
+      "requires": [
+        "gi_specialist_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "epi_owner_lifelong_management_and_red_flag_plan",
+      "requires": [
+        "epi_owner_home_plan"
+      ],
+      "availability": "home_longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "epi_internal_medicine_referral_for_discordant_or_refractory_case",
+      "requires": [
+        "gi_specialist_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "weight_muscle_appetite_stool_volume_frequency_trend",
+      "prompt": "Как менялись масса тела, мышцы состояние, аппетит и стул объём и частота?"
+    },
+    {
+      "id": "diet_treat_scavenging_other_pet_food",
+      "prompt": "Каков рацион, лакомства, поедание мусора и доступ к корму других животных?"
+    },
+    {
+      "id": "pancreatitis_diabetes_surgery_or_pancreatic_mass_history",
+      "prompt": "Были ли панкреатит, диабет, брюшной операция или поджелудочной железы образование?"
+    },
+    {
+      "id": "tli_species_sample_reference_interval",
+      "prompt": "Как взят трипсиноподобная иммунореактивность, какой вид метод исследования, проба и референсный диапазон интервал?"
+    },
+    {
+      "id": "cobalamin_folate_results_and_timing",
+      "prompt": "Проверены ли кобаламин и фолаты, когда и в какой лаборатории?"
+    },
+    {
+      "id": "enzyme_product_meal_storage_and_actual_use",
+      "prompt": "Как препарат использовался с кормления, хранился и что фактически получал пациент?"
+    },
+    {
+      "id": "vomiting_pain_anorexia_blood_fever_dehydration",
+      "prompt": "Есть ли рвота, боль, отказ от еды, кровь, лихорадка или обезвоживание?"
+    },
+    {
+      "id": "prior_weight_stool_and_appetite_response",
+      "prompt": "Как менялись масса тела, стул и аппетит после каждого компонента?"
+    },
+    {
+      "id": "intestinal_parasite_endocrine_neoplastic_context",
+      "prompt": "Есть ли кишечный, паразит, эндокринный или опухолевый доказательства?"
+    },
+    {
+      "id": "product_batch_supply_and_cost_continuity",
+      "prompt": "Менялись ли препарат партия, поставка, хранение или доступность по стоимости?"
+    },
+    {
+      "id": "adverse_effect_or_oral_bleeding_sign",
+      "prompt": "Есть ли нежелательный эффект, ротовая полость раздражение или кровотечение?"
+    },
+    {
+      "id": "owner_home_plan_and_referral_feasibility",
+      "prompt": "Как устроен пожизненный план, домашнее наблюдение, действия при тревожных признаках и возможность направления?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "serial_weight_bcs_mcs_stool_appetite_record",
+      "source": "physical_exam",
+      "requires": [
+        "epi_core_assessment"
+      ]
+    },
+    {
+      "id": "cbc_biochemistry_urine_malabsorption_mimic_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "epi_mimic_screen"
+      ]
+    },
+    {
+      "id": "species_specific_tli_sample_result_record",
+      "source": "external_report",
+      "requires": [
+        "tli_external"
+      ]
+    },
+    {
+      "id": "cobalamin_folate_status_record",
+      "source": "external_report",
+      "requires": [
+        "cobalamin_folate_external"
+      ]
+    },
+    {
+      "id": "pancreatic_intestinal_comorbidity_record",
+      "source": "diagnostic_review",
+      "requires": [
+        "epi_comorbidity_review"
+      ]
+    },
+    {
+      "id": "same_scale_weight_stool_appetite_response_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "epi_longitudinal_monitoring"
+      ]
+    },
+    {
+      "id": "product_storage_meal_actual_use_teach_back_record",
+      "source": "owner_review",
+      "requires": [
+        "epi_owner_adherence_review"
+      ]
+    },
+    {
+      "id": "poor_response_enteropathy_dysbiosis_workup_record",
+      "source": "external_review",
+      "requires": [
+        "gi_specialist_referral"
+      ]
+    },
+    {
+      "id": "lifelong_supply_red_flag_home_plan_record",
+      "source": "owner_plan",
+      "requires": [
+        "epi_owner_home_plan"
+      ]
+    },
+    {
+      "id": "discordant_refractory_internal_medicine_record",
+      "source": "external_review",
+      "requires": [
+        "gi_specialist_referral"
+      ]
+    },
+    {
+      "id": "red_flag_hydration_pain_blood_fever_record",
+      "source": "physical_exam",
+      "requires": [
+        "epi_core_assessment"
+      ]
+    },
+    {
+      "id": "same_patient_tli_cobalamin_cause_and_management_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "epi_longitudinal_monitoring"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "classic_canine_plan",
+      "fullPlan": [
+        "objective_maldigestion_baseline",
+        "routine_mimic_screen",
+        "species_specific_tli_confirmation",
+        "cobalamin_folate_assessment",
+        "cause_comorbidity_review",
+        "reviewed_management_route",
+        "measured_response"
+      ],
+      "stagedPlan": [
+        "suspect",
+        "confirm",
+        "map_deficiencies",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "breed_stool_weight_not_proof",
+        "tli_species_specific",
+        "cobalamin_visible",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "red_flag_stabilization",
+        "gi_referral"
+      ],
+      "unsafeOrInadequate": [
+        "trial_response_diagnoses",
+        "ordinary_lipase_diagnoses",
+        "generated_product_or_diet"
+      ]
+    },
+    {
+      "id": "feline_atypical_plan",
+      "fullPlan": [
+        "recognize_nontextbook_presentation",
+        "objective_weight_condition_stool_map",
+        "species_specific_tli",
+        "cobalamin_folate",
+        "broad_pancreatic_intestinal_review",
+        "repeat_or_specialist_review_if_discordant",
+        "measured_followup"
+      ],
+      "stagedPlan": [
+        "maintain_suspicion",
+        "confirm_species_specific",
+        "review_comorbidity",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "no_polyphagia_not_exclusion",
+        "feline_tli_not_canine",
+        "concurrent_disease_visible",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "red_flag_route",
+        "internal_medicine_referral"
+      ],
+      "unsafeOrInadequate": [
+        "textbook_stool_required",
+        "discordant_tli_forced_severe",
+        "feline_comorbidity_ignored"
+      ]
+    },
+    {
+      "id": "poor_response_cobalamin_plan",
+      "fullPlan": [
+        "verify_original_tli_and_cobalamin",
+        "measure_current_response",
+        "audit_product_storage_meal_and_actual_use",
+        "review_diet_and_supply",
+        "map_cobalamin_problem",
+        "investigate_concurrent_enteropathy_or_other_mimic",
+        "specialist_plan_and_recheck"
+      ],
+      "stagedPlan": [
+        "verify",
+        "audit",
+        "investigate",
+        "recheck"
+      ],
+      "minimumSafePlan": [
+        "poor_response_not_wrong_diagnosis",
+        "no_owner_blame",
+        "no_automatic_antimicrobial",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "correct_red_flag_route",
+        "gi_referral"
+      ],
+      "unsafeOrInadequate": [
+        "every_failure_is_dysbiosis",
+        "random_product_escalation",
+        "cobalamin_omitted"
+      ]
+    },
+    {
+      "id": "longitudinal_epi_plan",
+      "fullPlan": [
+        "preserve_tli_cobalamin_and_cause",
+        "same_scale_weight_stool_appetite_monitoring",
+        "supply_batch_storage_and_meal_audit",
+        "adverse_effect_screen",
+        "comorbidity_surveillance",
+        "reviewed_lifelong_plan",
+        "red_flag_and_referral_route"
+      ],
+      "stagedPlan": [
+        "early_response",
+        "stabilize_routine",
+        "audit_relapse",
+        "lifelong_surveillance"
+      ],
+      "minimumSafePlan": [
+        "same_patient_continuity",
+        "recurring_supply_visible",
+        "relapse_audit_before_testing",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "red_flag_route",
+        "internal_medicine_referral"
+      ],
+      "unsafeOrInadequate": [
+        "results_lost_after_reload",
+        "generated_lifelong_schedule",
+        "relapse_creates_new_patient"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_epi_2025",
+      "title": "Merck Veterinary Manual: Exocrine Pancreatic Insufficiency in Dogs and Cats",
+      "url": "https://www.merckvetmanual.com/digestive-system/the-exocrine-pancreas/exocrine-pancreatic-insufficiency-in-dogs-and-cats",
+      "scope": "etiology_species_tli_cobalamin_clinical_pattern_poor_response_and_longitudinal_management"
+    },
+    {
+      "id": "merck_malabsorption_2026",
+      "title": "Merck Veterinary Manual: Malabsorption Syndromes in Small Animals",
+      "url": "https://www.merckvetmanual.com/digestive-system/diseases-of-the-small-intestine-in-small-animals/malabsorption-syndromes-in-small-animals",
+      "scope": "maldigestion_vs_malabsorption_small_intestinal_mimics_feline_atypical_and_comorbidity"
+    }
+  ],
+  "variants": [
+    {
+      "id": "epi_classic_canine_maldigestion",
+      "version": "2026.07.16.40",
+      "title": "Классическая мальдигестия у собаки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Классическая потеря веса у собак, полифагия и обильный жидкий стул оправдывают объективную оценку нарушений пищеварения, подтверждение видоспецифического трипсиноподобная иммунореактивность в сыворотке и тестирование на кобаламин или фолат; порода, возраст, внешний вид стула и предшествующее заболевание поджелудочной железы изменяют вероятность или причину, но никогда не заменяют трипсиноподобная иммунореактивность.",
+      "exclusions": [
+        "breed_or_stool_diagnoses",
+        "ordinary_lipase_or_ultrasound_confirms",
+        "trial_response_confirms"
+      ],
+      "planBundleId": "classic_canine_plan",
+      "sourceIds": [
+        "merck_epi_2025",
+        "merck_malabsorption_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_weight_loss_polyphagia_and_voluminous_stool",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_condition",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что несмотря на полифагию, наблюдается прогрессирующая потеря веса и мышечной массы с частым обильным жидким стулом.",
+          "historyAnswers": {
+            "weight_muscle_appetite_stool_volume_frequency_trend": "По нашим наблюдениям, серийный вес или оценка мышечной массы, аппетит и тенденция стула.",
+            "diet_treat_scavenging_other_pet_food": "Дома мы заметили, что мы подробно перечислили рацион, лакомства, доступ к мусору и корму других животных.",
+            "vomiting_pain_anorexia_blood_fever_dehydration": "Насколько мы можем судить, тревожные признаки скорее проверяются, чем приписываются РПИ.",
+            "tli_species_sample_reference_interval": "Мы записали, что действительный трипсиноподобная иммунореактивность еще не указан или внешний идентификатор результата не сохранен."
+          },
+          "examFindings": [
+            {
+              "factId": "classic_maldigestion_pattern_justifies_tli_but_does_not_confirm_epi",
+              "source": "pretest_probability_rule",
+              "finding": "Вес, аппетит и стул являются объективными базовыми показателями."
+            },
+            {
+              "factId": "cobalamin_and_folate_are_assessed_with_tli_not_omitted",
+              "source": "deficiency_rule",
+              "finding": "Витаминный статус остается явным."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "classic_maldigestion_pattern_justifies_tli_but_does_not_confirm_epi",
+              "discoveryPaths": [
+                "weight_muscle_appetite_stool_volume_frequency_trend",
+                "serial_weight_bcs_mcs_stool_appetite_record",
+                "species_specific_tli_sample_result_record"
+              ]
+            },
+            {
+              "factId": "cobalamin_and_folate_are_assessed_with_tli_not_omitted",
+              "discoveryPaths": [
+                "cobalamin_folate_results_and_timing",
+                "cobalamin_folate_status_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "epi_history_weight_body_condition_stool_and_diet_inventory",
+              "classification": "required_first",
+              "result": "При уточнении анамнеза: объективный исходный уровень мальдигестии."
+            },
+            {
+              "id": "epi_cbc_biochemistry_urinalysis_and_malabsorption_mimic_screen",
+              "classification": "required",
+              "result": "В анализе мочи: стандартный или мимический контекст."
+            },
+            {
+              "id": "epi_species_specific_serum_tli_confirmation",
+              "classification": "required_confirmation",
+              "result": "Целевое исследование показало: видоспецифичный внешний трипсиноподобная иммунореактивность."
+            },
+            {
+              "id": "epi_serum_cobalamin_and_folate_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: статус кобаламина или фолата."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "classic_maldigestion_pattern_justifies_tli_but_does_not_confirm_epi",
+              "cobalamin_and_folate_are_assessed_with_tli_not_omitted"
+            ],
+            "confirmedDiagnosisRequires": [
+              "species_specific_tli_in_diagnostic_range_with_compatible_context"
+            ],
+            "dangerStates": [
+              "severe_emaciation",
+              "dehydration",
+              "blood",
+              "fever",
+              "pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "epi_core_assessment",
+              "epi_mimic_screen",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "tli_external",
+              "cobalamin_folate_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "epi_core_route",
+              "epi_mimic_route",
+              "epi_tli_route",
+              "epi_cobalamin_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "classic_canine_plan",
+          "followUp": {
+            "timing": "После получения результата трипсиноподобная иммунореактивность или кобаламин, затем контрольная точка веса или стула или аппетита той же шкалы.",
+            "required": true,
+            "targets": [
+              "weight",
+              "mcs",
+              "appetite",
+              "stool",
+              "tli",
+              "cobalamin"
+            ]
+          },
+          "outcomes": {
+            "safe": "Классическое подозрение подтверждается видоспецифичными данными и картированием дефицита.",
+            "unsafe": "Внешний вид учебника напрямую активизирует лечение РПИ."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: картина типичная, но видоспецифичный анализ крови должен подтвердить недостаточность ферментов поджелудочной железы."
+          ],
+          "compatibility": {
+            "temperament": [
+              "food_motivated",
+              "thin",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "low_stress_sampling_and_external_tli_route",
+            "ownerModifiers": [
+              "expects_stool_diagnosis",
+              "cost_concern"
+            ]
+          }
+        },
+        {
+          "id": "p2_breed_or_young_dog_with_acinar_atrophy_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_condition",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что у молодой собаки или предрасположенной породы имеется картина, совместимая с атрофией поджелудочной железы.",
+          "historyAnswers": {
+            "weight_muscle_appetite_stool_volume_frequency_trend": "По нашим наблюдениям, динамика нарушения пищеварения.",
+            "pancreatitis_diabetes_surgery_or_pancreatic_mass_history": "Дома мы заметили, что оценены приобретенные причины поджелудочной железы.",
+            "tli_species_sample_reference_interval": "Насколько мы можем судить, требуется анализ или справка для собак.",
+            "intestinal_parasite_endocrine_neoplastic_context": "Мы записали, что конкурирующее заболевание сохраняется."
+          },
+          "examFindings": [
+            {
+              "factId": "breed_and_young_age_raise_prior_probability_but_never_confirm_acinar_atrophy_or_epi",
+              "source": "bias_rule",
+              "finding": "Подтверждение трипсиноподобная иммунореактивность остается обязательным."
+            },
+            {
+              "factId": "young_dog_still_requires_mimic_and_comorbidity_screen",
+              "source": "completeness_rule",
+              "finding": "Закрепление породы заблокировано."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "breed_and_young_age_raise_prior_probability_but_never_confirm_acinar_atrophy_or_epi",
+              "discoveryPaths": [
+                "weight_muscle_appetite_stool_volume_frequency_trend",
+                "species_specific_tli_sample_result_record"
+              ]
+            },
+            {
+              "factId": "young_dog_still_requires_mimic_and_comorbidity_screen",
+              "discoveryPaths": [
+                "intestinal_parasite_endocrine_neoplastic_context",
+                "cbc_biochemistry_urine_malabsorption_mimic_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "epi_history_weight_body_condition_stool_and_diet_inventory",
+              "classification": "required",
+              "result": "При уточнении анамнеза: возраст или порода и объективный фенотип."
+            },
+            {
+              "id": "epi_species_specific_serum_tli_confirmation",
+              "classification": "required",
+              "result": "Целевое исследование показало: подтверждение трипсиноподобная иммунореактивность для собак."
+            },
+            {
+              "id": "epi_serum_cobalamin_and_folate_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: статус дефицита."
+            },
+            {
+              "id": "epi_pancreatic_and_intestinal_comorbidity_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: другие причины или доказательства сопутствующего заболевания."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "breed_and_young_age_raise_prior_probability_but_never_confirm_acinar_atrophy_or_epi",
+              "young_dog_still_requires_mimic_and_comorbidity_screen"
+            ],
+            "confirmedDiagnosisRequires": [
+              "canine_species_specific_tli_confirmation"
+            ],
+            "dangerStates": [
+              "severe_weight_loss",
+              "growth_failure",
+              "dehydration",
+              "concurrent_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "epi_core_assessment",
+              "epi_mimic_screen",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "tli_external",
+              "cobalamin_folate_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "epi_core_route",
+              "epi_tli_route",
+              "epi_cobalamin_route",
+              "epi_comorbidity_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "classic_canine_plan",
+          "followUp": {
+            "timing": "Вес или рост или стул после подтверждения и реакция на дефицит.",
+            "required": true,
+            "targets": [
+              "weight",
+              "growth",
+              "mcs",
+              "stool",
+              "cobalamin",
+              "comorbidity"
+            ]
+          },
+          "outcomes": {
+            "safe": "Порода сообщает о подозрении, в то время как трипсиноподобная иммунореактивность и сопутствующие заболевания определяют диагноз.",
+            "unsafe": "У молодой предрасположенной собаки диагноз диагностируют по сигналу."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: породный риск меняет вероятность, но не может заменить подтверждение трипсиноподобная иммунореактивность."
+          ],
+          "compatibility": {
+            "temperament": [
+              "food_motivated",
+              "thin",
+              "young"
+            ],
+            "requiredHandlingAlternative": "brief_sampling_and_home_weight_stool_log",
+            "ownerModifiers": [
+              "expects_breed_diagnosis",
+              "worried_about_lifelong_cost"
+            ]
+          }
+        },
+        {
+          "id": "p3_adult_dog_after_chronic_pancreatic_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_pain_diabetes_or_condition",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что у взрослой собаки нарушение пищеварения развивается после хронического заболевания поджелудочной железы с возможным диабетом или структурным заболеванием.",
+          "historyAnswers": {
+            "pancreatitis_diabetes_surgery_or_pancreatic_mass_history": "По нашим наблюдениям, динамика поджелудочной железы или диабета фиксирована.",
+            "weight_muscle_appetite_stool_volume_frequency_trend": "Дома мы заметили, что записан текущий исходный уровень нарушения пищеварения.",
+            "vomiting_pain_anorexia_blood_fever_dehydration": "Насколько мы можем судить, активный панкреатит или тревожные признаки проверены.",
+            "tli_species_sample_reference_interval": "Мы записали, что требуется действительный собачий трипсиноподобная иммунореактивность."
+          },
+          "examFindings": [
+            {
+              "factId": "chronic_pancreatic_history_supports_cause_but_does_not_confirm_current_epi",
+              "source": "causality_rule",
+              "finding": "трипсиноподобная иммунореактивность по-прежнему требуется."
+            },
+            {
+              "factId": "diabetes_pain_mass_and_recurrent_pancreatitis_remain_linked_separate_problems",
+              "source": "comorbidity_rule",
+              "finding": "экзокринная недостаточность поджелудочной железы не стирает их."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "chronic_pancreatic_history_supports_cause_but_does_not_confirm_current_epi",
+              "discoveryPaths": [
+                "pancreatitis_diabetes_surgery_or_pancreatic_mass_history",
+                "species_specific_tli_sample_result_record"
+              ]
+            },
+            {
+              "factId": "diabetes_pain_mass_and_recurrent_pancreatitis_remain_linked_separate_problems",
+              "discoveryPaths": [
+                "vomiting_pain_anorexia_blood_fever_dehydration",
+                "pancreatic_intestinal_comorbidity_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "epi_species_specific_serum_tli_confirmation",
+              "classification": "required",
+              "result": "Целевое исследование показало: текущее подтверждение экзокринная недостаточность поджелудочной железы."
+            },
+            {
+              "id": "epi_pancreatic_and_intestinal_comorbidity_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: панкреатит, диабет, новообразования и кишечный контекст."
+            },
+            {
+              "id": "epi_cbc_biochemistry_urinalysis_and_malabsorption_mimic_screen",
+              "classification": "required",
+              "result": "В анализе мочи: системный базовый уровень или тревожные признаки."
+            },
+            {
+              "id": "epi_serum_cobalamin_and_folate_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: витаминный статус."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "chronic_pancreatic_history_supports_cause_but_does_not_confirm_current_epi",
+              "diabetes_pain_mass_and_recurrent_pancreatitis_remain_linked_separate_problems"
+            ],
+            "confirmedDiagnosisRequires": [
+              "canine_tli_confirmation_plus_cause_review"
+            ],
+            "dangerStates": [
+              "acute_pancreatitis",
+              "unstable_diabetes",
+              "obstructive_mass",
+              "severe_dehydration"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "epi_core_assessment",
+              "epi_mimic_screen",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "tli_external",
+              "cobalamin_folate_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "epi_tli_route",
+              "epi_comorbidity_route",
+              "epi_mimic_route",
+              "epi_cobalamin_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "classic_canine_plan",
+          "followUp": {
+            "timing": "трипсиноподобная иммунореактивность или заключение о дефиците плюс динамика развития поджелудочной железы или диабета.",
+            "required": true,
+            "targets": [
+              "weight",
+              "stool",
+              "pain",
+              "pancreas",
+              "diabetes",
+              "cobalamin"
+            ]
+          },
+          "outcomes": {
+            "safe": "РПИ подтверждается, в то время как причина заболевания поджелудочной железы и сопутствующие заболевания остаются видимыми.",
+            "unsafe": "История панкреатита автоматически становится РПИ или скрывает активное заболевание."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: перенесённое заболевание поджелудочной железы делает экзокринную недостаточность вероятной, но её нужно подтвердить измерением трипсиноподобной иммунореактивности."
+          ],
+          "compatibility": {
+            "temperament": [
+              "thin",
+              "painful_or_stable",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "red_flag_triage_then_external_tli_and_specialist_review",
+            "ownerModifiers": [
+              "attributes_every_sign_to_pancreas",
+              "monitoring_fatigue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "epi_feline_or_atypical_presentation",
+      "version": "2026.07.16.40",
+      "title": "Кошачья или нетипичная подача",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "У кошачьих и атипичных РПИ могут отсутствовать хрестоматийная полифагия, стеаторея или явная диарея; Требуется соответствующий видоспецифичный трипсиноподобная иммунореактивность, кобаламин или фолат и широкий обзор коморбидных заболеваний поджелудочной железы или кишечника, в то время как дискордантный низкий трипсиноподобная иммунореактивность повторяется или проверяется специалистом, а не приводит к тяжелому заболеванию.",
+      "exclusions": [
+        "textbook_signs_required",
+        "canine_reference_for_cat",
+        "discordant_low_tli_forced_severe"
+      ],
+      "planBundleId": "feline_atypical_plan",
+      "sourceIds": [
+        "merck_epi_2025",
+        "merck_malabsorption_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_feline_weight_loss_and_loose_stool_with_concurrent_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_condition_or_comorbidity",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что у кошки наблюдается потеря веса, жидкий или изменчивый стул, часто при хроническом панкреатите, кишечном заболевании, диабете или другом сопутствующем заболевании.",
+          "historyAnswers": {
+            "weight_muscle_appetite_stool_volume_frequency_trend": "По нашим наблюдениям, вес или оценка мышечной массы кошек и характер стула.",
+            "pancreatitis_diabetes_surgery_or_pancreatic_mass_history": "Дома мы заметили, что записан анамнез поджелудочной железы или диабета.",
+            "intestinal_parasite_endocrine_neoplastic_context": "Насколько мы можем судить, записана обширная карта сопутствующих заболеваний.",
+            "tli_species_sample_reference_interval": "Мы записали, что требуется анализ или справка для кошек."
+          },
+          "examFindings": [
+            {
+              "factId": "feline_epi_requires_feline_tli_and_broad_comorbidity_review",
+              "source": "species_rule",
+              "finding": "Собачьи предположения не используются повторно."
+            },
+            {
+              "factId": "feline_weight_loss_can_exist_without_overt_diarrhea_or_polyphagia",
+              "source": "presentation_rule",
+              "finding": "Резерв толстой кишки и сопутствующая патология могут скрывать признаки из учебников."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "feline_epi_requires_feline_tli_and_broad_comorbidity_review",
+              "discoveryPaths": [
+                "tli_species_sample_reference_interval",
+                "species_specific_tli_sample_result_record",
+                "pancreatic_intestinal_comorbidity_record"
+              ]
+            },
+            {
+              "factId": "feline_weight_loss_can_exist_without_overt_diarrhea_or_polyphagia",
+              "discoveryPaths": [
+                "weight_muscle_appetite_stool_volume_frequency_trend",
+                "serial_weight_bcs_mcs_stool_appetite_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "epi_history_weight_body_condition_stool_and_diet_inventory",
+              "classification": "required",
+              "result": "При уточнении анамнеза: объективный базовый уровень для кошек."
+            },
+            {
+              "id": "epi_species_specific_serum_tli_confirmation",
+              "classification": "required_feline_assay",
+              "result": "Целевое исследование показало: подтверждение трипсиноподобная иммунореактивность для кошек."
+            },
+            {
+              "id": "epi_serum_cobalamin_and_folate_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: приоритетный витаминный статус."
+            },
+            {
+              "id": "epi_pancreatic_and_intestinal_comorbidity_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: панкреатический или кишечный или эндокринный или опухолевый контекст."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "feline_epi_requires_feline_tli_and_broad_comorbidity_review",
+              "feline_weight_loss_can_exist_without_overt_diarrhea_or_polyphagia"
+            ],
+            "confirmedDiagnosisRequires": [
+              "feline_species_specific_tli_with_compatible_context"
+            ],
+            "dangerStates": [
+              "fragile_emaciation",
+              "dehydration",
+              "diabetic_instability",
+              "pancreatic_pain",
+              "mass"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "epi_core_assessment",
+              "epi_mimic_screen",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "tli_external",
+              "cobalamin_folate_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "epi_core_route",
+              "epi_tli_route",
+              "epi_cobalamin_route",
+              "epi_comorbidity_route",
+              "epi_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_atypical_plan",
+          "followUp": {
+            "timing": "Заключение по трипсиноподобная иммунореактивность или кобаламину у кошек и реакция, специфичная для сопутствующих заболеваний.",
+            "required": true,
+            "targets": [
+              "weight",
+              "mcs",
+              "stool",
+              "appetite",
+              "cobalamin",
+              "pancreas",
+              "intestine"
+            ]
+          },
+          "outcomes": {
+            "safe": "экзокринная недостаточность поджелудочной железы кошек подтверждается без необходимости наличия знаков из учебника по собакам.",
+            "unsafe": "Кошку исключают из-за отсутствия полифагии или оценивают по собачьей эталонной логике."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: у кошек часто наблюдаются менее заметные признаки и более сопутствующие заболевания поджелудочной железы или кишечника."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "thin",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "low_stress_feline_sampling_and_internal_medicine_referral",
+            "ownerModifiers": [
+              "does_not_see_diarrhea",
+              "multiple_comorbidities"
+            ]
+          }
+        },
+        {
+          "id": "p2_intermittent_or_subclinical_low_tli_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что трипсиноподобная иммунореактивность низкий или пограничный, тогда как клинические признаки непостоянны, умеренны или не согласуются с тяжелой РПИ.",
+          "historyAnswers": {
+            "tli_species_sample_reference_interval": "По нашим наблюдениям, фиксированные виды, анализ, образец и точный интервал.",
+            "weight_muscle_appetite_stool_volume_frequency_trend": "Дома мы заметили, что объективное бремя заболевания может быть легким или перемежающимся.",
+            "prior_weight_stool_and_appetite_response": "Насколько мы можем судить, никакой динамики принудительного серьезного реагирования.",
+            "pancreatitis_diabetes_surgery_or_pancreatic_mass_history": "Мы записали, что контекст причины или прогрессирования сохранен."
+          },
+          "examFindings": [
+            {
+              "factId": "discordant_tli_and_clinical_pattern_requires_repeat_or_specialist_interpretation",
+              "source": "discordance_rule",
+              "finding": "Тяжёлое течение нельзя предполагать без соответствующих клинических данных."
+            },
+            {
+              "factId": "subclinical_or_intermittent_epi_preserves_current_function_and_future_risk_separately",
+              "source": "longitudinal_rule",
+              "finding": "Мониторинг не стирает низкий трипсиноподобная иммунореактивность."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "discordant_tli_and_clinical_pattern_requires_repeat_or_specialist_interpretation",
+              "discoveryPaths": [
+                "tli_species_sample_reference_interval",
+                "species_specific_tli_sample_result_record",
+                "discordant_refractory_internal_medicine_record"
+              ]
+            },
+            {
+              "factId": "subclinical_or_intermittent_epi_preserves_current_function_and_future_risk_separately",
+              "discoveryPaths": [
+                "weight_muscle_appetite_stool_volume_frequency_trend",
+                "same_patient_tli_cobalamin_cause_and_management_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "epi_species_specific_serum_tli_confirmation",
+              "classification": "repeat_or_specialist_review",
+              "result": "Целевое исследование показало: подтвержденный низкий или пограничный видоспецифичный результат."
+            },
+            {
+              "id": "epi_structured_response_weight_stool_and_appetite_monitoring",
+              "classification": "required_baseline",
+              "result": "При динамическом наблюдении: фактическая клиническая нагрузка."
+            },
+            {
+              "id": "epi_internal_medicine_referral_for_discordant_or_refractory_case",
+              "classification": "required_if_persistent_discordance",
+              "result": "По итогам консультации специалиста: интерпретация и план продвижения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "discordant_tli_and_clinical_pattern_requires_repeat_or_specialist_interpretation",
+              "subclinical_or_intermittent_epi_preserves_current_function_and_future_risk_separately"
+            ],
+            "confirmedDiagnosisRequires": [
+              "verified_species_specific_tli_plus_specialist_context_when_discordant"
+            ],
+            "dangerStates": [
+              "false_severe_label",
+              "sample_identity_error",
+              "progressive_weight_loss"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "epi_core_assessment",
+              "epi_longitudinal_monitoring"
+            ],
+            "external": [
+              "tli_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "epi_tli_route",
+              "epi_longitudinal_route",
+              "epi_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_atypical_plan",
+          "followUp": {
+            "timing": "Повторная или специализированная интерпретация трипсиноподобная иммунореактивность и мониторинг объективного прогрессирования.",
+            "required": true,
+            "targets": [
+              "tli_identity",
+              "weight",
+              "mcs",
+              "stool",
+              "appetite",
+              "progression"
+            ]
+          },
+          "outcomes": {
+            "safe": "Разногласия остаются видимыми и разрешаются без придуманной строгости.",
+            "unsafe": "Любое низкое значение превращается в такой же тяжелый случай РПИ."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему результаты лабораторных исследований и текущие симптомы пока не говорят об одном и том же."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "repeat_external_sample_or_record_review",
+            "ownerModifiers": [
+              "confused_by_borderline_result",
+              "test_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p3_diarrhea_without_polyphagia_or_obvious_steatorrhea",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_red_flags",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что хроническая или интермиттирующая диарея и потеря массы тела наблюдаются без полифагии, бледного стула или явной стеатореи.",
+          "historyAnswers": {
+            "weight_muscle_appetite_stool_volume_frequency_trend": "По нашим наблюдениям, клиническая картина нетипична: выраженной полифагии и очевидной стеатореи нет.",
+            "vomiting_pain_anorexia_blood_fever_dehydration": "Дома мы заметили, что вывешены красные флаги.",
+            "intestinal_parasite_endocrine_neoplastic_context": "Насколько мы можем судить, широкие дифференциалы сохранены.",
+            "tli_species_sample_reference_interval": "Мы записали, что рассмотрен соответствующий видоспецифичный маршрут испытаний."
+          },
+          "examFindings": [
+            {
+              "factId": "absence_of_polyphagia_or_steatorrhea_does_not_block_appropriate_tli_testing",
+              "source": "presentation_limit_rule",
+              "finding": "Знаки учебника не являются обязательными."
+            },
+            {
+              "factId": "diarrhea_alone_requires_intestinal_parasite_and_other_mimic_screen",
+              "source": "differential_rule",
+              "finding": "экзокринная недостаточность поджелудочной железы — это одна клинический вариант, а не по умолчанию."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "absence_of_polyphagia_or_steatorrhea_does_not_block_appropriate_tli_testing",
+              "discoveryPaths": [
+                "weight_muscle_appetite_stool_volume_frequency_trend",
+                "species_specific_tli_sample_result_record"
+              ]
+            },
+            {
+              "factId": "diarrhea_alone_requires_intestinal_parasite_and_other_mimic_screen",
+              "discoveryPaths": [
+                "intestinal_parasite_endocrine_neoplastic_context",
+                "cbc_biochemistry_urine_malabsorption_mimic_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "epi_cbc_biochemistry_urinalysis_and_malabsorption_mimic_screen",
+              "classification": "required_first",
+              "result": "В анализе мочи: более широкий контекст диареи или похудания."
+            },
+            {
+              "id": "epi_species_specific_serum_tli_confirmation",
+              "classification": "required_if_suspicion",
+              "result": "Целевое исследование показало: подтверждение или отклонение экзокринная недостаточность поджелудочной железы."
+            },
+            {
+              "id": "epi_serum_cobalamin_and_folate_assessment",
+              "classification": "required_if_malabsorption",
+              "result": "Клиническая оценка показала: доказательства витаминов."
+            },
+            {
+              "id": "epi_pancreatic_and_intestinal_comorbidity_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: сопутствующее или альтернативное заболевание."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "absence_of_polyphagia_or_steatorrhea_does_not_block_appropriate_tli_testing",
+              "diarrhea_alone_requires_intestinal_parasite_and_other_mimic_screen"
+            ],
+            "confirmedDiagnosisRequires": [
+              "species_specific_tli_not_stool_appearance"
+            ],
+            "dangerStates": [
+              "blood",
+              "fever",
+              "pain",
+              "dehydration",
+              "severe_weight_loss"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "epi_core_assessment",
+              "epi_mimic_screen",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "tli_external",
+              "cobalamin_folate_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "epi_mimic_route",
+              "epi_tli_route",
+              "epi_cobalamin_route",
+              "epi_comorbidity_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_atypical_plan",
+          "followUp": {
+            "timing": "Заключение трипсиноподобная иммунореактивность или мимограмма и реакция желудочно-кишечный тракт или веса того же масштаба.",
+            "required": true,
+            "targets": [
+              "diarrhea",
+              "weight",
+              "appetite",
+              "tli",
+              "cobalamin",
+              "mimics"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неучебный РПИ остается поддающимся проверке, в то время как более широкие причины диареи остаются активными.",
+            "unsafe": "Отсутствие бледного стула или полифагии ложно исключает ЭПИ."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: внешний вид стула варьируется, а анализ крови отвечает на вопрос о функции поджелудочной железы."
+          ],
+          "compatibility": {
+            "temperament": [
+              "thin",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "staged_sampling_and_red_flag_referral",
+            "ownerModifiers": [
+              "expects_visible_fat_in_stool",
+              "diagnostic_fatigue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "epi_cobalamin_deficiency_or_poor_response",
+      "version": "2026.07.16.40",
+      "title": "Дефицит кобаламина или неполный ответ",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Дефицит кобаламина является явным модификатором результата и исхода; Плохой ответ требует проверки исходного трипсиноподобная иммунореактивность, кобаламина, продукта, хранения, связи с приемом пищи, фактического использования, диеты, снабжения и побочных эффектов, прежде чем будет назначен или направлен сопутствующая энтеропатия, дисбиоз или другой имитатор.",
+      "exclusions": [
+        "cobalamin_omitted",
+        "poor_response_equals_wrong_diagnosis",
+        "automatic_dysbiosis_antimicrobial"
+      ],
+      "planBundleId": "poor_response_cobalamin_plan",
+      "sourceIds": [
+        "merck_epi_2025",
+        "merck_malabsorption_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_severe_cobalamin_deficiency_and_poor_weight_gain",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_condition_or_neurologic_hematologic_sign",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что подтвержденный РПИ имеет тяжелый дефицит кобаламина с плохим набором веса или стойким клиническим бременем.",
+          "historyAnswers": {
+            "cobalamin_folate_results_and_timing": "По нашим наблюдениям, точный результат, время и лаборатория сохранены.",
+            "prior_weight_stool_and_appetite_response": "Дома мы заметили, что реакция веса или стула остается субоптимальной.",
+            "enzyme_product_meal_storage_and_actual_use": "Насколько мы можем судить, записан аудит фактического использования.",
+            "vomiting_pain_anorexia_blood_fever_dehydration": "Мы записали, что показаны и другие красные флаги."
+          },
+          "examFindings": [
+            {
+              "factId": "cobalamin_deficiency_is_a_separate_measurable_problem_and_poor_outcome_risk",
+              "source": "deficiency_rule",
+              "finding": "Он не скрыт внутри общего экзокринная недостаточность поджелудочной железы."
+            },
+            {
+              "factId": "poor_weight_gain_requires_cobalamin_response_and_comorbidity_review",
+              "source": "failure_analysis_rule",
+              "finding": "Никаких предположений об одной причине."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "cobalamin_deficiency_is_a_separate_measurable_problem_and_poor_outcome_risk",
+              "discoveryPaths": [
+                "cobalamin_folate_results_and_timing",
+                "cobalamin_folate_status_record"
+              ]
+            },
+            {
+              "factId": "poor_weight_gain_requires_cobalamin_response_and_comorbidity_review",
+              "discoveryPaths": [
+                "prior_weight_stool_and_appetite_response",
+                "same_scale_weight_stool_appetite_response_record",
+                "pancreatic_intestinal_comorbidity_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "epi_serum_cobalamin_and_folate_assessment",
+              "classification": "required_current",
+              "result": "Клиническая оценка показала: тяжесть дефицита и контекст последующего наблюдения."
+            },
+            {
+              "id": "epi_structured_response_weight_stool_and_appetite_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: объективный результат."
+            },
+            {
+              "id": "epi_adherence_storage_meal_and_product_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: адекватность управления."
+            },
+            {
+              "id": "epi_pancreatic_and_intestinal_comorbidity_review",
+              "classification": "required_if_response_incomplete",
+              "result": "Целевое исследование показало: сопутствующий путь заболевания."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "cobalamin_deficiency_is_a_separate_measurable_problem_and_poor_outcome_risk",
+              "poor_weight_gain_requires_cobalamin_response_and_comorbidity_review"
+            ],
+            "confirmedDiagnosisRequires": [
+              "original_tli_confirmation_plus_current_cobalamin_evidence"
+            ],
+            "dangerStates": [
+              "severe_emaciation",
+              "dehydration",
+              "coagulopathy_or_neurologic_concern",
+              "active_pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "epi_core_assessment",
+              "epi_longitudinal_monitoring",
+              "epi_owner_adherence_review"
+            ],
+            "external": [
+              "cobalamin_folate_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "epi_cobalamin_route",
+              "epi_longitudinal_route",
+              "epi_adherence_route",
+              "epi_comorbidity_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "poor_response_cobalamin_plan",
+          "followUp": {
+            "timing": "Контрольные точки реакции веса или кала на кобаламин и ту же шкалу.",
+            "required": true,
+            "targets": [
+              "cobalamin",
+              "folate",
+              "weight",
+              "mcs",
+              "stool",
+              "appetite",
+              "comorbidity"
+            ]
+          },
+          "outcomes": {
+            "safe": "Дефицит и общий ответ РПИ отслеживаются отдельно и вместе.",
+            "unsafe": "Кобаламин не учитывается или плохой прирост вызывает случайное увеличение количества продукта."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: дефицит витаминов может помешать выздоровлению, даже если проводится замена поджелудочной железы."
+          ],
+          "compatibility": {
+            "temperament": [
+              "thin",
+              "weak",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "low_stress_external_vitamin_testing_and_home_weight_log",
+            "ownerModifiers": [
+              "expects_enzyme_alone_to_fix_all",
+              "monitoring_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p2_persistent_diarrhea_despite_reported_enzyme_use",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_red_flags",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что диарея сохраняется, несмотря на сообщения об использовании ферментов, что требует нейтрального фактического использования и проверки продукта, прежде чем признать случай рефрактерным.",
+          "historyAnswers": {
+            "enzyme_product_meal_storage_and_actual_use": "По нашим наблюдениям, реконструированы продукты, хранение, каждый прием пищи и фактическое управление.",
+            "product_batch_supply_and_cost_continuity": "Дома мы заметили, что партия, дефицит поставок и доступность.",
+            "diet_treat_scavenging_other_pet_food": "Насколько мы можем судить, записаны скрытые блюда или угощения.",
+            "adverse_effect_or_oral_bleeding_sign": "Мы записали, что неблагоприятные или оральные признаки проверены."
+          },
+          "examFindings": [
+            {
+              "factId": "reported_use_requires_product_storage_meal_and_actual_use_teach_back",
+              "source": "validity_rule",
+              "finding": "Никакой вины владельца; наблюдаемый процесс подвергается аудиту."
+            },
+            {
+              "factId": "adherence_storage_or_supply_failure_is_not_automatic_refractory_epi",
+              "source": "classification_rule",
+              "finding": "Устранимая проблема доставки остается отдельной."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "reported_use_requires_product_storage_meal_and_actual_use_teach_back",
+              "discoveryPaths": [
+                "enzyme_product_meal_storage_and_actual_use",
+                "product_storage_meal_actual_use_teach_back_record"
+              ]
+            },
+            {
+              "factId": "adherence_storage_or_supply_failure_is_not_automatic_refractory_epi",
+              "discoveryPaths": [
+                "product_batch_supply_and_cost_continuity",
+                "lifelong_supply_red_flag_home_plan_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "epi_adherence_storage_meal_and_product_review",
+              "classification": "required_first",
+              "result": "Целевое исследование показало: действительная или недействительная доставка управления."
+            },
+            {
+              "id": "epi_structured_response_weight_stool_and_appetite_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: объективная величина отказа."
+            },
+            {
+              "id": "epi_serum_cobalamin_and_folate_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: исправимый дефицитный статус."
+            },
+            {
+              "id": "epi_chronic_enteropathy_or_dysbiosis_workup_when_poor_response",
+              "classification": "only_after_validity_audit",
+              "result": "Целевое исследование показало: параллельный кишечный путь."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "reported_use_requires_product_storage_meal_and_actual_use_teach_back",
+              "adherence_storage_or_supply_failure_is_not_automatic_refractory_epi"
+            ],
+            "confirmedDiagnosisRequires": [
+              "original_tli_confirmation_plus_valid_management_audit"
+            ],
+            "dangerStates": [
+              "severe_dehydration",
+              "blood",
+              "fever",
+              "oral_bleeding",
+              "supply_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "epi_owner_adherence_review",
+              "epi_longitudinal_monitoring",
+              "epi_owner_home_plan"
+            ],
+            "external": [
+              "cobalamin_folate_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "epi_adherence_route",
+              "epi_longitudinal_route",
+              "epi_cobalamin_route",
+              "epi_poor_response_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "poor_response_cobalamin_plan",
+          "followUp": {
+            "timing": "После одной скорректированного фактора доставки и контрольной точки объективного ответа.",
+            "required": true,
+            "targets": [
+              "actual_use",
+              "storage",
+              "meal_linkage",
+              "supply",
+              "stool",
+              "weight",
+              "adverse_effect"
+            ]
+          },
+          "outcomes": {
+            "safe": "Устранимые проблемы с доставкой выявляются до дорогостоящей обработки огнеупора.",
+            "unsafe": "Владелец обвиняется или терапия усиливается без наблюдения за фактическим использованием."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: используйте обучение и контейнеры, чтобы реконструировать процесс, не рассматривая пробелы как личные неудачи."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable",
+              "thin",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "home_process_review_and_staged_recheck",
+            "ownerModifiers": [
+              "multiple_feeders",
+              "supply_cost_problem",
+              "embarrassed_by_gaps"
+            ]
+          }
+        },
+        {
+          "id": "p3_concurrent_chronic_enteropathy_dysbiosis_or_other_mimic",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_red_flags",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что стойкие симптомы после подтвержденного РПИ и проверенного лечения указывают на хроническую энтеропатию, дисбиоз, паразитарные, эндокринные, неопластические или другие сопутствующие заболевания.",
+          "historyAnswers": {
+            "intestinal_parasite_endocrine_neoplastic_context": "По нашим наблюдениям, карта доказательств сопутствующих заболеваний.",
+            "prior_weight_stool_and_appetite_response": "Дома мы заметили, что остаточная картина реакции сохранена.",
+            "vomiting_pain_anorexia_blood_fever_dehydration": "Насколько мы можем судить, тревожные признаки явны.",
+            "tli_species_sample_reference_interval": "Мы записали, что оригинал подтверждения личности сохранен."
+          },
+          "examFindings": [
+            {
+              "factId": "poor_response_after_valid_audit_requires_concurrent_disease_workup",
+              "source": "refractory_rule",
+              "finding": "Исходный экзокринная недостаточность поджелудочной железы сохраняется, пока исследуется дополнительное заболевание."
+            },
+            {
+              "factId": "dysbiosis_does_not_create_an_automatic_antimicrobial_route",
+              "source": "stewardship_rule",
+              "finding": "Требуются доказательства и план специалиста."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "poor_response_after_valid_audit_requires_concurrent_disease_workup",
+              "discoveryPaths": [
+                "intestinal_parasite_endocrine_neoplastic_context",
+                "poor_response_enteropathy_dysbiosis_workup_record"
+              ]
+            },
+            {
+              "factId": "dysbiosis_does_not_create_an_automatic_antimicrobial_route",
+              "discoveryPaths": [
+                "pancreatic_intestinal_comorbidity_record",
+                "discordant_refractory_internal_medicine_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "epi_chronic_enteropathy_or_dysbiosis_workup_when_poor_response",
+              "classification": "required_after_audit",
+              "result": "Целевое исследование показало: сопутствующие доказательства заболеваний ЖКТ."
+            },
+            {
+              "id": "epi_pancreatic_and_intestinal_comorbidity_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: более широкая карта причин."
+            },
+            {
+              "id": "epi_internal_medicine_referral_for_discordant_or_refractory_case",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: решение специалиста без автоматического антимикробного препарата."
+            },
+            {
+              "id": "epi_cbc_biochemistry_urinalysis_and_malabsorption_mimic_screen",
+              "classification": "required_updated",
+              "result": "В анализе мочи: системные или мимические изменения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "poor_response_after_valid_audit_requires_concurrent_disease_workup",
+              "dysbiosis_does_not_create_an_automatic_antimicrobial_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "concurrent_disease_specific_evidence_beyond_epi"
+            ],
+            "dangerStates": [
+              "protein_losing_disease",
+              "neoplasia",
+              "severe_inflammation",
+              "blood",
+              "fever"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "epi_mimic_screen",
+              "epi_comorbidity_review",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "epi_poor_response_route",
+              "epi_comorbidity_route",
+              "epi_referral_route",
+              "epi_mimic_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "poor_response_cobalamin_plan",
+          "followUp": {
+            "timing": "Результат одновременного заболевания и отдельные контрольные точки ответа экзокринная недостаточность поджелудочной железы и желудочно-кишечный тракт.",
+            "required": true,
+            "targets": [
+              "weight",
+              "stool",
+              "protein",
+              "inflammation",
+              "parasites",
+              "intestinal_diagnosis"
+            ]
+          },
+          "outcomes": {
+            "safe": "Сопутствующее заболевание подтверждается без перезаписи подтвержденного экзокринная недостаточность поджелудочной железы.",
+            "unsafe": "Любой неполный ответ становится дисбактериозом и автоматическим назначением антибиотиков."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: РПИ может быть реальным и хорошо вылеченным, в то время как второе заболевание кишечника все еще вызывает симптомы."
+          ],
+          "compatibility": {
+            "temperament": [
+              "thin",
+              "treatment_fatigued",
+              "painful_or_stable"
+            ],
+            "requiredHandlingAlternative": "staged_internal_medicine_workup",
+            "ownerModifiers": [
+              "frustrated_by_poor_response",
+              "financial_fatigue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "epi_longitudinal_management",
+      "version": "2026.07.16.40",
+      "title": "Продольное ведение подтверждённой экзокринная недостаточность поджелудочной железы",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Подтвержденный РПИ обычно представляет собой лонгитюдное состояние на протяжении всей жизни: трипсиноподобная иммунореактивность, кобаламин, причина, вес или состояние или реакция стула или аппетита, фактическое лечение, побочные эффекты, поставки или партия и наблюдение за сопутствующими заболеваниями сохраняются на протяжении всех посещений; Рецидив проверяют у того же пациента перед повторным тестированием или эскалацией.",
+      "exclusions": [
+        "results_lost_after_reload",
+        "relapse_creates_new_patient",
+        "one_generated_lifelong_schedule"
+      ],
+      "planBundleId": "longitudinal_epi_plan",
+      "sourceIds": [
+        "merck_epi_2025",
+        "merck_malabsorption_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_early_response_weight_and_stool_recheck",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_nonresponse",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что на ранних стадиях после начала пересмотренного плана РПИ измеряют вес, состояние тела или мышц, стул и аппетит.",
+          "historyAnswers": {
+            "prior_weight_stool_and_appetite_response": "По нашим наблюдениям, ответ базовой линии на текущий.",
+            "enzyme_product_meal_storage_and_actual_use": "Дома мы заметили, что фактический процесс записан.",
+            "cobalamin_folate_results_and_timing": "Насколько мы можем судить, план или результат по устранению недостатков сохранен.",
+            "adverse_effect_or_oral_bleeding_sign": "Мы записали, что побочные эффекты проверены."
+          },
+          "examFindings": [
+            {
+              "factId": "early_response_is_measured_with_same_definitions_not_impression_alone",
+              "source": "outcome_rule",
+              "finding": "Вес или оценка мышечной массы или стул или аппетит в сравнении."
+            },
+            {
+              "factId": "improvement_supports_management_response_but_does_not_replace_original_tli_confirmation",
+              "source": "diagnostic_boundary",
+              "finding": "Ответ на лечение не является ретроактивным диагнозом."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "early_response_is_measured_with_same_definitions_not_impression_alone",
+              "discoveryPaths": [
+                "prior_weight_stool_and_appetite_response",
+                "same_scale_weight_stool_appetite_response_record"
+              ]
+            },
+            {
+              "factId": "improvement_supports_management_response_but_does_not_replace_original_tli_confirmation",
+              "discoveryPaths": [
+                "tli_species_sample_reference_interval",
+                "same_patient_tli_cobalamin_cause_and_management_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "epi_structured_response_weight_stool_and_appetite_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: объективное раннее реагирование."
+            },
+            {
+              "id": "epi_adherence_storage_meal_and_product_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: адекватность управления."
+            },
+            {
+              "id": "epi_serum_cobalamin_and_folate_assessment",
+              "classification": "followup_by_original_status",
+              "result": "Клиническая оценка показала: динамика дефицита."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "early_response_is_measured_with_same_definitions_not_impression_alone",
+              "improvement_supports_management_response_but_does_not_replace_original_tli_confirmation"
+            ],
+            "confirmedDiagnosisRequires": [
+              "preserved_species_specific_tli_confirmation"
+            ],
+            "dangerStates": [
+              "continued_weight_loss",
+              "dehydration",
+              "blood",
+              "oral_bleeding"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "epi_longitudinal_monitoring",
+              "epi_owner_adherence_review",
+              "epi_core_assessment"
+            ],
+            "external": [
+              "cobalamin_folate_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "epi_longitudinal_route",
+              "epi_adherence_route",
+              "epi_cobalamin_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "longitudinal_epi_plan",
+          "followUp": {
+            "timing": "Ранняя контрольная точка цели, затем индивидуализированный ритм жизни на протяжении всей жизни.",
+            "required": true,
+            "targets": [
+              "weight",
+              "bcs",
+              "mcs",
+              "stool",
+              "appetite",
+              "cobalamin",
+              "adverse_effect"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ранние выгоды и остающиеся дефициты измеряются и поддаются проверке.",
+            "unsafe": "Субъективное улучшение задним числом заменяет трипсиноподобная иммунореактивность или прекращает мониторинг."
+          },
+          "ownerCommunication": [
+            "Я покажу вам исходные и текущие показатели веса или кала и определите следующую цель безопасности."
+          ],
+          "compatibility": {
+            "temperament": [
+              "food_motivated",
+              "stable_or_thin"
+            ],
+            "requiredHandlingAlternative": "home_log_and_brief_condition_recheck",
+            "ownerModifiers": [
+              "reports_better_without_measurement",
+              "schedule_barrier"
+            ]
+          }
+        },
+        {
+          "id": "p2_relapse_from_adherence_storage_diet_or_batch_problem",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_condition",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что у ранее контролируемого пациента возникает рецидив после изменения поставки, партии, хранения, приема пищи, диеты или домашнего использования.",
+          "historyAnswers": {
+            "product_batch_supply_and_cost_continuity": "По нашим наблюдениям, изменения и сроки фиксированы.",
+            "enzyme_product_meal_storage_and_actual_use": "Дома мы заметили, что сравнение текущего и предыдущего процесса.",
+            "diet_treat_scavenging_other_pet_food": "Насколько мы можем судить, записаны диетические изменения или скрытые приемы пищи.",
+            "prior_weight_stool_and_appetite_response": "Мы записали, что предыдущая ремиссия и рецидив остаются у одного и того же пациента."
+          },
+          "examFindings": [
+            {
+              "factId": "relapse_preserves_prior_tli_cobalamin_cause_and_successful_response",
+              "source": "continuity_rule",
+              "finding": "Никаких дубликатов и сбросов."
+            },
+            {
+              "factId": "supply_batch_storage_meal_and_diet_audit_precedes_repeat_diagnostics",
+              "source": "resource_rule",
+              "finding": "Недорогой причинно-следственный аудит в первую очередь, когда это безопасно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "relapse_preserves_prior_tli_cobalamin_cause_and_successful_response",
+              "discoveryPaths": [
+                "prior_weight_stool_and_appetite_response",
+                "same_patient_tli_cobalamin_cause_and_management_record"
+              ]
+            },
+            {
+              "factId": "supply_batch_storage_meal_and_diet_audit_precedes_repeat_diagnostics",
+              "discoveryPaths": [
+                "product_batch_supply_and_cost_continuity",
+                "product_storage_meal_actual_use_teach_back_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "epi_adherence_storage_meal_and_product_review",
+              "classification": "required_first",
+              "result": "Целевое исследование показало: изменение родов, связанное с рецидивом."
+            },
+            {
+              "id": "epi_structured_response_weight_stool_and_appetite_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: объективная тяжесть рецидива."
+            },
+            {
+              "id": "epi_pancreatic_and_intestinal_comorbidity_review",
+              "classification": "conditional_if_audit_does_not_explain",
+              "result": "Целевое исследование показало: новый путь сопутствующего заболевания."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "relapse_preserves_prior_tli_cobalamin_cause_and_successful_response",
+              "supply_batch_storage_meal_and_diet_audit_precedes_repeat_diagnostics"
+            ],
+            "confirmedDiagnosisRequires": [
+              "preserved_original_confirmation_plus_current_relapse_evidence"
+            ],
+            "dangerStates": [
+              "supply_loss",
+              "severe_weight_loss",
+              "dehydration",
+              "new_pain_or_blood"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "epi_owner_adherence_review",
+              "epi_longitudinal_monitoring",
+              "epi_owner_home_plan"
+            ],
+            "external": [
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "epi_adherence_route",
+              "epi_longitudinal_route",
+              "epi_comorbidity_route",
+              "epi_owner_plan_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "longitudinal_epi_plan",
+          "followUp": {
+            "timing": "После скорректированного фактора рецидива и контрольной точки объективного восстановления.",
+            "required": true,
+            "targets": [
+              "supply",
+              "batch",
+              "storage",
+              "meals",
+              "diet",
+              "weight",
+              "stool"
+            ]
+          },
+          "outcomes": {
+            "safe": "Рецидив каузально проверяется в пределах исходной динамики заболевания.",
+            "unsafe": "Пациент реназначается автоматически или проходит повторное тестирование перед простым обзором процесса."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: рассмотрите изменение нейтрально и отделите неудачу системы снабжения от личной вины."
+          ],
+          "compatibility": {
+            "temperament": [
+              "treatment_fatigued",
+              "thin_or_stable"
+            ],
+            "requiredHandlingAlternative": "home_process_audit_and_targeted_recheck",
+            "ownerModifiers": [
+              "financial_constraint",
+              "product_shortage",
+              "multiple_feeders"
+            ]
+          }
+        },
+        {
+          "id": "p3_stable_lifelong_care_with_comorbidity_surveillance",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_red_flag",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что стабильный пациент с РПИ продолжает пожизненный мониторинг снабжения, реакции и кобаламина с наблюдением за диабетом, панкреатитом и кишечными заболеваниями.",
+          "historyAnswers": {
+            "product_batch_supply_and_cost_continuity": "По нашим наблюдениям, статус повторяющихся поставок или затрат.",
+            "prior_weight_stool_and_appetite_response": "Дома мы заметили, что устойчивая тенденция реагирования сохранена.",
+            "pancreatitis_diabetes_surgery_or_pancreatic_mass_history": "Насколько мы можем судить, связанные предупреждения о сопутствующих заболеваниях сохранены.",
+            "owner_home_plan_and_referral_feasibility": "Мы записали, что владелец знает тревожные признаки и понимает, куда обратиться за специализированной помощью."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_lifelong_patient_retains_all_prior_confirmation_and_response_data",
+              "source": "persistence_rule",
+              "finding": "Перезагрузка не стирает историю."
+            },
+            {
+              "factId": "lifelong_care_includes_supply_burden_comorbidity_surveillance_and_red_flags",
+              "source": "management_rule",
+              "finding": "Стабильность – это не отсутствие текущих потребностей."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stable_lifelong_patient_retains_all_prior_confirmation_and_response_data",
+              "discoveryPaths": [
+                "same_patient_tli_cobalamin_cause_and_management_record",
+                "prior_weight_stool_and_appetite_response"
+              ]
+            },
+            {
+              "factId": "lifelong_care_includes_supply_burden_comorbidity_surveillance_and_red_flags",
+              "discoveryPaths": [
+                "product_batch_supply_and_cost_continuity",
+                "lifelong_supply_red_flag_home_plan_record",
+                "pancreatic_intestinal_comorbidity_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "epi_structured_response_weight_stool_and_appetite_monitoring",
+              "classification": "required_longitudinal",
+              "result": "При динамическом наблюдении: стабильный объективный ответ."
+            },
+            {
+              "id": "epi_owner_lifelong_management_and_red_flag_plan",
+              "classification": "required",
+              "result": "Целевое исследование показало: снабжение и готовность к экстренному обращению."
+            },
+            {
+              "id": "epi_pancreatic_and_intestinal_comorbidity_review",
+              "classification": "triggered_by_new_signs",
+              "result": "Целевое исследование показало: диабет или панкреатит или наблюдение за кишечником."
+            },
+            {
+              "id": "epi_internal_medicine_referral_for_discordant_or_refractory_case",
+              "classification": "conditional",
+              "result": "По итогам консультации специалиста: специализированный маршрут в случае изменения динамики."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stable_lifelong_patient_retains_all_prior_confirmation_and_response_data",
+              "lifelong_care_includes_supply_burden_comorbidity_surveillance_and_red_flags"
+            ],
+            "confirmedDiagnosisRequires": [
+              "preserved_tli_confirmation_and_longitudinal_response"
+            ],
+            "dangerStates": [
+              "supply_interruption",
+              "new_pancreatic_pain",
+              "diabetic_signs",
+              "weight_relapse"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "epi_longitudinal_monitoring",
+              "epi_owner_home_plan",
+              "longitudinal_care"
+            ],
+            "external": [
+              "cobalamin_folate_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "epi_longitudinal_route",
+              "epi_owner_plan_route",
+              "epi_comorbidity_route",
+              "epi_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "longitudinal_epi_plan",
+          "followUp": {
+            "timing": "Пожизненный контроль проводят по индивидуальному графику; новые симптомы запускают отдельную проверку сопутствующих болезней.",
+            "required": true,
+            "targets": [
+              "weight",
+              "condition",
+              "stool",
+              "appetite",
+              "cobalamin",
+              "supply",
+              "red_flags"
+            ]
+          },
+          "outcomes": {
+            "safe": "Стабильная помощь остается устойчивой, измеримой и связанной с оповещениями о сопутствующих заболеваниях.",
+            "unsafe": "Опасно терять предыдущие результаты или автоматически назначает один универсальный пожизненный график."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: признайте текущие расходы и определите изменения поставок и симптомов, которые должны вызвать контакт."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable",
+              "food_motivated",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "home_monitoring_and_low_stress_periodic_review",
+            "ownerModifiers": [
+              "supply_cost_concern",
+              "monitoring_fatigue"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if breed, stool appearance, low weight, ordinary lipase/amylase, ultrasound or treatment response alone confirms EPI.",
+    "Reject if canine and feline TLI lose species/reference identity or external results are instant.",
+    "Reject if cobalamin/folate are omitted or a poor response skips actual-use, storage, meal and product audit.",
+    "Reject if every poor response becomes dysbiosis or an automatic antimicrobial route.",
+    "Reject if a stable lifelong patient loses prior TLI, cobalamin, cause or response after reload.",
+    "Reject if code generates enzyme, vitamin, diet, antimicrobial, drug, dose or schedule."
+  ]
+}

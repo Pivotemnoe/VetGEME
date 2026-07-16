@@ -1,0 +1,3111 @@
+{
+  "schemaVersion": 1,
+  "familyId": "wound_abscess",
+  "familyVersion": "2026.07.16.40",
+  "title": "Раны, укусы, абсцессы и проникающая травма",
+  "campaignPhase": "chapter_1_to_chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "stabilityRule": "Видимая рана не отменяет первичный поиск шока, опасного кровотечения и полостной травмы.",
+    "depthRule": "Маленькое кожное отверстие не доказывает малую глубину повреждения.",
+    "closureRule": "Закрытие определяется жизнеспособностью, загрязнением, инфекцией, мёртвым пространством, натяжением и функцией, а не только временем.",
+    "viabilityRule": "Сомнительную ткань у важных структур оценивают поэтапно и не удаляют вслепую.",
+    "procedureRule": "Ветеринарный врач определяет раствор, давление, объём, технику орошения, дебридмента, дренирования, шва, анестезии или антимикробную дозу."
+  },
+  "coreCapabilities": [
+    "general_exam",
+    "stabilization",
+    "analgesia",
+    "wound_exam",
+    "wound_care"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "pain_anesthesia_or_referral",
+      "anyOf": [
+        "analgesia",
+        "anesthesia",
+        "safe_referral"
+      ],
+      "purpose": "painful_exam_or_procedure"
+    },
+    {
+      "id": "wound_procedure_or_referral",
+      "anyOf": [
+        "trained_wound_procedure",
+        "wound_care",
+        "wound_irrigation",
+        "wound_debridement",
+        "surgery_or_referral",
+        "safe_referral"
+      ],
+      "purpose": "irrigation_debridement_closure_or_open_management"
+    },
+    {
+      "id": "drainage_or_referral",
+      "anyOf": [
+        "wound_drain_management",
+        "surgery_or_referral",
+        "safe_referral"
+      ],
+      "purpose": "abscess_or_dead_space_control"
+    },
+    {
+      "id": "imaging_or_referral",
+      "anyOf": [
+        "xray_or_referral",
+        "ultrasound_or_referral",
+        "safe_referral"
+      ],
+      "purpose": "foreign_body_bone_joint_or_cavity_assessment"
+    },
+    {
+      "id": "culture_or_referral",
+      "anyOf": [
+        "culture_external",
+        "safe_referral"
+      ],
+      "purpose": "deep_recurrent_or_systemic_infection"
+    },
+    {
+      "id": "orthopedic_joint_or_referral",
+      "anyOf": [
+        "orthopedic_exam",
+        "joint_stability_exam",
+        "trained_orthopedic_exam",
+        "orthopedic_referral",
+        "safe_referral"
+      ],
+      "purpose": "joint_bone_tendon_and_function_route"
+    },
+    {
+      "id": "hospital_surgery_or_referral",
+      "anyOf": [
+        "emergency_stabilization",
+        "hospital_referral",
+        "surgery_or_referral",
+        "safe_referral"
+      ],
+      "purpose": "major_penetrating_degloving_or_shock_route"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "wound_stability_and_hemorrhage_assessment",
+      "requires": [
+        "general_exam",
+        "stabilization"
+      ],
+      "availability": "local_from_start",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "wound_depth_and_structure_exam",
+      "requires": [
+        "wound_exam"
+      ],
+      "availability": "local_from_start",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "wound_neurovascular_assessment",
+      "requires": [
+        "wound_exam",
+        "orthopedic_exam"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "wound_xray_or_ultrasound",
+      "requires": [
+        "xray_or_referral",
+        "ultrasound_or_referral"
+      ],
+      "availability": "local_or_external_chapter_3",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "wound_cytology_or_culture",
+      "requires": [
+        "cytology",
+        "culture_external"
+      ],
+      "availability": "local_and_external_chapter_3",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "wound_cbc_biochemistry",
+      "requires": [
+        "cbc",
+        "biochemistry"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "wound_serial_viability_map",
+      "requires": [
+        "longitudinal_care"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "mechanism_and_time",
+      "text": "Когда и как произошло повреждение?"
+    },
+    {
+      "id": "bleeding_history",
+      "text": "Было ли сильное кровотечение, остановилось ли оно?"
+    },
+    {
+      "id": "wound_location",
+      "text": "Где расположена рана и что находится рядом?"
+    },
+    {
+      "id": "contamination_history",
+      "text": "Чем могла быть загрязнена рана?"
+    },
+    {
+      "id": "bite_exposure",
+      "text": "Был ли укус, кем и доступно ли животное для предусмотренного законом наблюдения?"
+    },
+    {
+      "id": "limb_function",
+      "text": "Наступает ли пациент на конечность, двигает ли ею, сохранена ли чувствительность?"
+    },
+    {
+      "id": "systemic_trauma_signs",
+      "text": "Есть ли слабость, бледность, коллапс или одышка?"
+    },
+    {
+      "id": "infection_signs",
+      "text": "Есть ли припухлость, жар, гной, запах или ухудшение?"
+    },
+    {
+      "id": "self_trauma_and_bandage",
+      "text": "Лижет ли рану или срывает повязку?"
+    },
+    {
+      "id": "home_treatment",
+      "text": "Чем рану обрабатывали дома?"
+    },
+    {
+      "id": "vaccination_and_regulation",
+      "text": "Известен ли вакцинальный статус и применимый региональный регламент укуса?"
+    },
+    {
+      "id": "comorbidity_and_immunity",
+      "text": "Есть ли диабет, эндокринная болезнь, иммуносупрессия или замедленное заживление?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "general_stability_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "stabilization"
+      ]
+    },
+    {
+      "id": "hemorrhage_and_perfusion_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "stabilization"
+      ]
+    },
+    {
+      "id": "pain_assessment",
+      "source": "physical_exam",
+      "requires": [
+        "analgesia"
+      ]
+    },
+    {
+      "id": "wound_map_before_cleaning",
+      "source": "physical_exam",
+      "requires": [
+        "wound_exam"
+      ]
+    },
+    {
+      "id": "depth_pocket_dead_space_exam",
+      "source": "physical_exam",
+      "requires": [
+        "wound_exam"
+      ]
+    },
+    {
+      "id": "tissue_viability_exam",
+      "source": "physical_exam",
+      "requires": [
+        "wound_exam"
+      ]
+    },
+    {
+      "id": "distal_neurovascular_exam",
+      "source": "physical_exam",
+      "requires": [
+        "wound_exam",
+        "orthopedic_exam"
+      ]
+    },
+    {
+      "id": "joint_bone_tendon_exam",
+      "source": "physical_exam",
+      "requires": [
+        "orthopedic_exam",
+        "joint_stability_exam"
+      ]
+    },
+    {
+      "id": "thorax_abdomen_trauma_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "wound_imaging",
+      "source": "diagnostic_test",
+      "requires": [
+        "xray_or_referral",
+        "ultrasound_or_referral"
+      ]
+    },
+    {
+      "id": "correct_deep_sample",
+      "source": "diagnostic_test",
+      "requires": [
+        "cytology",
+        "culture_external"
+      ]
+    },
+    {
+      "id": "serial_viability_recheck",
+      "source": "follow_up",
+      "requires": [
+        "longitudinal_care"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "superficial_clean_protection_plan",
+      "fullPlan": [
+        "confirm_stability_depth_and_function",
+        "safe_cleaning_and_irrigation_by_protocol",
+        "protect_from_contamination_and_self_trauma",
+        "bandage_only_if_indicated_and_monitor_distal_limb",
+        "no_automatic_systemic_antimicrobial",
+        "document_recheck_triggers"
+      ],
+      "stagedPlan": [
+        "stability_and_depth",
+        "clean_and_protect",
+        "home_monitoring",
+        "recheck_if_not_improving"
+      ],
+      "minimumSafePlan": [
+        "exclude_deep_injury",
+        "protect_wound",
+        "pain_plan",
+        "return_conditions"
+      ],
+      "stabilizeAndRefer": [
+        "cover_wound",
+        "analgesia",
+        "safe_referral_if_depth_or_function_uncertain"
+      ],
+      "unsafeOrInadequate": [
+        "judge_depth_by_surface_area",
+        "caustic_home_agent",
+        "automatic_antimicrobial",
+        "tight_unmonitored_bandage"
+      ]
+    },
+    {
+      "id": "fresh_laceration_closure_assessment_plan",
+      "fullPlan": [
+        "stability_and_pain_control",
+        "map_layers_structures_and_contamination",
+        "irrigation_and_conservative_debridement_by_protocol",
+        "confirm_viability_hemostasis_and_function",
+        "choose_primary_closure_only_if_safe",
+        "eliminate_dead_space_without_harming_function",
+        "postprocedure_protection_and_recheck"
+      ],
+      "stagedPlan": [
+        "complete_wound_assessment",
+        "prepare_and_debride",
+        "closure_decision",
+        "function_and_wound_recheck"
+      ],
+      "minimumSafePlan": [
+        "do_not_close_before_depth_exam",
+        "pain_control",
+        "cover_and_refer_if_procedure_unavailable",
+        "document_function"
+      ],
+      "stabilizeAndRefer": [
+        "analgesia",
+        "sterile_cover",
+        "control_bleeding",
+        "surgical_referral"
+      ],
+      "unsafeOrInadequate": [
+        "suture_before_exploration",
+        "close_over_debris",
+        "ignore_dead_space",
+        "closure_under_tension",
+        "ignore_joint_or_tendon"
+      ]
+    },
+    {
+      "id": "contaminated_delayed_open_or_staged_plan",
+      "fullPlan": [
+        "stability_and_pain_control",
+        "map_contamination_and_viability",
+        "safe_irrigation_and_foreign_material_removal",
+        "selective_or_staged_debridement",
+        "culture_when_infected_deep_or_recurrent",
+        "open_or_delayed_closure_by_serial_findings",
+        "bandage_and_serial_viability_followup"
+      ],
+      "stagedPlan": [
+        "clean_and_map",
+        "control_contamination_infection",
+        "serial_viability",
+        "closure_or_continue_open_management"
+      ],
+      "minimumSafePlan": [
+        "do_not_seal_contamination",
+        "protect_and_control_pain",
+        "wound_procedure_or_referral",
+        "scheduled_recheck"
+      ],
+      "stabilizeAndRefer": [
+        "cover_wound",
+        "analgesia",
+        "safe_surgical_referral"
+      ],
+      "unsafeOrInadequate": [
+        "close_dirty_wound_for_convenience",
+        "remove_questionable_tissue_blindly",
+        "delay_without_protection",
+        "use_days_alone_as_closure_rule"
+      ]
+    },
+    {
+      "id": "bite_puncture_hidden_injury_plan",
+      "fullPlan": [
+        "stability_and_regulatory_history",
+        "pain_control_and_full_trauma_exam",
+        "map_puncture_tracks_without_blind_probing",
+        "evaluate_crush_joint_and_cavity_risk",
+        "irrigation_debridement_and_infection_component_by_reviewed_protocol",
+        "imaging_or_surgery_by_location",
+        "early_recheck_for_hidden_necrosis_or_abscess"
+      ],
+      "stagedPlan": [
+        "triage_and_hidden_injury_screen",
+        "wound_source_control",
+        "imaging_or_referral",
+        "early_recheck"
+      ],
+      "minimumSafePlan": [
+        "small_hole_is_not_minor",
+        "pain_control",
+        "do_not_blindly_probe_or_close",
+        "safe_referral_if_depth_uncertain"
+      ],
+      "stabilizeAndRefer": [
+        "emergency_support",
+        "protect_wound",
+        "urgent_cavity_joint_or_surgical_referral"
+      ],
+      "unsafeOrInadequate": [
+        "surface_cleaning_only",
+        "close_puncture_over_infection",
+        "ignore_crush_zone",
+        "ignore_regulatory_route"
+      ]
+    },
+    {
+      "id": "abscess_cellulitis_source_control_plan",
+      "fullPlan": [
+        "pain_and_systemic_assessment",
+        "identify_cavity_cellulitis_tracts_and_foreign_body_risk",
+        "trained_drainage_irrigation_or_surgical_route",
+        "debridement_and_open_management_by_protocol",
+        "correct_sample_for_deep_recurrent_or_systemic_case",
+        "reviewed_antimicrobial_component_by_context",
+        "protect_and_early_recheck"
+      ],
+      "stagedPlan": [
+        "pain_and_source",
+        "drain_or_refer",
+        "sample_and_systemic_tests_by_state",
+        "wound_recheck"
+      ],
+      "minimumSafePlan": [
+        "analgesia",
+        "do_not_close_over_infection",
+        "source_control_or_referral",
+        "early_recheck"
+      ],
+      "stabilizeAndRefer": [
+        "initial_support",
+        "urgent_hospital_or_surgical_referral"
+      ],
+      "unsafeOrInadequate": [
+        "tablet_without_source_control",
+        "rupture_equals_cure",
+        "close_draining_opening",
+        "routine_slot_for_systemic_spread"
+      ]
+    },
+    {
+      "id": "major_penetrating_degloving_emergency_plan",
+      "fullPlan": [
+        "emergency_stability_hemorrhage_and_pain_control",
+        "protect_wound_without_blind_exploration_or_object_removal",
+        "thorax_abdomen_neurovascular_and_orthopedic_assessment",
+        "imaging_and_surgical_route_without_unsafe_delay",
+        "serial_tissue_viability_and_reconstruction_plan",
+        "hospital_monitoring_and_handoff"
+      ],
+      "stagedPlan": [
+        "life_threat_control",
+        "protect_and_assess_extent",
+        "hospital_surgery_imaging",
+        "serial_reconstruction_and_followup"
+      ],
+      "minimumSafePlan": [
+        "direct_pressure_if_appropriate",
+        "sterile_protective_cover",
+        "do_not_remove_impaled_object",
+        "immediate_referral"
+      ],
+      "stabilizeAndRefer": [
+        "emergency_stabilization",
+        "oxygen_and_monitoring_by_state",
+        "controlled_transfer_to_surgery_hospital"
+      ],
+      "unsafeOrInadequate": [
+        "clean_before_stabilize",
+        "blind_probe",
+        "remove_impaled_object",
+        "close_nonviable_degloved_skin",
+        "delay_for_complete_local_workup"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "wound_superficial_clean",
+      "version": "2026.07.16.40",
+      "title": "Поверхностная чистая рана",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Неглубокое повреждение кожи без важных структур, значимого загрязнения, инфекции или системной травмы.",
+      "primaryDiagnosisId": "dx_superficial_clean_wound",
+      "differentials": [
+        "dx_deep_laceration",
+        "dx_puncture",
+        "dx_foreign_body",
+        "dx_infected_wound"
+      ],
+      "planBundleId": "superficial_clean_protection_plan",
+      "sourceIds": [
+        "merck_initial_wound",
+        "merck_wound_overview",
+        "aaha_pain"
+      ],
+      "presentations": [
+        {
+          "id": "p1_recent_abrasion_stable",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что после прогулки замечена свежая неглубокая ссадина; пациент активен.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, недавно, трение о поверхность.",
+            "bleeding_history": "Дома мы заметили, что незначительное, остановилось.",
+            "systemic_trauma_signs": "Насколько мы можем судить, нет.",
+            "contamination_history": "Мы записали, что минимальное."
+          },
+          "examFindings": [
+            {
+              "factId": "superficial_viable_abrasion",
+              "source": "physical_exam",
+              "finding": "Поверхностный дефект, жизнеспособное ложе, функция и перфузия сохранены."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "superficial_viable_abrasion",
+              "discoveryPaths": [
+                "wound_map_before_cleaning",
+                "depth_pocket_dead_space_exam",
+                "tissue_viability_exam"
+              ]
+            },
+            {
+              "factId": "patient_stable_no_hidden_mechanism",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "systemic_trauma_signs",
+                "general_stability_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_stability_and_hemorrhage_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: стабилен, опасного кровотечения нет."
+            },
+            {
+              "id": "wound_depth_and_structure_exam",
+              "classification": "required",
+              "result": "Клиническая оценка показала: только поверхностная кожа."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "superficial_viable_abrasion",
+              "patient_stable_no_hidden_mechanism"
+            ],
+            "confirmedDiagnosisRequires": [
+              "direct_depth_exam"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "wound_care",
+              "analgesia"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "wound_procedure_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "superficial_clean_protection_plan",
+          "followUp": {
+            "timing": "Домашний мониторинг с быстрым возвратом в случае ухудшения состояния.",
+            "required": true,
+            "targets": [
+              "pain",
+              "discharge",
+              "swelling",
+              "depth",
+              "self_trauma"
+            ]
+          },
+          "outcomes": {
+            "safe": "Рана защищена и контролируется без лишнего системного компонента.",
+            "unsafe": "Малый размер принят за доказательство малой глубины."
+          },
+          "ownerCommunication": [
+            "Я покажу вам признаки инфекции и углубления, требующие возврата."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_small_paw_or_pad_wound",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine_or_priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что небольшая рана лапы или подушечки вызывает вылизывание и лёгкую хромоту.",
+          "historyAnswers": {
+            "wound_location": "По нашим наблюдениям, лапа или подушечка.",
+            "limb_function": "Дома мы заметили, что опирается, но бережёт.",
+            "contamination_history": "Насколько мы можем судить, улица или влага возможны.",
+            "self_trauma_and_bandage": "Мы записали, что лижет."
+          },
+          "examFindings": [
+            {
+              "factId": "small_paw_wound_with_preserved_function",
+              "source": "physical_exam",
+              "finding": "Межпальцевые зоны проверены, инородного тела и глубокого повреждения не найдено, перфузия сохранена."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "small_paw_wound_with_preserved_function",
+              "discoveryPaths": [
+                "wound_map_before_cleaning",
+                "depth_pocket_dead_space_exam",
+                "distal_neurovascular_exam"
+              ]
+            },
+            {
+              "factId": "bandage_and_loading_context",
+              "discoveryPaths": [
+                "limb_function",
+                "self_trauma_and_bandage",
+                "joint_bone_tendon_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_depth_and_structure_exam",
+              "classification": "required",
+              "result": "Клиническая оценка показала: поверхностная рана без инородного тела."
+            },
+            {
+              "id": "wound_neurovascular_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: функция и дистальная перфузия сохранены."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "small_paw_wound_with_preserved_function",
+              "bandage_and_loading_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "interdigital_and_function_exam"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "wound_care",
+              "wound_bandaging"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pain_anesthesia_or_referral",
+              "wound_procedure_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "superficial_clean_protection_plan",
+          "followUp": {
+            "timing": "Ранняя повторная проверка повязки или конести, если она покрыта.",
+            "required": true,
+            "targets": [
+              "toes_temperature",
+              "swelling",
+              "weight_bearing",
+              "moisture",
+              "discharge"
+            ]
+          },
+          "outcomes": {
+            "safe": "Защита не нарушает перфузию и контролируется.",
+            "unsafe": "Тугая или мокрая повязка остаётся без проверки."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: ежедневный контроль пальцев, сухости и опоры."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "paw_sensitive",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "analgesia_or_referral",
+            "ownerModifiers": [
+              "adherent",
+              "inattentive"
+            ]
+          }
+        },
+        {
+          "id": "p3_recheck_uncomplicated_healing",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "follow_up",
+          "workload": 0.75,
+          "complaint": "Мы обратились, потому что на контроле поверхностная рана стала менее болезненной и сухой.",
+          "historyAnswers": {
+            "infection_signs": "По нашим наблюдениям, нет ухудшения, гноя или запаха.",
+            "self_trauma_and_bandage": "Дома мы заметили, что защита соблюдалась.",
+            "comorbidity_and_immunity": "Насколько мы можем судить, значимых факторов нет."
+          },
+          "examFindings": [
+            {
+              "factId": "uncomplicated_progressive_healing",
+              "source": "physical_exam",
+              "finding": "Жизнеспособная ткань, уменьшающийся дефект, нет кармана, отёка или потери функции."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "uncomplicated_progressive_healing",
+              "discoveryPaths": [
+                "tissue_viability_exam",
+                "serial_viability_recheck",
+                "infection_signs"
+              ]
+            },
+            {
+              "factId": "protection_can_be_safely_adjusted",
+              "discoveryPaths": [
+                "self_trauma_and_bandage",
+                "wound_map_before_cleaning"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_serial_viability_map",
+              "classification": "required_follow_up",
+              "result": "При динамическом наблюдении: положительная динамика без осложнений."
+            },
+            {
+              "id": "wound_cytology_or_culture",
+              "classification": "low_value_without_infection",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "uncomplicated_progressive_healing",
+              "protection_can_be_safely_adjusted"
+            ],
+            "confirmedDiagnosisRequires": [
+              "serial_exam"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "longitudinal_care"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "superficial_clean_protection_plan",
+          "followUp": {
+            "timing": "Выделения при эпителизации и защите.",
+            "required": true,
+            "targets": [
+              "closure",
+              "pain",
+              "function",
+              "self_trauma"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ненужные тесты не добавляются, защита отменяется по состоянию.",
+            "unsafe": "Улучшение используется для преждевременной отмены наблюдения при сохраняющемся дефекте."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: критерии завершения ухода и возврата."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "adherent",
+              "reassured"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "wound_fresh_laceration_closure_candidate",
+      "version": "2026.07.16.40",
+      "title": "Свежая рваная рана — кандидат на закрытие",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Свежая рана с жизнеспособными тканями и контролируемым загрязнением может быть закрыта после полного осмотра и обработки без опасного натяжения и мёртвого пространства.",
+      "primaryDiagnosisId": "dx_fresh_laceration_closure_candidate",
+      "differentials": [
+        "dx_contaminated_wound",
+        "dx_puncture",
+        "dx_joint_penetration",
+        "dx_tendon_injury"
+      ],
+      "planBundleId": "fresh_laceration_closure_assessment_plan",
+      "sourceIds": [
+        "merck_initial_wound",
+        "merck_wound_overview",
+        "aaha_pain"
+      ],
+      "presentations": [
+        {
+          "id": "p1_clean_recent_laceration",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что недавний ровный разрез кожи продолжает расходиться, пациент стабилен.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, недавно, острый чистый предмет.",
+            "contamination_history": "Дома мы заметили, что минимальное.",
+            "bleeding_history": "Насколько мы можем судить, контролируется.",
+            "systemic_trauma_signs": "Мы записали, что нет."
+          },
+          "examFindings": [
+            {
+              "factId": "clean_recent_viable_laceration",
+              "source": "physical_exam",
+              "finding": "Глубина полностью оценена, ткани жизнеспособны, важные структуры не повреждены, закрытие возможно без натяжения."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "clean_recent_viable_laceration",
+              "discoveryPaths": [
+                "wound_map_before_cleaning",
+                "depth_pocket_dead_space_exam",
+                "tissue_viability_exam"
+              ]
+            },
+            {
+              "factId": "safe_primary_closure_conditions",
+              "discoveryPaths": [
+                "contamination_history",
+                "hemorrhage_and_perfusion_exam",
+                "distal_neurovascular_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_stability_and_hemorrhage_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: стабилен, гемостаз достижим."
+            },
+            {
+              "id": "wound_depth_and_structure_exam",
+              "classification": "required_before_closure",
+              "result": "Клиническая оценка показала: структуры и карманы оценены."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "clean_recent_viable_laceration",
+              "safe_primary_closure_conditions"
+            ],
+            "confirmedDiagnosisRequires": [
+              "complete_preparation_and_depth_exam"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "analgesia",
+              "wound_procedure_kit",
+              "trained_wound_procedure"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pain_anesthesia_or_referral",
+              "wound_procedure_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fresh_laceration_closure_assessment_plan",
+          "followUp": {
+            "timing": "Досрочное закрытие и повторная проверка работоспособности.",
+            "required": true,
+            "targets": [
+              "swelling",
+              "discharge",
+              "dehiscence",
+              "pain",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Закрытие следует после оценки и контроля загрязнения.",
+            "unsafe": "Рана зашита до исследования глубины."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: решение о закрытии принимается после обработки, а не по внешнему виду."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "painful_defensive"
+            ],
+            "requiredHandlingAlternative": "analgesia_anesthesia_or_referral",
+            "ownerModifiers": [
+              "time_pressed",
+              "adherent"
+            ]
+          }
+        },
+        {
+          "id": "p2_layered_tissue_involvement",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": true
+          },
+          "urgency": "priority_or_urgent",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что рваная рана проходит через кожу и подкожные ткани; под краями есть полость.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, свежая травма.",
+            "wound_location": "Дома мы заметили, что туловище или конечность.",
+            "bleeding_history": "Насколько мы можем судить, остановилось после давления.",
+            "limb_function": "Мы записали, что оценена отдельно."
+          },
+          "examFindings": [
+            {
+              "factId": "multilayer_laceration_with_dead_space",
+              "source": "physical_exam",
+              "finding": "Повреждены несколько слоёв и имеется мёртвое пространство, но ткани после оценки жизнеспособны."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "multilayer_laceration_with_dead_space",
+              "discoveryPaths": [
+                "depth_pocket_dead_space_exam",
+                "tissue_viability_exam",
+                "wound_map_before_cleaning"
+              ]
+            },
+            {
+              "factId": "function_and_hemostasis_documented",
+              "discoveryPaths": [
+                "bleeding_history",
+                "hemorrhage_and_perfusion_exam",
+                "distal_neurovascular_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_depth_and_structure_exam",
+              "classification": "required_before_any_closure",
+              "result": "Клиническая оценка показала: карта слоёв и мёртвого пространства."
+            },
+            {
+              "id": "wound_neurovascular_assessment",
+              "classification": "required_by_location",
+              "result": "Клиническая оценка показала: дистальная функция."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "multilayer_laceration_with_dead_space",
+              "function_and_hemostasis_documented"
+            ],
+            "confirmedDiagnosisRequires": [
+              "layered_exam_after_analgesia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "analgesia",
+              "wound_procedure_kit",
+              "trained_wound_procedure"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pain_anesthesia_or_referral",
+              "wound_procedure_or_referral",
+              "drainage_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fresh_laceration_closure_assessment_plan",
+          "followUp": {
+            "timing": "Ранняя повторная проверка раны и мертвого пространства.",
+            "required": true,
+            "targets": [
+              "seroma",
+              "drainage",
+              "dehiscence",
+              "perfusion",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Все слои и мёртвое пространство учтены.",
+            "unsafe": "Поверхностный шов скрывает глубокую полость."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: риск скопления жидкости и необходимость раннего контроля."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "anesthesia_or_referral",
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_near_joint_functional_risk",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что свежая рана находится над суставом или в зоне активного движения; пациент хромает.",
+          "historyAnswers": {
+            "wound_location": "По нашим наблюдениям, рядом с суставом.",
+            "limb_function": "Дома мы заметили, что хромает или ограничивает движение.",
+            "mechanism_and_time": "Насколько мы можем судить, свежая травма.",
+            "bleeding_history": "Мы записали, что контролируется."
+          },
+          "examFindings": [
+            {
+              "factId": "periarticular_laceration_with_penetration_risk",
+              "source": "physical_exam",
+              "finding": "Расположение и глубина не позволяют безопасно исключить сустав, сухожилие или контрактурный риск на обычном амбулаторном приёме."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "periarticular_laceration_with_penetration_risk",
+              "discoveryPaths": [
+                "wound_location",
+                "depth_pocket_dead_space_exam",
+                "joint_bone_tendon_exam"
+              ]
+            },
+            {
+              "factId": "limb_function_baseline",
+              "discoveryPaths": [
+                "limb_function",
+                "distal_neurovascular_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_neurovascular_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: функция и перфузия до процедуры."
+            },
+            {
+              "id": "wound_xray_or_ultrasound",
+              "classification": "required_or_recommended_by_penetration_question",
+              "result": "При ультразвуковом исследовании: кость или сустав или инородное тело; отрицательная визуализация не заменяет хирургическую оценку."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "periarticular_laceration_with_penetration_risk",
+              "limb_function_baseline"
+            ],
+            "confirmedDiagnosisRequires": [
+              "joint_penetration_excluded_or_specialist_handoff"
+            ],
+            "dangerStates": [
+              "open_joint",
+              "tendon_injury",
+              "neurovascular_injury"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "analgesia",
+              "orthopedic_exam"
+            ],
+            "external": [
+              "orthopedic_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "orthopedic_joint_or_referral",
+              "imaging_or_referral",
+              "hospital_surgery_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fresh_laceration_closure_assessment_plan",
+          "followUp": {
+            "timing": "Оперативная ортопедическая или хирургическая передача и повторная проверка функций.",
+            "required": true,
+            "targets": [
+              "joint",
+              "tendon",
+              "weight_bearing",
+              "infection",
+              "range_of_motion"
+            ]
+          },
+          "outcomes": {
+            "safe": "Функциональные структуры проверены до выбора закрытия.",
+            "unsafe": "Рану оставляют заживать с риском сустава или контрактуры."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему близость к суставу повышает срочность независимо от размера."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "analgesia_minimal_handling_referral",
+            "ownerModifiers": [
+              "budget_limited",
+              "minimizes_small_wound"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "wound_contaminated_or_delayed",
+      "version": "2026.07.16.40",
+      "title": "Загрязнённая или запоздало представленная рана",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Загрязнение, инфекция или сомнительная жизнеспособность делают немедленное герметичное закрытие рискованным и требуют открытого или поэтапного ведения.",
+      "primaryDiagnosisId": "dx_contaminated_or_delayed_wound",
+      "differentials": [
+        "dx_foreign_body",
+        "dx_infected_wound",
+        "dx_degloving",
+        "dx_necrotizing_infection"
+      ],
+      "planBundleId": "contaminated_delayed_open_or_staged_plan",
+      "sourceIds": [
+        "merck_initial_wound",
+        "merck_triage_resuscitation",
+        "merck_integument_antibacterials"
+      ],
+      "presentations": [
+        {
+          "id": "p1_soil_or_debris_contamination",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что в открытой ране заметны земля, шерсть или иной мусор.",
+          "historyAnswers": {
+            "contamination_history": "По нашим наблюдениям, земля или грязь или растительный материал.",
+            "mechanism_and_time": "Дома мы заметили, что недавно или неизвестно.",
+            "home_treatment": "Насколько мы можем судить, ничем либо неподходящим средством.",
+            "systemic_trauma_signs": "Мы записали, что нет."
+          },
+          "examFindings": [
+            {
+              "factId": "grossly_contaminated_stable_wound",
+              "source": "physical_exam",
+              "finding": "Пациент стабилен, но загрязнение и частицы требуют полноценной обработки до решения о закрытии."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "grossly_contaminated_stable_wound",
+              "discoveryPaths": [
+                "contamination_history",
+                "wound_map_before_cleaning",
+                "depth_pocket_dead_space_exam"
+              ]
+            },
+            {
+              "factId": "viability_after_cleaning_unknown",
+              "discoveryPaths": [
+                "tissue_viability_exam",
+                "home_treatment"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_depth_and_structure_exam",
+              "classification": "required",
+              "result": "Клиническая оценка показала: глубина и инородный материал."
+            },
+            {
+              "id": "wound_xray_or_ultrasound",
+              "classification": "recommended_if_retained_material_or_deep_track",
+              "result": "При ультразвуковом исследовании: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "grossly_contaminated_stable_wound",
+              "viability_after_cleaning_unknown"
+            ],
+            "confirmedDiagnosisRequires": [
+              "post_irrigation_reassessment"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "analgesia",
+              "wound_procedure_kit",
+              "trained_wound_procedure"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "wound_procedure_or_referral",
+              "imaging_or_referral",
+              "pain_anesthesia_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "contaminated_delayed_open_or_staged_plan",
+          "followUp": {
+            "timing": "Ранняя повторная проверка жизнеспособности и контаминации.",
+            "required": true,
+            "targets": [
+              "retained_debris",
+              "viability",
+              "discharge",
+              "pain",
+              "closure_readiness"
+            ]
+          },
+          "outcomes": {
+            "safe": "Загрязнение удалено, закрытие решено после повторной оценки.",
+            "unsafe": "Мусор герметично закрыт внутри."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: открытое или отсроченное ведение может быть безопаснее немедленного шва."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "analgesia_anesthesia_or_referral",
+            "ownerModifiers": [
+              "requests_quick_suture",
+              "time_pressed"
+            ]
+          }
+        },
+        {
+          "id": "p2_delayed_with_questionable_tissue",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что рана существует несколько дней; края отёчны, часть кожи изменена и её жизнеспособность неясна.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, обращение запоздало.",
+            "infection_signs": "Дома мы заметили, что отёк или экссудат возможны.",
+            "home_treatment": "Насколько мы можем судить, по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой.",
+            "comorbidity_and_immunity": "Мы записали, что факторы риска проверены."
+          },
+          "examFindings": [
+            {
+              "factId": "delayed_wound_with_uncertain_viability",
+              "source": "physical_exam",
+              "finding": "Есть ткань сомнительной жизнеспособности, которую нельзя безопасно иссечь одномоментно у важных структур."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "delayed_wound_with_uncertain_viability",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "tissue_viability_exam",
+                "depth_pocket_dead_space_exam"
+              ]
+            },
+            {
+              "factId": "infection_and_comorbidity_context",
+              "discoveryPaths": [
+                "infection_signs",
+                "comorbidity_and_immunity",
+                "general_stability_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_serial_viability_map",
+              "classification": "required",
+              "result": "При динамическом наблюдении: первая карта для последующего сравнения."
+            },
+            {
+              "id": "wound_cytology_or_culture",
+              "classification": "recommended_if_clinically_infected_deep_or_nonhealing",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "delayed_wound_with_uncertain_viability",
+              "infection_and_comorbidity_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "serial_viability_assessment"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "analgesia",
+              "longitudinal_care"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "wound_procedure_or_referral",
+              "culture_or_referral",
+              "pain_anesthesia_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "contaminated_delayed_open_or_staged_plan",
+          "followUp": {
+            "timing": "Плановая серийная перепроверка жизнеспособности.",
+            "required": true,
+            "targets": [
+              "demarcation",
+              "necrosis",
+              "infection",
+              "granulation",
+              "closure_readiness"
+            ]
+          },
+          "outcomes": {
+            "safe": "Сомнительная ткань пересматривается поэтапно.",
+            "unsafe": "Важная жизнеспособная ткань удалена вслепую либо некроз закрыт."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему окончательный объём обработки может определиться на повторных осмотрах."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "analgesia_minimal_handling",
+            "ownerModifiers": [
+              "frustrated_by_multiple_visits",
+              "adherent"
+            ]
+          }
+        },
+        {
+          "id": "p3_delayed_closure_followup",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": true
+          },
+          "urgency": "follow_up_or_procedure",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что после открытого ведения рана выглядит чистой; нужно решить, закрывать ли её теперь.",
+          "historyAnswers": {
+            "infection_signs": "По нашим наблюдениям, уменьшились или отсутствуют.",
+            "self_trauma_and_bandage": "Дома мы заметили, что уход выполним.",
+            "comorbidity_and_immunity": "Насколько мы можем судить, учтены.",
+            "contamination_history": "Мы записали, что ранее контролировалось."
+          },
+          "examFindings": [
+            {
+              "factId": "healthy_wound_bed_for_closure_decision",
+              "source": "physical_exam",
+              "finding": "Решение основано на жизнеспособности, контроле инфекции, ткани и возможности закрытия без натяжения, а не на одном числе дней."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "healthy_wound_bed_for_closure_decision",
+              "discoveryPaths": [
+                "serial_viability_recheck",
+                "tissue_viability_exam",
+                "depth_pocket_dead_space_exam"
+              ]
+            },
+            {
+              "factId": "infection_control_confirmed",
+              "discoveryPaths": [
+                "infection_signs",
+                "wound_map_before_cleaning",
+                "correct_deep_sample"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_serial_viability_map",
+              "classification": "required_before_closure_decision",
+              "result": "При динамическом наблюдении: здоровая или ещё неготовая поверхность."
+            },
+            {
+              "id": "wound_cytology_or_culture",
+              "classification": "result_follow_up_if_previously_sampled_or_still_suspicious",
+              "result": "По результатам посева и определения чувствительности: решение основано на жизнеспособности, контроле инфекции, ткани и возможности закрытия без натяжения, а не на одном числе дней."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "healthy_wound_bed_for_closure_decision",
+              "infection_control_confirmed"
+            ],
+            "confirmedDiagnosisRequires": [
+              "serial_exam_after_source_control"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "longitudinal_care",
+              "analgesia"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "wound_procedure_or_referral",
+              "pain_anesthesia_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "contaminated_delayed_open_or_staged_plan",
+          "followUp": {
+            "timing": "Повторная проверка после закрытия или продолжения открытого управления.",
+            "required": true,
+            "targets": [
+              "dehiscence",
+              "infection",
+              "granulation",
+              "function",
+              "protection"
+            ]
+          },
+          "outcomes": {
+            "safe": "Закрытие выполняется только при безопасной -поверхности.",
+            "unsafe": "Календарный срок автоматически разрешает шов."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: критерии выбора закрытия или продолжения открытого ухода."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "adherent",
+              "requests_closure"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "wound_bite_puncture",
+      "version": "2026.07.16.40",
+      "title": "Укус или колотая рана со скрытым повреждением",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Прокол и укус создают загрязнённый канал и возможное размозжение глубже видимой кожи; полостной и суставной риск определяется механизмом и локализацией.",
+      "primaryDiagnosisId": "dx_bite_or_puncture_wound",
+      "differentials": [
+        "dx_abscess",
+        "dx_crush_injury",
+        "dx_open_joint",
+        "dx_penetrating_cavity_wound"
+      ],
+      "planBundleId": "bite_puncture_hidden_injury_plan",
+      "sourceIds": [
+        "merck_wound_overview",
+        "merck_initial_wound",
+        "merck_triage_resuscitation",
+        "aaha_pain"
+      ],
+      "presentations": [
+        {
+          "id": "p1_cat_bite_small_puncture",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что после контакта с кошкой видны один-два маленьких болезненных прокола.",
+          "historyAnswers": {
+            "bite_exposure": "По нашим наблюдениям, кошачий укус вероятен.",
+            "mechanism_and_time": "Дома мы заметили, что недавно.",
+            "infection_signs": "Насколько мы можем судить, пока минимальны или нарастают.",
+            "vaccination_and_regulation": "Мы записали, что региональный маршрут не пропущен."
+          },
+          "examFindings": [
+            {
+              "factId": "small_cat_bite_puncture_with_track_risk",
+              "source": "physical_exam",
+              "finding": "Малые отверстия имеют болезненный канал или карман; глубина оценивается без слепого зондирования."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "small_cat_bite_puncture_with_track_risk",
+              "discoveryPaths": [
+                "bite_exposure",
+                "wound_map_before_cleaning",
+                "depth_pocket_dead_space_exam"
+              ]
+            },
+            {
+              "factId": "regulatory_and_infection_route",
+              "discoveryPaths": [
+                "vaccination_and_regulation",
+                "infection_signs"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_depth_and_structure_exam",
+              "classification": "required_with_analgesia",
+              "result": "Клиническая оценка показала: глубина или карман без полостного риска."
+            },
+            {
+              "id": "wound_cytology_or_culture",
+              "classification": "recommended_by_infection_depth_or_protocol",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "small_cat_bite_puncture_with_track_risk",
+              "regulatory_and_infection_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "mechanism_and_depth_exam"
+            ],
+            "mustNotAssume": [
+              "small_skin_hole_is_minor"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "analgesia",
+              "wound_care"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "wound_procedure_or_referral",
+              "culture_or_referral",
+              "pain_anesthesia_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "bite_puncture_hidden_injury_plan",
+          "followUp": {
+            "timing": "Ранняя повторная проверка на наличие отека, абсцесса или некроза.",
+            "required": true,
+            "targets": [
+              "pain",
+              "swelling",
+              "fever",
+              "drainage",
+              "hidden_pocket"
+            ]
+          },
+          "outcomes": {
+            "safe": "Глубина и инфекционный риск учтены до закрытия.",
+            "unsafe": "Прокол только протёрт снаружи."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему малые кошачьи проколы часто требуют более внимательного контроля."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "analgesia_anesthesia_or_referral",
+            "ownerModifiers": [
+              "minimizes_small_wound",
+              "observant"
+            ]
+          }
+        },
+        {
+          "id": "p2_dog_bite_crush_under_small_skin_marks",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что после укуса собаки снаружи лишь небольшие отметины, но есть сильная боль и большой синяк.",
+          "historyAnswers": {
+            "bite_exposure": "По нашим наблюдениям, укус или сдавление собакой.",
+            "mechanism_and_time": "Дома мы заметили, что недавно.",
+            "limb_function": "Насколько мы можем судить, снижена по зоне травмы.",
+            "systemic_trauma_signs": "Мы записали, что могут отсутствовать."
+          },
+          "examFindings": [
+            {
+              "factId": "dog_bite_crush_zone_exceeds_skin_marks",
+              "source": "physical_exam",
+              "finding": "Подрытая кожа, синяк и болезненность указывают на размозжение глубже видимых проколов."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "dog_bite_crush_zone_exceeds_skin_marks",
+              "discoveryPaths": [
+                "bite_exposure",
+                "wound_map_before_cleaning",
+                "depth_pocket_dead_space_exam"
+              ]
+            },
+            {
+              "factId": "delayed_necrosis_and_function_risk",
+              "discoveryPaths": [
+                "tissue_viability_exam",
+                "limb_function",
+                "distal_neurovascular_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_stability_and_hemorrhage_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: общая стабильность."
+            },
+            {
+              "id": "wound_xray_or_ultrasound",
+              "classification": "recommended_or_required_by_location",
+              "result": "При ультразвуковом исследовании: скрытая глубина, кость или полость."
+            },
+            {
+              "id": "wound_serial_viability_map",
+              "classification": "required_for_crush_zone",
+              "result": "При динамическом наблюдении: начальная карта для выявления отсроченного некроза."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "dog_bite_crush_zone_exceeds_skin_marks",
+              "delayed_necrosis_and_function_risk"
+            ],
+            "confirmedDiagnosisRequires": [
+              "full_trauma_and_depth_exam"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "analgesia",
+              "stabilization"
+            ],
+            "external": [
+              "surgery_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "imaging_or_referral",
+              "wound_procedure_or_referral",
+              "hospital_surgery_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "bite_puncture_hidden_injury_plan",
+          "followUp": {
+            "timing": "Ранняя серийная жизнеспособность и системная перепроверка.",
+            "required": true,
+            "targets": [
+              "necrosis",
+              "swelling",
+              "infection",
+              "function",
+              "pain"
+            ]
+          },
+          "outcomes": {
+            "safe": "Размозжение получает полную оценку и серийный контроль.",
+            "unsafe": "Малые проколы скрывают обширную травму."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: возможность ухудшения жизнеспособности тканей через время."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_analgesia_referral",
+            "ownerModifiers": [
+              "shocked",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_bite_near_thorax_abdomen_or_joint",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency_or_urgent",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что прокол после укуса расположен над грудью, животом или суставом; возможны одышка, боль или хромота.",
+          "historyAnswers": {
+            "bite_exposure": "По нашим наблюдениям, укус подтверждён или вероятен.",
+            "wound_location": "Дома мы заметили, что над полостью или суставом.",
+            "systemic_trauma_signs": "Насколько мы можем судить, одышка или слабость либо пока отсутствуют.",
+            "limb_function": "Мы записали, что хромота при суставной локализации."
+          },
+          "examFindings": [
+            {
+              "factId": "bite_with_cavity_or_joint_penetration_risk",
+              "source": "physical_exam",
+              "finding": "Поверхностный осмотр не исключает воздух, кровь, органное или суставное повреждение."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "bite_with_cavity_or_joint_penetration_risk",
+              "discoveryPaths": [
+                "wound_location",
+                "thorax_abdomen_trauma_exam",
+                "joint_bone_tendon_exam"
+              ]
+            },
+            {
+              "factId": "stability_and_function_status",
+              "discoveryPaths": [
+                "systemic_trauma_signs",
+                "limb_function",
+                "general_stability_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_stability_and_hemorrhage_assessment",
+              "classification": "required_before_local_work",
+              "result": "Клиническая оценка показала: стабильность или дыхание или перфузия."
+            },
+            {
+              "id": "wound_xray_or_ultrasound",
+              "classification": "required_without_delaying_surgery_or_transfer",
+              "result": "При ультразвуковом исследовании: полостной или суставной риск."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "bite_with_cavity_or_joint_penetration_risk",
+              "stability_and_function_status"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_surgical_or_joint_assessment"
+            ],
+            "dangerStates": [
+              "pneumothorax",
+              "hemorrhage",
+              "organ_injury",
+              "open_joint"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "stabilization",
+              "analgesia",
+              "wound_exam"
+            ],
+            "external": [
+              "hospital_referral",
+              "surgery_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "imaging_or_referral",
+              "orthopedic_joint_or_referral",
+              "hospital_surgery_or_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "bite_puncture_hidden_injury_plan",
+          "followUp": {
+            "timing": "Непрерывно во время экстренного перевода.",
+            "required": true,
+            "targets": [
+              "breathing",
+              "perfusion",
+              "cavity_or_joint",
+              "pain",
+              "infection"
+            ]
+          },
+          "outcomes": {
+            "safe": "Полость или сустав проверяются без слепого зондирования.",
+            "unsafe": "Поверхностная обработка создаёт ложное завершение случая."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: риск скрытого повреждения внутренних структур."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "painful_defensive",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_emergency_referral",
+            "ownerModifiers": [
+              "overwhelmed",
+              "minimizes_small_wound"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "wound_abscess_or_cellulitis",
+      "version": "2026.07.16.40",
+      "title": "Абсцесс или целлюлит",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Гнойная полость или распространяющееся воспаление требуют контроля источника, оценки глубины и системности; самопроизвольное дренирование не равно излечению.",
+      "primaryDiagnosisId": "dx_wound_abscess_or_cellulitis",
+      "differentials": [
+        "dx_infected_foreign_body",
+        "dx_neoplasia",
+        "dx_necrotizing_infection",
+        "dx_deep_bite_wound"
+      ],
+      "planBundleId": "abscess_cellulitis_source_control_plan",
+      "sourceIds": [
+        "merck_initial_wound",
+        "merck_wound_overview",
+        "merck_integument_antibacterials",
+        "aaha_pain"
+      ],
+      "presentations": [
+        {
+          "id": "p1_closed_fluctuant_abscess",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority_or_urgent",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что появилась горячая болезненная припухлость; пациент лижет её и может быть вялым.",
+          "historyAnswers": {
+            "infection_signs": "По нашим наблюдениям, горячая болезненная припухлость, гной ещё не выходит.",
+            "bite_exposure": "Дома мы заметили, что укус возможен.",
+            "systemic_trauma_signs": "Насколько мы можем судить, стабилен или умеренно вял.",
+            "mechanism_and_time": "Мы записали, что несколько дней."
+          },
+          "examFindings": [
+            {
+              "factId": "closed_fluctuant_abscess_cavity",
+              "source": "physical_exam",
+              "finding": "Флюктуирующая болезненная полость с воспалением, требующая контроля источника, а не силового выдавливания."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "closed_fluctuant_abscess_cavity",
+              "discoveryPaths": [
+                "infection_signs",
+                "wound_map_before_cleaning",
+                "depth_pocket_dead_space_exam"
+              ]
+            },
+            {
+              "factId": "systemic_state_before_procedure",
+              "discoveryPaths": [
+                "systemic_trauma_signs",
+                "general_stability_exam",
+                "pain_assessment"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_depth_and_structure_exam",
+              "classification": "required_with_analgesia_or_anesthesia",
+              "result": "Клиническая оценка показала: полость и карманы."
+            },
+            {
+              "id": "wound_cytology_or_culture",
+              "classification": "recommended_by_depth_recurrence_or_systemic_state",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "closed_fluctuant_abscess_cavity",
+              "systemic_state_before_procedure"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cavity_exam_or_procedure_findings"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "analgesia",
+              "wound_procedure_kit",
+              "trained_wound_procedure"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pain_anesthesia_or_referral",
+              "drainage_or_referral",
+              "culture_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "abscess_cellulitis_source_control_plan",
+          "followUp": {
+            "timing": "Ранняя полость, дренирование и системная повторная проверка.",
+            "required": true,
+            "targets": [
+              "residual_cavity",
+              "drainage",
+              "pain",
+              "fever",
+              "wound"
+            ]
+          },
+          "outcomes": {
+            "safe": "Полость получает безопасный контроль источника и наблюдение.",
+            "unsafe": "Назначение без дренирования оставляет источник."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: роль дренирования или обработки и признаки системного ухудшения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "analgesia_anesthesia_or_referral",
+            "ownerModifiers": [
+              "requests_tablet_only",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_spontaneously_draining_abscess",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что припухлость прорвалась, выходит гной и боль уменьшилась.",
+          "historyAnswers": {
+            "infection_signs": "По нашим наблюдениям, есть дренирующее отверстие и отделяемое.",
+            "mechanism_and_time": "Дома мы заметили, что припухлость существовала несколько дней.",
+            "self_trauma_and_bandage": "Насколько мы можем судить, лижет отверстие.",
+            "systemic_trauma_signs": "Мы записали, что по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой."
+          },
+          "examFindings": [
+            {
+              "factId": "draining_abscess_with_residual_cavity",
+              "source": "physical_exam",
+              "finding": "Самопроизвольное отверстие не исключает остаточную полость, некроз, карманы или инородное тело."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "draining_abscess_with_residual_cavity",
+              "discoveryPaths": [
+                "infection_signs",
+                "depth_pocket_dead_space_exam",
+                "wound_map_before_cleaning"
+              ]
+            },
+            {
+              "factId": "systemic_and_source_context",
+              "discoveryPaths": [
+                "systemic_trauma_signs",
+                "bite_exposure",
+                "general_stability_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_depth_and_structure_exam",
+              "classification": "required",
+              "result": "Клиническая оценка показала: остаточная полость или карманы."
+            },
+            {
+              "id": "wound_cytology_or_culture",
+              "classification": "recommended_by_recurrence_depth_or_prior_treatment",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "draining_abscess_with_residual_cavity",
+              "systemic_and_source_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "source_and_cavity_exam"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "wound_exam",
+              "analgesia",
+              "wound_care"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "drainage_or_referral",
+              "wound_procedure_or_referral",
+              "culture_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "abscess_cellulitis_source_control_plan",
+          "followUp": {
+            "timing": "Ранний источник и повторная проверка раны.",
+            "required": true,
+            "targets": [
+              "residual_cavity",
+              "drainage",
+              "necrosis",
+              "pain",
+              "fever"
+            ]
+          },
+          "outcomes": {
+            "safe": "Разрыв запускает осмотр источника, а не завершает случай.",
+            "unsafe": "Уменьшение боли принимается за полное излечение."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: необходимость осмотра даже после самостоятельного прорыва."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "analgesia_or_referral",
+            "ownerModifiers": [
+              "relieved_after_rupture",
+              "inattentive"
+            ]
+          }
+        },
+        {
+          "id": "p3_systemic_or_recurrent_abscess",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что абсцесс возвращается или сопровождается лихорадкой, депрессией, глубокими ходами либо необычной локализацией.",
+          "historyAnswers": {
+            "infection_signs": "По нашим наблюдениям, системные признаки или рецидив или глубокое отделяемое.",
+            "comorbidity_and_immunity": "Дома мы заметили, что диабет, иммуносупрессия или иной риск.",
+            "home_treatment": "Насколько мы можем судить, предыдущие компоненты лечения.",
+            "bite_exposure": "Мы записали, что возможный старый укус."
+          },
+          "examFindings": [
+            {
+              "factId": "deep_recurrent_or_systemic_abscess",
+              "source": "physical_exam",
+              "finding": "Глубина или системное состояние превышают простой амбулаторный маршрут и требуют поиска инородного тела или основной болезни."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "deep_recurrent_or_systemic_abscess",
+              "discoveryPaths": [
+                "infection_signs",
+                "general_stability_exam",
+                "depth_pocket_dead_space_exam"
+              ]
+            },
+            {
+              "factId": "host_and_foreign_body_risk",
+              "discoveryPaths": [
+                "comorbidity_and_immunity",
+                "home_treatment",
+                "wound_imaging"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_cytology_or_culture",
+              "classification": "required_deep_sample_if_no_unsafe_delay",
+              "result": "По результатам посева и определения чувствительности: корректная глубокая проба и чувствительность."
+            },
+            {
+              "id": "wound_cbc_biochemistry",
+              "classification": "required_or_recommended_by_systemic_state",
+              "result": "В лабораторных показателях крови: воспалительные или органные изменения."
+            },
+            {
+              "id": "wound_xray_or_ultrasound",
+              "classification": "recommended_for_foreign_body_or_extent",
+              "result": "При ультразвуковом исследовании: глубина или инородное тело или распространение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "deep_recurrent_or_systemic_abscess",
+              "host_and_foreign_body_risk"
+            ],
+            "confirmedDiagnosisRequires": [
+              "deep_sample_and_source_assessment"
+            ],
+            "dangerStates": [
+              "sepsis",
+              "deep_necrosis",
+              "foreign_body",
+              "rapid_spread"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "stabilization",
+              "analgesia",
+              "wound_exam"
+            ],
+            "external": [
+              "cbc",
+              "biochemistry",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "culture_or_referral",
+              "imaging_or_referral",
+              "hospital_surgery_or_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "abscess_cellulitis_source_control_plan",
+          "followUp": {
+            "timing": "Срочный госпитальный или хирургический маршрут и последующий культуральный контроль.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "temperature",
+              "source",
+              "culture",
+              "organ_function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Системный пациент получает источник, пробу и стационарный маршрут.",
+            "unsafe": "Рецидив повторно лечат тем же способом без поиска причины."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему рецидив и системные признаки меняют объём диагностики."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "painful_defensive",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_hospital_referral",
+            "ownerModifiers": [
+              "frustrated",
+              "budget_limited",
+              "overwhelmed"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "wound_major_penetrating_or_degloving",
+      "version": "2026.07.16.40",
+      "title": "Обширная проникающая или дегловинг-травма",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Травма угрожает жизни, жизнеспособности тканей или функции и требует стабилизации, защиты, оценки скрытого объёма и хирургического или стационарного маршрута.",
+      "primaryDiagnosisId": "dx_major_penetrating_or_degloving_wound",
+      "differentials": [
+        "dx_hemorrhagic_shock",
+        "dx_thoracic_penetration",
+        "dx_abdominal_penetration",
+        "dx_open_fracture",
+        "dx_neurovascular_injury"
+      ],
+      "planBundleId": "major_penetrating_degloving_emergency_plan",
+      "sourceIds": [
+        "merck_triage_resuscitation",
+        "merck_initial_wound",
+        "merck_wound_overview",
+        "aaha_pain"
+      ],
+      "presentations": [
+        {
+          "id": "p1_degloving_with_uncertain_viability",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что большой участок кожи отслоен после травмы; глубокие ткани открыты, цвет части кожи сомнителен.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, дорожная или волочащая или раздавливающая травма.",
+            "bleeding_history": "Дома мы заметили, что контролируется или требует поддержки.",
+            "systemic_trauma_signs": "Насколько мы можем судить, стабилен после первичного триажа или нарушен.",
+            "contamination_history": "Мы записали, что значительное."
+          },
+          "examFindings": [
+            {
+              "factId": "degloving_with_evolving_viability",
+              "source": "physical_exam",
+              "finding": "Отслоенная кожа и глубокие ткани имеют неоднородную, меняющуюся жизнеспособность и риск большой потери покрова."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "degloving_with_evolving_viability",
+              "discoveryPaths": [
+                "wound_map_before_cleaning",
+                "tissue_viability_exam",
+                "serial_viability_recheck"
+              ]
+            },
+            {
+              "factId": "major_trauma_stability_and_function",
+              "discoveryPaths": [
+                "systemic_trauma_signs",
+                "general_stability_exam",
+                "distal_neurovascular_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_stability_and_hemorrhage_assessment",
+              "classification": "required_before_definitive_wound_work",
+              "result": "Клиническая оценка показала: стабильность и кровопотеря."
+            },
+            {
+              "id": "wound_serial_viability_map",
+              "classification": "required",
+              "result": "При динамическом наблюдении: поэтапная карта жизнеспособности."
+            },
+            {
+              "id": "wound_xray_or_ultrasound",
+              "classification": "recommended_by_mechanism_and_location",
+              "result": "При ультразвуковом исследовании: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "degloving_with_evolving_viability",
+              "major_trauma_stability_and_function"
+            ],
+            "confirmedDiagnosisRequires": [
+              "serial_surgical_viability_assessment"
+            ],
+            "dangerStates": [
+              "shock",
+              "open_fracture",
+              "neurovascular_loss",
+              "extensive_necrosis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "stabilization",
+              "analgesia",
+              "wound_exam"
+            ],
+            "external": [
+              "hospital_referral",
+              "surgery_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "hospital_surgery_or_referral",
+              "imaging_or_referral",
+              "pain_anesthesia_or_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "major_penetrating_degloving_emergency_plan",
+          "followUp": {
+            "timing": "Непрерывный и последовательный обзор хирургической жизнеспособности.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "viability",
+              "infection",
+              "coverage",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ткань защищена и оценивается поэтапно с планом реконструкции.",
+            "unsafe": "Сомнительная загрязнённая кожа герметично пришита либо вся удалена без оценки."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: окончательный объём жизнеспособной ткани может проявиться не сразу."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "painful_defensive",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_hospital_referral",
+            "ownerModifiers": [
+              "overwhelmed",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_penetrating_thoracic_or_abdominal_wound",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что небольшое отверстие или торчащий предмет находится на груди или животе; пациент болезнен, слаб или тяжело дышит.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, проникающий механизм.",
+            "wound_location": "Дома мы заметили, что грудь или живот.",
+            "systemic_trauma_signs": "Насколько мы можем судить, одышка или слабость или бледность.",
+            "bleeding_history": "Мы записали, что внешнее кровотечение может быть небольшим."
+          },
+          "examFindings": [
+            {
+              "factId": "penetrating_cavity_wound",
+              "source": "physical_exam",
+              "finding": "Малое отверстие не исключает воздух, кровь, органное повреждение или перитонит; торчащий объект не удаляется в кабинете."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "penetrating_cavity_wound",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "wound_location",
+                "thorax_abdomen_trauma_exam"
+              ]
+            },
+            {
+              "factId": "respiratory_and_perfusion_instability",
+              "discoveryPaths": [
+                "systemic_trauma_signs",
+                "hemorrhage_and_perfusion_exam",
+                "general_stability_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_stability_and_hemorrhage_assessment",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: дыхание и перфузия."
+            },
+            {
+              "id": "wound_xray_or_ultrasound",
+              "classification": "required_if_it_does_not_delay_life_saving_surgery_or_transfer",
+              "result": "При ультразвуковом исследовании: полостное повреждение или свободный газ или жидкость."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "penetrating_cavity_wound",
+              "respiratory_and_perfusion_instability"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_or_surgical_exploration"
+            ],
+            "dangerStates": [
+              "pneumothorax",
+              "hemothorax",
+              "organ_perforation",
+              "internal_hemorrhage",
+              "peritonitis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "emergency_stabilization",
+              "oxygen",
+              "vital_monitor",
+              "analgesia"
+            ],
+            "external": [
+              "hospital_referral",
+              "surgery_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "hospital_surgery_or_referral",
+              "imaging_or_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "major_penetrating_degloving_emergency_plan",
+          "followUp": {
+            "timing": "Непрерывный экстренный мониторинг и хирургическая передача.",
+            "required": true,
+            "targets": [
+              "airway_breathing",
+              "perfusion",
+              "cavity_injury",
+              "pain",
+              "infection"
+            ]
+          },
+          "outcomes": {
+            "safe": "Пациент стабилизируется и передаётся без извлечения объекта или слепого зондирования.",
+            "unsafe": "Локальная обработка задерживает полостную помощь."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему наружный размер не показывает объём внутренней травмы."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "obtunded",
+              "painful_defensive"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_emergency_transfer",
+            "ownerModifiers": [
+              "overwhelmed",
+              "requests_object_removal"
+            ]
+          }
+        },
+        {
+          "id": "p3_active_hemorrhage_or_shock",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что после травмы кровь продолжает идти или повязка промокает; пациент бледный, слабый или теряет сознание.",
+          "historyAnswers": {
+            "bleeding_history": "По нашим наблюдениям, продолжается или повязка промокает.",
+            "systemic_trauma_signs": "Дома мы заметили, что бледность, слабость, коллапс.",
+            "mechanism_and_time": "Насколько мы можем судить, острая травма.",
+            "wound_location": "Мы записали, что локализация кровотечения."
+          },
+          "examFindings": [
+            {
+              "factId": "active_hemorrhage_or_shock_state",
+              "source": "physical_exam",
+              "finding": "Нарушение перфузии или активное кровотечение требуют немедленного безопасного гемостаза и реанимационного маршрута до обработки раны."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "active_hemorrhage_or_shock_state",
+              "discoveryPaths": [
+                "bleeding_history",
+                "systemic_trauma_signs",
+                "hemorrhage_and_perfusion_exam"
+              ]
+            },
+            {
+              "factId": "wound_work_must_wait_for_stability",
+              "discoveryPaths": [
+                "general_stability_exam",
+                "pain_assessment"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "wound_stability_and_hemorrhage_assessment",
+              "classification": "required_immediate_and_serial",
+              "result": "Клиническая оценка показала: шок или кровотечение и ответ на поддержку."
+            },
+            {
+              "id": "wound_cbc_biochemistry",
+              "classification": "recommended_or_required_without_delaying_resuscitation",
+              "result": "В лабораторных показателях крови: гематологический или данные о функции органов."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "active_hemorrhage_or_shock_state",
+              "wound_work_must_wait_for_stability"
+            ],
+            "confirmedDiagnosisRequires": [
+              "serial_perfusion_and_hemorrhage_assessment"
+            ],
+            "dangerStates": [
+              "hemorrhagic_shock",
+              "ongoing_arterial_bleeding",
+              "internal_hemorrhage",
+              "coagulopathy"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "emergency_stabilization",
+              "oxygen",
+              "vital_monitor",
+              "analgesia"
+            ],
+            "external": [
+              "hospital_referral",
+              "surgery_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "hospital_surgery_or_referral",
+              "imaging_or_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "major_penetrating_degloving_emergency_plan",
+          "followUp": {
+            "timing": "Во время стабилизации и перевозки непрерывно контролируют кровотечение, дыхание, пульс и сознание.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "bleeding",
+              "mentation",
+              "respiration",
+              "definitive_source_control"
+            ]
+          },
+          "outcomes": {
+            "safe": "Гемостаз и перфузия получают приоритет перед очисткой и фотографированием.",
+            "unsafe": "Косметическая обработка задерживает реанимацию."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: кратко объяснить критическое состояние и необходимость немедленной стационарной помощи."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "obtunded",
+              "agitated"
+            ],
+            "requiredHandlingAlternative": "emergency_minimal_handling",
+            "ownerModifiers": [
+              "overwhelmed",
+              "panicked"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_initial_wound",
+      "title": "Merck Veterinary Manual: Initial Wound Management in Small Animals",
+      "url": "https://www.merckvetmanual.com/emergency-medicine-and-critical-care/wound-management-in-small-animals/initial-wound-management-in-small-animals",
+      "scope": "stability, hemorrhage, irrigation, debridement, viability, closure and open management"
+    },
+    {
+      "id": "merck_wound_overview",
+      "title": "Merck Veterinary Manual: Wound Management",
+      "url": "https://www.merckvetmanual.com/special-pet-topics/emergencies/wound-management",
+      "scope": "bite, puncture, degloving, drains, bandages and owner-facing wound course"
+    },
+    {
+      "id": "merck_triage_resuscitation",
+      "title": "Merck Veterinary Manual: Initial Triage and Resuscitation of Small Animal Emergency Patients",
+      "url": "https://www.merckvetmanual.com/emergency-medicine-and-critical-care/evaluation-and-initial-treatment-of-small-animal-emergency-patients/initial-triage-and-resuscitation-of-small-animal-emergency-patients",
+      "scope": "trauma triage, shock, hemorrhage and emergency sequencing"
+    },
+    {
+      "id": "merck_integument_antibacterials",
+      "title": "Merck Veterinary Manual: Antibacterials for Integumentary Disease in Animals",
+      "url": "https://www.merckvetmanual.com/pharmacology/systemic-pharmacotherapeutics-of-the-integumentary-system/antibacterials-for-integumentary-disease-in-animals",
+      "scope": "antimicrobial context and stewardship boundaries without authored dosing"
+    },
+    {
+      "id": "aaha_pain",
+      "title": "2022 AAHA Pain Management Guidelines for Dogs and Cats",
+      "url": "https://www.aaha.org/resources/2022-aaha-pain-management-guidelines-for-dogs-and-cats/home-3/",
+      "scope": "proactive pain assessment, treatment, reassessment and plan revision"
+    }
+  ],
+  "familyValidationRules": [
+    "species_must_be_dog_or_cat",
+    "stability_and_dangerous_hemorrhage_precede_definitive_wound_work",
+    "small_skin_opening_cannot_prove_minor_depth",
+    "active_bleeding_requires_safe_direct_control_and_emergency_route",
+    "pain_requires_assessment_analgesia_and_handling_alternative",
+    "wound_depth_structure_viability_contamination_and_function_must_precede_closure",
+    "gross_contamination_infection_or_nonviable_tissue_blocks_automatic_primary_closure",
+    "questionable_viability_near_critical_structures_requires_conservative_serial_assessment",
+    "bite_puncture_cannot_be_managed_by_surface_cleaning_only",
+    "cavity_or_joint_risk_cannot_be_excluded_by_blind_probing",
+    "spontaneously_draining_abscess_cannot_equal_complete_cure",
+    "deep_recurrent_or_systemic_abscess_requires_source_comorbidity_and_sample_route",
+    "impaled_object_cannot_be_removed_in_routine_clinic_flow",
+    "bandage_requires_distal_limb_and_moisture_monitoring",
+    "regional_bite_regulation_is_authored_by_jurisdiction_not_inferred_by_generator",
+    "all_levels_remain_generator_ineligible_until_external_veterinary_approval"
+  ]
+}

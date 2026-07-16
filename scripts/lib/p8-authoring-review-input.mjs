@@ -816,14 +816,23 @@ export function validateP8ReviewerDecisionSet(decisionSet, reviewInput) {
     for (const domain of DECISION_DOMAIN_KEYS) {
       check(DECISION_VALUES.has(decision.decisionDomains[domain]), `decision domain ${domain} is invalid for ${key}`);
     }
+    const domainValues = DECISION_DOMAIN_KEYS.map((domain) => decision.decisionDomains[domain]);
     if (decision.decision === "approved") {
       check(
-        DECISION_DOMAIN_KEYS.every((domain) => decision.decisionDomains[domain] === "approved"),
+        domainValues.every((value) => value === "approved"),
         `approved record ${key} must be approved in every decision domain`,
+      );
+    } else {
+      check(
+        domainValues.includes(decision.decision),
+        `${decision.decision} record ${key} must have at least one matching decision domain`,
       );
     }
     checkArray(decision.issueIds, `reviewer issue IDs for ${key}`);
     check(decision.issueIds.every(isNonEmptyString), `reviewer issue IDs are invalid for ${key}`);
+    if (decision.decision === "changes_required") {
+      check(decision.issueIds.length > 0, `changes_required record ${key} must reference at least one issue ID`);
+    }
     check(isNonEmptyString(decision.comment), `reviewer comment is required for ${key}`);
     check(isNonEmptyString(decision.reviewerSignature), `reviewer signature is required for ${key}`);
     decisionKeys.push(key);

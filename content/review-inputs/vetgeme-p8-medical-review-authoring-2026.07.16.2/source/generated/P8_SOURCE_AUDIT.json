@@ -1,0 +1,625 @@
+{
+  "schemaVersion": 1,
+  "reportId": "vetgeme-p8-source-audit",
+  "reportVersion": "2026.07.16.2",
+  "status": "reviewable",
+  "activationAllowed": false,
+  "input": {
+    "packageId": "vetgeme-medical-production-authoring",
+    "packageVersion": "2026.07.16.40",
+    "archiveSha256": "171659e929f4b8a83cf921a8fa689cd3f5ac632466c4c328dd047199fced71c5",
+    "sourceAggregateSha256": "3f3f89ab93e005a5100b39586328c38fa6b4fcf52887be63cabc41ac05c557c8"
+  },
+  "counts": {
+    "families": 39,
+    "variants": 215,
+    "presentations": 645,
+    "sourceEntries": 221,
+    "uniquePresentationRefs": 645,
+    "p4PresentationRefs": 645,
+    "issues": 0,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    },
+    "byCode": {}
+  },
+  "manifestConsistency": {
+    "packageVersionMatches": true,
+    "familiesMatch": true,
+    "variantsMatch": true,
+    "presentationsMatch": true,
+    "productionPoolRemainsZero": true,
+    "generatorEligibleRemainsFalse": true
+  },
+  "families": [
+    {
+      "familyId": "ear_external",
+      "familyVersion": "2026.07.16.40",
+      "title": "Наружное ухо",
+      "variants": 8,
+      "presentations": 24,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "skin_ectoparasites",
+      "familyVersion": "2026.07.16.40",
+      "title": "Эктопаразиты кожи и блошиная проблема",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 9,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "gi_acute",
+      "familyVersion": "2026.07.16.40",
+      "title": "Острые желудочно-кишечные симптомы",
+      "variants": 8,
+      "presentations": 24,
+      "sources": 8,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "urinary_feline_lower",
+      "familyVersion": "2026.07.16.40",
+      "title": "Заболевания нижних мочевыводящих путей кошек",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 8,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "eye_surface",
+      "familyVersion": "2026.07.16.40",
+      "title": "Красный глаз, поверхность роговицы и опасные внутриглазные альтернативы",
+      "variants": 7,
+      "presentations": 21,
+      "sources": 8,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "resp_cat_upper",
+      "familyVersion": "2026.07.16.40",
+      "title": "Синдромы верхних дыхательных путей кошек",
+      "variants": 5,
+      "presentations": 15,
+      "sources": 7,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "resp_dog_cough",
+      "familyVersion": "2026.07.16.40",
+      "title": "Кашель и похожие эпизоды у собак",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 7,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "perianal",
+      "familyVersion": "2026.07.16.40",
+      "title": "Параанальные мешки, свищи, массы и промежностные красные флаги",
+      "variants": 4,
+      "presentations": 12,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "wound_abscess",
+      "familyVersion": "2026.07.16.40",
+      "title": "Раны, укусы, абсцессы и проникающая травма",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "gi_parasites",
+      "familyVersion": "2026.07.16.40",
+      "title": "Кишечные паразиты собак и кошек",
+      "variants": 7,
+      "presentations": 21,
+      "sources": 13,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "skin_infectious",
+      "familyVersion": "2026.07.16.40",
+      "title": "Пиодермия, Malassezia, дерматофития и атипичные инфекции кожи",
+      "variants": 7,
+      "presentations": 21,
+      "sources": 6,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "ortho_lameness",
+      "familyVersion": "2026.07.16.40",
+      "title": "Хромота без очевидной ортопедической катастрофы",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 7,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "urinary_complex",
+      "familyVersion": "2026.07.16.40",
+      "title": "Рецидивирующие и осложнённые мочевые симптомы",
+      "variants": 5,
+      "presentations": 15,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "endocrine_diabetes",
+      "familyVersion": "2026.07.16.40",
+      "title": "Сахарный диабет",
+      "variants": 5,
+      "presentations": 15,
+      "sources": 6,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "renal_ckd",
+      "familyVersion": "2026.07.16.40",
+      "title": "Хроническая болезнь почек",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "endocrine_feline_hyperthyroid",
+      "familyVersion": "2026.07.16.40",
+      "title": "Гипертиреоз кошек",
+      "variants": 4,
+      "presentations": 12,
+      "sources": 4,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "gi_pancreas_acute",
+      "familyVersion": "2026.07.16.40",
+      "title": "Панкреатит собак и кошек",
+      "variants": 5,
+      "presentations": 15,
+      "sources": 4,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "repro_pyometra",
+      "familyVersion": "2026.07.16.40",
+      "title": "Пиометра собак и кошек",
+      "variants": 4,
+      "presentations": 12,
+      "sources": 4,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "hematology_anemia",
+      "familyVersion": "2026.07.16.40",
+      "title": "Анемический синдром собак и кошек",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 6,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "gi_chronic_enteropathy",
+      "familyVersion": "2026.07.16.40",
+      "title": "Хроническая энтеропатия собак и кошек",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "gi_obstruction",
+      "familyVersion": "2026.07.16.40",
+      "title": "Инородные тела и механическая непроходимость желудочно-кишечного тракта",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "urinary_uroliths",
+      "familyVersion": "2026.07.16.40",
+      "title": "Мочевые камни и уролитиаз",
+      "variants": 5,
+      "presentations": 15,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "resp_pneumonia",
+      "familyVersion": "2026.07.16.40",
+      "title": "Пневмония и поражение лёгочной ткани",
+      "variants": 5,
+      "presentations": 15,
+      "sources": 4,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "resp_feline_asthma",
+      "familyVersion": "2026.07.16.40",
+      "title": "Бронхиальная астма кошек",
+      "variants": 4,
+      "presentations": 12,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "ortho_fracture_luxation",
+      "familyVersion": "2026.07.16.40",
+      "title": "Переломы и вывихи",
+      "variants": 7,
+      "presentations": 21,
+      "sources": 6,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "dental_periodontal",
+      "familyVersion": "2026.07.16.40",
+      "title": "Стоматология и пародонтология",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "gi_gdv",
+      "familyVersion": "2026.07.16.40",
+      "title": "Расширение и заворот желудка",
+      "variants": 3,
+      "presentations": 9,
+      "sources": 4,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "cardio_chf",
+      "familyVersion": "2026.07.16.40",
+      "title": "Застойная сердечная недостаточность",
+      "variants": 5,
+      "presentations": 15,
+      "sources": 4,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "skin_atopy",
+      "familyVersion": "2026.07.16.40",
+      "title": "Атопия и хронический зуд",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "ear_chronic_middle",
+      "familyVersion": "2026.07.16.40",
+      "title": "Хронический отит и подозрение на среднее ухо",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "endocrine_cushing",
+      "familyVersion": "2026.07.16.40",
+      "title": "Гиперадренокортицизм",
+      "variants": 5,
+      "presentations": 15,
+      "sources": 4,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "endocrine_addison",
+      "familyVersion": "2026.07.16.40",
+      "title": "Гипоадренокортицизм",
+      "variants": 4,
+      "presentations": 12,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "gi_epi",
+      "familyVersion": "2026.07.16.40",
+      "title": "Экзокринная недостаточность поджелудочной железы",
+      "variants": 4,
+      "presentations": 12,
+      "sources": 2,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "hepatobiliary",
+      "familyVersion": "2026.07.16.40",
+      "title": "Гепатобилиарные заболевания",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 7,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "oncology_mass",
+      "familyVersion": "2026.07.16.40",
+      "title": "Объёмное образование и подозрение на опухоль",
+      "variants": 7,
+      "presentations": 21,
+      "sources": 5,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "neuro_vestibular",
+      "familyVersion": "2026.07.16.40",
+      "title": "Вестибулярный синдром",
+      "variants": 5,
+      "presentations": 15,
+      "sources": 4,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "infectious_canine_major",
+      "familyVersion": "2026.07.16.40",
+      "title": "Основные инфекции собак",
+      "variants": 5,
+      "presentations": 15,
+      "sources": 6,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "infectious_feline_major",
+      "familyVersion": "2026.07.16.40",
+      "title": "Основные инфекции кошек",
+      "variants": 6,
+      "presentations": 18,
+      "sources": 7,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    },
+    {
+      "familyId": "infectious_vector_borne",
+      "familyVersion": "2026.07.16.40",
+      "title": "Трансмиссивные и региональные инфекции",
+      "variants": 3,
+      "presentations": 9,
+      "sources": 6,
+      "issueCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "reviewDecision": "pending_correction_and_external_veterinary_review"
+    }
+  ],
+  "issues": []
+}

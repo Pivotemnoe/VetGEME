@@ -1,0 +1,2898 @@
+{
+  "schemaVersion": 1,
+  "familyId": "endocrine_cushing",
+  "familyVersion": "2026.07.16.40",
+  "title": "Гиперадренокортицизм",
+  "campaignPhase": "chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": [
+    "Клинически значимый гиперадренокортицизм требует совместимого прогрессирующего мультисистемного картины, стандартных лабораторных условий и интерпретируемого выбранного эндокринного теста.",
+    "Изолированный ЩФ, тонкая кожа, порода, внешний вид, стрессовый кортизол, случайное увеличение надпочечников или один положительный результат скрининга не доказывают синдром Кушинга.",
+    "Серьезные заболевания ненадпочечников, боль, госпитализация, стресс и недавнее воздействие глюкокортикоидов могут снизить интерпретируемость теста и вызвать временные ворота.",
+    "Нужно перечислить все пути введения глюкокортикоидов: внутрь, в инъекциях, в ухо, в глаза, на кожу, ингаляционно и в составе комбинированных препаратов.",
+    "Клинически значимый гиперкортицизм подтверждается до дифференциации гипофиза и надпочечников.",
+    "Эндогенный АКТГ и визуализация надпочечников поддерживают дифференцировку после подтверждения; двусторонние или противоречивые результаты требуют рассмотрения специалистом.",
+    "Редкий гиперадренокортицизм у кошек по умолчанию определяется специалистом и обычно сохраняет контекст диабета или хрупкой кожи.",
+    "Ятрогенный фенотип и риск подавления гипоталамо-гипофизарно-надпочечниковой системы остаются отдельными от спонтанного заболевания, и резкая отмена небезопасна.",
+    "Диабет, инфекция, гипертония, тромбоз, панкреатит и вызванные лечением гипоадреналовые состояния сохраняют отдельные данные и пути неотложной помощи.",
+    "Мониторинг лечения включает в себя воду, аппетит, одышку, состояние кожи, мышц, качество жизни и безопасность в зависимости от протокола, а не одно значение кортизола.",
+    "Внешние временные тесты, визуализация и хирургическое вмешательство возвращаются к одному и тому же пациенту и сохраняют протокол, образец и идентичность времени.",
+    "не назначается автоматически ни препарат, ни доза, ни постепенное снижение дозы, ни протокол динамических испытаний, ни интервал вымывания, ни хирургический порог."
+  ],
+  "coreCapabilities": [
+    "biochemistry",
+    "urinalysis",
+    "endocrine_testing_external",
+    "ultrasound_or_referral",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "cushing_inventory_route",
+      "anyOf": [
+        "cushing_clinical_inventory",
+        "biochemistry",
+        "urinalysis",
+        "safe_referral"
+      ],
+      "purpose": "compatible_sign_routine_lab_and_all_route_medication_inventory"
+    },
+    {
+      "id": "cushing_timing_gate_route",
+      "anyOf": [
+        "endocrine_test_timing_gate",
+        "safe_referral"
+      ],
+      "purpose": "significant_nonadrenal_illness_stress_and_exposure_interpretability"
+    },
+    {
+      "id": "cushing_screening_route",
+      "anyOf": [
+        "cushing_screening_external",
+        "endocrinology_referral",
+        "safe_referral"
+      ],
+      "purpose": "selected_interpretable_endocrine_screen"
+    },
+    {
+      "id": "cushing_confirmation_route",
+      "anyOf": [
+        "cushing_confirmation_review",
+        "endocrinology_referral",
+        "safe_referral"
+      ],
+      "purpose": "confirm_clinically_relevant_hypercortisolism_before_differentiation"
+    },
+    {
+      "id": "cushing_differentiation_route",
+      "anyOf": [
+        "endogenous_acth_external",
+        "adrenal_imaging_external",
+        "endocrinology_referral",
+        "safe_referral"
+      ],
+      "purpose": "pituitary_adrenal_and_equivocal_differentiation"
+    },
+    {
+      "id": "cushing_pituitary_imaging_route",
+      "anyOf": [
+        "pituitary_imaging_referral",
+        "safe_referral"
+      ],
+      "purpose": "macroadenoma_neurologic_or_behavioral_concern"
+    },
+    {
+      "id": "cushing_complication_route",
+      "anyOf": [
+        "cushing_complication_assessment",
+        "biochemistry",
+        "urinalysis",
+        "safe_referral"
+      ],
+      "purpose": "infection_diabetes_bp_thrombosis_pancreatitis_and_other_complications"
+    },
+    {
+      "id": "cushing_monitoring_route",
+      "anyOf": [
+        "cushing_longitudinal_monitoring",
+        "cushing_home_monitoring",
+        "safe_referral"
+      ],
+      "purpose": "clinical_response_qol_and_hypoadrenal_safety"
+    },
+    {
+      "id": "cushing_adrenal_referral_route",
+      "anyOf": [
+        "adrenal_surgery_referral",
+        "endocrinology_referral",
+        "safe_referral"
+      ],
+      "purpose": "adrenal_staging_surgery_or_advanced_endocrine_route"
+    },
+    {
+      "id": "cushing_home_log_route",
+      "anyOf": [
+        "cushing_home_monitoring",
+        "safe_referral"
+      ],
+      "purpose": "same_definition_water_appetite_skin_strength_and_qol_log"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "cushing_clinical_sign_routine_lab_and_medication_inventory",
+      "requires": [
+        "cushing_clinical_inventory"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "cushing_delay_testing_during_significant_nonadrenal_illness",
+      "requires": [
+        "endocrine_test_timing_gate"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "cushing_screening_lddst_acth_or_uccr_route",
+      "requires": [
+        "cushing_screening_external"
+      ],
+      "availability": "external_timed_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "cushing_confirm_before_differentiation",
+      "requires": [
+        "cushing_confirmation_review"
+      ],
+      "availability": "external_review_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "cushing_endogenous_acth_and_adrenal_imaging",
+      "requires": [
+        "endogenous_acth_external",
+        "adrenal_imaging_external"
+      ],
+      "availability": "external_post_confirmation_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "cushing_pituitary_imaging_when_neurologically_indicated",
+      "requires": [
+        "pituitary_imaging_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "cushing_infection_diabetes_blood_pressure_and_thrombosis_workup",
+      "requires": [
+        "cushing_complication_assessment"
+      ],
+      "availability": "local_plus_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "cushing_treatment_response_and_hypoadrenal_safety_monitoring",
+      "requires": [
+        "cushing_longitudinal_monitoring"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "cushing_adrenal_surgery_or_advanced_endocrine_referral",
+      "requires": [
+        "adrenal_surgery_referral",
+        "endocrinology_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "cushing_owner_water_appetite_skin_strength_and_quality_of_life_log",
+      "requires": [
+        "cushing_home_monitoring"
+      ],
+      "availability": "home_longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "measured_water_and_urination_trend",
+      "prompt": "Измерены ли вода и мочеиспускание одинаковым способом во времени?"
+    },
+    {
+      "id": "appetite_panting_abdomen_muscle_skin_progression",
+      "prompt": "Как менялись аппетит, одышка, форма живота, мышцы и кожа?"
+    },
+    {
+      "id": "all_route_glucocorticoid_inventory",
+      "prompt": "Какие ротовая полость, инъекционный, ухо, глаз, кожа, ингаляционный или скрытый глюкокортикоиды использовались?"
+    },
+    {
+      "id": "acute_illness_pain_hospital_stress",
+      "prompt": "Есть ли острый болезнь, боль, стационар или значимый стресс?"
+    },
+    {
+      "id": "diabetes_infection_pancreatitis_thrombosis_signs",
+      "prompt": "Есть ли признаки диабета, инфекции, панкреатита или тромбоза?"
+    },
+    {
+      "id": "endocrine_test_protocol_timing_lab",
+      "prompt": "Какой эндокринный исследование, протокол, срок, проба и лаборатория?"
+    },
+    {
+      "id": "imaging_before_or_after_confirmation",
+      "prompt": "визуализация выполнено до или после подтверждения гиперкортицизм?"
+    },
+    {
+      "id": "pacing_behavior_seizure_vision_change",
+      "prompt": "Есть ли беспокойное хождение, поведение изменение, судороги или зрение изменение?"
+    },
+    {
+      "id": "blood_pressure_weight_and_strength_trend",
+      "prompt": "Как менялись артериальное давление, масса тела и мышцы сила?"
+    },
+    {
+      "id": "infection_sites_culture_cytology_history",
+      "prompt": "Где возникали инфекции, какие результаты цитологии и посева получены и как часто были рецидивы?"
+    },
+    {
+      "id": "current_treatment_actual_use_and_adverse_signs",
+      "prompt": "Как фактически выполняется текущий план и есть ли нежелательная реакция или гипоадренокортицизм признаки?"
+    },
+    {
+      "id": "owner_monitoring_cost_and_referral_feasibility",
+      "prompt": "Какие домашнее наблюдение, стоимость и направление ограничения реальны?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "multisystem_cushing_phenotype_record",
+      "source": "physical_exam",
+      "requires": [
+        "cushing_clinical_inventory"
+      ]
+    },
+    {
+      "id": "cbc_biochemistry_urinalysis_pattern_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "biochemistry",
+        "urinalysis"
+      ]
+    },
+    {
+      "id": "all_route_exposure_and_timing_record",
+      "source": "medication_inventory",
+      "requires": [
+        "cushing_clinical_inventory"
+      ]
+    },
+    {
+      "id": "nonadrenal_illness_interpretability_gate_record",
+      "source": "diagnostic_rule",
+      "requires": [
+        "endocrine_test_timing_gate"
+      ]
+    },
+    {
+      "id": "selected_screen_protocol_sample_result_record",
+      "source": "external_report",
+      "requires": [
+        "cushing_screening_external"
+      ]
+    },
+    {
+      "id": "confirmation_before_differentiation_record",
+      "source": "external_review",
+      "requires": [
+        "cushing_confirmation_review"
+      ]
+    },
+    {
+      "id": "endogenous_acth_and_adrenal_imaging_record",
+      "source": "external_report",
+      "requires": [
+        "endogenous_acth_external",
+        "adrenal_imaging_external"
+      ]
+    },
+    {
+      "id": "pituitary_neurologic_imaging_record",
+      "source": "external_report",
+      "requires": [
+        "pituitary_imaging_referral"
+      ]
+    },
+    {
+      "id": "infection_diabetes_bp_thrombosis_pancreatitis_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "cushing_complication_assessment"
+      ]
+    },
+    {
+      "id": "clinical_response_and_hypoadrenal_safety_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "cushing_longitudinal_monitoring"
+      ]
+    },
+    {
+      "id": "adrenal_stage_invasion_metastasis_surgery_record",
+      "source": "external_report",
+      "requires": [
+        "adrenal_surgery_referral"
+      ]
+    },
+    {
+      "id": "same_definition_home_qol_log",
+      "source": "home_record",
+      "requires": [
+        "cushing_home_monitoring"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "appropriate_suspicion_plan",
+      "fullPlan": [
+        "compatible_progressive_pattern",
+        "routine_lab_and_full_exposure_inventory",
+        "nonadrenal_illness_gate",
+        "selected_interpretable_screen",
+        "confirm_before_differentiate",
+        "complication_screen",
+        "home_qol_log"
+      ],
+      "stagedPlan": [
+        "establish_pretest_probability",
+        "protect_interpretability",
+        "screen",
+        "confirm"
+      ],
+      "minimumSafePlan": [
+        "isolated_finding_not_diagnosis",
+        "all_routes_inventory",
+        "illness_gate",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "treat_major_nonadrenal_illness",
+        "endocrinology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "incidentaloma_shortcut",
+        "random_positive_screen_treats",
+        "generated_test_protocol"
+      ]
+    },
+    {
+      "id": "pituitary_dependent_plan",
+      "fullPlan": [
+        "confirmed_hypercortisolism",
+        "compatible_differentiation",
+        "neurologic_macroadenoma_screen",
+        "reviewed_long_term_route",
+        "clinical_and_lab_safety_monitoring",
+        "complication_control",
+        "qol_log"
+      ],
+      "stagedPlan": [
+        "confirm",
+        "differentiate",
+        "screen_neuro",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "bilateral_adrenal_change_not_proof",
+        "imaging_after_confirmation",
+        "macroadenoma_red_flags",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "urgent_neurologic_route",
+        "endocrinology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "pituitary_pattern_from_breed",
+        "one_number_monitoring",
+        "instant_external_result"
+      ]
+    },
+    {
+      "id": "adrenal_dependent_plan",
+      "fullPlan": [
+        "confirm_function",
+        "differentiate_without_side_guess",
+        "stage_adrenal_and_vascular_extent",
+        "metastasis_comorbidity_assessment",
+        "specialist_surgery_or_medical_route",
+        "peri_referral_safety",
+        "longitudinal_qol"
+      ],
+      "stagedPlan": [
+        "confirm",
+        "differentiate",
+        "stage",
+        "shared_decision"
+      ],
+      "minimumSafePlan": [
+        "mass_not_function",
+        "bilateral_equivocal_specialist_review",
+        "no_automatic_local_surgery",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "manage_complication",
+        "adrenal_surgery_referral"
+      ],
+      "unsafeOrInadequate": [
+        "incidental_mass_equals_cushing",
+        "random_side_selection",
+        "generated_surgery_threshold"
+      ]
+    },
+    {
+      "id": "iatrogenic_plan",
+      "fullPlan": [
+        "complete_all_route_exposure",
+        "link_phenotype_and_axis_suppression_risk",
+        "separate_from_spontaneous_disease",
+        "reviewed_change_or_withdrawal_plan",
+        "illness_hypoadrenal_safety_route",
+        "clinical_monitoring",
+        "underlying_condition_alternative"
+      ],
+      "stagedPlan": [
+        "discover_exposure",
+        "assess_suppression",
+        "review_change",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "topical_otic_inhaled_count",
+        "abrupt_withdrawal_unsafe",
+        "emergency_hypoadrenal_route",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "hypoadrenal_emergency_route",
+        "endocrinology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "oral_only_inventory",
+        "generated_taper",
+        "withdrawal_called_safe"
+      ]
+    },
+    {
+      "id": "complicated_monitoring_plan",
+      "fullPlan": [
+        "verify_current_disease_and_plan",
+        "identify_complication",
+        "separate_evidence_chains",
+        "urgent_state_first",
+        "reviewed_adjustment",
+        "clinical_plus_protocol_safety_monitoring",
+        "qol_and_feasibility"
+      ],
+      "stagedPlan": [
+        "triage",
+        "confirm_complication",
+        "stabilize",
+        "reconcile_and_monitor"
+      ],
+      "minimumSafePlan": [
+        "infection_needs_evidence",
+        "diabetes_stays_separate",
+        "thrombosis_hypoadrenal_red_flags",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "complication_emergency_route",
+        "endocrinology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "blind_therapy_increase",
+        "one_cortisol_decides",
+        "endocrine_status_proves_infection"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "aaha_endocrinopathies_2023",
+      "title": "2023 AAHA Selected Endocrinopathies of Dogs and Cats Guidelines",
+      "url": "https://www.aaha.org/resources/2023-aaha-selected-endocrinopathies-of-dogs-and-cats-guidelines/",
+      "scope": "stepwise_pretest_probability_diagnostic_testing_monitoring_and_client_communication"
+    },
+    {
+      "id": "merck_cushing_2024",
+      "title": "Merck Veterinary Manual: Cushing Syndrome in Animals",
+      "url": "https://www.merckvetmanual.com/endocrine-system/the-adrenal-glands/cushing-syndrome-hyperadrenocorticism-in-animals",
+      "scope": "clinical_pattern_routine_labs_confirmation_differentiation_imaging_and_species_context"
+    },
+    {
+      "id": "acvim_hac_diagnosis_consensus",
+      "title": "ACVIM Consensus: Diagnosis of Spontaneous Canine Hyperadrenocorticism",
+      "url": "https://academic.oup.com/jvim/article/27/6/1292/8483203",
+      "scope": "pretest_probability_test_selection_false_positive_limits_and_differentiation"
+    },
+    {
+      "id": "merck_pituitary_cushing",
+      "title": "Merck Veterinary Manual: Pituitary-Dependent Cushing Disease",
+      "url": "https://www.merckvetmanual.com/endocrine-system/the-pituitary-gland/cushing-disease-pituitary-dependent-hyperadrenocorticism-in-animals",
+      "scope": "pituitary_disease_macroadenoma_clinical_monitoring_and_complications"
+    }
+  ],
+  "variants": [
+    {
+      "id": "cushing_appropriate_suspicion_or_false_positive_risk",
+      "version": "2026.07.16.40",
+      "title": "Клинически обоснованное подозрение или высокий риск ложноположительного теста",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Эндокринный скрининг оправдан совместимой прогрессивной мультисистемной клинической и стандартной лабораторной схемой после подробного уточнения всех применявшихся глюкокортикоидов и оценки ненадпочечниковых заболеваний; Случайные находки и неинтерпретируемые положительные результаты скрининга не позволяют установить заболевание.",
+      "exclusions": [
+        "isolated_lab_or_appearance",
+        "incidentaloma_shortcut",
+        "screen_during_major_illness_as_confirmation"
+      ],
+      "planBundleId": "appropriate_suspicion_plan",
+      "sourceIds": [
+        "aaha_endocrinopathies_2023",
+        "merck_cushing_2024",
+        "acvim_hac_diagnosis_consensus"
+      ],
+      "presentations": [
+        {
+          "id": "p1_classic_progressive_clinical_and_routine_lab_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_complication",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что прогрессирующая ПУ или ПД, полифагия, одышка, увеличение живота, потеря мышечной массы и изменения кожи соответствуют картинау стандартных лабораторных исследований.",
+          "historyAnswers": {
+            "measured_water_and_urination_trend": "По нашим наблюдениям, объективно зафиксирована тенденция увеличения количества воды или мочеиспускания.",
+            "appetite_panting_abdomen_muscle_skin_progression": "Дома мы заметили, что мультисистемное прогрессирование.",
+            "all_route_glucocorticoid_inventory": "Насколько мы можем судить, все маршруты рассмотрены без поясняющих изложений.",
+            "acute_illness_pain_hospital_stress": "Мы записали, что никакой основной фактор, мешающий интерпретации или мешающий фактор явно не разрешены."
+          },
+          "examFindings": [
+            {
+              "factId": "compatible_progressive_multisystem_pattern_justifies_selected_screening",
+              "source": "pretest_probability_rule",
+              "finding": "Признаки и обычные результаты сочетаются; ни один признак не является достаточным сам по себе."
+            },
+            {
+              "factId": "screen_choice_and_timing_must_be_interpretable_and_action_changing",
+              "source": "test_selection_rule",
+              "finding": "Протокол и идентичность образца остаются внешними доказательствами."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "compatible_progressive_multisystem_pattern_justifies_selected_screening",
+              "discoveryPaths": [
+                "measured_water_and_urination_trend",
+                "appetite_panting_abdomen_muscle_skin_progression",
+                "multisystem_cushing_phenotype_record",
+                "cbc_biochemistry_urinalysis_pattern_record"
+              ]
+            },
+            {
+              "factId": "screen_choice_and_timing_must_be_interpretable_and_action_changing",
+              "discoveryPaths": [
+                "acute_illness_pain_hospital_stress",
+                "nonadrenal_illness_interpretability_gate_record",
+                "selected_screen_protocol_sample_result_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_clinical_sign_routine_lab_and_medication_inventory",
+              "classification": "required_first",
+              "result": "При уточнении анамнеза: совместимая прогрессирующая клиническая картина и перечень возможных воздействий."
+            },
+            {
+              "id": "cushing_delay_testing_during_significant_nonadrenal_illness",
+              "classification": "required_gate",
+              "result": "Целевое исследование показало: тестирование можно интерпретировать сейчас или намеренно отложить."
+            },
+            {
+              "id": "cushing_screening_lddst_acth_or_uccr_route",
+              "classification": "selected_external_screen",
+              "result": "По итогам консультации специалиста: доказательства скрининга, специфичные для протокола."
+            },
+            {
+              "id": "cushing_confirm_before_differentiation",
+              "classification": "required_before_cause",
+              "result": "Целевое исследование показало: клинически значимый обзор подтверждения гиперкортицизма."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "compatible_progressive_multisystem_pattern_justifies_selected_screening",
+              "screen_choice_and_timing_must_be_interpretable_and_action_changing"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_clinical_context_plus_interpretable_confirmatory_evidence"
+            ],
+            "dangerStates": [
+              "unstable_diabetes",
+              "sepsis",
+              "thrombosis",
+              "pancreatitis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "biochemistry",
+              "urinalysis",
+              "cushing_clinical_inventory",
+              "endocrine_test_timing_gate"
+            ],
+            "external": [
+              "cushing_screening_external",
+              "cushing_confirmation_review",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_inventory_route",
+              "cushing_timing_gate_route",
+              "cushing_screening_route",
+              "cushing_confirmation_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "appropriate_suspicion_plan",
+          "followUp": {
+            "timing": "После планового обследования, выбранного экрана и проверки подтверждения.",
+            "required": true,
+            "targets": [
+              "water",
+              "urination",
+              "appetite",
+              "panting",
+              "skin",
+              "muscle",
+              "test_interpretability"
+            ]
+          },
+          "outcomes": {
+            "safe": "обоснованное клиническое подозрение переходит к интерпретируемому выбранному тесту.",
+            "unsafe": "Внешний вид или один лабораторный показатель напрямую становятся синдромом Кушинга."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: эта закономерность оправдывает тестирование, но сама по себе не доказывает избыток кортизола."
+          ],
+          "compatibility": {
+            "temperament": [
+              "panting",
+              "weak",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "low_stress_timed_external_testing_or_referral",
+            "ownerModifiers": [
+              "expects_visual_diagnosis",
+              "concerned_about_test_cost"
+            ]
+          }
+        },
+        {
+          "id": "p2_incidental_adrenal_or_liver_finding_without_compatible_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_unless_mass_complication",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что узелки или увеличения надпочечников или изменения в печени или ЩФ обнаруживаются случайно без убедительной прогрессирующей картины Кушинга.",
+          "historyAnswers": {
+            "measured_water_and_urination_trend": "По нашим наблюдениям, никакой объективной совместимой тенденции или неопределенности не сохранилось.",
+            "appetite_panting_abdomen_muscle_skin_progression": "Дома мы заметили, что совместимая мультисистемная прогрессия отсутствует.",
+            "imaging_before_or_after_confirmation": "Насколько мы можем судить, визуализация предшествовала эндокринному подтверждению.",
+            "all_route_glucocorticoid_inventory": "Мы записали, что подробный перечень применявшихся препаратов еще завершена."
+          },
+          "examFindings": [
+            {
+              "factId": "incidental_adrenal_or_liver_finding_does_not_confirm_hypercortisolism",
+              "source": "incidentaloma_rule",
+              "finding": "Функция и анатомия остаются отдельными вопросами."
+            },
+            {
+              "factId": "low_pretest_probability_increases_false_positive_harm",
+              "source": "probability_rule",
+              "finding": "Обзор или мониторинг может быть безопаснее, чем принудительный скрининг."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "incidental_adrenal_or_liver_finding_does_not_confirm_hypercortisolism",
+              "discoveryPaths": [
+                "imaging_before_or_after_confirmation",
+                "endogenous_acth_and_adrenal_imaging_record",
+                "multisystem_cushing_phenotype_record"
+              ]
+            },
+            {
+              "factId": "low_pretest_probability_increases_false_positive_harm",
+              "discoveryPaths": [
+                "measured_water_and_urination_trend",
+                "appetite_panting_abdomen_muscle_skin_progression",
+                "confirmation_before_differentiation_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_clinical_sign_routine_lab_and_medication_inventory",
+              "classification": "required_reassessment",
+              "result": "При уточнении анамнеза: низкая или нерешенная клиническая вероятность."
+            },
+            {
+              "id": "cushing_delay_testing_during_significant_nonadrenal_illness",
+              "classification": "required_interpretability_review",
+              "result": "Целевое исследование показало: никакого принудительного теста с низким значением."
+            },
+            {
+              "id": "cushing_confirm_before_differentiation",
+              "classification": "required_if_disease_claimed",
+              "result": "Целевое исследование показало: визуализация сама по себе не соответствует критериям подтверждения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "incidental_adrenal_or_liver_finding_does_not_confirm_hypercortisolism",
+              "low_pretest_probability_increases_false_positive_harm"
+            ],
+            "confirmedDiagnosisRequires": [
+              "new_compatible_clinical_pattern_plus_interpretable_endocrine_confirmation"
+            ],
+            "dangerStates": [
+              "invasive_mass_feature",
+              "rapid_growth",
+              "unrelated_illness_missed"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "biochemistry",
+              "urinalysis",
+              "cushing_clinical_inventory"
+            ],
+            "external": [
+              "adrenal_imaging_external",
+              "cushing_confirmation_review",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_inventory_route",
+              "cushing_confirmation_route",
+              "cushing_differentiation_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "appropriate_suspicion_plan",
+          "followUp": {
+            "timing": "Обзор клинических тенденций и случайных находок без автоматического эндокринного лечения.",
+            "required": true,
+            "targets": [
+              "water",
+              "urination",
+              "sign_progression",
+              "mass_change",
+              "routine_labs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Случайная анатомия контролируется или исследуется по существу.",
+            "unsafe": "Узел надпочечника или изолированное значение ЩФ автоматически диагностируют синдром Кушинга."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: изменения в надпочечниках могут быть нефункциональными, и их не следует путать с подтвержденным гормональным заболеванием."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "nonurgent_staged_review_or_specialist_referral",
+            "ownerModifiers": [
+              "alarmed_by_mass_word",
+              "requests_immediate_treatment"
+            ]
+          }
+        },
+        {
+          "id": "p3_concurrent_illness_stress_or_recent_glucocorticoid_exposure",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_concurrent_illness",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что серьезное ненадпочечниковое заболевание, боль, госпитализация, стресс или недавнее воздействие глюкокортикоидов делают эндокринные тесты вводящими в заблуждение или небезопасными для интерпретации сейчас.",
+          "historyAnswers": {
+            "acute_illness_pain_hospital_stress": "По нашим наблюдениям, активный фактор, мешающий интерпретации.",
+            "all_route_glucocorticoid_inventory": "Дома мы заметили, что недавний маршрут или время или воздействие зафиксировано.",
+            "diabetes_infection_pancreatitis_thrombosis_signs": "Насколько мы можем судить, картирована тяжесть сопутствующего заболевания.",
+            "endocrine_test_protocol_timing_lab": "Мы записали, что все предыдущие сроки и ограничения испытаний сохраняются."
+          },
+          "examFindings": [
+            {
+              "factId": "significant_nonadrenal_illness_can_create_misleading_screen_results",
+              "source": "test_timing_rule",
+              "finding": "Плановому скринингу предшествует стабилизация и последующий осмотр."
+            },
+            {
+              "factId": "recent_glucocorticoid_exposure_requires_reviewed_timing_not_generated_washout",
+              "source": "exposure_rule",
+              "finding": "Никакого фиксированного интервала промывания не назначается автоматически."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "significant_nonadrenal_illness_can_create_misleading_screen_results",
+              "discoveryPaths": [
+                "acute_illness_pain_hospital_stress",
+                "nonadrenal_illness_interpretability_gate_record",
+                "infection_diabetes_bp_thrombosis_pancreatitis_record"
+              ]
+            },
+            {
+              "factId": "recent_glucocorticoid_exposure_requires_reviewed_timing_not_generated_washout",
+              "discoveryPaths": [
+                "all_route_glucocorticoid_inventory",
+                "all_route_exposure_and_timing_record",
+                "endocrine_test_protocol_timing_lab"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_clinical_sign_routine_lab_and_medication_inventory",
+              "classification": "required",
+              "result": "При уточнении анамнеза: полное воздействие и контекст сопутствующего заболевания."
+            },
+            {
+              "id": "cushing_delay_testing_during_significant_nonadrenal_illness",
+              "classification": "required_gate",
+              "result": "Целевое исследование показало: тестирование отложено или явно ограничено."
+            },
+            {
+              "id": "cushing_infection_diabetes_blood_pressure_and_thrombosis_workup",
+              "classification": "required_by_state",
+              "result": "При измерении давления: сопутствующий путь неотложного заболевания."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "significant_nonadrenal_illness_can_create_misleading_screen_results",
+              "recent_glucocorticoid_exposure_requires_reviewed_timing_not_generated_washout"
+            ],
+            "confirmedDiagnosisRequires": [
+              "later_interpretable_testing_after_reviewed_timing"
+            ],
+            "dangerStates": [
+              "sepsis",
+              "unstable_diabetes",
+              "pancreatitis",
+              "thromboembolism",
+              "acute_neurologic_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "biochemistry",
+              "urinalysis",
+              "endocrine_test_timing_gate",
+              "cushing_complication_assessment"
+            ],
+            "external": [
+              "cushing_screening_external",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_inventory_route",
+              "cushing_timing_gate_route",
+              "cushing_complication_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "appropriate_suspicion_plan",
+          "followUp": {
+            "timing": "После стабилизации сопутствующего заболевания и пересмотра интервала воздействия.",
+            "required": true,
+            "targets": [
+              "illness",
+              "stress",
+              "exposure",
+              "clinical_pattern",
+              "test_eligibility"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неотложное заболевание находится под контролем, а эндокринная неопределенность остается явной.",
+            "unsafe": "Больной пациент, находящийся в состоянии стресса, помечается как подтвержденный на основании случайного высокого результата."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему тестирование сейчас может привести к трате денег и получению ошибочного ответа."
+          ],
+          "compatibility": {
+            "temperament": [
+              "ill",
+              "painful",
+              "stressed"
+            ],
+            "requiredHandlingAlternative": "stabilize_current_illness_then_review_testing",
+            "ownerModifiers": [
+              "wants_test_today",
+              "concerned_about_delay"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cushing_pituitary_dependent",
+      "version": "2026.07.16.40",
+      "title": "Гипофизарно-зависимый гиперадренокортицизм",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Гипофизарно-зависимое заболевание требует подтвержденного клинически значимого гиперкортицизма плюс совместимой дифференцировки; двусторонние изменения надпочечников являются скорее поддерживающими, чем достаточными, неврологические проблемы с макроаденомой вызывают визуализацию гипофиза, а долгосрочный контроль оценивается клинически с контролем безопасности.",
+      "exclusions": [
+        "bilateral_adrenals_alone",
+        "breed_or_size_as_diagnosis",
+        "one_cortisol_number_monitoring"
+      ],
+      "planBundleId": "pituitary_dependent_plan",
+      "sourceIds": [
+        "aaha_endocrinopathies_2023",
+        "merck_cushing_2024",
+        "merck_pituitary_cushing",
+        "acvim_hac_diagnosis_consensus"
+      ],
+      "presentations": [
+        {
+          "id": "p1_confirmed_hypercortisolism_with_pituitary_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_complication",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что клинически значимый гиперкортицизм подтвержден, а данные, полученные после подтверждения, подтверждают гипофизозависимый характер.",
+          "historyAnswers": {
+            "endocrine_test_protocol_timing_lab": "По нашим наблюдениям, протокол подтверждения или результат фиксирован.",
+            "imaging_before_or_after_confirmation": "Дома мы заметили, что дифференциация произошла после подтверждения.",
+            "pacing_behavior_seizure_vision_change": "Насколько мы можем судить, обнаружены красные флаги макроаденомы.",
+            "diabetes_infection_pancreatitis_thrombosis_signs": "Мы записали, что осложнения проверены."
+          },
+          "examFindings": [
+            {
+              "factId": "pituitary_pattern_requires_confirmed_hypercortisolism_before_differentiation",
+              "source": "sequence_rule",
+              "finding": "критерии подтверждения прошли первыми."
+            },
+            {
+              "factId": "bilateral_adrenal_change_is_supportive_not_standalone_pdh_proof",
+              "source": "imaging_limit_rule",
+              "finding": "Эндогенный АКТГ и полный контекст сохранены."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "pituitary_pattern_requires_confirmed_hypercortisolism_before_differentiation",
+              "discoveryPaths": [
+                "confirmation_before_differentiation_record",
+                "endocrine_test_protocol_timing_lab"
+              ]
+            },
+            {
+              "factId": "bilateral_adrenal_change_is_supportive_not_standalone_pdh_proof",
+              "discoveryPaths": [
+                "endogenous_acth_and_adrenal_imaging_record",
+                "imaging_before_or_after_confirmation"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_confirm_before_differentiation",
+              "classification": "required",
+              "result": "Целевое исследование показало: клинически значимый гиперкортицизм подтвержден."
+            },
+            {
+              "id": "cushing_endogenous_acth_and_adrenal_imaging",
+              "classification": "required_differentiation",
+              "result": "В лабораторных показателях крови: совместимый образец гипофиза или данные, интегрированные специалистом."
+            },
+            {
+              "id": "cushing_infection_diabetes_blood_pressure_and_thrombosis_workup",
+              "classification": "required_baseline",
+              "result": "При измерении давления: базовый уровень осложнений."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "pituitary_pattern_requires_confirmed_hypercortisolism_before_differentiation",
+              "bilateral_adrenal_change_is_supportive_not_standalone_pdh_proof"
+            ],
+            "confirmedDiagnosisRequires": [
+              "confirmed_hypercortisolism_plus_compatible_post_confirmation_differentiation"
+            ],
+            "dangerStates": [
+              "macroadenoma_sign",
+              "thrombosis",
+              "sepsis",
+              "unstable_diabetes"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "biochemistry",
+              "urinalysis",
+              "cushing_complication_assessment"
+            ],
+            "external": [
+              "cushing_confirmation_review",
+              "endogenous_acth_external",
+              "adrenal_imaging_external",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_confirmation_route",
+              "cushing_differentiation_route",
+              "cushing_complication_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "pituitary_dependent_plan",
+          "followUp": {
+            "timing": "Базовый уровень после дифференциации, затем клинические контрольные точки и контрольные точки безопасности.",
+            "required": true,
+            "targets": [
+              "water",
+              "appetite",
+              "panting",
+              "skin",
+              "muscle",
+              "complications"
+            ]
+          },
+          "outcomes": {
+            "safe": "гипофизарно-зависимый гиперадренокортицизм назначается после подтверждения и совместимой дифференциации.",
+            "unsafe": "Двустороннее появление надпочечников или их мелкая порода решают причину."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: синдром кортизола был подтвержден до того, как были использованы доказательства для определения его источника."
+          ],
+          "compatibility": {
+            "temperament": [
+              "panting",
+              "weak",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "staged_external_endocrine_workup",
+            "ownerModifiers": [
+              "expects_imaging_to_diagnose_everything",
+              "cost_concern"
+            ]
+          }
+        },
+        {
+          "id": "p2_macroadenoma_neurologic_or_behavioral_concern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_or_emergency_by_neurologic_state",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что у животного с гипофизарно-зависимым гиперадренокортицизмом появились беспокойное хождение, изменение поведения или зрения, судороги либо другие неврологические признаки.",
+          "historyAnswers": {
+            "pacing_behavior_seizure_vision_change": "По нашим наблюдениям, начало и прогрессирование зафиксированы.",
+            "endocrine_test_protocol_timing_lab": "Дома мы заметили, что доказательства эндокринного диагноза сохранены.",
+            "acute_illness_pain_hospital_stress": "Насколько мы можем судить, неврологический статус не может быть выведен на основании эндокринного контроля.",
+            "owner_monitoring_cost_and_referral_feasibility": "Мы записали, что записана возможность срочной визуализации или направления."
+          },
+          "examFindings": [
+            {
+              "factId": "new_neurologic_or_behavioral_signs_trigger_pituitary_brain_imaging_route",
+              "source": "neurologic_rule",
+              "finding": "Макроаденома или конкурирующее заболевание головного мозга остается."
+            },
+            {
+              "factId": "pituitary_imaging_is_not_mandatory_for_every_stable_pdh_patient",
+              "source": "resource_rule",
+              "finding": "Визуализация управляется знаками и решениями."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "new_neurologic_or_behavioral_signs_trigger_pituitary_brain_imaging_route",
+              "discoveryPaths": [
+                "pacing_behavior_seizure_vision_change",
+                "pituitary_neurologic_imaging_record"
+              ]
+            },
+            {
+              "factId": "pituitary_imaging_is_not_mandatory_for_every_stable_pdh_patient",
+              "discoveryPaths": [
+                "owner_monitoring_cost_and_referral_feasibility",
+                "pacing_behavior_seizure_vision_change"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_pituitary_imaging_when_neurologically_indicated",
+              "classification": "required_by_red_flags",
+              "result": "При динамическом наблюдении: размер гипофиза или контекст мозга и конкурирующее поражение."
+            },
+            {
+              "id": "cushing_infection_diabetes_blood_pressure_and_thrombosis_workup",
+              "classification": "required_competing_acute_causes",
+              "result": "При измерении давления: метаболический, АД и тромботический контекст."
+            },
+            {
+              "id": "cushing_treatment_response_and_hypoadrenal_safety_monitoring",
+              "classification": "required_reconciliation",
+              "result": "При динамическом наблюдении: эндокринная безопасность и реальный ответ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "new_neurologic_or_behavioral_signs_trigger_pituitary_brain_imaging_route",
+              "pituitary_imaging_is_not_mandatory_for_every_stable_pdh_patient"
+            ],
+            "confirmedDiagnosisRequires": [
+              "specialist_neurologic_localization_and_pituitary_brain_imaging"
+            ],
+            "dangerStates": [
+              "seizure",
+              "acute_blindness",
+              "altered_mentation",
+              "intracranial_pressure_concern"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cushing_complication_assessment",
+              "cushing_longitudinal_monitoring"
+            ],
+            "external": [
+              "pituitary_imaging_referral",
+              "endocrinology_referral",
+              "safe_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_pituitary_imaging_route",
+              "cushing_complication_route",
+              "cushing_monitoring_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "pituitary_dependent_plan",
+          "followUp": {
+            "timing": "Срочный неврологический путь, затем эндокринный или неврологический путь.",
+            "required": true,
+            "targets": [
+              "mentation",
+              "vision",
+              "seizure",
+              "behavior",
+              "pituitary_imaging",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неврологическое прогрессирование получает целевую визуализацию без изменения каждого стабильного случая ПДГ.",
+            "unsafe": "Новые неврологические признаки игнорируются как старое поведение Кушинга."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему эти новые признаки меняют необходимость визуализации головного мозга или гипофиза."
+          ],
+          "compatibility": {
+            "temperament": [
+              "disoriented",
+              "weak",
+              "neurologically_impaired"
+            ],
+            "requiredHandlingAlternative": "minimal_stress_urgent_neuro_endocrine_referral",
+            "ownerModifiers": [
+              "attributes_to_aging",
+              "transport_barrier"
+            ]
+          }
+        },
+        {
+          "id": "p3_medical_control_and_longitudinal_quality_of_life",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_adverse_sign",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что пациенту с гипофизарной зависимостью, получающему лечение, необходим долгосрочный клинический мониторинг, мониторинг осложнений и безопасности гипонадпочечников.",
+          "historyAnswers": {
+            "measured_water_and_urination_trend": "По нашим наблюдениям, домашний тренд с тем же определением.",
+            "appetite_panting_abdomen_muscle_skin_progression": "Дома мы заметили, что клинический ответ по доменам зарегистрирован.",
+            "current_treatment_actual_use_and_adverse_signs": "Насколько мы можем судить, фактическое использование и неблагоприятные признаки совпадают.",
+            "owner_monitoring_cost_and_referral_feasibility": "Мы записали, что записано осуществимость мониторинга."
+          },
+          "examFindings": [
+            {
+              "factId": "monitoring_uses_clinical_response_and_protocol_specific_safety_not_one_number",
+              "source": "monitoring_rule",
+              "finding": "Вода, аппетит, одышка, кожа, мышцы и качество жизни интегрированы."
+            },
+            {
+              "factId": "poor_response_requires_diagnosis_adherence_complication_and_safety_audit_before_escalation",
+              "source": "failure_analysis_rule",
+              "finding": "Слепого увеличения дозы не происходит."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "monitoring_uses_clinical_response_and_protocol_specific_safety_not_one_number",
+              "discoveryPaths": [
+                "same_definition_home_qol_log",
+                "clinical_response_and_hypoadrenal_safety_record"
+              ]
+            },
+            {
+              "factId": "poor_response_requires_diagnosis_adherence_complication_and_safety_audit_before_escalation",
+              "discoveryPaths": [
+                "current_treatment_actual_use_and_adverse_signs",
+                "infection_diabetes_bp_thrombosis_pancreatitis_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_treatment_response_and_hypoadrenal_safety_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: клиническая польза и безопасность в зависимости от протокола."
+            },
+            {
+              "id": "cushing_owner_water_appetite_skin_strength_and_quality_of_life_log",
+              "classification": "required_home",
+              "result": "При динамическом наблюдении: сопоставимый домашний ответ."
+            },
+            {
+              "id": "cushing_infection_diabetes_blood_pressure_and_thrombosis_workup",
+              "classification": "required_by_findings",
+              "result": "При измерении давления: аудит осложнений."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "monitoring_uses_clinical_response_and_protocol_specific_safety_not_one_number",
+              "poor_response_requires_diagnosis_adherence_complication_and_safety_audit_before_escalation"
+            ],
+            "confirmedDiagnosisRequires": [
+              "original_diagnosis_and_current_plan_identity_preserved"
+            ],
+            "dangerStates": [
+              "hypoadrenal_signs",
+              "poor_appetite_vomiting_weakness",
+              "thrombosis",
+              "sepsis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cushing_home_monitoring",
+              "cushing_longitudinal_monitoring",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_monitoring_route",
+              "cushing_home_log_route",
+              "cushing_complication_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "pituitary_dependent_plan",
+          "followUp": {
+            "timing": "Проверенные контрольные точки протокола плюс постоянный домашний тренд.",
+            "required": true,
+            "targets": [
+              "water",
+              "appetite",
+              "panting",
+              "skin",
+              "strength",
+              "qol",
+              "hypoadrenal_safety"
+            ]
+          },
+          "outcomes": {
+            "safe": "Контроль балансирует клиническую пользу, безопасность и качество жизни.",
+            "unsafe": "Один результат кортизола или стойкий симптом вызывают автоматическую эскалацию."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какие изменения в доме приносят пользу, а какие требуют срочного контакта по вопросам безопасности."
+          ],
+          "compatibility": {
+            "temperament": [
+              "treatment_fatigued",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "home_log_and_coordinated_timed_monitoring",
+            "ownerModifiers": [
+              "monitoring_fatigue",
+              "multiple_caregivers"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cushing_adrenal_dependent",
+      "version": "2026.07.16.40",
+      "title": "Надпочечниково-зависимый гиперадренокортицизм",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Надпочечниково-зависимое заболевание требует подтверждения клинически значимого гиперкортицизма до постподтверждающей дифференциации и определения стадии; односторонняя, двусторонняя, инвазивная или метастатическая анатомия меняет варианты выбора специалиста, но сама по себе не доказывает функцию или не выбирает сторону.",
+      "exclusions": [
+        "adrenal_mass_equals_function",
+        "random_side_selection",
+        "automatic_local_adrenalectomy"
+      ],
+      "planBundleId": "adrenal_dependent_plan",
+      "sourceIds": [
+        "aaha_endocrinopathies_2023",
+        "merck_cushing_2024",
+        "acvim_hac_diagnosis_consensus"
+      ],
+      "presentations": [
+        {
+          "id": "p1_unilateral_adrenal_mass_with_confirmed_hypercortisolism",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_complication",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что клинически значимый гиперкортицизм подтверждается до того, как одностороннее образование надпочечников будет использовано для дифференциации и определения стадии.",
+          "historyAnswers": {
+            "endocrine_test_protocol_timing_lab": "По нашим наблюдениям, подтверждающие доказательства зафиксированы.",
+            "imaging_before_or_after_confirmation": "Дома мы заметили, что изображение интерпретируется после подтверждения.",
+            "diabetes_infection_pancreatitis_thrombosis_signs": "Насколько мы можем судить, экран осложнений.",
+            "owner_monitoring_cost_and_referral_feasibility": "Мы записали, что записана возможность постановки или направления специалиста."
+          },
+          "examFindings": [
+            {
+              "factId": "adrenal_function_is_confirmed_before_mass_based_surgical_planning",
+              "source": "sequence_rule",
+              "finding": "диагноз по случайно найденному образованию заблокирован."
+            },
+            {
+              "factId": "mass_side_size_and_appearance_do_not_replace_staging_or_specialist_selection",
+              "source": "imaging_limit_rule",
+              "finding": "Требуется контекст сосудистого или метастатического или коморбидного состояния."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "adrenal_function_is_confirmed_before_mass_based_surgical_planning",
+              "discoveryPaths": [
+                "confirmation_before_differentiation_record",
+                "endogenous_acth_and_adrenal_imaging_record"
+              ]
+            },
+            {
+              "factId": "mass_side_size_and_appearance_do_not_replace_staging_or_specialist_selection",
+              "discoveryPaths": [
+                "adrenal_stage_invasion_metastasis_surgery_record",
+                "owner_monitoring_cost_and_referral_feasibility"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_confirm_before_differentiation",
+              "classification": "required_first",
+              "result": "Целевое исследование показало: функция подтверждена."
+            },
+            {
+              "id": "cushing_endogenous_acth_and_adrenal_imaging",
+              "classification": "required_differentiation",
+              "result": "В лабораторных показателях крови: совместимый односторонний надпочечниково-зависимый картина."
+            },
+            {
+              "id": "cushing_adrenal_surgery_or_advanced_endocrine_referral",
+              "classification": "required_staging",
+              "result": "По итогам консультации специалиста: специализированный хирургический или расширенный эндокринный путь."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "adrenal_function_is_confirmed_before_mass_based_surgical_planning",
+              "mass_side_size_and_appearance_do_not_replace_staging_or_specialist_selection"
+            ],
+            "confirmedDiagnosisRequires": [
+              "confirmed_hypercortisolism_plus_compatible_adrenal_differentiation"
+            ],
+            "dangerStates": [
+              "vascular_invasion",
+              "metastatic_disease",
+              "thrombosis",
+              "unstable_comorbidity"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "biochemistry",
+              "urinalysis",
+              "cushing_complication_assessment"
+            ],
+            "external": [
+              "cushing_confirmation_review",
+              "endogenous_acth_external",
+              "adrenal_imaging_external",
+              "adrenal_surgery_referral",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_confirmation_route",
+              "cushing_differentiation_route",
+              "cushing_adrenal_referral_route",
+              "cushing_complication_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "adrenal_dependent_plan",
+          "followUp": {
+            "timing": "Этап пост-подтверждения и контрольные точки принятия специализированных решений.",
+            "required": true,
+            "targets": [
+              "function",
+              "mass_extent",
+              "vascular_invasion",
+              "metastasis",
+              "comorbidity",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Функция и этапность предшествуют индивидуальному специализированному маршруту.",
+            "unsafe": "Случайное одностороннее образование автоматически приводит к диагностике или хирургическому вмешательству."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: отдельно, что доказывает избыток гормонов и что визуализация говорит о целесообразности хирургического вмешательства."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "panting",
+              "medically_fragile"
+            ],
+            "requiredHandlingAlternative": "staged_endocrine_and_adrenal_surgery_referral",
+            "ownerModifiers": [
+              "alarmed_by_mass",
+              "procedure_concern"
+            ]
+          }
+        },
+        {
+          "id": "p2_bilateral_or_equivocal_adrenal_findings",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_complication",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что двусторонние узелки, асимметричные железы или противоречивые эндокринные или визуализационные данные препятствуют простому соотнесению гипофиза и надпочечников.",
+          "historyAnswers": {
+            "endocrine_test_protocol_timing_lab": "По нашим наблюдениям, протокол и идентичность результата сохранены.",
+            "imaging_before_or_after_confirmation": "Дома мы заметили, что последовательность записана.",
+            "all_route_glucocorticoid_inventory": "Насколько мы можем судить, ятрогенная мимика исключена или сохранена.",
+            "owner_monitoring_cost_and_referral_feasibility": "Мы записали, что возможно расширенное обследование эндокринной системы или необходимо направление."
+          },
+          "examFindings": [
+            {
+              "factId": "bilateral_or_discordant_adrenal_findings_require_integrated_endocrine_review",
+              "source": "equivocal_rule",
+              "finding": "Ни одна сторона или причина не выбираются случайно."
+            },
+            {
+              "factId": "equivocal_differentiation_does_not_erase_confirmed_syndrome_or_uncertainty",
+              "source": "uncertainty_rule",
+              "finding": "Планирование лечения или направления сохраняет уровень уверенности."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "bilateral_or_discordant_adrenal_findings_require_integrated_endocrine_review",
+              "discoveryPaths": [
+                "endogenous_acth_and_adrenal_imaging_record",
+                "endocrine_test_protocol_timing_lab"
+              ]
+            },
+            {
+              "factId": "equivocal_differentiation_does_not_erase_confirmed_syndrome_or_uncertainty",
+              "discoveryPaths": [
+                "confirmation_before_differentiation_record",
+                "owner_monitoring_cost_and_referral_feasibility"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_confirm_before_differentiation",
+              "classification": "required_preserved",
+              "result": "Целевое исследование показало: подтверждение синдрома сохранено."
+            },
+            {
+              "id": "cushing_endogenous_acth_and_adrenal_imaging",
+              "classification": "required_integrated_review",
+              "result": "В лабораторных показателях крови: противоречивые или явные двусторонние доказательства."
+            },
+            {
+              "id": "cushing_adrenal_surgery_or_advanced_endocrine_referral",
+              "classification": "required_if_cause_changes_plan",
+              "result": "По итогам консультации специалиста: специализированное разрешение или постановочные варианты."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "bilateral_or_discordant_adrenal_findings_require_integrated_endocrine_review",
+              "equivocal_differentiation_does_not_erase_confirmed_syndrome_or_uncertainty"
+            ],
+            "confirmedDiagnosisRequires": [
+              "confirmed_syndrome_with_specialist_differentiation_confidence"
+            ],
+            "dangerStates": [
+              "wrong_side_surgery",
+              "false_pituitary_assignment",
+              "unrecognized_bilateral_function"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "cushing_confirmation_review",
+              "endogenous_acth_external",
+              "adrenal_imaging_external",
+              "endocrinology_referral",
+              "adrenal_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_confirmation_route",
+              "cushing_differentiation_route",
+              "cushing_adrenal_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "adrenal_dependent_plan",
+          "followUp": {
+            "timing": "Контрольная точка дифференциации специалиста перед принятием необратимого решения.",
+            "required": true,
+            "targets": [
+              "left_adrenal",
+              "right_adrenal",
+              "endogenous_acth",
+              "confirmation",
+              "decision_confidence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Разногласия остаются видимыми до тех пор, пока специалист не интегрируется.",
+            "unsafe": "Опасно угадывать железу или причину по неоднозначной анатомии."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: двусторонние результаты могут иметь несколько значений и их нельзя решать путем догадок."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "use_external_records_and_endocrine_referral",
+            "ownerModifiers": [
+              "wants_definite_side",
+              "cost_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_invasive_or_metastatic_risk_and_surgical_referral",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_invasion_complication_or_decompensation",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что при подтвержденном надпочечниково-зависимом заболевании возможна сосудистая инвазия, метастазы или серьезные сопутствующие заболевания, влияющие на хирургическое вмешательство, а не на медикаментозное или паллиативное планирование.",
+          "historyAnswers": {
+            "diabetes_infection_pancreatitis_thrombosis_signs": "По нашим наблюдениям, зарегистрировано бремя осложнений.",
+            "blood_pressure_weight_and_strength_trend": "Мы записали изменения давления, силы и самочувствия после предыдущих процедур.",
+            "imaging_before_or_after_confirmation": "Насколько мы можем судить, постановка следует за подтверждением.",
+            "owner_monitoring_cost_and_referral_feasibility": "Мы записали, что цели и лимиты направление к специалисту ясны."
+          },
+          "examFindings": [
+            {
+              "factId": "vascular_invasion_metastasis_and_comorbidity_define_specialist_risk_not_automatic_inoperability",
+              "source": "staging_rule",
+              "finding": "Диапазон неопределенности сохранен."
+            },
+            {
+              "factId": "surgery_medical_or_palliative_route_requires_shared_specialist_decision",
+              "source": "decision_rule",
+              "finding": "Нет созданного порога или гарантии."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "vascular_invasion_metastasis_and_comorbidity_define_specialist_risk_not_automatic_inoperability",
+              "discoveryPaths": [
+                "adrenal_stage_invasion_metastasis_surgery_record",
+                "infection_diabetes_bp_thrombosis_pancreatitis_record"
+              ]
+            },
+            {
+              "factId": "surgery_medical_or_palliative_route_requires_shared_specialist_decision",
+              "discoveryPaths": [
+                "owner_monitoring_cost_and_referral_feasibility",
+                "adrenal_stage_invasion_metastasis_surgery_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_adrenal_surgery_or_advanced_endocrine_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: постановка и индивидуальный маршрут."
+            },
+            {
+              "id": "cushing_infection_diabetes_blood_pressure_and_thrombosis_workup",
+              "classification": "required",
+              "result": "При измерении давления: периферийный риск и осложнения."
+            },
+            {
+              "id": "cushing_owner_water_appetite_skin_strength_and_quality_of_life_log",
+              "classification": "required_decision_context",
+              "result": "При динамическом наблюдении: бремя болезни и цели владельца."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "vascular_invasion_metastasis_and_comorbidity_define_specialist_risk_not_automatic_inoperability",
+              "surgery_medical_or_palliative_route_requires_shared_specialist_decision"
+            ],
+            "confirmedDiagnosisRequires": [
+              "confirmed_adrenal_function_plus_specialist_stage"
+            ],
+            "dangerStates": [
+              "vena_cava_invasion",
+              "metastasis",
+              "thrombosis",
+              "sepsis",
+              "perioperative_instability"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cushing_complication_assessment",
+              "cushing_home_monitoring",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "adrenal_imaging_external",
+              "adrenal_surgery_referral",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_adrenal_referral_route",
+              "cushing_complication_route",
+              "cushing_home_log_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "adrenal_dependent_plan",
+          "followUp": {
+            "timing": "Этап передачи обслуживания, а затем мониторинг безопасности и качества жизни на конкретном маршруте.",
+            "required": true,
+            "targets": [
+              "invasion",
+              "metastasis",
+              "complication",
+              "function",
+              "qol",
+              "decision"
+            ]
+          },
+          "outcomes": {
+            "safe": "Риск и цели определяют решение специалиста с явной неопределенностью.",
+            "unsafe": "Только визуализация определяет излечимость, неоперабельность или необходимость хирургического вмешательства."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: дайте поэтапный диапазон работоспособности и осложнений, не обещая окончательный маршрут."
+          ],
+          "compatibility": {
+            "temperament": [
+              "medically_fragile",
+              "weak",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "stabilize_complications_and_specialist_stage",
+            "ownerModifiers": [
+              "financial_constraint",
+              "procedure_fear",
+              "seeks_prognosis"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cushing_iatrogenic",
+      "version": "2026.07.16.40",
+      "title": "Ятрогенный гиперадренокортицизм и подавление гипоталамо-гипофизарно-надпочечниковая оси",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Ятрогенный гиперадренокортицизм и подавление оси гипоталамо-гипофизарно-надпочечниковая ось требуют совместимого фенотипа плюс полное воздействие глюкокортикоидов на всех маршрутах; резкая отмена небезопасна, и любые изменения, снижение дозы, поддержка стресса или протокол неотложной помощи остаются на рассмотрении врача.",
+      "exclusions": [
+        "oral_only_inventory",
+        "abrupt_withdrawal_safe",
+        "generated_taper_or_stress_protocol"
+      ],
+      "planBundleId": "iatrogenic_plan",
+      "sourceIds": [
+        "aaha_endocrinopathies_2023",
+        "merck_cushing_2024",
+        "acvim_hac_diagnosis_consensus"
+      ],
+      "presentations": [
+        {
+          "id": "p1_chronic_systemic_glucocorticoid_exposure",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_adverse_or_hypoadrenal_sign",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что совместимый фенотип Кушинга следует за длительным системным воздействием глюкокортикоидов с возможным подавлением оси гипоталамо-гипофизарно-надпочечниковая ось.",
+          "historyAnswers": {
+            "all_route_glucocorticoid_inventory": "По нашим наблюдениям, препарат системного действия, сроки и фактическое использование фиксированы.",
+            "appetite_panting_abdomen_muscle_skin_progression": "Дома мы заметили, что прогрессирование фенотипа.",
+            "current_treatment_actual_use_and_adverse_signs": "Насколько мы можем судить, текущее воздействие и неблагоприятные признаки совпали.",
+            "acute_illness_pain_hospital_stress": "Мы записали, что влияние текущего стресса и сопутствующей болезни зафиксированы."
+          },
+          "examFindings": [
+            {
+              "factId": "systemic_exposure_plus_phenotype_supports_iatrogenic_route_not_spontaneous_shortcut",
+              "source": "etiology_rule",
+              "finding": "Разоблачение остается главным доказательством."
+            },
+            {
+              "factId": "abrupt_withdrawal_can_expose_hpa_suppression_and_is_not_declared_safe",
+              "source": "withdrawal_safety_rule",
+              "finding": "Требуется пересмотренный план изменений."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "systemic_exposure_plus_phenotype_supports_iatrogenic_route_not_spontaneous_shortcut",
+              "discoveryPaths": [
+                "all_route_glucocorticoid_inventory",
+                "all_route_exposure_and_timing_record",
+                "multisystem_cushing_phenotype_record"
+              ]
+            },
+            {
+              "factId": "abrupt_withdrawal_can_expose_hpa_suppression_and_is_not_declared_safe",
+              "discoveryPaths": [
+                "current_treatment_actual_use_and_adverse_signs",
+                "clinical_response_and_hypoadrenal_safety_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_clinical_sign_routine_lab_and_medication_inventory",
+              "classification": "required_first",
+              "result": "При уточнении анамнеза: связь «экспозиция-фенотип»."
+            },
+            {
+              "id": "cushing_treatment_response_and_hypoadrenal_safety_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: подавление оси и контекст клинической безопасности."
+            },
+            {
+              "id": "cushing_delay_testing_during_significant_nonadrenal_illness",
+              "classification": "required_if_testing_considered",
+              "result": "Целевое исследование показало: ограничение интерпретируемости воздействия или заболевания."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "systemic_exposure_plus_phenotype_supports_iatrogenic_route_not_spontaneous_shortcut",
+              "abrupt_withdrawal_can_expose_hpa_suppression_and_is_not_declared_safe"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_phenotype_plus_verified_systemic_exposure_and_review"
+            ],
+            "dangerStates": [
+              "abrupt_withdrawal",
+              "vomiting_weakness_collapse",
+              "acute_illness_with_suppression"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cushing_clinical_inventory",
+              "biochemistry",
+              "urinalysis",
+              "cushing_longitudinal_monitoring"
+            ],
+            "external": [
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_inventory_route",
+              "cushing_monitoring_route",
+              "cushing_timing_gate_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "iatrogenic_plan",
+          "followUp": {
+            "timing": "Рассмотрены контрольные точки изменения воздействия и клинической или гипоадреналовой безопасности.",
+            "required": true,
+            "targets": [
+              "exposure",
+              "water",
+              "appetite",
+              "strength",
+              "skin",
+              "hypoadrenal_signs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ятрогенные заболевания и риск подавления контролируются посредством пересмотренного плана изменений.",
+            "unsafe": "Воздействие прекращают резко или сразу считают спонтанным заболеванием без уточнения всех применявшихся препаратов."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему лекарство может вызывать как симптомы Кушинга, так и риск отмены."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "medication_reconciliation_and_specialist_plan",
+            "ownerModifiers": [
+              "wants_immediate_stop",
+              "multiple_prescribers"
+            ]
+          }
+        },
+        {
+          "id": "p2_topical_otic_ophthalmic_inhaled_or_hidden_exposure",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_suppression_sign",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что непероральное или скрытое воздействие глюкокортикоидов через уши, глаза, кожу, вдыхание или повторное употребление продуктов объясняет совместимый фенотип или искажение теста.",
+          "historyAnswers": {
+            "all_route_glucocorticoid_inventory": "По нашим наблюдениям, каждый маршрут, препарат, используемый дома и врач, выписавший рецепт, подробно перечислены.",
+            "current_treatment_actual_use_and_adverse_signs": "Дома мы заметили, что фактическая частота и перекрытие регистрируются без вынесения оценки дозы.",
+            "endocrine_test_protocol_timing_lab": "Насколько мы можем судить, тестирование относительно фиксированного воздействия.",
+            "owner_monitoring_cost_and_referral_feasibility": "Мы записали, что записан осуществимый план координации."
+          },
+          "examFindings": [
+            {
+              "factId": "otic_ophthalmic_dermal_inhaled_and_hidden_routes_count_as_exposure",
+              "source": "inventory_rule",
+              "finding": "Неоральный путь не опускается."
+            },
+            {
+              "factId": "exposure_timing_can_change_endocrine_test_interpretability",
+              "source": "test_limit_rule",
+              "finding": "Требуется пересмотр времени."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "otic_ophthalmic_dermal_inhaled_and_hidden_routes_count_as_exposure",
+              "discoveryPaths": [
+                "all_route_glucocorticoid_inventory",
+                "all_route_exposure_and_timing_record"
+              ]
+            },
+            {
+              "factId": "exposure_timing_can_change_endocrine_test_interpretability",
+              "discoveryPaths": [
+                "endocrine_test_protocol_timing_lab",
+                "nonadrenal_illness_interpretability_gate_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_clinical_sign_routine_lab_and_medication_inventory",
+              "classification": "required_complete_route_inventory",
+              "result": "При уточнении анамнеза: вероятность скрытого или системного воздействия."
+            },
+            {
+              "id": "cushing_delay_testing_during_significant_nonadrenal_illness",
+              "classification": "required_exposure_gate",
+              "result": "Целевое исследование показало: интерпретируемый будущий маршрут испытаний."
+            },
+            {
+              "id": "cushing_treatment_response_and_hypoadrenal_safety_monitoring",
+              "classification": "required_if_plan_changes",
+              "result": "При динамическом наблюдении: безопасность после рассмотренной модификации воздействия."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "otic_ophthalmic_dermal_inhaled_and_hidden_routes_count_as_exposure",
+              "exposure_timing_can_change_endocrine_test_interpretability"
+            ],
+            "confirmedDiagnosisRequires": [
+              "verified_nonoral_exposure_plus_compatible_phenotype_or_axis_review"
+            ],
+            "dangerStates": [
+              "multiple_uncoordinated_products",
+              "abrupt_stop",
+              "false_spontaneous_diagnosis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cushing_clinical_inventory",
+              "endocrine_test_timing_gate",
+              "cushing_longitudinal_monitoring"
+            ],
+            "external": [
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_inventory_route",
+              "cushing_timing_gate_route",
+              "cushing_monitoring_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "iatrogenic_plan",
+          "followUp": {
+            "timing": "После скоординированного пересмотра изменения воздействия и мониторинга безопасности.",
+            "required": true,
+            "targets": [
+              "all_products",
+              "phenotype",
+              "test_eligibility",
+              "underlying_condition",
+              "hypoadrenal_signs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Все скрытые источники глюкокортикоидов выявлены, а дальнейшие изменения согласованы с назначившим врачом.",
+            "unsafe": "Подинтерпретируются только таблетки, и тестирование проводится так, как если бы воздействия не было."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: спросите каждую бутылку и устройство; Объясните, что местные продукты все еще могут влиять на гормональную ось."
+          ],
+          "compatibility": {
+            "temperament": [
+              "handling_sensitive",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "container_based_reconciliation_and_coordinated_referral",
+            "ownerModifiers": [
+              "does_not_consider_topicals_medicine",
+              "multiple_prescribers"
+            ]
+          }
+        },
+        {
+          "id": "p3_withdrawal_or_illness_reveals_adrenal_suppression_risk",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_by_collapse_vomiting_or_shock",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что абстиненция или интеркуррентное заболевание проявляются слабостью, анорексией, рвотой, коллапсом или шоком, совместимыми с риском подавления надпочечников.",
+          "historyAnswers": {
+            "current_treatment_actual_use_and_adverse_signs": "По нашим наблюдениям, недавнее изменение или прекращение и устранение симптомов.",
+            "all_route_glucocorticoid_inventory": "Дома мы заметили, что продолжительность или маршруты воздействия сохранены.",
+            "acute_illness_pain_hospital_stress": "Насколько мы можем судить, выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного.",
+            "owner_monitoring_cost_and_referral_feasibility": "Мы записали, что зафиксирована возможность экстренной транспортировки."
+          },
+          "examFindings": [
+            {
+              "factId": "withdrawal_or_illness_with_suppression_signs_creates_urgent_hypoadrenal_route",
+              "source": "emergency_rule",
+              "finding": "Безопасность предшествует плановому обследованию Кушинга."
+            },
+            {
+              "factId": "stress_support_and_taper_details_remain_reviewed_protocols",
+              "source": "scope_rule",
+              "finding": "Никакого режима, генерируемого кодом."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "withdrawal_or_illness_with_suppression_signs_creates_urgent_hypoadrenal_route",
+              "discoveryPaths": [
+                "current_treatment_actual_use_and_adverse_signs",
+                "acute_illness_pain_hospital_stress",
+                "clinical_response_and_hypoadrenal_safety_record"
+              ]
+            },
+            {
+              "factId": "stress_support_and_taper_details_remain_reviewed_protocols",
+              "discoveryPaths": [
+                "all_route_glucocorticoid_inventory",
+                "owner_monitoring_cost_and_referral_feasibility"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_treatment_response_and_hypoadrenal_safety_monitoring",
+              "classification": "required_immediate",
+              "result": "При динамическом наблюдении: гипоадреналовая опасность и предварительная идентичность плана."
+            },
+            {
+              "id": "cushing_infection_diabetes_blood_pressure_and_thrombosis_workup",
+              "classification": "required_by_state",
+              "result": "При измерении давления: конкурирующий и провоцирующий шок или болезнь контекст."
+            },
+            {
+              "id": "cushing_clinical_sign_routine_lab_and_medication_inventory",
+              "classification": "required_parallel",
+              "result": "При уточнении анамнеза: воздействие и текущая физиология."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "withdrawal_or_illness_with_suppression_signs_creates_urgent_hypoadrenal_route",
+              "stress_support_and_taper_details_remain_reviewed_protocols"
+            ],
+            "confirmedDiagnosisRequires": [
+              "verified_exposure_change_plus_specialist_hypoadrenal_assessment"
+            ],
+            "dangerStates": [
+              "collapse",
+              "shock",
+              "vomiting",
+              "hypoglycemia",
+              "electrolyte_derangement"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "biochemistry",
+              "cushing_longitudinal_monitoring",
+              "cushing_complication_assessment"
+            ],
+            "external": [
+              "endocrinology_referral",
+              "safe_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_monitoring_route",
+              "cushing_complication_route",
+              "cushing_inventory_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "iatrogenic_plan",
+          "followUp": {
+            "timing": "Непрерывная передача экстренной помощи с последующим пересмотром оси и плана лечения основного заболевания.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "appetite",
+              "vomiting",
+              "strength",
+              "exposure",
+              "axis_safety"
+            ]
+          },
+          "outcomes": {
+            "safe": "Потенциальное подавление рассматривается как неотложная проблема безопасности, при этом детали режима лечения выносятся наружу.",
+            "unsafe": "Опасно игнорировать симптомы надпочечниковой недостаточности или самостоятельно назначать нагрузочную дозу и темп снижения препарата."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: укажите, что внезапная слабость после смены лекарства может быть неотложной и требует немедленного пересмотра лечения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "collapsed",
+              "medically_fragile"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_emergency_referral",
+            "ownerModifiers": [
+              "stopped_medication_suddenly",
+              "transport_barrier"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cushing_complicated_or_monitoring",
+      "version": "2026.07.16.40",
+      "title": "Осложнённый случай или мониторинг лечения",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Диабет или инсулинорезистентность, гиперлипидемия, инфекция, гипертония, тромбоз, панкреатит и риск гипоадреналовой недостаточности, вызванный лечением, остаются отдельными осложнениями, основанными на фактических данных; В первую очередь лечат неотложные состояния, а эндокринный план согласовывают, а не слепо увеличивают.",
+      "exclusions": [
+        "endocrine_status_proves_infection",
+        "diabetes_erased_into_cushing",
+        "blind_therapy_increase"
+      ],
+      "planBundleId": "complicated_monitoring_plan",
+      "sourceIds": [
+        "aaha_endocrinopathies_2023",
+        "merck_cushing_2024",
+        "merck_pituitary_cushing"
+      ],
+      "presentations": [
+        {
+          "id": "p1_diabetes_insulin_resistance_or_hyperlipidemia_overlap",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_diabetic_or_pancreatic_state",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что подтвержденный или предполагаемый гиперкортизолизм сочетается с диабетом, резистентностью к инсулину или гиперлипидемией, особенно в редких случаях у кошек.",
+          "historyAnswers": {
+            "diabetes_infection_pancreatitis_thrombosis_signs": "По нашим наблюдениям, диабетический контроль, кетоновые или поджелудочные признаки и время фиксированы.",
+            "measured_water_and_urination_trend": "Дома мы заметили, что пУ или ПД не могут быть отнесены к одному заболеванию без доказательств.",
+            "current_treatment_actual_use_and_adverse_signs": "Насколько мы можем судить, планы и фактическое использование согласованы.",
+            "appetite_panting_abdomen_muscle_skin_progression": "Мы записали, что эндокринный фенотип сохранен отдельно."
+          },
+          "examFindings": [
+            {
+              "factId": "diabetes_and_hypercortisolism_keep_separate_confirmation_and_monitoring",
+              "source": "overlap_rule",
+              "finding": "Ни один диагноз не выводится исключительно на основании другого."
+            },
+            {
+              "factId": "unstable_diabetes_or_pancreatitis_is_managed_before_elective_endocrine_testing",
+              "source": "priority_rule",
+              "finding": "Острая безопасность отменяет график испытаний."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "diabetes_and_hypercortisolism_keep_separate_confirmation_and_monitoring",
+              "discoveryPaths": [
+                "diabetes_infection_pancreatitis_thrombosis_signs",
+                "infection_diabetes_bp_thrombosis_pancreatitis_record",
+                "confirmation_before_differentiation_record"
+              ]
+            },
+            {
+              "factId": "unstable_diabetes_or_pancreatitis_is_managed_before_elective_endocrine_testing",
+              "discoveryPaths": [
+                "acute_illness_pain_hospital_stress",
+                "nonadrenal_illness_interpretability_gate_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_infection_diabetes_blood_pressure_and_thrombosis_workup",
+              "classification": "required_immediate_by_state",
+              "result": "При измерении давления: статус осложнений сахарного диабета, липидов и поджелудочной железы."
+            },
+            {
+              "id": "cushing_delay_testing_during_significant_nonadrenal_illness",
+              "classification": "required_gate",
+              "result": "Целевое исследование показало: эндокринные исследования откладываются при нестабильности."
+            },
+            {
+              "id": "cushing_treatment_response_and_hypoadrenal_safety_monitoring",
+              "classification": "required_reconciliation",
+              "result": "При динамическом наблюдении: и динамики заболевания, и безопасность."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "diabetes_and_hypercortisolism_keep_separate_confirmation_and_monitoring",
+              "unstable_diabetes_or_pancreatitis_is_managed_before_elective_endocrine_testing"
+            ],
+            "confirmedDiagnosisRequires": [
+              "separate_diabetes_evidence_plus_interpretable_hypercortisolism_confirmation"
+            ],
+            "dangerStates": [
+              "ketoacidosis",
+              "hypoglycemia",
+              "pancreatitis",
+              "severe_insulin_resistance"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "biochemistry",
+              "urinalysis",
+              "cushing_complication_assessment",
+              "endocrine_test_timing_gate"
+            ],
+            "external": [
+              "cushing_confirmation_review",
+              "endocrinology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_complication_route",
+              "cushing_timing_gate_route",
+              "cushing_monitoring_route",
+              "cushing_confirmation_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "complicated_monitoring_plan",
+          "followUp": {
+            "timing": "Острая стабилизация диабета или поджелудочной железы, затем параллельный эндокринный мониторинг.",
+            "required": true,
+            "targets": [
+              "glucose",
+              "ketones",
+              "appetite",
+              "water",
+              "lipids",
+              "pancreas",
+              "cortisol_safety"
+            ]
+          },
+          "outcomes": {
+            "safe": "Оба заболевания по-прежнему поддаются измерению, и приоритет отдается острому метаболическому риску.",
+            "unsafe": "Плохой контроль диабета автоматически доказывает Кушинга или вызывает слепую эндокринную эскалацию."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какие результаты относятся к диабету, какие подтверждают кортизоловую болезнь и почему необходимо учитывать оба показателя."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "ill",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "stabilize_metabolic_state_and_coordinate_endocrine_referral",
+            "ownerModifiers": [
+              "overwhelmed_by_two_diseases",
+              "monitoring_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p2_recurrent_urinary_skin_or_other_infection",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_site_or_systemic_state",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что во время гиперкортицизма или его лечения можно подозревать рецидивирующую инфекцию мочевых, кожных, ушных или других инфекций.",
+          "historyAnswers": {
+            "infection_sites_culture_cytology_history": "По нашим наблюдениям, место, даты, предыдущие цитологические или культуральные исследования и ответ зафиксированы.",
+            "diabetes_infection_pancreatitis_thrombosis_signs": "Дома мы заметили, что зарегистрирован риск системной или диабетической инфекции.",
+            "current_treatment_actual_use_and_adverse_signs": "Насколько мы можем судить, эндокринный план и реакция согласованы.",
+            "all_route_glucocorticoid_inventory": "Мы записали, что рассмотрено дополнительное иммуносупрессивное воздействие."
+          },
+          "examFindings": [
+            {
+              "factId": "endocrine_status_raises_risk_but_does_not_prove_infection",
+              "source": "infection_evidence_rule",
+              "finding": "Доказательства, специфичные для конкретного места, по-прежнему необходимы."
+            },
+            {
+              "factId": "recurrent_infection_requires_culture_or_cytology_and_cause_review_before_repeat_empiricism",
+              "source": "stewardship_rule",
+              "finding": "Выбор противомикробного препарата не сформирован."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "endocrine_status_raises_risk_but_does_not_prove_infection",
+              "discoveryPaths": [
+                "infection_sites_culture_cytology_history",
+                "infection_diabetes_bp_thrombosis_pancreatitis_record"
+              ]
+            },
+            {
+              "factId": "recurrent_infection_requires_culture_or_cytology_and_cause_review_before_repeat_empiricism",
+              "discoveryPaths": [
+                "infection_sites_culture_cytology_history",
+                "current_treatment_actual_use_and_adverse_signs"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_infection_diabetes_blood_pressure_and_thrombosis_workup",
+              "classification": "required_site_specific",
+              "result": "При измерении давления: признаки инфекции, тяжесть и сопутствующая патология."
+            },
+            {
+              "id": "cushing_treatment_response_and_hypoadrenal_safety_monitoring",
+              "classification": "required_reconciliation",
+              "result": "При динамическом наблюдении: эндокринный контроль или безопасность против рецидива."
+            },
+            {
+              "id": "cushing_clinical_sign_routine_lab_and_medication_inventory",
+              "classification": "required_exposure_review",
+              "result": "При уточнении анамнеза: дополнительные факторы риска и стандартный контекст."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "endocrine_status_raises_risk_but_does_not_prove_infection",
+              "recurrent_infection_requires_culture_or_cytology_and_cause_review_before_repeat_empiricism"
+            ],
+            "confirmedDiagnosisRequires": [
+              "site_specific_cytology_culture_or_other_infection_evidence"
+            ],
+            "dangerStates": [
+              "sepsis",
+              "pyelonephritis",
+              "deep_skin_infection",
+              "resistant_pattern"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "urinalysis",
+              "biochemistry",
+              "cushing_complication_assessment"
+            ],
+            "external": [
+              "endocrinology_referral",
+              "safe_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_complication_route",
+              "cushing_monitoring_route",
+              "cushing_inventory_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "complicated_monitoring_plan",
+          "followUp": {
+            "timing": "Местно-специфическая реакция на инфекцию, затем контрольная точка эндокринной системы или рецидива.",
+            "required": true,
+            "targets": [
+              "site_evidence",
+              "culture_or_cytology",
+              "systemic_state",
+              "endocrine_control",
+              "recurrence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Инфекция подтверждается и отслеживается без потери эндокринного контекста.",
+            "unsafe": "Статус Кушинга сам по себе диагностирует инфекцию или оправдывает бесконечное эмпирическое лечение."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: кортизоловая болезнь увеличивает риск, но тестирование конкретного места все равно необходимо."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "treatment_fatigued",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "representative_site_sampling_and_coordinated_followup",
+            "ownerModifiers": [
+              "expects_repeat_antibiotic",
+              "cost_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p3_thrombosis_hypertension_pancreatitis_or_hypoadrenal_treatment_risk",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_by_thrombotic_hypoadrenal_or_pancreatic_state",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что острая одышка или коллапс, нарушения со стороны конечностей или неврологические нарушения, тяжелая гипертензия, боль в животе или рвота или признаки лечения гипонадпочечников требуют срочного устранения осложнений.",
+          "historyAnswers": {
+            "diabetes_infection_pancreatitis_thrombosis_signs": "По нашим наблюдениям, изменения начались недавно и постепенно усиливаются.",
+            "blood_pressure_weight_and_strength_trend": "Дома мы заметили, что зарегистрирована тенденция изменения АД или перфузии или силы.",
+            "current_treatment_actual_use_and_adverse_signs": "Насколько мы можем судить, фактическое использование, недавние изменения и неблагоприятные признаки зафиксированы.",
+            "acute_illness_pain_hospital_stress": "Мы записали, что текущая нестабильность явная."
+          },
+          "examFindings": [
+            {
+              "factId": "thrombotic_hypertensive_pancreatic_or_hypoadrenal_red_flags_override_routine_monitoring",
+              "source": "emergency_rule",
+              "finding": "Срочная стабилизация или направление предшествует плановому тестированию."
+            },
+            {
+              "factId": "acute_deterioration_triggers_reconciliation_not_blind_endocrine_increase",
+              "source": "safety_rule",
+              "finding": "Причина и токсичность лечения остаются спорными."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "thrombotic_hypertensive_pancreatic_or_hypoadrenal_red_flags_override_routine_monitoring",
+              "discoveryPaths": [
+                "diabetes_infection_pancreatitis_thrombosis_signs",
+                "infection_diabetes_bp_thrombosis_pancreatitis_record",
+                "blood_pressure_weight_and_strength_trend"
+              ]
+            },
+            {
+              "factId": "acute_deterioration_triggers_reconciliation_not_blind_endocrine_increase",
+              "discoveryPaths": [
+                "current_treatment_actual_use_and_adverse_signs",
+                "clinical_response_and_hypoadrenal_safety_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "cushing_infection_diabetes_blood_pressure_and_thrombosis_workup",
+              "classification": "required_immediate",
+              "result": "При измерении давления: вероятность и стабильность острых осложнений."
+            },
+            {
+              "id": "cushing_treatment_response_and_hypoadrenal_safety_monitoring",
+              "classification": "required_parallel",
+              "result": "При динамическом наблюдении: риск гипоадреналовой или токсичности, вызванный лечением."
+            },
+            {
+              "id": "cushing_delay_testing_during_significant_nonadrenal_illness",
+              "classification": "required_gate",
+              "result": "Целевое исследование показало: плановое эндокринное обследование отложено."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "thrombotic_hypertensive_pancreatic_or_hypoadrenal_red_flags_override_routine_monitoring",
+              "acute_deterioration_triggers_reconciliation_not_blind_endocrine_increase"
+            ],
+            "confirmedDiagnosisRequires": [
+              "complication_specific_emergency_evidence_and_treatment_reconciliation"
+            ],
+            "dangerStates": [
+              "thromboembolism",
+              "hypertensive_emergency",
+              "pancreatitis",
+              "hypoadrenal_crisis",
+              "shock"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "biochemistry",
+              "urinalysis",
+              "cushing_complication_assessment",
+              "cushing_longitudinal_monitoring"
+            ],
+            "external": [
+              "endocrinology_referral",
+              "safe_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "cushing_complication_route",
+              "cushing_monitoring_route",
+              "cushing_timing_gate_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "complicated_monitoring_plan",
+          "followUp": {
+            "timing": "Постоянная неотложная передача, затем осложнения или восстановление эндокринной системы.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "respiration",
+              "neurologic_state",
+              "bp",
+              "abdomen",
+              "hypoadrenal_safety"
+            ]
+          },
+          "outcomes": {
+            "safe": "Острое осложнение стабилизируется, а эндокринный план согласовывается с доказательствами.",
+            "unsafe": "Резкое снижение приводит к автоматическому увеличению лечения или плановому назначению врача."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: укажите, какие тревожные сигналы критичны по времени и что причиной может быть осложнение или эффект лечения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "collapsed",
+              "dyspneic",
+              "painful",
+              "medically_fragile"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_emergency_referral",
+            "ownerModifiers": [
+              "panicked",
+              "transport_barrier",
+              "financial_constraint"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if isolated lab sign, appearance, breed or incidental adrenal mass proves Cushing syndrome.",
+    "Reject if major nonadrenal illness or glucocorticoid exposure is ignored when interpreting a test.",
+    "Reject if differentiation or imaging occurs before clinically relevant hypercortisolism is confirmed.",
+    "Reject if non-oral glucocorticoid routes are omitted or abrupt withdrawal is called safe.",
+    "Reject if infection, diabetes, thrombosis, pancreatitis or hypoadrenal risk loses its separate evidence route.",
+    "Reject if code generates a drug, dose, taper, dynamic-test protocol, washout interval or surgical threshold."
+  ]
+}

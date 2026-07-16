@@ -1,0 +1,536 @@
+{
+  "schemaVersion": 1,
+  "provenanceId": "vetgeme-medical-production-authoring-review-source",
+  "packageId": "vetgeme-medical-production-authoring",
+  "packageVersion": "2026.07.16.40",
+  "sourceArchive": "medical-production-authoring-2026.07.16.40.zip",
+  "sourceDirectory": "medical-production-authoring",
+  "archive": {
+    "path": "medical-production-authoring-2026.07.16.40.zip",
+    "checksumPath": "medical-production-authoring-2026.07.16.40.zip.sha256",
+    "sha256": "171659e929f4b8a83cf921a8fa689cd3f5ac632466c4c328dd047199fced71c5",
+    "zipEntryCount": 129,
+    "extractedFileCount": 85,
+    "extractedBytes": 5250732,
+    "keyFileHashes": {
+      "MANIFEST.json": "87ded58e62ecf0b05d87af83e00570004cadafa9a0edd74768eda6e8cb9b3f49",
+      "schemas/clinical-family-production-contract.md": "bf9ba02731d917390e92de4976772faad4e8114f2f74a8c662499c00f354619a",
+      "scripts/validate-medical-authoring.mjs": "860fa735fbce753b274d3574b230cab3309e34bdb205a97e84eda05597f56cfb"
+    }
+  },
+  "sourceFileCount": 85,
+  "sourceBytes": 5250732,
+  "aggregateSha256": "3f3f89ab93e005a5100b39586328c38fa6b4fcf52887be63cabc41ac05c557c8",
+  "files": [
+    {
+      "path": "families/01_ear_external/family.production.json",
+      "originPath": "medical-production-authoring/families/01_ear_external/family.production.json",
+      "bytes": 141068,
+      "sha256": "d035572ad64e9f1b39a0c582490889a9794274d72239c5e4da34b7db49dc6056"
+    },
+    {
+      "path": "families/02_skin_ectoparasites/family.production.json",
+      "originPath": "medical-production-authoring/families/02_skin_ectoparasites/family.production.json",
+      "bytes": 111457,
+      "sha256": "54cd54ef29262d9bc4ab4f1bda27f56241a4573a4c4ad703a0e66e65ca0d6ed7"
+    },
+    {
+      "path": "families/03_gi_acute/family.production.json",
+      "originPath": "medical-production-authoring/families/03_gi_acute/family.production.json",
+      "bytes": 146449,
+      "sha256": "37fcaa8655d0c5481d635db97e6ff279d96354794525e7a086302317aa4d7780"
+    },
+    {
+      "path": "families/04_urinary_feline_lower/family.production.json",
+      "originPath": "medical-production-authoring/families/04_urinary_feline_lower/family.production.json",
+      "bytes": 129604,
+      "sha256": "d5185dc0848e23b711c66723ff335c1b40c3fc820d910233aed0ac0cc68ec309"
+    },
+    {
+      "path": "families/05_eye_surface/family.production.json",
+      "originPath": "medical-production-authoring/families/05_eye_surface/family.production.json",
+      "bytes": 134207,
+      "sha256": "2d608b33267675b701412658da7dd52424b9b3853ad0d81606b13746b0cd3544"
+    },
+    {
+      "path": "families/06_resp_cat_upper/family.production.json",
+      "originPath": "medical-production-authoring/families/06_resp_cat_upper/family.production.json",
+      "bytes": 106969,
+      "sha256": "40ab13a8a2746c5a3d350107ed435b13634b38910106f17679f2b9e6ec12240c"
+    },
+    {
+      "path": "families/07_resp_dog_cough/family.production.json",
+      "originPath": "medical-production-authoring/families/07_resp_dog_cough/family.production.json",
+      "bytes": 124616,
+      "sha256": "b220daaef7e50400bd74b1ea7920a684f90ae89202558d502c2776ef89aac752"
+    },
+    {
+      "path": "families/08_perianal/family.production.json",
+      "originPath": "medical-production-authoring/families/08_perianal/family.production.json",
+      "bytes": 85877,
+      "sha256": "fdc00daa96ac6a9491b8aa8292bc394ad758f47141c4a1b899d570864e71c006"
+    },
+    {
+      "path": "families/09_wound_abscess/family.production.json",
+      "originPath": "medical-production-authoring/families/09_wound_abscess/family.production.json",
+      "bytes": 122999,
+      "sha256": "229279fb8ebab6d28514b77d3426c597c38ca9a6d277c4549479b04348e5fa73"
+    },
+    {
+      "path": "families/10_gi_parasites/family.production.json",
+      "originPath": "medical-production-authoring/families/10_gi_parasites/family.production.json",
+      "bytes": 147092,
+      "sha256": "b654e1a82f77174d15fb24e35e79997ecce8717a2e2c9ea342b1232c19a3c666"
+    },
+    {
+      "path": "families/11_skin_infectious/family.production.json",
+      "originPath": "medical-production-authoring/families/11_skin_infectious/family.production.json",
+      "bytes": 148544,
+      "sha256": "fe17ade066cd04e4492e8c46e8808e861f5ecb3cfae6ed7534835f695f61c9aa"
+    },
+    {
+      "path": "families/12_ortho_lameness/family.production.json",
+      "originPath": "medical-production-authoring/families/12_ortho_lameness/family.production.json",
+      "bytes": 130425,
+      "sha256": "16c8e9519152d05d7e4c31264e56211d26b263545937535666d0d02e0d569247"
+    },
+    {
+      "path": "families/13_urinary_complex/family.production.json",
+      "originPath": "medical-production-authoring/families/13_urinary_complex/family.production.json",
+      "bytes": 135915,
+      "sha256": "467df348d83a78716846db2b03e3c139b836b828c51020851d76614df07e1890"
+    },
+    {
+      "path": "families/14_endocrine_diabetes/family.production.json",
+      "originPath": "medical-production-authoring/families/14_endocrine_diabetes/family.production.json",
+      "bytes": 135325,
+      "sha256": "2ab047c66602e2781d7ea54d26d124d43764e7a3b715b12c87703639eb513742"
+    },
+    {
+      "path": "families/15_renal_ckd/family.production.json",
+      "originPath": "medical-production-authoring/families/15_renal_ckd/family.production.json",
+      "bytes": 153889,
+      "sha256": "2c6233edc431d43777e8b81cbb9f6a86c5f82679ac74f01628b948470447e8c0"
+    },
+    {
+      "path": "families/16_endocrine_feline_hyperthyroid/family.production.json",
+      "originPath": "medical-production-authoring/families/16_endocrine_feline_hyperthyroid/family.production.json",
+      "bytes": 107219,
+      "sha256": "a773963d3cac486a1c3c52efb28f51dbdf4a0b57585a23c9cd0885715894ca2b"
+    },
+    {
+      "path": "families/17_gi_pancreas_acute/family.production.json",
+      "originPath": "medical-production-authoring/families/17_gi_pancreas_acute/family.production.json",
+      "bytes": 129177,
+      "sha256": "6faa05c5c53dde1ebeb803dce2ff61323aca3eb20f20df5db84dc4e1d46c84a3"
+    },
+    {
+      "path": "families/18_repro_pyometra/family.production.json",
+      "originPath": "medical-production-authoring/families/18_repro_pyometra/family.production.json",
+      "bytes": 99546,
+      "sha256": "f0fcc51acaa4e9bc8a4aab01099a578c237fc71c85bee3769ac7885c8821675c"
+    },
+    {
+      "path": "families/19_hematology_anemia/family.production.json",
+      "originPath": "medical-production-authoring/families/19_hematology_anemia/family.production.json",
+      "bytes": 154587,
+      "sha256": "c37961cdcd5f292049d38418a308995cf88c3bdc3226a960dfbc337511ae9dde"
+    },
+    {
+      "path": "families/20_gi_chronic_enteropathy/family.production.json",
+      "originPath": "medical-production-authoring/families/20_gi_chronic_enteropathy/family.production.json",
+      "bytes": 158877,
+      "sha256": "5bd5e8aadc7a394154ec1cdd83c21e397d6ce748a79b28af6f47d5c024b23979"
+    },
+    {
+      "path": "families/21_gi_obstruction/family.production.json",
+      "originPath": "medical-production-authoring/families/21_gi_obstruction/family.production.json",
+      "bytes": 137754,
+      "sha256": "007f20fca7055edc4d68c6252519a13aa87ccaa3cb1062b9fd81e5b229c0d645"
+    },
+    {
+      "path": "families/22_urinary_uroliths/family.production.json",
+      "originPath": "medical-production-authoring/families/22_urinary_uroliths/family.production.json",
+      "bytes": 120484,
+      "sha256": "df84ccb7b6e7b50a79ae95828ca9000b4d24d98ef07e01e6893b47d20e7f92bf"
+    },
+    {
+      "path": "families/23_resp_pneumonia/family.production.json",
+      "originPath": "medical-production-authoring/families/23_resp_pneumonia/family.production.json",
+      "bytes": 124028,
+      "sha256": "e755fd7904537ff5f326d265574cf7e04d4ab0e8ed24c9365fdd5ea9dbbee754"
+    },
+    {
+      "path": "families/24_resp_feline_asthma/family.production.json",
+      "originPath": "medical-production-authoring/families/24_resp_feline_asthma/family.production.json",
+      "bytes": 100768,
+      "sha256": "737a4d3f319a8341a5ef9d9516c004c0965a8da699531e878817a291a236e252"
+    },
+    {
+      "path": "families/25_ortho_fracture_luxation/family.production.json",
+      "originPath": "medical-production-authoring/families/25_ortho_fracture_luxation/family.production.json",
+      "bytes": 171664,
+      "sha256": "9ba6a0ab4cdd27d6d4746fc1433ba6728f09ae9c6753aedd266716688ceba5b7"
+    },
+    {
+      "path": "families/26_dental_periodontal/family.production.json",
+      "originPath": "medical-production-authoring/families/26_dental_periodontal/family.production.json",
+      "bytes": 138132,
+      "sha256": "d41b7d26804d82044dd91c9c2068f5b21069fdd04bea790393500203b0c3d1cc"
+    },
+    {
+      "path": "families/27_gi_gdv/family.production.json",
+      "originPath": "medical-production-authoring/families/27_gi_gdv/family.production.json",
+      "bytes": 79835,
+      "sha256": "5f952b02930477372a2f8bc3a2b0a0b728e6e302368f41a909ed1aa49b27a086"
+    },
+    {
+      "path": "families/28_cardio_chf/family.production.json",
+      "originPath": "medical-production-authoring/families/28_cardio_chf/family.production.json",
+      "bytes": 122598,
+      "sha256": "6c1e0f5c7b2b5f069d00bb9a68c8c09dec47d7d5daec9343fd2a80ef918c4939"
+    },
+    {
+      "path": "families/29_skin_atopy/family.production.json",
+      "originPath": "medical-production-authoring/families/29_skin_atopy/family.production.json",
+      "bytes": 152692,
+      "sha256": "d8a7a526818d91d5461f091400a9ef4fc4526dd28c110caaf6c9c4080a13967d"
+    },
+    {
+      "path": "families/30_ear_chronic_middle/family.production.json",
+      "originPath": "medical-production-authoring/families/30_ear_chronic_middle/family.production.json",
+      "bytes": 155621,
+      "sha256": "e3d03a14597b82f5a2c061db53d108d144d820632a683467889f724a377d984d"
+    },
+    {
+      "path": "families/31_endocrine_cushing/family.production.json",
+      "originPath": "medical-production-authoring/families/31_endocrine_cushing/family.production.json",
+      "bytes": 137599,
+      "sha256": "1e46d778b74ccac56a78157a47133f898846dd7ea810e08102b9f6ad346a6c28"
+    },
+    {
+      "path": "families/32_endocrine_addison/family.production.json",
+      "originPath": "medical-production-authoring/families/32_endocrine_addison/family.production.json",
+      "bytes": 111349,
+      "sha256": "891500bb9ade021d210517b759085c580abdfdc798a528e36af317d21d2f0f22"
+    },
+    {
+      "path": "families/33_gi_epi/family.production.json",
+      "originPath": "medical-production-authoring/families/33_gi_epi/family.production.json",
+      "bytes": 113811,
+      "sha256": "3fa6608291413283d9032bd93004a7483d76770ffc31789d54d1c2901e6b9a1a"
+    },
+    {
+      "path": "families/34_hepatobiliary/family.production.json",
+      "originPath": "medical-production-authoring/families/34_hepatobiliary/family.production.json",
+      "bytes": 156862,
+      "sha256": "bfa5b83a9e538c5b32ca1d41ff559ae38445fb4d8b4a11745eb0940fbaef804d"
+    },
+    {
+      "path": "families/35_oncology_mass/family.production.json",
+      "originPath": "medical-production-authoring/families/35_oncology_mass/family.production.json",
+      "bytes": 139242,
+      "sha256": "fc259ab57687056d45f36ac0f4bb51b5508336441a19181f588f0d26c08abe36"
+    },
+    {
+      "path": "families/36_neuro_vestibular/family.production.json",
+      "originPath": "medical-production-authoring/families/36_neuro_vestibular/family.production.json",
+      "bytes": 109717,
+      "sha256": "007e668fcc321e0f8c541d9c787e58f43c471f35ba51470fc2434f532425e3a8"
+    },
+    {
+      "path": "families/37_infectious_canine_major/family.production.json",
+      "originPath": "medical-production-authoring/families/37_infectious_canine_major/family.production.json",
+      "bytes": 108554,
+      "sha256": "2b91970d13b851622d014666e8d6eaf83d286c42856688eef48cc37fe516ac79"
+    },
+    {
+      "path": "families/38_infectious_feline_major/family.production.json",
+      "originPath": "medical-production-authoring/families/38_infectious_feline_major/family.production.json",
+      "bytes": 121339,
+      "sha256": "94309554f0b3053ed2311656a5ec8f431a4d28fbf8ef531507865125131d592a"
+    },
+    {
+      "path": "families/39_infectious_vector_borne/family.production.json",
+      "originPath": "medical-production-authoring/families/39_infectious_vector_borne/family.production.json",
+      "bytes": 88162,
+      "sha256": "2160fed286ac618ff3376b9e7524c8a3239a50fae986db46d64b33287f9f914d"
+    },
+    {
+      "path": "FINAL_COMPLETION_AUDIT.md",
+      "originPath": "medical-production-authoring/FINAL_COMPLETION_AUDIT.md",
+      "bytes": 7589,
+      "sha256": "7fe29095c2ac214c3d533e62a69b1987357613e883b11f20c8fc92479426859e"
+    },
+    {
+      "path": "MANIFEST.json",
+      "originPath": "medical-production-authoring/MANIFEST.json",
+      "bytes": 20679,
+      "sha256": "87ded58e62ecf0b05d87af83e00570004cadafa9a0edd74768eda6e8cb9b3f49"
+    },
+    {
+      "path": "PROGRAMMER_HANDOFF.md",
+      "originPath": "medical-production-authoring/PROGRAMMER_HANDOFF.md",
+      "bytes": 6749,
+      "sha256": "85e91bfc66131a598e55abbaf85f8a522b4c03368e0a5a26c6898cda3553dcc8"
+    },
+    {
+      "path": "PROGRESS.md",
+      "originPath": "medical-production-authoring/PROGRESS.md",
+      "bytes": 4160,
+      "sha256": "a4616314b90d14afad76ad13045ce052f0805e53dc1b89887d4173a27fcb7a2f"
+    },
+    {
+      "path": "README.md",
+      "originPath": "medical-production-authoring/README.md",
+      "bytes": 4424,
+      "sha256": "6e06fed0327da11d9a2a92f65f37b1620d8a5b9ac4ac332ee53b34f1363df09e"
+    },
+    {
+      "path": "review/01_ear_external-source-review.md",
+      "originPath": "medical-production-authoring/review/01_ear_external-source-review.md",
+      "bytes": 3383,
+      "sha256": "85f207fbb1c098d43f92e6150353b71a68c5c3835a282cde0020ff1ba5f14f60"
+    },
+    {
+      "path": "review/02_skin_ectoparasites-source-review.md",
+      "originPath": "medical-production-authoring/review/02_skin_ectoparasites-source-review.md",
+      "bytes": 2989,
+      "sha256": "9e4dc866babd6ee6196a9061b16d0f11d9e07fc4ac60a05919691dd097cfaf77"
+    },
+    {
+      "path": "review/03_gi_acute-source-review.md",
+      "originPath": "medical-production-authoring/review/03_gi_acute-source-review.md",
+      "bytes": 3694,
+      "sha256": "59c4ad2ab068fec58401b371efa11b7535d1d26ae0efc1d464c8cb359e73f800"
+    },
+    {
+      "path": "review/04_urinary_feline_lower-source-review.md",
+      "originPath": "medical-production-authoring/review/04_urinary_feline_lower-source-review.md",
+      "bytes": 4122,
+      "sha256": "81fb664e02474d49141444b4a4bef33bc13d5db626b96036f6c4426c0928c363"
+    },
+    {
+      "path": "review/05_eye_surface-source-review.md",
+      "originPath": "medical-production-authoring/review/05_eye_surface-source-review.md",
+      "bytes": 4027,
+      "sha256": "e212978d07c32833e2e3f4b2ac5458fe2539619350c27ff1b958400807b320e6"
+    },
+    {
+      "path": "review/06_resp_cat_upper-source-review.md",
+      "originPath": "medical-production-authoring/review/06_resp_cat_upper-source-review.md",
+      "bytes": 3760,
+      "sha256": "46a6d534725f9f11b901f8c595ae8f91e4d80469afc1b949ed2c25ed1e01f6e0"
+    },
+    {
+      "path": "review/07_resp_dog_cough-source-review.md",
+      "originPath": "medical-production-authoring/review/07_resp_dog_cough-source-review.md",
+      "bytes": 4098,
+      "sha256": "38dc771b5e924dabfaa3297a3100fe19a589cc4bff160cc7ab9a24ea991d2f11"
+    },
+    {
+      "path": "review/08_perianal-source-review.md",
+      "originPath": "medical-production-authoring/review/08_perianal-source-review.md",
+      "bytes": 3677,
+      "sha256": "a9ad48062355df1245f5ec00a92d5320cbf08c842a1948f320c338c5b7937475"
+    },
+    {
+      "path": "review/09_wound_abscess-source-review.md",
+      "originPath": "medical-production-authoring/review/09_wound_abscess-source-review.md",
+      "bytes": 4711,
+      "sha256": "d97b1b335d7395012601cb5a6b54b7245817f6c424106116b38a9b5fea5518ef"
+    },
+    {
+      "path": "review/10_gi_parasites-source-review.md",
+      "originPath": "medical-production-authoring/review/10_gi_parasites-source-review.md",
+      "bytes": 5191,
+      "sha256": "eb7e645e7d5d8857f4b66c4a5860c3686a753393db91b4883e57dfed3f11c9aa"
+    },
+    {
+      "path": "review/11_skin_infectious-source-review.md",
+      "originPath": "medical-production-authoring/review/11_skin_infectious-source-review.md",
+      "bytes": 5923,
+      "sha256": "95f95d671dcf84703db9c1abfc85f60cec55d816d45ae54e58182de37293f1b1"
+    },
+    {
+      "path": "review/12_ortho_lameness-source-review.md",
+      "originPath": "medical-production-authoring/review/12_ortho_lameness-source-review.md",
+      "bytes": 5913,
+      "sha256": "a06c3ab277079a65f0585ae8be2857f198f46edd151136c073832679765fa93d"
+    },
+    {
+      "path": "review/13_urinary_complex-source-review.md",
+      "originPath": "medical-production-authoring/review/13_urinary_complex-source-review.md",
+      "bytes": 8021,
+      "sha256": "15c493cd8ef79425b901b919894aa1c6957de333652e6353d063b3c2a4db4fc7"
+    },
+    {
+      "path": "review/14_endocrine_diabetes-source-review.md",
+      "originPath": "medical-production-authoring/review/14_endocrine_diabetes-source-review.md",
+      "bytes": 6924,
+      "sha256": "45af33144a599417074773e370af8e128b155e50fb3edbfa18ddb4091905c74c"
+    },
+    {
+      "path": "review/15_renal_ckd-source-review.md",
+      "originPath": "medical-production-authoring/review/15_renal_ckd-source-review.md",
+      "bytes": 6363,
+      "sha256": "86a66856a287a6549601a3efee1cd43a4933c5b730e3e7290c462158c4344723"
+    },
+    {
+      "path": "review/16_endocrine_feline_hyperthyroid-source-review.md",
+      "originPath": "medical-production-authoring/review/16_endocrine_feline_hyperthyroid-source-review.md",
+      "bytes": 4487,
+      "sha256": "a6eae77aff6f0c41b55a83246b87426f3c177a1d4a8063bb1855d169222ad63b"
+    },
+    {
+      "path": "review/17_gi_pancreas_acute-source-review.md",
+      "originPath": "medical-production-authoring/review/17_gi_pancreas_acute-source-review.md",
+      "bytes": 5684,
+      "sha256": "87c726844a3bf2fc04fe7262e8baebd49e7898c81498ac0ee666b44797d8420a"
+    },
+    {
+      "path": "review/18_repro_pyometra-source-review.md",
+      "originPath": "medical-production-authoring/review/18_repro_pyometra-source-review.md",
+      "bytes": 5059,
+      "sha256": "733b56a17cc5de4edef68e50be031cd247b0d4c4e73fc7979f368731be891d47"
+    },
+    {
+      "path": "review/19_hematology_anemia-source-review.md",
+      "originPath": "medical-production-authoring/review/19_hematology_anemia-source-review.md",
+      "bytes": 6270,
+      "sha256": "9596c051efaae452ecaf554347462f6bef9690cfdbae03d82a668f966e1ce562"
+    },
+    {
+      "path": "review/20_gi_chronic_enteropathy-source-review.md",
+      "originPath": "medical-production-authoring/review/20_gi_chronic_enteropathy-source-review.md",
+      "bytes": 8224,
+      "sha256": "d516073904a3a0eef0f6e406ec7499eec7dce17bd5ba249109457ba0e5a87683"
+    },
+    {
+      "path": "review/21_gi_obstruction-source-review.md",
+      "originPath": "medical-production-authoring/review/21_gi_obstruction-source-review.md",
+      "bytes": 5964,
+      "sha256": "8a0514d6ab9c18803e037e833942b12c1a04b694f3801e9e5862abfb8852a94f"
+    },
+    {
+      "path": "review/22_urinary_uroliths-source-review.md",
+      "originPath": "medical-production-authoring/review/22_urinary_uroliths-source-review.md",
+      "bytes": 6261,
+      "sha256": "76e3d6d7bc8bb63b130c6aac44d4ab9e61ec84a5e576e8c1e3776d66609957ad"
+    },
+    {
+      "path": "review/23_resp_pneumonia-source-review.md",
+      "originPath": "medical-production-authoring/review/23_resp_pneumonia-source-review.md",
+      "bytes": 5940,
+      "sha256": "989d10c68eb7b82338373a6a766a6654fbf0a13136d475aff401b948390574e8"
+    },
+    {
+      "path": "review/24_resp_feline_asthma-source-review.md",
+      "originPath": "medical-production-authoring/review/24_resp_feline_asthma-source-review.md",
+      "bytes": 7844,
+      "sha256": "ecf6a160de2ff961ac8fdf6f86059fe5ce9131dca791c89f6e5beadf1fa0a408"
+    },
+    {
+      "path": "review/25_ortho_fracture_luxation-source-review.md",
+      "originPath": "medical-production-authoring/review/25_ortho_fracture_luxation-source-review.md",
+      "bytes": 8167,
+      "sha256": "63cef23e35f9ecb742520d8bfe35ef5d86d0ce4784195a2bb9667a8d060cc0ad"
+    },
+    {
+      "path": "review/26_dental_periodontal-source-review.md",
+      "originPath": "medical-production-authoring/review/26_dental_periodontal-source-review.md",
+      "bytes": 4631,
+      "sha256": "3588a21a428577f99d874b27b4196eda3a77a3877012f00dd6bead796adeb3ca"
+    },
+    {
+      "path": "review/27_gi_gdv-source-review.md",
+      "originPath": "medical-production-authoring/review/27_gi_gdv-source-review.md",
+      "bytes": 3779,
+      "sha256": "2838f878a5232c59e1f565b92037ad8a756a42048e67a18caa12f03d15cc8983"
+    },
+    {
+      "path": "review/28_cardio_chf-source-review.md",
+      "originPath": "medical-production-authoring/review/28_cardio_chf-source-review.md",
+      "bytes": 3995,
+      "sha256": "41f4c9c3c21627213b0cd5eac3a0772582630189064d3583f4af1389aa021517"
+    },
+    {
+      "path": "review/29_skin_atopy-source-review.md",
+      "originPath": "medical-production-authoring/review/29_skin_atopy-source-review.md",
+      "bytes": 4926,
+      "sha256": "5cacd1c937f49a0f2109605888abd432d20d7c90fb35da7df488b86895568e23"
+    },
+    {
+      "path": "review/30_ear_chronic_middle-source-review.md",
+      "originPath": "medical-production-authoring/review/30_ear_chronic_middle-source-review.md",
+      "bytes": 4810,
+      "sha256": "3796c671497b63566ac6210fbf03a2b28ced3fe7563a1a7bad109710c58f45ef"
+    },
+    {
+      "path": "review/31_endocrine_cushing-source-review.md",
+      "originPath": "medical-production-authoring/review/31_endocrine_cushing-source-review.md",
+      "bytes": 4206,
+      "sha256": "60305d7e6177815a134d27561db72bc0b0cc2a1c590ab8f8f1897939064ea9f8"
+    },
+    {
+      "path": "review/32_endocrine_addison-source-review.md",
+      "originPath": "medical-production-authoring/review/32_endocrine_addison-source-review.md",
+      "bytes": 4166,
+      "sha256": "34557d677e2380c1b142f2ca4182369526c6c185495954e779d991955c2a1120"
+    },
+    {
+      "path": "review/33_gi_epi-source-review.md",
+      "originPath": "medical-production-authoring/review/33_gi_epi-source-review.md",
+      "bytes": 3883,
+      "sha256": "d73e03111f36b072e2ce1d3a77c46833d4ac913fe17b6c97fc28eef8a235c997"
+    },
+    {
+      "path": "review/34_hepatobiliary-source-review.md",
+      "originPath": "medical-production-authoring/review/34_hepatobiliary-source-review.md",
+      "bytes": 5559,
+      "sha256": "ad567ae6b9942c2176eb3da63f81e6ffa0d58e96c334fa4005262d41e5f732fe"
+    },
+    {
+      "path": "review/35_oncology_mass-source-review.md",
+      "originPath": "medical-production-authoring/review/35_oncology_mass-source-review.md",
+      "bytes": 3611,
+      "sha256": "c57757e34547c6e9a80c9cec3e6126f131fad4071f7b5c28237be71542af6dcd"
+    },
+    {
+      "path": "review/36_neuro_vestibular-source-review.md",
+      "originPath": "medical-production-authoring/review/36_neuro_vestibular-source-review.md",
+      "bytes": 2737,
+      "sha256": "9521bdaaae979f63afeb2c7caaeb0abb7de75b8738fc84fbceb197aa9c6eea0a"
+    },
+    {
+      "path": "review/37_infectious_canine_major-source-review.md",
+      "originPath": "medical-production-authoring/review/37_infectious_canine_major-source-review.md",
+      "bytes": 2640,
+      "sha256": "1500599d00eb47ba4875129e728c25f339ea6bde1624a7cf685902c68b6c6974"
+    },
+    {
+      "path": "review/38_infectious_feline_major-source-review.md",
+      "originPath": "medical-production-authoring/review/38_infectious_feline_major-source-review.md",
+      "bytes": 2628,
+      "sha256": "07e15c7185c45517113e32b0d216140c585d189a835a38678f714a8ef59955d8"
+    },
+    {
+      "path": "review/39_infectious_vector_borne-source-review.md",
+      "originPath": "medical-production-authoring/review/39_infectious_vector_borne-source-review.md",
+      "bytes": 3362,
+      "sha256": "1ca93ba8f6374dff19b41a9dff6ac639e74fe0d7ba7f21974a20c03616a44247"
+    },
+    {
+      "path": "schemas/clinical-family-production-contract.md",
+      "originPath": "medical-production-authoring/schemas/clinical-family-production-contract.md",
+      "bytes": 3488,
+      "sha256": "bf9ba02731d917390e92de4976772faad4e8114f2f74a8c662499c00f354619a"
+    },
+    {
+      "path": "scripts/validate-medical-authoring.mjs",
+      "originPath": "medical-production-authoring/scripts/validate-medical-authoring.mjs",
+      "bytes": 17961,
+      "sha256": "860fa735fbce753b274d3574b230cab3309e34bdb205a97e84eda05597f56cfb"
+    }
+  ]
+}

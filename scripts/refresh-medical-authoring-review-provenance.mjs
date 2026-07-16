@@ -9,41 +9,63 @@ import { fileURLToPath } from "node:url";
 const execFileAsync = promisify(execFile);
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const requestedVersionArgument = process.argv.find((argument) => argument.startsWith("--version="));
+const requestedVersion = requestedVersionArgument?.slice("--version=".length) || "2026.07.16.39";
+const archiveProfiles = Object.freeze({
+  "2026.07.16.39": Object.freeze({
+    reviewRoot: "content/review-inputs/vetgeme-medical-production-authoring-2026.07.16.39",
+    sourceDirectoryPath: "medical-production-authoring",
+    path: "medical-production-authoring-2026.07.16.39.zip",
+    checksumPath: "medical-production-authoring-2026.07.16.39.zip.sha256",
+    sourceDirectory: "medical-production-authoring",
+    sha256: "54a6cec64406dd4e326aa5ff089cbd3878ef7cd17a4bb7ed01123c7a93da822c",
+    zipEntryCount: 129,
+    extractedFileCount: 85,
+    extractedBytes: 3194211,
+    keyFileHashes: Object.freeze({
+      "MANIFEST.json": "f7e987c3750277141dd256864ad024f2d88b43c9a1d0d2c019868171bffca220",
+      "schemas/clinical-family-production-contract.md": "bf9ba02731d917390e92de4976772faad4e8114f2f74a8c662499c00f354619a",
+      "scripts/validate-medical-authoring.mjs": "5c76783c31ccc21e2e05d1082c1f32cf9d5e44e7ea20d250d16f54e8acc8b443",
+    }),
+  }),
+  "2026.07.16.40": Object.freeze({
+    reviewRoot: "content/review-inputs/vetgeme-medical-production-authoring-2026.07.16.40",
+    sourceDirectoryPath: "content/review-inputs/vetgeme-medical-production-authoring-2026.07.16.40/source",
+    path: "medical-production-authoring-2026.07.16.40.zip",
+    checksumPath: "medical-production-authoring-2026.07.16.40.zip.sha256",
+    sourceDirectory: "medical-production-authoring",
+    sha256: "171659e929f4b8a83cf921a8fa689cd3f5ac632466c4c328dd047199fced71c5",
+    zipEntryCount: 129,
+    extractedFileCount: 85,
+    extractedBytes: 5250732,
+    keyFileHashes: Object.freeze({
+      "MANIFEST.json": "87ded58e62ecf0b05d87af83e00570004cadafa9a0edd74768eda6e8cb9b3f49",
+      "schemas/clinical-family-production-contract.md": "bf9ba02731d917390e92de4976772faad4e8114f2f74a8c662499c00f354619a",
+      "scripts/validate-medical-authoring.mjs": "860fa735fbce753b274d3574b230cab3309e34bdb205a97e84eda05597f56cfb",
+    }),
+  }),
+});
+const archiveIdentity = archiveProfiles[requestedVersion];
+if (!archiveIdentity) throw new Error(`Unsupported medical review input version: ${requestedVersion}`);
 const reviewInputRoot = path.join(
   projectRoot,
-  "content/review-inputs/vetgeme-medical-production-authoring-2026.07.16.39",
+  archiveIdentity.reviewRoot,
 );
 const sourceRoot = path.join(reviewInputRoot, "source");
 const provenancePath = path.join(reviewInputRoot, "provenance.json");
-const sourceArchivePath = path.join(
-  projectRoot,
-  "medical-production-authoring-2026.07.16.39.zip",
-);
+const sourceArchivePath = path.join(projectRoot, archiveIdentity.path);
 const sourceArchiveChecksumPath = `${sourceArchivePath}.sha256`;
-const sourceDirectoryPath = path.join(projectRoot, "medical-production-authoring");
+const sourceDirectoryPath = path.join(projectRoot, archiveIdentity.sourceDirectoryPath);
 const write = process.argv.includes("--write");
 const compareSource = process.argv.includes("--compare-source");
 const unknownArguments = process.argv
   .slice(2)
-  .filter((argument) => !["--write", "--compare-source"].includes(argument));
+  .filter((argument) => !["--write", "--compare-source"].includes(argument)
+    && !argument.startsWith("--version="));
 
 if (unknownArguments.length > 0) {
   throw new Error(`Unknown argument(s): ${unknownArguments.join(", ")}`);
 }
-
-const archiveIdentity = Object.freeze({
-  path: "medical-production-authoring-2026.07.16.39.zip",
-  checksumPath: "medical-production-authoring-2026.07.16.39.zip.sha256",
-  sha256: "54a6cec64406dd4e326aa5ff089cbd3878ef7cd17a4bb7ed01123c7a93da822c",
-  zipEntryCount: 129,
-  extractedFileCount: 85,
-  extractedBytes: 3194211,
-  keyFileHashes: Object.freeze({
-    "MANIFEST.json": "f7e987c3750277141dd256864ad024f2d88b43c9a1d0d2c019868171bffca220",
-    "schemas/clinical-family-production-contract.md": "bf9ba02731d917390e92de4976772faad4e8114f2f74a8c662499c00f354619a",
-    "scripts/validate-medical-authoring.mjs": "5c76783c31ccc21e2e05d1082c1f32cf9d5e44e7ea20d250d16f54e8acc8b443",
-  }),
-});
 
 const provenance = await buildProvenance();
 const serializedProvenance = `${JSON.stringify(provenance, null, 2)}\n`;
@@ -92,7 +114,7 @@ async function buildProvenance() {
     const buffer = await readFile(path.join(sourceRoot, ...relativeFile.split("/")));
     files.push({
       path: relativeFile,
-      originPath: `${path.basename(sourceDirectoryPath)}/${relativeFile}`,
+      originPath: `${archiveIdentity.sourceDirectory}/${relativeFile}`,
       bytes: buffer.length,
       sha256: sha256(buffer),
     });
@@ -109,8 +131,16 @@ async function buildProvenance() {
     packageId: manifest.packageId,
     packageVersion: manifest.packageVersion,
     sourceArchive: archiveIdentity.path,
-    sourceDirectory: path.basename(sourceDirectoryPath),
-    archive: archiveIdentity,
+    sourceDirectory: archiveIdentity.sourceDirectory,
+    archive: {
+      path: archiveIdentity.path,
+      checksumPath: archiveIdentity.checksumPath,
+      sha256: archiveIdentity.sha256,
+      zipEntryCount: archiveIdentity.zipEntryCount,
+      extractedFileCount: archiveIdentity.extractedFileCount,
+      extractedBytes: archiveIdentity.extractedBytes,
+      keyFileHashes: archiveIdentity.keyFileHashes,
+    },
     sourceFileCount: files.length,
     sourceBytes: files.reduce((total, file) => total + file.bytes, 0),
     aggregateSha256: aggregate.digest("hex"),
@@ -193,7 +223,7 @@ async function inspectArchiveEntries() {
   assert.equal(modes.length, entries.length, "archive mode inventory count mismatch");
   assert.equal(new Set(entries).size, entries.length, "archive contains duplicate paths");
 
-  const rootPrefix = `${path.basename(sourceDirectoryPath)}/`;
+  const rootPrefix = `${archiveIdentity.sourceDirectory}/`;
   const files = [];
   entries.forEach((archivePath, index) => {
     assert.equal(archivePath.includes("\0"), false, `${archivePath}: archive path contains NUL`);

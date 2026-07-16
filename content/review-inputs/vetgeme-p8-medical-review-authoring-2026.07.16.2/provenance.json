@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "provenanceId": "vetgeme-p8-medical-review-authoring-review-source",
+  "packageId": "vetgeme-p8-medical-review-authoring",
+  "packageVersion": "2026.07.16.2",
+  "sourceArchive": "p8-medical-review-authoring-2026.07.16.2.zip",
+  "sourceDirectory": "p8-medical-review-authoring",
+  "archive": {
+    "path": "p8-medical-review-authoring-2026.07.16.2.zip",
+    "checksumPath": "p8-medical-review-authoring-2026.07.16.2.zip.sha256",
+    "sha256": "2fb059e9a85c632d6f37b66f05ff8f93065aea7e92eda06e1fafb1dff55d5031",
+    "zipEntryCount": 33,
+    "extractedFileCount": 29,
+    "extractedBytes": 488589,
+    "keyFileHashes": {
+      "MANIFEST.json": "077833463f6926a16de93b5ffc647f9588e3193f7fa2fa5d18bd8e09673fc502",
+      "generated/P8_SOURCE_AUDIT.json": "739cba25f918d326986ac3303d71912251f59878bbc2d3a1b7391618378d04de",
+      "generated/P8_DISPLAY_LANGUAGE_AUDIT_2026.07.16.40.json": "2a09161661f593de46a47479f5e0eef2d11c6a7d9c9ae6c24239a9a7bb094dfd",
+      "source/p8-review-policy.json": "5b008d7868f651b2369b5732910363bc462d3e860ae03687986e8467c326f71d",
+      "source/reviewer-decision-template.json": "53a8bce8cb45972c6f83e387f971bbd74576867b85fc6d33bb2adf5392b7f12a",
+      "scripts/validate-p8-package.mjs": "2ff1e49d630ad6ad62a545fc8cd2849c85393e5092f07c4229330195de50e6c3"
+    }
+  },
+  "sourceFileCount": 29,
+  "sourceBytes": 488589,
+  "aggregateSha256": "785bd77cfda14e5846e13de7d219c1635714d16fbbabb6c04c88221f9d449093",
+  "files": [
+    {
+      "path": "generated/P8_ALLOWED_LATIN_TERMS.json",
+      "originPath": "p8-medical-review-authoring/generated/P8_ALLOWED_LATIN_TERMS.json",
+      "bytes": 420,
+      "sha256": "cfcf912ae0293fe6b730855cf5af140e7d524f5fb3407da7118fd21943c630de"
+    },
+    {
+      "path": "generated/P8_DIALOGUE_SAMPLE_MATRIX_2026.07.16.40.md",
+      "originPath": "p8-medical-review-authoring/generated/P8_DIALOGUE_SAMPLE_MATRIX_2026.07.16.40.md",
+      "bytes": 101173,
+      "sha256": "ce77aeeb71ed250288ecf8ac0bbd4522380162c1ce0ce3d548008c0b07d2722e"
+    },
+    {
+      "path": "generated/P8_DIALOGUE_VALIDATION.json",
+      "originPath": "p8-medical-review-authoring/generated/P8_DIALOGUE_VALIDATION.json",
+      "bytes": 687,
+      "sha256": "e07043fae4cf57e70cee3972a4d5465eb9ff4f8ee2538617964820da7192f33a"
+    },
+    {
+      "path": "generated/P8_DISPLAY_LANGUAGE_AUDIT_2026.07.16.40.json",
+      "originPath": "p8-medical-review-authoring/generated/P8_DISPLAY_LANGUAGE_AUDIT_2026.07.16.40.json",
+      "bytes": 1237,
+      "sha256": "2a09161661f593de46a47479f5e0eef2d11c6a7d9c9ae6c24239a9a7bb094dfd"
+    },
+    {
+      "path": "generated/P8_PACKAGE_VALIDATION.json",
+      "originPath": "p8-medical-review-authoring/generated/P8_PACKAGE_VALIDATION.json",
+      "bytes": 619,
+      "sha256": "08c7572bfe0ad346b4603b00a388045f8f5eab94d9d05e51a057a850e9e4dc27"
+    },
+    {
+      "path": "generated/P8_SOURCE_AUDIT_2026.07.16.40.json",
+      "originPath": "p8-medical-review-authoring/generated/P8_SOURCE_AUDIT_2026.07.16.40.json",
+      "bytes": 17274,
+      "sha256": "626902c08f9a0c2e4387efd438ad9c5e181aac9a799042f52791f717f7c89f17"
+    },
+    {
+      "path": "generated/P8_SOURCE_AUDIT.json",
+      "originPath": "p8-medical-review-authoring/generated/P8_SOURCE_AUDIT.json",
+      "bytes": 17274,
+      "sha256": "739cba25f918d326986ac3303d71912251f59878bbc2d3a1b7391618378d04de"
+    },
+    {
+      "path": "MANIFEST.json",
+      "originPath": "p8-medical-review-authoring/MANIFEST.json",
+      "bytes": 2683,
+      "sha256": "077833463f6926a16de93b5ffc647f9588e3193f7fa2fa5d18bd8e09673fc502"
+    },
+    {
+      "path": "P8_REVIEW_MATRIX.md",
+      "originPath": "p8-medical-review-authoring/P8_REVIEW_MATRIX.md",
+      "bytes": 8819,
+      "sha256": "621e69e8ef3275e474070ff98620d5d1d1db77d5c95cc6211cab2f4cb0a6ecb0"
+    },
+    {
+      "path": "PROGRAMMER_HANDOFF.md",
+      "originPath": "p8-medical-review-authoring/PROGRAMMER_HANDOFF.md",
+      "bytes": 4936,
+      "sha256": "f578a9150cab4295cef9f1b9f1623dee3b8186ff10ebd33aa07f84ef90829f4d"
+    },
+    {
+      "path": "README.md",
+      "originPath": "p8-medical-review-authoring/README.md",
+      "bytes": 2730,
+      "sha256": "f8a10a63292abb8ebb84cc7f29a083560afba6f74a790898e9ca7ab91f1b05fe"
+    },
+    {
+      "path": "REVIEWER_GUIDE.md",
+      "originPath": "p8-medical-review-authoring/REVIEWER_GUIDE.md",
+      "bytes": 2847,
+      "sha256": "293f2ffed9f3115373b6dad217c05ead26636c16a04d65de66074b6c4aaac1e9"
+    },
+    {
+      "path": "scripts/audit-p8-source.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/audit-p8-source.mjs",
+      "bytes": 10368,
+      "sha256": "cf53d9fcb9edf32828574fd1cdbdc4903092aac2a03cf852b6dc0918a5ceb565"
+    },
+    {
+      "path": "scripts/build-p8-dialogue-sample-report.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/build-p8-dialogue-sample-report.mjs",
+      "bytes": 4521,
+      "sha256": "360f35691def1afacfd6de64d7f71ad649c86290e80e5069993932c02b7f0cb8"
+    },
+    {
+      "path": "scripts/build-p8-package.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/build-p8-package.mjs",
+      "bytes": 5923,
+      "sha256": "4fc6ac1c3f165c904f3a5e0ef12937268e6b2dbb52024a2edccf80f9db2c1d6c"
+    },
+    {
+      "path": "scripts/finalize-medical-review-manifest.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/finalize-medical-review-manifest.mjs",
+      "bytes": 2647,
+      "sha256": "2d673aca60624977da9de9eb15022aaea502bce1d9a8fad38981ab85d423c4ab"
+    },
+    {
+      "path": "scripts/fix-p8-residuals.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/fix-p8-residuals.mjs",
+      "bytes": 39470,
+      "sha256": "c6bdd377b9359b5fceb191bb35140ed35ec91448bf3a3ca051b6b5898f872801"
+    },
+    {
+      "path": "scripts/humanize-medical-dialogues.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/humanize-medical-dialogues.mjs",
+      "bytes": 5855,
+      "sha256": "4f71d1ac2d2a8a56429ed8ed6d061991255e86c795df1704ac3574a2a92cf732"
+    },
+    {
+      "path": "scripts/normalize-medical-investigation-results.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/normalize-medical-investigation-results.mjs",
+      "bytes": 16438,
+      "sha256": "cdc7a140bd6644df622f51810c728288e6d2330ff51230fc2c99370ae5d3d501"
+    },
+    {
+      "path": "scripts/polish-p8-russian.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/polish-p8-russian.mjs",
+      "bytes": 166047,
+      "sha256": "ab5eca719fe537e52abb62d7a1623daf4b72338f7b5e193311cfc75dab5ffe13"
+    },
+    {
+      "path": "scripts/restore-authored-investigation-results.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/restore-authored-investigation-results.mjs",
+      "bytes": 2987,
+      "sha256": "fe4bf38630f324318740f136109a0703e33c07555771bfae81d587b8203b0f66"
+    },
+    {
+      "path": "scripts/rewrite-medical-player-text.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/rewrite-medical-player-text.mjs",
+      "bytes": 18194,
+      "sha256": "ad0d759f6691b32486a627af3b628b955102c0724bb0f4400c4cdc0d8de5fe14"
+    },
+    {
+      "path": "scripts/validate-human-dialogues.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/validate-human-dialogues.mjs",
+      "bytes": 4283,
+      "sha256": "15272143a4178f098b94ca0b363803022a6c013688e9706c221f8297ebd5e937"
+    },
+    {
+      "path": "scripts/validate-p8-display-language.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/validate-p8-display-language.mjs",
+      "bytes": 14231,
+      "sha256": "bffb1e12159f26b27d3da9a246b8e67f63b86c47584c1e8c8082a5bb4d980159"
+    },
+    {
+      "path": "scripts/validate-p8-package.mjs",
+      "originPath": "p8-medical-review-authoring/scripts/validate-p8-package.mjs",
+      "bytes": 2992,
+      "sha256": "2ff1e49d630ad6ad62a545fc8cd2849c85393e5092f07c4229330195de50e6c3"
+    },
+    {
+      "path": "source/human-dialogue-library.json",
+      "originPath": "p8-medical-review-authoring/source/human-dialogue-library.json",
+      "bytes": 24994,
+      "sha256": "a3bf989041f9fdfa4f07209e9b0ba936b4d8d23f04f4677f14ecd9fcd30c6fd5"
+    },
+    {
+      "path": "source/p8-review-policy.json",
+      "originPath": "p8-medical-review-authoring/source/p8-review-policy.json",
+      "bytes": 3532,
+      "sha256": "5b008d7868f651b2369b5732910363bc462d3e860ae03687986e8467c326f71d"
+    },
+    {
+      "path": "source/reviewer-decision-template.json",
+      "originPath": "p8-medical-review-authoring/source/reviewer-decision-template.json",
+      "bytes": 1600,
+      "sha256": "53a8bce8cb45972c6f83e387f971bbd74576867b85fc6d33bb2adf5392b7f12a"
+    },
+    {
+      "path": "SOURCE_REFRESH_NOTES.md",
+      "originPath": "p8-medical-review-authoring/SOURCE_REFRESH_NOTES.md",
+      "bytes": 3808,
+      "sha256": "cf923abcf58607a9d99dce0b829b437837da15099606111d5fdce45a8efba036"
+    }
+  ]
+}

@@ -1,0 +1,3382 @@
+{
+  "schemaVersion": 1,
+  "familyId": "eye_surface",
+  "familyVersion": "2026.07.16.40",
+  "title": "Красный глаз, поверхность роговицы и опасные внутриглазные альтернативы",
+  "campaignPhase": "chapter_1_to_chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "syndromeRule": "Красный глаз, выделения, прищур и помутнение являются симптомами, а не готовым диагнозом.",
+    "sequenceRule": "Нераздражающий осмотр и слёзная проба выполняются до капель или промывания; флуоресцеин предшествует решениям, опасным при язве.",
+    "integrityRule": "При угрозе перфорации глаз не сдавливают и не выполняют необязательную тонометрию.",
+    "treatmentRule": "Ветеринарный врач выбирает препараты, концентрации, интервалы, седацию или хирургическую технику."
+  },
+  "coreCapabilities": [
+    "general_exam",
+    "eye_exam",
+    "trained_eye_exam"
+  ],
+  "safeRouteCapability": "ophthalmology_referral",
+  "requirementGroups": [
+    {
+      "id": "eye_exam_or_referral",
+      "anyOf": [
+        "trained_eye_exam",
+        "ophthalmology_referral",
+        "safe_referral"
+      ],
+      "purpose": "safe_bilateral_eye_exam"
+    },
+    {
+      "id": "fluorescein_or_referral",
+      "anyOf": [
+        "fluorescein",
+        "ophthalmology_referral",
+        "safe_referral"
+      ],
+      "purpose": "corneal_integrity"
+    },
+    {
+      "id": "schirmer_or_referral",
+      "anyOf": [
+        "schirmer_test",
+        "ophthalmology_referral",
+        "safe_referral"
+      ],
+      "purpose": "tear_production"
+    },
+    {
+      "id": "tonometry_or_referral",
+      "anyOf": [
+        "tonometry",
+        "ophthalmology_referral",
+        "safe_referral"
+      ],
+      "purpose": "intraocular_pressure"
+    },
+    {
+      "id": "ocular_sampling_or_referral",
+      "anyOf": [
+        "ocular_cytology",
+        "culture_external",
+        "pcr_external",
+        "ophthalmology_referral",
+        "safe_referral"
+      ],
+      "purpose": "targeted_etiology"
+    },
+    {
+      "id": "urgent_ophthalmology_route",
+      "anyOf": [
+        "ophthalmology_referral",
+        "safe_referral"
+      ],
+      "purpose": "vision_or_globe_threat"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "eye_neurovisual_screen",
+      "requires": [
+        "eye_exam",
+        "trained_eye_exam"
+      ],
+      "availability": "local_chapter_1",
+      "fallback": "ophthalmology_referral"
+    },
+    {
+      "researchId": "eye_surface_exam",
+      "requires": [
+        "eye_exam",
+        "trained_eye_exam"
+      ],
+      "availability": "local_chapter_1",
+      "fallback": "ophthalmology_referral"
+    },
+    {
+      "researchId": "eye_schirmer_test",
+      "requires": [
+        "schirmer_test"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "ophthalmology_referral"
+    },
+    {
+      "researchId": "eye_fluorescein",
+      "requires": [
+        "fluorescein"
+      ],
+      "availability": "local_chapter_1",
+      "fallback": "ophthalmology_referral"
+    },
+    {
+      "researchId": "eye_tonometry",
+      "requires": [
+        "tonometry"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "ophthalmology_referral"
+    },
+    {
+      "researchId": "eye_ophthalmoscopy",
+      "requires": [
+        "ophthalmoscopy"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "ophthalmology_referral"
+    },
+    {
+      "researchId": "eye_ocular_cytology",
+      "requires": [
+        "ocular_cytology"
+      ],
+      "availability": "local_chapter_3",
+      "fallback": "ophthalmology_referral"
+    },
+    {
+      "researchId": "eye_external_pcr_or_culture",
+      "requires": [
+        "pcr_external",
+        "culture_external"
+      ],
+      "availability": "external_chapter_3",
+      "fallback": "ophthalmology_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "onset_course",
+      "text": "Когда началось и как быстро меняется?"
+    },
+    {
+      "id": "laterality",
+      "text": "Один глаз или оба, одновременно или последовательно?"
+    },
+    {
+      "id": "vision_owner_report",
+      "text": "Ориентируется ли животное и не натыкается ли на предметы?"
+    },
+    {
+      "id": "pain_behaviour",
+      "text": "Есть ли прищур, трение, светобоязнь или избегание прикосновения?"
+    },
+    {
+      "id": "discharge_character",
+      "text": "Выделения водянистые, слизистые, гнойные или кровянистые?"
+    },
+    {
+      "id": "trauma_chemical_exposure",
+      "text": "Были ли клинический вариант, коготь, химия, шампунь или другой контакт?"
+    },
+    {
+      "id": "systemic_signs",
+      "text": "Есть ли чихание, кашель, лихорадка, похудение или иные признаки?"
+    },
+    {
+      "id": "group_contact",
+      "text": "Есть ли другие животные с похожими признаками или передержка?"
+    },
+    {
+      "id": "previous_treatment",
+      "text": "Что применяли раньше и могли ли остаться старые капли?"
+    },
+    {
+      "id": "comorbidity",
+      "text": "Есть ли диабет, иммунная болезнь, опухоль, операция или системный риск?"
+    },
+    {
+      "id": "adherence_barrier",
+      "text": "Удаётся ли безопасно закапывать и использовать воротник?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "general_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "neurovisual_screen",
+      "source": "physical_exam",
+      "requires": [
+        "eye_exam",
+        "trained_eye_exam"
+      ]
+    },
+    {
+      "id": "bilateral_eye_comparison",
+      "source": "physical_exam",
+      "requires": [
+        "eye_exam",
+        "trained_eye_exam"
+      ]
+    },
+    {
+      "id": "surface_and_adnexa_exam",
+      "source": "physical_exam",
+      "requires": [
+        "eye_exam",
+        "trained_eye_exam"
+      ]
+    },
+    {
+      "id": "third_eyelid_exam",
+      "source": "physical_exam",
+      "requires": [
+        "eye_exam",
+        "trained_eye_exam"
+      ]
+    },
+    {
+      "id": "schirmer_before_drops",
+      "source": "diagnostic_test",
+      "requires": [
+        "schirmer_test"
+      ]
+    },
+    {
+      "id": "fluorescein_map",
+      "source": "diagnostic_test",
+      "requires": [
+        "fluorescein"
+      ]
+    },
+    {
+      "id": "bilateral_tonometry",
+      "source": "measurement",
+      "requires": [
+        "tonometry"
+      ]
+    },
+    {
+      "id": "ophthalmoscopy",
+      "source": "diagnostic_test",
+      "requires": [
+        "ophthalmoscopy"
+      ]
+    },
+    {
+      "id": "ocular_cytology",
+      "source": "diagnostic_test",
+      "requires": [
+        "ocular_cytology"
+      ]
+    },
+    {
+      "id": "ocular_pcr_or_culture",
+      "source": "diagnostic_test",
+      "requires": [
+        "pcr_external",
+        "culture_external"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "red_eye_safe_differentiation",
+      "fullPlan": [
+        "general_and_visual_screen",
+        "examine_both_eyes_and_adnexa",
+        "preserve_test_sequence",
+        "fluorescein_before_ulcer_unsafe_component",
+        "tear_pressure_or_sampling_by_context",
+        "remove_or_route_specific_cause",
+        "defined_recheck"
+      ],
+      "stagedPlan": [
+        "vision_pain_integrity",
+        "surface_and_fluorescein",
+        "targeted_next_test",
+        "followup"
+      ],
+      "minimumSafePlan": [
+        "both_eyes",
+        "fluorescein_or_referral",
+        "no_ulcer_unsafe_component",
+        "red_flags"
+      ],
+      "stabilizeAndRefer": [
+        "protect_eye",
+        "minimal_manipulation",
+        "urgent_ophthalmology_route"
+      ],
+      "unsafeOrInadequate": [
+        "diagnose_from_discharge",
+        "empirical_strong_drop_before_fluorescein",
+        "ignore_second_eye",
+        "repeat_nonspecific_component_indefinitely"
+      ]
+    },
+    {
+      "id": "superficial_ulcer_cause_and_recheck",
+      "fullPlan": [
+        "fluorescein_map",
+        "search_lids_third_eyelid_foreign_material",
+        "protect_from_self_trauma",
+        "reviewed_analgesic_and_antimicrobial_components",
+        "correct_mechanical_cause",
+        "early_fluorescein_recheck"
+      ],
+      "stagedPlan": [
+        "confirm_superficial_defect",
+        "protect_and_support",
+        "cause_search",
+        "early_recheck"
+      ],
+      "minimumSafePlan": [
+        "confirm_ulcer",
+        "exclude_deep_or_melting_features",
+        "protect",
+        "early_recheck"
+      ],
+      "stabilizeAndRefer": [
+        "protect_without_pressure",
+        "permitted_initial_support",
+        "ophthalmology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "ulcer_unsafe_antiinflammatory",
+        "no_cause_search",
+        "no_recheck",
+        "automatic_duration_from_code"
+      ]
+    },
+    {
+      "id": "complicated_ulcer_emergency",
+      "fullPlan": [
+        "minimal_pressure_exam",
+        "map_depth_and_integrity",
+        "cytology_and_culture_if_no_harmful_delay",
+        "protect_globe",
+        "intensive_reviewer_approved_protocol",
+        "urgent_ophthalmology_referral",
+        "documented_handoff"
+      ],
+      "stagedPlan": [
+        "recognize_globe_threat",
+        "sample_if_safe",
+        "protect_and_refer",
+        "specialist_followup"
+      ],
+      "minimumSafePlan": [
+        "no_pressure_or_tonometry_if_rupture_risk",
+        "protect",
+        "urgent_referral"
+      ],
+      "stabilizeAndRefer": [
+        "stop_routine_visit",
+        "shield_and_minimal_handling",
+        "urgent_ophthalmology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "wait_for_culture_before_referral",
+        "tonometry_with_perforation_risk",
+        "ulcer_unsafe_component",
+        "routine_next_week_recheck"
+      ]
+    },
+    {
+      "id": "mechanical_cause_resolution",
+      "fullPlan": [
+        "localize_material_or_contact",
+        "assess_penetration_risk",
+        "remove_or_irrigate_only_if_superficial_and_trained",
+        "repeat_surface_exam_and_fluorescein",
+        "correct_lid_hair_or_closure_problem",
+        "recheck"
+      ],
+      "stagedPlan": [
+        "localize",
+        "safe_removal_or_referral",
+        "repeat_integrity_test",
+        "definitive_mechanical_route"
+      ],
+      "minimumSafePlan": [
+        "do_not_blindly_extract",
+        "fluorescein",
+        "protect",
+        "referral_if_embedded_or_uncooperative"
+      ],
+      "stabilizeAndRefer": [
+        "leave_penetrating_object_in_place",
+        "protect",
+        "urgent_referral"
+      ],
+      "unsafeOrInadequate": [
+        "blind_swab_under_third_eyelid",
+        "remove_penetrating_object",
+        "symptom_only_plan",
+        "ignore_recurrent_contact_site"
+      ]
+    },
+    {
+      "id": "kcs_confirmation_and_longitudinal",
+      "fullPlan": [
+        "schirmer_both_eyes_before_drops",
+        "surface_and_fluorescein",
+        "identify_secondary_ulcer",
+        "reviewed_tear_stimulation_and_replacement_route",
+        "cause_review",
+        "longitudinal_surface_and_tear_monitoring",
+        "adherence_support"
+      ],
+      "stagedPlan": [
+        "confirm_tear_deficit",
+        "protect_surface",
+        "start_reviewed_long_term_route",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "schirmer_or_referral",
+        "fluorescein",
+        "surface_support",
+        "planned_recheck"
+      ],
+      "stabilizeAndRefer": [
+        "protect_ulcerated_surface",
+        "safe_initial_support",
+        "ophthalmology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "diagnose_from_mucus_only",
+        "short_antibiotic_only",
+        "ulcer_unsafe_component",
+        "blame_owner_without_barrier_assessment"
+      ]
+    },
+    {
+      "id": "uveitis_pressure_and_cause_route",
+      "fullPlan": [
+        "vision_and_bilateral_exam",
+        "fluorescein",
+        "tonometry_if_globe_intact",
+        "anterior_chamber_and_lens_assessment",
+        "reviewed_pain_and_inflammation_control",
+        "local_or_systemic_cause_workup",
+        "pressure_complication_monitoring"
+      ],
+      "stagedPlan": [
+        "exclude_ulcer_and_glaucoma",
+        "support_by_reviewed_protocol",
+        "targeted_cause_search",
+        "recheck_pressure_and_vision"
+      ],
+      "minimumSafePlan": [
+        "fluorescein",
+        "pressure_or_referral",
+        "pain_route",
+        "cause_and_recheck_plan"
+      ],
+      "stabilizeAndRefer": [
+        "protect_vision",
+        "minimal_safe_support",
+        "urgent_referral"
+      ],
+      "unsafeOrInadequate": [
+        "antiinflammatory_before_ulcer_check",
+        "ignore_bilateral_systemic_context",
+        "no_pressure_monitoring",
+        "assume_single_etiology"
+      ]
+    },
+    {
+      "id": "acute_glaucoma_emergency",
+      "fullPlan": [
+        "rapid_visual_and_integrity_screen",
+        "bilateral_tonometry_if_intact",
+        "assess_lens_and_uveitis_context",
+        "immediate_reviewer_approved_pressure_route",
+        "urgent_ophthalmology_referral",
+        "fellow_eye_and_long_term_plan"
+      ],
+      "stagedPlan": [
+        "confirm_pressure",
+        "immediate_safe_protocol",
+        "refer",
+        "monitor_fellow_eye"
+      ],
+      "minimumSafePlan": [
+        "recognize_emergency",
+        "tonometry_or_immediate_referral",
+        "do_not_wait",
+        "documented_handoff"
+      ],
+      "stabilizeAndRefer": [
+        "begin_permitted_pressure_support",
+        "minimal_delay",
+        "urgent_ophthalmology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "wait_until_tomorrow",
+        "treat_only_nausea_or_lethargy",
+        "code_selects_drug_without_lens_uveitis_context",
+        "ignore_fellow_eye"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "eye_conjunctivitis_undifferentiated",
+      "version": "2026.07.16.40",
+      "title": "Недифференцированный конъюнктивальный синдром",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Воспаление конъюнктивы без преждевременного утверждения инфекционной, аллергической или механической причины.",
+      "primaryDiagnosisId": "dx_conjunctivitis_undifferentiated",
+      "differentials": [
+        "dx_corneal_ulcer",
+        "dx_foreign_body",
+        "dx_kcs",
+        "dx_anterior_uveitis",
+        "dx_acute_glaucoma"
+      ],
+      "planBundleId": "red_eye_safe_differentiation",
+      "sourceIds": [
+        "merck_conjunctiva",
+        "merck_ocular_diagnostics"
+      ],
+      "presentations": [
+        {
+          "id": "p1_unilateral_mild_discharge",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine_or_priority",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что из одного глаза появились лёгкое покраснение и выделения; животное ориентируется нормально.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, началось недавно и не ухудшается быстро.",
+            "laterality": "Дома мы заметили, что один глаз.",
+            "vision_owner_report": "Насколько мы можем судить, не натыкается.",
+            "pain_behaviour": "Мы записали, что выраженной боли нет."
+          },
+          "examFindings": [
+            {
+              "factId": "mild_unilateral_surface_pattern",
+              "source": "physical_exam",
+              "finding": "Умеренная гиперемия или выделения, сохранённая зрительная функция, без явной внутриглазной угрозы."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "vision_and_globe_stable",
+              "discoveryPaths": [
+                "neurovisual_screen",
+                "bilateral_eye_comparison"
+              ]
+            },
+            {
+              "factId": "mild_unilateral_surface_pattern",
+              "discoveryPaths": [
+                "surface_and_adnexa_exam",
+                "third_eyelid_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_surface_exam",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: веки, волосы и третье веко осмотрены."
+            },
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_before_symptomatic_component",
+              "result": "Флуоресцеиновая проба показала: дефекта роговицы нет."
+            },
+            {
+              "id": "eye_schirmer_test",
+              "classification": "recommended_by_species_and_risk",
+              "result": "Тест Ширмера показал: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "vision_and_globe_stable",
+              "mild_unilateral_surface_pattern"
+            ],
+            "confirmedDiagnosisRequires": [
+              "syndrome_only_until_cause_evidence"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein"
+            ],
+            "conditional": [
+              "schirmer_or_referral"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "red_eye_safe_differentiation",
+          "followUp": {
+            "timing": "Короткая повторная проверка, если проблема не решена, или немедленно при появлении боли или помутнения или изменения зрения.",
+            "required": true,
+            "targets": [
+              "pain",
+              "cornea",
+              "discharge",
+              "vision"
+            ]
+          },
+          "outcomes": {
+            "safe": "Опасные альтернативы исключены в доступном объёме, причина не выдумана.",
+            "unsafe": "По виду выделений автоматически назначается лечение инфекции."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: характер выделений не доказывает возбудителя."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "anxious",
+              "expecting_antibiotic"
+            ]
+          }
+        },
+        {
+          "id": "p2_bilateral_group_contact_cat",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что после приюта или передержки у молодой кошки воспалились оба глаза, появились выделения и чихание.",
+          "historyAnswers": {
+            "laterality": "По нашим наблюдениям, поражение двустороннее или второй глаз присоединился позже.",
+            "group_contact": "Дома мы заметили, что есть групповой контакт и другие симптомные животные.",
+            "systemic_signs": "Насколько мы можем судить, есть чихание; системная тяжесть отдельно.",
+            "onset_course": "Мы записали, что развивалось в течение нескольких дней."
+          },
+          "examFindings": [
+            {
+              "factId": "bilateral_cat_group_pattern",
+              "source": "physical_exam",
+              "finding": "Двусторонний конъюнктивальный синдром с совместимым респираторным контекстом; роговица оценивается отдельно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "group_infectious_context",
+              "discoveryPaths": [
+                "group_contact",
+                "systemic_signs"
+              ]
+            },
+            {
+              "factId": "corneal_status_preserved",
+              "discoveryPaths": [
+                "fluorescein_map",
+                "surface_and_adnexa_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_for_safe_decision",
+              "result": "Флуоресцеиновая проба показала: карта исключает или переводит в язвенную клинический вариант."
+            },
+            {
+              "id": "eye_external_pcr_or_culture",
+              "classification": "recommended_by_severity_and_epidemiology",
+              "result": "По результатам посева и определения чувствительности: результат интерпретируется только вместе с картиной."
+            },
+            {
+              "id": "eye_ocular_cytology",
+              "classification": "optional_adds_information",
+              "result": "При микроскопии материала: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "group_infectious_context",
+              "corneal_status_preserved"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_clinical_pattern_and_targeted_evidence"
+            ],
+            "mustNotAssume": [
+              "positive_or_negative_pcr_is_entire_cause"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein",
+              "isolation_protocol"
+            ],
+            "conditional": [
+              "ocular_sampling_or_referral"
+            ],
+            "external": [
+              "pcr_external",
+              "culture_external"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "red_eye_safe_differentiation",
+          "followUp": {
+            "timing": "Инфекционный контроль и офтальмологический повторный осмотр по степени тяжести.",
+            "required": true,
+            "targets": [
+              "cornea",
+              "respiratory_state",
+              "contacts",
+              "test_result"
+            ]
+          },
+          "outcomes": {
+            "safe": "Групповой риск и поверхность глаза ведутся одновременно.",
+            "unsafe": "Пациент идёт через общую очередь или тест заменяет клиническую оценку."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: изоляцию и необходимость контроля боли или помутнения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "calm",
+              "defensive"
+            ],
+            "ownerModifiers": [
+              "shelter_adopter",
+              "multi_pet",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_recurrent_without_corneal_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что покраснение и выделения возвращаются после неспецифических капель.",
+          "historyAnswers": {
+            "previous_treatment": "По нашим наблюдениям, старые капли временно уменьшали признаки; состав или даты уточнены.",
+            "onset_course": "Дома мы заметили, что рецидивирует в одном или обоих глазах.",
+            "pain_behaviour": "Насколько мы можем судить, сильной боли сейчас нет.",
+            "adherence_barrier": "Мы записали, что закапывание возможно не всегда."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrent_nonulcerative_pattern",
+              "source": "physical_exam",
+              "finding": "На текущем осмотре язвы нет; веки, волосы, слёзы и механические причины требуют переоценки."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "prior_nonspecific_treatment",
+              "discoveryPaths": [
+                "previous_treatment"
+              ]
+            },
+            {
+              "factId": "recurrent_nonulcerative_pattern",
+              "discoveryPaths": [
+                "surface_and_adnexa_exam",
+                "fluorescein_map",
+                "schirmer_before_drops"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_again_before_repeating_component",
+              "result": "Флуоресцеиновая проба показала: язвы на текущем осмотре нет."
+            },
+            {
+              "id": "eye_schirmer_test",
+              "classification": "recommended_changes_plan",
+              "result": "Тест Ширмера показал: результат выявляет или исключает слёзный дефицит."
+            },
+            {
+              "id": "eye_surface_exam",
+              "classification": "required_for_mechanical_cause_search",
+              "result": "Клиническая оценка показала: веки или волосы или третье веко."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "prior_nonspecific_treatment",
+              "recurrent_nonulcerative_pattern"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cause_specific_evidence_or_persistent_syndrome"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein"
+            ],
+            "conditional": [
+              "schirmer_or_referral"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "red_eye_safe_differentiation",
+          "followUp": {
+            "timing": "После целевого шага причины.",
+            "required": true,
+            "targets": [
+              "recurrence",
+              "tear_result",
+              "mechanical_cause",
+              "adherence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Рецидив запускает поиск причины.",
+            "unsafe": "Прежнее средство повторяется бесконечно без проверки роговицы."
+          },
+          "ownerCommunication": [
+            "Пожалуйста, принесите упаковку старых капель и не применять их до осмотра."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "self_medicating",
+              "budget_limited",
+              "frustrated"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "eye_corneal_ulcer_superficial",
+      "version": "2026.07.16.40",
+      "title": "Поверхностная неосложнённая язва роговицы",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Поверхностный эпителиальный дефект удерживает флуоресцеин и не имеет -признаков глубокого расплавления, перфорации или внутриглазной причины.",
+      "primaryDiagnosisId": "dx_superficial_corneal_ulcer",
+      "differentials": [
+        "dx_complicated_corneal_ulcer",
+        "dx_foreign_body",
+        "dx_kcs",
+        "dx_entropion_or_trichiasis",
+        "dx_anterior_uveitis"
+      ],
+      "planBundleId": "superficial_ulcer_cause_and_recheck",
+      "sourceIds": [
+        "merck_cornea",
+        "merck_ocular_diagnostics"
+      ],
+      "presentations": [
+        {
+          "id": "p1_acute_after_minor_trauma",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что после клинического варианта, игры или когтя внезапно появились прищур и слезотечение.",
+          "historyAnswers": {
+            "trauma_chemical_exposure": "По нашим наблюдениям, вероятна малая механическая травма.",
+            "onset_course": "Дома мы заметили, что остро, часы.",
+            "vision_owner_report": "Насколько мы можем судить, ориентируется.",
+            "pain_behaviour": "Мы записали, что прищур и трение глаза."
+          },
+          "examFindings": [
+            {
+              "factId": "superficial_uncomplicated_defect",
+              "source": "diagnostic_test",
+              "finding": "Небольшой поверхностный дефект без инфильтрата, расплавления или угрозы перфорации."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "vision_preserved",
+              "discoveryPaths": [
+                "neurovisual_screen"
+              ]
+            },
+            {
+              "factId": "superficial_uncomplicated_defect",
+              "discoveryPaths": [
+                "fluorescein_map",
+                "surface_and_adnexa_exam"
+              ]
+            },
+            {
+              "factId": "cause_search_completed",
+              "discoveryPaths": [
+                "third_eyelid_exam",
+                "surface_and_adnexa_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_for_confirmation",
+              "result": "Флуоресцеиновая проба показала: поверхностная карта окрашивания."
+            },
+            {
+              "id": "eye_surface_exam",
+              "classification": "required_for_cause_search",
+              "result": "Клиническая оценка показала: проникающего материала и дефекта века нет."
+            },
+            {
+              "id": "eye_schirmer_test",
+              "classification": "recommended_by_risk",
+              "result": "Тест Ширмера показал: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "vision_preserved",
+              "superficial_uncomplicated_defect",
+              "cause_search_completed"
+            ],
+            "confirmedDiagnosisRequires": [
+              "fluorescein_positive_superficial_defect"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein",
+              "analgesia"
+            ],
+            "conditional": [
+              "schirmer_or_referral"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "superficial_ulcer_cause_and_recheck",
+          "followUp": {
+            "timing": "Ранняя перепроверка с повторной картой.",
+            "required": true,
+            "targets": [
+              "pain",
+              "defect_area",
+              "depth",
+              "infiltrate",
+              "collar_adherence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Причина устранена, глаз защищён, динамика объективно проверена.",
+            "unsafe": "Симптомы скрыты без контроля глубины и причины."
+          },
+          "ownerCommunication": [
+            "Важно знать: о немедленном возврате при помутнении или усилении боли."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "painful_defensive"
+            ],
+            "requiredHandlingAlternative": "low_stress_or_referral",
+            "ownerModifiers": [
+              "observant",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_owner_reports_red_eye_only",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что владелец заметил только красный глаз; выделений мало, боль кажется умеренной.",
+          "historyAnswers": {
+            "pain_behaviour": "По нашим наблюдениям, лёгкий прищур замечен только при расспросе.",
+            "vision_owner_report": "Дома мы заметили, что явной потери зрения нет.",
+            "onset_course": "Насколько мы можем судить, недавно.",
+            "previous_treatment": "Мы записали, что ничего не применяли."
+          },
+          "examFindings": [
+            {
+              "factId": "small_hidden_ulcer",
+              "source": "diagnostic_test",
+              "finding": "Малая поверхностная язва видна только после флуоресцеина."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "small_hidden_ulcer",
+              "discoveryPaths": [
+                "fluorescein_map"
+              ]
+            },
+            {
+              "factId": "no_deep_features",
+              "discoveryPaths": [
+                "surface_and_adnexa_exam",
+                "bilateral_eye_comparison"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_before_conjunctivitis_label",
+              "result": "Флуоресцеиновая проба показала: небольшой эпителиальный дефект удерживает краситель."
+            },
+            {
+              "id": "eye_surface_exam",
+              "classification": "required_for_depth_and_cause",
+              "result": "Клиническая оценка показала: глубоких или расплавляющихся признаков нет."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "small_hidden_ulcer",
+              "no_deep_features"
+            ],
+            "confirmedDiagnosisRequires": [
+              "fluorescein_positive_superficial_defect"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "superficial_ulcer_cause_and_recheck",
+          "followUp": {
+            "timing": "Ранняя повторная проверка флуоресцеина.",
+            "required": true,
+            "targets": [
+              "defect_area",
+              "pain",
+              "new_infiltrate"
+            ]
+          },
+          "outcomes": {
+            "safe": "Малая язва не получает противопоказанный компонент.",
+            "unsafe": "Красный глаз объявлен конъюнктивитом без окрашивания."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: повреждение роговицы может быть незаметно при обычном взгляде; окрашивание показывает его границы."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "inattentive",
+              "expecting_quick_drop"
+            ]
+          }
+        },
+        {
+          "id": "p3_recheck_healing_as_expected",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "follow_up",
+          "workload": 0.75,
+          "complaint": "Мы обратились, потому что на раннем контроле прищур уменьшился, глаз выглядит лучше.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, улучшение с прошлого визита.",
+            "adherence_barrier": "Дома мы заметили, что воротник и назначения выполнялись.",
+            "pain_behaviour": "Насколько мы можем судить, боль заметно меньше.",
+            "previous_treatment": "Мы записали, что только согласованный ранее план."
+          },
+          "examFindings": [
+            {
+              "factId": "objective_ulcer_healing",
+              "source": "diagnostic_test",
+              "finding": "Площадь окрашивания уменьшается, глубина и осложняющие признаки не нарастают."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "objective_ulcer_healing",
+              "discoveryPaths": [
+                "fluorescein_map",
+                "surface_and_adnexa_exam"
+              ]
+            },
+            {
+              "factId": "adherence_confirmed",
+              "discoveryPaths": [
+                "adherence_barrier",
+                "previous_treatment"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_for_objective_recheck",
+              "result": "Флуоресцеиновая проба показала: дефект уменьшается в сравнении с сохранённой картой."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "objective_ulcer_healing",
+              "adherence_confirmed"
+            ],
+            "confirmedDiagnosisRequires": [
+              "original_snapshot_and_current_map"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "superficial_ulcer_cause_and_recheck",
+          "followUp": {
+            "timing": "До закрытия эпителия согласно рассмотренному протоколу.",
+            "required": true,
+            "targets": [
+              "fluorescein_closure",
+              "pain",
+              "complication"
+            ]
+          },
+          "outcomes": {
+            "safe": "Динамика подтверждена тестом, а длительность не вычисляется кодом.",
+            "unsafe": "Лечение прекращается только потому, что глаз визуально лучше."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: разницу между уменьшением симптомов и подтверждённым закрытием дефекта."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "adherent",
+              "anxious"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "eye_corneal_ulcer_complicated",
+      "version": "2026.07.16.40",
+      "title": "Глубокая, инфицированная или расплавляющаяся язва роговицы",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Глубокая, инфицированная, расплавляющаяся, быстро прогрессирующая или незаживающая язва угрожает зрению и целостности глаза.",
+      "primaryDiagnosisId": "dx_complicated_corneal_ulcer",
+      "differentials": [
+        "dx_descemetocele",
+        "dx_corneal_perforation",
+        "dx_foreign_body",
+        "dx_kcs",
+        "dx_indolent_ulcer"
+      ],
+      "planBundleId": "complicated_ulcer_emergency",
+      "sourceIds": [
+        "merck_cornea",
+        "acvo_referral"
+      ],
+      "presentations": [
+        {
+          "id": "p1_deep_stromal_defect",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что глаз резко болезненный и мутный; заметна глубокая выемка роговицы.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, остро или быстро ухудшается.",
+            "pain_behaviour": "Дома мы заметили, что сильный прищур и светобоязнь.",
+            "vision_owner_report": "Насколько мы можем судить, зрение снижено или неизвестно.",
+            "previous_treatment": "Мы записали, что домашние капли уточнены."
+          },
+          "examFindings": [
+            {
+              "factId": "deep_stromal_or_descemetocele_risk",
+              "source": "physical_exam",
+              "finding": "Глубокий дефект или подозрение на десцеметоцеле; осмотр без давления."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "deep_stromal_or_descemetocele_risk",
+              "discoveryPaths": [
+                "surface_and_adnexa_exam",
+                "fluorescein_map"
+              ]
+            },
+            {
+              "factId": "vision_threat",
+              "discoveryPaths": [
+                "neurovisual_screen",
+                "bilateral_eye_comparison"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_with_depth_aware_interpretation",
+              "result": "Флуоресцеиновая проба показала: карта учитывает возможное иное окрашивание глубокого центра."
+            },
+            {
+              "id": "eye_tonometry",
+              "classification": "contraindicated_when_perforation_suspected",
+              "result": "При измерении давления: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            },
+            {
+              "id": "eye_ocular_cytology",
+              "classification": "only_if_safe_and_no_referral_delay",
+              "result": "При микроскопии материала: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "deep_stromal_or_descemetocele_risk",
+              "vision_threat"
+            ],
+            "confirmedDiagnosisRequires": [
+              "depth_assessment_by_trained_exam_or_specialist"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein"
+            ],
+            "conditional": [
+              "urgent_ophthalmology_route"
+            ],
+            "missingLocalRoute": [
+              "ophthalmology_referral"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "complicated_ulcer_emergency",
+          "followUp": {
+            "timing": "Немедленная передача специалиста.",
+            "required": true,
+            "targets": [
+              "globe_integrity",
+              "depth",
+              "pain",
+              "vision"
+            ]
+          },
+          "outcomes": {
+            "safe": "Глаз защищён и направлен без вредной манипуляции.",
+            "unsafe": "Тонометрия или обычное ожидание повышают риск потери глаза."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: прямо объяснить угрозу целостности глаза и срочность."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "panic",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_shield_and_referral",
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_infiltrate_or_melting",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что язва быстро белеет или углубляется, роговица выглядит размягчённой.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, быстрое ухудшение за часы или сутки.",
+            "pain_behaviour": "Дома мы заметили, что выраженная боль.",
+            "previous_treatment": "Насколько мы можем судить, возможна терапия, изменяющая материал пробы.",
+            "adherence_barrier": "Мы записали, что частые процедуры дома могут быть невыполнимы."
+          },
+          "examFindings": [
+            {
+              "factId": "infiltrate_or_malacia",
+              "source": "physical_exam",
+              "finding": "Бело-жёлтый инфильтрат или стромальное расплавление с угрозой углубления."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "infiltrate_or_malacia",
+              "discoveryPaths": [
+                "surface_and_adnexa_exam",
+                "fluorescein_map"
+              ]
+            },
+            {
+              "factId": "rapid_progression",
+              "discoveryPaths": [
+                "onset_course"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_ocular_cytology",
+              "classification": "required_or_recommended_before_material_changing_therapy_if_safe",
+              "result": "При микроскопии материала: обнаруженные клетки или микроорганизмы направляют обзор-протокол."
+            },
+            {
+              "id": "eye_external_pcr_or_culture",
+              "classification": "recommended_without_delaying_globe_protection",
+              "result": "По результатам посева и определения чувствительности: культура или чувствительность становится доступна позже."
+            },
+            {
+              "id": "eye_tonometry",
+              "classification": "contraindicated_if_integrity_at_risk",
+              "result": "При измерении давления: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "infiltrate_or_malacia",
+              "rapid_progression"
+            ],
+            "confirmedDiagnosisRequires": [
+              "trained_depth_and_malacia_assessment"
+            ],
+            "dangerStates": [
+              "perforation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein"
+            ],
+            "conditional": [
+              "ocular_sampling_or_referral",
+              "urgent_ophthalmology_route"
+            ],
+            "external": [
+              "culture_external"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "complicated_ulcer_emergency",
+          "followUp": {
+            "timing": "Немедленный интенсивный или специализированный маршрут.",
+            "required": true,
+            "targets": [
+              "depth",
+              "melting",
+              "culture",
+              "integrity",
+              "adherence_or_hospitalization"
+            ]
+          },
+          "outcomes": {
+            "safe": "Отбор не задерживает защиту и направление.",
+            "unsafe": "Ожидание результата или опасный компонент ускоряют разрушение роговицы."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему домашняя редкая схема может быть недостаточной."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "panic"
+            ],
+            "requiredHandlingAlternative": "sedation_only_by_reviewed_protocol_or_referral",
+            "ownerModifiers": [
+              "overwhelmed",
+              "budget_limited",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_rapid_progression_or_nonhealing",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "urgent_follow_up",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что на раннем контроле язва не уменьшается или стала глубже.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, нет ожидаемого улучшения либо быстрое ухудшение.",
+            "adherence_barrier": "Дома мы заметили, что выполнение и воротник проверяются без автоматического обвинения.",
+            "previous_treatment": "Насколько мы можем судить, схема и техника уточнены.",
+            "trauma_chemical_exposure": "Мы записали, что сохраняющаяся механическая причина не исключена."
+          },
+          "examFindings": [
+            {
+              "factId": "objective_nonhealing_or_progression",
+              "source": "diagnostic_test",
+              "finding": "Сравнение с сохранённой картой показывает отсутствие сокращения или углубление."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "objective_nonhealing_or_progression",
+              "discoveryPaths": [
+                "fluorescein_map",
+                "surface_and_adnexa_exam"
+              ]
+            },
+            {
+              "factId": "complicating_factor_search",
+              "discoveryPaths": [
+                "schirmer_before_drops",
+                "third_eyelid_exam",
+                "adherence_barrier"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_for_comparative_recheck",
+              "result": "Флуоресцеиновая проба показала: карта хуже или без ожидаемой динамики."
+            },
+            {
+              "id": "eye_schirmer_test",
+              "classification": "required_or_recommended_to_find_kcs",
+              "result": "Тест Ширмера показал: слёзопродукция."
+            },
+            {
+              "id": "eye_ocular_cytology",
+              "classification": "recommended_changes_plan",
+              "result": "При микроскопии материала: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "eye_external_pcr_or_culture",
+              "classification": "recommended_by_infection_risk",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "objective_nonhealing_or_progression",
+              "complicating_factor_search"
+            ],
+            "confirmedDiagnosisRequires": [
+              "original_and_current_snapshot"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein"
+            ],
+            "conditional": [
+              "schirmer_or_referral",
+              "ocular_sampling_or_referral",
+              "urgent_ophthalmology_route"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "complicated_ulcer_emergency",
+          "followUp": {
+            "timing": "Срочная повторная экспертиза специалиста.",
+            "required": true,
+            "targets": [
+              "depth",
+              "infection",
+              "tear_production",
+              "mechanical_cause",
+              "adherence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ухудшение меняет маршрут, направление не считается поражением.",
+            "unsafe": "Неэффективная схема повторяется без проверки причины."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: объективную динамику по карте, не обвиняя владельца."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "adherent",
+              "overwhelmed",
+              "frustrated"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "eye_foreign_body_or_mechanical_cause",
+      "version": "2026.07.16.40",
+      "title": "Инородное тело или механическая причина раздражения роговицы",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Инородный материал, веко, волос или неполное закрытие являются причиной до их безопасного устранения; симптоматический план один не завершает случай.",
+      "primaryDiagnosisId": "dx_eye_mechanical_cause",
+      "differentials": [
+        "dx_superficial_corneal_ulcer",
+        "dx_penetrating_eye_injury",
+        "dx_entropion_or_trichiasis",
+        "dx_conjunctivitis_undifferentiated"
+      ],
+      "planBundleId": "mechanical_cause_resolution",
+      "sourceIds": [
+        "merck_cornea",
+        "acvo_referral"
+      ],
+      "presentations": [
+        {
+          "id": "p1_visible_superficial_foreign_material",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что после прогулки или игры в конъюнктивальном мешке виден растительный материал.",
+          "historyAnswers": {
+            "trauma_chemical_exposure": "По нашим наблюдениям, подтверждён контакт с травой или пылью.",
+            "onset_course": "Дома мы заметили, что остро.",
+            "pain_behaviour": "Насколько мы можем судить, прищур и слезотечение.",
+            "vision_owner_report": "Мы записали, что ориентируется."
+          },
+          "examFindings": [
+            {
+              "factId": "superficial_nonpenetrating_material",
+              "source": "physical_exam",
+              "finding": "Материал поверхностный; признаков проникновения или разрыва нет."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "superficial_nonpenetrating_material",
+              "discoveryPaths": [
+                "surface_and_adnexa_exam",
+                "third_eyelid_exam"
+              ]
+            },
+            {
+              "factId": "post_removal_integrity",
+              "discoveryPaths": [
+                "fluorescein_map"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_surface_exam",
+              "classification": "required_before_removal",
+              "result": "Клиническая оценка показала: поверхностная локализация подтверждена."
+            },
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_after_safe_removal_or_irrigation",
+              "result": "Флуоресцеиновая проба показала: остаточный дефект определяет дальнейшую клинический вариант."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "superficial_nonpenetrating_material",
+              "post_removal_integrity"
+            ],
+            "confirmedDiagnosisRequires": [
+              "material_visualized_and_removed_or_referred"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "eye_irrigation",
+              "sterile_eye_consumables",
+              "fluorescein"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "mechanical_cause_resolution",
+          "followUp": {
+            "timing": "При остаточном дефекте роговицы.",
+            "required": true,
+            "targets": [
+              "material_absent",
+              "fluorescein",
+              "pain"
+            ]
+          },
+          "outcomes": {
+            "safe": "Причина устранена и поверхность повторно проверена.",
+            "unsafe": "Внедрённый предмет извлекается без оценки проникновения."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: необходимость повторного окрашивания после удаления."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "referral_if_uncooperative",
+            "ownerModifiers": [
+              "observant",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_hidden_under_third_eyelid",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что односторонняя боль и линейный дефект сохраняются, но снаружи предмета не видно.",
+          "historyAnswers": {
+            "trauma_chemical_exposure": "По нашим наблюдениям, контакт с растительностью возможен.",
+            "onset_course": "Дома мы заметили, что сохраняется после поверхностного осмотра.",
+            "pain_behaviour": "Насколько мы можем судить, выраженный прищур.",
+            "previous_treatment": "Мы записали, что симптоматическая помощь не решила причину."
+          },
+          "examFindings": [
+            {
+              "factId": "linear_ulcer_hidden_body_pattern",
+              "source": "diagnostic_test",
+              "finding": "Линейная карта дефекта поддерживает скрытый материал под третьим веком."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "linear_ulcer_hidden_body_pattern",
+              "discoveryPaths": [
+                "fluorescein_map"
+              ]
+            },
+            {
+              "factId": "third_eyelid_route_required",
+              "discoveryPaths": [
+                "third_eyelid_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_pattern_detection",
+              "result": "Флуоресцеиновая проба показала: линейный дефект."
+            },
+            {
+              "id": "eye_surface_exam",
+              "classification": "required_by_trained_exam_or_referral",
+              "result": "Клиническая оценка показала: скрытый материал обнаружен либо требуется направление."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "linear_ulcer_hidden_body_pattern",
+              "third_eyelid_route_required"
+            ],
+            "confirmedDiagnosisRequires": [
+              "material_visualized_or_specialist_confirmation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein"
+            ],
+            "conditional": [
+              "eye_exam_or_referral"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "mechanical_cause_resolution",
+          "followUp": {
+            "timing": "После удаления и ранней повторной проверки роговицы.",
+            "required": true,
+            "targets": [
+              "material",
+              "fluorescein",
+              "pain"
+            ]
+          },
+          "outcomes": {
+            "safe": "Отрицательный поверхностный взгляд не закрывает механическую клинический вариант.",
+            "unsafe": "Слепое промывание или повтор капель оставляют причину."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему требуется осмотр третьего века обученным сотрудником."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "painful_defensive"
+            ],
+            "requiredHandlingAlternative": "sedation_by_reviewed_protocol_or_referral",
+            "ownerModifiers": [
+              "skeptical",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_eyelid_or_hair_contact_recurrence",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что раздражение или язва возвращаются в одном участке глаза.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, повторяется после временного улучшения.",
+            "previous_treatment": "Дома мы заметили, что поверхность лечили, механическую причину не корректировали.",
+            "pain_behaviour": "Насколько мы можем судить, боль возвращается.",
+            "adherence_barrier": "Мы записали, что защита выполнялась."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrent_contact_site",
+              "source": "physical_exam",
+              "finding": "Заворот, волос или ресница или неполное смыкание касается того же участка."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "recurrent_contact_site",
+              "discoveryPaths": [
+                "surface_and_adnexa_exam",
+                "bilateral_eye_comparison"
+              ]
+            },
+            {
+              "factId": "current_corneal_damage",
+              "discoveryPaths": [
+                "fluorescein_map"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_surface_exam",
+              "classification": "required_for_mechanical_confirmation",
+              "result": "Клиническая оценка показала: механический контакт подтверждён."
+            },
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_for_current_damage",
+              "result": "Флуоресцеиновая проба показала: карта дефекта или раздражения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "recurrent_contact_site",
+              "current_corneal_damage"
+            ],
+            "confirmedDiagnosisRequires": [
+              "direct_contact_observed"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein"
+            ],
+            "conditional": [
+              "urgent_ophthalmology_route"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "mechanical_cause_resolution",
+          "followUp": {
+            "timing": "Поддержка на поверхности плюс окончательный маршрут коррекции.",
+            "required": true,
+            "targets": [
+              "contact_removed",
+              "corneal_healing",
+              "recurrence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Временная помощь соединена с коррекцией причины.",
+            "unsafe": "Каждый рецидив лечится как новая инфекция."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: разделить временную защиту поверхности и окончательное устранение контакта."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "budget_limited",
+              "frustrated",
+              "observant"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "eye_keratoconjunctivitis_sicca",
+      "version": "2026.07.16.40",
+      "title": "Сухой кератоконъюнктивит",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Сниженная слёзопродукция подтверждается корректной пробой Ширмера обоих глаз до капель вместе с совместимыми изменениями поверхности.",
+      "primaryDiagnosisId": "dx_keratoconjunctivitis_sicca",
+      "differentials": [
+        "dx_conjunctivitis_undifferentiated",
+        "dx_superficial_corneal_ulcer",
+        "dx_neurogenic_dry_eye",
+        "dx_lacrimal_gland_disease"
+      ],
+      "planBundleId": "kcs_confirmation_and_longitudinal",
+      "sourceIds": [
+        "acvo_dry_eye",
+        "merck_cornea",
+        "merck_ocular_diagnostics"
+      ],
+      "presentations": [
+        {
+          "id": "p1_bilateral_mucoid_discharge",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что у собаки хронически красные глаза, густая слизь и тусклая сухая поверхность.",
+          "historyAnswers": {
+            "laterality": "По нашим наблюдениям, оба глаза, степень может различаться.",
+            "onset_course": "Дома мы заметили, что хронически.",
+            "discharge_character": "Насколько мы можем судить, густые слизистые выделения.",
+            "previous_treatment": "Мы записали, что короткие противомикробные курсы давали временный эффект."
+          },
+          "examFindings": [
+            {
+              "factId": "bilateral_dry_surface_pattern",
+              "source": "physical_exam",
+              "finding": "Сухая тусклая поверхность с мукоидными выделениями и хроническим воспалением."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "bilateral_dry_surface_pattern",
+              "discoveryPaths": [
+                "surface_and_adnexa_exam",
+                "bilateral_eye_comparison"
+              ]
+            },
+            {
+              "factId": "low_tear_production",
+              "discoveryPaths": [
+                "schirmer_before_drops"
+              ]
+            },
+            {
+              "factId": "ulcer_status",
+              "discoveryPaths": [
+                "fluorescein_map"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_schirmer_test",
+              "classification": "required_for_confirmation",
+              "result": "Тест Ширмера показал: сниженный результат обоих глаз с видовым контекстом."
+            },
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_for_secondary_ulcer_screen",
+              "result": "Флуоресцеиновая проба показала: отсутствие или наличие вторичной язвы."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "bilateral_dry_surface_pattern",
+              "low_tear_production",
+              "ulcer_status"
+            ],
+            "confirmedDiagnosisRequires": [
+              "low_tear_production",
+              "compatible_surface_pattern"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "schirmer_test",
+              "fluorescein"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "kcs_confirmation_and_longitudinal",
+          "followUp": {
+            "timing": "Мониторинг продольного разрыва и поверхности.",
+            "required": true,
+            "targets": [
+              "schirmer",
+              "surface",
+              "discharge",
+              "ulcer",
+              "adherence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Подтверждён долгосрочный слёзный план, а не короткий курс от инфекции.",
+            "unsafe": "Диагноз поставлен только по слизи."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: хроническую природу и необходимость контроля обоих глаз."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "adherent",
+              "expecting_short_course",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_secondary_ulcer",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority_or_urgent_by_depth",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что на фоне сухого глаза усилились боль и прищур.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, хроническая сухость с острым усилением боли.",
+            "pain_behaviour": "Дома мы заметили, что новый выраженный прищур.",
+            "previous_treatment": "Насколько мы можем судить, слёзный план выполнялся полностью или частично.",
+            "adherence_barrier": "Мы записали, что барьер закапывания."
+          },
+          "examFindings": [
+            {
+              "factId": "kcs_with_secondary_ulcer",
+              "source": "diagnostic_test",
+              "finding": "Низкая слёзопродукция и положительный флуоресцеин; глубина отдельно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "low_tear_production",
+              "discoveryPaths": [
+                "schirmer_before_drops"
+              ]
+            },
+            {
+              "factId": "kcs_with_secondary_ulcer",
+              "discoveryPaths": [
+                "fluorescein_map",
+                "surface_and_adnexa_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_schirmer_test",
+              "classification": "required_for_cause_context",
+              "result": "Тест Ширмера показал: сохраняется дефицит."
+            },
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_for_ulcer_route",
+              "result": "Флуоресцеиновая проба показала: дефект переводит в поверхностную или осложнённую клинический вариант."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "low_tear_production",
+              "kcs_with_secondary_ulcer"
+            ],
+            "confirmedDiagnosisRequires": [
+              "tear_deficit_and_ulcer"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "schirmer_test",
+              "fluorescein"
+            ],
+            "conditional": [
+              "urgent_ophthalmology_route"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "kcs_confirmation_and_longitudinal",
+          "followUp": {
+            "timing": "Ранняя повторная проверка язвы плюс долгосрочный мониторинг слез.",
+            "required": true,
+            "targets": [
+              "ulcer_map",
+              "tear_production",
+              "pain",
+              "adherence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Язва и причина незаживления ведутся вместе.",
+            "unsafe": "Компонент, опасный для язвы, назначается по старому диагнозу сухого глаза."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему внезапная боль меняет прежний план."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "calm"
+            ],
+            "ownerModifiers": [
+              "adherent",
+              "overwhelmed"
+            ]
+          }
+        },
+        {
+          "id": "p3_chronic_pigment_or_poor_adherence",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "follow_up",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что боль меньше, но сохраняются слизь, сосуды или пигментация; частые процедуры трудно выполнять.",
+          "historyAnswers": {
+            "adherence_barrier": "По нашим наблюдениям, график работы, поведение собаки или физические ограничения мешают процедурам.",
+            "onset_course": "Дома мы заметили, что хроническое неполное улучшение.",
+            "previous_treatment": "Насколько мы можем судить, техника и фактическая частота записаны.",
+            "vision_owner_report": "Мы записали, что зрение может снижаться при прогрессировании пигмента."
+          },
+          "examFindings": [
+            {
+              "factId": "chronic_surface_damage",
+              "source": "physical_exam",
+              "finding": "Пигментация или васкуляризация и выделения при неполном контроле поверхности."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "chronic_surface_damage",
+              "discoveryPaths": [
+                "surface_and_adnexa_exam",
+                "neurovisual_screen"
+              ]
+            },
+            {
+              "factId": "real_adherence_barrier",
+              "discoveryPaths": [
+                "adherence_barrier",
+                "previous_treatment"
+              ]
+            },
+            {
+              "factId": "current_tear_status",
+              "discoveryPaths": [
+                "schirmer_before_drops"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_schirmer_test",
+              "classification": "required_longitudinal_measurement",
+              "result": "Тест Ширмера показал: текущая слёзопродукция."
+            },
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_if_new_pain_or_surface_risk",
+              "result": "Флуоресцеиновая проба показала: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "chronic_surface_damage",
+              "real_adherence_barrier",
+              "current_tear_status"
+            ],
+            "confirmedDiagnosisRequires": [
+              "existing_kcs_snapshot_and_current_measurement"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "schirmer_test"
+            ],
+            "conditional": [
+              "fluorescein_or_referral"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "kcs_confirmation_and_longitudinal",
+          "followUp": {
+            "timing": "После возможной корректировки плана.",
+            "required": true,
+            "targets": [
+              "tear_result",
+              "surface_damage",
+              "vision",
+              "adherence"
+            ]
+          },
+          "outcomes": {
+            "safe": "План адаптируется или пациент направляется, а барьер не скрывается.",
+            "unsafe": "Ухудшение приписывается характеру владельца без решения выполнимости."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: выбрать выполнимую поддержку, обучение или помощь другого человека."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "resists_drops"
+            ],
+            "ownerModifiers": [
+              "overwhelmed",
+              "physically_limited",
+              "motivated"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "eye_anterior_uveitis",
+      "version": "2026.07.16.40",
+      "title": "Передний увеит",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Передний увеит является внутриглазным воспалительным синдромом с локальными и системными причинами; причина может оставаться неустановленной.",
+      "primaryDiagnosisId": "dx_anterior_uveitis",
+      "differentials": [
+        "dx_corneal_ulcer",
+        "dx_acute_glaucoma",
+        "dx_lens_induced_uveitis",
+        "dx_infectious_systemic_uveitis",
+        "dx_intraocular_neoplasia"
+      ],
+      "planBundleId": "uveitis_pressure_and_cause_route",
+      "sourceIds": [
+        "merck_anterior_uvea",
+        "merck_ocular_diagnostics",
+        "acvo_referral"
+      ],
+      "presentations": [
+        {
+          "id": "p1_unilateral_acute_pain",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что один глаз остро болезненный, зрачок сужен, внутри глаза заметно помутнение.",
+          "historyAnswers": {
+            "laterality": "По нашим наблюдениям, один глаз.",
+            "onset_course": "Дома мы заметили, что остро.",
+            "pain_behaviour": "Насколько мы можем судить, сильная боль или светобоязнь.",
+            "trauma_chemical_exposure": "Мы записали, что локальная травма подтверждена или исключается."
+          },
+          "examFindings": [
+            {
+              "factId": "unilateral_anterior_uveitis_pattern",
+              "source": "physical_exam",
+              "finding": "Миоз, взвесь во влаге передней камеры и соответствующее внутриглазное давление при интактной роговице."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "cornea_integrity_known",
+              "discoveryPaths": [
+                "fluorescein_map"
+              ]
+            },
+            {
+              "factId": "unilateral_anterior_uveitis_pattern",
+              "discoveryPaths": [
+                "surface_and_adnexa_exam",
+                "bilateral_tonometry",
+                "bilateral_eye_comparison"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_before_antiinflammatory_route",
+              "result": "Флуоресцеиновая проба показала: сопутствующая язва как отсутствующая или меняющая план."
+            },
+            {
+              "id": "eye_tonometry",
+              "classification": "required_if_globe_intact",
+              "result": "При измерении давления: давление обоих глаз поддерживает увеит и исключает текущую глаукому."
+            },
+            {
+              "id": "eye_ophthalmoscopy",
+              "classification": "recommended_if_media_allow",
+              "result": "Целевое исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "cornea_integrity_known",
+              "unilateral_anterior_uveitis_pattern"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_chamber_findings_and_pressure_context"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein"
+            ],
+            "conditional": [
+              "tonometry_or_referral",
+              "urgent_ophthalmology_route"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "uveitis_pressure_and_cause_route",
+          "followUp": {
+            "timing": "Ранняя повторная проверка давления, зрения и воспалений.",
+            "required": true,
+            "targets": [
+              "pain",
+              "flare",
+              "pressure",
+              "vision",
+              "cause"
+            ]
+          },
+          "outcomes": {
+            "safe": "Язва и глаукома проверены до управления воспалением.",
+            "unsafe": "Компонент назначен без окрашивания или давления."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: увеит — синдром и причина ещё может уточняться."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "low_stress_or_referral",
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_bilateral_systemic_risk",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что воспалены оба глаза, одновременно есть лихорадка, похудение или другие системные признаки.",
+          "historyAnswers": {
+            "laterality": "По нашим наблюдениям, оба глаза.",
+            "systemic_signs": "Дома мы заметили, что лихорадка или похудение или лимфоузлы или эпидриск.",
+            "comorbidity": "Насколько мы можем судить, системная болезнь возможна.",
+            "group_contact": "Мы записали, что эпидемиологический контекст зафиксирован в этом случае."
+          },
+          "examFindings": [
+            {
+              "factId": "bilateral_uveitis_systemic_pattern",
+              "source": "physical_exam",
+              "finding": "Двусторонний передний увеит и объективные системные отклонения."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "bilateral_uveitis_systemic_pattern",
+              "discoveryPaths": [
+                "bilateral_eye_comparison",
+                "general_exam"
+              ]
+            },
+            {
+              "factId": "systemic_risk_context",
+              "discoveryPaths": [
+                "systemic_signs",
+                "comorbidity",
+                "group_contact"
+              ]
+            },
+            {
+              "factId": "pressure_and_cornea_known",
+              "discoveryPaths": [
+                "fluorescein_map",
+                "bilateral_tonometry"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_fluorescein",
+              "classification": "required",
+              "result": "Флуоресцеиновая проба показала: целостность роговицы."
+            },
+            {
+              "id": "eye_tonometry",
+              "classification": "required_if_globes_intact",
+              "result": "При измерении давления: давление обоих глаз."
+            },
+            {
+              "id": "eye_ophthalmoscopy",
+              "classification": "recommended_if_media_allow",
+              "result": "Целевое исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "eye_external_pcr_or_culture",
+              "classification": "targeted_only_by_authored_epidemiology",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "bilateral_uveitis_systemic_pattern",
+              "systemic_risk_context",
+              "pressure_and_cornea_known"
+            ],
+            "confirmedDiagnosisRequires": [
+              "ocular_syndrome_confirmed"
+            ],
+            "unexcludedRisks": [
+              "infectious",
+              "immune_mediated",
+              "neoplastic",
+              "systemic"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "eye_exam",
+              "trained_eye_exam",
+              "fluorescein"
+            ],
+            "conditional": [
+              "tonometry_or_referral",
+              "ocular_sampling_or_referral",
+              "urgent_ophthalmology_route"
+            ],
+            "external": [
+              "cbc",
+              "biochemistry",
+              "pcr_external"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "uveitis_pressure_and_cause_route",
+          "followUp": {
+            "timing": "Срочное офтальмологическое плюс системное обследование.",
+            "required": true,
+            "targets": [
+              "pressure",
+              "vision",
+              "systemic_disease",
+              "targeted_results"
+            ]
+          },
+          "outcomes": {
+            "safe": "Глазной синдром соединён с системной диагностикой.",
+            "unsafe": "Лечат только глаза и пропускают системную болезнь."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему двусторонность и общие признаки расширяют обследование."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "weak",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "overwhelmed",
+              "budget_limited",
+              "observant"
+            ]
+          }
+        },
+        {
+          "id": "p3_recheck_secondary_pressure_risk",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority_or_emergency_by_pressure",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что на контроле воспаление меняется, но глаз снова болезнен или зрачок стал шире.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, изменение после исходного увеита.",
+            "pain_behaviour": "Дома мы заметили, что новая или усилившаяся боль.",
+            "vision_owner_report": "Насколько мы можем судить, зрение может ухудшаться.",
+            "previous_treatment": "Мы записали, что текущий протокол и выполнение зафиксированы."
+          },
+          "examFindings": [
+            {
+              "factId": "secondary_pressure_change_risk",
+              "source": "measurement",
+              "finding": "Повторное давление повышается либо остаётся безопасным; рост переводит в глаукомную клинический вариант."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "secondary_pressure_change_risk",
+              "discoveryPaths": [
+                "bilateral_tonometry"
+              ]
+            },
+            {
+              "factId": "current_vision_and_inflammation",
+              "discoveryPaths": [
+                "neurovisual_screen",
+                "surface_and_adnexa_exam",
+                "bilateral_eye_comparison"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_tonometry",
+              "classification": "required_for_recheck",
+              "result": "При измерении давления: динамика обоих глаз."
+            },
+            {
+              "id": "eye_ophthalmoscopy",
+              "classification": "recommended_by_media_and_vision",
+              "result": "Целевое исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_if_surface_risk_or_plan_changes",
+              "result": "Флуоресцеиновая проба показала: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "secondary_pressure_change_risk",
+              "current_vision_and_inflammation"
+            ],
+            "confirmedDiagnosisRequires": [
+              "original_uveitis_snapshot_and_current_pressure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam"
+            ],
+            "conditional": [
+              "tonometry_or_referral",
+              "fluorescein_or_referral",
+              "urgent_ophthalmology_route"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "uveitis_pressure_and_cause_route",
+          "followUp": {
+            "timing": "Зависящий от давления; экстренная помощь в случае резкого подъема.",
+            "required": true,
+            "targets": [
+              "pressure",
+              "vision",
+              "inflammation",
+              "lens"
+            ]
+          },
+          "outcomes": {
+            "safe": "Вторичная глаукома обнаруживается на переходе, а не после потери зрения.",
+            "unsafe": "Улучшение красноты используется вместо измерения давления."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: осложнение может возникнуть даже при частичном улучшении воспаления."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "painful_defensive"
+            ],
+            "ownerModifiers": [
+              "adherent",
+              "anxious"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "eye_acute_glaucoma",
+      "version": "2026.07.16.40",
+      "title": "Острый глаукомный приступ",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Острое повышение внутриглазного давления с болью и риском необратимой нейропатии является офтальмологической неотложной ситуацией.",
+      "primaryDiagnosisId": "dx_acute_glaucoma",
+      "differentials": [
+        "dx_anterior_uveitis",
+        "dx_lens_luxation",
+        "dx_corneal_edema",
+        "dx_intraocular_neoplasia",
+        "dx_primary_glaucoma"
+      ],
+      "planBundleId": "acute_glaucoma_emergency",
+      "sourceIds": [
+        "merck_acute_glaucoma",
+        "merck_glaucoma",
+        "acvo_referral"
+      ],
+      "presentations": [
+        {
+          "id": "p1_pain_edema_mydriasis",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что глаз внезапно сильно болит, помутнел, зрачок расширен и зрение снизилось.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, остро, часы.",
+            "pain_behaviour": "Дома мы заметили, что сильная боль.",
+            "vision_owner_report": "Насколько мы можем судить, натыкается или хуже ориентируется.",
+            "laterality": "Мы записали, что один глаз; второй тоже подлежит оценке."
+          },
+          "examFindings": [
+            {
+              "factId": "acute_glaucoma_pattern",
+              "source": "physical_exam",
+              "finding": "Эписклеральная инъекция, диффузный отёк роговицы, мидриаз и снижение зрения при целом глазе."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "acute_glaucoma_pattern",
+              "discoveryPaths": [
+                "surface_and_adnexa_exam",
+                "neurovisual_screen",
+                "bilateral_eye_comparison"
+              ]
+            },
+            {
+              "factId": "elevated_iop_confirmed",
+              "discoveryPaths": [
+                "bilateral_tonometry"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_tonometry",
+              "classification": "required_for_confirmation_if_globe_intact",
+              "result": "При измерении давления: резко повышенное давление поражённого глаза и сравнительное значение второго."
+            },
+            {
+              "id": "eye_ophthalmoscopy",
+              "classification": "recommended_if_no_harmful_delay_and_media_allow",
+              "result": "Целевое исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "eye_fluorescein",
+              "classification": "required_or_completed_in_safe_sequence",
+              "result": "Флуоресцеиновая проба показала: целостность роговицы."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "acute_glaucoma_pattern",
+              "elevated_iop_confirmed"
+            ],
+            "confirmedDiagnosisRequires": [
+              "elevated_iop_confirmed",
+              "compatible_optic_pain_context"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam"
+            ],
+            "conditional": [
+              "tonometry_or_referral",
+              "urgent_ophthalmology_route"
+            ],
+            "missingLocalRoute": [
+              "ophthalmology_referral"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "acute_glaucoma_emergency",
+          "followUp": {
+            "timing": "Внутриглазное давление нужно снизить немедленно; пациента в тот же день передают ветеринарному офтальмологу.",
+            "required": true,
+            "targets": [
+              "pressure",
+              "vision",
+              "pain",
+              "lens_uveitis_cause",
+              "fellow_eye"
+            ]
+          },
+          "outcomes": {
+            "safe": "Давление снижается по утверждённому протоколу без задержки направления.",
+            "unsafe": "Плановый визит или случайная капля теряют время и зрение."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: назвать риск необратимой потери зрения и необходимость немедленного маршрута."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "panic",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_tonometry_if_safe_or_immediate_referral",
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_owner_reports_lethargy_not_eye_pain",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что животное прячется, не ест и выглядит вялым; владелец не заметил глазную боль.",
+          "historyAnswers": {
+            "systemic_signs": "По нашим наблюдениям, вялость и отказ от корма без явной ЖКТ-причины.",
+            "pain_behaviour": "Дома мы заметили, что трёт голову или избегает света только при уточнении.",
+            "vision_owner_report": "Насколько мы можем судить, не проверяли.",
+            "onset_course": "Мы записали, что остро."
+          },
+          "examFindings": [
+            {
+              "factId": "occult_eye_pain_on_general_exam",
+              "source": "physical_exam",
+              "finding": "Общий осмотр выявляет болезненный мутный глаз с мидриазом и снижением зрения."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "occult_eye_pain_on_general_exam",
+              "discoveryPaths": [
+                "general_exam",
+                "surface_and_adnexa_exam"
+              ]
+            },
+            {
+              "factId": "elevated_iop_confirmed",
+              "discoveryPaths": [
+                "bilateral_tonometry"
+              ]
+            },
+            {
+              "factId": "vision_reduced",
+              "discoveryPaths": [
+                "neurovisual_screen"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_tonometry",
+              "classification": "required_for_confirmation_if_intact",
+              "result": "При измерении давления: остро повышенное давление."
+            },
+            {
+              "id": "eye_neurovisual_screen",
+              "classification": "required_for_prognostic_context",
+              "result": "Целевое исследование показало: зрение как сниженное или отсутствующее."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "occult_eye_pain_on_general_exam",
+              "elevated_iop_confirmed",
+              "vision_reduced"
+            ],
+            "confirmedDiagnosisRequires": [
+              "elevated_iop_confirmed"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "eye_exam",
+              "trained_eye_exam"
+            ],
+            "conditional": [
+              "tonometry_or_referral",
+              "urgent_ophthalmology_route"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "acute_glaucoma_emergency",
+          "followUp": {
+            "timing": "Нужна немедленная экстренная помощь без ожидания планового приёма.",
+            "required": true,
+            "targets": [
+              "pressure",
+              "pain",
+              "vision",
+              "cause"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неспецифическая вялость не закрывает обязательный общий осмотр.",
+            "unsafe": "Назначается только ЖКТ-план без осмотра глаз."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: сильная глазная боль может выглядеть как общая вялость."
+          ],
+          "compatibility": {
+            "temperament": [
+              "quiet_pain",
+              "weak",
+              "defensive"
+            ],
+            "ownerModifiers": [
+              "inattentive",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_fellow_eye_risk_followup",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "specialist_follow_up",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что после лечения первого глаза второй пока видит; специалист подтвердил механизм с риском второго глаза.",
+          "historyAnswers": {
+            "laterality": "По нашим наблюдениям, первый глаз поражён, второй клинически сохранён.",
+            "previous_treatment": "Дома мы заметили, что экстренный эпизод и заключение специалиста сохранены.",
+            "vision_owner_report": "Насколько мы можем судить, второй глаз ориентировочно видит.",
+            "adherence_barrier": "Мы записали, что долгий мониторинг может быть сложен."
+          },
+          "examFindings": [
+            {
+              "factId": "fellow_eye_current_baseline",
+              "source": "measurement",
+              "finding": "Зрение, давление и состояние второго глаза служат базовой точкой."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "specialist_primary_mechanism",
+              "discoveryPaths": [
+                "previous_treatment"
+              ]
+            },
+            {
+              "factId": "fellow_eye_current_baseline",
+              "discoveryPaths": [
+                "bilateral_tonometry",
+                "neurovisual_screen",
+                "bilateral_eye_comparison"
+              ]
+            },
+            {
+              "factId": "monitoring_feasibility",
+              "discoveryPaths": [
+                "adherence_barrier"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "eye_tonometry",
+              "classification": "required_longitudinal_baseline",
+              "result": "При измерении давления: давление обоих глаз."
+            },
+            {
+              "id": "eye_ophthalmoscopy",
+              "classification": "recommended_by_specialist_route",
+              "result": "Целевое исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "specialist_primary_mechanism",
+              "fellow_eye_current_baseline",
+              "monitoring_feasibility"
+            ],
+            "confirmedDiagnosisRequires": [
+              "specialist_snapshot"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "eye_exam",
+              "trained_eye_exam"
+            ],
+            "conditional": [
+              "tonometry_or_referral",
+              "urgent_ophthalmology_route"
+            ],
+            "referralFallback": "ophthalmology_referral"
+          },
+          "carePlanId": "acute_glaucoma_emergency",
+          "followUp": {
+            "timing": "Второй глаз контролируют в срок, который назначил ветеринарный офтальмолог.",
+            "required": true,
+            "targets": [
+              "fellow_eye_pressure",
+              "vision",
+              "owner_detection_plan",
+              "adherence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Случай продолжается профилактикой и мониторингом второго глаза.",
+            "unsafe": "После снижения давления первый эпизод считается полностью завершённым."
+          },
+          "ownerCommunication": [
+            "Я дам вам признаки нового приступа и прямой экстренный контакт."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "adherent",
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_conjunctiva",
+      "title": "Merck Veterinary Manual: The Conjunctiva in Animals",
+      "url": "https://www.merckvetmanual.com/eye-diseases-and-disorders/ophthalmology/the-conjunctiva-in-animals",
+      "scope": "conjunctival signs and differential limits"
+    },
+    {
+      "id": "merck_cornea",
+      "title": "Merck Veterinary Manual: The Cornea in Animals",
+      "url": "https://www.merckvetmanual.com/eye-diseases-and-disorders/ophthalmology/the-cornea-in-animals",
+      "scope": "ulcer depth, mechanical causes, infection, melting and healing monitoring"
+    },
+    {
+      "id": "merck_anterior_uvea",
+      "title": "Merck Veterinary Manual: The Anterior Uvea in Animals",
+      "url": "https://www.merckvetmanual.com/eye-diseases-and-disorders/ophthalmology/the-anterior-uvea-in-animals",
+      "scope": "uveitis findings, local and systemic cause route, complications"
+    },
+    {
+      "id": "merck_acute_glaucoma",
+      "title": "Merck Veterinary Manual: Acute Glaucoma in Small Animals",
+      "url": "https://www.merckvetmanual.com/emergency-medicine-and-critical-care/ophthalmic-emergencies-in-small-animals/acute-glaucoma-in-small-animals",
+      "scope": "emergency recognition, tonometry, immediate pressure and referral route"
+    },
+    {
+      "id": "merck_glaucoma",
+      "title": "Merck Veterinary Manual: Glaucoma in Animals",
+      "url": "https://www.merckvetmanual.com/eye-diseases-and-disorders/ophthalmology/glaucoma-in-animals",
+      "scope": "primary and secondary mechanisms and long-term monitoring"
+    },
+    {
+      "id": "merck_ocular_diagnostics",
+      "title": "Merck Veterinary Manual: Diagnostic Tests Pertaining to Ocular Medications",
+      "url": "https://www.merckvetmanual.com/pharmacology/systemic-pharmacotherapeutics-of-the-eye/diagnostic-tests-pertaining-to-ocular-medications-in-animals",
+      "scope": "test order, fluorescein, tear testing and pressure context"
+    },
+    {
+      "id": "acvo_dry_eye",
+      "title": "American College of Veterinary Ophthalmologists: Dry Eye (Keratoconjunctivitis Sicca)",
+      "url": "https://www.acvo.org/common-conditions-1/2018/2/2/dry-eye-keratoconjunctivitis-sicca",
+      "scope": "tear deficiency, surface consequences and chronic management"
+    },
+    {
+      "id": "acvo_referral",
+      "title": "American College of Veterinary Ophthalmologists: Referral Guidance",
+      "url": "https://www.acvo.org/gp-referrals",
+      "scope": "specialist route for vision and globe-threatening conditions"
+    }
+  ],
+  "familyValidationRules": [
+    "species_must_be_dog_or_cat",
+    "red_eye_cannot_create_etiologic_diagnosis_without_tests",
+    "ulcer_unsafe_component_requires_prior_negative_fluorescein",
+    "deep_melting_or_perforation_risk_requires_urgent_ophthalmology_referral",
+    "perforation_risk_forbids_tonometry_and_pressure",
+    "acute_glaucoma_requires_tonometry_if_globe_intact_or_immediate_referral",
+    "uveitis_requires_corneal_integrity_and_pressure_assessment",
+    "kcs_requires_schirmer_and_compatible_surface_findings",
+    "penetrating_foreign_material_cannot_be_removed_in_ordinary_room",
+    "temperament_requires_low_stress_alternative_or_referral",
+    "all_levels_remain_generator_ineligible_until_external_veterinary_approval"
+  ]
+}

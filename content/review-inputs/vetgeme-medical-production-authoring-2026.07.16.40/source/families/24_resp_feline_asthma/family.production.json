@@ -1,0 +1,2391 @@
+{
+  "schemaVersion": 1,
+  "familyId": "resp_feline_asthma",
+  "familyVersion": "2026.07.16.40",
+  "status": "author_complete_source_checked_pending_external_veterinary_review",
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "species": [
+    "cat"
+  ],
+  "terminologyRules": [
+    "Feline asthma is chronic inflammatory lower-airway disease with hyperreactivity and reversible bronchoconstriction, not a synonym for any cough or bronchial image.",
+    "There is no single accepted clinical gold-standard test; diagnosis integrates compatible disease and explicit exclusions.",
+    "Asthma, chronic bronchitis, lungworm, heartworm-associated respiratory disease, pneumonia, edema, neoplasia, pleural disease and foreign body remain distinct states.",
+    "Blood or airway eosinophilia is not specific for asthma and never bypasses regional parasite and heartworm assessment.",
+    "Breed, one symptom, one image or response to an unreviewed trial never confirms asthma alone.",
+    "Minimal handling and oxygen precede radiography, BAL or bronchoscopy in unstable cats.",
+    "A quiet chest in an exhausted cat can represent critically poor airflow rather than improvement.",
+    "Rescue-only use is not complete chronic inflammatory control.",
+    "Device prescription is incomplete until mask/spacer technique and owner-cat feasibility are observed.",
+    "Episode history, oxygenation, imaging, sample truth, environment and response are authored before player choice and persist through reload.",
+    "Drug, dose, taper, actuation count, oxygen target and emergency airway/procedure technique require separately approved protocols."
+  ],
+  "coreCapabilities": [
+    "respiratory_exam",
+    "pulse_oximetry",
+    "xray_or_referral",
+    "oxygen",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "feline_asthma_triage_route",
+      "anyOf": [
+        "respiratory_distress_minimal_handling",
+        "pulse_oximetry",
+        "oxygen",
+        "safe_referral"
+      ],
+      "purpose": "rate_effort_oxygenation_and_minimal_handling"
+    },
+    {
+      "id": "feline_asthma_emergency_route",
+      "anyOf": [
+        "respiratory_hospital_monitoring",
+        "intensive_care_referral",
+        "mechanical_ventilation_referral",
+        "safe_referral"
+      ],
+      "purpose": "severe_bronchospasm_exhaustion_and_failure"
+    },
+    {
+      "id": "feline_asthma_imaging_route",
+      "anyOf": [
+        "xray_or_referral",
+        "thoracic_pocus",
+        "advanced_imaging_referral",
+        "safe_referral"
+      ],
+      "purpose": "bronchial_hyperinflation_pleural_cardiac_and_structural_patterns"
+    },
+    {
+      "id": "feline_asthma_airway_sample_route",
+      "anyOf": [
+        "feline_airway_cytology_external",
+        "lower_airway_sampling_referral",
+        "respiratory_cytology_culture_external",
+        "safe_referral"
+      ],
+      "purpose": "eosinophilic_neutrophilic_infectious_and_mixed_airway_evidence"
+    },
+    {
+      "id": "feline_asthma_parasite_route",
+      "anyOf": [
+        "feline_lungworm_testing_external",
+        "feline_heartworm_testing_external",
+        "regional_disease_filter",
+        "safe_referral"
+      ],
+      "purpose": "exposure_and_region_compatible_lungworm_and_heartworm_exclusion"
+    },
+    {
+      "id": "feline_asthma_cardiac_structural_route",
+      "anyOf": [
+        "echocardiography_external",
+        "cardiology_referral",
+        "advanced_imaging_referral",
+        "oncology_staging_external",
+        "safe_referral"
+      ],
+      "purpose": "cardiac_mass_foreign_body_and_other_structural_mimics"
+    },
+    {
+      "id": "feline_asthma_environment_route",
+      "anyOf": [
+        "feline_asthma_environment_plan",
+        "longitudinal_care",
+        "safe_referral"
+      ],
+      "purpose": "specific_irritant_inventory_and_feasible_reduction"
+    },
+    {
+      "id": "feline_asthma_device_route",
+      "anyOf": [
+        "feline_inhaler_training",
+        "longitudinal_care",
+        "safe_referral"
+      ],
+      "purpose": "observed_mask_spacer_technique_and_feasibility"
+    },
+    {
+      "id": "feline_asthma_longitudinal_route",
+      "anyOf": [
+        "feline_asthma_longitudinal_monitoring",
+        "longitudinal_care",
+        "safe_referral"
+      ],
+      "purpose": "cough_resting_rr_rescue_exacerbation_and_control_log"
+    },
+    {
+      "id": "feline_asthma_refractory_route",
+      "anyOf": [
+        "airway_endoscopy_referral",
+        "advanced_imaging_referral",
+        "lower_airway_sampling_referral",
+        "safe_referral"
+      ],
+      "purpose": "refractory_focal_or_misclassified_airway_disease"
+    },
+    {
+      "id": "feline_asthma_pleural_complication_route",
+      "anyOf": [
+        "thoracic_pocus",
+        "thoracocentesis_referral",
+        "intensive_care_referral",
+        "safe_referral"
+      ],
+      "purpose": "pneumothorax_or_pleural_space_emergency"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "feline_asthma_respiratory_triage_and_minimal_handling",
+      "requires": [
+        "respiratory_distress_minimal_handling",
+        "pulse_oximetry",
+        "oxygen"
+      ],
+      "availability": "local_emergency_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_asthma_thoracic_radiography",
+      "requires": [
+        "xray_or_referral"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_asthma_airway_cytology_and_culture",
+      "requires": [
+        "feline_airway_cytology_external",
+        "lower_airway_sampling_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_asthma_parasite_heartworm_and_regional_exclusion",
+      "requires": [
+        "feline_lungworm_testing_external",
+        "feline_heartworm_testing_external",
+        "regional_disease_filter"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_asthma_cardiac_and_structural_mimic_exclusion",
+      "requires": [
+        "echocardiography_external",
+        "advanced_imaging_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_asthma_environment_and_trigger_inventory",
+      "requires": [
+        "feline_asthma_environment_plan"
+      ],
+      "availability": "local_from_start",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_asthma_inhaler_device_technique_check",
+      "requires": [
+        "feline_inhaler_training"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_asthma_longitudinal_symptom_and_exacerbation_log",
+      "requires": [
+        "feline_asthma_longitudinal_monitoring"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_asthma_refractory_advanced_airway_referral",
+      "requires": [
+        "airway_endoscopy_referral",
+        "advanced_imaging_referral"
+      ],
+      "availability": "external_post_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "cough_vs_retake_hairball_video",
+      "prompt": "Это кашель, рвота, комок шерсти или тошнота; есть ли видео?"
+    },
+    {
+      "id": "episode_frequency_duration",
+      "prompt": "Как часто и сколько длится каждый эпизод?"
+    },
+    {
+      "id": "sleeping_resting_rr",
+      "prompt": "Какова частота дыхания во сне или полном покое?"
+    },
+    {
+      "id": "open_mouth_cyanosis_weakness",
+      "prompt": "Есть ли с открытым ртом дыхание, цианоз или слабость?"
+    },
+    {
+      "id": "smoke_aerosol_perfume_litter_renovation",
+      "prompt": "Есть ли дым, аэрозоли, парфюмерия, пыльный лоток или ремонт?"
+    },
+    {
+      "id": "home_season_ventilation_change",
+      "prompt": "Изменились ли дом, сезон или вентиляция?"
+    },
+    {
+      "id": "outdoor_hunting_travel_region",
+      "prompt": "Выходит ли кошка, охотится ли, путешествовала ли и где?"
+    },
+    {
+      "id": "prescribed_devices_and_plan",
+      "prompt": "Какие лекарства и устройства назначены и каков проверенный план?"
+    },
+    {
+      "id": "mask_spacer_demonstration",
+      "prompt": "Покажите фактическое использование маска или спейсер."
+    },
+    {
+      "id": "actual_missed_use",
+      "prompt": "Сколько применений реально пропущено и почему?"
+    },
+    {
+      "id": "weight_activity_burden",
+      "prompt": "Каковы оценка упитанности, нагрузка и фиксация нагрузка?"
+    },
+    {
+      "id": "prior_imaging_bal_cardiac",
+      "prompt": "Есть ли с указанной датой рентгенограммы, бронхоальвеолярный лаваж, цитология и посев или сердечный обследование?"
+    },
+    {
+      "id": "prior_treatment_response",
+      "prompt": "Какие компоненты лечения уже применялись, когда и с каким наблюдаемым ответом?"
+    },
+    {
+      "id": "rescue_frequency_and_response",
+      "prompt": "Как часто требуется экстренный компонент и каков ответ?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "hands_off_rate_effort_pattern",
+      "source": "observation",
+      "requires": [
+        "respiratory_exam",
+        "respiratory_distress_minimal_handling"
+      ]
+    },
+    {
+      "id": "mucosa_mentation_airflow",
+      "source": "observation",
+      "requires": [
+        "respiratory_exam",
+        "general_exam"
+      ]
+    },
+    {
+      "id": "signal_quality_spo2_record",
+      "source": "measurement",
+      "requires": [
+        "pulse_oximetry"
+      ]
+    },
+    {
+      "id": "wheeze_or_quiet_chest_context",
+      "source": "physical_exam",
+      "requires": [
+        "respiratory_exam"
+      ]
+    },
+    {
+      "id": "pleural_upper_airway_mimic_screen",
+      "source": "physical_exam",
+      "requires": [
+        "respiratory_exam",
+        "thoracic_pocus"
+      ]
+    },
+    {
+      "id": "dated_thoracic_radiograph_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "xray_or_referral"
+      ]
+    },
+    {
+      "id": "airway_sample_quality_cytology_culture",
+      "source": "external_report",
+      "requires": [
+        "feline_airway_cytology_external",
+        "lower_airway_sampling_referral"
+      ]
+    },
+    {
+      "id": "region_compatible_parasite_record",
+      "source": "external_report",
+      "requires": [
+        "feline_lungworm_testing_external",
+        "feline_heartworm_testing_external"
+      ]
+    },
+    {
+      "id": "cardiac_structural_mimic_record",
+      "source": "external_report",
+      "requires": [
+        "echocardiography_external",
+        "advanced_imaging_referral"
+      ]
+    },
+    {
+      "id": "specific_environment_inventory",
+      "source": "owner_and_clinic_record",
+      "requires": [
+        "feline_asthma_environment_plan"
+      ]
+    },
+    {
+      "id": "observed_inhaler_return_demonstration",
+      "source": "staff_observation",
+      "requires": [
+        "feline_inhaler_training"
+      ]
+    },
+    {
+      "id": "same_episode_control_exacerbation_log",
+      "source": "longitudinal_record",
+      "requires": [
+        "feline_asthma_longitudinal_monitoring"
+      ]
+    },
+    {
+      "id": "advanced_airway_source_record",
+      "source": "external_report",
+      "requires": [
+        "airway_endoscopy_referral",
+        "advanced_imaging_referral"
+      ]
+    },
+    {
+      "id": "serial_weight_bcs_activity",
+      "source": "longitudinal_record",
+      "requires": [
+        "body_weight",
+        "body_condition_score",
+        "nutritional_assessment"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_feline_asthma_2024",
+      "title": "Merck Veterinary Manual: Feline Bronchial Asthma",
+      "url": "https://www.merckvetmanual.com/respiratory-system/respiratory-diseases-of-small-animals/feline-bronchial-asthma",
+      "scope": "definition_differentials_environment_and_controller_rescue_boundary"
+    },
+    {
+      "id": "feline_asthma_review_2010",
+      "title": "Feline asthma: what is new and where might clinical practice be heading?",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20800209/",
+      "scope": "no_gold_standard_diagnostic_limits_pathophysiology_and_long_term_control"
+    },
+    {
+      "id": "feline_asthma_heartworm_2019",
+      "title": "Feline asthma and heartworm disease: clinical features diagnostics and therapeutics",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31446863/",
+      "scope": "asthma_hard_overlap_region_compatible_differentiation"
+    },
+    {
+      "id": "feline_glucocorticoid_evidence_2022",
+      "title": "Do inhaled or oral glucocorticoids more effectively control feline asthma?",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13082273/",
+      "scope": "weak_comparative_evidence_and_response_measure_limits"
+    },
+    {
+      "id": "feline_asthma_update_2026",
+      "title": "Feline Asthma: Update on Diagnosis and Treatment Recommendations",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42320919/",
+      "scope": "current_multimodal_diagnosis_airway_remodeling_and_evidence_limits"
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "stable_lower_airway_plan",
+      "fullPlan": [
+        "confirm_symptom_and_stability",
+        "thoracic_and_regional_mimic_route",
+        "airway_sample_when_safe_and_decision_changing",
+        "reviewed_controller_not_rescue_only",
+        "environment_inventory",
+        "device_training",
+        "same_scale_control_log"
+      ],
+      "stagedPlan": [
+        "clarify_cough",
+        "exclude_dangerous_mimics",
+        "classify_lower_airway_inflammation",
+        "build_feasible_control_plan"
+      ],
+      "minimumSafePlan": [
+        "no_single_sign_diagnosis",
+        "regional_exclusions",
+        "red_flags_and_recheck"
+      ],
+      "stabilizeAndRefer": [
+        "retriage_effort",
+        "minimal_handling_oxygen",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "breed_or_xray_proves_asthma",
+        "eosinophils_are_specific",
+        "bronchodilator_only_chronic_plan"
+      ]
+    },
+    {
+      "id": "acute_exacerbation_plan",
+      "fullPlan": [
+        "effort_and_oxygen_triage",
+        "reviewed_acute_components",
+        "specific_environment_timeline",
+        "observed_device_technique",
+        "actual_use_without_blame",
+        "controller_and_mimic_reassessment",
+        "exacerbation_followup"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "identify_modifiable_failure_or_trigger",
+        "correct_feasible_barrier",
+        "restore_long_term_control"
+      ],
+      "minimumSafePlan": [
+        "oxygen_route",
+        "technique_before_nonadherence_label",
+        "rescue_frequency_changes_control_status"
+      ],
+      "stabilizeAndRefer": [
+        "minimal_handling_oxygen",
+        "hospital_monitoring",
+        "icu_if_worse"
+      ],
+      "unsafeOrInadequate": [
+        "trigger_correlation_proves_allergen",
+        "device_prescription_without_training",
+        "repeated_rescue_counts_as_control"
+      ]
+    },
+    {
+      "id": "severe_status_plan",
+      "fullPlan": [
+        "hands_off_oxygen",
+        "continuous_airflow_mentation_oxygenation",
+        "defer_unsafe_imaging_and_sampling",
+        "pleural_complication_screen_when_safe",
+        "icu_and_ventilation_threshold",
+        "same_episode_outcome"
+      ],
+      "stagedPlan": [
+        "recognize_status",
+        "protect_gas_exchange",
+        "identify_only_immediate_complication",
+        "transfer_before_exhaustion"
+      ],
+      "minimumSafePlan": [
+        "quiet_chest_is_danger",
+        "oxygen_first",
+        "no_forced_bal_or_radiography"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen",
+        "respiratory_hospital_monitoring",
+        "intensive_or_ventilation_referral"
+      ],
+      "unsafeOrInadequate": [
+        "quiet_lungs_marked_normal",
+        "complete_diagnosis_before_stabilization",
+        "ui_generates_emergency_procedure"
+      ]
+    },
+    {
+      "id": "mimic_or_poor_control_plan",
+      "fullPlan": [
+        "retriage_stability",
+        "audit_symptom_diagnosis_device_environment_and_use",
+        "region_compatible_parasite_heartworm_route",
+        "cytology_culture_and_chronic_bronchitis_context",
+        "cardiac_structural_focal_route",
+        "family_transfer_or_revised_control"
+      ],
+      "stagedPlan": [
+        "verify_what_failed",
+        "select_compatible_discriminator",
+        "avoid_unsafe_immunosuppression_or_antimicrobial",
+        "reclassify_and_follow"
+      ],
+      "minimumSafePlan": [
+        "eosinophils_not_specific",
+        "neutrophils_not_prescription",
+        "dangerous_mimic_visible"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen_by_state",
+        "minimal_safe_tests",
+        "advanced_airway_cardiac_or_oncology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "region_free_parasite",
+        "owner_blame_before_technique_check",
+        "all_lower_airway_disease_collapsed_to_asthma"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "feline_asthma_stable_lower_airway_disease",
+      "version": "2026.07.16.40",
+      "title": "Стабильное подозрение на астму кошек",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "У стабильной кошки имеется совместимое заболевание нижних дыхательных путей с явными регионарными, инфекционными, кардиальными и структурными исключениями; ни один тест не считается окончательным.",
+      "exclusions": [
+        "acute_severe_distress",
+        "unexcluded_region_compatible_parasite",
+        "cardiac_or_pleural_emergency"
+      ],
+      "planBundleId": "stable_lower_airway_plan",
+      "sourceIds": [
+        "merck_feline_asthma_2024",
+        "feline_asthma_review_2010",
+        "feline_asthma_update_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_intermittent_cough_or_wheeze",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что периодический кашель или хрипы с нормальным дыханием между эпизодами и без гипоксемии.",
+          "historyAnswers": {
+            "cough_vs_retake_hairball_video": "По нашим наблюдениям, совместимое видео или описание от кашля.",
+            "episode_frequency_duration": "Дома мы заметили, что в дневнике отмечены один–два приступа кашля в месяц продолжительностью меньше минуты.",
+            "sleeping_resting_rr": "Насколько мы можем судить, между сериями нормально.",
+            "open_mouth_cyanosis_weakness": "Мы записали, что отсутствует."
+          },
+          "examFindings": [
+            {
+              "factId": "one_cough_or_wheeze_does_not_confirm_asthma",
+              "source": "diagnostic_rule",
+              "finding": "Требуются анамнез, изображения и исключения."
+            },
+            {
+              "factId": "mild_current_signs_do_not_remove_long_term_inflammation_risk",
+              "source": "control_rule",
+              "finding": "Рассмотренное обсуждение контроллера остается актуальным."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "one_cough_or_wheeze_does_not_confirm_asthma",
+              "discoveryPaths": [
+                "cough_vs_retake_hairball_video",
+                "episode_frequency_duration",
+                "hands_off_rate_effort_pattern",
+                "dated_thoracic_radiograph_record"
+              ]
+            },
+            {
+              "factId": "mild_current_signs_do_not_remove_long_term_inflammation_risk",
+              "discoveryPaths": [
+                "sleeping_resting_rr",
+                "open_mouth_cyanosis_weakness",
+                "same_episode_control_exacerbation_log"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_asthma_respiratory_triage_and_minimal_handling",
+              "classification": "required_baseline",
+              "result": "Клиническая оценка показала: стабильный или нет необходимости в кислороде."
+            },
+            {
+              "id": "feline_asthma_thoracic_radiography",
+              "classification": "required_or_referral",
+              "result": "На рентгенограммах: совместим или неспецифичен с мнемосхемой."
+            },
+            {
+              "id": "feline_asthma_longitudinal_symptom_and_exacerbation_log",
+              "classification": "required_control_baseline",
+              "result": "При динамическом наблюдении: частота или продолжительность или частота дыхания покоя."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "one_cough_or_wheeze_does_not_confirm_asthma",
+              "mild_current_signs_do_not_remove_long_term_inflammation_risk"
+            ],
+            "confirmedDiagnosisRequires": [
+              "integrated_compatible_lower_airway_evidence_and_exclusions"
+            ],
+            "dangerStates": [
+              "open_mouth_breathing",
+              "cyanosis",
+              "resting_effort"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "pulse_oximetry",
+              "feline_asthma_longitudinal_monitoring"
+            ],
+            "external": [
+              "xray_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_asthma_triage_route",
+              "feline_asthma_imaging_route",
+              "feline_asthma_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "stable_lower_airway_plan",
+          "followUp": {
+            "timing": "Владелец ведёт дневник кашля две недели; контроль назначен после рентгена и оценки ответа на исключение раздражителей.",
+            "required": true,
+            "targets": [
+              "cough",
+              "wheeze",
+              "resting_rr",
+              "effort",
+              "imaging",
+              "exclusions"
+            ]
+          },
+          "outcomes": {
+            "safe": "Легкие заболевания нижних дыхательных путей исследуются и контролируются пропорционально.",
+            "unsafe": "Один кашель, порода или реакция вызывают астму."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему легкие эпизодические симптомы по-прежнему нуждаются в структурированном диагностическом и контрольном журнале."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "video_and_low_stress_baseline",
+            "ownerModifiers": [
+              "minimizes_mild_signs",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_chronic_cough_with_bronchial_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что повторяющийся кашель с совместимым характером бронхов или гиперинфляции, достаточно стабильный для поэтапного обследования.",
+          "historyAnswers": {
+            "episode_frequency_duration": "По нашим наблюдениям, хронический или повторяющийся.",
+            "prior_imaging_bal_cardiac": "Дома мы заметили, что бронхиальное или неспецифическое изображение и состояние образца.",
+            "outdoor_hunting_travel_region": "Насколько мы можем судить, региональный риск.",
+            "smoke_aerosol_perfume_litter_renovation": "Мы записали, что мы перечислили дым, аэрозоли, парфюмерию, пыльный наполнитель и ремонт как возможные раздражители."
+          },
+          "examFindings": [
+            {
+              "factId": "bronchial_radiograph_does_not_distinguish_asthma_from_chronic_bronchitis",
+              "source": "imaging_limit",
+              "finding": "Требуется цитология или исключение и клиническая интеграция."
+            },
+            {
+              "factId": "blood_or_bal_eosinophilia_is_not_asthma_specific",
+              "source": "biomarker_limit",
+              "finding": "Паразиты или сердечные черви и другие причины остаются."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "bronchial_radiograph_does_not_distinguish_asthma_from_chronic_bronchitis",
+              "discoveryPaths": [
+                "episode_frequency_duration",
+                "prior_imaging_bal_cardiac",
+                "dated_thoracic_radiograph_record",
+                "airway_sample_quality_cytology_culture"
+              ]
+            },
+            {
+              "factId": "blood_or_bal_eosinophilia_is_not_asthma_specific",
+              "discoveryPaths": [
+                "outdoor_hunting_travel_region",
+                "region_compatible_parasite_record",
+                "airway_sample_quality_cytology_culture"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_asthma_thoracic_radiography",
+              "classification": "required_quality",
+              "result": "На рентгенограммах: бронхиальный или гиперинфляционный или мимический картина."
+            },
+            {
+              "id": "feline_asthma_airway_cytology_and_culture",
+              "classification": "recommended_if_safe_and_decision_changing",
+              "result": "По результатам посева и определения чувствительности: эозинофильные или нейтрофильные или инфекционные или смешанные данные."
+            },
+            {
+              "id": "feline_asthma_parasite_heartworm_and_regional_exclusion",
+              "classification": "required_by_region_exposure",
+              "result": "Кардиологическая оценка показала: совместимые исключения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "bronchial_radiograph_does_not_distinguish_asthma_from_chronic_bronchitis",
+              "blood_or_bal_eosinophilia_is_not_asthma_specific"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_airway_inflammation_plus_mimic_exclusion"
+            ],
+            "dangerStates": [
+              "occult_parasite",
+              "infection",
+              "cardiac_mimic"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "cbc"
+            ],
+            "external": [
+              "xray_or_referral",
+              "feline_airway_cytology_external",
+              "lower_airway_sampling_referral",
+              "feline_lungworm_testing_external",
+              "feline_heartworm_testing_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_asthma_imaging_route",
+              "feline_asthma_airway_sample_route",
+              "feline_asthma_parasite_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "stable_lower_airway_plan",
+          "followUp": {
+            "timing": "Результат выборки или исключения и проверка контроля того же масштаба.",
+            "required": true,
+            "targets": [
+              "cough",
+              "rr",
+              "cytology",
+              "culture",
+              "parasite_status",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "На основании комплексных данных по-прежнему различают астму и хронический бронхит.",
+            "unsafe": "Решают только бронхиальный образ или эозинофилы."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему подобные изображения возникают при некоторых заболеваниях нижних дыхательных путей."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "stable_elective_sampling_or_referral",
+            "ownerModifiers": [
+              "requests_instant_label",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_cough_mistaken_for_hairball_or_nausea",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что владелец сообщает о комках шерсти или тошноте; видео показывает кашель, распространяющийся в шею, или остается неоднозначным.",
+          "historyAnswers": {
+            "cough_vs_retake_hairball_video": "По нашим наблюдениям, видео или описание сохранено.",
+            "episode_frequency_duration": "Дома мы заметили, что за последнюю неделю владелец записал три коротких приступа кашля.",
+            "sleeping_resting_rr": "Насколько мы можем судить, измерено или не посчитано.",
+            "open_mouth_cyanosis_weakness": "Мы записали, что красные флаги."
+          },
+          "examFindings": [
+            {
+              "factId": "symptom_is_clarified_without_mocking_owner",
+              "source": "communication_rule",
+              "finding": "Видео и факты о респираторных заболеваниях и желудочно-кишечном тракте остаются отдельными."
+            },
+            {
+              "factId": "doctor_interpretation_does_not_rewrite_real_gi_signs",
+              "source": "data_integrity_rule",
+              "finding": "Истинная тошнота или рвота в анамнезе сохраняется."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "symptom_is_clarified_without_mocking_owner",
+              "discoveryPaths": [
+                "cough_vs_retake_hairball_video",
+                "episode_frequency_duration",
+                "hands_off_rate_effort_pattern"
+              ]
+            },
+            {
+              "factId": "doctor_interpretation_does_not_rewrite_real_gi_signs",
+              "discoveryPaths": [
+                "sleeping_resting_rr",
+                "open_mouth_cyanosis_weakness"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_asthma_respiratory_triage_and_minimal_handling",
+              "classification": "required",
+              "result": "Клиническая оценка показала: текущее состояние дыхания."
+            },
+            {
+              "id": "feline_asthma_thoracic_radiography",
+              "classification": "recommended_if_cough_supported",
+              "result": "На рентгенограммах: нижне-дыхательные пути или мимический контекст."
+            },
+            {
+              "id": "feline_asthma_longitudinal_symptom_and_exacerbation_log",
+              "classification": "required_if_ambiguous",
+              "result": "При динамическом наблюдении: временная шкала видео или частоты или частота дыхания."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "symptom_is_clarified_without_mocking_owner",
+              "doctor_interpretation_does_not_rewrite_real_gi_signs"
+            ],
+            "confirmedDiagnosisRequires": [
+              "respiratory_cough_classification_plus_lower_airway_evidence"
+            ],
+            "dangerStates": [
+              "open_mouth_breathing",
+              "repeated_unrecognized_cough"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "feline_asthma_longitudinal_monitoring"
+            ],
+            "external": [
+              "xray_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_asthma_triage_route",
+              "feline_asthma_imaging_route",
+              "feline_asthma_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "stable_lower_airway_plan",
+          "followUp": {
+            "timing": "Просмотр видео или журнала и контрольная точка диагностики.",
+            "required": true,
+            "targets": [
+              "event_type",
+              "frequency",
+              "resting_rr",
+              "effort",
+              "gi_signs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Событие классифицируется с уважением, и данные сохраняются.",
+            "unsafe": "Этикетка с комочками волос задерживает оказание респираторной помощи или исчезновение желудочно-кишечного анамнеза."
+          },
+          "ownerCommunication": [
+            "Пожалуйста, видео и без насмешек опишите наблюдаемые различия."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "home_video_first",
+            "ownerModifiers": [
+              "confused",
+              "embarrassed"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "feline_asthma_acute_exacerbation",
+      "version": "2026.07.16.40",
+      "title": "Острое обострение астмы",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Известное или предполагаемое заболевание нижних дыхательных путей резко ухудшается, но реагирует на первоначальную стабилизацию и остается ниже критериев тяжелого состояния; триггер, техника, использование и имитация проверяются.",
+      "exclusions": [
+        "severe_status_or_ventilatory_failure",
+        "unassessed_device_technique_called_nonadherence"
+      ],
+      "planBundleId": "acute_exacerbation_plan",
+      "sourceIds": [
+        "merck_feline_asthma_2024",
+        "feline_asthma_review_2010",
+        "feline_glucocorticoid_evidence_2022"
+      ],
+      "presentations": [
+        {
+          "id": "p1_after_smoke_dust_aerosol_or_environment_change",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_effort",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что совместимое воздействие дыма или пыли или аэрозоля или мусора или ремонта предшествует усилению кашля или усилий на выдохе.",
+          "historyAnswers": {
+            "smoke_aerosol_perfume_litter_renovation": "По нашим наблюдениям, конкретное воздействие или дата.",
+            "home_season_ventilation_change": "Дома мы заметили, что за два дня до приступа дома начался ремонт и использовался аэрозольный очиститель.",
+            "episode_frequency_duration": "Насколько мы можем судить, ухудшилось.",
+            "open_mouth_cyanosis_weakness": "Мы записали, что ниже тяжелого маршрута или эскалации."
+          },
+          "examFindings": [
+            {
+              "factId": "specific_exposure_can_modify_plan_without_proving_unique_allergen",
+              "source": "causality_limit",
+              "finding": "Удаление – это осуществимый терапевтический тест, а не уверенность."
+            },
+            {
+              "factId": "environment_discussion_is_specific_and_nonmoralizing",
+              "source": "communication_rule",
+              "finding": "Дешевая профилактика действительна."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "specific_exposure_can_modify_plan_without_proving_unique_allergen",
+              "discoveryPaths": [
+                "smoke_aerosol_perfume_litter_renovation",
+                "home_season_ventilation_change",
+                "specific_environment_inventory"
+              ]
+            },
+            {
+              "factId": "environment_discussion_is_specific_and_nonmoralizing",
+              "discoveryPaths": [
+                "episode_frequency_duration",
+                "open_mouth_cyanosis_weakness",
+                "same_episode_control_exacerbation_log"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_asthma_respiratory_triage_and_minimal_handling",
+              "classification": "required_first",
+              "result": "Клиническая оценка показала: путь усилие или кислород или статус."
+            },
+            {
+              "id": "feline_asthma_environment_and_trigger_inventory",
+              "classification": "required",
+              "result": "При уточнении анамнеза: конкретные модифицируемые воздействия."
+            },
+            {
+              "id": "feline_asthma_longitudinal_symptom_and_exacerbation_log",
+              "classification": "required_response",
+              "result": "При динамическом наблюдении: устранение воздействия и динамика симптомов."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "specific_exposure_can_modify_plan_without_proving_unique_allergen",
+              "environment_discussion_is_specific_and_nonmoralizing"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_airway_disease_plus_exposure_link_without_overclaim"
+            ],
+            "dangerStates": [
+              "progression_to_status",
+              "ongoing_smoke",
+              "oxygen_need"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "pulse_oximetry",
+              "oxygen",
+              "feline_asthma_environment_plan"
+            ],
+            "external": [
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_asthma_triage_route",
+              "feline_asthma_environment_route",
+              "feline_asthma_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_exacerbation_plan",
+          "followUp": {
+            "timing": "Ранняя проверка усилий или кислорода и анализ реакции окружающей среды.",
+            "required": true,
+            "targets": [
+              "effort",
+              "rr",
+              "oxygen",
+              "exposure",
+              "cough"
+            ]
+          },
+          "outcomes": {
+            "safe": "Модифицируемый раздражитель снижается при мониторинге серьезности.",
+            "unsafe": "Корреляция создает непроверенный диагноз аллергена."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: назовите конкретное воздействие и возможные изменения, не обвиняя и не обещая лечения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "dyspneic",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_and_home_inventory",
+            "ownerModifiers": [
+              "smoker_household",
+              "renovation"
+            ]
+          }
+        },
+        {
+          "id": "p2_inhaler_or_spacer_technique_failure",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "urgent_stable",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что предписанный план ингаляций не достигает кошки, поскольку герметичность, время, дыхание или кондиционирование неадекватны.",
+          "historyAnswers": {
+            "prescribed_devices_and_plan": "По нашим наблюдениям, устройство и проверенный план зафиксированы.",
+            "mask_spacer_demonstration": "Дома мы заметили, что наблюдаемый режим отказа.",
+            "actual_missed_use": "Насколько мы можем судить, количественные барьеры.",
+            "rescue_frequency_and_response": "Мы записали, что увеличение использования или ответа."
+          },
+          "examFindings": [
+            {
+              "factId": "technique_is_observed_before_nonadherence_label",
+              "source": "fairness_rule",
+              "finding": "Уплотнение или синхронизация или кондиционирование видны."
+            },
+            {
+              "factId": "unteachable_device_requires_feasible_reviewed_alternative",
+              "source": "feasibility_rule",
+              "finding": "Владелец или кошка не наказываются за невозможность родов."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "technique_is_observed_before_nonadherence_label",
+              "discoveryPaths": [
+                "prescribed_devices_and_plan",
+                "mask_spacer_demonstration",
+                "observed_inhaler_return_demonstration"
+              ]
+            },
+            {
+              "factId": "unteachable_device_requires_feasible_reviewed_alternative",
+              "discoveryPaths": [
+                "actual_missed_use",
+                "rescue_frequency_and_response",
+                "same_episode_control_exacerbation_log"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_asthma_inhaler_device_technique_check",
+              "classification": "required",
+              "result": "Целевое исследование показало: наблюдал за ответной демонстрацией и барьером."
+            },
+            {
+              "id": "feline_asthma_longitudinal_symptom_and_exacerbation_log",
+              "classification": "required_control",
+              "result": "При динамическом наблюдении: эффект после коррекции или альтернативный вариант."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "technique_is_observed_before_nonadherence_label",
+              "unteachable_device_requires_feasible_reviewed_alternative"
+            ],
+            "confirmedDiagnosisRequires": [
+              "observed_delivery_failure_contributing_to_poor_control"
+            ],
+            "dangerStates": [
+              "rescue_overuse",
+              "cat_panic",
+              "worsening_effort"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "feline_inhaler_training",
+              "feline_asthma_longitudinal_monitoring"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_asthma_device_route",
+              "feline_asthma_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_exacerbation_plan",
+          "followUp": {
+            "timing": "Досрочное повторение демонстрации и контрольный журнал.",
+            "required": true,
+            "targets": [
+              "seal",
+              "technique",
+              "cat_acceptance",
+              "missed_use",
+              "rescue_frequency"
+            ]
+          },
+          "outcomes": {
+            "safe": "Устраняется барьер доставки или пересматривается возможный маршрут.",
+            "unsafe": "Предполагается, что назначение устройства прошло успешно или виноват владелец."
+          },
+          "ownerCommunication": [
+            "Я покажу, как пользоваться ингалятором со спейсером, затем попрошу вас повторить. Вместе выберем один выполнимый следующий шаг."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "handling_averse",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "gradual_conditioning_or_reviewed_alternative",
+            "ownerModifiers": [
+              "anxious",
+              "dexterity_limit"
+            ]
+          }
+        },
+        {
+          "id": "p3_breakthrough_exacerbation_despite_reported_plan",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что атаки повторяются, несмотря на очевидно адекватную технику и сообщения об использовании контроллера.",
+          "historyAnswers": {
+            "prescribed_devices_and_plan": "По нашим наблюдениям, текущая версия плана.",
+            "mask_spacer_demonstration": "Дома мы заметили, что адекватно соблюдена техника.",
+            "actual_missed_use": "Насколько мы можем судить, фактическое использование проверено.",
+            "rescue_frequency_and_response": "Мы записали, что прорыва или чрезмерного использования."
+          },
+          "examFindings": [
+            {
+              "factId": "breakthrough_requires_controller_trigger_comorbidity_and_mimic_audit",
+              "source": "control_rule",
+              "finding": "Изменения дозы или протокола остаются на рассмотрении."
+            },
+            {
+              "factId": "repeated_rescue_only_use_is_not_good_control",
+              "source": "safety_rule",
+              "finding": "Хроническое воспаление и риск остаются."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "breakthrough_requires_controller_trigger_comorbidity_and_mimic_audit",
+              "discoveryPaths": [
+                "prescribed_devices_and_plan",
+                "mask_spacer_demonstration",
+                "actual_missed_use",
+                "specific_environment_inventory"
+              ]
+            },
+            {
+              "factId": "repeated_rescue_only_use_is_not_good_control",
+              "discoveryPaths": [
+                "rescue_frequency_and_response",
+                "same_episode_control_exacerbation_log"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_asthma_inhaler_device_technique_check",
+              "classification": "required_audit",
+              "result": "Целевое исследование показало: техника адекватная или неадекватная."
+            },
+            {
+              "id": "feline_asthma_environment_and_trigger_inventory",
+              "classification": "required_reaudit",
+              "result": "При уточнении анамнеза: новые или постоянные раздражители."
+            },
+            {
+              "id": "feline_asthma_refractory_advanced_airway_referral",
+              "classification": "recommended_if_persistent",
+              "result": "По итогам консультации специалиста: диагноз или коморбидность или обзор источника."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "breakthrough_requires_controller_trigger_comorbidity_and_mimic_audit",
+              "repeated_rescue_only_use_is_not_good_control"
+            ],
+            "confirmedDiagnosisRequires": [
+              "objective_breakthrough_after_technique_and_use_audit"
+            ],
+            "dangerStates": [
+              "status_asthmaticus",
+              "rescue_overuse",
+              "wrong_diagnosis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "feline_inhaler_training",
+              "feline_asthma_longitudinal_monitoring"
+            ],
+            "external": [
+              "airway_endoscopy_referral",
+              "advanced_imaging_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_asthma_device_route",
+              "feline_asthma_environment_route",
+              "feline_asthma_refractory_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_exacerbation_plan",
+          "followUp": {
+            "timing": "Оперативный контрольный аудит и пересмотренная версия контрольной точки.",
+            "required": true,
+            "targets": [
+              "effort",
+              "rescue_use",
+              "technique",
+              "environment",
+              "mimics"
+            ]
+          },
+          "outcomes": {
+            "safe": "Плохой контроль объясняется до рассмотрения пересмотренного плана.",
+            "unsafe": "Разрешается использовать только в целях спасения, или автоматическая система изменяет дозу."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: частое использование спасательных средств сигнализирует о неадекватном долгосрочном контроле, а не о личной неудаче."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "handling_averse"
+            ],
+            "requiredHandlingAlternative": "owner_supported_control_audit",
+            "ownerModifiers": [
+              "treatment_fatigue",
+              "adherent"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "feline_asthma_severe_status",
+      "version": "2026.07.16.40",
+      "title": "Тяжёлый бронхоспазм или астматический статус",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Бронхоспазм и воспаление дыхательных путей угрожают оксигенации или дыхательной выносливости; неотложная стабилизация предшествует полной диагностике, в то время как острые симптомы или осложнения остаются видимыми.",
+      "exclusions": [
+        "stable_cough_without_distress"
+      ],
+      "planBundleId": "severe_status_plan",
+      "sourceIds": [
+        "merck_feline_asthma_2024",
+        "feline_asthma_update_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_marked_expiratory_distress_or_cyanosis",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что дыхание открытым ртом, выраженный толчок выдоха, цианоз или достоверная гипоксемия.",
+          "historyAnswers": {
+            "open_mouth_cyanosis_weakness": "По нашим наблюдениям, признак присутствует сейчас.",
+            "sleeping_resting_rr": "Дома мы заметили, что высокий или недостижимый.",
+            "episode_frequency_duration": "Насколько мы можем судить, тяжелая или длительная.",
+            "rescue_frequency_and_response": "Мы записали, что неполный или неизвестный ответ."
+          },
+          "examFindings": [
+            {
+              "factId": "oxygen_and_minimal_handling_precede_radiography_or_bal",
+              "source": "emergency_rule",
+              "finding": "Диагностика не может ухудшить поток воздуха."
+            },
+            {
+              "factId": "owner_communication_is_short_and_action_focused",
+              "source": "communication_rule",
+              "finding": "Сначала стабилизация или перенаправление."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "oxygen_and_minimal_handling_precede_radiography_or_bal",
+              "discoveryPaths": [
+                "open_mouth_cyanosis_weakness",
+                "hands_off_rate_effort_pattern",
+                "signal_quality_spo2_record"
+              ]
+            },
+            {
+              "factId": "owner_communication_is_short_and_action_focused",
+              "discoveryPaths": [
+                "episode_frequency_duration",
+                "mucosa_mentation_airflow"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_asthma_respiratory_triage_and_minimal_handling",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: тяжелый бедствие или кислородный маршрут."
+            },
+            {
+              "id": "feline_asthma_thoracic_radiography",
+              "classification": "only_when_stable_enough",
+              "result": "На рентгенограммах: отложено, если небезопасно."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "oxygen_and_minimal_handling_precede_radiography_or_bal",
+              "owner_communication_is_short_and_action_focused"
+            ],
+            "confirmedDiagnosisRequires": [
+              "severe_lower_airway_obstruction_after_immediate_mimic_screen"
+            ],
+            "dangerStates": [
+              "respiratory_arrest",
+              "severe_hypoxemia",
+              "fatigue"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_distress_minimal_handling",
+              "pulse_oximetry",
+              "oxygen",
+              "respiratory_hospital_monitoring"
+            ],
+            "external": [
+              "intensive_care_referral",
+              "mechanical_ventilation_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_asthma_triage_route",
+              "feline_asthma_emergency_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "severe_status_plan",
+          "followUp": {
+            "timing": "Непрерывный посредством стабилизации или переноса.",
+            "required": true,
+            "targets": [
+              "effort",
+              "airflow",
+              "oxygen",
+              "mentation",
+              "fatigue"
+            ]
+          },
+          "outcomes": {
+            "safe": "Газообмен защищен до полной диагностики.",
+            "unsafe": "Принудительная визуализация или БАЛ задерживает кислород."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: кратко заявите, что дыхательная поддержка и транспортировка с низким уровнем стресса являются неотложными приоритетами."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic",
+              "fearful",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "hands_off_oxygen_transfer",
+            "ownerModifiers": [
+              "panicked",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_exhaustion_quiet_chest_or_worsening_gas_exchange",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что движение воздуха уменьшается, в груди становится тихо, утомляемость или изменение психики или газообмен ухудшаются.",
+          "historyAnswers": {
+            "open_mouth_cyanosis_weakness": "По нашим наблюдениям, ухудшение или изменение психики.",
+            "rescue_frequency_and_response": "Дома мы заметили, что неспособность ответить.",
+            "episode_frequency_duration": "Насколько мы можем судить, длительный тяжелый эпизод.",
+            "prior_imaging_bal_cardiac": "Мы записали, что только если он был доступен ранее."
+          },
+          "examFindings": [
+            {
+              "factId": "quiet_chest_in_exhausted_cat_is_critical_not_normal",
+              "source": "airflow_rule",
+              "finding": "Снижение звука отражает плохое движение воздуха."
+            },
+            {
+              "factId": "icu_or_ventilation_referral_appears_before_collapse",
+              "source": "capacity_rule",
+              "finding": "Порог локальной мощности указан явно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "quiet_chest_in_exhausted_cat_is_critical_not_normal",
+              "discoveryPaths": [
+                "open_mouth_cyanosis_weakness",
+                "wheeze_or_quiet_chest_context",
+                "mucosa_mentation_airflow"
+              ]
+            },
+            {
+              "factId": "icu_or_ventilation_referral_appears_before_collapse",
+              "discoveryPaths": [
+                "rescue_frequency_and_response",
+                "episode_frequency_duration",
+                "signal_quality_spo2_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_asthma_respiratory_triage_and_minimal_handling",
+              "classification": "required_continuous",
+              "result": "Клиническая оценка показала: усталость или плохой поток воздуха."
+            },
+            {
+              "id": "feline_asthma_cardiac_and_structural_mimic_exclusion",
+              "classification": "only_if_safe_no_delay",
+              "result": "Кардиологическая оценка показала: острый имитирующий путь, если это возможно."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "quiet_chest_in_exhausted_cat_is_critical_not_normal",
+              "icu_or_ventilation_referral_appears_before_collapse"
+            ],
+            "confirmedDiagnosisRequires": [
+              "critical_airflow_or_gas_exchange_failure"
+            ],
+            "dangerStates": [
+              "respiratory_arrest",
+              "ventilatory_failure",
+              "shock"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oxygen",
+              "respiratory_hospital_monitoring",
+              "respiratory_distress_minimal_handling"
+            ],
+            "external": [
+              "mechanical_ventilation_referral",
+              "intensive_care_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_asthma_emergency_route",
+              "feline_asthma_triage_route"
+            ],
+            "referralFallback": "mechanical_ventilation_referral"
+          },
+          "carePlanId": "severe_status_plan",
+          "followUp": {
+            "timing": "Непрерывно через отделение интенсивной терапии или вентиляционный маршрут.",
+            "required": true,
+            "targets": [
+              "airflow",
+              "effort",
+              "oxygen",
+              "mentation",
+              "ventilation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Утомление признается еще до ареста.",
+            "unsafe": "Спокойные легкие показаны в норме или перевод задерживается."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: более спокойное дыхание может означать утомление, а не выздоровление."
+          ],
+          "compatibility": {
+            "temperament": [
+              "obtunded",
+              "dyspneic",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "no_forced_exam_ventilation_transfer",
+            "ownerModifiers": [
+              "misreads_quiet_as_better",
+              "overwhelmed"
+            ]
+          }
+        },
+        {
+          "id": "p3_pneumothorax_or_other_acute_complication",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что внезапное ухудшение, асимметричные или отсутствующие звуки или плохой ответ вызывают пневмоторакс или плевральные осложнения.",
+          "historyAnswers": {
+            "open_mouth_cyanosis_weakness": "По нашим наблюдениям, внезапный серьезный спад.",
+            "rescue_frequency_and_response": "Дома мы заметили, что плохой ответ.",
+            "prior_imaging_bal_cardiac": "Насколько мы можем судить, более ранний базовый уровень, если таковой имеется.",
+            "episode_frequency_duration": "Мы записали, что острая перемена."
+          },
+          "examFindings": [
+            {
+              "factId": "sudden_nonresponse_triggers_pleural_complication_assessment",
+              "source": "complication_rule",
+              "finding": "Не все страдания связаны с астмой."
+            },
+            {
+              "factId": "emergency_pleural_technique_is_not_generated",
+              "source": "procedure_boundary",
+              "finding": "Сначала стабилизируют дыхание; при подозрении на плевральное осложнение немедленно выполняют профильную процедуру или направляют."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "sudden_nonresponse_triggers_pleural_complication_assessment",
+              "discoveryPaths": [
+                "open_mouth_cyanosis_weakness",
+                "rescue_frequency_and_response",
+                "pleural_upper_airway_mimic_screen"
+              ]
+            },
+            {
+              "factId": "emergency_pleural_technique_is_not_generated",
+              "discoveryPaths": [
+                "prior_imaging_bal_cardiac",
+                "mucosa_mentation_airflow"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_asthma_respiratory_triage_and_minimal_handling",
+              "classification": "required_parallel",
+              "result": "Клиническая оценка показала: выявлены признаки неотложного состояния."
+            },
+            {
+              "id": "feline_asthma_cardiac_and_structural_mimic_exclusion",
+              "classification": "focused_acute_mimic",
+              "result": "Кардиологическая оценка показала: плевральный или структурный контекст."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "sudden_nonresponse_triggers_pleural_complication_assessment",
+              "emergency_pleural_technique_is_not_generated"
+            ],
+            "confirmedDiagnosisRequires": [
+              "pocus_imaging_or_procedure_confirmed_complication"
+            ],
+            "dangerStates": [
+              "tension_pneumothorax",
+              "respiratory_arrest",
+              "pleural_effusion"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oxygen",
+              "thoracic_pocus",
+              "respiratory_distress_minimal_handling"
+            ],
+            "external": [
+              "thoracocentesis_referral",
+              "intensive_care_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_asthma_pleural_complication_route",
+              "feline_asthma_emergency_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "severe_status_plan",
+          "followUp": {
+            "timing": "Непрерывная помощь при осложнениях одного и того же эпизода.",
+            "required": true,
+            "targets": [
+              "pleural_space",
+              "oxygen",
+              "airflow",
+              "recurrence",
+              "underlying_airway"
+            ]
+          },
+          "outcomes": {
+            "safe": "Острое осложнение выявляется в этом же эпизоде.",
+            "unsafe": "Опасно бесконечно усиливать противоастматические меры, задерживая диагностику и лечение пневмоторакса или другого плеврального осложнения."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: внезапное осложнение и необходимость немедленной внешней процедуры или отделения интенсивной терапии."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic",
+              "obtunded",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "hands_off_pocus_and_emergency_transfer",
+            "ownerModifiers": [
+              "panicked",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "feline_asthma_mimic_or_poor_control",
+      "version": "2026.07.16.40",
+      "title": "Имитация астмы или плохой контроль",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Конкурирующее заболевание объясняет все или часть симптомов, или контроль неудовлетворителен, поскольку диагноз, окружающая среда, устройство или пересмотренный план неполны.",
+      "exclusions": [
+        "all_lower_airway_disease_collapsed_to_asthma",
+        "owner_nonadherence_without_observed_audit"
+      ],
+      "planBundleId": "mimic_or_poor_control_plan",
+      "sourceIds": [
+        "feline_asthma_review_2010",
+        "feline_asthma_heartworm_2019",
+        "feline_asthma_update_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_lungworm_or_heartworm_compatible_context",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_complex",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что на открытом воздухе или регионе или путешествиях и совместимые результаты повышают риск респираторных заболеваний, связанных с легочными или сердечными червями.",
+          "historyAnswers": {
+            "outdoor_hunting_travel_region": "По нашим наблюдениям, совместимая география или экспозиция.",
+            "prior_imaging_bal_cardiac": "Дома мы заметили, что перекрывающиеся бронхоинтерстициальные или кардиопульмональные данные.",
+            "episode_frequency_duration": "Насколько мы можем судить, по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой.",
+            "prescribed_devices_and_plan": "Мы записали, что предыдущая маркировка или план астмы, если таковой имеется."
+          },
+          "examFindings": [
+            {
+              "factId": "parasite_heartworm_testing_requires_regional_exposure_eligibility",
+              "source": "eligibility_rule",
+              "finding": "Контент, несовместимый с регионом, запрещен."
+            },
+            {
+              "factId": "bal_or_blood_eosinophilia_cannot_distinguish_asthma_from_parasite_alone",
+              "source": "biomarker_limit",
+              "finding": "Необходимы целевые мультимодальные доказательства."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "parasite_heartworm_testing_requires_regional_exposure_eligibility",
+              "discoveryPaths": [
+                "outdoor_hunting_travel_region",
+                "region_compatible_parasite_record"
+              ]
+            },
+            {
+              "factId": "bal_or_blood_eosinophilia_cannot_distinguish_asthma_from_parasite_alone",
+              "discoveryPaths": [
+                "prior_imaging_bal_cardiac",
+                "airway_sample_quality_cytology_culture",
+                "cardiac_structural_mimic_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_asthma_parasite_heartworm_and_regional_exclusion",
+              "classification": "required_region_targeted",
+              "result": "Кардиологическая оценка показала: доказательства легочных или сердечных червей имеют ограничения."
+            },
+            {
+              "id": "feline_asthma_airway_cytology_and_culture",
+              "classification": "recommended_if_safe",
+              "result": "По результатам посева и определения чувствительности: контекст воспаления или культуры неспецифичен."
+            },
+            {
+              "id": "feline_asthma_cardiac_and_structural_mimic_exclusion",
+              "classification": "required_by_heartworm_or_cardiac_pattern",
+              "result": "Кардиологическая оценка показала: сердечный или сосудистый контекст."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "parasite_heartworm_testing_requires_regional_exposure_eligibility",
+              "bal_or_blood_eosinophilia_cannot_distinguish_asthma_from_parasite_alone"
+            ],
+            "confirmedDiagnosisRequires": [
+              "region_compatible_targeted_parasite_or_heartworm_evidence"
+            ],
+            "dangerStates": [
+              "heartworm_death_event",
+              "severe_airway_disease",
+              "wrong_immunosuppression"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "regional_disease_filter"
+            ],
+            "external": [
+              "feline_lungworm_testing_external",
+              "feline_heartworm_testing_external",
+              "echocardiography_external",
+              "feline_airway_cytology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_asthma_parasite_route",
+              "feline_asthma_airway_sample_route",
+              "feline_asthma_cardiac_structural_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "mimic_or_poor_control_plan",
+          "followUp": {
+            "timing": "Целевой результат и контрольная точка реклассификации.",
+            "required": true,
+            "targets": [
+              "region",
+              "parasite_evidence",
+              "heartworm_evidence",
+              "oxygen",
+              "airway_inflammation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Перекрывающиеся заболевания разделяются по эпидемиологическому критерию.",
+            "unsafe": "Эозинофилы свидетельствуют об астме или появлении случайных паразитов."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему география и воздействие влияют на то, какие тесты имеют смысл."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "dyspneic"
+            ],
+            "requiredHandlingAlternative": "region_targeted_external_testing",
+            "ownerModifiers": [
+              "travel_history_uncertain",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_chronic_bronchitis_infection_or_mixed_inflammation",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_complex",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что нейтрофильные или смешанные изменения в дыхательных путях, посев или наличие хронической слизи позволяют предположить бронхит, инфекцию или смешанное заболевание.",
+          "historyAnswers": {
+            "episode_frequency_duration": "По нашим наблюдениям, хронический характер.",
+            "prior_imaging_bal_cardiac": "Дома мы заметили, что цитология или культура или визуализация доступны или необходимы.",
+            "prior_treatment_response": "Насколько мы можем судить, время ответа и выборки.",
+            "prescribed_devices_and_plan": "Мы записали, что современные компоненты астмы."
+          },
+          "examFindings": [
+            {
+              "factId": "neutrophils_alone_are_not_antimicrobial_indication",
+              "source": "stewardship_rule",
+              "finding": "Требуются бактериальные доказательства или клинический контекст."
+            },
+            {
+              "factId": "mixed_disease_can_preserve_asthma_component_without_single_label",
+              "source": "classification_rule",
+              "finding": "Эозинофильный или нейтрофильный или инфекционный компоненты остаются явными."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "neutrophils_alone_are_not_antimicrobial_indication",
+              "discoveryPaths": [
+                "prior_imaging_bal_cardiac",
+                "prior_treatment_response",
+                "airway_sample_quality_cytology_culture"
+              ]
+            },
+            {
+              "factId": "mixed_disease_can_preserve_asthma_component_without_single_label",
+              "discoveryPaths": [
+                "episode_frequency_duration",
+                "prescribed_devices_and_plan",
+                "same_episode_control_exacerbation_log"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_asthma_airway_cytology_and_culture",
+              "classification": "required_if_safe",
+              "result": "По результатам посева и определения чувствительности: пропорции воспаления, бактерии и качество проб."
+            },
+            {
+              "id": "feline_asthma_thoracic_radiography",
+              "classification": "required_context",
+              "result": "На рентгенограммах: распространение или имитация."
+            },
+            {
+              "id": "feline_asthma_longitudinal_symptom_and_exacerbation_log",
+              "classification": "required_response",
+              "result": "При динамическом наблюдении: специфический для компонента ответ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "neutrophils_alone_are_not_antimicrobial_indication",
+              "mixed_disease_can_preserve_asthma_component_without_single_label"
+            ],
+            "confirmedDiagnosisRequires": [
+              "meaningful_airway_cytology_culture_plus_clinical_context"
+            ],
+            "dangerStates": [
+              "bacterial_infection",
+              "wrong_immunosuppression",
+              "poor_control"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "feline_asthma_longitudinal_monitoring"
+            ],
+            "external": [
+              "feline_airway_cytology_external",
+              "lower_airway_sampling_referral",
+              "respiratory_cytology_culture_external",
+              "xray_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_asthma_airway_sample_route",
+              "feline_asthma_imaging_route",
+              "feline_asthma_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "mimic_or_poor_control_plan",
+          "followUp": {
+            "timing": "Культура или цитология и контрольная точка реакции компонента.",
+            "required": true,
+            "targets": [
+              "cytology",
+              "culture",
+              "cough",
+              "rr",
+              "rescue_use",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Смешанное воспаление остается явным, а лечение соответствует фактическим данным.",
+            "unsafe": "Нейтрофилы назначают противомикробные препараты или все это называется астмой."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: могут сосуществовать более одного процесса в дыхательных путях."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "stable_lower_airway_sampling_or_referral",
+            "ownerModifiers": [
+              "treatment_fatigue",
+              "requests_simple_label"
+            ]
+          }
+        },
+        {
+          "id": "p3_cardiac_neoplastic_foreign_body_or_other_mimic",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_complex_by_state",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что визуализация или обследование позволяет предположить отек, заболевание сердца, образование, очаговое поражение дыхательных путей, заболевание плевры или инородное тело.",
+          "historyAnswers": {
+            "prior_imaging_bal_cardiac": "По нашим наблюдениям, сердечные или структурные признаки.",
+            "episode_frequency_duration": "Дома мы заметили, что очаговый или рецидивирующий или атипичный картина.",
+            "rescue_frequency_and_response": "Насколько мы можем судить, плохой или парадоксальный ответ.",
+            "open_mouth_cyanosis_weakness": "Мы записали, что текущая серьезность."
+          },
+          "examFindings": [
+            {
+              "factId": "all_respiratory_distress_is_not_assigned_to_asthma",
+              "source": "differential_rule",
+              "finding": "Плевральная, сердечная, пневмония и структуры остаются видимыми."
+            },
+            {
+              "factId": "family_transfer_preserves_all_collected_facts_and_patient_identity",
+              "source": "continuity_rule",
+              "finding": "Нет сброса после критерий срочностиа."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "all_respiratory_distress_is_not_assigned_to_asthma",
+              "discoveryPaths": [
+                "open_mouth_cyanosis_weakness",
+                "prior_imaging_bal_cardiac",
+                "pleural_upper_airway_mimic_screen",
+                "cardiac_structural_mimic_record"
+              ]
+            },
+            {
+              "factId": "family_transfer_preserves_all_collected_facts_and_patient_identity",
+              "discoveryPaths": [
+                "episode_frequency_duration",
+                "rescue_frequency_and_response",
+                "advanced_airway_source_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_asthma_cardiac_and_structural_mimic_exclusion",
+              "classification": "required_discriminator",
+              "result": "Кардиологическая оценка показала: сердечные или новообразования или инородные тела или структурные признаки."
+            },
+            {
+              "id": "feline_asthma_refractory_advanced_airway_referral",
+              "classification": "required_if_focal_or_unresolved",
+              "result": "По итогам консультации специалиста: кТ или бронхоскопия или источник."
+            },
+            {
+              "id": "feline_asthma_thoracic_radiography",
+              "classification": "required_when_safe",
+              "result": "На рентгенограммах: распространение или плевральный или сердечный контекст."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "all_respiratory_distress_is_not_assigned_to_asthma",
+              "family_transfer_preserves_all_collected_facts_and_patient_identity"
+            ],
+            "confirmedDiagnosisRequires": [
+              "mimic_specific_cardiac_structural_or_pathology_evidence"
+            ],
+            "dangerStates": [
+              "pulmonary_edema",
+              "pleural_disease",
+              "neoplasia",
+              "foreign_body"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "thoracic_pocus"
+            ],
+            "external": [
+              "echocardiography_external",
+              "cardiology_referral",
+              "advanced_imaging_referral",
+              "airway_endoscopy_referral",
+              "oncology_staging_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_asthma_cardiac_structural_route",
+              "feline_asthma_refractory_route",
+              "feline_asthma_imaging_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "mimic_or_poor_control_plan",
+          "followUp": {
+            "timing": "Срочный критерий срочности и контроль принимающей семьи.",
+            "required": true,
+            "targets": [
+              "oxygen",
+              "cardiac_status",
+              "mass",
+              "foreign_body",
+              "pleural_space",
+              "family_transfer"
+            ]
+          },
+          "outcomes": {
+            "safe": "Опасный мимик диагностируется и передается без потери данных.",
+            "unsafe": "Дыхательная недостаточность приводит к астме, а иммуносупрессия происходит вслепую."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какая альтернатива опасна и как ее отделяет следующий тест."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "oxygen_supported_targeted_referral",
+            "ownerModifiers": [
+              "frustrated",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if oxygen and minimal handling are delayed for complete diagnostics in a dyspneic cat.",
+    "Reject if a quiet chest in an exhausted cat is recorded as normal or improving.",
+    "Reject if breed, eosinophilia, one radiograph or bronchodilator response alone confirms asthma.",
+    "Reject if lungworm or heartworm content appears without compatible region and exposure.",
+    "Reject if neutrophils alone generate an antimicrobial indication or all lower-airway disease is collapsed into asthma.",
+    "Reject if the generator creates a drug, dose, emergency procedure, device prescription or ventilation setting."
+  ],
+  "title": "Бронхиальная астма кошек"
+}

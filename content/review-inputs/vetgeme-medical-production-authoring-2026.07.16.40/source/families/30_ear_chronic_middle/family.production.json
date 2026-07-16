@@ -1,0 +1,3375 @@
+{
+  "schemaVersion": 1,
+  "familyId": "ear_chronic_middle",
+  "familyVersion": "2026.07.16.40",
+  "title": "Хронический отит и подозрение на среднее ухо",
+  "campaignPhase": "chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": [
+    "Хронический наружный отит, средний отит и внутренний отит являются родственными, но отдельными уровнями заболевания.",
+    "Нормальный вид, неповрежденная или невизуализируемая барабанная перепонка не исключает среднего отита.",
+    "Стеноз канала, экссудат, анатомия, боль и ограничения пациента регистрируются как неизвестная видимость, а не как неповрежденная барабанная полость.",
+    "Цитология или посев наружного канала не являются истиной среднего уха; вопрос о среднем ухе, меняющий решение, требует истинного образца среднего уха.",
+    "КТ или МРТ подтверждают оценку булл, костей, каналов и внутреннего уха, но случайная жидкость булл требует клинической корреляции.",
+    "Средний отит может вызывать боль, поражение лицевого нерва, симптомы Горнера, сухость глаз и слуха; неврологический наклон головы указывает на внутреннее ухо или другой вестибулярный путь, а не только на среду.",
+    "Периферический вестибулярный картина остается локализацией, но не автоматическим доказательством внутреннего отита.",
+    "Оба уха оцениваются, а латеральность, целостность барабанной перепонки, уровень образца и предшествующие процедуры сохраняются в продольном направлении.",
+    "Воспалительные полипы у кошек, первичные секреторные заболевания, инфекции и объёмные образования рассматривают как отдельные клинические варианты.",
+    "Массообразное заболевание требует диагностики тканей; Холестеатома не является автоматически неоплазией.",
+    "Болезненные стенозирующие уши не вызывают неоднократного пробуждения.",
+    "Никакого препарата, дозы, решения о местной безопасности, очищающего раствора, миринготомии, промывания или хирургической техники не задаётся автоматически."
+  ],
+  "coreCapabilities": [
+    "ear_exam",
+    "ear_cytology",
+    "video_otoscopy_referral",
+    "middle_ear_imaging_external",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "ear_chronic_history_route",
+      "anyOf": [
+        "ear_chronic_history_map",
+        "ear_exam",
+        "safe_referral"
+      ],
+      "purpose": "same_patient_laterality_recurrence_procedure_and_neuro_timeline"
+    },
+    {
+      "id": "ear_chronic_external_mapping_route",
+      "anyOf": [
+        "ear_exam",
+        "ear_cytology",
+        "video_otoscopy_referral",
+        "safe_referral"
+      ],
+      "purpose": "bilateral_canal_cytology_stenosis_discharge_and_tympanum_status"
+    },
+    {
+      "id": "ear_chronic_video_otoscopy_route",
+      "anyOf": [
+        "video_otoscopy_referral",
+        "safe_referral"
+      ],
+      "purpose": "magnified_tympanic_assessment_and_procedure_planning"
+    },
+    {
+      "id": "ear_chronic_imaging_route",
+      "anyOf": [
+        "middle_ear_imaging_external",
+        "safe_referral"
+      ],
+      "purpose": "ct_mri_bulla_bone_canal_and_inner_ear_assessment"
+    },
+    {
+      "id": "ear_chronic_middle_sampling_route",
+      "anyOf": [
+        "middle_ear_sampling_referral",
+        "safe_referral"
+      ],
+      "purpose": "true_middle_ear_cytology_culture"
+    },
+    {
+      "id": "ear_chronic_neuro_ocular_hearing_route",
+      "anyOf": [
+        "ear_cranial_nerve_assessment",
+        "hearing_assessment_external",
+        "safe_referral"
+      ],
+      "purpose": "vestibular_facial_horner_tear_hearing_and_central_red_flags"
+    },
+    {
+      "id": "ear_chronic_polyp_mass_route",
+      "anyOf": [
+        "nasopharyngeal_endoscopy_referral",
+        "histology_external",
+        "middle_ear_imaging_external",
+        "safe_referral"
+      ],
+      "purpose": "feline_polyp_nasopharynx_secretory_and_mass_discriminator"
+    },
+    {
+      "id": "ear_chronic_underlying_cause_route",
+      "anyOf": [
+        "dermatology_referral",
+        "ear_exam",
+        "safe_referral"
+      ],
+      "purpose": "allergic_endocrine_anatomic_and_other_perpetuating_factor_review"
+    },
+    {
+      "id": "ear_chronic_longitudinal_route",
+      "anyOf": [
+        "ear_longitudinal_monitoring",
+        "ear_cytology",
+        "safe_referral"
+      ],
+      "purpose": "same_ear_cytology_tympanum_neuro_hearing_pain_and_response"
+    },
+    {
+      "id": "ear_chronic_salvage_route",
+      "anyOf": [
+        "ear_surgery_referral",
+        "histology_external",
+        "safe_referral"
+      ],
+      "purpose": "end_stage_canal_cholesteatoma_mass_and_surgical_salvage"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "ear_chronic_complete_dermatologic_and_neurologic_history",
+      "requires": [
+        "ear_chronic_history_map"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_chronic_bilateral_cytology_and_external_canal_mapping",
+      "requires": [
+        "ear_cytology"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_chronic_video_otoscopy_and_tympanic_assessment",
+      "requires": [
+        "video_otoscopy_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+      "requires": [
+        "middle_ear_imaging_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_chronic_middle_ear_sampling_cytology_culture",
+      "requires": [
+        "middle_ear_sampling_referral"
+      ],
+      "availability": "external_procedural_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_chronic_facial_nerve_horner_tear_and_hearing_assessment",
+      "requires": [
+        "ear_cranial_nerve_assessment",
+        "hearing_assessment_external"
+      ],
+      "availability": "local_plus_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_chronic_polyp_nasopharyngeal_and_mass_workup",
+      "requires": [
+        "nasopharyngeal_endoscopy_referral",
+        "histology_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_chronic_underlying_allergy_endocrine_and_anatomic_review",
+      "requires": [
+        "dermatology_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_chronic_response_tympanum_neurologic_and_hearing_monitoring",
+      "requires": [
+        "ear_longitudinal_monitoring"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_chronic_surgical_salvage_referral",
+      "requires": [
+        "ear_surgery_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "episodes_laterality_response_timeline",
+      "prompt": "Сколько эпизодов, какое ухо и как долго держался ответ?"
+    },
+    {
+      "id": "prior_cytology_culture_video_ct_mri_surgery",
+      "prompt": "Какие исследования и процедуры были, с какой стороны и на каком уровне?"
+    },
+    {
+      "id": "mouth_opening_chewing_head_neck_pain",
+      "prompt": "Больно ли открывать рот, жевать или трогать голову или шею?"
+    },
+    {
+      "id": "head_tilt_falling_nystagmus_facial_droop",
+      "prompt": "Есть ли наклон головы, падение, нистагм или асимметрия морды?"
+    },
+    {
+      "id": "dry_eye_pupil_third_eyelid_change",
+      "prompt": "Есть ли сухость глаза, изменение зрачка или третьего века?"
+    },
+    {
+      "id": "hearing_change_and_test_confidence",
+      "prompt": "Изменился ли слух и как это проверяли?"
+    },
+    {
+      "id": "cleaning_products_technique_and_known_tympanum",
+      "prompt": "Чем и как чистили ухо и была ли целостность перепонки известна?"
+    },
+    {
+      "id": "skin_allergy_endocrine_pattern",
+      "prompt": "Есть ли кожа, аллергия или эндокринный картина?"
+    },
+    {
+      "id": "feline_nasal_noise_dysphagia_polyp_history",
+      "prompt": "У кошки есть носовой шум, нарушение глотания или полип или процедура анамнез?"
+    },
+    {
+      "id": "foreign_body_trauma_procedure_onset",
+      "prompt": "Были ли инородное тело, травма, агрессивная чистка или процедура перед ухудшением?"
+    },
+    {
+      "id": "systemic_fever_appetite_mentation",
+      "prompt": "Есть ли лихорадка, снижение аппетита или изменение сознание?"
+    },
+    {
+      "id": "owner_cost_transport_and_handling_feasibility",
+      "prompt": "Какие направление, стоимость, перевозка и фиксация ограничения реальны?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "pain_swelling_canal_patency_discharge_map",
+      "source": "ear_exam",
+      "requires": [
+        "ear_exam"
+      ]
+    },
+    {
+      "id": "bilateral_external_canal_cytology_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "ear_cytology"
+      ]
+    },
+    {
+      "id": "tympanum_visible_unknown_intact_ruptured_record",
+      "source": "video_otoscopy",
+      "requires": [
+        "video_otoscopy_referral"
+      ]
+    },
+    {
+      "id": "mouth_opening_head_neck_pain_record",
+      "source": "physical_exam",
+      "requires": [
+        "ear_exam"
+      ]
+    },
+    {
+      "id": "vestibular_mentation_proprioception_localization",
+      "source": "neurologic_exam",
+      "requires": [
+        "ear_cranial_nerve_assessment"
+      ]
+    },
+    {
+      "id": "facial_horner_tear_ocular_protection_record",
+      "source": "cranial_nerve_exam",
+      "requires": [
+        "ear_cranial_nerve_assessment"
+      ]
+    },
+    {
+      "id": "hearing_assessment_confidence_record",
+      "source": "external_report",
+      "requires": [
+        "hearing_assessment_external"
+      ]
+    },
+    {
+      "id": "ct_mri_bulla_bone_canal_inner_ear_record",
+      "source": "external_report",
+      "requires": [
+        "middle_ear_imaging_external"
+      ]
+    },
+    {
+      "id": "true_middle_ear_sample_level_record",
+      "source": "external_report",
+      "requires": [
+        "middle_ear_sampling_referral"
+      ]
+    },
+    {
+      "id": "nasopharynx_polyp_mass_histology_record",
+      "source": "external_report",
+      "requires": [
+        "nasopharyngeal_endoscopy_referral",
+        "histology_external"
+      ]
+    },
+    {
+      "id": "same_ear_tympanum_cytology_neuro_response_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "ear_longitudinal_monitoring"
+      ]
+    },
+    {
+      "id": "end_stage_qol_salvage_histology_record",
+      "source": "external_report",
+      "requires": [
+        "ear_surgery_referral"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "recurrent_externa_middle_risk_plan",
+      "fullPlan": [
+        "preserve_same_ear_timeline",
+        "bilateral_canal_map_and_cytology",
+        "record_tympanum_known_or_unknown",
+        "assess_middle_ear_probability",
+        "review_primary_perpetuating_causes",
+        "imaging_or_true_middle_sample_when_decision_changing",
+        "same_level_recheck"
+      ],
+      "stagedPlan": [
+        "localize",
+        "sample",
+        "assess_depth",
+        "control_cause_and_monitor"
+      ],
+      "minimumSafePlan": [
+        "unknown_tympanum_not_intact",
+        "external_sample_not_middle_sample",
+        "pain_aware_exam",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "pain_and_ocular_safety",
+        "video_otoscopy_imaging_referral"
+      ],
+      "unsafeOrInadequate": [
+        "repeat_blind_topical_route",
+        "forced_awake_stenotic_exam",
+        "outside_culture_as_middle_truth"
+      ]
+    },
+    {
+      "id": "media_intact_unseen_plan",
+      "fullPlan": [
+        "clinical_middle_ear_suspicion",
+        "video_tympanic_assessment",
+        "bilateral_advanced_imaging",
+        "correlate_bulla_findings",
+        "true_middle_ear_sample_when_needed",
+        "underlying_cause_control",
+        "tympanum_neuro_hearing_recheck"
+      ],
+      "stagedPlan": [
+        "suspect",
+        "image",
+        "sample_if_decision_changing",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "normal_membrane_not_exclusion",
+        "incidental_bulla_fluid_not_infection",
+        "bilateral_assessment",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "pain_control_route",
+        "advanced_imaging_referral"
+      ],
+      "unsafeOrInadequate": [
+        "normal_view_closes_media",
+        "bulge_alone_proves_infection",
+        "opposite_ear_ignored"
+      ]
+    },
+    {
+      "id": "media_ruptured_plan",
+      "fullPlan": [
+        "record_integrity_laterality_and_cause_modifier",
+        "protect_from_unreviewed_topical_exposure",
+        "bilateral_external_cytology",
+        "advanced_imaging",
+        "true_middle_sample",
+        "reviewed_infection_inflammation_route",
+        "healing_neuro_hearing_followup"
+      ],
+      "stagedPlan": [
+        "protect",
+        "map_depth",
+        "sample_true_site",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "rupture_not_routine_externa",
+        "no_code_ototoxicity_decision",
+        "foreign_body_trauma_preserved",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "pain_and_aspiration_safety",
+        "procedural_referral"
+      ],
+      "unsafeOrInadequate": [
+        "external_result_overwrites_middle",
+        "blind_cleaning",
+        "generated_flush_or_solution"
+      ]
+    },
+    {
+      "id": "interna_peripheral_plan",
+      "fullPlan": [
+        "minimal_safe_neuro_localization",
+        "ear_and_middle_evidence",
+        "ocular_tear_facial_hearing_safety",
+        "safe_mobility_nausea_support_route",
+        "advanced_neuro_ear_imaging",
+        "central_red_flag_transfer",
+        "longitudinal_deficit_prognosis"
+      ],
+      "stagedPlan": [
+        "localize",
+        "protect",
+        "image",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "peripheral_pattern_not_automatic_interna",
+        "media_alone_not_neurologic_head_tilt",
+        "central_red_flags_visible",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "protect_eye_and_mobility",
+        "neuro_imaging_referral"
+      ],
+      "unsafeOrInadequate": [
+        "every_head_tilt_is_ear_infection",
+        "altered_mentation_forced_peripheral",
+        "hearing_behavior_as_certain_test"
+      ]
+    },
+    {
+      "id": "feline_polyp_secretory_plan",
+      "fullPlan": [
+        "preserve_age_airway_ear_and_procedure_history",
+        "bilateral_ear_and_nasopharynx_views",
+        "advanced_imaging_origin_extent",
+        "separate_polyp_secretory_infection_mass",
+        "histology_when_tissue",
+        "complete_origin_appropriate_referral",
+        "same_polyp_bulla_recurrence_followup"
+      ],
+      "stagedPlan": [
+        "localize_source",
+        "image_extent",
+        "sample_or_remove_reviewed",
+        "monitor_recurrence"
+      ],
+      "minimumSafePlan": [
+        "fluid_not_automatic_bacteria",
+        "recurrence_not_new_patient",
+        "bilateral_route",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "airway_swallowing_ear_safety",
+        "endoscopy_surgery_referral"
+      ],
+      "unsafeOrInadequate": [
+        "incomplete_removal_resets_case",
+        "bulla_fluid_equals_infection",
+        "mass_equals_cancer"
+      ]
+    },
+    {
+      "id": "end_stage_mass_salvage_plan",
+      "fullPlan": [
+        "pain_qol_and_canal_function_map",
+        "advanced_bone_bulla_mass_imaging",
+        "separate_end_stage_cholesteatoma_neoplasia",
+        "true_site_sampling_and_histology",
+        "review_reversible_causes",
+        "surgical_salvage_shared_decision",
+        "postprocedure_pain_neuro_hearing_followup"
+      ],
+      "stagedPlan": [
+        "define_irreversibility",
+        "image",
+        "obtain_tissue_when_needed",
+        "salvage_or_palliate_reviewed"
+      ],
+      "minimumSafePlan": [
+        "mass_needs_tissue",
+        "cholesteatoma_not_cancer",
+        "surgery_not_automatic",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "pain_ocular_neuro_safety",
+        "ear_surgery_oncology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "endless_blind_medical_repeats",
+        "instant_surgery",
+        "generated_procedure_technique"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_otitis_media_interna_2026",
+      "title": "Merck Veterinary Manual: Otitis Media and Interna in Animals",
+      "url": "https://www.merckvetmanual.com/ear-disorders/otitis-media-and-interna/otitis-media-and-interna-in-animals",
+      "scope": "clinical_levels_tympanum_limits_imaging_middle_sampling_neuro_and_bilateral_route"
+    },
+    {
+      "id": "canine_otitis_externa_review",
+      "title": "Canine Otitis Externa — Treatment and Complications",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6294027/",
+      "scope": "chronic_externa_perpetuating_factors_resistance_and_complications"
+    },
+    {
+      "id": "merck_cholesteatoma_2026",
+      "title": "Merck Veterinary Manual: Cholesteatomas in Small Animals",
+      "url": "https://www.merckvetmanual.com/ear-disorders/tumors-of-the-ear-in-small-animals/cholesteatomas-in-small-animals",
+      "scope": "expansile_keratin_bulla_bone_change_imaging_and_surgical_context"
+    },
+    {
+      "id": "feline_video_otoscopy_ct_2024",
+      "title": "Comparative Performance of Video-otoscopy and CT in Cats",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11529141/",
+      "scope": "feline_video_otoscopy_ct_complementary_findings_and_bilateral_disease"
+    },
+    {
+      "id": "umn_otitis_media",
+      "title": "University of Minnesota: Otitis Media — Dogs and Cats",
+      "url": "https://open.lib.umn.edu/animaldermatology/chapter/otitis-media-dogs-and-cats/",
+      "scope": "clinical_workup_sampling_underlying_disease_and_followup"
+    }
+  ],
+  "variants": [
+    {
+      "id": "ear_chronic_recurrent_externa_with_middle_ear_risk",
+      "version": "2026.07.16.40",
+      "title": "Хронический наружный отит с риском среднего уха",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Повторяющийся, не полностью реагирующий или быстро рецидивирующий наружный отит требует сохранения анамнеза того же уха, двусторонней цитологического исследования, состояния барабанной видимости, риска среднего уха и первичных сохраняющихся причин до обострения.",
+      "exclusions": [
+        "repeat_blind_topical_route",
+        "unknown_tympanum_called_intact",
+        "external_sample_as_middle_truth"
+      ],
+      "planBundleId": "recurrent_externa_middle_risk_plan",
+      "sourceIds": [
+        "merck_otitis_media_interna_2026",
+        "canine_otitis_externa_review",
+        "umn_otitis_media"
+      ],
+      "presentations": [
+        {
+          "id": "p1_repeated_same_ear_or_incomplete_response",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_pain",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что одно и то же ухо неоднократно рецидивирует или никогда полностью не очищается, несмотря на предшествующее наружное лечение.",
+          "historyAnswers": {
+            "episodes_laterality_response_timeline": "По нашим наблюдениям, односторонние эпизоды и интервалы ответа сохранены.",
+            "prior_cytology_culture_video_ct_mri_surgery": "Дома мы заметили, что восстановлены предыдущие уровни выборки и процедуры.",
+            "mouth_opening_chewing_head_neck_pain": "Насколько мы можем судить, записан скрининг боли в среднем ухе.",
+            "skin_allergy_endocrine_pattern": "Мы записали, что первичная или постоянная модель остается неразрешенной."
+          },
+          "examFindings": [
+            {
+              "factId": "rapid_same_ear_relapse_raises_middle_ear_or_uncontrolled_primary_cause_risk",
+              "source": "recurrence_rule",
+              "finding": "Рецидив связан с той же цепочкой ушей и эпизодов."
+            },
+            {
+              "factId": "clinical_and_cytologic_resolution_before_relapse_must_be_verified",
+              "source": "longitudinal_rule",
+              "finding": "Очевидное улучшение не считается излечением."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "rapid_same_ear_relapse_raises_middle_ear_or_uncontrolled_primary_cause_risk",
+              "discoveryPaths": [
+                "episodes_laterality_response_timeline",
+                "mouth_opening_head_neck_pain_record"
+              ]
+            },
+            {
+              "factId": "clinical_and_cytologic_resolution_before_relapse_must_be_verified",
+              "discoveryPaths": [
+                "prior_cytology_culture_video_ct_mri_surgery",
+                "same_ear_tympanum_cytology_neuro_response_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_complete_dermatologic_and_neurologic_history",
+              "classification": "required_first",
+              "result": "При динамическом наблюдении: рецидив одного уха и карта основных причин."
+            },
+            {
+              "id": "ear_chronic_bilateral_cytology_and_external_canal_mapping",
+              "classification": "required_current_episode",
+              "result": "При микроскопии материала: текущее состояние двусторонних внешних каналов."
+            },
+            {
+              "id": "ear_chronic_underlying_allergy_endocrine_and_anatomic_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: предрасполагающие и закрепляющие факторы."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "conditional_middle_ear_risk",
+              "result": "При томографическом исследовании: доказательство глубины буллы или канала."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "rapid_same_ear_relapse_raises_middle_ear_or_uncontrolled_primary_cause_risk",
+              "clinical_and_cytologic_resolution_before_relapse_must_be_verified"
+            ],
+            "confirmedDiagnosisRequires": [
+              "current_external_evidence_plus_depth_and_primary_cause_assessment"
+            ],
+            "dangerStates": [
+              "severe_pain",
+              "rapid_relapse",
+              "resistant_pattern"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cytology",
+              "ear_chronic_history_map"
+            ],
+            "external": [
+              "middle_ear_imaging_external",
+              "video_otoscopy_referral",
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_history_route",
+              "ear_chronic_external_mapping_route",
+              "ear_chronic_imaging_route",
+              "ear_chronic_underlying_cause_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "recurrent_externa_middle_risk_plan",
+          "followUp": {
+            "timing": "Текущее цитологическое разрешение, а затем контрольная точка рецидива того же уха.",
+            "required": true,
+            "targets": [
+              "pain",
+              "canal",
+              "cytology",
+              "tympanum",
+              "primary_cause",
+              "recurrence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Рецидив связан с наличием признаков среднего уха и первичной причины.",
+            "unsafe": "Одно и то же слепое лечение повторяется бесконечно."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему повторяющееся кратковременное облегчение изменяет глубину диагностики, а не только продукт."
+          ],
+          "compatibility": {
+            "temperament": [
+              "ear_pain",
+              "head_shy",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "pain_aware_sampling_and_video_otoscopy_or_referral",
+            "ownerModifiers": [
+              "expects_repeat_drops",
+              "cost_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p2_stenotic_painful_canal_limits_tympanic_view",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_pain_swelling_or_neuro_sign",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что болезненный стеноз канала препятствует безопасной визуализации барабанной перепонки.",
+          "historyAnswers": {
+            "episodes_laterality_response_timeline": "По нашим наблюдениям, хроническое сужение одного и того же уха.",
+            "cleaning_products_technique_and_known_tympanum": "Дома мы заметили, что барабанная полость не была видна или неповреждена.",
+            "mouth_opening_chewing_head_neck_pain": "Насколько мы можем судить, зафиксирована выраженность боли.",
+            "owner_cost_transport_and_handling_feasibility": "Мы записали, что записана возможность проведения седативного или направленного обследования."
+          },
+          "examFindings": [
+            {
+              "factId": "unvisualized_tympanum_is_unknown_not_intact",
+              "source": "visibility_rule",
+              "finding": "Статус явно остается неизвестным."
+            },
+            {
+              "factId": "painful_stenotic_canal_is_not_repeatedly_forced_awake",
+              "source": "handling_rule",
+              "finding": "Осмотр в бодрствовании прекращается до получения травмы или недостоверного заключения."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "unvisualized_tympanum_is_unknown_not_intact",
+              "discoveryPaths": [
+                "cleaning_products_technique_and_known_tympanum",
+                "tympanum_visible_unknown_intact_ruptured_record"
+              ]
+            },
+            {
+              "factId": "painful_stenotic_canal_is_not_repeatedly_forced_awake",
+              "discoveryPaths": [
+                "mouth_opening_chewing_head_neck_pain",
+                "pain_swelling_canal_patency_discharge_map"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_bilateral_cytology_and_external_canal_mapping",
+              "classification": "required_if_safely_obtainable",
+              "result": "При микроскопии материала: состояние наружных каналов без принудительного глубокого обследования."
+            },
+            {
+              "id": "ear_chronic_video_otoscopy_and_tympanic_assessment",
+              "classification": "required_referral_route",
+              "result": "При эндоскопическом осмотре: тимпанический статус в рассмотренных условиях."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required_when_depth_or_end_stage_question",
+              "result": "При томографическом исследовании: протяженность канала или буллы или кости."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "unvisualized_tympanum_is_unknown_not_intact",
+              "painful_stenotic_canal_is_not_repeatedly_forced_awake"
+            ],
+            "confirmedDiagnosisRequires": [
+              "safe_video_otoscopy_or_advanced_imaging_depth_evidence"
+            ],
+            "dangerStates": [
+              "severe_pain",
+              "rapid_swelling",
+              "forced_injury",
+              "hidden_media"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cytology"
+            ],
+            "external": [
+              "video_otoscopy_referral",
+              "middle_ear_imaging_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_external_mapping_route",
+              "ear_chronic_video_otoscopy_route",
+              "ear_chronic_imaging_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "recurrent_externa_middle_risk_plan",
+          "followUp": {
+            "timing": "После безопасной визуализации или визуализации и вмешательства с учетом боли.",
+            "required": true,
+            "targets": [
+              "pain",
+              "patency",
+              "tympanum_status",
+              "cytology",
+              "depth"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неизвестная анатомия остается видимой до тех пор, пока не будут получены надежные доказательства.",
+            "unsafe": "Боль подавляется, и невидимая мембрана называется неповрежденной."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему прекращение исследования в сознании защищает пациента и сохраняет точность диагностики."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "head_shy",
+              "panic"
+            ],
+            "requiredHandlingAlternative": "stop_forced_exam_and_use_reviewed_sedation_or_referral",
+            "ownerModifiers": [
+              "requests_complete_exam_now",
+              "transport_barrier"
+            ]
+          }
+        },
+        {
+          "id": "p3_recurrent_resistant_bacterial_or_mixed_cytology",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_pain_or_progression",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что рецидивирующая бактериальная или смешанная цитология сохраняется после предыдущего воздействия, что вызывает вопросы о резистентности, биопленке, глубине и причине.",
+          "historyAnswers": {
+            "prior_cytology_culture_video_ct_mri_surgery": "По нашим наблюдениям, организмы, места обитания, восприимчивость и история воздействия датированы.",
+            "episodes_laterality_response_timeline": "Дома мы заметили, что реакция и рецидив зафиксированы на слух.",
+            "cleaning_products_technique_and_known_tympanum": "Насколько мы можем судить, проверяются техника и знание тимпанических инструментов.",
+            "skin_allergy_endocrine_pattern": "Мы записали, что требуется обследование основного заболевания."
+          },
+          "examFindings": [
+            {
+              "factId": "current_bilateral_site_cytology_precedes_escalation",
+              "source": "stewardship_rule",
+              "finding": "Для каждого пораженного наружного канала имеются текущие данные."
+            },
+            {
+              "factId": "external_culture_cannot_define_middle_ear_organisms",
+              "source": "sampling_level_rule",
+              "finding": "Уровень выборки остается явным."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "current_bilateral_site_cytology_precedes_escalation",
+              "discoveryPaths": [
+                "bilateral_external_canal_cytology_record",
+                "prior_cytology_culture_video_ct_mri_surgery"
+              ]
+            },
+            {
+              "factId": "external_culture_cannot_define_middle_ear_organisms",
+              "discoveryPaths": [
+                "true_middle_ear_sample_level_record",
+                "prior_cytology_culture_video_ct_mri_surgery"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_bilateral_cytology_and_external_canal_mapping",
+              "classification": "required_current",
+              "result": "При микроскопии материала: внешние организмы или воспаление сбоку."
+            },
+            {
+              "id": "ear_chronic_middle_ear_sampling_cytology_culture",
+              "classification": "required_if_middle_ear_decision_changing",
+              "result": "По результатам посева и определения чувствительности: истинный организм или восприимчивость среднего уха."
+            },
+            {
+              "id": "ear_chronic_underlying_allergy_endocrine_and_anatomic_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: доказательства, подтверждающие причину."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "current_bilateral_site_cytology_precedes_escalation",
+              "external_culture_cannot_define_middle_ear_organisms"
+            ],
+            "confirmedDiagnosisRequires": [
+              "current_site_evidence_at_the_claimed_anatomic_level"
+            ],
+            "dangerStates": [
+              "multidrug_resistant_pattern",
+              "deep_pain",
+              "random_escalation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_cytology",
+              "ear_exam"
+            ],
+            "external": [
+              "middle_ear_sampling_referral",
+              "video_otoscopy_referral",
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_external_mapping_route",
+              "ear_chronic_middle_sampling_route",
+              "ear_chronic_underlying_cause_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "recurrent_externa_middle_risk_plan",
+          "followUp": {
+            "timing": "Цитология на уровне сайта и контрольные точки ответа.",
+            "required": true,
+            "targets": [
+              "organism",
+              "inflammation",
+              "pain",
+              "sample_level",
+              "cause",
+              "response"
+            ]
+          },
+          "outcomes": {
+            "safe": "Эскалация основана на текущих данных из правильного анатомического участка.",
+            "unsafe": "Легкий внешний образец рассматривается как истина среднего уха."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему более глубокий образец может не совпадать с материалом у входа в канал."
+          ],
+          "compatibility": {
+            "temperament": [
+              "ear_pain",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "representative_site_sampling_or_referral",
+            "ownerModifiers": [
+              "prior_treatment_failure",
+              "financial_fatigue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ear_otitis_media_intact_or_unseen_tympanum",
+      "version": "2026.07.16.40",
+      "title": "Средний отит при интактной или недоступной осмотру барабанной перепонке",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Средний отит остается возможным при нормальной на вид, неповрежденной или невизуализируемой барабанной перепонке; Клиническое подозрение, видеооценка, двусторонняя расширенная визуализация и истинный отбор проб из среднего уха дополняют друг друга, а случайный материал из булл требует корреляции.",
+      "exclusions": [
+        "normal_membrane_excludes_media",
+        "bulging_alone_proves_infection",
+        "incidental_bulla_fluid_as_diagnosis"
+      ],
+      "planBundleId": "media_intact_unseen_plan",
+      "sourceIds": [
+        "merck_otitis_media_interna_2026",
+        "feline_video_otoscopy_ct_2024",
+        "umn_otitis_media"
+      ],
+      "presentations": [
+        {
+          "id": "p1_normal_appearing_tympanum_but_supporting_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_pain_or_cranial_nerve_sign",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что мембрана выглядит нормальной, но рецидивы, боль при открывании рта, признаки поражения черепных нервов или визуализация подтверждают вопрос о среднем ухе.",
+          "historyAnswers": {
+            "episodes_laterality_response_timeline": "По нашим наблюдениям, совместимое повторение зафиксировано.",
+            "mouth_opening_chewing_head_neck_pain": "Дома мы заметили, что владелец не отмечает этого признака на текущем этапе.",
+            "dry_eye_pupil_third_eyelid_change": "Насколько мы можем судить, фиксированный экран черепных нервов или глаз.",
+            "prior_cytology_culture_video_ct_mri_surgery": "Мы записали, что зарегистрирован предшествующий уровень доказательности."
+          },
+          "examFindings": [
+            {
+              "factId": "normal_appearing_tympanum_does_not_exclude_otitis_media",
+              "source": "test_limit_rule",
+              "finding": "Внешний вид – это один из выводов, а не исключение."
+            },
+            {
+              "factId": "middle_ear_diagnosis_integrates_clinical_signs_imaging_and_true_site_sample",
+              "source": "integration_rule",
+              "finding": "Уровни доказательности остаются отдельными."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "normal_appearing_tympanum_does_not_exclude_otitis_media",
+              "discoveryPaths": [
+                "tympanum_visible_unknown_intact_ruptured_record",
+                "mouth_opening_head_neck_pain_record"
+              ]
+            },
+            {
+              "factId": "middle_ear_diagnosis_integrates_clinical_signs_imaging_and_true_site_sample",
+              "discoveryPaths": [
+                "ct_mri_bulla_bone_canal_inner_ear_record",
+                "true_middle_ear_sample_level_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_video_otoscopy_and_tympanic_assessment",
+              "classification": "required_when_safe",
+              "result": "При эндоскопическом осмотре: барабанная перепонка выглядит интактной, однако это не исключает заболевание среднего уха."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required_for_depth",
+              "result": "При томографическом исследовании: рисунок буллы или кости или канала."
+            },
+            {
+              "id": "ear_chronic_middle_ear_sampling_cytology_culture",
+              "classification": "conditional_decision_changing",
+              "result": "По результатам посева и определения чувствительности: доказательства на реальном месте."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "normal_appearing_tympanum_does_not_exclude_otitis_media",
+              "middle_ear_diagnosis_integrates_clinical_signs_imaging_and_true_site_sample"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_clinical_context_plus_imaging_or_true_middle_sample"
+            ],
+            "dangerStates": [
+              "facial_paralysis",
+              "ocular_exposure",
+              "severe_pain",
+              "missed_media"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cytology",
+              "ear_cranial_nerve_assessment"
+            ],
+            "external": [
+              "video_otoscopy_referral",
+              "middle_ear_imaging_external",
+              "middle_ear_sampling_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_video_otoscopy_route",
+              "ear_chronic_imaging_route",
+              "ear_chronic_middle_sampling_route",
+              "ear_chronic_neuro_ocular_hearing_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "media_intact_unseen_plan",
+          "followUp": {
+            "timing": "После подтверждения глубины и по реакции барабанной перепонки или нейро или слуха.",
+            "required": true,
+            "targets": [
+              "pain",
+              "tympanum",
+              "bulla",
+              "sample",
+              "cranial_nerves",
+              "hearing"
+            ]
+          },
+          "outcomes": {
+            "safe": "Обычное представление правильно интегрируется, а не используется как ложное исключение.",
+            "unsafe": "Видимая перепонка закрывает опорный дифференциал среднего уха."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: мембрана представляет собой пограничный вид, а не полную картину буллы."
+          ],
+          "compatibility": {
+            "temperament": [
+              "ear_pain",
+              "head_shy"
+            ],
+            "requiredHandlingAlternative": "video_otoscopy_and_imaging_referral",
+            "ownerModifiers": [
+              "reassured_by_normal_view",
+              "questions_advanced_imaging"
+            ]
+          }
+        },
+        {
+          "id": "p2_bulging_opaque_or_abnormal_tympanum",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что барабанная перепонка выпячена, непрозрачна, утолщена или изменила цвет; нужно сопоставить это с симптомами и оценить среднее ухо.",
+          "historyAnswers": {
+            "episodes_laterality_response_timeline": "По нашим наблюдениям, латеральность и курс фиксированы.",
+            "mouth_opening_chewing_head_neck_pain": "Дома мы заметили, что контекст боли.",
+            "systemic_fever_appetite_mentation": "Насколько мы можем судить, системный или центральный экран опасности.",
+            "prior_cytology_culture_video_ct_mri_surgery": "Мы записали, что предыдущая анатомия и процедуры известны."
+          },
+          "examFindings": [
+            {
+              "factId": "abnormal_tympanum_supports_but_does_not_alone_define_infected_middle_ear",
+              "source": "interpretation_rule",
+              "finding": "Воздух, жидкость, ткани и воспаление остаются критерий срочностиами."
+            },
+            {
+              "factId": "procedure_and_sampling_require_reviewed_external_route",
+              "source": "scope_rule",
+              "finding": "Никакой кодовой миринготомии или промывания."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "abnormal_tympanum_supports_but_does_not_alone_define_infected_middle_ear",
+              "discoveryPaths": [
+                "tympanum_visible_unknown_intact_ruptured_record",
+                "ct_mri_bulla_bone_canal_inner_ear_record"
+              ]
+            },
+            {
+              "factId": "procedure_and_sampling_require_reviewed_external_route",
+              "discoveryPaths": [
+                "true_middle_ear_sample_level_record",
+                "owner_cost_transport_and_handling_feasibility"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_video_otoscopy_and_tympanic_assessment",
+              "classification": "required",
+              "result": "При эндоскопическом осмотре: морфология барабанной перепонки, обеспечивающая качество принятия решения."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required_by_extent_question",
+              "result": "При томографическом исследовании: содержимое буллы и контекст стены или кости."
+            },
+            {
+              "id": "ear_chronic_middle_ear_sampling_cytology_culture",
+              "classification": "conditional_for_infection_decision",
+              "result": "По результатам посева и определения чувствительности: истинная цитология или культура среднего уха."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "abnormal_tympanum_supports_but_does_not_alone_define_infected_middle_ear",
+              "procedure_and_sampling_require_reviewed_external_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "correlated_clinical_imaging_and_or_true_sample_evidence"
+            ],
+            "dangerStates": [
+              "severe_pain",
+              "facial_nerve_sign",
+              "systemic_illness",
+              "unsafe_procedure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cytology"
+            ],
+            "external": [
+              "video_otoscopy_referral",
+              "middle_ear_imaging_external",
+              "middle_ear_sampling_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_video_otoscopy_route",
+              "ear_chronic_imaging_route",
+              "ear_chronic_middle_sampling_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "media_intact_unseen_plan",
+          "followUp": {
+            "timing": "Пост-визуализация или пробы и серийная повторная оценка барабанной перепонки или боли.",
+            "required": true,
+            "targets": [
+              "membrane",
+              "pain",
+              "bulla",
+              "sample",
+              "response"
+            ]
+          },
+          "outcomes": {
+            "safe": "Аномальный внешний вид вызывает наличие соответствующих доказательств и планирования безопасной процедуры.",
+            "unsafe": "Выпуклость сама по себе называется бактериальной инфекцией или требует импровизированной процедуры."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: о чем говорит аномальная мембрана и почему она не позволяет идентифицировать материал, находящийся под ней."
+          ],
+          "compatibility": {
+            "temperament": [
+              "ear_pain",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "reviewed_anesthesia_video_otoscopy_or_referral",
+            "ownerModifiers": [
+              "expects_visual_certainty",
+              "procedure_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_bilateral_or_subclinical_contralateral_middle_ear_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_signs",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что одно симптоматическое ухо приводит к двустороннему или субклиническому контралатеральному заболеванию среднего уха.",
+          "historyAnswers": {
+            "episodes_laterality_response_timeline": "По нашим наблюдениям, обе стороны отслеживали независимо.",
+            "hearing_change_and_test_confidence": "Дома мы заметили, что контекст слушания по имеющимся доказательствам.",
+            "prior_cytology_culture_video_ct_mri_surgery": "Насколько мы можем судить, пересмотр предыдущих односторонних предположений.",
+            "mouth_opening_chewing_head_neck_pain": "Мы записали, что латеральность боли зафиксирована."
+          },
+          "examFindings": [
+            {
+              "factId": "diagnosed_middle_ear_disease_prompts_contralateral_assessment",
+              "source": "bilateral_rule",
+              "finding": "Противоположное ухо не игнорируется, потому что оно тихое."
+            },
+            {
+              "factId": "bilateral_imaging_truth_does_not_make_both_ears_identically_infected",
+              "source": "laterality_rule",
+              "finding": "Клинические и выборочные данные остаются специфичными для каждой стороны."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "diagnosed_middle_ear_disease_prompts_contralateral_assessment",
+              "discoveryPaths": [
+                "episodes_laterality_response_timeline",
+                "ct_mri_bulla_bone_canal_inner_ear_record"
+              ]
+            },
+            {
+              "factId": "bilateral_imaging_truth_does_not_make_both_ears_identically_infected",
+              "discoveryPaths": [
+                "bilateral_external_canal_cytology_record",
+                "true_middle_ear_sample_level_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_bilateral_cytology_and_external_canal_mapping",
+              "classification": "required",
+              "result": "При микроскопии материала: специфические внешние доказательства."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required_bilateral_review",
+              "result": "При томографическом исследовании: зафиксированы как буллы, так и каналы."
+            },
+            {
+              "id": "ear_chronic_middle_ear_sampling_cytology_culture",
+              "classification": "side_specific_if_decision_changing",
+              "result": "По результатам посева и определения чувствительности: уровень и сторона образца фиксированы."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "diagnosed_middle_ear_disease_prompts_contralateral_assessment",
+              "bilateral_imaging_truth_does_not_make_both_ears_identically_infected"
+            ],
+            "confirmedDiagnosisRequires": [
+              "side_specific_imaging_clinical_and_sample_evidence"
+            ],
+            "dangerStates": [
+              "contralateral_missed_disease",
+              "sample_side_swap",
+              "false_bilateral_infection"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cytology"
+            ],
+            "external": [
+              "middle_ear_imaging_external",
+              "middle_ear_sampling_referral",
+              "video_otoscopy_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_external_mapping_route",
+              "ear_chronic_imaging_route",
+              "ear_chronic_middle_sampling_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "media_intact_unseen_plan",
+          "followUp": {
+            "timing": "Специфическая для стороны реакция и двусторонняя визуализация или контрольная точка барабанной полости.",
+            "required": true,
+            "targets": [
+              "left_ear",
+              "right_ear",
+              "tympanum",
+              "sample_level",
+              "hearing"
+            ]
+          },
+          "outcomes": {
+            "safe": "Оба уха остаются отдельными продольными объектами с коррелирующими свидетельствами.",
+            "unsafe": "«Тихое ухо» игнорируется, или обе стороны наследуют один результат культуры."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему проверяются оба уха, но могут быть разные причины или результаты проб."
+          ],
+          "compatibility": {
+            "temperament": [
+              "ear_pain",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "bilateral_low_stress_exam_and_imaging_referral",
+            "ownerModifiers": [
+              "focuses_only_symptomatic_side",
+              "cost_concern"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ear_otitis_media_ruptured_tympanum",
+      "version": "2026.07.16.40",
+      "title": "Средний отит с разрывом барабанной перепонки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Разрыв барабанной перепонки меняет безопасность и анатомический путь: сохраняются спонтанные, инородные тела, травматические или ятрогенные модификаторы, внешние и истинные образцы среднего уха остаются различимыми, а процедуры или выбор местной безопасности требуют проверенных специалистов.",
+      "exclusions": [
+        "rupture_as_routine_externa",
+        "blind_cleaning",
+        "external_result_overwrites_middle"
+      ],
+      "planBundleId": "media_ruptured_plan",
+      "sourceIds": [
+        "merck_otitis_media_interna_2026",
+        "canine_otitis_externa_review",
+        "umn_otitis_media"
+      ],
+      "presentations": [
+        {
+          "id": "p1_spontaneous_rupture_with_otorrhea",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что оторея и документально подтвержденный спонтанный разрыв барабанной перепонки указывают на путь через среднее ухо, а не на обычное наружное отверстие.",
+          "historyAnswers": {
+            "episodes_laterality_response_timeline": "По нашим наблюдениям, сторона разрыва и эпизод зафиксированы.",
+            "cleaning_products_technique_and_known_tympanum": "Дома мы заметили, что зарегистрировано воздействие до или после разрыва.",
+            "mouth_opening_chewing_head_neck_pain": "Насколько мы можем судить, булла или головная боль проверена.",
+            "head_tilt_falling_nystagmus_facial_droop": "Мы записали, что опасность для внутреннего уха или нервов проверена."
+          },
+          "examFindings": [
+            {
+              "factId": "documented_rupture_with_otorrhea_requires_middle_ear_safety_route",
+              "source": "anatomic_rule",
+              "finding": "Тимпаническая целостность и латеральность выражены."
+            },
+            {
+              "factId": "unreviewed_topical_or_flushing_choice_is_not_generated",
+              "source": "scope_rule",
+              "finding": "Решение по безопасности передано проверенному клиницисту или процедуре."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "documented_rupture_with_otorrhea_requires_middle_ear_safety_route",
+              "discoveryPaths": [
+                "tympanum_visible_unknown_intact_ruptured_record",
+                "pain_swelling_canal_patency_discharge_map"
+              ]
+            },
+            {
+              "factId": "unreviewed_topical_or_flushing_choice_is_not_generated",
+              "discoveryPaths": [
+                "cleaning_products_technique_and_known_tympanum",
+                "owner_cost_transport_and_handling_feasibility"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_bilateral_cytology_and_external_canal_mapping",
+              "classification": "required_external_level",
+              "result": "При микроскопии материала: наружные выделения или цитология сбоку."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required_by_extent",
+              "result": "При томографическом исследовании: поражение булл или костей или внутреннего уха."
+            },
+            {
+              "id": "ear_chronic_middle_ear_sampling_cytology_culture",
+              "classification": "required_if_infection_decision",
+              "result": "По результатам посева и определения чувствительности: истинный образец среднего уха."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "documented_rupture_with_otorrhea_requires_middle_ear_safety_route",
+              "unreviewed_topical_or_flushing_choice_is_not_generated"
+            ],
+            "confirmedDiagnosisRequires": [
+              "rupture_documentation_plus_correlated_middle_ear_evidence"
+            ],
+            "dangerStates": [
+              "ototoxic_exposure_risk",
+              "facial_nerve_sign",
+              "vestibular_sign",
+              "severe_pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cytology",
+              "ear_cranial_nerve_assessment"
+            ],
+            "external": [
+              "middle_ear_imaging_external",
+              "middle_ear_sampling_referral",
+              "video_otoscopy_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_external_mapping_route",
+              "ear_chronic_imaging_route",
+              "ear_chronic_middle_sampling_route",
+              "ear_chronic_neuro_ocular_hearing_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "media_ruptured_plan",
+          "followUp": {
+            "timing": "Постпроцедурный или медицинский осмотр с проверками барабанной полости, цитологическим исследованием, нейро- и слуховыми контрольными точками.",
+            "required": true,
+            "targets": [
+              "rupture",
+              "otorrhea",
+              "pain",
+              "middle_sample",
+              "neuro",
+              "hearing"
+            ]
+          },
+          "outcomes": {
+            "safe": "Разрыв лечится как заболевание среднего уха с четкими границами безопасности.",
+            "unsafe": "Обычная слепая чистка или актуальные советы продолжаются."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: открытая мембрана меняет то, какие процедуры и продукты можно считать безопасными."
+          ],
+          "compatibility": {
+            "temperament": [
+              "ear_pain",
+              "head_shy",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "protect_ear_and_refer_for_reviewed_middle_ear_route",
+            "ownerModifiers": [
+              "used_home_cleaner",
+              "expects_routine_drops"
+            ]
+          }
+        },
+        {
+          "id": "p2_foreign_body_or_traumatic_iatrogenic_rupture",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_or_emergency_by_neuro_state",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что инородное тело, травма, агрессивная чистка или процедура предшествуют разрыву барабанной перепонки и острому ухудшению состояния.",
+          "historyAnswers": {
+            "foreign_body_trauma_procedure_onset": "По нашим наблюдениям, модификатор причины и время сохраняются.",
+            "cleaning_products_technique_and_known_tympanum": "Дома мы заметили, что точный контекст воздействия зафиксирован без указания токсичности.",
+            "head_tilt_falling_nystagmus_facial_droop": "Насколько мы можем судить, обнаружены острые нейросимптомы.",
+            "systemic_fever_appetite_mentation": "Мы записали, что центральная или системная опасность."
+          },
+          "examFindings": [
+            {
+              "factId": "foreign_body_trauma_or_procedure_remains_a_causal_modifier",
+              "source": "causality_rule",
+              "finding": "Событие не стирается при более позднем заражении."
+            },
+            {
+              "factId": "acute_neuro_or_ocular_change_after_rupture_requires_urgent_referral",
+              "source": "urgency_rule",
+              "finding": "Открыт путь к повреждению внутреннего уха или нервов."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "foreign_body_trauma_or_procedure_remains_a_causal_modifier",
+              "discoveryPaths": [
+                "foreign_body_trauma_procedure_onset",
+                "tympanum_visible_unknown_intact_ruptured_record"
+              ]
+            },
+            {
+              "factId": "acute_neuro_or_ocular_change_after_rupture_requires_urgent_referral",
+              "discoveryPaths": [
+                "head_tilt_falling_nystagmus_facial_droop",
+                "facial_horner_tear_ocular_protection_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_complete_dermatologic_and_neurologic_history",
+              "classification": "required_immediate",
+              "result": "При динамическом наблюдении: травма или процедура и неврологическая временная шкала."
+            },
+            {
+              "id": "ear_chronic_video_otoscopy_and_tympanic_assessment",
+              "classification": "required_when_safe",
+              "result": "При эндоскопическом осмотре: оценка инородного тела и мембраны."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required_if_neuro_or_deep_trauma",
+              "result": "При томографическом исследовании: степень повреждения буллы или внутреннего уха или прилежащего уха."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "foreign_body_trauma_or_procedure_remains_a_causal_modifier",
+              "acute_neuro_or_ocular_change_after_rupture_requires_urgent_referral"
+            ],
+            "confirmedDiagnosisRequires": [
+              "event_timeline_plus_safe_anatomic_evidence"
+            ],
+            "dangerStates": [
+              "acute_vestibular_sign",
+              "facial_paralysis",
+              "ocular_exposure",
+              "deep_foreign_body",
+              "central_sign"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cranial_nerve_assessment"
+            ],
+            "external": [
+              "video_otoscopy_referral",
+              "middle_ear_imaging_external",
+              "middle_ear_sampling_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_history_route",
+              "ear_chronic_video_otoscopy_route",
+              "ear_chronic_imaging_route",
+              "ear_chronic_neuro_ocular_hearing_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "media_ruptured_plan",
+          "followUp": {
+            "timing": "Срочная анатомическая или нейродиагностика с последующим восстановлением барабанной перепонки и слуха.",
+            "required": true,
+            "targets": [
+              "foreign_body",
+              "rupture",
+              "pain",
+              "neuro",
+              "eye",
+              "hearing"
+            ]
+          },
+          "outcomes": {
+            "safe": "Провоцирующее событие и осложнения остаются связанными в одном эпизоде.",
+            "unsafe": "Событие стирается или назначается автоматически импровизированное удаление или сброс."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: опишите предполагаемую связь, не называя виновных, и задайте неотложные вопросы безопасности."
+          ],
+          "compatibility": {
+            "temperament": [
+              "acute_pain",
+              "panic",
+              "vestibular"
+            ],
+            "requiredHandlingAlternative": "minimal_manipulation_and_urgent_specialist_route",
+            "ownerModifiers": [
+              "guilty_about_cleaning",
+              "procedure_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_middle_ear_sample_differs_from_external_canal",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_resistance_or_neuro_sign",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что результат исследования материала из среднего уха отличается от цитологии или посева из наружного слухового прохода того же уха.",
+          "historyAnswers": {
+            "prior_cytology_culture_video_ct_mri_surgery": "По нашим наблюдениям, оба образца сохраняют дату, сторону и анатомический уровень.",
+            "episodes_laterality_response_timeline": "Дома мы заметили, что ответ привязан к правильному уровню.",
+            "cleaning_products_technique_and_known_tympanum": "Насколько мы можем судить, записан контекст загрязнения или воздействия.",
+            "skin_allergy_endocrine_pattern": "Мы записали, что основное внешнее заболевание остается изученным."
+          },
+          "examFindings": [
+            {
+              "factId": "discordant_external_and_middle_results_are_preserved_not_overwritten",
+              "source": "data_integrity_rule",
+              "finding": "Каждый результат сохраняет сторону и уровень."
+            },
+            {
+              "factId": "middle_ear_decisions_use_true_middle_sample_when_available",
+              "source": "sampling_priority_rule",
+              "finding": "Более легкий внешний результат не заменяет более глубоких доказательств."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "discordant_external_and_middle_results_are_preserved_not_overwritten",
+              "discoveryPaths": [
+                "bilateral_external_canal_cytology_record",
+                "true_middle_ear_sample_level_record"
+              ]
+            },
+            {
+              "factId": "middle_ear_decisions_use_true_middle_sample_when_available",
+              "discoveryPaths": [
+                "prior_cytology_culture_video_ct_mri_surgery",
+                "true_middle_ear_sample_level_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_bilateral_cytology_and_external_canal_mapping",
+              "classification": "required_external_comparison",
+              "result": "При микроскопии материала: внешние организмы рядом."
+            },
+            {
+              "id": "ear_chronic_middle_ear_sampling_cytology_culture",
+              "classification": "required_true_site",
+              "result": "По результатам посева и определения чувствительности: микроорганизмы среднего уха или восприимчивость."
+            },
+            {
+              "id": "ear_chronic_response_tympanum_neurologic_and_hearing_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: реакция, специфичная для уровня."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "discordant_external_and_middle_results_are_preserved_not_overwritten",
+              "middle_ear_decisions_use_true_middle_sample_when_available"
+            ],
+            "confirmedDiagnosisRequires": [
+              "specimen_identity_side_and_anatomic_level_verified"
+            ],
+            "dangerStates": [
+              "sample_swap",
+              "external_overwrite",
+              "resistant_middle_infection"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_cytology",
+              "ear_exam"
+            ],
+            "external": [
+              "middle_ear_sampling_referral",
+              "ear_longitudinal_monitoring"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_external_mapping_route",
+              "ear_chronic_middle_sampling_route",
+              "ear_chronic_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "media_ruptured_plan",
+          "followUp": {
+            "timing": "Специфическая цитология или культура и клинический ответ.",
+            "required": true,
+            "targets": [
+              "external_result",
+              "middle_result",
+              "pain",
+              "otorrhea",
+              "tympanum"
+            ]
+          },
+          "outcomes": {
+            "safe": "Разногласия улучшают качество решений и остаются проверяемыми.",
+            "unsafe": "Удобный внешний результат перезаписывает истинный образец среднего уха."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: два соседних участка могут содержать разные организмы и требуют разных доказательств."
+          ],
+          "compatibility": {
+            "temperament": [
+              "ear_pain",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "use_existing_true_site_evidence_and_minimize_repeat_sampling",
+            "ownerModifiers": [
+              "confused_by_two_results",
+              "cost_fatigue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ear_otitis_interna_peripheral_vestibular",
+      "version": "2026.07.16.40",
+      "title": "Внутренний отит и периферический вестибулярный синдром",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Периферический вестибулярный картина с совместимыми признаками уха или среднего уха может свидетельствовать в пользу внутреннего отита, но локализация не является этиологией; мышление, проприоцепция, характер нистагма, черепные нервы, безопасность глаз, слух и центральные различия определяют срочность и путь визуализации.",
+      "exclusions": [
+        "every_head_tilt_is_interna",
+        "media_alone_causes_neurologic_head_tilt",
+        "altered_mentation_forced_peripheral"
+      ],
+      "planBundleId": "interna_peripheral_plan",
+      "sourceIds": [
+        "merck_otitis_media_interna_2026",
+        "umn_otitis_media"
+      ],
+      "presentations": [
+        {
+          "id": "p1_head_tilt_nystagmus_and_ataxia_with_ear_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_or_emergency_by_mobility_and_state",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что наклон головы, горизонтальный или ротационный нистагм и вестибулярная атаксия наблюдаются при совместимом заболевании уха.",
+          "historyAnswers": {
+            "head_tilt_falling_nystagmus_facial_droop": "По нашим наблюдениям, начало, направление и подвижность фиксированы.",
+            "episodes_laterality_response_timeline": "Дома мы заметили, что латерализация уха и эпизод связаны.",
+            "systemic_fever_appetite_mentation": "Насколько мы можем судить, записано состояние тревоги в сравнении с центральным или системным состоянием.",
+            "hearing_change_and_test_confidence": "Мы записали, что зарегистрированы изменения слуха и достоверность доказательств."
+          },
+          "examFindings": [
+            {
+              "factId": "peripheral_vestibular_pattern_plus_ear_evidence_supports_but_does_not_alone_prove_interna",
+              "source": "localization_rule",
+              "finding": "Этиология требует коррелированных глубоких доказательств."
+            },
+            {
+              "factId": "safe_mobility_and_nausea_support_route_precedes_exhaustive_testing_when_severe",
+              "source": "stabilization_rule",
+              "finding": "Падающего пациента защитят и направят."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "peripheral_vestibular_pattern_plus_ear_evidence_supports_but_does_not_alone_prove_interna",
+              "discoveryPaths": [
+                "head_tilt_falling_nystagmus_facial_droop",
+                "vestibular_mentation_proprioception_localization",
+                "ct_mri_bulla_bone_canal_inner_ear_record"
+              ]
+            },
+            {
+              "factId": "safe_mobility_and_nausea_support_route_precedes_exhaustive_testing_when_severe",
+              "discoveryPaths": [
+                "head_tilt_falling_nystagmus_facial_droop",
+                "owner_cost_transport_and_handling_feasibility"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_complete_dermatologic_and_neurologic_history",
+              "classification": "required_immediate",
+              "result": "При динамическом наблюдении: ушная или нейро-височная локализация."
+            },
+            {
+              "id": "ear_chronic_facial_nerve_horner_tear_and_hearing_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: состояние периферических нервов или глаз или слуха."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required",
+              "result": "При томографическом исследовании: среднее или внутреннее ухо и центральный контекст."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "peripheral_vestibular_pattern_plus_ear_evidence_supports_but_does_not_alone_prove_interna",
+              "safe_mobility_and_nausea_support_route_precedes_exhaustive_testing_when_severe"
+            ],
+            "confirmedDiagnosisRequires": [
+              "peripheral_localization_plus_correlated_ear_imaging_or_sample_evidence"
+            ],
+            "dangerStates": [
+              "cannot_stand",
+              "aspiration_risk",
+              "central_sign",
+              "sepsis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_cranial_nerve_assessment",
+              "ear_exam"
+            ],
+            "external": [
+              "middle_ear_imaging_external",
+              "hearing_assessment_external",
+              "safe_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_history_route",
+              "ear_chronic_neuro_ocular_hearing_route",
+              "ear_chronic_imaging_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "interna_peripheral_plan",
+          "followUp": {
+            "timing": "Постоянная подвижность или мысление, затем реакция нервной системы, слуха и уха.",
+            "required": true,
+            "targets": [
+              "tilt",
+              "nystagmus",
+              "standing",
+              "mentation",
+              "hearing",
+              "ear_depth"
+            ]
+          },
+          "outcomes": {
+            "safe": "Периферическая локализация и ушные показания коррелируют с безопасной поддержкой.",
+            "unsafe": "Любой наклон головы автоматически называется инфекцией внутреннего уха."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: неврологический осмотр помогает локализовать нарушение равновесия, а визуализация и другие исследования нужны, чтобы установить причину."
+          ],
+          "compatibility": {
+            "temperament": [
+              "vestibular",
+              "nauseated",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "non_slip_minimal_movement_and_urgent_referral",
+            "ownerModifiers": [
+              "panicked",
+              "transport_barrier"
+            ]
+          }
+        },
+        {
+          "id": "p2_facial_nerve_horner_dry_eye_or_hearing_deficit",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_ocular_risk_or_progression",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что заболевания среднего или внутреннего уха сопровождают слабость лица, симптомы Горнера, снижение слезоотделения, обнажение глаз или нарушение слуха.",
+          "historyAnswers": {
+            "dry_eye_pupil_third_eyelid_change": "По нашим наблюдениям, зафиксировано изменение глаз и время.",
+            "head_tilt_falling_nystagmus_facial_droop": "Дома мы заметили, что лицевые и вестибулярные признаки связаны.",
+            "hearing_change_and_test_confidence": "Насколько мы можем судить, поведенческая и объективная уверенность в явном виде.",
+            "episodes_laterality_response_timeline": "Мы записали, что история уха с той же стороны сохранена."
+          },
+          "examFindings": [
+            {
+              "factId": "facial_nerve_or_tear_deficit_creates_immediate_ocular_protection_route",
+              "source": "ocular_safety_rule",
+              "finding": "Зарегистрирован риск травм от воздействия."
+            },
+            {
+              "factId": "behavioral_hearing_change_has_limited_confidence_and_does_not_define_prognosis_alone",
+              "source": "hearing_limit_rule",
+              "finding": "Доступен объективный маршрут направления."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "facial_nerve_or_tear_deficit_creates_immediate_ocular_protection_route",
+              "discoveryPaths": [
+                "dry_eye_pupil_third_eyelid_change",
+                "facial_horner_tear_ocular_protection_record"
+              ]
+            },
+            {
+              "factId": "behavioral_hearing_change_has_limited_confidence_and_does_not_define_prognosis_alone",
+              "discoveryPaths": [
+                "hearing_change_and_test_confidence",
+                "hearing_assessment_confidence_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_facial_nerve_horner_tear_and_hearing_assessment",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: оценены функция лицевого нерва, симпатическая иннервация, слезопродукция, защита роговицы и слух."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required",
+              "result": "При томографическом исследовании: анатомическая протяженность и конкурирующее поражение."
+            },
+            {
+              "id": "ear_chronic_response_tympanum_neurologic_and_hearing_monitoring",
+              "classification": "required_longitudinal",
+              "result": "При динамическом наблюдении: сохранение или восстановление дефицита."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "facial_nerve_or_tear_deficit_creates_immediate_ocular_protection_route",
+              "behavioral_hearing_change_has_limited_confidence_and_does_not_define_prognosis_alone"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cranial_nerve_localization_plus_correlated_ear_depth_evidence"
+            ],
+            "dangerStates": [
+              "corneal_exposure",
+              "ulcer_risk",
+              "progressive_cranial_neuropathy",
+              "bilateral_hearing_loss"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_cranial_nerve_assessment",
+              "ear_exam"
+            ],
+            "external": [
+              "hearing_assessment_external",
+              "middle_ear_imaging_external",
+              "ear_longitudinal_monitoring"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_neuro_ocular_hearing_route",
+              "ear_chronic_imaging_route",
+              "ear_chronic_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "interna_peripheral_plan",
+          "followUp": {
+            "timing": "Немедленная проверка зрения, затем последовательное восстановление черепных нервов или слуха.",
+            "required": true,
+            "targets": [
+              "blink",
+              "tear",
+              "cornea",
+              "facial_function",
+              "horner",
+              "hearing"
+            ]
+          },
+          "outcomes": {
+            "safe": "Лечение уха сопровождается контролем глазной безопасности и объективного дефицита.",
+            "unsafe": "Глаз игнорируется, или прогноз слуха объявляется только на основании поведения."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какие нервные расстройства требуют защиты глаз и почему восстановление слуха может оставаться неопределенным."
+          ],
+          "compatibility": {
+            "temperament": [
+              "vestibular",
+              "vision_compromised",
+              "head_shy"
+            ],
+            "requiredHandlingAlternative": "ocular_protection_and_low_stress_referral",
+            "ownerModifiers": [
+              "focused_on_cosmetic_asymmetry",
+              "hearing_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_severe_vestibular_signs_require_central_differential_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_neurologic",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что тяжелые вестибулярные симптомы включают изменение мышления, проприоцептивные нарушения, вертикальный или дискордантный нистагм или другие центральные тревожные сигналы, несмотря на ушной анамнез.",
+          "historyAnswers": {
+            "head_tilt_falling_nystagmus_facial_droop": "По нашим наблюдениям, серьезная закономерность.",
+            "systemic_fever_appetite_mentation": "Дома мы заметили, что изменения мышления или системные признаки.",
+            "episodes_laterality_response_timeline": "Насколько мы можем судить, история ушей сохранена, но не закреплена.",
+            "prior_cytology_culture_video_ct_mri_surgery": "Мы записали, что уровень доказательности предшествующего уха известен."
+          },
+          "examFindings": [
+            {
+              "factId": "central_red_flags_override_automatic_ear_attribution",
+              "source": "neurologic_safety_rule",
+              "finding": "Центральная локализация остается видимой."
+            },
+            {
+              "factId": "ear_history_can_coexist_with_a_separate_central_disease",
+              "source": "anti_anchoring_rule",
+              "finding": "Конкурирующая причина не подавляется."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "central_red_flags_override_automatic_ear_attribution",
+              "discoveryPaths": [
+                "systemic_fever_appetite_mentation",
+                "vestibular_mentation_proprioception_localization"
+              ]
+            },
+            {
+              "factId": "ear_history_can_coexist_with_a_separate_central_disease",
+              "discoveryPaths": [
+                "episodes_laterality_response_timeline",
+                "ct_mri_bulla_bone_canal_inner_ear_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_complete_dermatologic_and_neurologic_history",
+              "classification": "required_without_delay",
+              "result": "При динамическом наблюдении: ухо и центральная линия времени разделены."
+            },
+            {
+              "id": "ear_chronic_facial_nerve_horner_tear_and_hearing_assessment",
+              "classification": "required_localization",
+              "result": "Клиническая оценка показала: черепно-нервный рисунок."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "urgent_advanced_neuro_ear_route",
+              "result": "При томографическом исследовании: анатомия центрального и среднего или внутреннего уха."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "central_red_flags_override_automatic_ear_attribution",
+              "ear_history_can_coexist_with_a_separate_central_disease"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_neurologic_imaging_and_specialist_interpretation"
+            ],
+            "dangerStates": [
+              "altered_mentation",
+              "proprioceptive_deficit",
+              "vertical_nystagmus",
+              "seizure",
+              "cannot_stand"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_cranial_nerve_assessment"
+            ],
+            "external": [
+              "middle_ear_imaging_external",
+              "safe_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_neuro_ocular_hearing_route",
+              "ear_chronic_imaging_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "interna_peripheral_plan",
+          "followUp": {
+            "timing": "Постоянная неврологическая безопасность благодаря передаче специалиста.",
+            "required": true,
+            "targets": [
+              "mentation",
+              "proprioception",
+              "nystagmus",
+              "mobility",
+              "imaging",
+              "diagnostic_transfer"
+            ]
+          },
+          "outcomes": {
+            "safe": "Центральное заболевание остается активным и неотложным, несмотря на правдоподобный ушной анамнез.",
+            "unsafe": "Каждый тяжелый вестибулярный случай приводит к внутреннему отиту."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: укажите, что некоторые данные не соответствуют простой локализации во внутреннем ухе и требуют срочного неврологического обследования."
+          ],
+          "compatibility": {
+            "temperament": [
+              "obtunded",
+              "vestibular",
+              "panic"
+            ],
+            "requiredHandlingAlternative": "protect_airway_mobility_and_emergency_neuro_referral",
+            "ownerModifiers": [
+              "expects_old_ear_diagnosis",
+              "transport_barrier"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ear_feline_polyp_or_secretory_middle_ear_disease",
+      "version": "2026.07.16.40",
+      "title": "Полип, секреторное заболевание или носоглоточный источник у кошки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "У кошек воспалительный полип, носоглоточный источник, первичное секреторное заболевание среднего уха, инфекция и образование являются отдельными отдельными клиническими вариантами; видеоотоскопия, оценка носоглотки, двусторонняя визуализация и гистология определяют происхождение и степень, в то время как рецидив сохраняет тот же полип, процедуру и историю булл.",
+      "exclusions": [
+        "bulla_fluid_automatically_bacterial",
+        "incomplete_polyp_removal_resets_patient",
+        "mass_without_tissue_diagnosis"
+      ],
+      "planBundleId": "feline_polyp_secretory_plan",
+      "sourceIds": [
+        "merck_otitis_media_interna_2026",
+        "feline_video_otoscopy_ct_2024",
+        "umn_otitis_media"
+      ],
+      "presentations": [
+        {
+          "id": "p1_young_cat_with_polyp_and_upper_airway_or_ear_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_airway_swallowing_or_neuro_sign",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что у молодой кошки наблюдаются симптомы в ушах, шум в носу, дисфагия или видимое образование, напоминающее воспалительный полип.",
+          "historyAnswers": {
+            "feline_nasal_noise_dysphagia_polyp_history": "По нашим наблюдениям, временная шкала дыхательных путей, глотания, ушей и предшествующих полипов.",
+            "episodes_laterality_response_timeline": "Дома мы заметили, что латеральность ушей сохранена.",
+            "head_tilt_falling_nystagmus_facial_droop": "Насколько мы можем судить, проверены вестибулярные или лицевые признаки.",
+            "systemic_fever_appetite_mentation": "Мы записали, что зарегистрирована безопасность дыхательных путей или системной безопасности."
+          },
+          "examFindings": [
+            {
+              "factId": "ear_and_nasopharyngeal_views_plus_imaging_define_polyp_origin_and_extent",
+              "source": "localization_rule",
+              "finding": "Предполагается, что видимая часть не показывает полное происхождение."
+            },
+            {
+              "factId": "airway_swallowing_neuro_or_ocular_compromise_accelerates_referral",
+              "source": "urgency_rule",
+              "finding": "Нарушение дыхания, глотания, зрения или неврологической функции требует срочного направления."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "ear_and_nasopharyngeal_views_plus_imaging_define_polyp_origin_and_extent",
+              "discoveryPaths": [
+                "feline_nasal_noise_dysphagia_polyp_history",
+                "nasopharynx_polyp_mass_histology_record",
+                "ct_mri_bulla_bone_canal_inner_ear_record"
+              ]
+            },
+            {
+              "factId": "airway_swallowing_neuro_or_ocular_compromise_accelerates_referral",
+              "discoveryPaths": [
+                "systemic_fever_appetite_mentation",
+                "head_tilt_falling_nystagmus_facial_droop"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_polyp_nasopharyngeal_and_mass_workup",
+              "classification": "required",
+              "result": "Целевое исследование показало: ушно-носоглоточное происхождение и тканевой путь."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required_for_extent",
+              "result": "При томографическом исследовании: булла, двусторонняя и смежная анатомия."
+            },
+            {
+              "id": "ear_chronic_facial_nerve_horner_tear_and_hearing_assessment",
+              "classification": "required_by_signs",
+              "result": "Клиническая оценка показала: неврологическое или глазное или слуховое состояние."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "ear_and_nasopharyngeal_views_plus_imaging_define_polyp_origin_and_extent",
+              "airway_swallowing_neuro_or_ocular_compromise_accelerates_referral"
+            ],
+            "confirmedDiagnosisRequires": [
+              "origin_extent_and_tissue_when_removed_or_mass_like"
+            ],
+            "dangerStates": [
+              "airway_compromise",
+              "dysphagia_aspiration",
+              "vestibular_sign",
+              "facial_nerve_sign"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cranial_nerve_assessment"
+            ],
+            "external": [
+              "nasopharyngeal_endoscopy_referral",
+              "middle_ear_imaging_external",
+              "histology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_polyp_mass_route",
+              "ear_chronic_imaging_route",
+              "ear_chronic_neuro_ocular_hearing_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_polyp_secretory_plan",
+          "followUp": {
+            "timing": "Подтверждение происхождения или объема и мониторинг рецидива того же полипа.",
+            "required": true,
+            "targets": [
+              "airway",
+              "swallowing",
+              "ear",
+              "bulla",
+              "neuro",
+              "histology"
+            ]
+          },
+          "outcomes": {
+            "safe": "Происхождение полипа и его полная протяженность определяются до окончательного планирования.",
+            "unsafe": "Видимый фрагмент рассматривается как целое заболевание."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: полип может располагаться между пузырем, ухом и носоглоткой и требует картирования."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "head_shy",
+              "airway_noisy"
+            ],
+            "requiredHandlingAlternative": "low_stress_airway_safe_endoscopy_imaging_referral",
+            "ownerModifiers": [
+              "expects_simple_visible_removal",
+              "cost_concern"
+            ]
+          }
+        },
+        {
+          "id": "p2_primary_secretory_middle_ear_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_pain_neuro_or_hearing",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что булловая жидкость или совместимые признаки среднего уха возникают без достаточных доказательств, позволяющих предположить обычную бактериальную инфекцию.",
+          "historyAnswers": {
+            "episodes_laterality_response_timeline": "По нашим наблюдениям, односторонний или двусторонний курс фиксированный.",
+            "hearing_change_and_test_confidence": "Дома мы заметили, что проблемы со слухом зафиксированы с доверительными интервалами.",
+            "prior_cytology_culture_video_ct_mri_surgery": "Насколько мы можем судить, уровень изображения или образца сохранен.",
+            "systemic_fever_appetite_mentation": "Мы записали, что владелец не отмечает этого признака на текущем этапе."
+          },
+          "examFindings": [
+            {
+              "factId": "bulla_fluid_requires_clinical_correlation_and_is_not_automatically_bacterial",
+              "source": "imaging_limit_rule",
+              "finding": "Случайные или секреторные или воспалительные или инфекционные варианты остаются."
+            },
+            {
+              "factId": "secretory_pattern_and_infection_require_different_evidence_chains",
+              "source": "classification_rule",
+              "finding": "Никакого эмпирического слияния."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "bulla_fluid_requires_clinical_correlation_and_is_not_automatically_bacterial",
+              "discoveryPaths": [
+                "ct_mri_bulla_bone_canal_inner_ear_record",
+                "systemic_fever_appetite_mentation"
+              ]
+            },
+            {
+              "factId": "secretory_pattern_and_infection_require_different_evidence_chains",
+              "discoveryPaths": [
+                "true_middle_ear_sample_level_record",
+                "prior_cytology_culture_video_ct_mri_surgery"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required_bilateral_correlation",
+              "result": "При томографическом исследовании: жидкость, стенка и окружающая анатомия."
+            },
+            {
+              "id": "ear_chronic_video_otoscopy_and_tympanic_assessment",
+              "classification": "required_when_safe",
+              "result": "При эндоскопическом осмотре: результаты исследования мембран или каналов."
+            },
+            {
+              "id": "ear_chronic_middle_ear_sampling_cytology_culture",
+              "classification": "conditional_if_infection_changes_plan",
+              "result": "По результатам посева и определения чувствительности: истинные доказательства заражения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "bulla_fluid_requires_clinical_correlation_and_is_not_automatically_bacterial",
+              "secretory_pattern_and_infection_require_different_evidence_chains"
+            ],
+            "confirmedDiagnosisRequires": [
+              "correlated_clinical_video_imaging_and_sample_evidence"
+            ],
+            "dangerStates": [
+              "false_infection_label",
+              "progressive_hearing_loss",
+              "vestibular_sign",
+              "mass_missed"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cytology"
+            ],
+            "external": [
+              "middle_ear_imaging_external",
+              "video_otoscopy_referral",
+              "middle_ear_sampling_referral",
+              "hearing_assessment_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_imaging_route",
+              "ear_chronic_video_otoscopy_route",
+              "ear_chronic_middle_sampling_route",
+              "ear_chronic_neuro_ocular_hearing_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_polyp_secretory_plan",
+          "followUp": {
+            "timing": "Серийный булла или барабанная полость, слуховые и клинические контрольные точки.",
+            "required": true,
+            "targets": [
+              "fluid",
+              "membrane",
+              "pain",
+              "hearing",
+              "neuro",
+              "infection_evidence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Секреторный или случайный материал отличают от инфекции.",
+            "unsafe": "Любое помутнение буллы становится бактериальным средним отитом."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: визуализация показывает материал, но не автоматически его причину."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "head_shy"
+            ],
+            "requiredHandlingAlternative": "low_stress_imaging_and_specialist_sampling_route",
+            "ownerModifiers": [
+              "expects_antibiotic_from_scan",
+              "hearing_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_recurrent_after_incomplete_polyp_removal_or_bilateral_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_airway_neuro_or_pain",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что признаки в ушах или дыхательных путях рецидивируют после неполного удаления полипа или сохраняется двустороннее заболевание булл.",
+          "historyAnswers": {
+            "feline_nasal_noise_dysphagia_polyp_history": "По нашим наблюдениям, исходный полип, способ, боковое и остаточное происхождение сохранены.",
+            "prior_cytology_culture_video_ct_mri_surgery": "Дома мы заметили, что непрерывность процедуры и визуализации.",
+            "episodes_laterality_response_timeline": "Насколько мы можем судить, интервал повторения и с обеих сторон регистрировали.",
+            "head_tilt_falling_nystagmus_facial_droop": "Мы записали, что новые осложнения проверены."
+          },
+          "examFindings": [
+            {
+              "factId": "polyp_recurrence_remains_the_same_patient_procedure_and_bulla_chain",
+              "source": "continuity_rule",
+              "finding": "Никакого нового случайного пациента или бокового сброса."
+            },
+            {
+              "factId": "bilateral_or_residual_origin_requires_complete_extent_reassessment",
+              "source": "recurrence_rule",
+              "finding": "Удаление только симптоматических повторов недостаточно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "polyp_recurrence_remains_the_same_patient_procedure_and_bulla_chain",
+              "discoveryPaths": [
+                "feline_nasal_noise_dysphagia_polyp_history",
+                "prior_cytology_culture_video_ct_mri_surgery"
+              ]
+            },
+            {
+              "factId": "bilateral_or_residual_origin_requires_complete_extent_reassessment",
+              "discoveryPaths": [
+                "ct_mri_bulla_bone_canal_inner_ear_record",
+                "nasopharynx_polyp_mass_histology_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_polyp_nasopharyngeal_and_mass_workup",
+              "classification": "required_recurrence",
+              "result": "Целевое исследование показало: остаточная или рецидивная ткань и ее происхождение."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required_bilateral",
+              "result": "При томографическом исследовании: та же булла и контрлатеральная протяженность."
+            },
+            {
+              "id": "ear_chronic_response_tympanum_neurologic_and_hearing_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: реакция на процедуру и тенденция повторения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "polyp_recurrence_remains_the_same_patient_procedure_and_bulla_chain",
+              "bilateral_or_residual_origin_requires_complete_extent_reassessment"
+            ],
+            "confirmedDiagnosisRequires": [
+              "same_procedure_continuity_plus_current_origin_extent_evidence"
+            ],
+            "dangerStates": [
+              "airway_obstruction",
+              "progressive_neuro_sign",
+              "repeated_incomplete_procedure",
+              "contralateral_missed_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_chronic_history_map"
+            ],
+            "external": [
+              "nasopharyngeal_endoscopy_referral",
+              "middle_ear_imaging_external",
+              "histology_external",
+              "ear_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_history_route",
+              "ear_chronic_polyp_mass_route",
+              "ear_chronic_imaging_route",
+              "ear_chronic_salvage_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_polyp_secretory_plan",
+          "followUp": {
+            "timing": "Постпроцедурный график с одним и тем же полипом и график двусторонних рецидивов.",
+            "required": true,
+            "targets": [
+              "origin",
+              "left_bulla",
+              "right_bulla",
+              "airway",
+              "neuro",
+              "hearing"
+            ]
+          },
+          "outcomes": {
+            "safe": "Рецидив объясняется сохраненной анатомией и историей процедур.",
+            "unsafe": "Каждое повторение становится новым несвязанным случаем или еще одним неполным повторением."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: как остаточное происхождение и противоположная булла влияют на риск рецидива."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "treatment_fatigued",
+              "head_shy"
+            ],
+            "requiredHandlingAlternative": "use_prior_records_and_complete_specialist_reassessment",
+            "ownerModifiers": [
+              "procedure_fatigue",
+              "cost_fatigue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ear_end_stage_cholesteatoma_or_mass",
+      "version": "2026.07.16.40",
+      "title": "Терминальный ушной канал, холестеатома или объёмное образование",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Заболевание конечной стадии канала, холестеатома и образование или неоплазия различаются: боль, качество жизни, необратимые изменения канала и пузырного пузыря или кости требуют расширенной визуализации, отбора проб из правильного места и гистологии, когда диагноз ткани имеет значение до пересмотра спасательной операции или другого специального планирования.",
+      "exclusions": [
+        "endless_blind_medical_repeats",
+        "cholesteatoma_equals_cancer",
+        "mass_equals_neoplasia_without_tissue"
+      ],
+      "planBundleId": "end_stage_mass_salvage_plan",
+      "sourceIds": [
+        "merck_cholesteatoma_2026",
+        "merck_otitis_media_interna_2026",
+        "canine_otitis_externa_review"
+      ],
+      "presentations": [
+        {
+          "id": "p1_mineralized_obliterated_end_stage_canal",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_pain_infection_or_neuro_sign",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что канал минерализован, стенозирован или облитерирован, сопровождается хронической болью и плохим качеством жизни, несмотря на предварительные попытки лечения.",
+          "historyAnswers": {
+            "episodes_laterality_response_timeline": "По нашим наблюдениям, зафиксировано длительное прогрессирование и реакция одного и того же уха.",
+            "prior_cytology_culture_video_ct_mri_surgery": "Дома мы заметили, что предыдущие процедуры и изображения сохранены.",
+            "mouth_opening_chewing_head_neck_pain": "Насколько мы можем судить, записано хроническое болевое или функциональное бремя.",
+            "owner_cost_transport_and_handling_feasibility": "Мы записали, что записаны осуществимость спасения или передачи и цели."
+          },
+          "examFindings": [
+            {
+              "factId": "irreversible_canal_change_and_qol_shift_the_route_to_salvage_assessment",
+              "source": "salvage_threshold_rule",
+              "finding": "Медицинское повторение больше не считалось лечебным."
+            },
+            {
+              "factId": "reversible_primary_causes_and_current_infection_are_still_reviewed",
+              "source": "completeness_rule",
+              "finding": "Направление к хирургическому вмешательству не происходит автоматически только по внешнему виду."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "irreversible_canal_change_and_qol_shift_the_route_to_salvage_assessment",
+              "discoveryPaths": [
+                "pain_swelling_canal_patency_discharge_map",
+                "end_stage_qol_salvage_histology_record"
+              ]
+            },
+            {
+              "factId": "reversible_primary_causes_and_current_infection_are_still_reviewed",
+              "discoveryPaths": [
+                "skin_allergy_endocrine_pattern",
+                "bilateral_external_canal_cytology_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required_for_salvage_extent",
+              "result": "При томографическом исследовании: минерализация каналов, булла или кость и прилегающая анатомия."
+            },
+            {
+              "id": "ear_chronic_underlying_allergy_endocrine_and_anatomic_review",
+              "classification": "required",
+              "result": "Целевое исследование показало: обратимые и контрлатеральные факторы."
+            },
+            {
+              "id": "ear_chronic_surgical_salvage_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: рассмотрены варианты спасения или качества жизни."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "irreversible_canal_change_and_qol_shift_the_route_to_salvage_assessment",
+              "reversible_primary_causes_and_current_infection_are_still_reviewed"
+            ],
+            "confirmedDiagnosisRequires": [
+              "clinical_qol_plus_advanced_anatomic_extent"
+            ],
+            "dangerStates": [
+              "uncontrolled_pain",
+              "deep_infection",
+              "facial_nerve_risk",
+              "endless_failed_repetition"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cytology"
+            ],
+            "external": [
+              "middle_ear_imaging_external",
+              "ear_surgery_referral",
+              "histology_external",
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_external_mapping_route",
+              "ear_chronic_imaging_route",
+              "ear_chronic_underlying_cause_route",
+              "ear_chronic_salvage_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "end_stage_mass_salvage_plan",
+          "followUp": {
+            "timing": "Контрольная точка боли или качества жизни посредством визуализации, принятия решения и результата после направления.",
+            "required": true,
+            "targets": [
+              "pain",
+              "qol",
+              "canal",
+              "bulla",
+              "infection",
+              "salvage_decision"
+            ]
+          },
+          "outcomes": {
+            "safe": "Необратимость и качество жизни вызывают обоснованную оценку спасения с сохранением обратимых факторов.",
+            "unsafe": "Слепые медицинские циклы продолжаются или операция предлагается без пересмотра объема."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему анатомия больше не позволяет осуществлять постоянный медицинский контроль и что должно оцениваться при направлении."
+          ],
+          "compatibility": {
+            "temperament": [
+              "chronic_pain",
+              "head_shy",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "minimal_manipulation_imaging_and_surgical_referral",
+            "ownerModifiers": [
+              "procedure_fear",
+              "financial_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p2_cholesteatoma_or_progressive_bulla_change",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что прогрессирующее расширение буллы, изменение кератинового материала или кости приводят к развитию холестеатомы и других деструктивных заболеваний.",
+          "historyAnswers": {
+            "episodes_laterality_response_timeline": "По нашим наблюдениям, прогрессия и латеральность сохранены.",
+            "prior_cytology_culture_video_ct_mri_surgery": "Дома мы заметили, что сравнение последовательных изображений или доказательств процедуры.",
+            "mouth_opening_chewing_head_neck_pain": "Насколько мы можем судить, боль при открывании рта и жевании постепенно усиливалась.",
+            "head_tilt_falling_nystagmus_facial_droop": "Мы записали, что нейроосложнения проверены."
+          },
+          "examFindings": [
+            {
+              "factId": "cholesteatoma_is_expansile_keratin_disease_not_automatic_neoplasia",
+              "source": "classification_rule",
+              "finding": "Маркировка рака требует отдельного тканевого доказательства."
+            },
+            {
+              "factId": "progressive_bulla_or_bone_change_requires_imaging_and_surgical_histologic_plan",
+              "source": "destructive_disease_rule",
+              "finding": "Последовательные изменения являются движущей силой принятия решений."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "cholesteatoma_is_expansile_keratin_disease_not_automatic_neoplasia",
+              "discoveryPaths": [
+                "ct_mri_bulla_bone_canal_inner_ear_record",
+                "nasopharynx_polyp_mass_histology_record"
+              ]
+            },
+            {
+              "factId": "progressive_bulla_or_bone_change_requires_imaging_and_surgical_histologic_plan",
+              "discoveryPaths": [
+                "prior_cytology_culture_video_ct_mri_surgery",
+                "end_stage_qol_salvage_histology_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required_serial_extent",
+              "result": "При томографическом исследовании: расширяющийся кератин или костный рисунок и прогрессирование."
+            },
+            {
+              "id": "ear_chronic_polyp_nasopharyngeal_and_mass_workup",
+              "classification": "required_differential",
+              "result": "Целевое исследование показало: дифференциальный маршрут массы или тканей."
+            },
+            {
+              "id": "ear_chronic_surgical_salvage_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: специализированный план удаления или спасения и гистологии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "cholesteatoma_is_expansile_keratin_disease_not_automatic_neoplasia",
+              "progressive_bulla_or_bone_change_requires_imaging_and_surgical_histologic_plan"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_imaging_plus_procedural_or_histologic_confirmation"
+            ],
+            "dangerStates": [
+              "bone_lysis",
+              "intracranial_extension_risk",
+              "facial_nerve_deficit",
+              "severe_pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cranial_nerve_assessment"
+            ],
+            "external": [
+              "middle_ear_imaging_external",
+              "ear_surgery_referral",
+              "histology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_imaging_route",
+              "ear_chronic_polyp_mass_route",
+              "ear_chronic_salvage_route",
+              "ear_chronic_neuro_ocular_hearing_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "end_stage_mass_salvage_plan",
+          "followUp": {
+            "timing": "Серийная визуализация или хирургическая патология и неврологические контрольные точки.",
+            "required": true,
+            "targets": [
+              "bulla",
+              "bone",
+              "keratin",
+              "histology",
+              "pain",
+              "neuro"
+            ]
+          },
+          "outcomes": {
+            "safe": "Деструктивное кератиновое заболевание отделяют от неоплазии и направляют на окончательное планирование.",
+            "unsafe": "Холестеатому называют раком или лечат как обычный мусор."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: поражение может расширяться и повреждать кость, не превращаясь автоматически в злокачественное образование."
+          ],
+          "compatibility": {
+            "temperament": [
+              "chronic_pain",
+              "head_shy"
+            ],
+            "requiredHandlingAlternative": "advanced_imaging_and_surgical_referral",
+            "ownerModifiers": [
+              "fears_cancer",
+              "procedure_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_mass_neoplasia_or_surgical_salvage_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_growth_pain_neuro_or_bleeding",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что образование ушного канала, среднего уха или буллы требует определения стадии, диагностики тканей и координации хирургии уха или онкологии.",
+          "historyAnswers": {
+            "episodes_laterality_response_timeline": "По нашим наблюдениям, рост, кровотечение, боль и латеральность фиксированы.",
+            "prior_cytology_culture_video_ct_mri_surgery": "Дома мы заметили, что предыдущие изображения или образцы или процедуры сохранены.",
+            "head_tilt_falling_nystagmus_facial_droop": "Насколько мы можем судить, обследована неврологическая степень.",
+            "owner_cost_transport_and_handling_feasibility": "Мы записали, что записаны поэтапные выборы направлений и цели."
+          },
+          "examFindings": [
+            {
+              "factId": "mass_does_not_equal_neoplasia_until_tissue_diagnosis",
+              "source": "tissue_diagnosis_rule",
+              "finding": "Сохраняются воспалительные, полипоидные, ороговевшие и опухолевые клинического варианта."
+            },
+            {
+              "factId": "surgery_and_oncology_planning_require_extent_histology_and_qol_context",
+              "source": "multidisciplinary_rule",
+              "finding": "Решение об операции принимают после оценки распространённости процесса, гистологии, функции уха и качества жизни."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "mass_does_not_equal_neoplasia_until_tissue_diagnosis",
+              "discoveryPaths": [
+                "nasopharynx_polyp_mass_histology_record",
+                "ct_mri_bulla_bone_canal_inner_ear_record"
+              ]
+            },
+            {
+              "factId": "surgery_and_oncology_planning_require_extent_histology_and_qol_context",
+              "discoveryPaths": [
+                "end_stage_qol_salvage_histology_record",
+                "owner_cost_transport_and_handling_feasibility"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_chronic_polyp_nasopharyngeal_and_mass_workup",
+              "classification": "required_tissue_route",
+              "result": "Целевое исследование показало: массовое происхождение и гистология."
+            },
+            {
+              "id": "ear_chronic_ct_mri_bulla_and_inner_ear_imaging",
+              "classification": "required_staging_extent",
+              "result": "При томографическом исследовании: канал, булла, кость и прилегающие структуры."
+            },
+            {
+              "id": "ear_chronic_surgical_salvage_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: оценка спасения от хирургии уха или онкологии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "mass_does_not_equal_neoplasia_until_tissue_diagnosis",
+              "surgery_and_oncology_planning_require_extent_histology_and_qol_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "representative_tissue_histology_plus_extent_assessment"
+            ],
+            "dangerStates": [
+              "rapid_growth",
+              "bleeding",
+              "bone_lysis",
+              "facial_nerve_deficit",
+              "severe_pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cranial_nerve_assessment"
+            ],
+            "external": [
+              "histology_external",
+              "middle_ear_imaging_external",
+              "ear_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "ear_chronic_polyp_mass_route",
+              "ear_chronic_imaging_route",
+              "ear_chronic_salvage_route",
+              "ear_chronic_neuro_ocular_hearing_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "end_stage_mass_salvage_plan",
+          "followUp": {
+            "timing": "Решение о гистологии или стадировании, затем мониторинг боли, нервной системы, слуха и мониторинг после направления.",
+            "required": true,
+            "targets": [
+              "histology",
+              "extent",
+              "pain",
+              "qol",
+              "neuro",
+              "hearing",
+              "decision"
+            ]
+          },
+          "outcomes": {
+            "safe": "Массовая идентичность и масштабы определяют скоординированное планирование специалистов.",
+            "unsafe": "Один только внешний вид указывает на рак или становится поводом для срочной операции."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: укажите, что масса — это находка; Ткани и визуализация необходимы перед прогнозом и выбором лечения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "chronic_pain",
+              "head_shy",
+              "medically_fragile"
+            ],
+            "requiredHandlingAlternative": "staged_imaging_tissue_and_specialist_route",
+            "ownerModifiers": [
+              "cancer_fear",
+              "budget_limited",
+              "procedure_fatigue"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if normal, intact or unvisualized tympanum excludes otitis media.",
+    "Reject if external-canal culture becomes middle-ear culture or bulla fluid automatically means infection.",
+    "Reject if every head tilt becomes otitis interna or central neurologic red flags are hidden.",
+    "Reject if a painful stenotic ear is repeatedly forced awake or the opposite ear is ignored.",
+    "Reject if recurrent polyp becomes a new patient, mass automatically becomes neoplasia or cholesteatoma becomes cancer.",
+    "Reject if imaging or procedures are instant or code generates a drug, dose, topical-safety decision, cleaning solution, myringotomy, flush or surgery technique."
+  ]
+}

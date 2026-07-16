@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "allowedLatin": [
+    "Malassezia",
+    "Otodectes",
+    "cynotis",
+    "Sarcoptes",
+    "Notoedres",
+    "cati",
+    "Demodex",
+    "Cheyletiella",
+    "Giardia",
+    "Tritrichomonas",
+    "Toxocara",
+    "Toxascaris",
+    "Trichuris",
+    "vulpis",
+    "Cystoisospora",
+    "Echinococcus",
+    "Borrelia",
+    "Babesia",
+    "felis",
+    "duodenalis",
+    "Chlamydia",
+    "Mycoplasma"
+  ]
+}

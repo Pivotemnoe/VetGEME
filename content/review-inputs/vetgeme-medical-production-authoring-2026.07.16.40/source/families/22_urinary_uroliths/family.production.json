@@ -1,0 +1,2959 @@
+{
+  "schemaVersion": 1,
+  "familyId": "urinary_uroliths",
+  "familyVersion": "2026.07.16.40",
+  "status": "author_complete_source_checked_pending_external_veterinary_review",
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "terminologyRules": [
+    "Crystalluria, a urolith and urinary obstruction are separate authored entities.",
+    "Urine pH, crystal morphology, radiopacity, breed or visual appearance never confirm quantitative stone composition alone.",
+    "LUTS and FLUTD describe signs or an umbrella category and are not etiologic diagnoses.",
+    "Actual urine output and bladder status precede detailed diet or mineral discussion.",
+    "Normal urination and a nondistended bladder do not exclude unilateral ureteral obstruction.",
+    "An obstructed patient is not a routine dissolution candidate until outflow and systemic risk are safely addressed.",
+    "Stone size, number, location, serial trajectory and episode time persist through reload and cannot adapt to player choices.",
+    "Drug, dose, diet formula, urinary target and catheter, lithotripsy, stent, SUB or surgical technique require separately approved protocols."
+  ],
+  "coreCapabilities": [
+    "general_exam",
+    "abdominal_palpation",
+    "urinalysis",
+    "xray_or_referral",
+    "ultrasound_or_referral",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "urolith_obstruction_route",
+      "anyOf": [
+        "urinary_obstruction_stabilization",
+        "urinary_decompression_referral",
+        "urinary_catheterization",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "emergency_outflow_and_stabilization"
+    },
+    {
+      "id": "urolith_urine_route",
+      "anyOf": [
+        "urinalysis",
+        "urine_sediment_microscopy",
+        "urine_collection",
+        "urine_culture_external",
+        "safe_referral"
+      ],
+      "purpose": "method_dated_urine_sediment_and_culture"
+    },
+    {
+      "id": "urolith_lab_route",
+      "anyOf": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "ecg",
+        "blood_gas_external",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "renal_electrolyte_acid_base_and_rhythm_risk"
+    },
+    {
+      "id": "urolith_xray_route",
+      "anyOf": [
+        "xray_or_referral",
+        "safe_referral"
+      ],
+      "purpose": "multiview_size_number_location_and_radiopacity"
+    },
+    {
+      "id": "urolith_ultrasound_route",
+      "anyOf": [
+        "ultrasound_or_referral",
+        "advanced_imaging_referral",
+        "safe_referral"
+      ],
+      "purpose": "upper_lower_tract_pelvis_ureter_and_shadowing"
+    },
+    {
+      "id": "urolith_serial_route",
+      "anyOf": [
+        "urolith_dissolution_monitoring",
+        "upper_urinary_tract_monitoring",
+        "longitudinal_care",
+        "safe_referral"
+      ],
+      "purpose": "same_method_serial_size_number_location_and_function"
+    },
+    {
+      "id": "urolith_analysis_route",
+      "anyOf": [
+        "urolith_analysis_external",
+        "urolith_database_lookup",
+        "safe_referral"
+      ],
+      "purpose": "quantitative_composition_and_type_specific_prevention"
+    },
+    {
+      "id": "urolith_intervention_route",
+      "anyOf": [
+        "uroendoscopy_lithotripsy_referral",
+        "ureteral_intervention_referral",
+        "surgery_or_referral",
+        "safe_referral"
+      ],
+      "purpose": "anatomy_and_specialist_selected_removal_or_bypass"
+    },
+    {
+      "id": "urolith_upper_emergency_route",
+      "anyOf": [
+        "stabilization",
+        "vital_monitor",
+        "hospital_referral",
+        "intensive_care_referral",
+        "ureteral_intervention_referral",
+        "safe_referral"
+      ],
+      "purpose": "bilateral_single_kidney_or_ckd_complicated_obstruction"
+    },
+    {
+      "id": "urolith_metabolic_route",
+      "anyOf": [
+        "hepatic_core_assessment",
+        "hepatic_routine_lab_pattern",
+        "hepatic_function_external",
+        "biochemistry",
+        "blood_glucose",
+        "safe_referral"
+      ],
+      "purpose": "urate_cystine_calcium_and_systemic_context"
+    },
+    {
+      "id": "urolith_prevention_route",
+      "anyOf": [
+        "urolith_prevention_plan",
+        "longitudinal_care",
+        "nutritional_assessment",
+        "safe_referral"
+      ],
+      "purpose": "composition_specific_recurrence_prevention"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "urolith_obstruction_perfusion_and_bladder_triage",
+      "requires": [
+        "general_exam",
+        "abdominal_palpation",
+        "urinary_obstruction_stabilization"
+      ],
+      "availability": "local_emergency_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urolith_urinalysis_sediment_pH_and_culture",
+      "requires": [
+        "urinalysis",
+        "urine_sediment_microscopy",
+        "urine_culture_external"
+      ],
+      "availability": "local_and_external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urolith_cbc_biochemistry_electrolytes_ecg",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "ecg"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urolith_multiview_radiography",
+      "requires": [
+        "xray_or_referral"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urolith_ultrasound_upper_and_lower_tract",
+      "requires": [
+        "ultrasound_or_referral"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urolith_serial_size_number_and_location",
+      "requires": [
+        "urolith_dissolution_monitoring",
+        "upper_urinary_tract_monitoring"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urolith_quantitative_composition_analysis",
+      "requires": [
+        "urolith_analysis_external",
+        "urolith_database_lookup"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urolith_endoscopic_surgical_or_bypass_referral",
+      "requires": [
+        "uroendoscopy_lithotripsy_referral",
+        "ureteral_intervention_referral",
+        "surgery_or_referral"
+      ],
+      "availability": "external_specialist_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urolith_recurrence_and_prevention_monitoring",
+      "requires": [
+        "urolith_prevention_plan",
+        "longitudinal_care"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "actual_urine_output",
+      "prompt": "Мочится ли пациент и какой фактический объём?"
+    },
+    {
+      "id": "last_normal_stream",
+      "prompt": "Когда последний раз подтверждён нормальный поток?"
+    },
+    {
+      "id": "blood_pain_vocalization",
+      "prompt": "Есть ли кровь, боль или вокализация?"
+    },
+    {
+      "id": "prior_stone_obstruction_report",
+      "prompt": "Были ли камни или препятствие и есть ли анализ или отчет?"
+    },
+    {
+      "id": "infection_culture_history",
+      "prompt": "Есть ли культура, каким методом и когда получена?"
+    },
+    {
+      "id": "urine_collection_timing",
+      "prompt": "Как и когда собирали мочу относительно лечения?"
+    },
+    {
+      "id": "complete_diet_exclusivity",
+      "prompt": "Каков полный рацион и соблюдается ли эксклюзивность?"
+    },
+    {
+      "id": "water_intake_food_moisture",
+      "prompt": "Сколько пьёт пациент и какова влажность питания?"
+    },
+    {
+      "id": "hepatic_metabolic_history",
+      "prompt": "Есть ли печёночные, кальциевые или метаболические болезни?"
+    },
+    {
+      "id": "ckd_single_kidney_status",
+      "prompt": "Есть ли ХБП или единственная функционирующая почка?"
+    },
+    {
+      "id": "prior_device_surgery",
+      "prompt": "Были ли уретростома, стентирование, СУБ или иные операции?"
+    },
+    {
+      "id": "home_actions_before_sample",
+      "prompt": "Что уже давали или делали дома?"
+    },
+    {
+      "id": "serial_imaging_timeline",
+      "prompt": "Когда и каким методом измерялись число, размер и расположение?"
+    },
+    {
+      "id": "recurrence_compliance_audit",
+      "prompt": "Как соблюдались диета, вода, культура и план повторных проверок?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "perfusion_mentation_temperature",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "temperature",
+        "blood_pressure"
+      ]
+    },
+    {
+      "id": "actual_output_observation",
+      "source": "observation",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "gentle_bladder_size_pain",
+      "source": "physical_exam",
+      "requires": [
+        "abdominal_palpation",
+        "pain_assessment"
+      ]
+    },
+    {
+      "id": "renal_abdominal_pain_exam",
+      "source": "physical_exam",
+      "requires": [
+        "abdominal_palpation",
+        "pain_assessment"
+      ]
+    },
+    {
+      "id": "hydration_vomiting_weakness",
+      "source": "physical_exam",
+      "requires": [
+        "hydration_assessment",
+        "general_exam"
+      ]
+    },
+    {
+      "id": "heart_rate_rhythm_record",
+      "source": "measurement",
+      "requires": [
+        "general_exam",
+        "ecg"
+      ]
+    },
+    {
+      "id": "method_dated_urine_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "urinalysis",
+        "urine_sediment_microscopy"
+      ]
+    },
+    {
+      "id": "renal_electrolyte_ecg_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "biochemistry",
+        "electrolytes",
+        "ecg"
+      ]
+    },
+    {
+      "id": "multiview_urolith_xray_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "xray_or_referral"
+      ]
+    },
+    {
+      "id": "upper_lower_ultrasound_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "ultrasound_or_referral"
+      ]
+    },
+    {
+      "id": "same_method_serial_stone_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "urolith_dissolution_monitoring",
+        "upper_urinary_tract_monitoring"
+      ]
+    },
+    {
+      "id": "quantitative_composition_record",
+      "source": "external_report",
+      "requires": [
+        "urolith_analysis_external"
+      ]
+    },
+    {
+      "id": "same_episode_intervention_record",
+      "source": "external_report",
+      "requires": [
+        "surgery_or_referral"
+      ]
+    },
+    {
+      "id": "prevention_followup_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "urolith_prevention_plan",
+        "longitudinal_care"
+      ]
+    },
+    {
+      "id": "serial_weight_bcs_mcs",
+      "source": "longitudinal_record",
+      "requires": [
+        "body_weight",
+        "body_condition_score",
+        "muscle_condition_score"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "acvim_urolith_consensus_2016",
+      "title": "ACVIM Small Animal Consensus Recommendations on Treatment and Prevention of Uroliths",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27611724/",
+      "scope": "patient_centered_dissolution_removal_analysis_and_prevention"
+    },
+    {
+      "id": "icatcare_lutd_2025",
+      "title": "2025 iCatCare consensus guidelines on lower urinary tract diseases in cats",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39935081/",
+      "scope": "feline_luts_uroliths_infection_urethral_obstruction_and_recurrence"
+    },
+    {
+      "id": "merck_urethral_obstruction_2025",
+      "title": "Merck Veterinary Manual: Urethral Obstruction in Small Animals",
+      "url": "https://www.merckvetmanual.com/urinary-system/urolithiasis-in-small-animals/urethral-obstruction-in-small-animals",
+      "scope": "emergency_triage_labs_imaging_stabilization_and_relief"
+    },
+    {
+      "id": "merck_obstructive_uropathy_2025",
+      "title": "Merck Veterinary Manual: Obstructive Uropathy in Dogs and Cats",
+      "url": "https://www.merckvetmanual.com/urinary-system/noninfectious-diseases-of-the-urinary-system-in-small-animals/obstructive-uropathy-in-dogs-and-cats",
+      "scope": "urethral_unilateral_bilateral_upper_tract_and_postobstructive_course"
+    },
+    {
+      "id": "merck_urolithiasis_overview",
+      "title": "Merck Veterinary Manual: Overview of Urolithiasis in Small Animals",
+      "url": "https://www.merckvetmanual.com/urinary-system/urolithiasis-in-small-animals/overview-of-urolithiasis-in-small-animals",
+      "scope": "composition_imaging_dissolution_removal_and_prevention"
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "struvite_dissolution_plan",
+      "fullPlan": [
+        "exclude_or_relieve_obstruction",
+        "method_dated_urine_and_culture",
+        "baseline_size_number_location",
+        "species_infection_context",
+        "reviewed_exclusive_dissolution_protocol",
+        "same_method_serial_imaging",
+        "hard_exit_and_prevention"
+      ],
+      "stagedPlan": [
+        "prove_eligibility",
+        "record_baseline",
+        "start_reviewed_protocol",
+        "measure_authored_response"
+      ],
+      "minimumSafePlan": [
+        "no_dissolution_while_blocked",
+        "culture_and_species_logic",
+        "dated_imaging_recheck"
+      ],
+      "stabilizeAndRefer": [
+        "obstruction_triage",
+        "renal_electrolyte_support",
+        "safe_decompression_or_referral"
+      ],
+      "unsafeOrInadequate": [
+        "crystals_equal_stone",
+        "ph_alone_selects_type",
+        "dog_infection_logic_copied_to_cat",
+        "instant_dissolution"
+      ]
+    },
+    {
+      "id": "nondissolvable_lower_tract_plan",
+      "fullPlan": [
+        "output_and_bladder_triage",
+        "multiview_location_and_passage_risk",
+        "urine_and_metabolic_context",
+        "least_invasive_specialist_option",
+        "quantitative_analysis",
+        "type_specific_prevention"
+      ],
+      "stagedPlan": [
+        "classify_immediate_risk",
+        "confirm_anatomy",
+        "remove_or_monitor_by_risk",
+        "analyze_and_prevent"
+      ],
+      "minimumSafePlan": [
+        "no_blind_dissolution",
+        "monitoring_can_be_correct",
+        "analysis_after_retrieval"
+      ],
+      "stabilizeAndRefer": [
+        "retriage_outflow",
+        "minimal_safe_support",
+        "urgent_specialist_route"
+      ],
+      "unsafeOrInadequate": [
+        "calcium_oxalate_acidification",
+        "breed_equals_urate_or_cystine",
+        "always_reward_removal"
+      ]
+    },
+    {
+      "id": "urethral_obstruction_plan",
+      "fullPlan": [
+        "actual_output_and_bladder",
+        "perfusion_renal_potassium_acid_base_ecg",
+        "stabilize_before_or_with_relief",
+        "cause_imaging_and_urine_when_safe",
+        "specialist_selected_relief",
+        "postobstructive_and_recurrence_plan"
+      ],
+      "stagedPlan": [
+        "recognize_emergency",
+        "stabilize_by_state",
+        "restore_outflow",
+        "classify_cause_and_prevent"
+      ],
+      "minimumSafePlan": [
+        "not_constipation_until_output_checked",
+        "no_routine_dissolution_while_blocked",
+        "safe_decompression_referral"
+      ],
+      "stabilizeAndRefer": [
+        "monitor_and_support",
+        "urgent_outflow_relief",
+        "hospital_or_specialist_transfer"
+      ],
+      "unsafeOrInadequate": [
+        "code_generates_catheter_technique",
+        "normal_previous_stream_reassures",
+        "salvage_surgery_called_cure"
+      ]
+    },
+    {
+      "id": "upper_tract_urolith_plan",
+      "fullPlan": [
+        "renal_function_and_contralateral_context",
+        "complete_upper_tract_ultrasound",
+        "pelvis_ureter_location_and_flow",
+        "serial_function_and_imaging",
+        "early_specialist_route_when_obstructed",
+        "postobstructive_monitoring"
+      ],
+      "stagedPlan": [
+        "classify_incidental_vs_obstructive",
+        "measure_both_kidneys",
+        "monitor_or_intervene_by_risk",
+        "preserve_longitudinal_function"
+      ],
+      "minimumSafePlan": [
+        "normal_urination_does_not_exclude",
+        "not_every_nephrolith_removed",
+        "bilateral_or_ckd_route_is_urgent"
+      ],
+      "stabilizeAndRefer": [
+        "uremia_hydration_potassium_support",
+        "intensive_monitoring",
+        "experienced_ureteral_referral"
+      ],
+      "unsafeOrInadequate": [
+        "nondistended_bladder_excludes",
+        "creatinine_alone_excludes_unilateral",
+        "ui_selects_stent_or_sub"
+      ]
+    },
+    {
+      "id": "recurrent_post_removal_plan",
+      "fullPlan": [
+        "preserve_same_episode_and_procedure_record",
+        "quantitative_components",
+        "residual_fragment_check",
+        "infection_metabolic_diet_water_audit",
+        "type_specific_reviewed_prevention",
+        "serial_urine_culture_imaging"
+      ],
+      "stagedPlan": [
+        "obtain_analysis",
+        "verify_clearance",
+        "correct_authored_driver",
+        "measure_recurrence"
+      ],
+      "minimumSafePlan": [
+        "removal_not_complete_without_analysis",
+        "do_not_blame_owner_before_audit",
+        "dated_followup"
+      ],
+      "stabilizeAndRefer": [
+        "retriage_reobstruction",
+        "protect_renal_function",
+        "urgent_specialist_route"
+      ],
+      "unsafeOrInadequate": [
+        "visual_label_as_composition",
+        "symptom_relief_equals_clearance",
+        "random_diet_switching",
+        "new_patient_on_recurrence"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "urolith_struvite_dissolution_candidate",
+      "version": "2026.07.16.40",
+      "title": "Струвитный уролит — кандидат на растворение",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Стабильный пациент без обструкции имеет местоположение, визуализацию и видоспецифичные данные мочи или культуры, совместимые с проверенным путем растворения.",
+      "exclusions": [
+        "active_outflow_obstruction",
+        "unlocalized_crystalluria_only",
+        "unreliable_diet_exclusivity"
+      ],
+      "planBundleId": "struvite_dissolution_plan",
+      "sourceIds": [
+        "acvim_urolith_consensus_2016",
+        "icatcare_lutd_2025",
+        "merck_urolithiasis_overview"
+      ],
+      "presentations": [
+        {
+          "id": "p1_canine_infection_induced_struvite_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_urgent_if_luts",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что у собак рентгеноконтрастные камни в мочевом пузыре и посев или картина мочи соответствуют струвиту, вызванному инфекцией.",
+          "historyAnswers": {
+            "actual_urine_output": "По нашим наблюдениям, первое мочеиспускание или обструкция пути.",
+            "infection_culture_history": "Дома мы заметили, что метода или даты или изолята.",
+            "urine_collection_timing": "Насколько мы можем судить, до лечения, когда это безопасно.",
+            "complete_diet_exclusivity": "Мы записали, что возможность пройти наблюдение или лечение."
+          },
+          "examFindings": [
+            {
+              "factId": "canine_infection_pattern_requires_culture_context",
+              "source": "etiology_rule",
+              "finding": "Щелочной мочи недостаточно."
+            },
+            {
+              "factId": "obstruction_precludes_routine_dissolution",
+              "source": "eligibility_rule",
+              "finding": "В первую очередь обеспечивается отток."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "canine_infection_pattern_requires_culture_context",
+              "discoveryPaths": [
+                "infection_culture_history",
+                "urine_collection_timing",
+                "method_dated_urine_record"
+              ]
+            },
+            {
+              "factId": "obstruction_precludes_routine_dissolution",
+              "discoveryPaths": [
+                "actual_urine_output",
+                "last_normal_stream",
+                "gentle_bladder_size_pain"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_obstruction_perfusion_and_bladder_triage",
+              "classification": "required_first",
+              "result": "Клиническая оценка показала: свободное или стабилизированное состояние."
+            },
+            {
+              "id": "urolith_urinalysis_sediment_pH_and_culture",
+              "classification": "required_method_dated",
+              "result": "По результатам посева и определения чувствительности: совместимый контекст заражения."
+            },
+            {
+              "id": "urolith_multiview_radiography",
+              "classification": "required_baseline",
+              "result": "На рентгенограммах: размер или количество или расположение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "canine_infection_pattern_requires_culture_context",
+              "obstruction_precludes_routine_dissolution"
+            ],
+            "confirmedDiagnosisRequires": [
+              "stone_imaging_plus_compatible_culture_and_reviewed_response"
+            ],
+            "dangerStates": [
+              "obstruction",
+              "pyelonephritis",
+              "systemic_infection"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation",
+              "urinalysis",
+              "urine_sediment_microscopy"
+            ],
+            "external": [
+              "urine_culture_external",
+              "xray_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_obstruction_route",
+              "urolith_urine_route",
+              "urolith_xray_route",
+              "urolith_serial_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "struvite_dissolution_plan",
+          "followUp": {
+            "timing": "Контрольные точки серийной визуализации, определяемые культурой и протоколом.",
+            "required": true,
+            "targets": [
+              "output",
+              "culture",
+              "size",
+              "number",
+              "diet_exclusivity"
+            ]
+          },
+          "outcomes": {
+            "safe": "Реакцию на заражение и растворение измеряют вместе.",
+            "unsafe": "лёгочная гипертензия или кристаллы автоматически запускают диету или противомикробное действие."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему необходимы реакция культуры и повторные изображения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "painful_defensive"
+            ],
+            "requiredHandlingAlternative": "low_stress_sampling_and_imaging",
+            "ownerModifiers": [
+              "multi_pet_home",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_feline_sterile_struvite_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_if_nonobstructed",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что у кошек беспрепятственная визуализация или картина мочи совместимы со стерильным струвитом без подтвержденной инфекции.",
+          "historyAnswers": {
+            "actual_urine_output": "По нашим наблюдениям, подтвержденный вывод.",
+            "infection_culture_history": "Дома мы заметили, что нет совместимых доказательств инфекции.",
+            "complete_diet_exclusivity": "Насколько мы можем судить, доступ нескольких домашних животных зафиксирован.",
+            "water_intake_food_moisture": "Мы записали, что базовый уровень создан."
+          },
+          "examFindings": [
+            {
+              "factId": "feline_struvite_does_not_inherit_canine_infection_logic",
+              "source": "species_rule",
+              "finding": "Инфекция не назначается автоматически."
+            },
+            {
+              "factId": "valid_dissolution_requires_exclusive_diet_and_serial_imaging",
+              "source": "eligibility_rule",
+              "finding": "Симптомы или результаты остаются под наблюдением."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "feline_struvite_does_not_inherit_canine_infection_logic",
+              "discoveryPaths": [
+                "infection_culture_history",
+                "urine_collection_timing",
+                "method_dated_urine_record"
+              ]
+            },
+            {
+              "factId": "valid_dissolution_requires_exclusive_diet_and_serial_imaging",
+              "discoveryPaths": [
+                "complete_diet_exclusivity",
+                "water_intake_food_moisture",
+                "serial_imaging_timeline",
+                "same_method_serial_stone_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_obstruction_perfusion_and_bladder_triage",
+              "classification": "required_first",
+              "result": "Клиническая оценка показала: моча проходит."
+            },
+            {
+              "id": "urolith_urinalysis_sediment_pH_and_culture",
+              "classification": "required_by_risk_and_sample",
+              "result": "По результатам посева и определения чувствительности: стерильный контекст поддерживается, а не предполагается."
+            },
+            {
+              "id": "urolith_serial_size_number_and_location",
+              "classification": "required_dissolution_monitor",
+              "result": "При динамическом наблюдении: полученная динамика."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "feline_struvite_does_not_inherit_canine_infection_logic",
+              "valid_dissolution_requires_exclusive_diet_and_serial_imaging"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_compatible_stone_plus_objective_dissolution_response"
+            ],
+            "dangerStates": [
+              "urethral_obstruction",
+              "diet_refusal",
+              "stone_growth"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "urinalysis",
+              "nutritional_assessment"
+            ],
+            "external": [
+              "xray_or_referral",
+              "urine_culture_external",
+              "urolith_dissolution_monitoring"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_urine_route",
+              "urolith_serial_route",
+              "urolith_prevention_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "struvite_dissolution_plan",
+          "followUp": {
+            "timing": "Ранняя проверка входа или выхода и плановая визуализация тем же методом.",
+            "required": true,
+            "targets": [
+              "appetite",
+              "output",
+              "size",
+              "number",
+              "exclusivity"
+            ]
+          },
+          "outcomes": {
+            "safe": "Стерильность кошек контролируется без ненужных антибиотиков.",
+            "unsafe": "Логика заражения собак или кристаллы сами по себе определяют терапию."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: перечислите все знаки доступа к еде и невозможности самостоятельно помочиться."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "calm",
+              "food_averse"
+            ],
+            "requiredHandlingAlternative": "feline_low_stress_longitudinal_route",
+            "ownerModifiers": [
+              "multi_pet_home",
+              "feeding_conflict"
+            ]
+          }
+        },
+        {
+          "id": "p3_serial_imaging_confirms_or_refutes_dissolution",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что тот же метод визуализации показывает уменьшение, отсутствие изменений или рост по заранее заданной динамики.",
+          "historyAnswers": {
+            "serial_imaging_timeline": "По нашим наблюдениям, исходные данные и повторные проверки датированы.",
+            "complete_diet_exclusivity": "Дома мы заметили, что соответствие проверено.",
+            "actual_urine_output": "Насколько мы можем судить, текущий выход.",
+            "recurrence_compliance_audit": "Мы записали, что культура или диета или вода проверены."
+          },
+          "examFindings": [
+            {
+              "factId": "dissolution_response_is_authored_before_player_choice",
+              "source": "state_rule",
+              "finding": "Перезарядка не может изменить размер динамики."
+            },
+            {
+              "factId": "nonresponse_requires_type_compliance_and_retrieval_reassessment",
+              "source": "exit_rule",
+              "finding": "Симптомы или препятствие переопределяют следующее запланированное изображение."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "dissolution_response_is_authored_before_player_choice",
+              "discoveryPaths": [
+                "serial_imaging_timeline",
+                "same_method_serial_stone_record"
+              ]
+            },
+            {
+              "factId": "nonresponse_requires_type_compliance_and_retrieval_reassessment",
+              "discoveryPaths": [
+                "recurrence_compliance_audit",
+                "complete_diet_exclusivity",
+                "actual_urine_output",
+                "multiview_urolith_xray_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_serial_size_number_and_location",
+              "classification": "required_outcome",
+              "result": "При динамическом наблюдении: объективная динамика того же метода."
+            },
+            {
+              "id": "urolith_urinalysis_sediment_pH_and_culture",
+              "classification": "required_by_response",
+              "result": "По результатам посева и определения чувствительности: контекст инфекции или мочи."
+            },
+            {
+              "id": "urolith_endoscopic_surgical_or_bypass_referral",
+              "classification": "required_if_failed_or_unsafe",
+              "result": "При эндоскопическом осмотре: специализированная альтернатива."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "dissolution_response_is_authored_before_player_choice",
+              "nonresponse_requires_type_compliance_and_retrieval_reassessment"
+            ],
+            "confirmedDiagnosisRequires": [
+              "objective_dissolution_support_or_reclassification"
+            ],
+            "dangerStates": [
+              "obstruction",
+              "growth",
+              "new_infection",
+              "diet_refusal"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "longitudinal_care",
+              "urinalysis"
+            ],
+            "external": [
+              "urolith_dissolution_monitoring",
+              "uroendoscopy_lithotripsy_referral",
+              "surgery_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_serial_route",
+              "urolith_intervention_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "struvite_dissolution_plan",
+          "followUp": {
+            "timing": "Продолжить, переклассифицировать или вмешаться на созданной контрольной точке.",
+            "required": true,
+            "targets": [
+              "size",
+              "number",
+              "location",
+              "output",
+              "culture",
+              "compliance"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ответ определяет продолжение или выход.",
+            "unsafe": "Ожидание продолжается, несмотря на рост или перезагрузку, меняющую результат."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: доказывает изображение, и веские причины перестать ждать."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "repeat_same_method_low_stress_imaging",
+            "ownerModifiers": [
+              "adherent",
+              "frustrated"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "urolith_nondissolvable_lower_tract",
+      "version": "2026.07.16.40",
+      "title": "Нерастворимый уролит нижних мочевых путей",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Состав или рисунок не является безопасным для растворения, или риск анатомии или пациента требует удаления или контролируемого удержания, а не слепого растворения.",
+      "exclusions": [
+        "active_obstruction_without_emergency_route",
+        "crystalluria_without_stone"
+      ],
+      "planBundleId": "nondissolvable_lower_tract_plan",
+      "sourceIds": [
+        "acvim_urolith_consensus_2016",
+        "icatcare_lutd_2025",
+        "merck_urolithiasis_overview"
+      ],
+      "presentations": [
+        {
+          "id": "p1_calcium_oxalate_bladder_stone_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что рентгеноконтрастная картина камней в мочевом пузыре совместима с оксалатом кальция, но требует извлечения и количественного анализа.",
+          "historyAnswers": {
+            "actual_urine_output": "По нашим наблюдениям, вывод подтвержден.",
+            "prior_stone_obstruction_report": "Дома мы заметили, что предварительный анализ или его отсутствие.",
+            "hepatic_metabolic_history": "Насколько мы можем судить, Кальций или данные об общем состоянии.",
+            "infection_culture_history": "Мы записали, что контекст заражения отдельный."
+          },
+          "examFindings": [
+            {
+              "factId": "calcium_oxalate_is_not_medically_dissolved_by_generated_plan",
+              "source": "treatment_boundary",
+              "finding": "Маршрут удаления или мониторинга по рискам."
+            },
+            {
+              "factId": "radiopacity_and_patient_profile_do_not_replace_analysis",
+              "source": "composition_rule",
+              "finding": "После извлечения требуется количественный отчет."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "calcium_oxalate_is_not_medically_dissolved_by_generated_plan",
+              "discoveryPaths": [
+                "actual_urine_output",
+                "multiview_urolith_xray_record"
+              ]
+            },
+            {
+              "factId": "radiopacity_and_patient_profile_do_not_replace_analysis",
+              "discoveryPaths": [
+                "prior_stone_obstruction_report",
+                "hepatic_metabolic_history",
+                "quantitative_composition_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_multiview_radiography",
+              "classification": "required",
+              "result": "На рентгенограммах: риск размера или количества или расположения или прохода."
+            },
+            {
+              "id": "urolith_ultrasound_upper_and_lower_tract",
+              "classification": "required_by_extent",
+              "result": "При ультразвуковом исследовании: контекст верхних или нижних путей."
+            },
+            {
+              "id": "urolith_quantitative_composition_analysis",
+              "classification": "required_after_retrieval",
+              "result": "Целевое исследование показало: компоненты или пропорции."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "calcium_oxalate_is_not_medically_dissolved_by_generated_plan",
+              "radiopacity_and_patient_profile_do_not_replace_analysis"
+            ],
+            "confirmedDiagnosisRequires": [
+              "quantitative_analysis_for_definitive_composition"
+            ],
+            "dangerStates": [
+              "urethral_passage_risk",
+              "obstruction",
+              "hypercalcemia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "urinalysis"
+            ],
+            "external": [
+              "xray_or_referral",
+              "ultrasound_or_referral",
+              "uroendoscopy_lithotripsy_referral",
+              "urolith_analysis_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_xray_route",
+              "urolith_intervention_route",
+              "urolith_analysis_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "nondissolvable_lower_tract_plan",
+          "followUp": {
+            "timing": "контроль поиска или мониторинга и анализа.",
+            "required": true,
+            "targets": [
+              "output",
+              "size",
+              "analysis",
+              "calcium_context",
+              "recurrence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Наименее инвазивный подходящий маршрут с последующим анализом.",
+            "unsafe": "Подкисление или растворение происходит повсеместно."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: предполагаемый и подтвержденный состав."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "painful_defensive"
+            ],
+            "requiredHandlingAlternative": "specialist_minimally_invasive_route",
+            "ownerModifiers": [
+              "budget_limited",
+              "requests_diet_only"
+            ]
+          }
+        },
+        {
+          "id": "p2_urate_or_cystine_requires_metabolic_context",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что рентгенопрозрачный или вариабельный камень и породный или печеночный или метаболический контекст вызывают беспокойство по поводу уратов или цистина.",
+          "historyAnswers": {
+            "hepatic_metabolic_history": "По нашим наблюдениям, данные текущего случая о печени или метаболизме.",
+            "prior_stone_obstruction_report": "Дома мы заметили, что анализ есть или отсутствует.",
+            "actual_urine_output": "Насколько мы можем судить, текущий выход.",
+            "complete_diet_exclusivity": "Мы записали, что полная история диеты или добавок."
+          },
+          "examFindings": [
+            {
+              "factId": "breed_or_radiolucency_is_risk_not_composition",
+              "source": "composition_rule",
+              "finding": "Требуется анализ и метаболическое исследование."
+            },
+            {
+              "factId": "systemic_driver_must_be_classified_before_prevention",
+              "source": "etiology_rule",
+              "finding": "Печеночный или метаболический путь является отдельным."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "breed_or_radiolucency_is_risk_not_composition",
+              "discoveryPaths": [
+                "hepatic_metabolic_history",
+                "prior_stone_obstruction_report",
+                "upper_lower_ultrasound_record"
+              ]
+            },
+            {
+              "factId": "systemic_driver_must_be_classified_before_prevention",
+              "discoveryPaths": [
+                "complete_diet_exclusivity",
+                "quantitative_composition_record",
+                "prevention_followup_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_ultrasound_upper_and_lower_tract",
+              "classification": "required_for_radiolucent_pattern",
+              "result": "При ультразвуковом исследовании: расположение или протяженность камня."
+            },
+            {
+              "id": "urolith_quantitative_composition_analysis",
+              "classification": "required_definitive",
+              "result": "Целевое исследование показало: соотношение уратов и цистина."
+            },
+            {
+              "id": "urolith_recurrence_and_prevention_monitoring",
+              "classification": "required_type_specific",
+              "result": "При динамическом наблюдении: системный причина и профилактика."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "breed_or_radiolucency_is_risk_not_composition",
+              "systemic_driver_must_be_classified_before_prevention"
+            ],
+            "confirmedDiagnosisRequires": [
+              "quantitative_analysis_plus_relevant_systemic_context"
+            ],
+            "dangerStates": [
+              "obstruction",
+              "hepatic_disease",
+              "recurrent_stones"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "biochemistry",
+              "urinalysis",
+              "nutritional_assessment"
+            ],
+            "external": [
+              "ultrasound_or_referral",
+              "hepatic_function_external",
+              "urolith_analysis_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_ultrasound_route",
+              "urolith_analysis_route",
+              "urolith_metabolic_route",
+              "urolith_prevention_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "nondissolvable_lower_tract_plan",
+          "followUp": {
+            "timing": "Состав или системный результат, затем обзор профилактики.",
+            "required": true,
+            "targets": [
+              "composition",
+              "liver_metabolic_status",
+              "urine",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Риск указывает на прямое тестирование без названия состава.",
+            "unsafe": "Порода или уровень кислотность определяют диету или план приема лекарств."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему основная системная причина имеет такое же значение, как и устранение."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "staged_external_metabolic_route",
+            "ownerModifiers": [
+              "breeder_assumption",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_asymptomatic_stone_monitoring_vs_removal",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что случайный камень нижних мочевых путей протекает бессимптомно; Риск прохода или препятствия считается низким или существенным.",
+          "historyAnswers": {
+            "actual_urine_output": "По нашим наблюдениям, нормально.",
+            "blood_pain_vocalization": "Дома мы заметили, что отсутствует.",
+            "serial_imaging_timeline": "Насколько мы можем судить, базовый уровень документирован.",
+            "prior_stone_obstruction_report": "Мы записали, что история информирует о риске."
+          },
+          "examFindings": [
+            {
+              "factId": "monitoring_can_be_correct_for_selected_low_risk_stone",
+              "source": "proportionality_rule",
+              "finding": "Бессимптомный камень не удаляют автоматически: риск вмешательства сравнивают с риском обструкции и роста."
+            },
+            {
+              "factId": "growth_symptoms_infection_or_passage_risk_changes_route",
+              "source": "exit_rule",
+              "finding": "Мониторинг имеет жесткие критерии."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "monitoring_can_be_correct_for_selected_low_risk_stone",
+              "discoveryPaths": [
+                "actual_urine_output",
+                "blood_pain_vocalization",
+                "multiview_urolith_xray_record"
+              ]
+            },
+            {
+              "factId": "growth_symptoms_infection_or_passage_risk_changes_route",
+              "discoveryPaths": [
+                "serial_imaging_timeline",
+                "prior_stone_obstruction_report",
+                "same_method_serial_stone_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_multiview_radiography",
+              "classification": "required_baseline",
+              "result": "На рентгенограммах: риск размера или расположения или прохода."
+            },
+            {
+              "id": "urolith_urinalysis_sediment_pH_and_culture",
+              "classification": "required_context",
+              "result": "По результатам посева и определения чувствительности: бактериального роста нет; анализ мочи не поддерживает активную инфекцию."
+            },
+            {
+              "id": "urolith_serial_size_number_and_location",
+              "classification": "required_monitoring",
+              "result": "При динамическом наблюдении: число, размер и положение камней не изменились по сравнению с предыдущими снимками."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "monitoring_can_be_correct_for_selected_low_risk_stone",
+              "growth_symptoms_infection_or_passage_risk_changes_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_confirmed_low_risk_lower_tract_stone"
+            ],
+            "dangerStates": [
+              "urethral_passage",
+              "growth",
+              "infection",
+              "new_luts"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "urinalysis",
+              "longitudinal_care"
+            ],
+            "external": [
+              "xray_or_referral",
+              "urolith_dissolution_monitoring",
+              "uroendoscopy_lithotripsy_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_xray_route",
+              "urolith_serial_route",
+              "urolith_intervention_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "nondissolvable_lower_tract_plan",
+          "followUp": {
+            "timing": "Запланированное исследование мочи и визуализация одним и тем же методом.",
+            "required": true,
+            "targets": [
+              "output",
+              "luts",
+              "size",
+              "location",
+              "infection"
+            ]
+          },
+          "outcomes": {
+            "safe": "Мониторинг низкого риска клинически и экономически обоснован.",
+            "unsafe": "Ненужное удаление всегда повышает репутацию."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: предупреждающие знаки о препятствиях и дату следующего измерения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "brief_longitudinal_imaging",
+            "ownerModifiers": [
+              "cost_sensitive",
+              "demands_removal"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "urolith_urethral_obstruction",
+      "version": "2026.07.16.40",
+      "title": "Уретральная обструкция камнем, пробкой или стриктурой",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Отток мочи блокируется механически или функционально; причина классифицируется после немедленной перфузии, почечного, калиевого, кислотно-щелочного риска и риска ритма.",
+      "exclusions": [
+        "confirmed_normal_output_and_nonobstructive_bladder"
+      ],
+      "planBundleId": "urethral_obstruction_plan",
+      "sourceIds": [
+        "icatcare_lutd_2025",
+        "merck_urethral_obstruction_2025",
+        "merck_obstructive_uropathy_2025"
+      ],
+      "presentations": [
+        {
+          "id": "p1_male_cat_unproductive_straining",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "sexConstraints": [
+            "male"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency_until_excluded",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что кот многократно тужится без подтверждённой мочи; владелец может считать это запором.",
+          "historyAnswers": {
+            "actual_urine_output": "По нашим наблюдениям, дроп или нет или неизвестно.",
+            "last_normal_stream": "Дома мы заметили, что датировано или неизвестно.",
+            "blood_pain_vocalization": "Насколько мы можем судить, боль или напряжение.",
+            "home_actions_before_sample": "Мы записали, что действия владельца в текущем случае."
+          },
+          "examFindings": [
+            {
+              "factId": "straining_is_not_constipation_until_output_and_bladder_checked",
+              "source": "triage_rule",
+              "finding": "Большой болезненный мочевой пузырь обеспечивает экстренную помощь."
+            },
+            {
+              "factId": "systemic_risk_precedes_cause_and_diet",
+              "source": "priority_rule",
+              "finding": "Калий или почки или ЭКГ оцениваются в зависимости от штата."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "straining_is_not_constipation_until_output_and_bladder_checked",
+              "discoveryPaths": [
+                "actual_urine_output",
+                "last_normal_stream",
+                "actual_output_observation",
+                "gentle_bladder_size_pain"
+              ]
+            },
+            {
+              "factId": "systemic_risk_precedes_cause_and_diet",
+              "discoveryPaths": [
+                "hydration_vomiting_weakness",
+                "heart_rate_rhythm_record",
+                "renal_electrolyte_ecg_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_obstruction_perfusion_and_bladder_triage",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: препятствие или стабильность."
+            },
+            {
+              "id": "urolith_cbc_biochemistry_electrolytes_ecg",
+              "classification": "required_by_state",
+              "result": "На электрокардиограмме: почки или калий или кислотно-основное состояние или ритм."
+            },
+            {
+              "id": "urolith_multiview_radiography",
+              "classification": "after_or_parallel_when_safe",
+              "result": "На рентгенограммах: причина или местоположение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "straining_is_not_constipation_until_output_and_bladder_checked",
+              "systemic_risk_precedes_cause_and_diet"
+            ],
+            "confirmedDiagnosisRequires": [
+              "absent_outflow_plus_compatible_bladder_or_relief_findings"
+            ],
+            "dangerStates": [
+              "hyperkalemia",
+              "arrhythmia",
+              "postrenal_azotemia",
+              "shock"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation",
+              "urinary_obstruction_stabilization",
+              "electrolytes",
+              "ecg",
+              "vital_monitor"
+            ],
+            "external": [
+              "urinary_decompression_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_obstruction_route",
+              "urolith_lab_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "urethral_obstruction_plan",
+          "followUp": {
+            "timing": "Постоянный через купирование и постобструктивный мониторинг.",
+            "required": true,
+            "targets": [
+              "output",
+              "potassium",
+              "rhythm",
+              "renal_values",
+              "diuresis"
+            ]
+          },
+          "outcomes": {
+            "safe": "Экстренную непроходимость распознают до появления этиологических подробностей.",
+            "unsafe": "Запор или обычное рассасывание задерживают облегчение оттока."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: отсутствие мочи представляет собой непосредственную угрозу для жизни, а не является временной проблемой, связанной с запором."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "cat_friendly_emergency_stabilization",
+            "ownerModifiers": [
+              "confident_wrong_label",
+              "overwhelmed"
+            ]
+          }
+        },
+        {
+          "id": "p2_dog_urethrolith_or_mass_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что у собак частичная или полная обструкция уретры камнями, массами, предстательной железой или дифференциальными стриктурами.",
+          "historyAnswers": {
+            "actual_urine_output": "По нашим наблюдениям, снижено или нет.",
+            "last_normal_stream": "Дома мы заметили, что датировано.",
+            "prior_device_surgery": "Насколько мы можем судить, разработаны предыдущие процедуры.",
+            "prior_stone_obstruction_report": "Мы записали, что предварительный анализ или визуализация."
+          },
+          "examFindings": [
+            {
+              "factId": "dog_urethral_obstruction_keeps_stone_mass_stricture_differentials",
+              "source": "cause_rule",
+              "finding": "Причина следует за облегчением и визуализацией."
+            },
+            {
+              "factId": "direct_urethral_surgery_is_not_automatic_default",
+              "source": "procedure_boundary",
+              "finding": "Специалист подбирает маршрут ретропульсии или литотрипсии или стентирования или хирургического вмешательства."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "dog_urethral_obstruction_keeps_stone_mass_stricture_differentials",
+              "discoveryPaths": [
+                "actual_urine_output",
+                "prior_device_surgery",
+                "gentle_bladder_size_pain",
+                "multiview_urolith_xray_record"
+              ]
+            },
+            {
+              "factId": "direct_urethral_surgery_is_not_automatic_default",
+              "discoveryPaths": [
+                "prior_stone_obstruction_report",
+                "same_episode_intervention_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_obstruction_perfusion_and_bladder_triage",
+              "classification": "required_first",
+              "result": "Клиническая оценка показала: отток или стабильность."
+            },
+            {
+              "id": "urolith_multiview_radiography",
+              "classification": "required_when_safe",
+              "result": "На рентгенограммах: вся соответствующая уретра или локация."
+            },
+            {
+              "id": "urolith_endoscopic_surgical_or_bypass_referral",
+              "classification": "required_specialist",
+              "result": "При эндоскопическом осмотре: анатомически подобранный рельеф."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "dog_urethral_obstruction_keeps_stone_mass_stricture_differentials",
+              "direct_urethral_surgery_is_not_automatic_default"
+            ],
+            "confirmedDiagnosisRequires": [
+              "outflow_block_plus_cause_specific_imaging_or_intervention"
+            ],
+            "dangerStates": [
+              "complete_obstruction",
+              "mass",
+              "urethral_trauma"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "urinary_obstruction_stabilization",
+              "electrolytes",
+              "ecg"
+            ],
+            "external": [
+              "xray_or_referral",
+              "uroendoscopy_lithotripsy_referral",
+              "surgery_or_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_obstruction_route",
+              "urolith_xray_route",
+              "urolith_intervention_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "urethral_obstruction_plan",
+          "followUp": {
+            "timing": "Неотложная помощь с последующим наблюдением за причиной или патологией.",
+            "required": true,
+            "targets": [
+              "output",
+              "location",
+              "cause",
+              "renal_values",
+              "complications"
+            ]
+          },
+          "outcomes": {
+            "safe": "Отток восстановлен, а причина остается дифференцированной.",
+            "unsafe": "интерфейс выбирает прямую операцию или предполагает, что каждое препятствие — это камень."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: немедленное облегчение по сравнению с последующим подтверждением причины."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "weak",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "stabilize_and_specialist_transfer",
+            "ownerModifiers": [
+              "budget_limited",
+              "requests_definitive_surgery"
+            ]
+          }
+        },
+        {
+          "id": "p3_recurrent_obstruction_and_salvage_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_each_episode",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что рецидивирующая обструкция после применения катетера или процедуры; камень, пробка, воспаление, стриктура и окружающая среда остаются классифицированными.",
+          "historyAnswers": {
+            "actual_urine_output": "По нашим наблюдениям, ток уменьшен или нет.",
+            "prior_device_surgery": "Дома мы заметили, что процедура или устройство или дата.",
+            "prior_stone_obstruction_report": "Насколько мы можем судить, причина или история анализа.",
+            "recurrence_compliance_audit": "Мы записали, что диета или вода или окружающая среда или проверки."
+          },
+          "examFindings": [
+            {
+              "factId": "each_reobstruction_is_retriaged_as_emergency",
+              "source": "emergency_rule",
+              "finding": "Предыдущий успех не снижает текущий риск."
+            },
+            {
+              "factId": "salvage_procedure_reduces_blockage_risk_but_is_not_cure",
+              "source": "expectation_rule",
+              "finding": "Основной камень или воспаление и осложнения остаются."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "each_reobstruction_is_retriaged_as_emergency",
+              "discoveryPaths": [
+                "actual_urine_output",
+                "last_normal_stream",
+                "gentle_bladder_size_pain",
+                "renal_electrolyte_ecg_record"
+              ]
+            },
+            {
+              "factId": "salvage_procedure_reduces_blockage_risk_but_is_not_cure",
+              "discoveryPaths": [
+                "prior_device_surgery",
+                "prior_stone_obstruction_report",
+                "recurrence_compliance_audit",
+                "prevention_followup_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_obstruction_perfusion_and_bladder_triage",
+              "classification": "required_each_episode",
+              "result": "Клиническая оценка показала: признаки жизнеугрожающего состояния."
+            },
+            {
+              "id": "urolith_endoscopic_surgical_or_bypass_referral",
+              "classification": "required_salvage_review",
+              "result": "При эндоскопическом осмотре: специализированная анатомия или компромиссы."
+            },
+            {
+              "id": "urolith_recurrence_and_prevention_monitoring",
+              "classification": "required_after_relief",
+              "result": "При динамическом наблюдении: профилактика, специфичная для конкретной причины."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "each_reobstruction_is_retriaged_as_emergency",
+              "salvage_procedure_reduces_blockage_risk_but_is_not_cure"
+            ],
+            "confirmedDiagnosisRequires": [
+              "current_outflow_obstruction_plus_recurrence_record"
+            ],
+            "dangerStates": [
+              "hyperkalemia",
+              "stricture",
+              "infection",
+              "device_complication"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "urinary_obstruction_stabilization",
+              "vital_monitor",
+              "longitudinal_care"
+            ],
+            "external": [
+              "hospital_referral",
+              "uroendoscopy_lithotripsy_referral",
+              "surgery_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_obstruction_route",
+              "urolith_intervention_route",
+              "urolith_prevention_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "urethral_obstruction_plan",
+          "followUp": {
+            "timing": "Экстренная помощь, а затем версионный план повторения.",
+            "required": true,
+            "targets": [
+              "output",
+              "cause",
+              "device",
+              "infection",
+              "environment",
+              "stones"
+            ]
+          },
+          "outcomes": {
+            "safe": "Повторную обструкцию лечат срочно, и ожидания спасения реалистичны.",
+            "unsafe": "Предыдущая операция гарантирует излечение, иначе эпизод станет новым пациентом."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: текущую чрезвычайную ситуацию и то, что спасение может и не может предотвратить."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "repeat_cat_friendly_or_specialist_emergency_route",
+            "ownerModifiers": [
+              "treatment_fatigue",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "urolith_upper_urinary_tract",
+      "version": "2026.07.16.40",
+      "title": "Нефролит или уретеролит",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Нефролит или уретеролит может быть случайным или обструктивным; обе почки, мочеточники, функция почек и контралатеральный резерв определяют срочность.",
+      "exclusions": [
+        "lower_tract_signs_required_for_diagnosis",
+        "nephrolith_presence_equals_obstruction"
+      ],
+      "planBundleId": "upper_tract_urolith_plan",
+      "sourceIds": [
+        "acvim_urolith_consensus_2016",
+        "merck_obstructive_uropathy_2025",
+        "merck_urolithiasis_overview"
+      ],
+      "presentations": [
+        {
+          "id": "p1_incidental_nonobstructive_nephrolith",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что случайный нефролит без расширения лоханки или мочеточника, боли, инфекции или снижения функции почек.",
+          "historyAnswers": {
+            "actual_urine_output": "По нашим наблюдениям, нормально.",
+            "ckd_single_kidney_status": "Дома мы заметили, что почечный резерв документирован.",
+            "infection_culture_history": "Насколько мы можем судить, нет активных признаков инфекции верхних отделов.",
+            "serial_imaging_timeline": "Мы записали, что базовый уровень доступен."
+          },
+          "examFindings": [
+            {
+              "factId": "incidental_nephrolith_does_not_require_automatic_removal",
+              "source": "proportionality_rule",
+              "finding": "Мониторинг может сохранить функцию с меньшим вредом."
+            },
+            {
+              "factId": "presence_alone_does_not_prove_ckd_progression",
+              "source": "causality_rule",
+              "finding": "Требуются серийная функция и анатомия."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "incidental_nephrolith_does_not_require_automatic_removal",
+              "discoveryPaths": [
+                "actual_urine_output",
+                "renal_abdominal_pain_exam",
+                "upper_lower_ultrasound_record"
+              ]
+            },
+            {
+              "factId": "presence_alone_does_not_prove_ckd_progression",
+              "discoveryPaths": [
+                "ckd_single_kidney_status",
+                "serial_imaging_timeline",
+                "renal_electrolyte_ecg_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_ultrasound_upper_and_lower_tract",
+              "classification": "required_baseline",
+              "result": "При ультразвуковом исследовании: анатомия таза или мочеточника или почки."
+            },
+            {
+              "id": "urolith_cbc_biochemistry_electrolytes_ecg",
+              "classification": "required_renal_context",
+              "result": "На электрокардиограмме: стабильная функция почек или электролиты."
+            },
+            {
+              "id": "urolith_serial_size_number_and_location",
+              "classification": "required_monitoring",
+              "result": "При динамическом наблюдении: динамика размера или таза или функции."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "incidental_nephrolith_does_not_require_automatic_removal",
+              "presence_alone_does_not_prove_ckd_progression"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_confirmed_nonobstructive_nephrolith"
+            ],
+            "dangerStates": [
+              "pelvic_dilation",
+              "infection",
+              "pain",
+              "function_decline"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "biochemistry",
+              "urinalysis",
+              "longitudinal_care"
+            ],
+            "external": [
+              "ultrasound_or_referral",
+              "upper_urinary_tract_monitoring"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_ultrasound_route",
+              "urolith_serial_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "upper_tract_urolith_plan",
+          "followUp": {
+            "timing": "Плановая функция почек и УЗИ одним и тем же методом.",
+            "required": true,
+            "targets": [
+              "renal_function",
+              "pelvis",
+              "ureter",
+              "size",
+              "infection",
+              "pain"
+            ]
+          },
+          "outcomes": {
+            "safe": "Выбранный случайный нефролит контролируется объективно.",
+            "unsafe": "Само по себе присутствие вызывает инвазивное удаление или приписывание ХБП."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему мониторинг может быть безопаснее и какие результаты меняют план."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "serial_low_stress_ultrasound",
+            "ownerModifiers": [
+              "demands_removal",
+              "cost_sensitive"
+            ]
+          }
+        },
+        {
+          "id": "p2_unilateral_ureteral_obstruction_with_subtle_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что легкая рвота или вялость или боль в почках при нормальном мочеиспускании и нерастянутом мочевом пузыре; Подозрение на одностороннюю обструкцию мочеточника.",
+          "historyAnswers": {
+            "actual_urine_output": "По нашим наблюдениям, возможен нормальный вывод.",
+            "ckd_single_kidney_status": "Дома мы заметили, что контралатеральный резерв.",
+            "blood_pain_vocalization": "Насколько мы можем судить, возможны легкие боли в почках.",
+            "serial_imaging_timeline": "Мы записали, что график работы таза или функций."
+          },
+          "examFindings": [
+            {
+              "factId": "normal_urination_does_not_exclude_unilateral_ureteral_obstruction",
+              "source": "localization_rule",
+              "finding": "Контралатеральная почка может поддерживать выработку."
+            },
+            {
+              "factId": "modest_creatinine_does_not_exclude_unilateral_damage",
+              "source": "lab_limit",
+              "finding": "Визуализация и последовательная диагностика таза или функционального диска."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "normal_urination_does_not_exclude_unilateral_ureteral_obstruction",
+              "discoveryPaths": [
+                "actual_urine_output",
+                "ckd_single_kidney_status",
+                "upper_lower_ultrasound_record"
+              ]
+            },
+            {
+              "factId": "modest_creatinine_does_not_exclude_unilateral_damage",
+              "discoveryPaths": [
+                "renal_abdominal_pain_exam",
+                "renal_electrolyte_ecg_record",
+                "same_method_serial_stone_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_ultrasound_upper_and_lower_tract",
+              "classification": "required_expert",
+              "result": "При ультразвуковом исследовании: почка или лоханка или мочеточник или расположение."
+            },
+            {
+              "id": "urolith_cbc_biochemistry_electrolytes_ecg",
+              "classification": "required",
+              "result": "На электрокардиограмме: почечный или электролитный контекст."
+            },
+            {
+              "id": "urolith_endoscopic_surgical_or_bypass_referral",
+              "classification": "required_early_specialist",
+              "result": "При эндоскопическом осмотре: мочеточниковый путь, основанный на анатомии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "normal_urination_does_not_exclude_unilateral_ureteral_obstruction",
+              "modest_creatinine_does_not_exclude_unilateral_damage"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_confirmed_unilateral_outflow_obstruction"
+            ],
+            "dangerStates": [
+              "progressive_hydronephrosis",
+              "infection",
+              "contralateral_ckd"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "ultrasound_or_referral",
+              "advanced_imaging_referral",
+              "ureteral_intervention_referral",
+              "upper_urinary_tract_monitoring"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_ultrasound_route",
+              "urolith_serial_route",
+              "urolith_intervention_route"
+            ],
+            "referralFallback": "ureteral_intervention_referral"
+          },
+          "carePlanId": "upper_tract_urolith_plan",
+          "followUp": {
+            "timing": "Срочные специализированные и периодические проверки таза или функций.",
+            "required": true,
+            "targets": [
+              "pelvis",
+              "ureter",
+              "renal_function",
+              "pain",
+              "infection"
+            ]
+          },
+          "outcomes": {
+            "safe": "Незаметное одностороннее заболевание выявляется, несмотря на нормальный диурез.",
+            "unsafe": "Нормальный выброс или умеренный уровень креатинина устраняют обструкцию."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: как другая почка может скрывать потерю функции с одной стороны."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "calm",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "expert_ultrasound_and_early_referral",
+            "ownerModifiers": [
+              "skeptical",
+              "transport_difficult"
+            ]
+          }
+        },
+        {
+          "id": "p3_bilateral_or_ckd_complicated_obstruction",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что двусторонняя обструкция либо односторонняя обструкция при ХБП или единственной почке приводит к азотемии, олигурии или анурии или системному снижению.",
+          "historyAnswers": {
+            "actual_urine_output": "По нашим наблюдениям, олигурия или анурия или снижена.",
+            "ckd_single_kidney_status": "Дома мы заметили, что хБП или единственная функционирующая почка или двусторонняя.",
+            "last_normal_stream": "Насколько мы можем судить, датировано.",
+            "prior_device_surgery": "Мы записали, что история устройства или вмешательства."
+          },
+          "examFindings": [
+            {
+              "factId": "bilateral_or_limited_reserve_obstruction_is_emergency",
+              "source": "emergency_rule",
+              "finding": "Стабилизация почечного или электролитного баланса и направление к врачу продолжаются одновременно."
+            },
+            {
+              "factId": "device_or_bypass_technique_is_not_selected_by_ui",
+              "source": "procedure_boundary",
+              "finding": "Опытный специалист использует анатомию и ресурсы."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "bilateral_or_limited_reserve_obstruction_is_emergency",
+              "discoveryPaths": [
+                "actual_urine_output",
+                "ckd_single_kidney_status",
+                "hydration_vomiting_weakness",
+                "renal_electrolyte_ecg_record"
+              ]
+            },
+            {
+              "factId": "device_or_bypass_technique_is_not_selected_by_ui",
+              "discoveryPaths": [
+                "prior_device_surgery",
+                "upper_lower_ultrasound_record",
+                "same_episode_intervention_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_cbc_biochemistry_electrolytes_ecg",
+              "classification": "required_immediate",
+              "result": "На электрокардиограмме: состояние почек или калий или кислотно-щелочное состояние."
+            },
+            {
+              "id": "urolith_ultrasound_upper_and_lower_tract",
+              "classification": "required_no_unsafe_delay",
+              "result": "При ультразвуковом исследовании: двусторонняя анатомия или обструкция."
+            },
+            {
+              "id": "urolith_endoscopic_surgical_or_bypass_referral",
+              "classification": "required_emergency_specialist",
+              "result": "При эндоскопическом осмотре: путь вмешательства."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "bilateral_or_limited_reserve_obstruction_is_emergency",
+              "device_or_bypass_technique_is_not_selected_by_ui"
+            ],
+            "confirmedDiagnosisRequires": [
+              "upper_tract_imaging_plus_limited_function_context"
+            ],
+            "dangerStates": [
+              "anuria",
+              "hyperkalemia",
+              "uremia",
+              "postobstructive_diuresis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "stabilization",
+              "vital_monitor",
+              "biochemistry",
+              "electrolytes",
+              "ecg"
+            ],
+            "external": [
+              "intensive_care_referral",
+              "ureteral_intervention_referral",
+              "advanced_imaging_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_upper_emergency_route",
+              "urolith_lab_route",
+              "urolith_intervention_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "upper_tract_urolith_plan",
+          "followUp": {
+            "timing": "Непрерывный через вмешательство и постобструктивную фазу.",
+            "required": true,
+            "targets": [
+              "output",
+              "potassium",
+              "renal_function",
+              "pelvis",
+              "device",
+              "diuresis"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ограниченный почечный резерв требует неотложной помощи специалиста.",
+            "unsafe": "Опасно выбирать устройство для отведения мочи или режим наблюдения без оценки обструкции, функции почек и возможностей клиники."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: непосредственный риск для почек или электролитов и варианты, зависящие от специалиста."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "obtunded",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_icu_transfer",
+            "ownerModifiers": [
+              "overwhelmed",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "urolith_recurrent_or_post_removal",
+      "version": "2026.07.16.40",
+      "title": "Рецидивирующий уролитиаз и контроль после удаления",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Удаление или растворение является неполным как план заболевания до тех пор, пока количественный состав, клиренс и основные факторы инфекции или метаболизма или диеты-воды не будут рассмотрены в продольном направлении.",
+      "exclusions": [
+        "visual_composition_label_only",
+        "new_unlinked_patient_on_recurrence"
+      ],
+      "planBundleId": "recurrent_post_removal_plan",
+      "sourceIds": [
+        "acvim_urolith_consensus_2016",
+        "icatcare_lutd_2025",
+        "merck_urolithiasis_overview"
+      ],
+      "presentations": [
+        {
+          "id": "p1_quantitative_stone_analysis_changes_prevention",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что в количественном отчете перечислены минеральные компоненты или пропорции и предотвращены изменения по сравнению с визуальным подозрением.",
+          "historyAnswers": {
+            "prior_stone_obstruction_report": "По нашим наблюдениям, ссылка на извлеченный или растворенный эпизод.",
+            "hepatic_metabolic_history": "Дома мы заметили, что соответствующий контекст причинаа.",
+            "complete_diet_exclusivity": "Насколько мы можем судить, текущая диета или добавки.",
+            "water_intake_food_moisture": "Мы записали, что текущая водная стратегия."
+          },
+          "examFindings": [
+            {
+              "factId": "quantitative_components_not_visual_label_drive_prevention",
+              "source": "analysis_rule",
+              "finding": "Смешанная композиция остается явной."
+            },
+            {
+              "factId": "removed_stone_without_analysis_is_incomplete_plan",
+              "source": "continuity_rule",
+              "finding": "Профилактика не может быть безопасно специфичной для конкретного типа."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "quantitative_components_not_visual_label_drive_prevention",
+              "discoveryPaths": [
+                "prior_stone_obstruction_report",
+                "quantitative_composition_record"
+              ]
+            },
+            {
+              "factId": "removed_stone_without_analysis_is_incomplete_plan",
+              "discoveryPaths": [
+                "same_episode_intervention_record",
+                "hepatic_metabolic_history",
+                "prevention_followup_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_quantitative_composition_analysis",
+              "classification": "required",
+              "result": "Целевое исследование показало: компоненты или пропорции."
+            },
+            {
+              "id": "urolith_recurrence_and_prevention_monitoring",
+              "classification": "required_type_specific",
+              "result": "При динамическом наблюдении: план анализа мочи или посева или диеты или воды или визуализации."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "quantitative_components_not_visual_label_drive_prevention",
+              "removed_stone_without_analysis_is_incomplete_plan"
+            ],
+            "confirmedDiagnosisRequires": [
+              "quantitative_composition_report"
+            ],
+            "dangerStates": [
+              "mixed_stone_mismatch",
+              "unaddressed_infection",
+              "metabolic_driver"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "longitudinal_care",
+              "nutritional_assessment"
+            ],
+            "external": [
+              "urolith_analysis_external",
+              "urolith_database_lookup"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_analysis_route",
+              "urolith_prevention_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "recurrent_post_removal_plan",
+          "followUp": {
+            "timing": "Обзор анализа, затем серийный план для конкретного типа.",
+            "required": true,
+            "targets": [
+              "composition",
+              "urine",
+              "culture",
+              "diet",
+              "water",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Количественный анализ определяет профилактику.",
+            "unsafe": "Цвет, кислотность или один кристалл создают общую диету."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему удаление решает проблему закупорки, но не объясняет причину образования камней."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "report_review_and_low_stress_followup",
+            "ownerModifiers": [
+              "expects_cure",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_residual_fragment_or_incomplete_clearance",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "postprocedure_priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что визуализация после процедуры показывает остаточный фрагмент или материал, несмотря на улучшение симптомов.",
+          "historyAnswers": {
+            "prior_device_surgery": "По нашим наблюдениям, процедура или дата или место.",
+            "serial_imaging_timeline": "Дома мы заметили, что изображение оформления после процедуры.",
+            "actual_urine_output": "Насколько мы можем судить, текущий выход.",
+            "prior_stone_obstruction_report": "Мы записали, что статус анализа."
+          },
+          "examFindings": [
+            {
+              "factId": "symptom_improvement_does_not_prove_complete_clearance",
+              "source": "outcome_rule",
+              "finding": "Визуализация документов остаточной нагрузки."
+            },
+            {
+              "factId": "fragment_route_depends_on_size_location_and_passage_risk",
+              "source": "proportionality_rule",
+              "finding": "Дальнейший поиск по сравнению с мониторингом проверяется специалистом."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "symptom_improvement_does_not_prove_complete_clearance",
+              "discoveryPaths": [
+                "actual_urine_output",
+                "serial_imaging_timeline",
+                "same_episode_intervention_record",
+                "same_method_serial_stone_record"
+              ]
+            },
+            {
+              "factId": "fragment_route_depends_on_size_location_and_passage_risk",
+              "discoveryPaths": [
+                "prior_device_surgery",
+                "prior_stone_obstruction_report",
+                "multiview_urolith_xray_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_serial_size_number_and_location",
+              "classification": "required_clearance_check",
+              "result": "При динамическом наблюдении: остаточный размер или расположение."
+            },
+            {
+              "id": "urolith_endoscopic_surgical_or_bypass_referral",
+              "classification": "required_by_risk",
+              "result": "При эндоскопическом осмотре: маршрут поиска или мониторинга."
+            },
+            {
+              "id": "urolith_quantitative_composition_analysis",
+              "classification": "required_if_material_available",
+              "result": "Целевое исследование показало: состав."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "symptom_improvement_does_not_prove_complete_clearance",
+              "fragment_route_depends_on_size_location_and_passage_risk"
+            ],
+            "confirmedDiagnosisRequires": [
+              "postprocedure_imaging_confirmed_residual_material"
+            ],
+            "dangerStates": [
+              "urethral_passage",
+              "infection",
+              "device_obstruction"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "longitudinal_care"
+            ],
+            "external": [
+              "xray_or_referral",
+              "ultrasound_or_referral",
+              "uroendoscopy_lithotripsy_referral",
+              "urolith_analysis_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_serial_route",
+              "urolith_intervention_route",
+              "urolith_analysis_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "recurrent_post_removal_plan",
+          "followUp": {
+            "timing": "Послепроцедурное оформление и повторная проверка с учетом рисков.",
+            "required": true,
+            "targets": [
+              "fragment",
+              "location",
+              "output",
+              "infection",
+              "analysis"
+            ]
+          },
+          "outcomes": {
+            "safe": "Остаточная нагрузка остается видимой и распределяется пропорционально.",
+            "unsafe": "Процедура завершается, когда симптомы улучшаются."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: осталось и почему это можно отслеживать или извлекать."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "painful_defensive"
+            ],
+            "requiredHandlingAlternative": "postprocedure_low_stress_imaging",
+            "ownerModifiers": [
+              "frustrated",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_recurrence_despite_reported_diet_or_infection_control",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority_urgent_if_output_changes",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что камень рецидивирует, несмотря на диету и инфекционный контроль; неправильный тип, резидуальный камень, реинфекция и метаболический фактор остаются возможными.",
+          "historyAnswers": {
+            "recurrence_compliance_audit": "По нашим наблюдениям, соблюдение диеты или воды или культуры или визуализации..",
+            "complete_diet_exclusivity": "Дома мы заметили, что весь доступ зафиксирован.",
+            "infection_culture_history": "Насколько мы можем судить, разрешение или метод повторного заражения или дата.",
+            "prior_stone_obstruction_report": "Мы записали, что учет состава и оформления."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrence_requires_full_cause_and_compliance_audit_before_blame",
+              "source": "fairness_rule",
+              "finding": "Отчет владельца проверен на практике."
+            },
+            {
+              "factId": "random_diet_switching_is_not_a_prevention_strategy",
+              "source": "protocol_boundary",
+              "finding": "Состав и причина определяют пересмотренный план."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "recurrence_requires_full_cause_and_compliance_audit_before_blame",
+              "discoveryPaths": [
+                "recurrence_compliance_audit",
+                "complete_diet_exclusivity",
+                "infection_culture_history",
+                "prior_stone_obstruction_report"
+              ]
+            },
+            {
+              "factId": "random_diet_switching_is_not_a_prevention_strategy",
+              "discoveryPaths": [
+                "quantitative_composition_record",
+                "prevention_followup_record",
+                "same_method_serial_stone_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urolith_obstruction_perfusion_and_bladder_triage",
+              "classification": "required_if_luts_or_output_change",
+              "result": "Клиническая оценка показала: текущее состояние препятствия."
+            },
+            {
+              "id": "urolith_quantitative_composition_analysis",
+              "classification": "required_compare",
+              "result": "Целевое исследование показало: тот же или разный или смешанный состав."
+            },
+            {
+              "id": "urolith_recurrence_and_prevention_monitoring",
+              "classification": "required_audit",
+              "result": "При динамическом наблюдении: аудит диеты или воды или культуры или метаболизма или визуализации."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "recurrence_requires_full_cause_and_compliance_audit_before_blame",
+              "random_diet_switching_is_not_a_prevention_strategy"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_confirmed_recurrence_plus_composition_context"
+            ],
+            "dangerStates": [
+              "reobstruction",
+              "reinfection",
+              "wrong_prevention_type",
+              "residual_fragment"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "urinalysis",
+              "longitudinal_care",
+              "nutritional_assessment"
+            ],
+            "external": [
+              "urine_culture_external",
+              "urolith_analysis_external",
+              "xray_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "urolith_obstruction_route",
+              "urolith_urine_route",
+              "urolith_analysis_route",
+              "urolith_prevention_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "recurrent_post_removal_plan",
+          "followUp": {
+            "timing": "Вызвать аудит, а затем пересмотреть контрольные точки версий.",
+            "required": true,
+            "targets": [
+              "output",
+              "composition",
+              "clearance",
+              "culture",
+              "diet",
+              "water",
+              "metabolic_driver"
+            ]
+          },
+          "outcomes": {
+            "safe": "Повторение объясняется до изменения плана.",
+            "unsafe": "Виноват владелец или диета меняется случайно."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: рассмотрите препятствия без обвинений и объясните, какие данные меняют профилактику."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "owner_supported_longitudinal_audit",
+            "ownerModifiers": [
+              "treatment_fatigue",
+              "multi_pet_home"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if urine-flow obstruction and systemic instability are not assessed before stone composition planning.",
+    "Reject if crystals, pH, breed or visual appearance alone define urolith composition.",
+    "Reject if canine infection-associated logic is copied to feline struvite disease.",
+    "Reject if a nondissolvable stone receives a dissolution promise or instant clearance.",
+    "Reject if unilateral upper-tract disease is dismissed by one creatinine value or a nondistended bladder.",
+    "Reject if the generator creates a diet formula, drug, dose, catheter, stent, SUB or surgical technique."
+  ],
+  "title": "Мочевые камни и уролитиаз"
+}

@@ -1,0 +1,3589 @@
+{
+  "schemaVersion": 1,
+  "familyId": "ear_external",
+  "familyVersion": "2026.07.16.40",
+  "title": "Наружное ухо",
+  "campaignPhase": "chapter_1_to_post_chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "projectLabel": "Грибковый отит.",
+    "clinicalMeaning": "Наружный отит с клинически значимым дрожжевым компонентом, морфологически совместимым с Malassezia.",
+    "forbiddenShortcut": "Цвет, запах или количество выделений сами по себе не определяют этиологию."
+  },
+  "coreCapabilities": [
+    "general_exam",
+    "ear_exam",
+    "ear_cytology"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "sedation_capability_or_safe_referral",
+      "anyOf": [
+        "anesthesia",
+        "safe_referral"
+      ],
+      "purpose": "controlled_visualized_removal"
+    },
+    {
+      "id": "minor_procedure_or_safe_referral",
+      "anyOf": [
+        "minor_procedure",
+        "safe_referral"
+      ],
+      "purpose": "hematoma_procedure"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "ear_cytology",
+      "requires": [
+        "ear_cytology"
+      ],
+      "availability": "local_from_start"
+    },
+    {
+      "researchId": "ear_mite_microscopy",
+      "requires": [
+        "microscope",
+        "cytology_consumables"
+      ],
+      "availability": "local_from_start"
+    },
+    {
+      "researchId": "ear_culture_ast",
+      "requires": [
+        "culture_external"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_video_otoscopy",
+      "requires": [
+        "video_otoscopy_referral"
+      ],
+      "availability": "external_post_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_middle_sample",
+      "requires": [
+        "middle_ear_sampling_referral"
+      ],
+      "availability": "external_post_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_ct_mri",
+      "requires": [
+        "middle_ear_imaging_external"
+      ],
+      "availability": "external_post_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "ear_mass_histology",
+      "requires": [
+        "histology_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "minimum_dermatologic_database",
+      "requires": [
+        "skin_exam",
+        "skin_cytology",
+        "skin_scraping",
+        "trained_dermatology_sampling"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "onset_course",
+      "text": "Когда начались симптомы и как они менялись?"
+    },
+    {
+      "id": "laterality",
+      "text": "Одно ухо беспокоит или оба?"
+    },
+    {
+      "id": "pain_pruritus_discharge",
+      "text": "Есть ли зуд, боль, тряска головой, запах или выделения?"
+    },
+    {
+      "id": "prior_episodes_treatment",
+      "text": "Были ли эпизоды раньше, что применяли и завершили ли курс?"
+    },
+    {
+      "id": "exposure",
+      "text": "Были ли купание, груминг, прогулка в траве или новые контакты?"
+    },
+    {
+      "id": "skin_allergy",
+      "text": "Есть ли зуд лап, морды или кожи, сезонность или связь с рационом?"
+    },
+    {
+      "id": "home_products",
+      "text": "Что чистили или закапывали дома; можно ли увидеть упаковку?"
+    },
+    {
+      "id": "neurologic_signs",
+      "text": "Есть ли наклон головы, нарушение равновесия, нистагм или изменение слуха?"
+    },
+    {
+      "id": "contact_animals",
+      "text": "Есть ли другие животные и появились ли у них похожие симптомы?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "general_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "pinna_skin_exam",
+      "source": "physical_exam",
+      "requires": []
+    },
+    {
+      "id": "bilateral_ear_comparison",
+      "source": "physical_exam",
+      "requires": []
+    },
+    {
+      "id": "ear_base_palpation",
+      "source": "physical_exam",
+      "requires": []
+    },
+    {
+      "id": "otoscopy_less_painful_first",
+      "source": "physical_exam",
+      "requires": [
+        "ear_exam"
+      ]
+    },
+    {
+      "id": "post_removal_otoscopy",
+      "source": "physical_exam",
+      "requires": [
+        "ear_exam"
+      ]
+    },
+    {
+      "id": "controlled_post_removal_otoscopy",
+      "source": "physical_exam",
+      "requires": [
+        "ear_exam"
+      ],
+      "constraint": "only_after_controlled_removal"
+    },
+    {
+      "id": "ear_exam",
+      "source": "physical_exam",
+      "requires": [
+        "ear_exam"
+      ]
+    },
+    {
+      "id": "eye_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ],
+      "constraint": "protect_cornea_and_refer_if_blink_is_impaired"
+    },
+    {
+      "id": "ear_cytology_each_affected_ear",
+      "source": "diagnostic_test",
+      "requires": [
+        "ear_cytology"
+      ],
+      "sampleBeforeCleaning": true
+    },
+    {
+      "id": "mite_mineral_oil_microscopy",
+      "source": "diagnostic_test",
+      "requires": [
+        "microscope",
+        "cytology_consumables"
+      ],
+      "sampleBeforeCleaning": true
+    },
+    {
+      "id": "brief_neurologic_screen",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "full_neurologic_exam",
+      "source": "physical_exam",
+      "requires": [
+        "neurologic_exam"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "local_otitis_cytology_directed",
+      "fullPlan": [
+        "analgesia_if_needed",
+        "sample_before_cleaning",
+        "cytology_directed_local_treatment",
+        "tympanum_safety_check",
+        "gentle_cleaning",
+        "owner_technique_training",
+        "scheduled_exam_and_repeat_cytology",
+        "investigate_primary_cause_if_recurrent"
+      ],
+      "stagedPlan": [
+        "analgesia_if_needed",
+        "ear_cytology",
+        "safe_local_plan_after_tympanum_assessment",
+        "scheduled_recheck"
+      ],
+      "minimumSafePlan": [
+        "pain_control",
+        "no_blind_or_irritating_home_products",
+        "cytology_or_safe_referral",
+        "written_red_flags",
+        "recheck"
+      ],
+      "stabilizeAndRefer": [
+        "pain_control",
+        "avoid_forced_otoscopy",
+        "avoid_unknown_ototoxic_product",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "diagnose_by_discharge_color",
+        "reuse_old_drops_without_exam",
+        "stop_when_odor_improves",
+        "force_painful_otoscopy"
+      ]
+    },
+    {
+      "id": "rod_or_refractory_otitis",
+      "fullPlan": [
+        "analgesia",
+        "sample_before_cleaning",
+        "ear_cytology",
+        "culture_and_susceptibility",
+        "assess_tympanum_and_middle_ear",
+        "directed_antimicrobial_plan",
+        "frequent_exam_and_repeat_cytology",
+        "investigate_primary_cause"
+      ],
+      "stagedPlan": [
+        "analgesia",
+        "ear_cytology",
+        "collect_culture_before_new_antimicrobial",
+        "safe_cleaning_only_after_depth_assessment",
+        "referral_if_local_workup_unavailable"
+      ],
+      "minimumSafePlan": [
+        "pain_control",
+        "do_not_guess_systemic_antimicrobial",
+        "collect_or_refer_for_culture",
+        "written_neurologic_red_flags"
+      ],
+      "stabilizeAndRefer": [
+        "minimal_handling",
+        "analgesia",
+        "no_blind_flushing",
+        "urgent_safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "identify_species_by_color_or_odor",
+        "empirical_repeat_of_failed_course",
+        "blind_deep_flush",
+        "delay_referral_for_complete_local_workup"
+      ]
+    },
+    {
+      "id": "otodectosis_control",
+      "fullPlan": [
+        "confirm_mites",
+        "cytology_for_secondary_component",
+        "species_and_age_compatible_acaricidal_component",
+        "safe_cleaning",
+        "evaluate_and_treat_compatible_contacts",
+        "control_self_trauma",
+        "scheduled_recheck"
+      ],
+      "stagedPlan": [
+        "confirm_mites",
+        "treat_index_patient_with_compatible_product",
+        "book_contact_assessment",
+        "recheck"
+      ],
+      "minimumSafePlan": [
+        "compatible_parasite_control",
+        "contact_warning",
+        "avoid_unverified_home_product",
+        "recheck"
+      ],
+      "stabilizeAndRefer": [
+        "control_self_trauma",
+        "safe_referral_if_exam_impossible"
+      ],
+      "unsafeOrInadequate": [
+        "exclude_mites_because_debris_is_scarce",
+        "treat_only_one_symptomatic_pet_in_exposed_household",
+        "use_one_unchecked_product_for_all_species_and_ages"
+      ]
+    },
+    {
+      "id": "ear_foreign_body",
+      "fullPlan": [
+        "analgesia_or_sedation_as_needed",
+        "controlled_visualized_removal",
+        "post_removal_otoscopy",
+        "assess_tympanum",
+        "cytology_if_inflammation_or_discharge",
+        "treat_documented_trauma",
+        "recheck"
+      ],
+      "stagedPlan": [
+        "pain_control",
+        "stop_blind_attempts",
+        "sedated_or_video_assisted_assessment",
+        "remove_or_refer"
+      ],
+      "minimumSafePlan": [
+        "pain_control",
+        "prevent_further_home_manipulation",
+        "same_day_safe_route"
+      ],
+      "stabilizeAndRefer": [
+        "minimal_manipulation",
+        "no_blind_instrumentation",
+        "urgent_safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "blind_forceps_attempt",
+        "declare_absence_from_nondiagnostic_cytology",
+        "apply_unknown_product_when_tympanum_is_damaged_or_unknown"
+      ]
+    },
+    {
+      "id": "recurrent_allergic_otitis",
+      "fullPlan": [
+        "cytology_each_ear",
+        "treat_secondary_components_per_ear",
+        "control_inflammation_and_pain",
+        "minimum_dermatologic_database",
+        "allergy_workup_plan",
+        "adherence_teach_back",
+        "longitudinal_prevention_and_recheck"
+      ],
+      "stagedPlan": [
+        "treat_current_ear_components",
+        "document_skin_pattern",
+        "start_minimum_dermatologic_database",
+        "schedule_allergy_workup"
+      ],
+      "minimumSafePlan": [
+        "pain_and_inflammation_control",
+        "cytology_directed_ear_plan",
+        "clear_recheck",
+        "explain_recurrence_risk"
+      ],
+      "stabilizeAndRefer": [
+        "pain_control",
+        "safe_referral_for_stenosis_or_uncontrolled_disease"
+      ],
+      "unsafeOrInadequate": [
+        "call_secondary_infection_the_only_cause",
+        "copy_same_result_to_both_ears",
+        "repeat_previous_plan_without_new_cytology",
+        "blame_owner_instead_of_checking_feasibility"
+      ]
+    },
+    {
+      "id": "suspected_middle_inner_ear",
+      "fullPlan": [
+        "complete_history",
+        "neurologic_and_cranial_nerve_exam",
+        "eye_protection_if_blink_impaired",
+        "controlled_deep_ear_assessment",
+        "advanced_imaging",
+        "separate_middle_ear_sample",
+        "supportive_care",
+        "specialist_plan"
+      ],
+      "stagedPlan": [
+        "localize_neurologic_signs",
+        "protect_cornea_if_needed",
+        "arrange_urgent_imaging_and_specialist_assessment"
+      ],
+      "minimumSafePlan": [
+        "minimal_handling",
+        "supportive_care_by_state",
+        "urgent_safe_referral",
+        "written_deterioration_route"
+      ],
+      "stabilizeAndRefer": [
+        "minimal_handling",
+        "protect_airway_and_cornea_as_indicated",
+        "no_blind_flush",
+        "urgent_or_emergency_referral"
+      ],
+      "unsafeOrInadequate": [
+        "exclude_middle_ear_with_normal_external_cytology",
+        "label_every_head_tilt_as_ear_infection",
+        "delay_referral_for_external_swab",
+        "blind_flush_with_neurologic_signs"
+      ]
+    },
+    {
+      "id": "aural_hematoma",
+      "fullPlan": [
+        "analgesia",
+        "evaluate_underlying_itch_or_ear_disease",
+        "treat_underlying_cause",
+        "select_procedure_by_size_age_and_resources",
+        "discuss_recurrence_and_deformity",
+        "monitor_refilling_and_ear_canal"
+      ],
+      "stagedPlan": [
+        "analgesia",
+        "diagnose_underlying_cause",
+        "schedule_or_refer_for_definitive_procedure",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "pain_control",
+        "address_head_shaking_cause",
+        "timely_procedure_or_referral",
+        "recheck"
+      ],
+      "stabilizeAndRefer": [
+        "pain_control",
+        "protect_pinna_from_self_trauma",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "drain_without_assessing_cause",
+        "repeat_aspiration_indefinitely",
+        "promise_normal_cosmetic_result_in_chronic_organized_hematoma"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "ear_yeast_otitis",
+      "version": "2026.07.16.40",
+      "title": "Грибковый наружный отит",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Наружный отит с клинически значимым дрожжевым компонентом, подтверждаемым цитологией; при рецидиве требуется поиск первичной причины.",
+      "primaryDiagnosisId": "dx_ear_yeast_otitis",
+      "differentials": [
+        "dx_ear_bacterial_otitis",
+        "dx_ear_otodectosis",
+        "dx_ear_foreign_body",
+        "dx_recurrent_allergic_otitis"
+      ],
+      "planBundleId": "local_otitis_cytology_directed",
+      "sourceIds": [
+        "merck_otitis_externa",
+        "aaha_allergic_skin_2023"
+      ],
+      "presentations": [
+        {
+          "id": "p1_uncomplicated",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что питомец несколько дней чешет одно ухо, трясёт головой, появился запах.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, началось 4–6 дней назад и постепенно усилилось.",
+            "laterality": "Дома мы заметили, что одно ухо беспокоит заметно сильнее.",
+            "prior_episodes_treatment": "Насколько мы можем судить, это первый эпизод, ранее капли не применяли.",
+            "home_products": "Мы записали, что дома только осторожно протёрли наружную часть раковины."
+          },
+          "examFindings": [
+            {
+              "factId": "unilateral_open_canal",
+              "source": "physical_exam",
+              "finding": "Умеренная эритема, жирные коричневые выделения, канал открыт."
+            },
+            {
+              "factId": "tympanum_visible_intact_appearing",
+              "source": "physical_exam",
+              "finding": "Перепонка визуализируется и выглядит целой."
+            },
+            {
+              "factId": "no_neurologic_deficit",
+              "source": "physical_exam",
+              "finding": "Краткий неврологический скрининг без отклонений."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "yeast_high",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            },
+            {
+              "factId": "tympanum_visible_intact_appearing",
+              "discoveryPaths": [
+                "otoscopy_less_painful_first"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: многочисленные почкующиеся дрожжевые клетки; единичные кокки; выраженного нейтрофильного воспаления нет."
+            },
+            {
+              "id": "ear_mite_microscopy",
+              "classification": "optional_adds_information",
+              "result": "При микроскопии материала: клещи и яйца не обнаружены."
+            },
+            {
+              "id": "ear_culture_ast",
+              "classification": "low_value_in_context",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "yeast_high",
+              "tympanum_visible_intact_appearing"
+            ],
+            "confirmedDiagnosisRequires": [
+              "yeast_high"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "otoscope",
+              "microscope",
+              "cytology_consumables"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "local_otitis_cytology_directed",
+          "followUp": {
+            "timing": "7–14 дней или раньше, если хуже.",
+            "required": true,
+            "targets": [
+              "pain",
+              "canal_inflammation",
+              "repeat_cytology"
+            ]
+          },
+          "outcomes": {
+            "safe": "Зуд и воспаление уменьшаются; лечение продолжается до клинического и цитологического разрешения.",
+            "unsafe": "План только по цвету выделений повышает риск неэффективного лечения и повторного визита."
+          },
+          "ownerCommunication": [
+            "Я покажу вам технику обработки.",
+            "Пожалуйста, повторите порядок действий.",
+            "Я поясню вам: исчезновение запаха не подтверждает излечение."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious",
+              "avoidant_with_gentle_handling"
+            ],
+            "blockedTemperament": [
+              "handling_impossible_without_safe_alternative"
+            ],
+            "ownerModifiers": [
+              "budget_limited",
+              "inattentive",
+              "anxious",
+              "observant"
+            ]
+          }
+        },
+        {
+          "id": "p2_bilateral_skin_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "routine",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что оба уха периодически пахнут, а собака ещё лижет лапы; в тёплое время хуже.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, эпизоды повторяются несколько месяцев.",
+            "laterality": "Дома мы заметили, что оба уха, справа выраженнее.",
+            "skin_allergy": "Насколько мы можем судить, есть сезонный зуд лап и морды.",
+            "prior_episodes_treatment": "Мы записали, что капли временно помогали, причину рецидива не исследовали."
+          },
+          "examFindings": [
+            {
+              "factId": "bilateral_otitis",
+              "source": "physical_exam",
+              "finding": "Оба канала воспалены, справа выраженнее."
+            },
+            {
+              "factId": "allergic_skin_pattern",
+              "source": "physical_exam",
+              "finding": "Межпальцевая эритема и следы вылизывания лап."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "different_ear_burdens",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            },
+            {
+              "factId": "allergic_skin_pattern",
+              "discoveryPaths": [
+                "pinna_skin_exam",
+                "general_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: справа дрожжей много, слева умеренно; значимого палочкового компонента нет."
+            },
+            {
+              "id": "ear_culture_ast",
+              "classification": "low_value_in_context",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "different_ear_burdens"
+            ],
+            "confirmedDiagnosisRequires": [
+              "different_ear_burdens"
+            ],
+            "underlyingCauseStatus": "probable_not_confirmed"
+          },
+          "equipment": {
+            "requiredLocal": [
+              "otoscope",
+              "microscope",
+              "cytology_consumables"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "recurrent_allergic_otitis",
+          "followUp": {
+            "timing": "7–14 дней и продольное обследование на аллергию.",
+            "required": true,
+            "targets": [
+              "cytology_each_ear",
+              "skin_pruritus",
+              "adherence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Вторичный компонент контролируется, запускается поиск аллергической причины.",
+            "unsafe": "Лечение только ушей без первичной причины ведёт к рецидивам."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: разницу между вторичной инфекцией и первичной причиной.",
+            "Я не буду обещать одномоментного излечения хронической аллергической болезни."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious",
+              "avoidant_with_gentle_handling"
+            ],
+            "ownerModifiers": [
+              "budget_limited",
+              "nonadherent",
+              "observant",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_pain_old_drops",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что ухо резко заболело; дома закапали оставшееся старое средство, но стало хуже.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, ухудшение за последние двое суток.",
+            "home_products": "Дома мы заметили, что использовали старые капли с неизвестным сроком и составом.",
+            "neurologic_signs": "Насколько мы можем судить, наклона головы и потери равновесия не замечали.",
+            "prior_episodes_treatment": "Мы записали, что раньше лечили похожий эпизод, контроль не проходили."
+          },
+          "examFindings": [
+            {
+              "factId": "severe_pain_limits_otoscopy",
+              "source": "physical_exam",
+              "finding": "Глубокая отоскопия прекращена из-за боли."
+            },
+            {
+              "factId": "tympanum_unknown",
+              "source": "physical_exam",
+              "finding": "Перепонка не оценена."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "unknown_home_drops",
+              "discoveryPaths": [
+                "home_products"
+              ]
+            },
+            {
+              "factId": "tympanum_unknown",
+              "discoveryPaths": [
+                "otoscopy_less_painful_first"
+              ]
+            },
+            {
+              "factId": "mixed_cytology",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: много дрожжей, умеренные кокки и нейтрофильное воспаление."
+            },
+            {
+              "id": "ear_culture_ast",
+              "classification": "recommended_changes_plan",
+              "result": "По результатам посева и определения чувствительности: материал должен быть собран до нового противомикробного плана; результат отсроченный."
+            },
+            {
+              "id": "ear_video_otoscopy",
+              "classification": "unavailable_requires_referral",
+              "result": "При эндоскопическом осмотре: глубокая оценка после обезболивания или подготовки."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "mixed_cytology",
+              "tympanum_unknown"
+            ],
+            "confirmedDiagnosisRequires": [
+              "mixed_cytology"
+            ],
+            "mustNotAssume": [
+              "tympanum_intact"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "microscope",
+              "cytology_consumables",
+              "analgesia"
+            ],
+            "missingLocalRoute": [
+              "video_otoscopy_referral",
+              "safe_referral"
+            ]
+          },
+          "carePlanId": "local_otitis_cytology_directed",
+          "followUp": {
+            "timing": "Маршрут в тот же день плюс повторная проверка после углубленной оценки.",
+            "required": true,
+            "targets": [
+              "pain",
+              "tympanum_status",
+              "culture_if_collected",
+              "repeat_cytology"
+            ]
+          },
+          "outcomes": {
+            "safe": "Боль контролируется, потенциально ототоксичные средства не применяются вслепую.",
+            "unsafe": "Форсированная отоскопия или неизвестные капли при неоценённой перепонке могут ухудшить состояние."
+          },
+          "ownerCommunication": [
+            "Пожалуйста, принесите упаковку старого средства.",
+            "Я поясню, почему сейчас нельзя безопасно повторить прежние капли."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "analgesia_or_referral",
+            "ownerModifiers": [
+              "home_treatment",
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ear_bacterial_cocci",
+      "version": "2026.07.16.40",
+      "title": "Кокковый бактериальный наружный отит",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Клинически значимый кокковый бактериальный компонент наружного отита подтверждается цитологией в контексте воспаления.",
+      "primaryDiagnosisId": "dx_ear_bacterial_cocci",
+      "differentials": [
+        "dx_ear_yeast_otitis",
+        "dx_ear_bacterial_rods",
+        "dx_ear_foreign_body",
+        "dx_recurrent_allergic_otitis"
+      ],
+      "planBundleId": "local_otitis_cytology_directed",
+      "sourceIds": [
+        "merck_otitis_externa"
+      ],
+      "presentations": [
+        {
+          "id": "p1_first_local",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что одно ухо болит и пахнет, появились влажные выделения.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, 3–5 дней, постепенно хуже.",
+            "prior_episodes_treatment": "Дома мы заметили, что первый эпизод, недавней терапии нет.",
+            "neurologic_signs": "Насколько мы можем судить, неврологических признаков дома не замечали."
+          },
+          "examFindings": [
+            {
+              "factId": "local_pain_inflammation",
+              "source": "physical_exam",
+              "finding": "Локальная боль, влажное отделяемое и воспаление канала."
+            },
+            {
+              "factId": "tympanum_intact_after_surface_clean",
+              "source": "physical_exam",
+              "finding": "После осторожной поверхностной очистки перепонка видима и выглядит целой."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "intracellular_cocci",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            },
+            {
+              "factId": "tympanum_intact_after_surface_clean",
+              "discoveryPaths": [
+                "otoscopy_less_painful_first"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: много кокков внутри и вне нейтрофилов."
+            },
+            {
+              "id": "ear_culture_ast",
+              "classification": "optional_adds_information",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "intracellular_cocci",
+              "tympanum_intact_after_surface_clean"
+            ],
+            "confirmedDiagnosisRequires": [
+              "intracellular_cocci"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "otoscope",
+              "microscope",
+              "cytology_consumables"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "local_otitis_cytology_directed",
+          "followUp": {
+            "timing": "7–14 дней.",
+            "required": true,
+            "targets": [
+              "pain",
+              "canal",
+              "repeat_cytology"
+            ]
+          },
+          "outcomes": {
+            "safe": "Клиническое и цитологическое разрешение при выполнении плана.",
+            "unsafe": "Прекращение после уменьшения запаха создаёт риск персистенции и рецидива."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: длительность до контрольной цитологии.",
+            "Я объясню вам: проверить технику местной обработки."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious",
+              "pain_defensive_with_analgesia"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "inattentive",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_recurrence_incomplete_course",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что ухо снова воспалилось вскоре после того, как капли прекратили при первом улучшении.",
+          "historyAnswers": {
+            "prior_episodes_treatment": "По нашим наблюдениям, прошлый курс завершили раньше срока, контроль пропустили.",
+            "skin_allergy": "Дома мы заметили, что сохраняется зуд лап.",
+            "laterality": "Насколько мы можем судить, справа хуже, но левое тоже периодически беспокоит."
+          },
+          "examFindings": [
+            {
+              "factId": "bilateral_unequal_inflammation",
+              "source": "physical_exam",
+              "finding": "Справа выраженное воспаление, слева умеренное."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "recent_incomplete_treatment",
+              "discoveryPaths": [
+                "prior_episodes_treatment"
+              ]
+            },
+            {
+              "factId": "different_ear_cytology",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: справа кокки с воспалением; слева смешанный умеренный дрожжевой компонент."
+            },
+            {
+              "id": "ear_culture_ast",
+              "classification": "recommended_changes_plan",
+              "result": "По результатам посева и определения чувствительности: посев из более поражённого уха; результат отсроченный."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "different_ear_cytology",
+              "recent_incomplete_treatment"
+            ],
+            "confirmedDiagnosisRequires": [
+              "different_ear_cytology"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "otoscope",
+              "microscope",
+              "cytology_consumables"
+            ],
+            "external": [
+              "culture_external"
+            ]
+          },
+          "carePlanId": "recurrent_allergic_otitis",
+          "followUp": {
+            "timing": "7–14 дней и после посева, если его собрать.",
+            "required": true,
+            "targets": [
+              "cytology_each_ear",
+              "adherence",
+              "skin_pattern"
+            ]
+          },
+          "outcomes": {
+            "safe": "Разные уши получают обоснованные планы, устраняются барьеры выполнения.",
+            "unsafe": "Копирование прошлого плана без новой цитологии может повторить неудачу."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: без обвинения выяснить фактический режим.",
+            "Я объясню вам: согласовать выполнимый график и проверка понимания."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "nonadherent",
+              "budget_limited",
+              "guilty",
+              "defensive"
+            ]
+          }
+        },
+        {
+          "id": "p3_pain_stenosis",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что ухо очень болит, проход почти закрылся, питомец не даёт осматривать.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, проблема длительная, резко болезненнее последние дни.",
+            "prior_episodes_treatment": "Дома мы заметили, что было несколько курсов без устойчивого контроля.",
+            "neurologic_signs": "Насколько мы можем судить, явного наклона головы не замечали."
+          },
+          "examFindings": [
+            {
+              "factId": "marked_stenosis",
+              "source": "physical_exam",
+              "finding": "Канал значительно сужен; глубина и перепонка не видны."
+            },
+            {
+              "factId": "severe_pain",
+              "source": "physical_exam",
+              "finding": "Манипуляции ограничены болью."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "marked_stenosis",
+              "discoveryPaths": [
+                "ear_base_palpation",
+                "otoscopy_less_painful_first"
+              ]
+            },
+            {
+              "factId": "cocci_suppurative",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: дегенеративные нейтрофилы и многочисленные кокки."
+            },
+            {
+              "id": "ear_culture_ast",
+              "classification": "recommended_changes_plan",
+              "result": "По результатам посева и определения чувствительности: сбор до системного противомикробного решения."
+            },
+            {
+              "id": "ear_video_otoscopy",
+              "classification": "unavailable_requires_referral",
+              "result": "При эндоскопическом осмотре: требуется контролируемая глубокая оценка."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "marked_stenosis",
+              "cocci_suppurative"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cocci_suppurative"
+            ],
+            "unexcludedRisks": [
+              "middle_ear_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "microscope",
+              "analgesia"
+            ],
+            "missingLocalRoute": [
+              "video_otoscopy_referral",
+              "safe_referral"
+            ]
+          },
+          "carePlanId": "rod_or_refractory_otitis",
+          "followUp": {
+            "timing": "Срочное направление и документированная передача.",
+            "required": true,
+            "targets": [
+              "pain",
+              "deep_ear_assessment",
+              "middle_ear_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Боль контролируется и глубокая оценка проводится безопасно.",
+            "unsafe": "Форсированная отоскопия травмирует и не исключает средний отит."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему нормальный краткий неврологический скрининг не исключает поражение среднего уха."
+          ],
+          "compatibility": {
+            "temperament": [
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "analgesia_sedation_or_referral",
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited",
+              "frustrated"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ear_bacterial_rods",
+      "version": "2026.07.16.40",
+      "title": "Палочковый бактериальный наружный отит",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Палочковый компонент определяется цитологией; вид и чувствительность не выводятся из цвета или запаха и требуют посева по контексту.",
+      "primaryDiagnosisId": "dx_ear_bacterial_rods",
+      "differentials": [
+        "dx_ear_bacterial_cocci",
+        "dx_ear_media_interna",
+        "dx_ear_mass",
+        "dx_ear_foreign_body"
+      ],
+      "planBundleId": "rod_or_refractory_otitis",
+      "sourceIds": [
+        "merck_otitis_externa",
+        "merck_otitis_media_interna"
+      ],
+      "presentations": [
+        {
+          "id": "p1_rods_cytology",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что из уха много влажных выделений, оно болезненное и раздражённое.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, ухудшение около недели.",
+            "prior_episodes_treatment": "Дома мы заметили, что ранее были местные курсы, устойчивого результата нет.",
+            "neurologic_signs": "Насколько мы можем судить, неврологических признаков не замечали."
+          },
+          "examFindings": [
+            {
+              "factId": "erosive_painful_canal",
+              "source": "physical_exam",
+              "finding": "Эрозии, боль и обильное влажное отделяемое; перепонка не видна."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "intracellular_rods",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            },
+            {
+              "factId": "tympanum_unknown",
+              "discoveryPaths": [
+                "otoscopy_less_painful_first"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: много палочек, часть внутриклеточно; выраженное нейтрофильное воспаление."
+            },
+            {
+              "id": "ear_culture_ast",
+              "classification": "required_for_safe_decision",
+              "result": "По результатам посева и определения чувствительности: отсроченный посев и чувствительность до направленной терапии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "intracellular_rods",
+              "tympanum_unknown"
+            ],
+            "confirmedDiagnosisRequires": [
+              "intracellular_rods"
+            ],
+            "mustNotAssume": [
+              "bacterial_species",
+              "susceptibility"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "microscope",
+              "cytology_consumables",
+              "analgesia"
+            ],
+            "external": [
+              "culture_external"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "rod_or_refractory_otitis",
+          "followUp": {
+            "timing": "Как только культура вернется; частые осмотры или цитология.",
+            "required": true,
+            "targets": [
+              "pain",
+              "culture",
+              "canal",
+              "repeat_cytology"
+            ]
+          },
+          "outcomes": {
+            "safe": "Терапия направляется результатами и глубиной процесса.",
+            "unsafe": "Эмпирический повтор прежнего курса повышает риск неудачи и резистентности."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: отсроченность посева и временный безопасный план."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "pain_defensive_with_analgesia"
+            ],
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited",
+              "frustrated"
+            ]
+          }
+        },
+        {
+          "id": "p2_chronic_stenosis",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что ухо болеет много месяцев; проход почти закрылся, курсы помогают ненадолго.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, хроническое течение более двух месяцев.",
+            "prior_episodes_treatment": "Дома мы заметили, что много местных и системных курсов.",
+            "skin_allergy": "Насколько мы можем судить, первичную причину последовательно не исследовали."
+          },
+          "examFindings": [
+            {
+              "factId": "chronic_proliferative_stenosis",
+              "source": "physical_exam",
+              "finding": "Утолщение, почти закрытый канал, выраженная боль."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "chronic_proliferative_stenosis",
+              "discoveryPaths": [
+                "ear_base_palpation",
+                "otoscopy_less_painful_first"
+              ]
+            },
+            {
+              "factId": "rods_neutrophils",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: палочки и нейтрофилы."
+            },
+            {
+              "id": "ear_culture_ast",
+              "classification": "required_for_safe_decision",
+              "result": "По результатам посева и определения чувствительности: утолщение, почти закрытый канал, выраженная боль."
+            },
+            {
+              "id": "ear_video_otoscopy",
+              "classification": "unavailable_requires_referral",
+              "result": "При эндоскопическом осмотре: глубокая оценка направление к специалисту."
+            },
+            {
+              "id": "ear_ct_mri",
+              "classification": "recommended_changes_plan",
+              "result": "При томографическом исследовании: оценка среднего уха и хронических изменений."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "chronic_proliferative_stenosis",
+              "rods_neutrophils"
+            ],
+            "confirmedDiagnosisRequires": [
+              "rods_neutrophils"
+            ],
+            "unexcludedRisks": [
+              "middle_ear_disease",
+              "irreversible_canal_change",
+              "mass"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "microscope",
+              "analgesia"
+            ],
+            "missingLocalRoute": [
+              "culture_external",
+              "video_otoscopy_referral",
+              "middle_ear_imaging_external",
+              "safe_referral"
+            ]
+          },
+          "carePlanId": "rod_or_refractory_otitis",
+          "followUp": {
+            "timing": "Срочная передача специалиста.",
+            "required": true,
+            "targets": [
+              "deep_assessment",
+              "culture",
+              "surgical_options",
+              "primary_cause"
+            ]
+          },
+          "outcomes": {
+            "safe": "Специалист оценивает обратимость и среднее ухо.",
+            "unsafe": "Ещё один короткий курс создаёт ложное обещание и задерживает помощь."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: честно обсудить хронический характер и возможную хирургическую оценку."
+          ],
+          "compatibility": {
+            "temperament": [
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_and_referral",
+            "ownerModifiers": [
+              "frustrated",
+              "budget_limited",
+              "distrustful"
+            ]
+          }
+        },
+        {
+          "id": "p3_neurologic_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_referral",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что на фоне больного уха появился наклон головы и нарушение равновесия.",
+          "historyAnswers": {
+            "neurologic_signs": "По нашим наблюдениям, есть наклон головы, шаткость и движения глаз; возможно изменение морды.",
+            "onset_course": "Дома мы заметили, что неврологические признаки появились остро на фоне хронического уха.",
+            "prior_episodes_treatment": "Насколько мы можем судить, было несколько курсов лечения наружного уха."
+          },
+          "examFindings": [
+            {
+              "factId": "peripheral_vestibular_signs",
+              "source": "physical_exam",
+              "finding": "Наклон головы, горизонтальный или ротаторный нистагм, атаксия; сознание сохранено."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "peripheral_vestibular_signs",
+              "discoveryPaths": [
+                "brief_neurologic_screen",
+                "full_neurologic_exam"
+              ]
+            },
+            {
+              "factId": "external_rods_not_middle_sample",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "optional_adds_information",
+              "result": "При микроскопии материала: палочки во внешнем канале; результат не устанавливает возбудителя среднего уха."
+            },
+            {
+              "id": "ear_ct_mri",
+              "classification": "unavailable_requires_referral",
+              "result": "При томографическом исследовании: срочная продвинутая визуализация."
+            },
+            {
+              "id": "ear_middle_sample",
+              "classification": "unavailable_requires_referral",
+              "result": "Целевое исследование показало: отдельный глубокий материал после безопасной визуализации."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "peripheral_vestibular_signs"
+            ],
+            "confirmedDiagnosisRequires": [
+              "ear_ct_mri_or_specialist_assessment"
+            ],
+            "unexcludedRisks": [
+              "central_neurologic_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam"
+            ],
+            "missingLocalRoute": [
+              "middle_ear_imaging_external",
+              "middle_ear_sampling_referral",
+              "safe_referral"
+            ]
+          },
+          "carePlanId": "suspected_middle_inner_ear",
+          "followUp": {
+            "timing": "Немедленное документальное направление.",
+            "required": true,
+            "targets": [
+              "neurolocalization",
+              "imaging",
+              "middle_ear_sample",
+              "support"
+            ]
+          },
+          "outcomes": {
+            "safe": "Пациент направлен без опасных промываний и задержки.",
+            "unsafe": "Попытка закончить местную диагностику задерживает экстренный маршрут."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: внешний мазок не равен материалу среднего уха.",
+            "Я объясню вам: описать срочность и безопасную транспортировку."
+          ],
+          "compatibility": {
+            "temperament": [
+              "neurologically_impaired"
+            ],
+            "requiredHandlingAlternative": "minimal_handling",
+            "ownerModifiers": [
+              "anxious",
+              "panicked",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ear_otodectosis",
+      "version": "2026.07.16.40",
+      "title": "Отодектоз",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Инвазия Otodectes cynotis подтверждается визуализацией клещей или яиц; Вторичная инфекция и контакты подключаются отдельно.",
+      "primaryDiagnosisId": "dx_ear_otodectosis",
+      "differentials": [
+        "dx_ear_yeast_otitis",
+        "dx_ear_bacterial_cocci",
+        "dx_allergic_pruritus",
+        "dx_other_mite_disease"
+      ],
+      "planBundleId": "otodectosis_control",
+      "sourceIds": [
+        "capc_otodectic_mite",
+        "merck_otitis_externa"
+      ],
+      "presentations": [
+        {
+          "id": "p1_young_cat",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что молодая кошка из приюта сильно чешет оба уха; внутри тёмные сухие выделения.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, около недели, последние дни сильнее.",
+            "contact_animals": "Дома мы заметили, что недавно жила с другими кошками.",
+            "home_products": "Насколько мы можем судить, ничего не применяли."
+          },
+          "examFindings": [
+            {
+              "factId": "bilateral_dry_dark_debris",
+              "source": "physical_exam",
+              "finding": "Двусторонние сухие тёмные крошковатые выделения и расчёсы."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "mites_or_eggs_seen",
+              "discoveryPaths": [
+                "mite_mineral_oil_microscopy"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_mite_microscopy",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: обнаружены подвижные клещи и яйца."
+            },
+            {
+              "id": "ear_cytology",
+              "classification": "recommended_changes_plan",
+              "result": "При микроскопии материала: значимого вторичного дрожжевого или бактериального компонента нет."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "mites_or_eggs_seen"
+            ],
+            "confirmedDiagnosisRequires": [
+              "mites_or_eggs_seen"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "otoscope",
+              "microscope",
+              "cytology_consumables"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "otodectosis_control",
+          "followUp": {
+            "timing": "За выбранный продукт и жизненный цикл; раньше, если боль.",
+            "required": true,
+            "targets": [
+              "pruritus",
+              "mites",
+              "contacts",
+              "secondary_infection"
+            ]
+          },
+          "outcomes": {
+            "safe": "Зуд уменьшается, контакты не поддерживают реинвазию.",
+            "unsafe": "Лечение только пациента без оценки контактов повышает риск повторения."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: передачу между совместимыми контактными животными.",
+            "Я объясню вам: проверить вид и возраст перед выбором продукта."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "young_active"
+            ],
+            "ownerModifiers": [
+              "shelter_adopter",
+              "multi_pet",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_multi_pet_secondary_infection",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat",
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что в доме у нескольких животных зудят уши; одного уже лечили, но проблема вернулась.",
+          "historyAnswers": {
+            "contact_animals": "По нашим наблюдениям, похожие симптомы есть у нескольких животных.",
+            "prior_episodes_treatment": "Дома мы заметили, что ранее обработали только одного питомца.",
+            "laterality": "Насколько мы можем судить, одно ухо у текущего пациента болезненнее."
+          },
+          "examFindings": [
+            {
+              "factId": "household_cluster",
+              "source": "owner_history",
+              "finding": "Несколько совместимых контактных животных с ушным зудом."
+            },
+            {
+              "factId": "one_ear_more_inflamed",
+              "source": "physical_exam",
+              "finding": "Одно ухо более болезненное и воспалённое."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "mites_confirmed",
+              "discoveryPaths": [
+                "mite_mineral_oil_microscopy"
+              ]
+            },
+            {
+              "factId": "secondary_cocci_one_ear",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_mite_microscopy",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: клещи обнаружены."
+            },
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: во втором, более болезненном ухе кокковый компонент с воспалением; в другом значимой инфекции нет."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "mites_confirmed",
+              "secondary_cocci_one_ear"
+            ],
+            "confirmedDiagnosisRequires": [
+              "mites_confirmed"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "otoscope",
+              "microscope",
+              "cytology_consumables"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "otodectosis_control",
+          "followUp": {
+            "timing": "Координированный бытовой контроль и перепроверка.",
+            "required": true,
+            "targets": [
+              "all_contacts",
+              "secondary_infection",
+              "pruritus"
+            ]
+          },
+          "outcomes": {
+            "safe": "Все совместимые контакты получают видо- и возраст-совместимый контроль, вторичная инфекция лечится адресно.",
+            "unsafe": "Одинаковая схема без проверки вида или возраста или лечение только одного животного приводит к риску вреда или реинвазии."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: составить список всех контактных животных.",
+            "Я объясню вам: не переносить один препарат автоматически между видами и возрастами."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "multi_pet",
+              "budget_limited",
+              "overwhelmed"
+            ]
+          }
+        },
+        {
+          "id": "p3_severe_pruritus_low_debris",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat",
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "priority_if_self_trauma",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что питомец очень сильно чешет уши, хотя тёмных выделений почти нет; раковина расчёсана.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, зуд выраженный, быстро усилился.",
+            "contact_animals": "Дома мы заметили, что контакт с другими животными возможен.",
+            "home_products": "Насколько мы можем судить, уши недавно чистили, поэтому выделений мало."
+          },
+          "examFindings": [
+            {
+              "factId": "pinna_excoriations",
+              "source": "physical_exam",
+              "finding": "Расчёсы ушной раковины при небольшом количестве отделяемого."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "mites_confirmed_low_burden_sample",
+              "discoveryPaths": [
+                "mite_mineral_oil_microscopy"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_mite_microscopy",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: в материале обнаружены клещи или яйца несмотря на небольшое количество отделяемого."
+            },
+            {
+              "id": "ear_cytology",
+              "classification": "recommended_changes_plan",
+              "result": "При микроскопии материала: вторичная инфекция не подтверждена."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "mites_confirmed_low_burden_sample"
+            ],
+            "confirmedDiagnosisRequires": [
+              "mites_confirmed_low_burden_sample"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "otoscope",
+              "microscope",
+              "cytology_consumables"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "otodectosis_control",
+          "followUp": {
+            "timing": "Запланировано плюс раньше, если самотравма ухудшается.",
+            "required": true,
+            "targets": [
+              "self_trauma",
+              "mites",
+              "contacts"
+            ]
+          },
+          "outcomes": {
+            "safe": "Инвазия не пропущена из-за слабого визуального стереотипа.",
+            "unsafe": "Исключение клещей по малому количеству отделяемого оставляет причину зуда."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: количество тёмных выделений не является надёжным исключающим признаком."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "pruritic_restless"
+            ],
+            "ownerModifiers": [
+              "anxious",
+              "observant",
+              "home_cleaning"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ear_foreign_body",
+      "version": "2026.07.16.40",
+      "title": "Инородное тело слухового прохода",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Инородное тело подтверждается контролируемой визуализацией или извлечением; цитология не исключает его.",
+      "primaryDiagnosisId": "dx_ear_foreign_body",
+      "differentials": [
+        "dx_ear_bacterial_otitis",
+        "dx_ear_trauma",
+        "dx_ear_mass",
+        "dx_ear_media_interna"
+      ],
+      "planBundleId": "ear_foreign_body",
+      "sourceIds": [
+        "merck_otitis_externa",
+        "merck_otitis_media_interna"
+      ],
+      "presentations": [
+        {
+          "id": "p1_visible_plant",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": "only_if_controlled_removal_capability_confirmed"
+          },
+          "urgency": "priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что сразу после прогулки питомец внезапно начал трясти головой и чесать одно ухо.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, началось внезапно после прогулки в траве.",
+            "laterality": "Дома мы заметили, что только одно ухо.",
+            "home_products": "Насколько мы можем судить, дома ничего не закапывали и не пытались доставать."
+          },
+          "examFindings": [
+            {
+              "factId": "visible_plant_material",
+              "source": "physical_exam",
+              "finding": "Растительный предмет виден отоскопом; небольшое серозно-кровянистое отделяемое."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "visible_plant_material",
+              "discoveryPaths": [
+                "otoscopy_less_painful_first"
+              ]
+            },
+            {
+              "factId": "post_removal_tympanum_status",
+              "discoveryPaths": [
+                "post_removal_otoscopy"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "recommended_changes_plan",
+              "result": "При микроскопии материала: после извлечения значимой инфекции нет."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "visible_plant_material",
+              "post_removal_tympanum_status"
+            ],
+            "confirmedDiagnosisRequires": [
+              "visible_plant_material"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "otoscope",
+              "analgesia"
+            ],
+            "conditional": [
+              "sedation_capability_or_safe_referral"
+            ]
+          },
+          "carePlanId": "ear_foreign_body",
+          "followUp": {
+            "timing": "Короткая повторная проверка, если травма или боль сохраняется.",
+            "required": true,
+            "targets": [
+              "pain",
+              "tympanum",
+              "secondary_inflammation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Предмет удалён под контролем зрения, травма и перепонка оценены.",
+            "unsafe": "Слепая попытка проталкивает предмет глубже или повреждает канал или перепонку."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: необходимость повторной оценки после извлечения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious",
+              "pain_defensive_with_sedation"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_hidden_pain_edema",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что после прогулки ухо резко заболело; домашняя попытка пинцетом вызвала кровь.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, внезапно после травы.",
+            "home_products": "Дома мы заметили, что пытались достать предмет пинцетом вслепую.",
+            "neurologic_signs": "Насколько мы можем судить, наклона головы не замечали."
+          },
+          "examFindings": [
+            {
+              "factId": "edema_bleeding_limits_view",
+              "source": "physical_exam",
+              "finding": "Отёк, боль и кровотечение не позволяют увидеть глубину."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "blind_home_attempt",
+              "discoveryPaths": [
+                "home_products"
+              ]
+            },
+            {
+              "factId": "nondiagnostic_otoscopy",
+              "discoveryPaths": [
+                "otoscopy_less_painful_first"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "low_value_in_context",
+              "result": "При микроскопии материала: не исключает инородное тело."
+            },
+            {
+              "id": "ear_video_otoscopy",
+              "classification": "unavailable_requires_referral",
+              "result": "При эндоскопическом осмотре: требуется контролируемая оценка или извлечение под седацией или направление к специалисту."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "blind_home_attempt",
+              "nondiagnostic_otoscopy"
+            ],
+            "confirmedDiagnosisRequires": [
+              "controlled_visualization_or_removal"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "analgesia"
+            ],
+            "missingLocalRoute": [
+              "video_otoscopy_referral",
+              "safe_referral"
+            ]
+          },
+          "carePlanId": "ear_foreign_body",
+          "followUp": {
+            "timing": "Безопасный маршрут в тот же день.",
+            "required": true,
+            "targets": [
+              "controlled_removal",
+              "canal_trauma",
+              "tympanum"
+            ]
+          },
+          "outcomes": {
+            "safe": "Повторные слепые попытки прекращены, пациент направлен.",
+            "unsafe": "Продолжение манипуляций усиливает травму и риск повреждения перепонки."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: без обвинения объяснить, почему дальнейшие домашние попытки опасны."
+          ],
+          "compatibility": {
+            "temperament": [
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "analgesia_sedation_or_referral",
+            "ownerModifiers": [
+              "home_procedure",
+              "anxious",
+              "guilty"
+            ]
+          }
+        },
+        {
+          "id": "p3_tympanic_damage",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_referral",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что после удаления предмета сохраняются боль и лёгкий наклон головы.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, неврологический признак появился после травмы или извлечения.",
+            "neurologic_signs": "Дома мы заметили, что есть лёгкий наклон головы, возможна неустойчивость.",
+            "prior_episodes_treatment": "Насколько мы можем судить, до события хронического отита не было."
+          },
+          "examFindings": [
+            {
+              "factId": "tympanic_perforation",
+              "source": "physical_exam",
+              "finding": "При контролируемой оценке выявлена перфорация перепонки."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "tympanic_perforation",
+              "discoveryPaths": [
+                "controlled_post_removal_otoscopy"
+              ]
+            },
+            {
+              "factId": "new_neurologic_sign",
+              "discoveryPaths": [
+                "brief_neurologic_screen"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "optional_adds_information",
+              "result": "При микроскопии материала: внешний материал не заменяет материал среднего уха."
+            },
+            {
+              "id": "ear_middle_sample",
+              "classification": "unavailable_requires_referral",
+              "result": "Целевое исследование показало: отдельный материал по показаниям."
+            },
+            {
+              "id": "ear_ct_mri",
+              "classification": "recommended_changes_plan",
+              "result": "При томографическом исследовании: оценка среднего или внутреннего уха при неврологических признаках."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "tympanic_perforation",
+              "new_neurologic_sign"
+            ],
+            "confirmedDiagnosisRequires": [
+              "tympanic_perforation"
+            ],
+            "unexcludedRisks": [
+              "middle_inner_ear_injury"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam"
+            ],
+            "missingLocalRoute": [
+              "middle_ear_imaging_external",
+              "middle_ear_sampling_referral",
+              "safe_referral"
+            ]
+          },
+          "carePlanId": "suspected_middle_inner_ear",
+          "followUp": {
+            "timing": "Срочное направление.",
+            "required": true,
+            "targets": [
+              "neurologic_status",
+              "hearing",
+              "middle_ear",
+              "cornea_if_blink_abnormal"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ототоксичные или непроверенные средства исключены, неврология маршрутизирована.",
+            "unsafe": "Местное средство при повреждённой перепонке без проверки безопасности может ухудшить слух или вестибулярные признаки."
+          },
+          "ownerCommunication": [
+            "Я дам вам инструкцию по срочному ухудшению равновесия, сознания или моргания."
+          ],
+          "compatibility": {
+            "temperament": [
+              "pain_defensive",
+              "neurologically_impaired"
+            ],
+            "requiredHandlingAlternative": "minimal_handling",
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ear_recurrent_allergic",
+      "version": "2026.07.16.40",
+      "title": "Рецидивирующий отит с вероятной аллергической причиной",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Рецидивирующий наружный отит рассматривается как вторичная проблема; аллергическая первичная причина остаётся вероятной до систематического дерматологического исследования.",
+      "primaryDiagnosisId": "dx_recurrent_allergic_otitis",
+      "differentials": [
+        "dx_food_allergy",
+        "dx_atopic_disease",
+        "dx_ectoparasite_disease",
+        "dx_endocrine_predisposition",
+        "dx_ear_mass"
+      ],
+      "planBundleId": "recurrent_allergic_otitis",
+      "sourceIds": [
+        "aaha_allergic_skin_2023",
+        "merck_otitis_externa"
+      ],
+      "presentations": [
+        {
+          "id": "p1_seasonal_bilateral",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что оба уха воспаляются в тёплое время, одновременно собака лижет лапы и трёт морду.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, несколько сезонных эпизодов.",
+            "skin_allergy": "Дома мы заметили, что зуд лап и морды совпадает с ушными обострениями.",
+            "prior_episodes_treatment": "Насколько мы можем судить, капли дают временное улучшение."
+          },
+          "examFindings": [
+            {
+              "factId": "seasonal_pruritic_pattern",
+              "source": "physical_exam",
+              "finding": "Двусторонний отит и распределение кожного зуда, совместимое с аллергическим заболеванием."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "per_ear_secondary_components",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            },
+            {
+              "factId": "seasonal_pruritic_pattern",
+              "discoveryPaths": [
+                "skin_allergy",
+                "pinna_skin_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: в ушах разные уровни дрожжей или кокков; палочки не выявлены."
+            },
+            {
+              "id": "minimum_dermatologic_database",
+              "classification": "recommended_changes_plan",
+              "result": "При динамическом наблюдении: должен быть описан отдельным дерматологическим маршрутом."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "per_ear_secondary_components",
+              "seasonal_pruritic_pattern"
+            ],
+            "confirmedDiagnosisRequires": [
+              "per_ear_secondary_components"
+            ],
+            "underlyingCauseStatus": "probable_not_confirmed"
+          },
+          "equipment": {
+            "requiredLocal": [
+              "otoscope",
+              "microscope",
+              "cytology_consumables"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "recurrent_allergic_otitis",
+          "followUp": {
+            "timing": "Повторная проверка уха 7–14 дней; продольная обработка кожи.",
+            "required": true,
+            "targets": [
+              "cytology_each_ear",
+              "skin_pruritus",
+              "flare_pattern"
+            ]
+          },
+          "outcomes": {
+            "safe": "Текущий вторичный компонент лечится, первичная причина исследуется поэтапно.",
+            "unsafe": "Объявление инфекции единственной причиной создаёт повторные обострения."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: длительный диагностический путь и возможность вспышек даже при хорошем контроле."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "frustrated",
+              "budget_limited",
+              "high_adherence",
+              "low_adherence"
+            ]
+          }
+        },
+        {
+          "id": "p2_nonadherence_recurrence",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что после улучшения лечение прекратили и контроль пропустили; симптомы вернулись.",
+          "historyAnswers": {
+            "prior_episodes_treatment": "По нашим наблюдениям, фактический курс был короче назначенного.",
+            "home_products": "Дома мы заметили, что остаток средства сохранился, но повторно ещё не применяли.",
+            "onset_course": "Насколько мы можем судить, рецидив вскоре после прекращения."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrent_active_otitis",
+              "source": "physical_exam",
+              "finding": "Активное воспаление; прошлый результат нельзя переносить на новый эпизод."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "actual_adherence_gap",
+              "discoveryPaths": [
+                "prior_episodes_treatment"
+              ]
+            },
+            {
+              "factId": "new_cytology_required",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: новая цитология текущего эпизода; не копия прошлого результата."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "actual_adherence_gap",
+              "new_cytology_required"
+            ],
+            "confirmedDiagnosisRequires": [
+              "new_cytology_required"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "otoscope",
+              "microscope",
+              "cytology_consumables"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "recurrent_allergic_otitis",
+          "followUp": {
+            "timing": "Согласована возможная повторная проверка.",
+            "required": true,
+            "targets": [
+              "new_cytology",
+              "adherence_barriers",
+              "underlying_cause"
+            ]
+          },
+          "outcomes": {
+            "safe": "План упрощён до выполнимого, понимание проверено.",
+            "unsafe": "Обвинение владельца снижает доверие и не делает невыполнимый план лечения более безопасным."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: использовать нейтральные вопросы о фактическом применении.",
+            "Пожалуйста, повторите новый план своими словами."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "nonadherent",
+              "ashamed",
+              "defensive",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_chronic_proliferative",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_specialist",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что ухо хронически болезненное, проход утолщён и почти не открывается.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, многомесячное или многолетнее течение.",
+            "prior_episodes_treatment": "Дома мы заметили, что много курсов с кратким эффектом.",
+            "skin_allergy": "Насколько мы можем судить, есть длительный кожный зуд или другая неустранённая первичная причина."
+          },
+          "examFindings": [
+            {
+              "factId": "proliferative_irreversible_change_possible",
+              "source": "physical_exam",
+              "finding": "Выраженное утолщение или стеноз, перепонка не видна."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "proliferative_irreversible_change_possible",
+              "discoveryPaths": [
+                "ear_base_palpation",
+                "otoscopy_less_painful_first"
+              ]
+            },
+            {
+              "factId": "current_secondary_component",
+              "discoveryPaths": [
+                "ear_cytology_each_affected_ear"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: текущий вторичный компонент задан данными текущего случая."
+            },
+            {
+              "id": "ear_culture_ast",
+              "classification": "required_for_safe_decision_if_rods_or_systemic_plan",
+              "result": "По результатам посева и определения чувствительности: выраженное утолщение или стеноз, перепонка не видна."
+            },
+            {
+              "id": "ear_ct_mri",
+              "classification": "recommended_changes_plan",
+              "result": "При томографическом исследовании: оценка среднего уха и необратимых изменений."
+            },
+            {
+              "id": "ear_video_otoscopy",
+              "classification": "unavailable_requires_referral",
+              "result": "При эндоскопическом осмотре: специализированная глубокая оценка."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "proliferative_irreversible_change_possible",
+              "current_secondary_component"
+            ],
+            "confirmedDiagnosisRequires": [
+              "current_secondary_component"
+            ],
+            "unexcludedRisks": [
+              "middle_ear_disease",
+              "mass",
+              "irreversible_canal_change"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "microscope",
+              "analgesia"
+            ],
+            "missingLocalRoute": [
+              "video_otoscopy_referral",
+              "middle_ear_imaging_external",
+              "ear_surgery_referral",
+              "safe_referral"
+            ]
+          },
+          "carePlanId": "recurrent_allergic_otitis",
+          "followUp": {
+            "timing": "Срочный план специалиста.",
+            "required": true,
+            "targets": [
+              "deep_disease",
+              "surgical_options",
+              "pain",
+              "primary_allergy_control"
+            ]
+          },
+          "outcomes": {
+            "safe": "Медицинская и хирургическая пригодность оцениваются честно.",
+            "unsafe": "Обещание излечения коротким местным курсом задерживает специализированную помощь."
+          },
+          "ownerCommunication": [
+            "Давайте обсудим цели: боль, функция канала, контроль причины и реалистичный прогноз."
+          ],
+          "compatibility": {
+            "temperament": [
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_and_referral",
+            "ownerModifiers": [
+              "frustrated",
+              "distrustful",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ear_media_suspected",
+      "version": "2026.07.16.40",
+      "title": "Подозрение на средний или внутренний отит",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Подозрение формируется по глубокой боли, хроническому течению, перепонке или неврологическим признакам; внешний мазок не подтверждает и не исключает болезнь среднего уха.",
+      "primaryDiagnosisId": "dx_ear_media_interna_suspected",
+      "differentials": [
+        "dx_peripheral_vestibular_other",
+        "dx_central_neurologic_disease",
+        "dx_ear_mass",
+        "dx_idiopathic_vestibular_syndrome"
+      ],
+      "planBundleId": "suspected_middle_inner_ear",
+      "sourceIds": [
+        "merck_otitis_media_interna",
+        "merck_otitis_externa"
+      ],
+      "presentations": [
+        {
+          "id": "p1_persistent_deep_pain",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_referral",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что наружное ухо выглядит лучше, но глубокая боль сохраняется.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, боль сохраняется после улучшения наружного канала.",
+            "neurologic_signs": "Дома мы заметили, что явных вестибулярных признаков нет.",
+            "prior_episodes_treatment": "Насколько мы можем судить, был курс лечения наружного отита."
+          },
+          "examFindings": [
+            {
+              "factId": "persistent_deep_pain",
+              "source": "physical_exam",
+              "finding": "Боль при пальпации основания или открывании рта; перепонка мутная, выпуклая или не оценивается."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "persistent_deep_pain",
+              "discoveryPaths": [
+                "ear_base_palpation",
+                "otoscopy_less_painful_first"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "optional_adds_information",
+              "result": "При микроскопии материала: внешний результат не отражает надёжно среднее ухо."
+            },
+            {
+              "id": "ear_ct_mri",
+              "classification": "recommended_changes_plan",
+              "result": "При томографическом исследовании: визуализация среднего уха."
+            },
+            {
+              "id": "ear_middle_sample",
+              "classification": "unavailable_requires_referral",
+              "result": "Целевое исследование показало: отдельный материал среднего уха."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "persistent_deep_pain"
+            ],
+            "confirmedDiagnosisRequires": [
+              "specialist_imaging_and_or_middle_sample"
+            ],
+            "unexcludedRisks": [
+              "middle_ear_disease",
+              "mass"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam"
+            ],
+            "missingLocalRoute": [
+              "middle_ear_imaging_external",
+              "middle_ear_sampling_referral",
+              "safe_referral"
+            ]
+          },
+          "carePlanId": "suspected_middle_inner_ear",
+          "followUp": {
+            "timing": "Приоритетное направление и передача результатов.",
+            "required": true,
+            "targets": [
+              "imaging",
+              "middle_sample",
+              "pain"
+            ]
+          },
+          "outcomes": {
+            "safe": "Глубокая болезнь не исключается по улучшению наружного канала.",
+            "unsafe": "Повтор местного курса без оценки глубины создаёт риск хронического рецидива."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: различие наружного и среднего уха."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "analgesia_or_referral",
+            "ownerModifiers": [
+              "frustrated",
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_peripheral_vestibular",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что питомец наклоняет голову, шатается, глаза двигаются из стороны в сторону.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, началось остро.",
+            "neurologic_signs": "Дома мы заметили, что наклон головы, шаткость, тошнота; сознание сохранено.",
+            "prior_episodes_treatment": "Насколько мы можем судить, возможен текущий или прошлый отит."
+          },
+          "examFindings": [
+            {
+              "factId": "peripheral_vestibular_pattern",
+              "source": "physical_exam",
+              "finding": "Горизонтальный или ротаторный нистагм, атаксия, сохранённое сознание; требуется полная невролокализация."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "peripheral_vestibular_pattern",
+              "discoveryPaths": [
+                "full_neurologic_exam"
+              ]
+            },
+            {
+              "factId": "central_red_flags_absent_or_present",
+              "discoveryPaths": [
+                "full_neurologic_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_ct_mri",
+              "classification": "unavailable_requires_referral",
+              "result": "При томографическом исследовании: срочная визуализация по невролокализации."
+            },
+            {
+              "id": "ear_middle_sample",
+              "classification": "recommended_changes_plan",
+              "result": "Целевое исследование показало: отдельный материал при подтверждённом ушном маршруте."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "peripheral_vestibular_pattern",
+              "central_red_flags_absent_or_present"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_workup"
+            ],
+            "unexcludedRisks": [
+              "central_neurologic_disease",
+              "idiopathic_vestibular_syndrome"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "neurologic_exam"
+            ],
+            "missingLocalRoute": [
+              "middle_ear_imaging_external",
+              "safe_referral"
+            ]
+          },
+          "carePlanId": "suspected_middle_inner_ear",
+          "followUp": {
+            "timing": "Срочное направление.",
+            "required": true,
+            "targets": [
+              "neurolocalization",
+              "imaging",
+              "supportive_needs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Пациент стабильно и быстро маршрутизирован по неврологической срочности.",
+            "unsafe": "Любой наклон головы объявлен ушной инфекцией без исключения центральной причины."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: ушная причина вероятна, но не единственная."
+          ],
+          "compatibility": {
+            "temperament": [
+              "neurologically_impaired"
+            ],
+            "requiredHandlingAlternative": "minimal_handling",
+            "ownerModifiers": [
+              "panicked",
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_facial_or_horner",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_referral",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что на стороне хронически больного уха изменилась морда или глаз, питомец хуже моргает.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, новый признак на фоне хронического уха.",
+            "neurologic_signs": "Дома мы заметили, что асимметрия морды, неполное моргание или признаки Горнера.",
+            "prior_episodes_treatment": "Насколько мы можем судить, хронические ушные эпизоды."
+          },
+          "examFindings": [
+            {
+              "factId": "cranial_nerve_or_horner_signs",
+              "source": "physical_exam",
+              "finding": "Парез лицевого нерва или нарушение моргания либо ипсилатеральные признаки Горнера."
+            },
+            {
+              "factId": "corneal_exposure_risk",
+              "source": "physical_exam",
+              "finding": "При нарушении моргания роговица требует защиты и оценки."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "cranial_nerve_or_horner_signs",
+              "discoveryPaths": [
+                "full_neurologic_exam"
+              ]
+            },
+            {
+              "factId": "corneal_exposure_risk",
+              "discoveryPaths": [
+                "eye_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_ct_mri",
+              "classification": "unavailable_requires_referral",
+              "result": "При томографическом исследовании: продвинутая визуализация."
+            },
+            {
+              "id": "ear_middle_sample",
+              "classification": "recommended_changes_plan",
+              "result": "Целевое исследование показало: глубокий материал по результатам визуализации."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "cranial_nerve_or_horner_signs",
+              "corneal_exposure_risk"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_workup"
+            ],
+            "unexcludedRisks": [
+              "ear_mass",
+              "central_or_peripheral_neurologic_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "neurologic_exam"
+            ],
+            "missingLocalRoute": [
+              "middle_ear_imaging_external",
+              "middle_ear_sampling_referral",
+              "safe_referral"
+            ]
+          },
+          "carePlanId": "suspected_middle_inner_ear",
+          "followUp": {
+            "timing": "Срочное направление.",
+            "required": true,
+            "targets": [
+              "corneal_protection",
+              "imaging",
+              "cranial_nerve_function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Роговица защищена, глубокая причина исследуется.",
+            "unsafe": "Игнорирование моргания приводит к повреждению роговицы."
+          },
+          "ownerCommunication": [
+            "Я покажу вам владельцу, как отслеживать моргание и ухудшение глаза до приёма специалиста."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "neurologically_impaired"
+            ],
+            "requiredHandlingAlternative": "minimal_handling",
+            "ownerModifiers": [
+              "anxious",
+              "observant",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ear_aural_hematoma",
+      "version": "2026.07.16.40",
+      "title": "Отогематома",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Полость ушной раковины оценивается вместе с причиной тряски или зуда; устранение только жидкости не является полным планом.",
+      "primaryDiagnosisId": "dx_aural_hematoma",
+      "differentials": [
+        "dx_pinna_abscess",
+        "dx_pinna_mass",
+        "dx_pinna_trauma",
+        "dx_ear_otitis_underlying"
+      ],
+      "planBundleId": "aural_hematoma",
+      "sourceIds": [
+        "merck_aural_hematoma",
+        "merck_otitis_externa"
+      ],
+      "presentations": [
+        {
+          "id": "p1_small_with_otitis",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": "procedure_dependent"
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что после нескольких дней тряски головой на ушной раковине появилась мягкая припухлость.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, припухлость появилась недавно.",
+            "pain_pruritus_discharge": "Дома мы заметили, что до неё были зуд и тряска головой.",
+            "prior_episodes_treatment": "Насколько мы можем судить, причину зуда ещё не исследовали."
+          },
+          "examFindings": [
+            {
+              "factId": "small_fluctuant_hematoma",
+              "source": "physical_exam",
+              "finding": "Небольшая флюктуирующая полость части раковины."
+            },
+            {
+              "factId": "concurrent_otitis",
+              "source": "physical_exam",
+              "finding": "Одновременно признаки наружного отита."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "small_fluctuant_hematoma",
+              "discoveryPaths": [
+                "pinna_skin_exam"
+              ]
+            },
+            {
+              "factId": "underlying_ear_cause",
+              "discoveryPaths": [
+                "otoscopy_less_painful_first",
+                "ear_cytology_each_affected_ear"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "required_for_safe_decision",
+              "result": "При микроскопии материала: результат активного отита; не выводится из гематомы."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "small_fluctuant_hematoma",
+              "underlying_ear_cause"
+            ],
+            "confirmedDiagnosisRequires": [
+              "small_fluctuant_hematoma"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "otoscope",
+              "microscope",
+              "cytology_consumables",
+              "analgesia"
+            ],
+            "conditional": [
+              "minor_procedure_or_safe_referral"
+            ]
+          },
+          "carePlanId": "aural_hematoma",
+          "followUp": {
+            "timing": "Ранняя повторная проверка в зависимости от процедуры.",
+            "required": true,
+            "targets": [
+              "refilling",
+              "pain",
+              "underlying_otitis"
+            ]
+          },
+          "outcomes": {
+            "safe": "Гематома и причина тряски лечатся вместе.",
+            "unsafe": "Только опорожнение приводит к рецидиву и сохраняет боль или зуд."
+          },
+          "ownerCommunication": [
+            "Давайте обсудим риск повторного наполнения и деформации."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "pain_defensive_with_analgesia"
+            ],
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited",
+              "cosmetic_concern"
+            ]
+          }
+        },
+        {
+          "id": "p2_large_tense",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": "procedure_dependent"
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что почти вся ушная раковина стала большой, напряжённой и болезненной.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, быстро увеличилась за несколько дней.",
+            "pain_pruritus_discharge": "Дома мы заметили, что питомец трясёт головой и не даёт касаться.",
+            "prior_episodes_treatment": "Насколько мы можем судить, процедур ещё не было."
+          },
+          "examFindings": [
+            {
+              "factId": "large_tense_hematoma",
+              "source": "physical_exam",
+              "finding": "Болезненная напряжённая полость почти всей раковины; системно стабилен."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "large_tense_hematoma",
+              "discoveryPaths": [
+                "pinna_skin_exam"
+              ]
+            },
+            {
+              "factId": "underlying_cause_assessed",
+              "discoveryPaths": [
+                "ear_exam",
+                "ear_cytology_each_affected_ear"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_cytology",
+              "classification": "recommended_changes_plan",
+              "result": "При микроскопии материала: результат зависит от найденной причины тряски."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "large_tense_hematoma",
+              "underlying_cause_assessed"
+            ],
+            "confirmedDiagnosisRequires": [
+              "large_tense_hematoma"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "analgesia"
+            ],
+            "conditional": [
+              "minor_procedure_or_safe_referral"
+            ]
+          },
+          "carePlanId": "aural_hematoma",
+          "followUp": {
+            "timing": "Вскоре после процедуры и до стабилизации.",
+            "required": true,
+            "targets": [
+              "refilling",
+              "pain",
+              "wound_or_bandage",
+              "underlying_cause"
+            ]
+          },
+          "outcomes": {
+            "safe": "Выбран обоснованный метод, причина контролируется.",
+            "unsafe": "Бесконечная повторная аспирация без окончательного плана ведёт к рецидиву."
+          },
+          "ownerCommunication": [
+            "Давайте сравним допустимые методы, риски повторного наполнения и необходимость контроля."
+          ],
+          "compatibility": {
+            "temperament": [
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "analgesia_sedation_or_referral",
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited",
+              "cosmetic_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_chronic_recurrent",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_specialist",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что ушная раковина давно утолщена и деформирована; припухлость уже возвращалась.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, хроническое организованное состояние.",
+            "prior_episodes_treatment": "Дома мы заметили, что были повторные дренирования или неполный контроль причины.",
+            "pain_pruritus_discharge": "Насколько мы можем судить, активная боль или зуд оцениваются отдельно."
+          },
+          "examFindings": [
+            {
+              "factId": "organized_deformed_pinna",
+              "source": "physical_exam",
+              "finding": "Утолщённая деформированная раковина, организованная полость; возможное сужение входа в канал."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "organized_deformed_pinna",
+              "discoveryPaths": [
+                "pinna_skin_exam"
+              ]
+            },
+            {
+              "factId": "active_underlying_cause_status",
+              "discoveryPaths": [
+                "ear_exam",
+                "ear_cytology_each_affected_ear"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "ear_mass_histology",
+              "classification": "recommended_changes_plan_if_mass_or_atypical",
+              "result": "В заключении по гистологическому исследованию: только при атипичном образовании или подозрении на массу."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "organized_deformed_pinna",
+              "active_underlying_cause_status"
+            ],
+            "confirmedDiagnosisRequires": [
+              "organized_deformed_pinna"
+            ],
+            "unexcludedRisks": [
+              "ear_canal_obstruction",
+              "pinna_mass_if_atypical"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam"
+            ],
+            "missingLocalRoute": [
+              "ear_surgery_referral",
+              "histology_external",
+              "safe_referral"
+            ]
+          },
+          "carePlanId": "aural_hematoma",
+          "followUp": {
+            "timing": "План специалиста, как указано.",
+            "required": true,
+            "targets": [
+              "pain",
+              "canal_function",
+              "active_cause",
+              "realistic_cosmetic_goal"
+            ]
+          },
+          "outcomes": {
+            "safe": "Функция, боль и реалистичный косметический результат обсуждены.",
+            "unsafe": "Обещание полного восстановления формы создаёт ложные ожидания."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: честно разделить медицинскую цель и косметический исход."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "pain_defensive"
+            ],
+            "ownerModifiers": [
+              "cosmetic_concern",
+              "frustrated",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_otitis_externa",
+      "title": "Merck Veterinary Manual: Otitis Externa in Animals",
+      "url": "https://www.merckvetmanual.com/ear-disorders/otitis-externa/otitis-externa-in-animals",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "history_otoscopy_cytology",
+        "sample_before_cleaning",
+        "pain_limited_exam",
+        "tympanum_safety",
+        "repeat_cytology",
+        "underlying_causes",
+        "rod_infection_stewardship"
+      ]
+    },
+    {
+      "id": "merck_otitis_media_interna",
+      "title": "Merck Veterinary Manual: Otitis Media and Interna in Animals",
+      "url": "https://www.merckvetmanual.com/ear-disorders/otitis-media-and-interna/otitis-media-and-interna-in-animals",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "cranial_nerve_signs",
+        "peripheral_vestibular_signs",
+        "advanced_imaging",
+        "middle_ear_sample_not_external_swab",
+        "foreign_body_and_chronic_routes"
+      ]
+    },
+    {
+      "id": "merck_aural_hematoma",
+      "title": "Merck Veterinary Manual: Auricular Hematomas in Animals",
+      "url": "https://www.merckvetmanual.com/ear-disorders/diseases-of-the-pinna/auricular-hematomas-in-animals",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "hematoma_management",
+        "underlying_cause",
+        "recurrence_and_deformity"
+      ]
+    },
+    {
+      "id": "aaha_allergic_skin_2023",
+      "title": "2023 AAHA Management of Allergic Diseases in Dogs and Cats Guidelines",
+      "url": "https://www.aaha.org/wp-content/uploads/globalassets/02-guidelines/2023-aaha-management-of-allergic-skin-diseases-in-dogs-and-cats-guidelines/resources/2023-aaha-management-of-allergic-skin-diseases-guidelines-new.pdf",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "minimum_dermatologic_database",
+        "secondary_infection_control",
+        "longitudinal_allergy_management",
+        "client_communication_and_finances"
+      ]
+    },
+    {
+      "id": "capc_otodectic_mite",
+      "title": "Companion Animal Parasite Council: Otodectic Mite",
+      "url": "https://capcvet.org/guidelines/otodectic-mite/",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "dog_cat_hosts",
+        "clinical_signs",
+        "otoscopy_or_swab_detection",
+        "contact_control_context"
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "tympanum_intact_and_tympanum_unknown_are_mutually_exclusive",
+    "each_affected_ear_has_its_own_cytology_result",
+    "bacterial_species_is_not_inferred_from_color_or_odor",
+    "external_cytology_is_not_middle_ear_sample",
+    "pain_limited_exam_requires_analgesia_sedation_or_referral",
+    "neurologic_signs_block_blind_flushing_and_require_urgent_route",
+    "aural_hematoma_requires_underlying_cause_assessment",
+    "external_results_are_not_instant_local_results",
+    "all_critical_facts_have_at_least_one_available_discovery_path",
+    "missing_required_capability_has_safe_referral"
+  ]
+}

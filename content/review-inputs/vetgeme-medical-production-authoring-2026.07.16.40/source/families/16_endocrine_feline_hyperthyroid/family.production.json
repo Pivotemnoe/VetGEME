@@ -1,0 +1,2467 @@
+{
+  "schemaVersion": 1,
+  "familyId": "endocrine_feline_hyperthyroid",
+  "familyVersion": "2026.07.16.40",
+  "title": "Гипертиреоз кошек",
+  "campaignPhase": "chapter_4_to_post_chapter_5",
+  "species": [
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "speciesRule": "Обычный автоматическая система допускает только кошку.",
+    "diagnosisRule": "Совместимая клиника плюс повышенный общий тироксин подтверждают явный гипертиреоз; масса или пальпируемый узел отдельно недостаточны.",
+    "equivocalRule": "Высокий-нормальный или нормальный Т4 не всегда исключает раннюю болезнь, но свободный Т4/ТТГ не интерпретируется отдельно от общего Т4 и нетиреоидных заболеваний.",
+    "renalRule": "ХБП не является причиной, которую не лечат; контроль щитовидной железы может выявить почечную дисфункцию и требует совместного исходного или последующего наблюдения.",
+    "cardiacRule": "Тахикардия, шумы или галоп требуют оценки, но не соответствуют застойная сердечная недостаточность.",
+    "protocolRule": "автоматическая система не определяет препарат, дозу, целевой уровень Т4, диетический состав, радиоактивный йод или хирургическую технику."
+  },
+  "coreCapabilities": [
+    "general_exam",
+    "body_weight",
+    "body_condition_score",
+    "muscle_condition_score",
+    "thyroid_palpation",
+    "t4_external",
+    "cbc",
+    "biochemistry",
+    "urinalysis",
+    "blood_pressure",
+    "longitudinal_care"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "thyroid_hormone_or_referral",
+      "anyOf": [
+        "t4_external",
+        "free_t4_external",
+        "feline_tsh_external",
+        "feline_hyperthyroid_referral",
+        "safe_referral"
+      ],
+      "purpose": "total_t4_and_algorithmic_equivocal_testing"
+    },
+    {
+      "id": "thyroid_localization_or_referral",
+      "anyOf": [
+        "thyroid_palpation",
+        "thyroid_scintigraphy_referral",
+        "feline_hyperthyroid_referral",
+        "safe_referral"
+      ],
+      "purpose": "functional_tissue_or_mass_localization"
+    },
+    {
+      "id": "thyroid_renal_baseline_or_referral",
+      "anyOf": [
+        "cbc",
+        "biochemistry",
+        "urinalysis",
+        "sdma_external",
+        "renal_referral",
+        "safe_referral"
+      ],
+      "purpose": "renal_and_systemic_baseline_before_and_after_control"
+    },
+    {
+      "id": "thyroid_bp_target_route",
+      "anyOf": [
+        "blood_pressure",
+        "target_organ_damage_exam",
+        "ophthalmology_referral",
+        "safe_referral"
+      ],
+      "purpose": "standardized_bp_and_retinal_target_damage"
+    },
+    {
+      "id": "thyroid_cardiac_route",
+      "anyOf": [
+        "ecg",
+        "cardiac_biomarker_external",
+        "echocardiography_external",
+        "cardiology_referral",
+        "safe_referral"
+      ],
+      "purpose": "tachycardia_arrhythmia_murmur_gallop_or_failure_question"
+    },
+    {
+      "id": "thyroid_emergency_route",
+      "anyOf": [
+        "oxygen",
+        "hospital_referral",
+        "intensive_care_referral",
+        "cardiology_referral",
+        "safe_referral"
+      ],
+      "purpose": "respiratory_failure_arrhythmia_blindness_hyperthermia_or_decompensation"
+    },
+    {
+      "id": "thyroid_definitive_route",
+      "anyOf": [
+        "radioiodine_referral",
+        "thyroid_surgery_referral",
+        "thyroid_scintigraphy_referral",
+        "feline_hyperthyroid_referral",
+        "safe_referral"
+      ],
+      "purpose": "reviewed_definitive_treatment_selection"
+    },
+    {
+      "id": "thyroid_longitudinal_route",
+      "anyOf": [
+        "thyroid_longitudinal_monitoring",
+        "longitudinal_care",
+        "renal_home_monitoring",
+        "safe_referral"
+      ],
+      "purpose": "t4_renal_bp_weight_and_treatment_state_followup"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "feline_hyperthyroid_weight_appetite_and_behavior_timeline",
+      "requires": [
+        "longitudinal_care",
+        "body_weight"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_hyperthyroid_thyroid_palpation",
+      "requires": [
+        "thyroid_palpation"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "feline_hyperthyroid_referral"
+    },
+    {
+      "researchId": "feline_hyperthyroid_total_t4",
+      "requires": [
+        "t4_external"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_hyperthyroid_free_t4_tsh_or_repeat",
+      "requires": [
+        "free_t4_external",
+        "feline_tsh_external"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "feline_hyperthyroid_referral"
+    },
+    {
+      "researchId": "feline_hyperthyroid_cbc_biochemistry_urinalysis",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "urinalysis"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_hyperthyroid_blood_pressure_and_retina",
+      "requires": [
+        "blood_pressure",
+        "target_organ_damage_exam"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_hyperthyroid_cardiac_assessment",
+      "requires": [
+        "ecg",
+        "cardiac_biomarker_external",
+        "echocardiography_external"
+      ],
+      "availability": "local_and_external_chapter_4",
+      "fallback": "cardiology_referral"
+    },
+    {
+      "researchId": "feline_hyperthyroid_scintigraphy_or_referral",
+      "requires": [
+        "thyroid_scintigraphy_referral"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "feline_hyperthyroid_referral"
+    },
+    {
+      "researchId": "feline_hyperthyroid_treatment_and_renal_monitoring",
+      "requires": [
+        "thyroid_longitudinal_monitoring"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "weight_change",
+      "text": "Как быстро и насколько изменилась масса и мышцы?"
+    },
+    {
+      "id": "appetite_pattern",
+      "text": "Аппетит повышен, нормален, снижен или изменчив?"
+    },
+    {
+      "id": "activity_sleep",
+      "text": "Есть гиперактивность, беспокойство или апатия?"
+    },
+    {
+      "id": "vocal_irritability",
+      "text": "Стала ли кошка громче или раздражительнее?"
+    },
+    {
+      "id": "pupd_pattern",
+      "text": "Изменились ли жажда и мочеиспускание?"
+    },
+    {
+      "id": "gi_signs",
+      "text": "Есть ли рвота или диарея и как часто?"
+    },
+    {
+      "id": "cardiorespiratory_signs",
+      "text": "Есть ли одышка, слабость, коллапс или обморок?"
+    },
+    {
+      "id": "vision_change",
+      "text": "Есть ли внезапное ухудшение зрения?"
+    },
+    {
+      "id": "prior_t4_renal_records",
+      "text": "Есть ли датированные Т4, креатинин, СДМА, моча и АД?"
+    },
+    {
+      "id": "thyroid_treatment_diet_history",
+      "text": "Есть ли лечение щитовидной железы или диета с ограничением йода и как соблюдается?"
+    },
+    {
+      "id": "exclusive_diet_feasibility",
+      "text": "Ест ли кошка что-либо кроме назначенного рациона?"
+    },
+    {
+      "id": "owner_route_capacity",
+      "text": "Какой контроль, транспорт, бюджет и домашний уход выполнимы?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "serial_weight_bcs_mcs_thyroid",
+      "source": "physical_exam",
+      "requires": [
+        "body_weight",
+        "body_condition_score",
+        "muscle_condition_score"
+      ]
+    },
+    {
+      "id": "hydration_temperature_behavior_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "hydration_assessment",
+        "temperature"
+      ]
+    },
+    {
+      "id": "trained_thyroid_neck_palpation",
+      "source": "physical_exam",
+      "requires": [
+        "thyroid_palpation"
+      ]
+    },
+    {
+      "id": "heart_rate_rhythm_auscultation",
+      "source": "physical_exam",
+      "requires": [
+        "auscultation",
+        "respiratory_rate"
+      ]
+    },
+    {
+      "id": "standardized_feline_bp_series",
+      "source": "measurement",
+      "requires": [
+        "blood_pressure",
+        "trained_blood_pressure"
+      ]
+    },
+    {
+      "id": "retinal_target_organ_exam",
+      "source": "physical_exam",
+      "requires": [
+        "target_organ_damage_exam"
+      ]
+    },
+    {
+      "id": "dated_total_t4_result",
+      "source": "diagnostic_test",
+      "requires": [
+        "t4_external"
+      ]
+    },
+    {
+      "id": "integrated_ft4_tsh_repeat_context",
+      "source": "diagnostic_test",
+      "requires": [
+        "free_t4_external",
+        "feline_tsh_external"
+      ]
+    },
+    {
+      "id": "thyroid_renal_systemic_baseline",
+      "source": "diagnostic_test",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "urinalysis"
+      ]
+    },
+    {
+      "id": "cardiac_ecg_echo_context",
+      "source": "diagnostic_test",
+      "requires": [
+        "ecg",
+        "echocardiography_external"
+      ]
+    },
+    {
+      "id": "functional_thyroid_tissue_localization",
+      "source": "diagnostic_test",
+      "requires": [
+        "thyroid_scintigraphy_referral"
+      ]
+    },
+    {
+      "id": "same_episode_thyroid_renal_bp_followup",
+      "source": "follow_up",
+      "requires": [
+        "thyroid_longitudinal_monitoring",
+        "longitudinal_care"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "overt_feline_hyperthyroid_plan",
+      "fullPlan": [
+        "clinical_weight_appetite_behavior_baseline",
+        "confirm_high_total_t4_in_context",
+        "cbc_chem_urine_renal_and_bp_baseline",
+        "cardiac_and_target_organ_screen",
+        "reviewed_reversible_or_definitive_route",
+        "owner_feasibility_and_risk_discussion",
+        "dated_t4_renal_bp_weight_followup"
+      ],
+      "stagedPlan": [
+        "confirm",
+        "baseline_comorbidities",
+        "reviewed_route",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "mass_or_nodule_not_diagnosis",
+        "renal_bp_baseline_required",
+        "emergency_signs_route",
+        "no_generated_treatment"
+      ],
+      "stabilizeAndRefer": [
+        "hospital_cardiology_or_ophthalmology_route_if_unstable",
+        "feline_hyperthyroid_referral_if_testing_unavailable"
+      ],
+      "unsafeOrInadequate": [
+        "weight_loss_only_confirms",
+        "high_t4_without_context_immediate_irreversible_route",
+        "biochemistry_machine_claims_t4",
+        "one_pill_forever_without_monitoring"
+      ]
+    },
+    {
+      "id": "equivocal_feline_hyperthyroid_plan",
+      "fullPlan": [
+        "document_clinical_probability_and_non_thyroid_disease",
+        "repeat_total_t4_with_date_and_lab",
+        "integrate_ft4_tsh_only_with_total_t4",
+        "thyroid_palpation_and_mass_differential",
+        "scintigraphy_or_specialist_if_still_conflicted",
+        "explicit_confirmed_euthyroid_or_followup_classification"
+      ],
+      "stagedPlan": [
+        "probability_and_repeat",
+        "integrated_tests",
+        "specialist_localization",
+        "classify"
+      ],
+      "minimumSafePlan": [
+        "normal_total_t4_not_absolute_exclusion",
+        "ft4_not_standalone_screen",
+        "nodule_not_function",
+        "followup_deadline"
+      ],
+      "stabilizeAndRefer": [
+        "treat_significant_non_thyroid_illness_first",
+        "specialist_route_for_persistent_conflict"
+      ],
+      "unsafeOrInadequate": [
+        "free_t4_alone_confirms",
+        "normal_t4_always_excludes",
+        "every_neck_mass_is_thyroid",
+        "indefinite_suspicion"
+      ]
+    },
+    {
+      "id": "hyperthyroid_ckd_joint_plan",
+      "fullPlan": [
+        "preserve_pretreatment_thyroid_and_renal_baseline",
+        "hydration_creatinine_sdma_urine_upc_bp_context",
+        "reviewed_reversible_control_if_uncertainty_material",
+        "early_joint_t4_renal_appetite_bp_followup",
+        "exclude_dehydration_and_excessive_thyroid_suppression",
+        "select_definitive_or_longterm_route_by_joint_outcome"
+      ],
+      "stagedPlan": [
+        "joint_baseline",
+        "reviewed_control_trial_if_needed",
+        "early_joint_recheck",
+        "route_selection"
+      ],
+      "minimumSafePlan": [
+        "ckd_not_reason_for_no_treatment",
+        "postcontrol_azotemia_not_auto_irreversible_ckd",
+        "hydration_and_treatment_state_required",
+        "renal_referral_if_unstable"
+      ],
+      "stabilizeAndRefer": [
+        "renal_or_hyperthyroid_specialist_route",
+        "hospital_if_uremic_or_decompensated"
+      ],
+      "unsafeOrInadequate": [
+        "cancel_all_control_for_ckd",
+        "ignore_renal_risk",
+        "single_postcontrol_creatinine_decides",
+        "generator_selects_target_t4_or_dose"
+      ]
+    },
+    {
+      "id": "cardiovascular_severe_hyperthyroid_plan",
+      "fullPlan": [
+        "respiratory_perfusion_temperature_and_mentation_triage",
+        "confirm_thyroid_context_without_delaying_support",
+        "standardized_bp_and_target_organ_exam",
+        "ecg_biomarker_echo_or_cardiology_route",
+        "renal_and_systemic_baseline",
+        "reviewed_stabilization_and_thyroid_plan",
+        "serial_cardiac_bp_t4_renal_followup"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "cardiac_bp_target_organ",
+        "thyroid_renal_context",
+        "joint_followup"
+      ],
+      "minimumSafePlan": [
+        "murmur_not_chf",
+        "blindness_or_respiratory_distress_no_wait",
+        "apathetic_pattern_does_not_exclude",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen_hospital_cardiology_or_ophthalmology_referral",
+        "minimal_handling_if_dyspneic"
+      ],
+      "unsafeOrInadequate": [
+        "heart_sign_equals_chf",
+        "wait_weeks_for_bp_confirmation_with_retinal_damage",
+        "low_activity_excludes_hyperthyroidism",
+        "longterm_choice_delays_stabilization"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "feline_hyperthyroid_overt_classic",
+      "version": "2026.07.16.40",
+      "title": "Явный классический гипертиреоз кошки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Клинически совместимая кошка с повышенным общим Т4 имеет выраженный гипертиреоз; до выбора маршрута фиксируются исходные показатели почек, мочи, АД, сердца и веса.",
+      "exclusions": [
+        "weight_loss_without_hormonal_confirmation",
+        "euthyroid_thyroid_nodule",
+        "nonthyroidal_illness_only",
+        "decompensated_emergency_unstabilized"
+      ],
+      "planBundleId": "overt_feline_hyperthyroid_plan",
+      "sourceIds": [
+        "aafp_feline_hyperthyroid_2016",
+        "aafp_feline_hyperthyroid_full",
+        "merck_feline_hyperthyroid"
+      ],
+      "presentations": [
+        {
+          "id": "p1_weight_loss_despite_good_appetite",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что зрелая кошка ест хорошо или больше обычного, но постепенно худеет.",
+          "historyAnswers": {
+            "weight_change": "По нашим наблюдениям, документированные потери и снижение оценка мышечной массы.",
+            "appetite_pattern": "Дома мы заметили, что нормальный или повышенный.",
+            "activity_sleep": "Насколько мы можем судить, по этому пункту владелец не замечает отклонений от обычного состояния.",
+            "gi_signs": "Мы записали, что отсутствует или периодически.",
+            "prior_t4_renal_records": "По нашим наблюдениям, запрошены базовые записи."
+          },
+          "examFindings": [
+            {
+              "factId": "classic_weight_appetite_pattern_with_high_t4",
+              "source": "clinical_and_lab_record",
+              "finding": "Совместимый образец веса или аппетита плюс высокий общий уровень Т4."
+            },
+            {
+              "factId": "weight_loss_differentials_remain_if_unexplained",
+              "source": "clinical_reasoning",
+              "finding": "Диабет, заболевания желудочно-кишечного тракта и неоплазии остаются, если результаты не будут полностью объяснены."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "classic_weight_appetite_pattern_with_high_t4",
+              "discoveryPaths": [
+                "weight_change",
+                "appetite_pattern",
+                "dated_total_t4_result"
+              ]
+            },
+            {
+              "factId": "weight_loss_differentials_remain_if_unexplained",
+              "discoveryPaths": [
+                "gi_signs",
+                "thyroid_renal_systemic_baseline",
+                "serial_weight_bcs_mcs_thyroid"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_hyperthyroid_weight_appetite_and_behavior_timeline",
+              "classification": "required",
+              "result": "При уточнении анамнеза: масса тела или оценка мышечной массы или аппетит динамика."
+            },
+            {
+              "id": "feline_hyperthyroid_total_t4",
+              "classification": "required_confirmatory",
+              "result": "В лабораторных показателях крови: высокий общий Т4 с указанием даты или лаборатории."
+            },
+            {
+              "id": "feline_hyperthyroid_cbc_biochemistry_urinalysis",
+              "classification": "required_baseline",
+              "result": "В анализе мочи: системный или почечный или моча контекст."
+            },
+            {
+              "id": "feline_hyperthyroid_blood_pressure_and_retina",
+              "classification": "required",
+              "result": "При измерении давления: артериальное давление или целевой орган скрининг."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "classic_weight_appetite_pattern_with_high_t4",
+              "weight_loss_differentials_remain_if_unexplained"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_clinical_cat_plus_high_total_t4"
+            ],
+            "dangerStates": [
+              "hypertension",
+              "cardiac_decompensation",
+              "ckd",
+              "diabetes_or_neoplasia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "body_weight",
+              "thyroid_palpation",
+              "cbc",
+              "biochemistry",
+              "urinalysis",
+              "blood_pressure"
+            ],
+            "external": [
+              "t4_external",
+              "feline_hyperthyroid_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "thyroid_hormone_or_referral",
+              "thyroid_renal_baseline_or_referral",
+              "thyroid_bp_target_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "overt_feline_hyperthyroid_plan",
+          "followUp": {
+            "timing": "Пересмотрен маршрут лечения с ранним контролем Т4/почек или АД или веса.",
+            "required": true,
+            "targets": [
+              "t4",
+              "weight",
+              "appetite",
+              "renal",
+              "bp",
+              "adverse_effects"
+            ]
+          },
+          "outcomes": {
+            "safe": "Выбору маршрута предшествует явная диагностика и полная исходная информация.",
+            "unsafe": "Потеря веса сама по себе или одна таблетка без базовой линии решают дело."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: несколько рассмотренных вариантов и их нагрузку по мониторингу."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "irritable",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "low_stress_exam_and_external_testing",
+            "ownerModifiers": [
+              "budget_limited",
+              "transport_difficult"
+            ]
+          }
+        },
+        {
+          "id": "p2_pupd_hyperactivity_vocalization",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что кошка стала активнее, громче, больше пьёт и мочится и понемногу теряет массу.",
+          "historyAnswers": {
+            "pupd_pattern": "По нашим наблюдениям, стойкие изменения.",
+            "activity_sleep": "Дома мы заметили, что гиперактивный или беспокойный.",
+            "vocal_irritability": "Насколько мы можем судить, увеличено.",
+            "weight_change": "Мы записали, что убыток зафиксирован.",
+            "prior_t4_renal_records": "По нашим наблюдениям, исходный уровень почек отсутствует или доступен."
+          },
+          "examFindings": [
+            {
+              "factId": "behavior_pupd_pattern_supports_but_does_not_define",
+              "source": "clinical_record",
+              "finding": "полиурия и полидипсия и поведение поддерживают гипертиреоз, но неспецифичны."
+            },
+            {
+              "factId": "high_t4_confirms_with_mandatory_renal_urine_context",
+              "source": "lab_record",
+              "finding": "Высокий общий уровень Т4 подтверждается контекстом; Исходные показатели почек или мочи разделяют ХБП или диабет."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "behavior_pupd_pattern_supports_but_does_not_define",
+              "discoveryPaths": [
+                "pupd_pattern",
+                "activity_sleep",
+                "vocal_irritability"
+              ]
+            },
+            {
+              "factId": "high_t4_confirms_with_mandatory_renal_urine_context",
+              "discoveryPaths": [
+                "prior_t4_renal_records",
+                "dated_total_t4_result",
+                "thyroid_renal_systemic_baseline"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_hyperthyroid_total_t4",
+              "classification": "required_confirmatory",
+              "result": "В лабораторных показателях крови: высокий общий тироксин."
+            },
+            {
+              "id": "feline_hyperthyroid_cbc_biochemistry_urinalysis",
+              "classification": "required_pupd_baseline",
+              "result": "В анализе мочи: почечный или глюкоза или моча контекст."
+            },
+            {
+              "id": "feline_hyperthyroid_blood_pressure_and_retina",
+              "classification": "required",
+              "result": "При измерении давления: получены конкретные значения артериального давления."
+            },
+            {
+              "id": "feline_hyperthyroid_treatment_and_renal_monitoring",
+              "classification": "required_longitudinal",
+              "result": "При динамическом наблюдении: создано то же наблюдение за пациентами."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "behavior_pupd_pattern_supports_but_does_not_define",
+              "high_t4_confirms_with_mandatory_renal_urine_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_clinical_signs_plus_high_total_t4"
+            ],
+            "dangerStates": [
+              "ckd",
+              "diabetes",
+              "hypertension",
+              "cardiac_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "body_weight",
+              "biochemistry",
+              "urinalysis",
+              "blood_pressure",
+              "longitudinal_care"
+            ],
+            "external": [
+              "t4_external",
+              "sdma_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "thyroid_hormone_or_referral",
+              "thyroid_renal_baseline_or_referral",
+              "thyroid_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "overt_feline_hyperthyroid_plan",
+          "followUp": {
+            "timing": "Раннее совместное наблюдение в зависимости от маршрута.",
+            "required": true,
+            "targets": [
+              "t4",
+              "pupd",
+              "weight",
+              "renal",
+              "bp",
+              "behavior"
+            ]
+          },
+          "outcomes": {
+            "safe": "Дифференциал полиурия и полидипсия и базовый уровень сохранены.",
+            "unsafe": "Поведение рассматривается как плохой темперамент или признак единственной причины."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: раздражительность может быть симптомом, и обращение с ним должно быть с низким уровнем стресса."
+          ],
+          "compatibility": {
+            "temperament": [
+              "irritable",
+              "fearful",
+              "hyperactive"
+            ],
+            "requiredHandlingAlternative": "acclimatized_low_stress_sampling",
+            "ownerModifiers": [
+              "behavior_concern",
+              "multiple_cats"
+            ]
+          }
+        },
+        {
+          "id": "p3_incidental_high_t4_with_subtle_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "routine_priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что старший скрининг показывает высокий общий уровень Т4 при незначительном объеме массы тела или тонком сердечном признаке.",
+          "historyAnswers": {
+            "weight_change": "По нашим наблюдениям, тонкая документированная потеря.",
+            "appetite_pattern": "Дома мы заметили, что нормально.",
+            "activity_sleep": "Насколько мы можем судить, минимальные изменения или их отсутствие.",
+            "cardiorespiratory_signs": "Мы записали, что никаких признаков неисправности; только тонкий намек.",
+            "prior_t4_renal_records": "По нашим наблюдениям, единичный высокий результат скрининга."
+          },
+          "examFindings": [
+            {
+              "factId": "screening_high_t4_needs_persistence_if_false_positive_context",
+              "source": "lab_record",
+              "finding": "Клинически малозаметный высокий результат повторяется или проверяется, когда лабораторный или временной контекст вызывает беспокойство."
+            },
+            {
+              "factId": "early_overt_disease_still_needs_complication_baseline",
+              "source": "clinical_reasoning",
+              "finding": "Минимальные признаки не исключают оценки состояния сердца, АД или почек."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "screening_high_t4_needs_persistence_if_false_positive_context",
+              "discoveryPaths": [
+                "prior_t4_renal_records",
+                "dated_total_t4_result",
+                "same_episode_thyroid_renal_bp_followup"
+              ]
+            },
+            {
+              "factId": "early_overt_disease_still_needs_complication_baseline",
+              "discoveryPaths": [
+                "weight_change",
+                "heart_rate_rhythm_auscultation",
+                "standardized_feline_bp_series"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_hyperthyroid_total_t4",
+              "classification": "required_repeat_if_context_demands",
+              "result": "В лабораторных показателях крови: стойкого высокого или ложноположительного разрешения."
+            },
+            {
+              "id": "feline_hyperthyroid_cbc_biochemistry_urinalysis",
+              "classification": "required_baseline",
+              "result": "В анализе мочи: полученный базовый вариант."
+            },
+            {
+              "id": "feline_hyperthyroid_blood_pressure_and_retina",
+              "classification": "required",
+              "result": "При измерении давления: бП или сетчатка."
+            },
+            {
+              "id": "feline_hyperthyroid_cardiac_assessment",
+              "classification": "targeted_by_exam",
+              "result": "Кардиологическая оценка показала: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "screening_high_t4_needs_persistence_if_false_positive_context",
+              "early_overt_disease_still_needs_complication_baseline"
+            ],
+            "confirmedDiagnosisRequires": [
+              "persistent_high_t4_with_compatible_subtle_context"
+            ],
+            "dangerStates": [
+              "hypertension",
+              "occult_cardiac_disease",
+              "masked_ckd"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "body_weight",
+              "auscultation",
+              "blood_pressure",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "t4_external",
+              "cardiac_biomarker_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "thyroid_hormone_or_referral",
+              "thyroid_cardiac_route",
+              "thyroid_bp_target_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "overt_feline_hyperthyroid_plan",
+          "followUp": {
+            "timing": "Проверка результата, затем полный мониторинг маршрута.",
+            "required": true,
+            "targets": [
+              "t4",
+              "weight",
+              "heart",
+              "bp",
+              "renal"
+            ]
+          },
+          "outcomes": {
+            "safe": "Раннее заболевание подтверждается без пропуска исходного уровня.",
+            "unsafe": "Одна неожиданная лабораторная работа немедленно запускает необратимое лечение."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему малозаметное заболевание все еще может иметь значение и почему может оказаться целесообразным верификация."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "repeat_external_lab_or_referral",
+            "ownerModifiers": [
+              "screening_surprise",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "feline_hyperthyroid_equivocal_or_occult",
+      "version": "2026.07.16.40",
+      "title": "Сомнительный или скрытый гипертиреоз кошки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Совместимые признаки с высоким нормальным или нормальным общим уровнем Т4 требуют повторного и комплексного дополнительного тестирования; узелки и свободный Т4 сами по себе не подтверждают функциональный гипертиреоз.",
+      "exclusions": [
+        "overt_high_total_t4",
+        "euthyroid_mass_without_function",
+        "nonthyroidal_illness_uncharacterized"
+      ],
+      "planBundleId": "equivocal_feline_hyperthyroid_plan",
+      "sourceIds": [
+        "aafp_feline_hyperthyroid_2016",
+        "aafp_feline_hyperthyroid_full",
+        "merck_feline_hyperthyroid"
+      ],
+      "presentations": [
+        {
+          "id": "p1_compatible_signs_high_normal_t4",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_follow_up",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что пожилая кошка худеет и тахикардична, но общий тироксин находится высоко в референсе.",
+          "historyAnswers": {
+            "weight_change": "По нашим наблюдениям, совместимая потеря.",
+            "appetite_pattern": "Дома мы заметили, что нормальный или повышенный.",
+            "activity_sleep": "Насколько мы можем судить, совместимое изменение.",
+            "prior_t4_renal_records": "Мы записали, что высокий-нормальный результат с датой.",
+            "thyroid_treatment_diet_history": "По нашим наблюдениям, никакого сбивающего с толку обращения или документально подтвержденного."
+          },
+          "examFindings": [
+            {
+              "factId": "compatible_probability_survives_high_normal_t4",
+              "source": "clinical_record",
+              "finding": "Признаки пожилых кошек остаются совместимыми, поскольку уровень Т4 может быть нормальным у меньшинства и снижается с возрастом."
+            },
+            {
+              "factId": "additional_tests_are_integrated_not_standalone",
+              "source": "diagnostic_rule",
+              "finding": "Повторите общий контекст тироксин плюс свободный тироксин и тиреотропный гормон; сцинтиграфия или направление, если конфликт сохраняется."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "compatible_probability_survives_high_normal_t4",
+              "discoveryPaths": [
+                "weight_change",
+                "heart_rate_rhythm_auscultation",
+                "prior_t4_renal_records"
+              ]
+            },
+            {
+              "factId": "additional_tests_are_integrated_not_standalone",
+              "discoveryPaths": [
+                "dated_total_t4_result",
+                "integrated_ft4_tsh_repeat_context",
+                "functional_thyroid_tissue_localization"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_hyperthyroid_total_t4",
+              "classification": "required_repeat",
+              "result": "В лабораторных показателях крови: повторного высокого или нормального результата."
+            },
+            {
+              "id": "feline_hyperthyroid_free_t4_tsh_or_repeat",
+              "classification": "required_integrated_if_equivocal",
+              "result": "В лабораторных показателях крови: интегрированного результата."
+            },
+            {
+              "id": "feline_hyperthyroid_scintigraphy_or_referral",
+              "classification": "recommended_if_persistent_conflict",
+              "result": "По итогам консультации специалиста: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "feline_hyperthyroid_cbc_biochemistry_urinalysis",
+              "classification": "required_non_thyroid_context",
+              "result": "В анализе мочи: полученные альтернативы."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "compatible_probability_survives_high_normal_t4",
+              "additional_tests_are_integrated_not_standalone"
+            ],
+            "confirmedDiagnosisRequires": [
+              "approved_integrated_hormone_or_scintigraphy_classification"
+            ],
+            "dangerStates": [
+              "cardiac_disease",
+              "nonthyroidal_illness",
+              "neoplasia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "body_weight",
+              "thyroid_palpation",
+              "auscultation",
+              "cbc",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "t4_external",
+              "free_t4_external",
+              "feline_tsh_external",
+              "thyroid_scintigraphy_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "thyroid_hormone_or_referral",
+              "thyroid_localization_or_referral"
+            ],
+            "referralFallback": "feline_hyperthyroid_referral"
+          },
+          "carePlanId": "equivocal_feline_hyperthyroid_plan",
+          "followUp": {
+            "timing": "Общий тироксин повторяют через две–четыре недели в стабильном состоянии либо раньше по решению эндокринолога.",
+            "required": true,
+            "targets": [
+              "classification",
+              "t4",
+              "ft4_tsh_context",
+              "weight",
+              "nonthyroidal_disease"
+            ]
+          },
+          "outcomes": {
+            "safe": "Двусмысленный статус разрешается по определенному алгоритму.",
+            "unsafe": "Нормальный уровень Т4 завершает исследование или начинается лечение только свободным Т4."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: неопределенность и то, что может изменить каждый следующий результат."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "irritable",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "external_repeat_or_specialist_route",
+            "ownerModifiers": [
+              "result_anxiety",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_thyroid_nodule_with_normal_t4",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "routine_follow_up",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что на шее пальпируется узел, но общий тироксин нормален и клинические признаки отсутствуют или минимальны.",
+          "historyAnswers": {
+            "weight_change": "По нашим наблюдениям, за последний месяц кошка потеряла около ста граммов, хотя внешне изменение почти незаметно.",
+            "appetite_pattern": "Дома мы заметили, что нормально.",
+            "activity_sleep": "Насколько мы можем судить, никаких явных изменений.",
+            "prior_t4_renal_records": "Мы записали, что нормальный общий Т4.",
+            "owner_route_capacity": "По нашим наблюдениям, мониторинг или возможность пройти наблюдение или лечение зафиксировано."
+          },
+          "examFindings": [
+            {
+              "factId": "palpable_nodule_is_anatomic_not_functional_diagnosis",
+              "source": "physical_exam",
+              "finding": "Узелки на шее или щитовидной железе вызывают подозрения, но не доказывают выработку гормонов."
+            },
+            {
+              "factId": "nodule_requires_timed_monitor_or_mass_localization",
+              "source": "clinical_reasoning",
+              "finding": "Повторите Т4/вес или специализированную локализацию; разница масс сохраняется."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "palpable_nodule_is_anatomic_not_functional_diagnosis",
+              "discoveryPaths": [
+                "trained_thyroid_neck_palpation",
+                "weight_change",
+                "dated_total_t4_result"
+              ]
+            },
+            {
+              "factId": "nodule_requires_timed_monitor_or_mass_localization",
+              "discoveryPaths": [
+                "owner_route_capacity",
+                "same_episode_thyroid_renal_bp_followup",
+                "functional_thyroid_tissue_localization"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_hyperthyroid_thyroid_palpation",
+              "classification": "required_documented",
+              "result": "Клиническая оценка показала: справа пальпируется небольшой подвижный узел в области щитовидной железы; сама пальпация не подтверждает выработку гормонов."
+            },
+            {
+              "id": "feline_hyperthyroid_total_t4",
+              "classification": "required_timed_repeat",
+              "result": "В лабораторных показателях крови: нормального или постоянного роста."
+            },
+            {
+              "id": "feline_hyperthyroid_scintigraphy_or_referral",
+              "classification": "optional_by_mass_or_function_question",
+              "result": "По итогам консультации специалиста: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "palpable_nodule_is_anatomic_not_functional_diagnosis",
+              "nodule_requires_timed_monitor_or_mass_localization"
+            ],
+            "confirmedDiagnosisRequires": [
+              "hormonal_or_functional_localization_evidence"
+            ],
+            "dangerStates": [
+              "invasive_neck_mass",
+              "rapid_growth",
+              "airway_effect"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "body_weight",
+              "thyroid_palpation",
+              "longitudinal_care"
+            ],
+            "external": [
+              "t4_external",
+              "thyroid_scintigraphy_referral",
+              "feline_hyperthyroid_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "thyroid_localization_or_referral",
+              "thyroid_hormone_or_referral",
+              "thyroid_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "equivocal_feline_hyperthyroid_plan",
+          "followUp": {
+            "timing": "Повторно измерить общий тироксин и массу тела в назначенный срок; при сохраняющемся подозрении — направить на специализированное исследование.",
+            "required": true,
+            "targets": [
+              "nodule",
+              "t4",
+              "weight",
+              "clinical_signs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Узелок остается находкой до тех пор, пока не будет продемонстрирована его функция.",
+            "unsafe": "Любая шишка на шее становится гипертиреозом."
+          },
+          "ownerCommunication": [
+            "Я поясню: узел можно нащупать, но его гормональную активность подтверждают только исследования и динамика."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "gentle_palpation_or_referral",
+            "ownerModifiers": [
+              "mass_anxiety",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_nonthyroidal_illness_confounds_testing",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что больная кошка худеет, но значительные нетиреоидные заболевания могут снизить общий уровень Т4 и путать картину.",
+          "historyAnswers": {
+            "weight_change": "По нашим наблюдениям, по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой.",
+            "appetite_pattern": "Дома мы заметили, что пониженный или переменный.",
+            "gi_signs": "Насколько мы можем судить, совместимое нетиреоидное заболевание.",
+            "prior_t4_renal_records": "Мы записали, что нормальный или низкий или высоко-нормальный Т4.",
+            "cardiorespiratory_signs": "По нашим наблюдениям, оценена системная тяжесть."
+          },
+          "examFindings": [
+            {
+              "factId": "nonthyroidal_illness_can_suppress_total_t4",
+              "source": "clinical_reasoning",
+              "finding": "Значимое сопутствующее заболевание меняет гормональную интерпретацию."
+            },
+            {
+              "factId": "free_t4_does_not_override_sick_cat_context",
+              "source": "safety_rule",
+              "finding": "Уровень свободный тироксин может быть ненормальным при нетиреоидных заболеваниях и интерпретируется только при наличии общего уровня тироксин или клинического статуса."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "nonthyroidal_illness_can_suppress_total_t4",
+              "discoveryPaths": [
+                "appetite_pattern",
+                "gi_signs",
+                "thyroid_renal_systemic_baseline"
+              ]
+            },
+            {
+              "factId": "free_t4_does_not_override_sick_cat_context",
+              "discoveryPaths": [
+                "prior_t4_renal_records",
+                "integrated_ft4_tsh_repeat_context",
+                "hydration_temperature_behavior_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_hyperthyroid_cbc_biochemistry_urinalysis",
+              "classification": "required_characterize_other_illness",
+              "result": "В анализе мочи: полученный контекст нетиреоидных заболеваний."
+            },
+            {
+              "id": "feline_hyperthyroid_total_t4",
+              "classification": "repeat_after_stability_by_plan",
+              "result": "В лабораторных показателях крови: подавленного или разрешенного или диагностического результата."
+            },
+            {
+              "id": "feline_hyperthyroid_free_t4_tsh_or_repeat",
+              "classification": "integrated_only",
+              "result": "В лабораторных показателях крови: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "nonthyroidal_illness_can_suppress_total_t4",
+              "free_t4_does_not_override_sick_cat_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "poststability_integrated_thyroid_classification"
+            ],
+            "dangerStates": [
+              "severe_non_thyroid_illness",
+              "malignancy",
+              "renal_decompensation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "cbc",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "t4_external",
+              "free_t4_external",
+              "feline_tsh_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "thyroid_hormone_or_referral",
+              "thyroid_renal_baseline_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "equivocal_feline_hyperthyroid_plan",
+          "followUp": {
+            "timing": "После характеристики или стабилизации серьезного заболевания.",
+            "required": true,
+            "targets": [
+              "nonthyroidal_disease",
+              "t4",
+              "weight",
+              "appetite",
+              "classification"
+            ]
+          },
+          "outcomes": {
+            "safe": "Вылечена ситуация с больной кошкой и вновь рассмотрена неопределенность в отношении щитовидной железы.",
+            "unsafe": "Гипертиреоз ошибочно подтверждают только по свободному тироксину без учёта общего тироксина и клинического состояния."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему болезнь может изменить результаты анализов щитовидной железы."
+          ],
+          "compatibility": {
+            "temperament": [
+              "lethargic",
+              "fearful",
+              "irritable"
+            ],
+            "requiredHandlingAlternative": "stabilize_then_repeat_or_referral",
+            "ownerModifiers": [
+              "frustrated_by_uncertainty",
+              "cost_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "feline_hyperthyroid_with_ckd",
+      "version": "2026.07.16.40",
+      "title": "Гипертиреоз с сопутствующей или маскированной ХБП",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Гипертиреоз и ХБП могут сосуществовать; Увеличение СКФ и потеря мышечной массы могут маскировать почечную дисфункцию, поэтому для контроля щитовидной железы используются сохраненные исходные показатели почек или гидратации или мочи или АД и ранние повторные проверки суставов.",
+      "exclusions": [
+        "single_postcontrol_dehydrated_azotemia",
+        "untreated_obstruction_or_aki",
+        "ckd_used_as_reason_for_no_thyroid_plan"
+      ],
+      "planBundleId": "hyperthyroid_ckd_joint_plan",
+      "sourceIds": [
+        "aafp_feline_hyperthyroid_2016",
+        "aafp_feline_hyperthyroid_full",
+        "merck_feline_hyperthyroid"
+      ],
+      "presentations": [
+        {
+          "id": "p1_preexisting_ckd_and_high_t4",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что у кошки уже документирована ХБП, а теперь клиника и высокий общий тироксин подтверждают гипертиреоз.",
+          "historyAnswers": {
+            "prior_t4_renal_records": "По нашим наблюдениям, стабильная стадия или подстадии ХБП и текущий высокий уровень Т4 сохранены.",
+            "pupd_pattern": "Дома мы заметили, что смешанные симптомы щитовидной железы и почек.",
+            "weight_change": "Насколько мы можем судить, убыток и оценка мышечной массы зафиксированы.",
+            "owner_route_capacity": "Мы записали, что возможный маршрут раннего мониторинга.",
+            "thyroid_treatment_diet_history": "По нашим наблюдениям, никакая или текущая терапия не документирована."
+          },
+          "examFindings": [
+            {
+              "factId": "coexisting_ckd_does_not_cancel_thyroid_disease",
+              "source": "clinical_record",
+              "finding": "Оба диагноза разрабатываются и контролируются совместно."
+            },
+            {
+              "factId": "joint_baseline_required_before_route",
+              "source": "safety_rule",
+              "finding": "Гидратация, креатинин или СДМА, моча, отношение белка к креатинину мочи, АД, вес и Т4 связаны перед рассмотрением выбора."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "coexisting_ckd_does_not_cancel_thyroid_disease",
+              "discoveryPaths": [
+                "prior_t4_renal_records",
+                "dated_total_t4_result",
+                "thyroid_renal_systemic_baseline"
+              ]
+            },
+            {
+              "factId": "joint_baseline_required_before_route",
+              "discoveryPaths": [
+                "pupd_pattern",
+                "standardized_feline_bp_series",
+                "same_episode_thyroid_renal_bp_followup"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_hyperthyroid_total_t4",
+              "classification": "required_confirmatory",
+              "result": "В лабораторных показателях крови: высокий полученный Т4."
+            },
+            {
+              "id": "feline_hyperthyroid_cbc_biochemistry_urinalysis",
+              "classification": "required_joint_baseline",
+              "result": "В анализе мочи: полученный контекст почек или мочи или гидратации."
+            },
+            {
+              "id": "feline_hyperthyroid_blood_pressure_and_retina",
+              "classification": "required",
+              "result": "При измерении давления: получены конкретные значения артериального давления."
+            },
+            {
+              "id": "feline_hyperthyroid_treatment_and_renal_monitoring",
+              "classification": "required_early_joint_followup",
+              "result": "При динамическом наблюдении: тот же эпизод, будущий контроль."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "coexisting_ckd_does_not_cancel_thyroid_disease",
+              "joint_baseline_required_before_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "confirmed_hyperthyroidism_plus_preexisting_stable_ckd"
+            ],
+            "dangerStates": [
+              "acute_on_chronic_ckd",
+              "hypertension",
+              "dehydration",
+              "cardiac_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "body_weight",
+              "biochemistry",
+              "urinalysis",
+              "blood_pressure",
+              "longitudinal_care"
+            ],
+            "external": [
+              "t4_external",
+              "sdma_external",
+              "urine_protein_creatinine_ratio_external",
+              "renal_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "thyroid_hormone_or_referral",
+              "thyroid_renal_baseline_or_referral",
+              "thyroid_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "hyperthyroid_ckd_joint_plan",
+          "followUp": {
+            "timing": "Ранняя проверка совместного Т4/почек или АД или проверки аппетита.",
+            "required": true,
+            "targets": [
+              "t4",
+              "creatinine",
+              "sdma",
+              "urine",
+              "bp",
+              "weight",
+              "appetite"
+            ]
+          },
+          "outcomes": {
+            "safe": "Оба заболевания остаются видимыми и контролируются.",
+            "unsafe": "ХБП блокирует весь уход за щитовидной железой, или результат лечения щитовидной железы стирает ХБП."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: совместную пользу или риск, не обещая неизменных показателей функции почек."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "irritable"
+            ],
+            "requiredHandlingAlternative": "staged_joint_monitoring_or_referral",
+            "ownerModifiers": [
+              "chronic_care_fatigue",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_renal_risk_revealed_during_control_trial",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что во время определенного протоколом случайного контроля контролируются Т4, оконные почки, аппетит и давление перед чательным маршрутом.",
+          "historyAnswers": {
+            "prior_t4_renal_records": "По нашим наблюдениям, исходный уровень до контроля сохранен.",
+            "thyroid_treatment_diet_history": "Дома мы заметили, что рассмотрен обратимый этап, зафиксированный без дозы в содержании.",
+            "appetite_pattern": "Насколько мы можем судить, текущий аппетит.",
+            "weight_change": "Мы записали, что текущий вес или оценка мышечной массы.",
+            "owner_route_capacity": "По нашим наблюдениям, обсуждаются окончательные и продольные маршруты."
+          },
+          "examFindings": [
+            {
+              "factId": "reversible_control_reduces_not_eliminates_renal_uncertainty",
+              "source": "longitudinal_record",
+              "finding": "Совместная тенденция определяет путь, но не может гарантировать окончательный почечный результат после лечения."
+            },
+            {
+              "factId": "generator_cannot_select_protocol_or_target",
+              "source": "safety_rule",
+              "finding": "Агентские магазины проверяют только состояние лечения; нет вывода о дозе или цели."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "reversible_control_reduces_not_eliminates_renal_uncertainty",
+              "discoveryPaths": [
+                "prior_t4_renal_records",
+                "weight_change",
+                "same_episode_thyroid_renal_bp_followup"
+              ]
+            },
+            {
+              "factId": "generator_cannot_select_protocol_or_target",
+              "discoveryPaths": [
+                "thyroid_treatment_diet_history",
+                "owner_route_capacity",
+                "thyroid_renal_systemic_baseline"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_hyperthyroid_treatment_and_renal_monitoring",
+              "classification": "required_protocol_state",
+              "result": "При динамическом наблюдении: совместного направления."
+            },
+            {
+              "id": "feline_hyperthyroid_total_t4",
+              "classification": "required_resulted",
+              "result": "В лабораторных показателях крови: полученный ответ."
+            },
+            {
+              "id": "feline_hyperthyroid_cbc_biochemistry_urinalysis",
+              "classification": "required_resulted",
+              "result": "В анализе мочи: изованный ответ почек или мочи."
+            },
+            {
+              "id": "feline_hyperthyroid_scintigraphy_or_referral",
+              "classification": "optional_definitive_planning",
+              "result": "По итогам консультации специалиста: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "reversible_control_reduces_not_eliminates_renal_uncertainty",
+              "generator_cannot_select_protocol_or_target"
+            ],
+            "confirmedDiagnosisRequires": [
+              "joint_reviewed_response_context"
+            ],
+            "dangerStates": [
+              "dehydration",
+              "hypothyroid_state",
+              "renal_decompensation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "body_weight",
+              "biochemistry",
+              "urinalysis",
+              "blood_pressure",
+              "thyroid_longitudinal_monitoring"
+            ],
+            "external": [
+              "t4_external",
+              "sdma_external",
+              "feline_hyperthyroid_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "thyroid_renal_baseline_or_referral",
+              "thyroid_longitudinal_route",
+              "thyroid_definitive_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "hyperthyroid_ckd_joint_plan",
+          "followUp": {
+            "timing": "Определяемый протоколом ранний ответ до принятия решения о маршруте.",
+            "required": true,
+            "targets": [
+              "t4",
+              "renal",
+              "hydration",
+              "appetite",
+              "weight",
+              "bp"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неопределенность становится меньшей и явной.",
+            "unsafe": "Опасно считать пробный этап безошибочным прогнозом или менять цель и дозу без оценки врача."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: можно и что нельзя предсказать с помощью обратимого шага."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "external_joint_monitoring",
+            "ownerModifiers": [
+              "definitive_route_uncertainty",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_post_treatment_azotemia_requires_joint_monitoring",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что после контроля щитовидной железы креатинин или СДМА повышался или моча или клинические данные раскрыли почечную дисфункцию.",
+          "historyAnswers": {
+            "prior_t4_renal_records": "По нашим наблюдениям, связаны снимки до и после контроля.",
+            "thyroid_treatment_diet_history": "Дома мы заметили, что состояние лечения документировано.",
+            "pupd_pattern": "Насколько мы можем судить, нынешняя клиническая картина пока не изменилась.",
+            "appetite_pattern": "Мы записали, что текущее потребление.",
+            "weight_change": "По нашим наблюдениям, текущий вес или оценка мышечной массы."
+          },
+          "examFindings": [
+            {
+              "factId": "postcontrol_azotemia_needs_hydration_and_thyroid_context",
+              "source": "clinical_record",
+              "finding": "Проверяются гидратация, чрезмерное подавление, острые факторы и стабильный новый исходный уровень почек."
+            },
+            {
+              "factId": "automatic_cancel_or_ignore_are_both_unsafe",
+              "source": "safety_rule",
+              "finding": "План совместно пересматривается; отсутствие рефлекса отмены или принятия без контроля."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "postcontrol_azotemia_needs_hydration_and_thyroid_context",
+              "discoveryPaths": [
+                "prior_t4_renal_records",
+                "hydration_temperature_behavior_exam",
+                "thyroid_renal_systemic_baseline"
+              ]
+            },
+            {
+              "factId": "automatic_cancel_or_ignore_are_both_unsafe",
+              "discoveryPaths": [
+                "thyroid_treatment_diet_history",
+                "appetite_pattern",
+                "same_episode_thyroid_renal_bp_followup"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_hyperthyroid_treatment_and_renal_monitoring",
+              "classification": "required_serial",
+              "result": "При динамическом наблюдении: т4-фотографии и снимки почек до или после."
+            },
+            {
+              "id": "feline_hyperthyroid_total_t4",
+              "classification": "required_over_under_control_context",
+              "result": "В лабораторных показателях крови: текущего Т4."
+            },
+            {
+              "id": "feline_hyperthyroid_cbc_biochemistry_urinalysis",
+              "classification": "required_new_stable_baseline",
+              "result": "В анализе мочи: полученный контекст гидратации или почек или мочи."
+            },
+            {
+              "id": "feline_hyperthyroid_blood_pressure_and_retina",
+              "classification": "required",
+              "result": "При измерении давления: получены конкретные значения артериального давления."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "postcontrol_azotemia_needs_hydration_and_thyroid_context",
+              "automatic_cancel_or_ignore_are_both_unsafe"
+            ],
+            "confirmedDiagnosisRequires": [
+              "stable_postcontrol_renal_dysfunction_after_context_review"
+            ],
+            "dangerStates": [
+              "dehydration",
+              "iatrogenic_hypothyroid_state",
+              "acute_kidney_injury",
+              "uremia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "biochemistry",
+              "urinalysis",
+              "blood_pressure",
+              "thyroid_longitudinal_monitoring"
+            ],
+            "external": [
+              "t4_external",
+              "sdma_external",
+              "renal_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "thyroid_renal_baseline_or_referral",
+              "thyroid_longitudinal_route",
+              "thyroid_emergency_route"
+            ],
+            "referralFallback": "renal_referral"
+          },
+          "carePlanId": "hyperthyroid_ckd_joint_plan",
+          "followUp": {
+            "timing": "Короткий общий обзор до стабилизации исходного состояния щитовидной железы и почек.",
+            "required": true,
+            "targets": [
+              "hydration",
+              "t4",
+              "creatinine",
+              "sdma",
+              "urine",
+              "bp",
+              "appetite"
+            ]
+          },
+          "outcomes": {
+            "safe": "Постконтрольные изменения почек классифицируются в контексте суставов.",
+            "unsafe": "Вся терапия прекращается или снижение функции почек автоматически игнорируется."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: демаскирующие факторы в сравнении с острыми или обратимыми факторами."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "frail"
+            ],
+            "requiredHandlingAlternative": "staged_low_stress_joint_rechecks",
+            "ownerModifiers": [
+              "treatment_regret",
+              "cost_concern"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "feline_hyperthyroid_cardiovascular_or_severe",
+      "version": "2026.07.16.40",
+      "title": "Кардиоваскулярное, гипертензивное или тяжёлое течение",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Сердечные, гипертонические и апатические или декомпенсированные состояния требуют отдельной срочной оценки; Исследование сердца подтверждает вопрос о сердечно-сосудистой системе, но не позволяет автоматически установить ЗСН.",
+      "exclusions": [
+        "murmur_equals_chf_without_evidence",
+        "single_stress_bp_without_damage",
+        "primary_cardiac_or_neuro_disease_unassessed"
+      ],
+      "planBundleId": "cardiovascular_severe_hyperthyroid_plan",
+      "sourceIds": [
+        "aafp_feline_hyperthyroid_2016",
+        "merck_feline_hyperthyroid",
+        "isfm_feline_hypertension_2017"
+      ],
+      "presentations": [
+        {
+          "id": "p1_tachycardia_murmur_or_gallop",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_urgent_by_breathing",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что у гипертиреоидной кошки тахикардия, нерегулярный ритм, шум или галоп; дыхательные признаки отдельно.",
+          "historyAnswers": {
+            "cardiorespiratory_signs": "По нашим наблюдениям, владелец не отмечает этого признака на текущем этапе.",
+            "weight_change": "Дома мы заметили, что базовая потеря.",
+            "activity_sleep": "Насколько мы можем судить, гиперактивный или слабый.",
+            "prior_t4_renal_records": "Мы записали, что высокий Т4 и исходный уровень почек.",
+            "vision_change": "По нашим наблюдениям, жалобы на орган-мишень проверены."
+          },
+          "examFindings": [
+            {
+              "factId": "cardiac_exam_finding_requires_specific_assessment",
+              "source": "physical_exam",
+              "finding": "Частота или ритм или шум или галоп определяют ЭКГ или эхо или направление."
+            },
+            {
+              "factId": "murmur_or_tachycardia_is_not_chf",
+              "source": "safety_rule",
+              "finding": "Неудача требует контекста дыхания или визуализации или эхо; одышка требует немедленного минимального лечения."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "cardiac_exam_finding_requires_specific_assessment",
+              "discoveryPaths": [
+                "cardiorespiratory_signs",
+                "heart_rate_rhythm_auscultation",
+                "cardiac_ecg_echo_context"
+              ]
+            },
+            {
+              "factId": "murmur_or_tachycardia_is_not_chf",
+              "discoveryPaths": [
+                "activity_sleep",
+                "hydration_temperature_behavior_exam",
+                "standardized_feline_bp_series"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_hyperthyroid_cardiac_assessment",
+              "classification": "required_by_exam_or_referral",
+              "result": "Кардиологическая оценка показала: полученный контекст ЭКГ или эхо или биомаркеров."
+            },
+            {
+              "id": "feline_hyperthyroid_blood_pressure_and_retina",
+              "classification": "required",
+              "result": "При измерении давления: получены конкретные значения артериального давления."
+            },
+            {
+              "id": "feline_hyperthyroid_total_t4",
+              "classification": "required_context",
+              "result": "В лабораторных показателях крови: высокого Т4."
+            },
+            {
+              "id": "feline_hyperthyroid_treatment_and_renal_monitoring",
+              "classification": "required_cardiac_reassessment",
+              "result": "При динамическом наблюдении: будущий совместный КПП."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "cardiac_exam_finding_requires_specific_assessment",
+              "murmur_or_tachycardia_is_not_chf"
+            ],
+            "confirmedDiagnosisRequires": [
+              "thyroid_context_plus_specific_cardiac_classification"
+            ],
+            "dangerStates": [
+              "chf",
+              "dangerous_arrhythmia",
+              "arterial_thromboembolism",
+              "hypertension"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "auscultation",
+              "respiratory_rate",
+              "blood_pressure",
+              "ecg"
+            ],
+            "external": [
+              "cardiac_biomarker_external",
+              "echocardiography_external",
+              "cardiology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "thyroid_cardiac_route",
+              "thyroid_bp_target_route",
+              "thyroid_emergency_route"
+            ],
+            "referralFallback": "cardiology_referral"
+          },
+          "carePlanId": "cardiovascular_severe_hyperthyroid_plan",
+          "followUp": {
+            "timing": "Стабилизация или оценка сердечной деятельности, затем повторная проверка после контроля щитовидной железы.",
+            "required": true,
+            "targets": [
+              "respiration",
+              "rate_rhythm",
+              "echo",
+              "bp",
+              "t4",
+              "renal"
+            ]
+          },
+          "outcomes": {
+            "safe": "Сердечные заболевания классифицируются, а затем подвергаются повторной оценке.",
+            "unsafe": "Шум называется ЗСН, или одышка требует полного гормонального обследования."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какие изменения со стороны сердца могут развиться после контроля щитовидной железы, а какие требуют собственного плана."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "irritable",
+              "dyspneic"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_oxygen_cardiology_route",
+            "ownerModifiers": [
+              "cardiac_anxiety",
+              "cost_crisis"
+            ]
+          }
+        },
+        {
+          "id": "p2_hypertension_and_retinal_target_damage",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что кошка внезапно стала натыкаться на предметы; изменения сетчатки и стойко высокое артериальное давление указывают на поражение органов-мишеней.",
+          "historyAnswers": {
+            "vision_change": "По нашим наблюдениям, острая слепота или изменение зрачков.",
+            "prior_t4_renal_records": "Дома мы заметили, что т4 и исходный уровень почек.",
+            "cardiorespiratory_signs": "Насколько мы можем судить, проверены другие признаки органов-мишеней.",
+            "thyroid_treatment_diet_history": "Мы записали, что состояние лечения документировано.",
+            "owner_route_capacity": "По нашим наблюдениям, обсуждается срочный маршрут."
+          },
+          "examFindings": [
+            {
+              "factId": "retinal_target_damage_requires_immediate_route",
+              "source": "physical_exam",
+              "finding": "Артериальное давление стойко повышено; при осмотре глаз выявлены множественные кровоизлияния и частичная отслойка сетчатки."
+            },
+            {
+              "factId": "target_damage_does_not_wait_for_long_bp_persistence",
+              "source": "safety_rule",
+              "finding": "Срочное пересмотренное лечение и офтальмологическое или почечное или тиреоидное лечение осуществляются параллельно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "retinal_target_damage_requires_immediate_route",
+              "discoveryPaths": [
+                "vision_change",
+                "retinal_target_organ_exam",
+                "standardized_feline_bp_series"
+              ]
+            },
+            {
+              "factId": "target_damage_does_not_wait_for_long_bp_persistence",
+              "discoveryPaths": [
+                "prior_t4_renal_records",
+                "thyroid_renal_systemic_baseline",
+                "same_episode_thyroid_renal_bp_followup"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_hyperthyroid_blood_pressure_and_retina",
+              "classification": "required_immediate_authored",
+              "result": "При измерении давления: высокое АД с полученным поражением органов-мишеней."
+            },
+            {
+              "id": "feline_hyperthyroid_total_t4",
+              "classification": "required_parallel_context",
+              "result": "В лабораторных показателях крови: высокого или двусмысленного Т4."
+            },
+            {
+              "id": "feline_hyperthyroid_cbc_biochemistry_urinalysis",
+              "classification": "required_renal_parallel_context",
+              "result": "В анализе мочи: полученный базовый уровень почек."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "retinal_target_damage_requires_immediate_route",
+              "target_damage_does_not_wait_for_long_bp_persistence"
+            ],
+            "confirmedDiagnosisRequires": [
+              "high_bp_plus_authored_target_organ_damage"
+            ],
+            "dangerStates": [
+              "retinal_detachment",
+              "hypertensive_encephalopathy",
+              "acute_renal_change"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "blood_pressure",
+              "trained_blood_pressure",
+              "target_organ_damage_exam",
+              "ophthalmoscopy"
+            ],
+            "external": [
+              "ophthalmology_referral",
+              "hospital_referral",
+              "renal_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "thyroid_bp_target_route",
+              "thyroid_emergency_route",
+              "thyroid_renal_baseline_or_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "cardiovascular_severe_hyperthyroid_plan",
+          "followUp": {
+            "timing": "Срочное обследование сетчатки или АД, затем совместное наблюдение за лечением щитовидной железы или почек.",
+            "required": true,
+            "targets": [
+              "vision",
+              "retina",
+              "bp",
+              "t4",
+              "renal",
+              "neurology"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неотложная помощь органам-мишеням осуществляется немедленно.",
+            "unsafe": "Слепота неделями ждет подтверждения АД, или рендерер выдумывает результат сетчатки."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: срочный риск для органов-мишеней, не обещая восстановления зрения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "visually_impaired",
+              "fearful",
+              "irritable"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_ophthalmology_hospital_route",
+            "ownerModifiers": [
+              "panic_about_blindness",
+              "cost_crisis"
+            ]
+          }
+        },
+        {
+          "id": "p3_apathetic_or_decompensated_hyperthyroid_cat",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что вместо гиперактивности кошка слаба, не ест, обезвожена или имеет сердечные или желудочно-кишечный тракт признаки.",
+          "historyAnswers": {
+            "activity_sleep": "По нашим наблюдениям, апатия или слабость.",
+            "appetite_pattern": "Дома мы заметили, что снижено или отсутствует.",
+            "gi_signs": "Насколько мы можем судить, рвота или понос.",
+            "cardiorespiratory_signs": "Мы записали, что оценивается одышка или слабость или коллапс.",
+            "prior_t4_renal_records": "По нашим наблюдениям, временная шкала щитовидной железы или почек доступна или отсутствует."
+          },
+          "examFindings": [
+            {
+              "factId": "apathetic_pattern_does_not_exclude_hyperthyroidism",
+              "source": "physical_exam",
+              "finding": "Кошка с тяжелым или сопутствующим гипертиреозом может быть скорее апатичной, чем гиперактивной."
+            },
+            {
+              "factId": "stabilization_precedes_longterm_route_selection",
+              "source": "safety_rule",
+              "finding": "Окончательному выбору предшествуют оценка гидратации, перфузии, температуры, почек, АД и сердца."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "apathetic_pattern_does_not_exclude_hyperthyroidism",
+              "discoveryPaths": [
+                "activity_sleep",
+                "appetite_pattern",
+                "hydration_temperature_behavior_exam"
+              ]
+            },
+            {
+              "factId": "stabilization_precedes_longterm_route_selection",
+              "discoveryPaths": [
+                "cardiorespiratory_signs",
+                "heart_rate_rhythm_auscultation",
+                "thyroid_renal_systemic_baseline"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_hyperthyroid_cbc_biochemistry_urinalysis",
+              "classification": "required_immediate",
+              "result": "В анализе мочи: полученная картина органной или почечной или коморбидной патологии."
+            },
+            {
+              "id": "feline_hyperthyroid_blood_pressure_and_retina",
+              "classification": "required_by_stability",
+              "result": "При измерении давления: полученное АД или органы-мишени."
+            },
+            {
+              "id": "feline_hyperthyroid_cardiac_assessment",
+              "classification": "urgent_by_exam",
+              "result": "Кардиологическая оценка показала: полученный сердечный путь."
+            },
+            {
+              "id": "feline_hyperthyroid_total_t4",
+              "classification": "required_without_delaying_support",
+              "result": "В лабораторных показателях крови: полученный контекст щитовидной железы."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "apathetic_pattern_does_not_exclude_hyperthyroidism",
+              "stabilization_precedes_longterm_route_selection"
+            ],
+            "confirmedDiagnosisRequires": [
+              "thyroid_confirmation_plus_decompensation_context"
+            ],
+            "dangerStates": [
+              "chf",
+              "shock",
+              "hyperthermia",
+              "severe_dehydration",
+              "acute_renal_injury"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "temperature",
+              "auscultation",
+              "respiratory_rate",
+              "blood_pressure",
+              "biochemistry"
+            ],
+            "external": [
+              "t4_external",
+              "hospital_referral",
+              "cardiology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "thyroid_emergency_route",
+              "thyroid_cardiac_route",
+              "thyroid_renal_baseline_or_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "cardiovascular_severe_hyperthyroid_plan",
+          "followUp": {
+            "timing": "Непрерывная стабилизация, затем повторная оценка состояния щитовидной железы, сердца и почек.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "intake",
+              "temperature",
+              "respiration",
+              "t4",
+              "renal",
+              "bp"
+            ]
+          },
+          "outcomes": {
+            "safe": "Атипичный тяжелый картина стабилизирован и правильно связан.",
+            "unsafe": "Низкая активность ошибочно исключает гипертиреоз или окончательный выбор задерживает поддержку."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: тяжелый гипертиреоз может проявляться слабостью, а не только гиперактивностью."
+          ],
+          "compatibility": {
+            "temperament": [
+              "lethargic",
+              "frail",
+              "dyspneic"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_hospital_referral",
+            "ownerModifiers": [
+              "cost_crisis",
+              "prognosis_anxiety"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "aafp_feline_hyperthyroid_2016",
+      "title": "2016 AAFP Guidelines for the Management of Feline Hyperthyroidism",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27143042/",
+      "scope": "diagnostic categories, testing sequence, comorbid CKD/cardiac disease, treatment and monitoring boundaries"
+    },
+    {
+      "id": "aafp_feline_hyperthyroid_full",
+      "title": "Full text: AAFP Feline Hyperthyroidism Guidelines",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11132203/",
+      "scope": "clinical signs, total T4, equivocal cases, CKD and treatment routes"
+    },
+    {
+      "id": "merck_feline_hyperthyroid",
+      "title": "Merck Veterinary Manual: Hyperthyroidism in Animals",
+      "url": "https://www.merckvetmanual.com/endocrine-system/the-thyroid-gland/hyperthyroidism-in-animals",
+      "scope": "current diagnostic algorithm, normal T4 minority, free T4 limits, screening, CKD and cardiovascular complications"
+    },
+    {
+      "id": "isfm_feline_hypertension_2017",
+      "title": "ISFM Consensus Guidelines on the Diagnosis and Management of Hypertension in Cats",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28245741/",
+      "scope": "standardized blood pressure and target-organ damage"
+    }
+  ],
+  "familyValidationRules": [
+    "species_must_be_cat",
+    "weight_loss_or_thyroid_nodule_alone_cannot_confirm",
+    "clinical_cat_plus_high_total_t4_confirms_overt_disease",
+    "normal_total_t4_cannot_always_exclude_compatible_early_disease",
+    "free_t4_or_tsh_cannot_be_standalone_screen",
+    "nonthyroidal_illness_and_mass_differentials_must_remain",
+    "renal_urine_bp_and_weight_baseline_required_before_longterm_route",
+    "ckd_cannot_mean_do_not_treat_hyperthyroidism",
+    "postcontrol_azotemia_requires_hydration_thyroid_and_stable_renal_context",
+    "murmur_or_tachycardia_cannot_equal_chf",
+    "target_organ_damage_cannot_wait_for_long_bp_confirmation",
+    "external_t4_scintigraphy_echo_and_definitive_services_keep_turnaround",
+    "biochemistry_analyzer_cannot_grant_t4_capability",
+    "no_drug_dose_target_t4_diet_composition_radioiodine_or_surgery_technique_is_generated",
+    "all_levels_remain_generator_ineligible_until_external_veterinary_approval"
+  ]
+}

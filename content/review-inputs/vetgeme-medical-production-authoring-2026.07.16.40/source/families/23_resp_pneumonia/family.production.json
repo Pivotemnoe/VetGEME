@@ -1,0 +1,2924 @@
+{
+  "schemaVersion": 1,
+  "familyId": "resp_pneumonia",
+  "familyVersion": "2026.07.16.40",
+  "status": "author_complete_source_checked_pending_external_veterinary_review",
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "terminologyRules": [
+    "Pneumonia is pulmonary parenchymal inflammation and is not synonymous with cough or upper respiratory disease.",
+    "An aspiration event, aspiration pneumonitis and secondary bacterial aspiration pneumonia are separate authored states.",
+    "Fever, CBC change or radiographic severity alone never proves bacterial etiology.",
+    "Respiratory stabilization and minimal handling precede radiography or airway sampling in an unstable patient.",
+    "Oropharyngeal or nasal swabs are not substitutes for a meaningful lower-airway sample.",
+    "Blood culture may support selected severe cases but is not presented as an equivalent replacement for lower-airway sampling.",
+    "Fungal and parasitic branches require compatible geography, species and exposure.",
+    "Clinical, hematologic and imaging recovery may occur at different rates and remain time-linked.",
+    "Oxygenation, imaging, culture truth, primary cause and response are authored before player choice and persist through reload.",
+    "Drug, dose, duration, oxygen target, sampling, intubation and ventilation technique require separately approved protocols."
+  ],
+  "coreCapabilities": [
+    "respiratory_exam",
+    "pulse_oximetry",
+    "cbc",
+    "xray_or_referral",
+    "oxygen",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "pneumonia_triage_route",
+      "anyOf": [
+        "respiratory_exam",
+        "pulse_oximetry",
+        "oxygen",
+        "respiratory_distress_minimal_handling",
+        "safe_referral"
+      ],
+      "purpose": "respiratory_stability_oxygenation_and_handling"
+    },
+    {
+      "id": "pneumonia_hospital_route",
+      "anyOf": [
+        "respiratory_hospital_monitoring",
+        "hospital_referral",
+        "intensive_care_referral",
+        "mechanical_ventilation_referral",
+        "safe_referral"
+      ],
+      "purpose": "oxygen_dependent_septic_or_ventilatory_failure"
+    },
+    {
+      "id": "pneumonia_systemic_route",
+      "anyOf": [
+        "cbc",
+        "biochemistry",
+        "vital_monitor",
+        "stabilization",
+        "safe_referral"
+      ],
+      "purpose": "systemic_inflammation_perfusion_and_organ_context"
+    },
+    {
+      "id": "pneumonia_imaging_route",
+      "anyOf": [
+        "xray_or_referral",
+        "serial_thoracic_radiography",
+        "thoracic_pocus",
+        "safe_referral"
+      ],
+      "purpose": "multiview_distribution_and_serial_imaging"
+    },
+    {
+      "id": "pneumonia_airway_sample_route",
+      "anyOf": [
+        "lower_airway_sampling_referral",
+        "respiratory_cytology_culture_external",
+        "safe_referral"
+      ],
+      "purpose": "lower_airway_cytology_culture_and_susceptibility"
+    },
+    {
+      "id": "pneumonia_blood_culture_route",
+      "anyOf": [
+        "blood_culture_external",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "selected_severe_case_alternative_when_airway_sampling_unsafe"
+    },
+    {
+      "id": "pneumonia_aspiration_source_route",
+      "anyOf": [
+        "aspiration_risk_assessment",
+        "esophageal_swallowing_workup_external",
+        "advanced_imaging_referral",
+        "safe_referral"
+      ],
+      "purpose": "regurgitation_dysphagia_anesthesia_and_feeding_source"
+    },
+    {
+      "id": "pneumonia_infectious_route",
+      "anyOf": [
+        "respiratory_infectious_panel_external",
+        "respiratory_fungal_testing_external",
+        "isolation_protocol",
+        "safe_referral"
+      ],
+      "purpose": "compatible_region_species_exposure_testing"
+    },
+    {
+      "id": "pneumonia_mimic_route",
+      "anyOf": [
+        "thoracic_pocus",
+        "coagulation",
+        "ecg",
+        "cardiology_referral",
+        "oncology_staging_external",
+        "advanced_imaging_referral",
+        "safe_referral"
+      ],
+      "purpose": "edema_hemorrhage_neoplasia_and_other_mimics"
+    },
+    {
+      "id": "pneumonia_longitudinal_route",
+      "anyOf": [
+        "pneumonia_longitudinal_monitoring",
+        "serial_thoracic_radiography",
+        "longitudinal_care",
+        "safe_referral"
+      ],
+      "purpose": "clinical_hematologic_imaging_and_primary_cause_response"
+    },
+    {
+      "id": "pneumonia_nonresolving_route",
+      "anyOf": [
+        "advanced_imaging_referral",
+        "airway_endoscopy_referral",
+        "lower_airway_sampling_referral",
+        "safe_referral"
+      ],
+      "purpose": "focal_recurrent_or_nonresolving_source_control"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "pneumonia_respiratory_triage_and_oxygenation",
+      "requires": [
+        "respiratory_exam",
+        "pulse_oximetry",
+        "oxygen"
+      ],
+      "availability": "local_emergency_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pneumonia_cbc_biochemistry_and_sepsis_assessment",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "respiratory_hospital_monitoring"
+      ],
+      "availability": "local_hospital_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pneumonia_multiview_thoracic_radiography",
+      "requires": [
+        "xray_or_referral",
+        "serial_thoracic_radiography"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pneumonia_lower_airway_cytology_culture_and_susceptibility",
+      "requires": [
+        "lower_airway_sampling_referral",
+        "respiratory_cytology_culture_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pneumonia_blood_culture_when_airway_sampling_is_unsafe",
+      "requires": [
+        "blood_culture_external"
+      ],
+      "availability": "external_selected_emergency_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pneumonia_aspiration_source_and_esophageal_swallowing_workup",
+      "requires": [
+        "aspiration_risk_assessment",
+        "esophageal_swallowing_workup_external"
+      ],
+      "availability": "local_and_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pneumonia_infectious_fungal_parasitic_or_inflammatory_workup",
+      "requires": [
+        "respiratory_infectious_panel_external",
+        "respiratory_fungal_testing_external"
+      ],
+      "availability": "external_post_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pneumonia_serial_clinical_hematologic_and_imaging_reassessment",
+      "requires": [
+        "pneumonia_longitudinal_monitoring"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pneumonia_nonresolving_advanced_airway_or_imaging_referral",
+      "requires": [
+        "advanced_imaging_referral",
+        "airway_endoscopy_referral"
+      ],
+      "availability": "external_post_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "respiratory_onset_dynamics",
+      "prompt": "Когда возникли проблемы с кашлем или утахипноэ или слабостью и как менялись?"
+    },
+    {
+      "id": "resting_sleeping_rr",
+      "prompt": "Какова измеренная частота дыхания во сне или полном покое?"
+    },
+    {
+      "id": "effort_cyanosis_syncope",
+      "prompt": "Есть ли усилие, цианоз, коллапс или обморок?"
+    },
+    {
+      "id": "vomiting_regurgitation_timeline",
+      "prompt": "Была ли рвота или срыгивание и когда важные признаки?"
+    },
+    {
+      "id": "anesthesia_force_feeding_liquid_medication",
+      "prompt": "Были ли анестезия, принудительное кормление или жидкие лекарства?"
+    },
+    {
+      "id": "dysphagia_megaesophagus_cough_eating",
+      "prompt": "Есть ли дисфагия, мегаэзофагус или кашель во время еды?"
+    },
+    {
+      "id": "crowding_shelter_sick_contacts",
+      "prompt": "Были ли контакты приюта или интерната или скопления или больных?"
+    },
+    {
+      "id": "travel_region_environment",
+      "prompt": "Каковы путешествия, регион и воздействие на окружающую среду?"
+    },
+    {
+      "id": "prior_treatment_response",
+      "prompt": "Что получал пациент, когда и с каким ответом?"
+    },
+    {
+      "id": "immune_status",
+      "prompt": "Есть ли иммунодефицит или иммуносупрессия?"
+    },
+    {
+      "id": "appetite_activity_breathing_log",
+      "prompt": "Как изменить аппетит, активность и дыхание?"
+    },
+    {
+      "id": "prior_thoracic_imaging",
+      "prompt": "Есть ли предыдущее торакальное изображение или отчет и дата?"
+    },
+    {
+      "id": "primary_airway_disease_history",
+      "prompt": "Есть ли хроническое заболевание дыхательных путей, коллапс, риск инородного тела или неоплазия?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "minimal_handling_respiratory_observation",
+      "source": "observation",
+      "requires": [
+        "respiratory_exam",
+        "respiratory_distress_minimal_handling"
+      ]
+    },
+    {
+      "id": "respiratory_rate_effort_pattern",
+      "source": "measurement",
+      "requires": [
+        "respiratory_exam"
+      ]
+    },
+    {
+      "id": "mucosa_mentation_perfusion",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "blood_pressure"
+      ]
+    },
+    {
+      "id": "signal_quality_oxygenation_record",
+      "source": "measurement",
+      "requires": [
+        "pulse_oximetry"
+      ]
+    },
+    {
+      "id": "temperature_hydration_sepsis_record",
+      "source": "physical_exam",
+      "requires": [
+        "temperature",
+        "hydration_assessment",
+        "general_exam"
+      ]
+    },
+    {
+      "id": "thoracic_auscultation",
+      "source": "physical_exam",
+      "requires": [
+        "respiratory_exam"
+      ]
+    },
+    {
+      "id": "dated_multiview_thoracic_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "xray_or_referral"
+      ]
+    },
+    {
+      "id": "lower_airway_sample_quality_record",
+      "source": "external_report",
+      "requires": [
+        "lower_airway_sampling_referral",
+        "respiratory_cytology_culture_external"
+      ]
+    },
+    {
+      "id": "same_episode_blood_culture_record",
+      "source": "external_report",
+      "requires": [
+        "blood_culture_external"
+      ]
+    },
+    {
+      "id": "aspiration_source_workup_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "aspiration_risk_assessment",
+        "esophageal_swallowing_workup_external"
+      ]
+    },
+    {
+      "id": "region_exposure_test_record",
+      "source": "external_report",
+      "requires": [
+        "respiratory_infectious_panel_external",
+        "respiratory_fungal_testing_external"
+      ]
+    },
+    {
+      "id": "same_scale_clinical_cbc_imaging_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "pneumonia_longitudinal_monitoring"
+      ]
+    },
+    {
+      "id": "advanced_airway_imaging_record",
+      "source": "external_report",
+      "requires": [
+        "advanced_imaging_referral",
+        "airway_endoscopy_referral"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "iscaid_respiratory_2017",
+      "title": "ISCAID antimicrobial use guidelines for respiratory tract disease in dogs and cats",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28185306/",
+      "scope": "bacterial_diagnosis_sampling_stewardship_and_response"
+    },
+    {
+      "id": "merck_pneumonia_2024",
+      "title": "Merck Veterinary Manual: Pneumonia in Dogs and Cats",
+      "url": "https://www.merckvetmanual.com/respiratory-system/respiratory-diseases-of-small-animals/pneumonia-in-dogs-and-cats",
+      "scope": "etiologies_clinical_findings_imaging_oxygen_and_underlying_disease"
+    },
+    {
+      "id": "aspiration_bacterial_2021",
+      "title": "Bacterial infection in dogs with aspiration pneumonia at two referral practices",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34751462/",
+      "scope": "bacterial_criteria_balf_limits_and_noninvasive_marker_uncertainty"
+    },
+    {
+      "id": "aspiration_findings_2008",
+      "title": "Clinical clinicopathologic and radiographic findings in dogs with aspiration pneumonia",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19046033/",
+      "scope": "clinical_oxygenation_cbc_and_radiographic_distribution"
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "bacterial_bronchopneumonia_plan",
+      "fullPlan": [
+        "stability_and_oxygen",
+        "systemic_and_multiview_assessment",
+        "meaningful_lower_airway_sample_when_safe",
+        "reviewed_empirical_then_result_aligned_protocol",
+        "underlying_source_search",
+        "same_scale_reassessment"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "document_parenchymal_disease",
+        "sample_when_safe",
+        "treat_and_reassess_source"
+      ],
+      "minimumSafePlan": [
+        "oxygen_and_referral_by_state",
+        "imaging_without_destabilization",
+        "stewardship_recheck"
+      ],
+      "stabilizeAndRefer": [
+        "minimal_handling_oxygen",
+        "perfusion_support",
+        "hospital_or_icu_transfer"
+      ],
+      "unsafeOrInadequate": [
+        "any_cough_equals_pneumonia",
+        "one_cbc_value_proves_bacteria",
+        "nasal_swab_as_lower_airway_culture",
+        "random_drug_escalation"
+      ]
+    },
+    {
+      "id": "aspiration_pneumonitis_pneumonia_plan",
+      "fullPlan": [
+        "stability_and_oxygen",
+        "timed_aspiration_event",
+        "thoracic_baseline_and_authored_evolution",
+        "separate_chemical_and_bacterial_evidence",
+        "source_swallow_esophageal_workup",
+        "recurrence_prevention"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "link_event_without_blame",
+        "classify_lung_process",
+        "control_source"
+      ],
+      "minimumSafePlan": [
+        "early_negative_image_does_not_erase_event",
+        "history_alone_does_not_prove_bacteria",
+        "dated_reassessment"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen_and_minimal_handling",
+        "urgent_hospital_route",
+        "source_workup_after_stability"
+      ],
+      "unsafeOrInadequate": [
+        "all_aspiration_is_bacterial",
+        "force_feeding_blame",
+        "wait_for_radiograph_while_unstable"
+      ]
+    },
+    {
+      "id": "severe_hypoxemic_pneumonia_plan",
+      "fullPlan": [
+        "minimal_handling_oxygen",
+        "continuous_oxygenation_and_perfusion",
+        "sepsis_and_multilobar_context",
+        "culture_without_harmful_delay",
+        "icu_and_ventilation_threshold",
+        "linked_outcome"
+      ],
+      "stagedPlan": [
+        "recognize_exhaustion",
+        "support_gas_exchange",
+        "obtain_only_safe_diagnostics",
+        "transfer_before_capacity_exceeded"
+      ],
+      "minimumSafePlan": [
+        "oxygen_first",
+        "continuous_monitor_or_referral",
+        "no_forced_sampling"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen",
+        "shock_support",
+        "icu_or_mechanical_ventilation_referral"
+      ],
+      "unsafeOrInadequate": [
+        "calm_exhausted_patient_called_stable",
+        "radiography_delays_oxygen",
+        "blood_culture_called_perfect_bal",
+        "ui_generates_ventilator_settings"
+      ]
+    },
+    {
+      "id": "nonbacterial_or_mimic_plan",
+      "fullPlan": [
+        "stability_first",
+        "distribution_and_timeline",
+        "region_species_exposure_gate",
+        "cytology_and_targeted_external_tests",
+        "edema_hemorrhage_neoplasia_differentials",
+        "transfer_to_correct_family"
+      ],
+      "stagedPlan": [
+        "exclude_immediate_threat",
+        "select_compatible_discriminator",
+        "avoid_unsafe_immunosuppression",
+        "reclassify_by_evidence"
+      ],
+      "minimumSafePlan": [
+        "no_geography_free_exotic_disease",
+        "infection_exclusion_before_immunosuppression",
+        "dangerous_mimic_visible"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen_by_state",
+        "minimal_safe_tests",
+        "specialist_route"
+      ],
+      "unsafeOrInadequate": [
+        "negative_bacterial_culture_proves_fungus",
+        "eosinophilia_proves_parasite",
+        "repeated_antimicrobials_replace_mimic_workup"
+      ]
+    },
+    {
+      "id": "followup_nonresolving_plan",
+      "fullPlan": [
+        "same_episode_clinical_cbc_imaging_trends",
+        "sample_and_susceptibility_quality_audit",
+        "adherence_and_primary_source_audit",
+        "radiographic_lag_context",
+        "advanced_focal_airway_workup",
+        "versioned_next_plan"
+      ],
+      "stagedPlan": [
+        "compare_authored_checkpoint",
+        "classify_response_or_failure",
+        "audit_assumption_and_source",
+        "escalate_targetedly"
+      ],
+      "minimumSafePlan": [
+        "clinical_and_imaging_lag_allowed",
+        "deterioration_retriaged",
+        "same_patient_continuity"
+      ],
+      "stabilizeAndRefer": [
+        "retriage_oxygen_need",
+        "hospitalize_if_worse",
+        "advanced_airway_or_imaging_referral"
+      ],
+      "unsafeOrInadequate": [
+        "endless_treatment_until_perfect_xray",
+        "broadening_without_evidence",
+        "recurrence_becomes_new_patient"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "resp_pneumonia_bacterial_bronchopneumonia",
+      "version": "2026.07.16.40",
+      "title": "Бактериальная бронхопневмония",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Клинические и торакальные данные со значимой цитологией или культурой нижних дыхательных путей, когда это возможно, подтверждают бактериальную легочную инфекцию и сохраняют ее основной возбудитель.",
+      "exclusions": [
+        "cough_without_parenchymal_evidence",
+        "aspiration_event_without_bacterial_evidence",
+        "region_incompatible_nonbacterial_disease"
+      ],
+      "planBundleId": "bacterial_bronchopneumonia_plan",
+      "sourceIds": [
+        "iscaid_respiratory_2017",
+        "merck_pneumonia_2024"
+      ],
+      "presentations": [
+        {
+          "id": "p1_fever_cough_and_alveolar_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_priority",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что кашель, лихорадка или системное заболевание, тахипноэ и совместимый альвеолярный картина.",
+          "historyAnswers": {
+            "respiratory_onset_dynamics": "По нашим наблюдениям, острый или прогрессирующий.",
+            "resting_sleeping_rr": "Дома мы заметили, что по этому пункту владелец не замечает отклонений от обычного состояния.",
+            "effort_cyanosis_syncope": "Насколько мы можем судить, выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного.",
+            "prior_treatment_response": "Мы записали, что необработанный и не документированный."
+          },
+          "examFindings": [
+            {
+              "factId": "parenchymal_pattern_plus_systemic_context_supports_not_proves_bacteria",
+              "source": "diagnostic_rule",
+              "finding": "Доказательства поражения нижних дыхательных путей необходимо искать, когда это безопасно."
+            },
+            {
+              "factId": "sampling_must_not_destabilize_patient",
+              "source": "safety_rule",
+              "finding": "Кислород и порог обработки – на первом месте."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "parenchymal_pattern_plus_systemic_context_supports_not_proves_bacteria",
+              "discoveryPaths": [
+                "respiratory_onset_dynamics",
+                "temperature_hydration_sepsis_record",
+                "dated_multiview_thoracic_record"
+              ]
+            },
+            {
+              "factId": "sampling_must_not_destabilize_patient",
+              "discoveryPaths": [
+                "effort_cyanosis_syncope",
+                "minimal_handling_respiratory_observation",
+                "signal_quality_oxygenation_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_respiratory_triage_and_oxygenation",
+              "classification": "required_first",
+              "result": "Пульсоксиметрия показала: стабильность или потребность в кислороде."
+            },
+            {
+              "id": "pneumonia_multiview_thoracic_radiography",
+              "classification": "required_when_safe",
+              "result": "На рентгенограммах: распространение или схема или время."
+            },
+            {
+              "id": "pneumonia_lower_airway_cytology_culture_and_susceptibility",
+              "classification": "recommended_before_treatment_when_safe",
+              "result": "По результатам посева и определения чувствительности: качество образца или цитология или культура."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "parenchymal_pattern_plus_systemic_context_supports_not_proves_bacteria",
+              "sampling_must_not_destabilize_patient"
+            ],
+            "confirmedDiagnosisRequires": [
+              "integrated_clinical_imaging_and_meaningful_lower_airway_evidence"
+            ],
+            "dangerStates": [
+              "hypoxemia",
+              "sepsis",
+              "respiratory_fatigue"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "pulse_oximetry",
+              "oxygen",
+              "cbc",
+              "xray_or_referral"
+            ],
+            "external": [
+              "lower_airway_sampling_referral",
+              "respiratory_cytology_culture_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_triage_route",
+              "pneumonia_imaging_route",
+              "pneumonia_airway_sample_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "bacterial_bronchopneumonia_plan",
+          "followUp": {
+            "timing": "Дыхание и температуру повторно оценивают через 12–24 часа; результат посева проверяют сразу после готовности, снимки повторяют по динамике.",
+            "required": true,
+            "targets": [
+              "rr",
+              "effort",
+              "oxygen",
+              "appetite",
+              "cbc",
+              "culture",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Наличие бактерий и степень тяжести определяют пересмотренный план.",
+            "unsafe": "Кашель, лихорадка или одно значение общего анализа крови вызывают появление противомикробного препарата."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: поддерживает пневмонию и что еще необходимо для выявления бактериального поражения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "dyspneic"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_oxygen_or_referral",
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_secondary_after_airway_or_viral_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_urgent",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что после заболевания верхних дыхательных путей или комплекс инфекционных респираторных заболеваний собак подобного заболевания наблюдается лихорадка, системный спад или признаки поражения нижних дыхательных путей.",
+          "historyAnswers": {
+            "crowding_shelter_sick_contacts": "По нашим наблюдениям, совместимое воздействие, а не диагноз.",
+            "respiratory_onset_dynamics": "Дома мы заметили, что начальный инфекция верхних дыхательных путей, затем ухудшение.",
+            "prior_treatment_response": "Насколько мы можем судить, предварительного плана.",
+            "immune_status": "Мы записали, что по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой."
+          },
+          "examFindings": [
+            {
+              "factId": "viral_or_crowding_context_does_not_prove_secondary_bacteria",
+              "source": "etiology_rule",
+              "finding": "Требуются новые паренхиматозные данные."
+            },
+            {
+              "factId": "infection_control_and_bacterial_workup_coexist",
+              "source": "workflow_rule",
+              "finding": "Изоляция не заменяет диагноз."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "viral_or_crowding_context_does_not_prove_secondary_bacteria",
+              "discoveryPaths": [
+                "crowding_shelter_sick_contacts",
+                "respiratory_onset_dynamics",
+                "thoracic_auscultation",
+                "dated_multiview_thoracic_record"
+              ]
+            },
+            {
+              "factId": "infection_control_and_bacterial_workup_coexist",
+              "discoveryPaths": [
+                "immune_status",
+                "prior_treatment_response",
+                "lower_airway_sample_quality_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_cbc_biochemistry_and_sepsis_assessment",
+              "classification": "required_by_systemic_change",
+              "result": "Клиническая оценка показала: системная тяжесть."
+            },
+            {
+              "id": "pneumonia_multiview_thoracic_radiography",
+              "classification": "required_if_lower_airway_concern",
+              "result": "На рентгенограммах: новые паренхиматозные данные."
+            },
+            {
+              "id": "pneumonia_lower_airway_cytology_culture_and_susceptibility",
+              "classification": "recommended_when_safe",
+              "result": "По результатам посева и определения чувствительности: классификация бактерий."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "viral_or_crowding_context_does_not_prove_secondary_bacteria",
+              "infection_control_and_bacterial_workup_coexist"
+            ],
+            "confirmedDiagnosisRequires": [
+              "new_pneumonia_evidence_plus_bacterial_support"
+            ],
+            "dangerStates": [
+              "rapid_worsening",
+              "hypoxemia",
+              "outbreak"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "cbc",
+              "isolation_protocol"
+            ],
+            "external": [
+              "xray_or_referral",
+              "respiratory_infectious_panel_external",
+              "respiratory_cytology_culture_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_infectious_route",
+              "pneumonia_imaging_route",
+              "pneumonia_airway_sample_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "bacterial_bronchopneumonia_plan",
+          "followUp": {
+            "timing": "Маршрут оценки тяжести в тот же день и ранняя объективная повторная оценка.",
+            "required": true,
+            "targets": [
+              "temperature",
+              "rr",
+              "effort",
+              "appetite",
+              "imaging",
+              "culture"
+            ]
+          },
+          "outcomes": {
+            "safe": "Вторичная инфекция подтверждается без отказа от контроля воздействия.",
+            "unsafe": "Воздействие убежища автоматически приводит к бактериальной пневмонии."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему ухудшение состояния меняет результаты обследования, но само по себе воздействие не доказывает присутствие бактерий."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "calm",
+              "dyspneic"
+            ],
+            "requiredHandlingAlternative": "isolation_low_stress_route",
+            "ownerModifiers": [
+              "multi_animal_household",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_recurrent_or_immunocompromised_patient",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_complex",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что рецидивирующая, необычно тяжелая или плохо поддающаяся лечению пневмония с нарушением иммунитета или дыхательных путей или источника.",
+          "historyAnswers": {
+            "immune_status": "По нашим наблюдениям, подтверждено или подозревается или не оценено.",
+            "primary_airway_disease_history": "Дома мы заметили, что признаки бронхоэктатической болезни или ресничного тела или инородного тела или новообразования или аспирации.",
+            "prior_treatment_response": "Насколько мы можем судить, эпизоды и реакция зафиксированы.",
+            "prior_thoracic_imaging": "Мы записали, что одна и та же доля или меняющийся рисунок."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrent_pneumonia_requires_primary_source_workup",
+              "source": "cause_rule",
+              "finding": "Иммунные, дыхательные и аспирационные факторы остаются активными."
+            },
+            {
+              "factId": "endless_empirical_switching_is_not_source_control",
+              "source": "stewardship_rule",
+              "finding": "Качество проб и диагноз проверяются."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "recurrent_pneumonia_requires_primary_source_workup",
+              "discoveryPaths": [
+                "immune_status",
+                "primary_airway_disease_history",
+                "prior_thoracic_imaging",
+                "advanced_airway_imaging_record"
+              ]
+            },
+            {
+              "factId": "endless_empirical_switching_is_not_source_control",
+              "discoveryPaths": [
+                "prior_treatment_response",
+                "lower_airway_sample_quality_record",
+                "same_scale_clinical_cbc_imaging_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_lower_airway_cytology_culture_and_susceptibility",
+              "classification": "required_quality_review",
+              "result": "По результатам посева и определения чувствительности: значимая выборка или восприимчивость."
+            },
+            {
+              "id": "pneumonia_aspiration_source_and_esophageal_swallowing_workup",
+              "classification": "required_by_history",
+              "result": "Целевое исследование показало: исходный контекст."
+            },
+            {
+              "id": "pneumonia_nonresolving_advanced_airway_or_imaging_referral",
+              "classification": "required_if_focal_or_recurrent",
+              "result": "По итогам консультации специалиста: дыхательные пути или КТ или источник."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "recurrent_pneumonia_requires_primary_source_workup",
+              "endless_empirical_switching_is_not_source_control"
+            ],
+            "confirmedDiagnosisRequires": [
+              "recurrent_parenchymal_disease_plus_primary_driver_assessment"
+            ],
+            "dangerStates": [
+              "immunodeficiency",
+              "foreign_body",
+              "neoplasia",
+              "bronchiectasis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "cbc",
+              "longitudinal_care"
+            ],
+            "external": [
+              "lower_airway_sampling_referral",
+              "advanced_imaging_referral",
+              "airway_endoscopy_referral",
+              "esophageal_swallowing_workup_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_airway_sample_route",
+              "pneumonia_aspiration_source_route",
+              "pneumonia_nonresolving_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "bacterial_bronchopneumonia_plan",
+          "followUp": {
+            "timing": "Расширенные контрольные точки исходного результата и версионного ответа.",
+            "required": true,
+            "targets": [
+              "source",
+              "sample_quality",
+              "susceptibility",
+              "same_lobe",
+              "immune_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Рецидивирующее заболевание приводит к контролю источника.",
+            "unsafe": "Повторные случайные противомикробные препараты заменяют диагноз."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему повторные эпизоды требуют выявления способствующего заболевания."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "staged_specialist_airway_route",
+            "ownerModifiers": [
+              "treatment_fatigue",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_pneumonia_aspiration",
+      "version": "2026.07.16.40",
+      "title": "Аспирационный пневмонит или аспирационная пневмония",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Своевременное событие аспирации или постоянный источник связаны с заболеванием легких, в то время как химическое повреждение и вторичная бактериальная инфекция сохраняют отдельные статусы доказательств.",
+      "exclusions": [
+        "aspiration_history_alone_equals_bacterial_pneumonia"
+      ],
+      "planBundleId": "aspiration_pneumonitis_pneumonia_plan",
+      "sourceIds": [
+        "merck_pneumonia_2024",
+        "aspiration_bacterial_2021",
+        "aspiration_findings_2008"
+      ],
+      "presentations": [
+        {
+          "id": "p1_after_vomiting_regurgitation_anesthesia_or_feeding",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "neonate",
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_breathing",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что после рвоты, срыгивания, наркоза или кормления появлялись учащенное дыхание или кашель или вялость.",
+          "historyAnswers": {
+            "vomiting_regurgitation_timeline": "По нашим наблюдениям, событие, рассчитанное на время.",
+            "anesthesia_force_feeding_liquid_medication": "Дома мы заметили, что особый риск.",
+            "respiratory_onset_dynamics": "Насколько мы можем судить, следит за событием.",
+            "effort_cyanosis_syncope": "Мы записали, что выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного."
+          },
+          "examFindings": [
+            {
+              "factId": "aspiration_event_supports_causality_not_bacterial_status",
+              "source": "mechanism_rule",
+              "finding": "Химическое и бактериальное состояния разделились."
+            },
+            {
+              "factId": "risk_history_is_collected_without_owner_blame",
+              "source": "communication_rule",
+              "finding": "Профилактика заменяет обвинение."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "aspiration_event_supports_causality_not_bacterial_status",
+              "discoveryPaths": [
+                "vomiting_regurgitation_timeline",
+                "anesthesia_force_feeding_liquid_medication",
+                "respiratory_onset_dynamics",
+                "dated_multiview_thoracic_record"
+              ]
+            },
+            {
+              "factId": "risk_history_is_collected_without_owner_blame",
+              "discoveryPaths": [
+                "anesthesia_force_feeding_liquid_medication",
+                "prior_treatment_response"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_respiratory_triage_and_oxygenation",
+              "classification": "required_first",
+              "result": "Пульсоксиметрия показала: стабильность или потребность в кислороде."
+            },
+            {
+              "id": "pneumonia_multiview_thoracic_radiography",
+              "classification": "required_when_safe",
+              "result": "На рентгенограммах: распространение или сроки."
+            },
+            {
+              "id": "pneumonia_lower_airway_cytology_culture_and_susceptibility",
+              "classification": "only_if_bacterial_question_and_safe",
+              "result": "По результатам посева и определения чувствительности: бактериальные данные отдельные."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "aspiration_event_supports_causality_not_bacterial_status",
+              "risk_history_is_collected_without_owner_blame"
+            ],
+            "confirmedDiagnosisRequires": [
+              "timed_risk_plus_compatible_pulmonary_disease"
+            ],
+            "dangerStates": [
+              "hypoxemia",
+              "repeated_aspiration",
+              "sepsis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "pulse_oximetry",
+              "oxygen",
+              "aspiration_risk_assessment"
+            ],
+            "external": [
+              "xray_or_referral",
+              "lower_airway_sampling_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_triage_route",
+              "pneumonia_imaging_route",
+              "pneumonia_airway_sample_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "aspiration_pneumonitis_pneumonia_plan",
+          "followUp": {
+            "timing": "Дыхание и потребность в кислороде повторно оценивают в течение четырёх часов; рентген повторяют через 24–48 часов по состоянию.",
+            "required": true,
+            "targets": [
+              "rr",
+              "effort",
+              "oxygen",
+              "temperature",
+              "appetite",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Механизм аспирации связан, хотя бактериальный статус остается подтвержденным.",
+            "unsafe": "Каждое событие запускает один и тот же антимикробный план."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: опишите событие нейтрально и объясните, как можно предотвратить его повторение."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "dyspneic"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_oxygen_route",
+            "ownerModifiers": [
+              "guilty",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_recurrent_aspiration_from_esophageal_or_swallowing_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "neonate",
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "complex_urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что мегаэзофагус, дисфагия или дисфункция гортани или глотки вызывают повторную аспирацию.",
+          "historyAnswers": {
+            "dysphagia_megaesophagus_cough_eating": "По нашим наблюдениям, подтверждено или подозревается.",
+            "vomiting_regurgitation_timeline": "Дома мы заметили, что выделяют повторяющиеся пассивные или активные события.",
+            "appetite_activity_breathing_log": "Насколько мы можем судить, взаимосвязь питания и дыхания.",
+            "prior_thoracic_imaging": "Мы записали, что повторное распространение."
+          },
+          "examFindings": [
+            {
+              "factId": "lung_disease_and_aspiration_source_are_linked_but_separate_problems",
+              "source": "workflow_rule",
+              "finding": "Для каждого из этих состояний нужен отдельный клинический план."
+            },
+            {
+              "factId": "recurrent_aspiration_is_not_random_nonadherence",
+              "source": "causality_rule",
+              "finding": "Физиологический источник остается видимым."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "lung_disease_and_aspiration_source_are_linked_but_separate_problems",
+              "discoveryPaths": [
+                "dysphagia_megaesophagus_cough_eating",
+                "vomiting_regurgitation_timeline",
+                "aspiration_source_workup_record"
+              ]
+            },
+            {
+              "factId": "recurrent_aspiration_is_not_random_nonadherence",
+              "discoveryPaths": [
+                "appetite_activity_breathing_log",
+                "prior_thoracic_imaging",
+                "same_scale_clinical_cbc_imaging_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_aspiration_source_and_esophageal_swallowing_workup",
+              "classification": "required_after_stability",
+              "result": "Целевое исследование показало: глоточный или пищеводный источник."
+            },
+            {
+              "id": "pneumonia_serial_clinical_hematologic_and_imaging_reassessment",
+              "classification": "required_recurrence_map",
+              "result": "При динамическом наблюдении: тенденции одного и того же эпизода."
+            },
+            {
+              "id": "pneumonia_nonresolving_advanced_airway_or_imaging_referral",
+              "classification": "required_by_source",
+              "result": "По итогам консультации специалиста: специалист по контролю источников."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "lung_disease_and_aspiration_source_are_linked_but_separate_problems",
+              "recurrent_aspiration_is_not_random_nonadherence"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_source_workup_plus_recurrent_pulmonary_events"
+            ],
+            "dangerStates": [
+              "feeding_related_reaspiration",
+              "megaesophagus",
+              "airway_dysfunction"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "aspiration_risk_assessment",
+              "longitudinal_care"
+            ],
+            "external": [
+              "esophageal_swallowing_workup_external",
+              "advanced_imaging_referral",
+              "airway_endoscopy_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_aspiration_source_route",
+              "pneumonia_longitudinal_route",
+              "pneumonia_nonresolving_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "aspiration_pneumonitis_pneumonia_plan",
+          "followUp": {
+            "timing": "План кормления или источника и контрольные точки дыхания.",
+            "required": true,
+            "targets": [
+              "regurgitation",
+              "swallow",
+              "feeding",
+              "rr",
+              "imaging",
+              "recurrence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Первичный источник и повреждение легких лечатся совместно.",
+            "unsafe": "Выделения лечат легкие, но игнорируют риск кормления или глотания."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: как контроль версий снижает вероятность повторения, не обещая устранения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "staged_swallow_specialist_route",
+            "ownerModifiers": [
+              "care_burden",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_early_or_equivocal_imaging_with_clinical_progression",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "neonate",
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_urgent_by_state",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что убедительное событие и новое респираторное нарушение, но первое изображение нормальное или двусмысленное или изменения развиваются.",
+          "historyAnswers": {
+            "vomiting_regurgitation_timeline": "По нашим наблюдениям, убедительное своевременное мероприятие.",
+            "respiratory_onset_dynamics": "Дома мы заметили, что прогрессивное после события.",
+            "prior_thoracic_imaging": "Насколько мы можем судить, раннее или двусмысленно датированное изображение.",
+            "effort_cyanosis_syncope": "Мы записали, что текущая серьезность."
+          },
+          "examFindings": [
+            {
+              "factId": "early_negative_image_does_not_erase_evolving_aspiration",
+              "source": "timing_rule",
+              "finding": "Сроки повторной проверки сохраняются."
+            },
+            {
+              "factId": "history_alone_does_not_prove_bacterial_infection",
+              "source": "etiology_boundary",
+              "finding": "Клиническое прогрессирование требует поддержки или переоценки, а не автоматического определения бактериальной принадлежности."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "early_negative_image_does_not_erase_evolving_aspiration",
+              "discoveryPaths": [
+                "vomiting_regurgitation_timeline",
+                "prior_thoracic_imaging",
+                "respiratory_onset_dynamics",
+                "dated_multiview_thoracic_record"
+              ]
+            },
+            {
+              "factId": "history_alone_does_not_prove_bacterial_infection",
+              "discoveryPaths": [
+                "effort_cyanosis_syncope",
+                "temperature_hydration_sepsis_record",
+                "lower_airway_sample_quality_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_respiratory_triage_and_oxygenation",
+              "classification": "required_each_change",
+              "result": "Пульсоксиметрия показала: текущая стабильность."
+            },
+            {
+              "id": "pneumonia_multiview_thoracic_radiography",
+              "classification": "required_authored_repeat_when_safe",
+              "result": "На рентгенограммах: развивающийся или отсутствующий картина."
+            },
+            {
+              "id": "pneumonia_serial_clinical_hematologic_and_imaging_reassessment",
+              "classification": "required_timeline",
+              "result": "При динамическом наблюдении: клиническая и имиджевая динамика."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "early_negative_image_does_not_erase_evolving_aspiration",
+              "history_alone_does_not_prove_bacterial_infection"
+            ],
+            "confirmedDiagnosisRequires": [
+              "event_plus_evolving_compatible_pulmonary_evidence"
+            ],
+            "dangerStates": [
+              "worsening_effort",
+              "hypoxemia",
+              "sepsis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "pulse_oximetry",
+              "oxygen"
+            ],
+            "external": [
+              "xray_or_referral",
+              "serial_thoracic_radiography",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_triage_route",
+              "pneumonia_imaging_route",
+              "pneumonia_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "aspiration_pneumonitis_pneumonia_plan",
+          "followUp": {
+            "timing": "ранней переоценки; немедленно, если усилие ухудшается.",
+            "required": true,
+            "targets": [
+              "rr",
+              "effort",
+              "oxygen",
+              "temperature",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Временные ограничения соблюдаются без автоматической бактериальной маркировки.",
+            "unsafe": "Одно раннее изображение стирает риск, а ожидание задерживает подачу кислорода."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему ранний образ может отставать и какие изменения требуют немедленного возврата."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "calm",
+              "dyspneic"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_repeat_or_hospital_route",
+            "ownerModifiers": [
+              "seeks_certainty",
+              "transport_difficult"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_pneumonia_severe_hypoxemic",
+      "version": "2026.07.16.40",
+      "title": "Тяжёлая гипоксемическая пневмония",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Заболевания легких вызывают опасные нарушения оксигенации или вентиляции или системный сепсис, требующие минимального лечения, поддержки и ухода высокого уровня перед полным этиологическим обследованием.",
+      "exclusions": [
+        "stable_cough_without_gas_exchange_or_systemic_compromise"
+      ],
+      "planBundleId": "severe_hypoxemic_pneumonia_plan",
+      "sourceIds": [
+        "merck_pneumonia_2024",
+        "iscaid_respiratory_2017",
+        "aspiration_findings_2008"
+      ],
+      "presentations": [
+        {
+          "id": "p1_increased_effort_cyanosis_or_low_oxygenation",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "neonate",
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что выраженное усилие, цианоз, психические изменения или достоверно низкая оксигенация.",
+          "historyAnswers": {
+            "effort_cyanosis_syncope": "По нашим наблюдениям, признак присутствует сейчас.",
+            "resting_sleeping_rr": "Дома мы заметили, что высокий или исчерпанный низкий картина.",
+            "respiratory_onset_dynamics": "Насколько мы можем судить, острый или прогрессирующий.",
+            "prior_thoracic_imaging": "Мы записали, что может отсутствовать из-за нестабильности."
+          },
+          "examFindings": [
+            {
+              "factId": "oxygen_and_minimal_handling_precede_complete_imaging",
+              "source": "emergency_rule",
+              "finding": "Диагностика не может ухудшить газообмен."
+            },
+            {
+              "factId": "quiet_exhausted_patient_can_be_more_dangerous_than_loud_cough",
+              "source": "fatigue_rule",
+              "finding": "Усилия или мысли перевешивают шум."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "oxygen_and_minimal_handling_precede_complete_imaging",
+              "discoveryPaths": [
+                "effort_cyanosis_syncope",
+                "minimal_handling_respiratory_observation",
+                "signal_quality_oxygenation_record"
+              ]
+            },
+            {
+              "factId": "quiet_exhausted_patient_can_be_more_dangerous_than_loud_cough",
+              "discoveryPaths": [
+                "resting_sleeping_rr",
+                "respiratory_rate_effort_pattern",
+                "mucosa_mentation_perfusion"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_respiratory_triage_and_oxygenation",
+              "classification": "required_immediate",
+              "result": "Пульсоксиметрия показала: жизнеугрожающее нарушение оксигенации."
+            },
+            {
+              "id": "pneumonia_multiview_thoracic_radiography",
+              "classification": "only_when_safe",
+              "result": "На рентгенограммах: можно отложить до стабилизации."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "oxygen_and_minimal_handling_precede_complete_imaging",
+              "quiet_exhausted_patient_can_be_more_dangerous_than_loud_cough"
+            ],
+            "confirmedDiagnosisRequires": [
+              "pulmonary_disease_with_dangerous_oxygenation_or_effort"
+            ],
+            "dangerStates": [
+              "respiratory_arrest",
+              "severe_hypoxemia",
+              "fatigue"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "pulse_oximetry",
+              "oxygen",
+              "respiratory_distress_minimal_handling",
+              "vital_monitor"
+            ],
+            "external": [
+              "intensive_care_referral",
+              "mechanical_ventilation_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_triage_route",
+              "pneumonia_hospital_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "severe_hypoxemic_pneumonia_plan",
+          "followUp": {
+            "timing": "Постоянный мониторинг оксигенации или усилия.",
+            "required": true,
+            "targets": [
+              "effort",
+              "oxygen",
+              "mentation",
+              "perfusion",
+              "fatigue"
+            ]
+          },
+          "outcomes": {
+            "safe": "Газообмен защищен до диагностики.",
+            "unsafe": "Принудительная рентгенография или тишина ошибочно принимаются за стабильность."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: объясняйте кратко: поддержка дыхания и транспортировка являются непосредственными приоритетами."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic",
+              "weak",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "hands_off_oxygen_and_transfer",
+            "ownerModifiers": [
+              "panicked",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_sepsis_shock_or_multilobar_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "neonate",
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что нарушение перфузии, системное заболевание и обширный или многодолевой легочный рисунок.",
+          "historyAnswers": {
+            "respiratory_onset_dynamics": "По нашим наблюдениям, быстрый или системный спад.",
+            "effort_cyanosis_syncope": "Дома мы заметили, что выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного.",
+            "prior_treatment_response": "Насколько мы можем судить, предварительная обработка и сроки.",
+            "immune_status": "Мы записали, что контекст риска."
+          },
+          "examFindings": [
+            {
+              "factId": "culture_is_sought_without_delaying_reviewed_emergency_treatment",
+              "source": "sepsis_rule",
+              "finding": "Маршрут отбора проб соответствует безопасности."
+            },
+            {
+              "factId": "blood_culture_is_selected_alternative_not_perfect_bal_replacement",
+              "source": "test_limit",
+              "finding": "Происхождение результата остается явным."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "culture_is_sought_without_delaying_reviewed_emergency_treatment",
+              "discoveryPaths": [
+                "respiratory_onset_dynamics",
+                "temperature_hydration_sepsis_record",
+                "mucosa_mentation_perfusion",
+                "lower_airway_sample_quality_record"
+              ]
+            },
+            {
+              "factId": "blood_culture_is_selected_alternative_not_perfect_bal_replacement",
+              "discoveryPaths": [
+                "effort_cyanosis_syncope",
+                "same_episode_blood_culture_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_cbc_biochemistry_and_sepsis_assessment",
+              "classification": "required_parallel",
+              "result": "Клиническая оценка показала: системный или перфузионный или данные о функции органов."
+            },
+            {
+              "id": "pneumonia_lower_airway_cytology_culture_and_susceptibility",
+              "classification": "only_if_safe_no_delay",
+              "result": "По результатам посева и определения чувствительности: данные о нижних дыхательных путях."
+            },
+            {
+              "id": "pneumonia_blood_culture_when_airway_sampling_is_unsafe",
+              "classification": "selected_alternative",
+              "result": "По результатам посева и определения чувствительности: доказательства культуры крови имеют ограничения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "culture_is_sought_without_delaying_reviewed_emergency_treatment",
+              "blood_culture_is_selected_alternative_not_perfect_bal_replacement"
+            ],
+            "confirmedDiagnosisRequires": [
+              "integrated_severe_pulmonary_and_systemic_evidence"
+            ],
+            "dangerStates": [
+              "septic_shock",
+              "multiorgan_dysfunction",
+              "hypoxemia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oxygen",
+              "stabilization",
+              "vital_monitor",
+              "cbc",
+              "biochemistry",
+              "respiratory_hospital_monitoring"
+            ],
+            "external": [
+              "blood_culture_external",
+              "intensive_care_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_systemic_route",
+              "pneumonia_blood_culture_route",
+              "pneumonia_hospital_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "severe_hypoxemic_pneumonia_plan",
+          "followUp": {
+            "timing": "В реанимации непрерывно контролируют дыхание, перфузию и сознание; результат посева оценивают сразу после готовности.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "oxygen",
+              "organ_function",
+              "culture",
+              "response"
+            ]
+          },
+          "outcomes": {
+            "safe": "Поддержка и культура при сепсисе проводятся пропорционально.",
+            "unsafe": "Идеальный образец необходим до того, как потребуется неотложная помощь или посев крови."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: критический системный риск и почему некоторые виды диагностики могут быть отложены или заменены."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "obtunded",
+              "dyspneic"
+            ],
+            "requiredHandlingAlternative": "icu_minimal_handling",
+            "ownerModifiers": [
+              "overwhelmed",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_oxygen_dependent_or_ventilatory_failure",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "neonate",
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что пациент не может поддерживать оксигенацию без поддержки, у него наблюдается ухудшение утомляемости или вентиляционная недостаточность.",
+          "historyAnswers": {
+            "effort_cyanosis_syncope": "По нашим наблюдениям, кислородозависимая или ухудшающаяся усталость.",
+            "respiratory_onset_dynamics": "Дома мы заметили, что прогрессивный, несмотря на поддержку.",
+            "appetite_activity_breathing_log": "Насколько мы можем судить, постоянная больничная тенденция.",
+            "prior_thoracic_imaging": "Мы записали, что только если благополучно получено."
+          },
+          "examFindings": [
+            {
+              "factId": "transfer_for_ventilatory_support_is_visible_before_local_capacity_fails",
+              "source": "capacity_rule",
+              "finding": "направление к специалисту порог не скрыт."
+            },
+            {
+              "factId": "ui_never_generates_intubation_or_ventilator_settings",
+              "source": "procedure_boundary",
+              "finding": "Специалист протокола владеет техникой."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "transfer_for_ventilatory_support_is_visible_before_local_capacity_fails",
+              "discoveryPaths": [
+                "effort_cyanosis_syncope",
+                "minimal_handling_respiratory_observation",
+                "signal_quality_oxygenation_record"
+              ]
+            },
+            {
+              "factId": "ui_never_generates_intubation_or_ventilator_settings",
+              "discoveryPaths": [
+                "respiratory_onset_dynamics",
+                "mucosa_mentation_perfusion"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_respiratory_triage_and_oxygenation",
+              "classification": "required_continuous",
+              "result": "Пульсоксиметрия показала: кислородная зависимость или усталость."
+            },
+            {
+              "id": "pneumonia_cbc_biochemistry_and_sepsis_assessment",
+              "classification": "parallel_if_safe",
+              "result": "Клиническая оценка показала: органный или данные об общем состоянии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "transfer_for_ventilatory_support_is_visible_before_local_capacity_fails",
+              "ui_never_generates_intubation_or_ventilator_settings"
+            ],
+            "confirmedDiagnosisRequires": [
+              "persistent_oxygen_dependence_or_ventilatory_failure"
+            ],
+            "dangerStates": [
+              "respiratory_arrest",
+              "hypercapnic_failure",
+              "shock"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oxygen",
+              "vital_monitor",
+              "respiratory_hospital_monitoring"
+            ],
+            "external": [
+              "mechanical_ventilation_referral",
+              "intensive_care_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_hospital_route",
+              "pneumonia_triage_route"
+            ],
+            "referralFallback": "mechanical_ventilation_referral"
+          },
+          "carePlanId": "severe_hypoxemic_pneumonia_plan",
+          "followUp": {
+            "timing": "Непрерывно посредством перевода или вентиляционной поддержки.",
+            "required": true,
+            "targets": [
+              "oxygen",
+              "effort",
+              "ventilation",
+              "mentation",
+              "perfusion"
+            ]
+          },
+          "outcomes": {
+            "safe": "Передача с учетом емкости происходит до коллапса.",
+            "unsafe": "Опасно продолжать лечение там, где не хватает кислородной и реанимационной поддержки, или самостоятельно задавать параметры вентиляции без специалиста."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: усиленная респираторная поддержка необходима сейчас, до полного истощения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic",
+              "obtunded",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "hands_off_oxygen_transport",
+            "ownerModifiers": [
+              "panicked",
+              "transport_difficult"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_pneumonia_nonbacterial_or_mimic",
+      "version": "2026.07.16.40",
+      "title": "Небактериальная пневмония или имитирующее заболевание",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Легочные признаки или визуализация имеют грибковое, паразитарное, протозойное, воспалительное или неинфекционное объяснение, выбираемое только на основе совместимых видов, географии, воздействия и дискриминационных данных.",
+      "exclusions": [
+        "negative_bacterial_culture_alone_proves_nonbacterial_cause",
+        "geography_free_exotic_disease"
+      ],
+      "planBundleId": "nonbacterial_or_mimic_plan",
+      "sourceIds": [
+        "merck_pneumonia_2024",
+        "iscaid_respiratory_2017"
+      ],
+      "presentations": [
+        {
+          "id": "p1_fungal_or_regional_exposure_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_complex",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что хронический или системный или узловой или интерстициальный или альвеолярный характер с совместимым региональным или экологическим воздействием.",
+          "historyAnswers": {
+            "travel_region_environment": "По нашим наблюдениям, совместимый регион или экспозиция.",
+            "respiratory_onset_dynamics": "Дома мы заметили, что хронический или прогрессирующий.",
+            "immune_status": "Насколько мы можем судить, контекст риска.",
+            "prior_treatment_response": "Мы записали, что возможен плохой или неспецифический бактериальный ответ."
+          },
+          "examFindings": [
+            {
+              "factId": "fungal_testing_requires_region_species_and_exposure_compatibility",
+              "source": "eligibility_rule",
+              "finding": "Редкую региональную инфекцию рассматривают только при соответствующих поездках, месте проживания или контакте с источником."
+            },
+            {
+              "factId": "negative_bacterial_culture_does_not_prove_fungus",
+              "source": "test_limit",
+              "finding": "Требуются доказательства, ориентированные на организм."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "fungal_testing_requires_region_species_and_exposure_compatibility",
+              "discoveryPaths": [
+                "travel_region_environment",
+                "immune_status",
+                "region_exposure_test_record"
+              ]
+            },
+            {
+              "factId": "negative_bacterial_culture_does_not_prove_fungus",
+              "discoveryPaths": [
+                "prior_treatment_response",
+                "lower_airway_sample_quality_record",
+                "dated_multiview_thoracic_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_infectious_fungal_parasitic_or_inflammatory_workup",
+              "classification": "required_region_targeted",
+              "result": "Целевое исследование показало: доказательства, ориентированные на организм или воздействие."
+            },
+            {
+              "id": "pneumonia_multiview_thoracic_radiography",
+              "classification": "required_distribution",
+              "result": "На рентгенограммах: полученное распространение."
+            },
+            {
+              "id": "pneumonia_nonresolving_advanced_airway_or_imaging_referral",
+              "classification": "required_if_nodular_or_unresolved",
+              "result": "По итогам консультации специалиста: расширенная локализация или выборка."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "fungal_testing_requires_region_species_and_exposure_compatibility",
+              "negative_bacterial_culture_does_not_prove_fungus"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_epidemiology_plus_organism_focused_evidence"
+            ],
+            "dangerStates": [
+              "dissemination",
+              "hypoxemia",
+              "immunocompromise"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "cbc"
+            ],
+            "external": [
+              "respiratory_fungal_testing_external",
+              "respiratory_infectious_panel_external",
+              "advanced_imaging_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_infectious_route",
+              "pneumonia_nonresolving_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "nonbacterial_or_mimic_plan",
+          "followUp": {
+            "timing": "Целевой результат и системная или респираторная контрольная точка.",
+            "required": true,
+            "targets": [
+              "organism_evidence",
+              "region",
+              "oxygen",
+              "systemic_signs",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Целевое исследование, совместимое с регионом, заменяет предположения.",
+            "unsafe": "Отрицательная бактериальная культура или случайная география создают грибок."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему путешествие или окружающая среда определяют, какие необычные тесты имеют ценность."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "staged_external_infectious_route",
+            "ownerModifiers": [
+              "travel_history_uncertain",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_eosinophilic_parasitic_or_inflammatory_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_complex",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что воздействие или эозинофилия или структура дыхательных путей вызывают паразитарное или воспалительное заболевание, но сам по себе общий анализ крови не дает диагностического результата.",
+          "historyAnswers": {
+            "travel_region_environment": "По нашим наблюдениям, три месяца назад животное жило в регионе с эндемичными паразитами и часто контактировало с почвой.",
+            "primary_airway_disease_history": "Дома мы заметили, что дыхательные пути или воспалительный контекст.",
+            "prior_treatment_response": "Насколько мы можем судить, предварительная терапия и ответ.",
+            "immune_status": "Мы записали, что риск заражения."
+          },
+          "examFindings": [
+            {
+              "factId": "eosinophilia_or_exposure_does_not_confirm_parasite_or_inflammation",
+              "source": "diagnostic_rule",
+              "finding": "Требуются цитологические или визуальные или целевые тесты."
+            },
+            {
+              "factId": "important_infection_is_excluded_before_immunosuppression",
+              "source": "safety_rule",
+              "finding": "Опасная инфекция остается видимой."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "eosinophilia_or_exposure_does_not_confirm_parasite_or_inflammation",
+              "discoveryPaths": [
+                "travel_region_environment",
+                "primary_airway_disease_history",
+                "region_exposure_test_record",
+                "lower_airway_sample_quality_record"
+              ]
+            },
+            {
+              "factId": "important_infection_is_excluded_before_immunosuppression",
+              "discoveryPaths": [
+                "immune_status",
+                "prior_treatment_response",
+                "dated_multiview_thoracic_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_cbc_biochemistry_and_sepsis_assessment",
+              "classification": "required_context",
+              "result": "Клиническая оценка показала: эозинофилия или данные об общем состоянии."
+            },
+            {
+              "id": "pneumonia_lower_airway_cytology_culture_and_susceptibility",
+              "classification": "required_when_safe",
+              "result": "По результатам посева и определения чувствительности: признаки воспаления или инфекционности дыхательных путей."
+            },
+            {
+              "id": "pneumonia_infectious_fungal_parasitic_or_inflammatory_workup",
+              "classification": "required_targeted",
+              "result": "Целевое исследование показало: критерий срочности, совместимый с экспозицией."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "eosinophilia_or_exposure_does_not_confirm_parasite_or_inflammation",
+              "important_infection_is_excluded_before_immunosuppression"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cytology_and_targeted_cause_evidence"
+            ],
+            "dangerStates": [
+              "occult_infection",
+              "hypoxemia",
+              "unsafe_immunosuppression"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "cbc"
+            ],
+            "external": [
+              "lower_airway_sampling_referral",
+              "respiratory_cytology_culture_external",
+              "respiratory_infectious_panel_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_airway_sample_route",
+              "pneumonia_infectious_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "nonbacterial_or_mimic_plan",
+          "followUp": {
+            "timing": "Цитология или целевой результат и объективный ответ.",
+            "required": true,
+            "targets": [
+              "eosinophilia",
+              "cytology",
+              "infection_status",
+              "rr",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Перед пересмотром лечения различают воспалительные и инфекционные причины.",
+            "unsafe": "Один только общий анализ крови указывает на заболевание, или иммуносупрессия предшествует скринингу на инфекцию."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему один образец клеток крови не может определить причину заболевания легких."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "dyspneic"
+            ],
+            "requiredHandlingAlternative": "safe_sampling_or_referral",
+            "ownerModifiers": [
+              "requests_fast_treatment",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_edema_hemorrhage_neoplasia_or_other_mimic",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_complex",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что отек, кровоизлияние, неоплазия, травма или другая мимика конкурируют с инфекционной пневмонией.",
+          "historyAnswers": {
+            "respiratory_onset_dynamics": "По нашим наблюдениям, изменения начались недавно и постепенно усиливаются.",
+            "primary_airway_disease_history": "Дома мы заметили, что признаки сердечной или травмы или неоплазии или коагулопатии.",
+            "prior_treatment_response": "Насколько мы можем судить, повторные противомикробные препараты или их отсутствие.",
+            "prior_thoracic_imaging": "Мы записали, что распространение или очаговое поражение."
+          },
+          "examFindings": [
+            {
+              "factId": "dangerous_mimics_remain_visible_until_discriminated",
+              "source": "differential_rule",
+              "finding": "Кардиологические, коагуляционные и онкологические пути ясны."
+            },
+            {
+              "factId": "repeated_antimicrobials_do_not_replace_mimic_workup",
+              "source": "stewardship_rule",
+              "finding": "Доказательства передают дело правильной семье."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "dangerous_mimics_remain_visible_until_discriminated",
+              "discoveryPaths": [
+                "respiratory_onset_dynamics",
+                "primary_airway_disease_history",
+                "mucosa_mentation_perfusion",
+                "dated_multiview_thoracic_record"
+              ]
+            },
+            {
+              "factId": "repeated_antimicrobials_do_not_replace_mimic_workup",
+              "discoveryPaths": [
+                "prior_treatment_response",
+                "prior_thoracic_imaging",
+                "advanced_airway_imaging_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_multiview_thoracic_radiography",
+              "classification": "required_integrated",
+              "result": "На рентгенограммах: распространение или имитация подсказок."
+            },
+            {
+              "id": "pneumonia_cbc_biochemistry_and_sepsis_assessment",
+              "classification": "required_by_mimic",
+              "result": "Клиническая оценка показала: данные об общем состоянии или кровотечение."
+            },
+            {
+              "id": "pneumonia_nonresolving_advanced_airway_or_imaging_referral",
+              "classification": "required_discriminator",
+              "result": "По итогам консультации специалиста: кардиологическая или онкологическая или реклассификация дыхательных путей."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "dangerous_mimics_remain_visible_until_discriminated",
+              "repeated_antimicrobials_do_not_replace_mimic_workup"
+            ],
+            "confirmedDiagnosisRequires": [
+              "mimic_specific_discriminator_and_family_transfer"
+            ],
+            "dangerStates": [
+              "cardiogenic_edema",
+              "pulmonary_hemorrhage",
+              "neoplasia",
+              "trauma"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "cbc",
+              "biochemistry",
+              "ecg",
+              "coagulation"
+            ],
+            "external": [
+              "cardiology_referral",
+              "oncology_staging_external",
+              "advanced_imaging_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_mimic_route",
+              "pneumonia_nonresolving_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "nonbacterial_or_mimic_plan",
+          "followUp": {
+            "timing": "Срочный критерий срочности и последующее наблюдение принимающей семьи.",
+            "required": true,
+            "targets": [
+              "oxygen",
+              "cardiac_status",
+              "coagulation",
+              "mass",
+              "diagnosis_transfer"
+            ]
+          },
+          "outcomes": {
+            "safe": "Опасная альтернатива диагностируется и переносится с сохранением анамнеза.",
+            "unsafe": "Повторные антимикробные препараты скрывают отек, кровоизлияние или образование."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какие неинфекционные варианты опасны и как их разделяет следующий тест."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "dyspneic",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "oxygen_supported_targeted_referral",
+            "ownerModifiers": [
+              "frustrated",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_pneumonia_followup_or_nonresolving",
+      "version": "2026.07.16.40",
+      "title": "Контроль или неразрешающаяся пневмония",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Клинические, гематологические и визуальные тенденции интерпретируются вместе; неадекватное реагирование приводит к выборке, предположению, проверке соответствия и проверке источников, а не к случайной эскалации.",
+      "exclusions": [
+        "fixed_generated_treatment_duration",
+        "new_unlinked_patient_for_recurrence"
+      ],
+      "planBundleId": "followup_nonresolving_plan",
+      "sourceIds": [
+        "iscaid_respiratory_2017",
+        "merck_pneumonia_2024",
+        "aspiration_bacterial_2021"
+      ],
+      "presentations": [
+        {
+          "id": "p1_clinical_response_with_planned_reassessment",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "neonate",
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "follow_up",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что улучшается аппетит или активность или усилие; ОАК и визуализация могут отставать с разной скоростью.",
+          "historyAnswers": {
+            "appetite_activity_breathing_log": "По нашим наблюдениям, объективное улучшение.",
+            "resting_sleeping_rr": "Дома мы заметили, что последовательные значения одного и того же контекста.",
+            "prior_thoracic_imaging": "Насколько мы можем судить, сопоставимые изображения.",
+            "prior_treatment_response": "Мы записали, что приверженность или побочные эффекты."
+          },
+          "examFindings": [
+            {
+              "factId": "clinical_hematologic_and_radiographic_recovery_need_not_be_synchronous",
+              "source": "response_rule",
+              "finding": "Тенденции одного масштаба интегрированы."
+            },
+            {
+              "factId": "radiographic_lag_alone_does_not_force_endless_treatment",
+              "source": "stewardship_rule",
+              "finding": "Рассмотренные критерии остановки остаются внешним протоколом."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "clinical_hematologic_and_radiographic_recovery_need_not_be_synchronous",
+              "discoveryPaths": [
+                "appetite_activity_breathing_log",
+                "resting_sleeping_rr",
+                "same_scale_clinical_cbc_imaging_record"
+              ]
+            },
+            {
+              "factId": "radiographic_lag_alone_does_not_force_endless_treatment",
+              "discoveryPaths": [
+                "prior_thoracic_imaging",
+                "prior_treatment_response",
+                "dated_multiview_thoracic_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_serial_clinical_hematologic_and_imaging_reassessment",
+              "classification": "required_same_scale",
+              "result": "При динамическом наблюдении: клинические или общий анализ крови или визуальные тенденции."
+            },
+            {
+              "id": "pneumonia_multiview_thoracic_radiography",
+              "classification": "scheduled_not_daily_default",
+              "result": "На рентгенограммах: сопоставимое распределение или разрешение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "clinical_hematologic_and_radiographic_recovery_need_not_be_synchronous",
+              "radiographic_lag_alone_does_not_force_endless_treatment"
+            ],
+            "confirmedDiagnosisRequires": [
+              "objective_compatible_response_to_reviewed_plan"
+            ],
+            "dangerStates": [
+              "new_effort",
+              "oxygen_need",
+              "relapse"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "pneumonia_longitudinal_monitoring",
+              "longitudinal_care"
+            ],
+            "external": [
+              "serial_thoracic_radiography"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_longitudinal_route",
+              "pneumonia_imaging_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "followup_nonresolving_plan",
+          "followUp": {
+            "timing": "контроль клинической динамики и снимков.",
+            "required": true,
+            "targets": [
+              "rr",
+              "effort",
+              "appetite",
+              "activity",
+              "cbc",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Улучшение измеряется без требования одновременной нормализации.",
+            "unsafe": "Лечение продолжается до получения идеального изображения независимо от пациента и протокола."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какие результаты улучшаются в первую очередь, а какие тревожные сигналы перевешивают график."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "brief_same_scale_followup",
+            "ownerModifiers": [
+              "adherent",
+              "anxious_about_xray"
+            ]
+          }
+        },
+        {
+          "id": "p2_culture_resistance_or_incorrect_initial_assumption",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "neonate",
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_follow_up",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что неадекватное улучшение, ухудшение или несоответствие восприимчивости ставят под сомнение первоначальное предположение.",
+          "historyAnswers": {
+            "prior_treatment_response": "По нашим наблюдениям, доза или продолжительность или приверженность или нежелательные эффекты, зарегистрированные без выбора кода.",
+            "appetite_activity_breathing_log": "Дома мы заметили, что плохой или хуже ответ.",
+            "primary_airway_disease_history": "Насколько мы можем судить, источник подсказки.",
+            "prior_thoracic_imaging": "Мы записали, что постоянное или изменяющееся распределение."
+          },
+          "examFindings": [
+            {
+              "factId": "failure_requires_sample_quality_adherence_source_and_diagnosis_audit",
+              "source": "failure_rule",
+              "finding": "Сопротивление – это одна из возможностей, но не единственная."
+            },
+            {
+              "factId": "broadening_without_evidence_is_penalized",
+              "source": "stewardship_rule",
+              "finding": "Последствия затрат или неблагоприятных последствий или сопротивления остаются."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "failure_requires_sample_quality_adherence_source_and_diagnosis_audit",
+              "discoveryPaths": [
+                "prior_treatment_response",
+                "primary_airway_disease_history",
+                "lower_airway_sample_quality_record",
+                "same_scale_clinical_cbc_imaging_record"
+              ]
+            },
+            {
+              "factId": "broadening_without_evidence_is_penalized",
+              "discoveryPaths": [
+                "appetite_activity_breathing_log",
+                "prior_thoracic_imaging"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_lower_airway_cytology_culture_and_susceptibility",
+              "classification": "required_review_or_repeat_if_justified",
+              "result": "По результатам посева и определения чувствительности: качество или восприимчивость."
+            },
+            {
+              "id": "pneumonia_serial_clinical_hematologic_and_imaging_reassessment",
+              "classification": "required_failure_map",
+              "result": "При динамическом наблюдении: объективное отсутствие ответа."
+            },
+            {
+              "id": "pneumonia_nonresolving_advanced_airway_or_imaging_referral",
+              "classification": "recommended_if_assumption_unresolved",
+              "result": "По итогам консультации специалиста: обработка источника или имита."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "failure_requires_sample_quality_adherence_source_and_diagnosis_audit",
+              "broadening_without_evidence_is_penalized"
+            ],
+            "confirmedDiagnosisRequires": [
+              "documented_nonresponse_plus_reclassified_cause_or_susceptibility"
+            ],
+            "dangerStates": [
+              "worsening_hypoxemia",
+              "resistant_infection",
+              "wrong_diagnosis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "cbc",
+              "pneumonia_longitudinal_monitoring"
+            ],
+            "external": [
+              "respiratory_cytology_culture_external",
+              "lower_airway_sampling_referral",
+              "advanced_imaging_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_airway_sample_route",
+              "pneumonia_longitudinal_route",
+              "pneumonia_nonresolving_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "followup_nonresolving_plan",
+          "followUp": {
+            "timing": "Быстрый аудит результатов или источников и пересмотренная контрольная точка цели.",
+            "required": true,
+            "targets": [
+              "oxygen",
+              "sample_quality",
+              "susceptibility",
+              "adherence",
+              "source",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Сбой объясняется до изменения версии плана.",
+            "unsafe": "Лечение расширяется случайным образом."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: отсутствие ответа может отражать сопротивление, ограничения выборки, соблюдение режима лечения, источник или неправильный диагноз."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "targeted_repeat_or_specialist_route",
+            "ownerModifiers": [
+              "frustrated",
+              "treatment_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p3_persistent_focus_foreign_body_bronchiectasis_or_underlying_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "complex_urgent_by_state",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что стойкое очаговое или рецидивирующее поражение одной доли предполагает наличие инородного тела, бронхоэктазов, новообразования или первичного заболевания дыхательных путей.",
+          "historyAnswers": {
+            "primary_airway_disease_history": "По нашим наблюдениям, признаки инородного тела или дыхательных путей или массы.",
+            "prior_thoracic_imaging": "Дома мы заметили, что стойкий однодольный рисунок.",
+            "prior_treatment_response": "Насколько мы можем судить, повторный неполный ответ.",
+            "appetite_activity_breathing_log": "Мы записали, что текущее состояние."
+          },
+          "examFindings": [
+            {
+              "factId": "persistent_focal_pattern_requires_advanced_source_control_route",
+              "source": "localization_rule",
+              "finding": "Рассматривается возможность КТ или бронхоскопии или значимого отбора проб."
+            },
+            {
+              "factId": "nonresolving_episode_remains_same_patient_and_due_followup",
+              "source": "continuity_rule",
+              "finding": "Никакой случайной замены."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "persistent_focal_pattern_requires_advanced_source_control_route",
+              "discoveryPaths": [
+                "primary_airway_disease_history",
+                "prior_thoracic_imaging",
+                "advanced_airway_imaging_record"
+              ]
+            },
+            {
+              "factId": "nonresolving_episode_remains_same_patient_and_due_followup",
+              "discoveryPaths": [
+                "prior_treatment_response",
+                "appetite_activity_breathing_log",
+                "same_scale_clinical_cbc_imaging_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pneumonia_nonresolving_advanced_airway_or_imaging_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: очаговые данные о дыхательных путях или источнике."
+            },
+            {
+              "id": "pneumonia_lower_airway_cytology_culture_and_susceptibility",
+              "classification": "required_targeted_when_safe",
+              "result": "По результатам посева и определения чувствительности: значимый образец из очага или нижних дыхательных путей."
+            },
+            {
+              "id": "pneumonia_serial_clinical_hematologic_and_imaging_reassessment",
+              "classification": "required_continuity",
+              "result": "При динамическом наблюдении: тенденция одного и того же эпизода."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "persistent_focal_pattern_requires_advanced_source_control_route",
+              "nonresolving_episode_remains_same_patient_and_due_followup"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_imaging_airway_or_pathology_specific_source"
+            ],
+            "dangerStates": [
+              "foreign_body",
+              "bronchiectasis",
+              "neoplasia",
+              "recurrent_sepsis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "pneumonia_longitudinal_monitoring"
+            ],
+            "external": [
+              "advanced_imaging_referral",
+              "airway_endoscopy_referral",
+              "lower_airway_sampling_referral",
+              "oncology_staging_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pneumonia_nonresolving_route",
+              "pneumonia_airway_sample_route",
+              "pneumonia_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "followup_nonresolving_plan",
+          "followUp": {
+            "timing": "Результат расширенного источника и контрольная точка окончательного контроля.",
+            "required": true,
+            "targets": [
+              "focus",
+              "foreign_body",
+              "airway_structure",
+              "pathology",
+              "culture",
+              "oxygen"
+            ]
+          },
+          "outcomes": {
+            "safe": "Постоянный фокус получает контроль источника с непрерывностью эпизода.",
+            "unsafe": "Другой эмпирический курс или новый случайный пациент заменяют должное обследование."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему рецидив в одном и том же месте предполагает наличие устранимого или структурного источника."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "specialist_airway_source_route",
+            "ownerModifiers": [
+              "treatment_fatigue",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if oxygen and minimal handling are delayed for radiography or sampling in respiratory distress.",
+    "Reject if cough, one CBC value or one radiographic pattern alone proves bacterial pneumonia.",
+    "Reject if every aspiration event is labeled bacterial infection.",
+    "Reject if nasal sampling is silently substituted for a lower-airway specimen or sample quality is discarded.",
+    "Reject if nonresolving disease only broadens treatment instead of reopening structural, fungal, parasitic and neoplastic mimics.",
+    "Reject if the generator creates an antimicrobial, drug, dose, oxygen target, ventilation setting or invasive sampling technique."
+  ],
+  "title": "Пневмония и поражение лёгочной ткани"
+}

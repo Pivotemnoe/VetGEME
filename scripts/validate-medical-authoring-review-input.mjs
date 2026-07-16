@@ -5,8 +5,14 @@ import { loadMedicalAuthoringReviewInput } from "./lib/medical-authoring-review-
 import { runMedicalAuthoringBundledValidator } from "./run-medical-authoring-bundled-validator.mjs";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const bundledValidator = await runMedicalAuthoringBundledValidator();
-const reviewInput = await loadMedicalAuthoringReviewInput(projectRoot, { context: "review" });
+const versionArgument = process.argv.find((argument) => argument.startsWith("--version="));
+const reviewInputVersion = versionArgument?.slice("--version=".length);
+const unknownArguments = process.argv.slice(2).filter((argument) => !argument.startsWith("--version="));
+if (unknownArguments.length > 0) throw new Error(`Unknown argument(s): ${unknownArguments.join(", ")}`);
+const bundledValidator = await runMedicalAuthoringBundledValidator({ reviewInputVersion });
+const loadOptions = { context: "review" };
+if (reviewInputVersion) loadOptions.reviewInputVersion = reviewInputVersion;
+const reviewInput = await loadMedicalAuthoringReviewInput(projectRoot, loadOptions);
 
 assert.equal(reviewInput.loadContext, "review");
 assert.equal(reviewInput.reviewOnly, true);
@@ -19,6 +25,8 @@ assert.deepEqual(
     families: reviewInput.audit.families,
     variants: reviewInput.audit.variants,
     presentations: reviewInput.audit.presentations,
+    investigationResults: reviewInput.audit.investigations,
+    nullInvestigationResults: reviewInput.audit.nullInvestigationResults,
     productionPool: reviewInput.audit.productionPool,
     capabilityRegistryEntries: reviewInput.audit.capabilityRegistryEntries,
   },
@@ -26,6 +34,8 @@ assert.deepEqual(
     families: 39,
     variants: 215,
     presentations: 645,
+    investigationResults: 1864,
+    nullInvestigationResults: reviewInput.registration.reviewInputVersion === "2026.07.16.40" ? 0 : 184,
     productionPool: 0,
     capabilityRegistryEntries: 447,
   },
@@ -45,6 +55,8 @@ console.log(JSON.stringify({
     families: reviewInput.audit.families,
     variants: reviewInput.audit.variants,
     presentations: reviewInput.audit.presentations,
+    investigationResults: reviewInput.audit.investigations,
+    nullInvestigationResults: reviewInput.audit.nullInvestigationResults,
     productionPool: reviewInput.audit.productionPool,
   },
   sourceIntegrity: reviewInput.sourceIntegrity,

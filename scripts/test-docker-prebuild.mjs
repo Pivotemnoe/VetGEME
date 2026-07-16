@@ -77,6 +77,17 @@ if (existsSync(reviewInputRegistry)) {
     ["medical authoring review provenance", "scripts/refresh-medical-authoring-review-provenance.mjs"],
     ["medical authoring review input", "scripts/validate-medical-authoring-review-input.mjs"],
     ["medical authoring review contract", "scripts/test-medical-authoring-review-input.mjs"],
+    [
+      "medical authoring .40 review provenance",
+      "scripts/refresh-medical-authoring-review-provenance.mjs",
+      "--version=2026.07.16.40",
+    ],
+    [
+      "medical authoring .40 review input",
+      "scripts/validate-medical-authoring-review-input.mjs",
+      "--version=2026.07.16.40",
+    ],
+    ["medical authoring .40 review contract", "scripts/test-medical-authoring-review-input-v40.mjs"],
     ["operational authoring review provenance", "scripts/refresh-operational-authoring-review-provenance.mjs"],
     ["operational authoring review input", "scripts/validate-operational-authoring-review-input.mjs"],
     ["operational authoring review contract", "scripts/test-operational-authoring-review-input.mjs"],
@@ -89,6 +100,15 @@ if (existsSync(reviewInputRegistry)) {
     ["P8 authoring bundled validator", "scripts/run-p8-authoring-bundled-validator.mjs"],
     ["P8 authoring review input", "scripts/validate-p8-authoring-review-input.mjs"],
     ["P8 authoring review contract", "scripts/test-p8-authoring-review-input.mjs"],
+    [
+      "P8 authoring .2 review provenance",
+      "scripts/refresh-p8-authoring-review-provenance.mjs",
+      "--version=2026.07.16.2",
+    ],
+    ["P8 authoring .2 bundled validator", "scripts/run-p8-authoring-bundled-validator-v2.mjs"],
+    ["P8 authoring .2 review input", "scripts/validate-p8-authoring-review-input-v2.mjs"],
+    ["P8 authoring .2 review contract", "scripts/test-p8-authoring-review-input-v2.mjs"],
+    ["P8 authoring .2 medical review service view", "scripts/test-medical-review-service-view.mjs"],
   );
 } else {
   console.log(

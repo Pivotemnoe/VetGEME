@@ -1,0 +1,2905 @@
+{
+  "schemaVersion": 1,
+  "familyId": "cardio_chf",
+  "familyVersion": "2026.07.16.40",
+  "title": "Застойная сердечная недостаточность",
+  "campaignPhase": "chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": [
+    "Заболевания сердца, шумы, кардиомегалия и застойная сердечная недостаточность являются отдельными отдельными клиническими состояниями.",
+    "ЗСН требует клинического застоя, такого как отек легких, плевральный или перикардиальный выпот, асцит или системный венозный застой, иногда с низким выбросом.",
+    "Кашель сам по себе не является кардиогенным отеком легких и обычно бывает респираторным у пожилых собак мелких пород.",
+    "Отсутствие слышимого шума не исключает кардиомиопатию кошек или ЗСН.",
+    "Сердечный фенотип и локализация застоя остаются отдельными доказательствами.",
+    "Биомаркеры подтверждают вероятность и никогда не доказывают наличие ЗСН изолированно.",
+    "Нестабильные пациенты получают кислород, минимальное вмешательство и жизненно важное дренирование или направление перед стрессовой окончательной визуализацией.",
+    "экстренное ультразвуковое исследование поддерживает сортировку и вероятность выпота или отека, но не заменяет полный фенотип или исследование конкурирующих причин.",
+    "Частота дыхания и вес во время сна в домашних условиях являются продольными тенденциями с учетом обучаемой техники, а не заменой тревожного обследования.",
+    "Последствия для почек, электролитов и артериального давления являются частью компромисса в лечении, а не необязательными неожиданными результатами.",
+    "Никакого сердечно-сосудистого препарата, дозы, целевого уровня кислорода, техники дренажа или протокола эскалации не задаётся автоматически."
+  ],
+  "coreCapabilities": [
+    "respiratory_distress_minimal_handling",
+    "oxygen",
+    "xray_or_referral",
+    "ecg",
+    "cardiology_referral",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "chf_emergency_triage_route",
+      "anyOf": [
+        "respiratory_distress_minimal_handling",
+        "oxygen",
+        "hospital_referral",
+        "intensive_care_referral",
+        "safe_referral"
+      ],
+      "purpose": "minimal_handling_respiratory_perfusion_stabilization"
+    },
+    {
+      "id": "chf_congestion_imaging_route",
+      "anyOf": [
+        "xray_or_referral",
+        "thoracic_pocus",
+        "trained_pocus",
+        "cardiology_referral",
+        "safe_referral"
+      ],
+      "purpose": "pulmonary_edema_effusion_heart_and_venous_context"
+    },
+    {
+      "id": "chf_rhythm_pressure_oxygen_route",
+      "anyOf": [
+        "ecg",
+        "blood_pressure",
+        "pulse_oximetry",
+        "vital_monitor",
+        "safe_referral"
+      ],
+      "purpose": "rhythm_pressure_oxygenation_and_signal_context"
+    },
+    {
+      "id": "chf_echo_phenotype_route",
+      "anyOf": [
+        "echocardiography_external",
+        "cardiology_referral",
+        "advanced_heart_failure_referral",
+        "safe_referral"
+      ],
+      "purpose": "cardiac_structure_function_and_phenotype"
+    },
+    {
+      "id": "chf_effusion_drainage_route",
+      "anyOf": [
+        "thoracocentesis_referral",
+        "abdominocentesis_referral",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "ventilation_comfort_fluid_and_competing_cause_route"
+    },
+    {
+      "id": "chf_systemic_lab_route",
+      "anyOf": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "t4_external",
+        "renal_referral",
+        "safe_referral"
+      ],
+      "purpose": "renal_electrolyte_thyroid_and_systemic_context"
+    },
+    {
+      "id": "chf_biomarker_route",
+      "anyOf": [
+        "cardiac_biomarker_external",
+        "cardiology_referral",
+        "safe_referral"
+      ],
+      "purpose": "probability_support_without_standalone_diagnosis"
+    },
+    {
+      "id": "chf_home_monitoring_route",
+      "anyOf": [
+        "cardiac_home_monitoring",
+        "chf_longitudinal_monitoring",
+        "safe_referral"
+      ],
+      "purpose": "resting_respiratory_rate_weight_and_symptom_trend"
+    },
+    {
+      "id": "chf_longitudinal_safety_route",
+      "anyOf": [
+        "chf_longitudinal_monitoring",
+        "blood_pressure",
+        "biochemistry",
+        "electrolytes",
+        "renal_referral",
+        "safe_referral"
+      ],
+      "purpose": "response_congestion_renal_perfusion_and_quality_of_life"
+    },
+    {
+      "id": "chf_advanced_route",
+      "anyOf": [
+        "advanced_heart_failure_referral",
+        "cardiology_referral",
+        "intensive_care_referral",
+        "safe_referral"
+      ],
+      "purpose": "refractory_low_output_arrhythmia_or_advanced_congestion"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "chf_minimal_handling_respiratory_and_perfusion_triage",
+      "requires": [
+        "respiratory_distress_minimal_handling",
+        "oxygen"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chf_thoracic_radiography_or_pocus_route",
+      "requires": [
+        "xray_or_referral",
+        "thoracic_pocus"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chf_ecg_blood_pressure_and_oxygenation",
+      "requires": [
+        "ecg",
+        "blood_pressure",
+        "pulse_oximetry"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chf_echocardiography_and_cardiac_phenotype",
+      "requires": [
+        "echocardiography_external",
+        "cardiology_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chf_pleural_or_abdominal_effusion_assessment",
+      "requires": [
+        "thoracocentesis_referral",
+        "abdominocentesis_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chf_cbc_biochemistry_electrolyte_renal_and_thyroid_context",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "t4_external"
+      ],
+      "availability": "local_plus_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chf_cardiac_biomarker_as_support_not_proof",
+      "requires": [
+        "cardiac_biomarker_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chf_home_resting_respiratory_rate_and_weight_log",
+      "requires": [
+        "cardiac_home_monitoring"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chf_response_renal_perfusion_and_quality_of_life_monitoring",
+      "requires": [
+        "chf_longitudinal_monitoring"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chf_refractory_or_advanced_cardiology_referral",
+      "requires": [
+        "advanced_heart_failure_referral"
+      ],
+      "availability": "external_post_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "home_sleeping_rr_video",
+      "prompt": "Каковы во сне или в полном покое частота дыхания и есть ли с указанной датой видеозапись?"
+    },
+    {
+      "id": "cough_effort_syncope",
+      "prompt": "Есть ли кашель, дыхательный усилие или обморок и когда?"
+    },
+    {
+      "id": "appetite_water_urine_weight",
+      "prompt": "Как менялись аппетит, вода, моча и масса тела?"
+    },
+    {
+      "id": "prior_echo_xray_ecg_diagnosis",
+      "prompt": "Есть ли предыдущий эхокардиография, рентген, электрокардиография и точный диагноз?"
+    },
+    {
+      "id": "exact_medication_and_actual_use",
+      "prompt": "Каков точный список назначений, пропуски и дополнительный дозы?"
+    },
+    {
+      "id": "collapse_open_mouth_cyanosis",
+      "prompt": "Есть ли коллапс, с открытым ртом дыхание, цианоз или выраженный слабость?"
+    },
+    {
+      "id": "cold_painful_limb_neuro_deficit",
+      "prompt": "Есть ли внезапно болезненная холодная конечность или паралич?"
+    },
+    {
+      "id": "effusion_drainage_history",
+      "prompt": "Были ли выпот или дренирование, когда и как быстро жидкость вернулась?"
+    },
+    {
+      "id": "home_log_technique_and_baseline",
+      "prompt": "Как дома измеряют частоту дыхания и массу тела и каковы обычные показатели этого животного?"
+    },
+    {
+      "id": "owner_goals_cost_and_qol",
+      "prompt": "Каковы уход цели, финансовые ограничения и качество жизни опасения?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "hands_off_rr_effort_posture",
+      "source": "observation",
+      "requires": [
+        "respiratory_distress_minimal_handling"
+      ]
+    },
+    {
+      "id": "mucosa_temperature_mentation_perfusion",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "vital_monitor"
+      ]
+    },
+    {
+      "id": "signal_qualified_spo2_bp_ecg",
+      "source": "monitoring",
+      "requires": [
+        "pulse_oximetry",
+        "blood_pressure",
+        "ecg"
+      ]
+    },
+    {
+      "id": "thoracic_pocus_edema_effusion_screen",
+      "source": "diagnostic_test",
+      "requires": [
+        "thoracic_pocus"
+      ]
+    },
+    {
+      "id": "quality_thoracic_radiograph_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "xray_or_referral"
+      ]
+    },
+    {
+      "id": "echo_cardiac_phenotype_record",
+      "source": "external_report",
+      "requires": [
+        "echocardiography_external",
+        "cardiology_referral"
+      ]
+    },
+    {
+      "id": "pleural_abdominal_fluid_impact_record",
+      "source": "external_report",
+      "requires": [
+        "thoracocentesis_referral",
+        "abdominocentesis_referral"
+      ]
+    },
+    {
+      "id": "serial_renal_electrolyte_pressure_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "biochemistry",
+        "electrolytes",
+        "blood_pressure"
+      ]
+    },
+    {
+      "id": "cardiac_biomarker_context_record",
+      "source": "external_report",
+      "requires": [
+        "cardiac_biomarker_external"
+      ]
+    },
+    {
+      "id": "same_scale_home_rr_weight_log",
+      "source": "longitudinal_record",
+      "requires": [
+        "cardiac_home_monitoring"
+      ]
+    },
+    {
+      "id": "same_episode_response_qol_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "chf_longitudinal_monitoring"
+      ]
+    },
+    {
+      "id": "limb_perfusion_neurologic_emergency_record",
+      "source": "emergency_exam",
+      "requires": [
+        "neurovascular_limb_assessment",
+        "neurologic_exam"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "left_pulmonary_edema_plan",
+      "fullPlan": [
+        "minimal_handling_oxygen_and_perfusion",
+        "confirm_congestion_with_safe_imaging",
+        "rhythm_bp_oxygenation",
+        "phenotype_after_stabilization",
+        "reviewed_congestion_plan",
+        "renal_electrolyte_response",
+        "home_rr_weight_and_recheck"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "prove_congestion",
+        "define_phenotype",
+        "monitor_response"
+      ],
+      "minimumSafePlan": [
+        "cough_not_edema",
+        "murmur_not_chf",
+        "feline_no_murmur_not_exclusion",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen",
+        "respiratory_distress_minimal_handling",
+        "cardiology_or_icu_referral"
+      ],
+      "unsafeOrInadequate": [
+        "echo_alone_proves_edema",
+        "stressful_imaging_before_oxygen",
+        "generated_drug_protocol"
+      ]
+    },
+    {
+      "id": "pleural_effusion_plan",
+      "fullPlan": [
+        "minimal_handling_oxygen",
+        "identify_ventilation_restriction",
+        "drainage_route_when_indicated",
+        "fluid_and_competing_cause_assessment",
+        "cardiac_phenotype_and_congestion_context",
+        "reaccumulation_monitoring",
+        "hospital_or_advanced_referral"
+      ],
+      "stagedPlan": [
+        "protect_ventilation",
+        "drain_if_needed",
+        "classify_cause",
+        "monitor_recurrence"
+      ],
+      "minimumSafePlan": [
+        "not_every_effusion_cardiac",
+        "drain_before_exhaustive_imaging_when_needed",
+        "same_episode_reaccumulation",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen",
+        "thoracocentesis_referral",
+        "hospital_referral"
+      ],
+      "unsafeOrInadequate": [
+        "cardiac_history_owns_all_fluid",
+        "instant_drainage",
+        "no_reaccumulation_plan"
+      ]
+    },
+    {
+      "id": "right_systemic_congestion_plan",
+      "fullPlan": [
+        "respiratory_perfusion_triage",
+        "document_ascites_jugular_liver_and_effusions",
+        "right_heart_and_pulmonary_hypertension_phenotype",
+        "renal_liver_protein_and_neoplastic_context",
+        "reviewed_congestion_and_comfort_plan",
+        "drainage_only_by_impact",
+        "quality_of_life_and_advanced_referral"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "prove_systemic_congestion",
+        "separate_cause",
+        "balance_comfort_and_organs"
+      ],
+      "minimumSafePlan": [
+        "ascites_not_automatically_cardiac",
+        "drainage_not_diagnosis",
+        "renal_protein_liver_mimics_visible",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen_by_state",
+        "abdominocentesis_referral",
+        "advanced_heart_failure_referral"
+      ],
+      "unsafeOrInadequate": [
+        "ascites_only_chf",
+        "endless_drainage_without_cause",
+        "qol_ignored"
+      ]
+    },
+    {
+      "id": "acute_low_output_plan",
+      "fullPlan": [
+        "minimal_handling_oxygen_and_perfusion",
+        "continuous_ecg_bp_oxygenation",
+        "life_threatening_effusion_or_arrhythmia_route",
+        "phenotype_after_stabilization",
+        "icu_and_cardiology",
+        "concurrent_thromboembolism_route",
+        "same_episode_outcome"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "identify_immediate_mechanism",
+        "route_to_icu",
+        "preserve_complications"
+      ],
+      "minimumSafePlan": [
+        "no_full_echo_before_life_support",
+        "no_universal_cardiovascular_drug",
+        "cold_painful_limb_emergency",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen",
+        "intensive_care_referral",
+        "advanced_heart_failure_referral"
+      ],
+      "unsafeOrInadequate": [
+        "collapse_waits_for_echo",
+        "ui_generates_pressor_or_antiarrhythmic",
+        "thromboembolism_detached"
+      ]
+    },
+    {
+      "id": "longitudinal_or_mimic_plan",
+      "fullPlan": [
+        "same_patient_diagnosis_and_medication_reconciliation",
+        "taught_home_rr_weight_log",
+        "clinic_exam_bp_renal_electrolytes",
+        "congestion_evidence_before_relapse_label",
+        "respiratory_and_other_mimic_route",
+        "reviewed_tradeoff_or_plan_adjustment",
+        "hard_red_flags_and_followup"
+      ],
+      "stagedPlan": [
+        "verify_baseline",
+        "compare_same_scale",
+        "separate_congestion_from_mimic",
+        "review_safety_tradeoff"
+      ],
+      "minimumSafePlan": [
+        "one_excited_rr_not_relapse",
+        "murmur_cardiomegaly_not_congestion",
+        "renal_safety_visible",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen_if_red_flags",
+        "cardiology_or_respiratory_referral"
+      ],
+      "unsafeOrInadequate": [
+        "owner_log_ignored",
+        "kidney_penalized_as_nonadherence",
+        "cough_unlocks_chf_treatment"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_heart_failure_2025",
+      "title": "Merck Veterinary Manual: Heart Failure in Dogs and Cats",
+      "url": "https://www.merckvetmanual.com/circulatory-system/heart-failure-in-dogs-and-cats/heart-failure-in-dogs-and-cats",
+      "scope": "heart_failure_definition_congestion_species_differences_biomarker_limits_home_rr_and_renal_monitoring"
+    },
+    {
+      "id": "acvim_mmvd_consensus",
+      "title": "ACVIM consensus guidelines for myxomatous mitral valve disease",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6524084/",
+      "scope": "canine_stage_phenotype_congestion_and_longitudinal_monitoring"
+    },
+    {
+      "id": "acvim_feline_cardiomyopathy_consensus",
+      "title": "ACVIM consensus statement: cardiomyopathies in cats",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7255676/",
+      "scope": "occult_feline_cardiomyopathy_chf_effusion_and_thromboembolic_risk"
+    },
+    {
+      "id": "merck_heart_diagnosis",
+      "title": "Merck Veterinary Manual: Diagnosis of Heart Disease in Animals",
+      "url": "https://www.merckvetmanual.com/circulatory-system/diagnosis-of-heart-disease/diagnosis-of-heart-disease-in-animals",
+      "scope": "history_exam_imaging_ecg_echo_and_biomarker_diagnostic_boundaries"
+    }
+  ],
+  "variants": [
+    {
+      "id": "chf_left_sided_cardiogenic_pulmonary_edema",
+      "version": "2026.07.16.40",
+      "title": "Левосторонняя недостаточность с кардиогенным отёком лёгких",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Кардиогенный отек легких требует соответствующего респираторного дистресса, а также признаков застоя и тяжелого сердечного контекста; одних только кашля, шума, эхо или кардиомегалии недостаточно.",
+      "exclusions": [
+        "cough_only",
+        "murmur_only",
+        "echo_without_congestion"
+      ],
+      "planBundleId": "left_pulmonary_edema_plan",
+      "sourceIds": [
+        "merck_heart_failure_2025",
+        "acvim_mmvd_consensus",
+        "acvim_feline_cardiomyopathy_consensus"
+      ],
+      "presentations": [
+        {
+          "id": "p1_dog_with_tachypnea_dyspnea_and_cardiac_context",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что у собаки учащенное дыхание или одышка, сочетающийся с отеком легких и тяжелым сердечно-сосудистым заболеванием.",
+          "historyAnswers": {
+            "home_sleeping_rr_video": "По нашим наблюдениям, повышенная тенденция зафиксирована.",
+            "cough_effort_syncope": "Дома мы заметили, что усилие доминирует; кашель сам по себе не используется.",
+            "prior_echo_xray_ecg_diagnosis": "Насколько мы можем судить, контекст тяжелого фенотипа.",
+            "collapse_open_mouth_cyanosis": "Мы записали, что выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного."
+          },
+          "examFindings": [
+            {
+              "factId": "cough_alone_does_not_qualify_as_cardiogenic_edema",
+              "source": "differential_rule",
+              "finding": "Респираторные заболевания остаются."
+            },
+            {
+              "factId": "edema_requires_congestion_evidence_plus_cardiac_context",
+              "source": "diagnostic_rule",
+              "finding": "Интеграция изображений или экстренное ультразвуковое исследование и фенотипа."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "cough_alone_does_not_qualify_as_cardiogenic_edema",
+              "discoveryPaths": [
+                "cough_effort_syncope",
+                "hands_off_rr_effort_posture",
+                "quality_thoracic_radiograph_record"
+              ]
+            },
+            {
+              "factId": "edema_requires_congestion_evidence_plus_cardiac_context",
+              "discoveryPaths": [
+                "thoracic_pocus_edema_effusion_screen",
+                "echo_cardiac_phenotype_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_minimal_handling_respiratory_and_perfusion_triage",
+              "classification": "required_first",
+              "result": "Клиническая оценка показала: неотложное состояние органов дыхания или перфузии."
+            },
+            {
+              "id": "chf_thoracic_radiography_or_pocus_route",
+              "classification": "required_when_safe",
+              "result": "При ультразвуковом исследовании: совместимый рисунок отеков или венозных или сердечных заболеваний."
+            },
+            {
+              "id": "chf_echocardiography_and_cardiac_phenotype",
+              "classification": "required_after_stabilization",
+              "result": "При ультразвуковом исследовании: тяжелый сердечный фенотип."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "cough_alone_does_not_qualify_as_cardiogenic_edema",
+              "edema_requires_congestion_evidence_plus_cardiac_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "clinical_congestion_and_compatible_cardiac_phenotype"
+            ],
+            "dangerStates": [
+              "hypoxemia",
+              "respiratory_fatigue",
+              "poor_perfusion"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_distress_minimal_handling",
+              "oxygen",
+              "thoracic_pocus"
+            ],
+            "external": [
+              "xray_or_referral",
+              "echocardiography_external",
+              "cardiology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_emergency_triage_route",
+              "chf_congestion_imaging_route",
+              "chf_echo_phenotype_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "left_pulmonary_edema_plan",
+          "followUp": {
+            "timing": "Непрерывная стабилизация, затем контрольная точка тенденции к застою или почечным или домашним заболеваниям.",
+            "required": true,
+            "targets": [
+              "effort",
+              "oxygenation",
+              "perfusion",
+              "congestion",
+              "renal",
+              "home_rr"
+            ]
+          },
+          "outcomes": {
+            "safe": "Отек уменьшается при подтверждении перегруженности и постоянном мониторинге безопасности.",
+            "unsafe": "Кашель или шум сами по себе позволяют начать лечение ЗСН."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: доказательства наличия легочной жидкости и почему одного кашля недостаточно."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_oxygen_and_safe_imaging_or_referral",
+            "ownerModifiers": [
+              "attributes_all_cough_to_heart",
+              "panicked"
+            ]
+          }
+        },
+        {
+          "id": "p2_cat_with_occult_cardiomyopathy_and_acute_distress",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что у кошки, у которой не выявлен шум, наблюдается острая респираторная недостаточность, вызванная скрытой кардиомиопатией и застойными явлениями.",
+          "historyAnswers": {
+            "home_sleeping_rr_video": "По нашим наблюдениям, может иметь едва уловимую или неизвестную тенденцию.",
+            "cough_effort_syncope": "Дома мы заметили, что усилие без кашля совместимо.",
+            "prior_echo_xray_ecg_diagnosis": "Насколько мы можем судить, никакого предшествующего фенотипа или скрытого заболевания.",
+            "collapse_open_mouth_cyanosis": "Мы записали, что открытый рот или цианоз."
+          },
+          "examFindings": [
+            {
+              "factId": "lack_of_feline_murmur_does_not_exclude_cardiomyopathy_or_chf",
+              "source": "species_rule",
+              "finding": "Требуется метод доказательств с низким уровнем стресса."
+            },
+            {
+              "factId": "stabilization_precedes_full_echo_in_unstable_cat",
+              "source": "emergency_rule",
+              "finding": "Сначала кислород или минимальная обработка."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "lack_of_feline_murmur_does_not_exclude_cardiomyopathy_or_chf",
+              "discoveryPaths": [
+                "prior_echo_xray_ecg_diagnosis",
+                "echo_cardiac_phenotype_record"
+              ]
+            },
+            {
+              "factId": "stabilization_precedes_full_echo_in_unstable_cat",
+              "discoveryPaths": [
+                "collapse_open_mouth_cyanosis",
+                "hands_off_rr_effort_posture",
+                "mucosa_temperature_mentation_perfusion"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_minimal_handling_respiratory_and_perfusion_triage",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: стабильность жизненно важных функций."
+            },
+            {
+              "id": "chf_thoracic_radiography_or_pocus_route",
+              "classification": "triage_then_safe_imaging",
+              "result": "При ультразвуковом исследовании: вероятность отека или выпота."
+            },
+            {
+              "id": "chf_echocardiography_and_cardiac_phenotype",
+              "classification": "after_stabilization",
+              "result": "При ультразвуковом исследовании: фенотип оккультной кардиомиопатии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "lack_of_feline_murmur_does_not_exclude_cardiomyopathy_or_chf",
+              "stabilization_precedes_full_echo_in_unstable_cat"
+            ],
+            "confirmedDiagnosisRequires": [
+              "congestion_evidence_plus_echo_phenotype"
+            ],
+            "dangerStates": [
+              "open_mouth_breathing",
+              "hypothermia",
+              "poor_perfusion",
+              "thromboembolism"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_distress_minimal_handling",
+              "oxygen",
+              "thoracic_pocus"
+            ],
+            "external": [
+              "echocardiography_external",
+              "cardiology_referral",
+              "intensive_care_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_emergency_triage_route",
+              "chf_congestion_imaging_route",
+              "chf_echo_phenotype_route",
+              "chf_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "left_pulmonary_edema_plan",
+          "followUp": {
+            "timing": "Непрерывное дыхание или перфузия, затем фенотип и внутренняя тенденция.",
+            "required": true,
+            "targets": [
+              "effort",
+              "temperature",
+              "perfusion",
+              "congestion",
+              "phenotype"
+            ]
+          },
+          "outcomes": {
+            "safe": "Оккультную кардиомиопатию диагностируют после стабилизации состояния при низком стрессе.",
+            "unsafe": "Отсутствие шума ложно исключает заболевание сердца."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: у кошек может быть серьезное заболевание сердца, если ранее не было слышно шума."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic",
+              "fearful",
+              "hypothermic"
+            ],
+            "requiredHandlingAlternative": "hands_off_oxygen_and_post_stabilization_echo",
+            "ownerModifiers": [
+              "surprised_by_occult_disease",
+              "panicked"
+            ]
+          }
+        },
+        {
+          "id": "p3_recurrent_pulmonary_edema_after_previous_control",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_or_emergency_by_state",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что у пациента с ХСН, ранее контролировавшегося, развивается рецидивирующий отек легких или совместимый рецидив.",
+          "historyAnswers": {
+            "home_sleeping_rr_video": "По нашим наблюдениям, базовый уровень и подъем фиксированы.",
+            "exact_medication_and_actual_use": "Дома мы заметили, что контейнеры или использование или ошибки зарегистрированы без вины.",
+            "appetite_water_urine_weight": "Насколько мы можем судить, почечная или перфузионная тенденция.",
+            "prior_echo_xray_ecg_diagnosis": "Мы записали, что тот же фенотип сохранен."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrence_is_same_patient_not_generated_duplicate",
+              "source": "continuity_rule",
+              "finding": "Предварительный диагноз и ответ сохраняются."
+            },
+            {
+              "factId": "home_rate_protocol_actual_use_and_renal_status_are_reconciled_before_escalation",
+              "source": "safety_rule",
+              "finding": "Никакого случайного расширения."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "recurrence_is_same_patient_not_generated_duplicate",
+              "discoveryPaths": [
+                "prior_echo_xray_ecg_diagnosis",
+                "same_episode_response_qol_record"
+              ]
+            },
+            {
+              "factId": "home_rate_protocol_actual_use_and_renal_status_are_reconciled_before_escalation",
+              "discoveryPaths": [
+                "home_sleeping_rr_video",
+                "exact_medication_and_actual_use",
+                "serial_renal_electrolyte_pressure_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_minimal_handling_respiratory_and_perfusion_triage",
+              "classification": "required_by_state",
+              "result": "Клиническая оценка показала: тяжесть рецидива."
+            },
+            {
+              "id": "chf_home_resting_respiratory_rate_and_weight_log",
+              "classification": "required_comparison",
+              "result": "При динамическом наблюдении: тенденция от исходного уровня к рецидиву."
+            },
+            {
+              "id": "chf_response_renal_perfusion_and_quality_of_life_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: компромисс застой или почки или перфузия."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "recurrence_is_same_patient_not_generated_duplicate",
+              "home_rate_protocol_actual_use_and_renal_status_are_reconciled_before_escalation"
+            ],
+            "confirmedDiagnosisRequires": [
+              "renewed_congestion_evidence_in_same_phenotype"
+            ],
+            "dangerStates": [
+              "refractory_edema",
+              "azotemia",
+              "hypotension",
+              "medication_error"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oxygen",
+              "cardiac_home_monitoring",
+              "chf_longitudinal_monitoring",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "cardiology_referral",
+              "advanced_heart_failure_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_home_monitoring_route",
+              "chf_longitudinal_safety_route",
+              "chf_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "left_pulmonary_edema_plan",
+          "followUp": {
+            "timing": "Острый ответ, затем контрольная точка почечного или электролитного или домашнего частота дыхания.",
+            "required": true,
+            "targets": [
+              "congestion",
+              "rr",
+              "weight",
+              "renal",
+              "electrolytes",
+              "actual_use"
+            ]
+          },
+          "outcomes": {
+            "safe": "Рецидив верифицируется и лечится в пределах исходной динамики заболевания.",
+            "unsafe": "Повторный пациент или случайная эскалация заменяют сверку."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: просмотрите домашний журнал и существующие контейнеры без моральных суждений."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic",
+              "fearful",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "stabilize_then_reconcile_records",
+            "ownerModifiers": [
+              "medication_confusion",
+              "financial_fatigue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "chf_pleural_effusion_cardiac_or_mixed",
+      "version": "2026.07.16.40",
+      "title": "Плевральный выпот при сердечной недостаточности или смешанной причине",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Плевральный выпот может быть сердечным или смешанным; Влияние вентиляции может потребовать дренирования перед проведением исчерпывающей визуализации, в то время как конкурирующие причины остаются видимыми.",
+      "exclusions": [
+        "all_effusion_is_cardiac",
+        "forced_imaging_before_drainage",
+        "recurrence_without_same_episode"
+      ],
+      "planBundleId": "pleural_effusion_plan",
+      "sourceIds": [
+        "merck_heart_failure_2025",
+        "acvim_feline_cardiomyopathy_consensus"
+      ],
+      "presentations": [
+        {
+          "id": "p1_cat_with_pleural_effusion_and_reduced_ventilation",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что у кошки с плевральным выпотом наблюдаются ограничительные усилия и сниженная вентиляция.",
+          "historyAnswers": {
+            "home_sleeping_rr_video": "По нашим наблюдениям, повышенная тенденция или неизвестно.",
+            "collapse_open_mouth_cyanosis": "Дома мы заметили, что выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного.",
+            "effusion_drainage_history": "Насколько мы можем судить, владелец не отмечает этого признака на текущем этапе.",
+            "prior_echo_xray_ecg_diagnosis": "Мы записали, что кардиальный контекст фиксирован или неизвестен."
+          },
+          "examFindings": [
+            {
+              "factId": "ventilation_limiting_effusion_gets_oxygen_and_drainage_route_before_exhaustive_imaging",
+              "source": "emergency_rule",
+              "finding": "Минимальная обработка в первую очередь."
+            },
+            {
+              "factId": "drainage_is_therapeutic_and_diagnostic_context_not_full_cause_proof",
+              "source": "diagnostic_boundary",
+              "finding": "Фенотипические или конкурирующие причины остаются."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "ventilation_limiting_effusion_gets_oxygen_and_drainage_route_before_exhaustive_imaging",
+              "discoveryPaths": [
+                "hands_off_rr_effort_posture",
+                "thoracic_pocus_edema_effusion_screen",
+                "pleural_abdominal_fluid_impact_record"
+              ]
+            },
+            {
+              "factId": "drainage_is_therapeutic_and_diagnostic_context_not_full_cause_proof",
+              "discoveryPaths": [
+                "effusion_drainage_history",
+                "echo_cardiac_phenotype_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_minimal_handling_respiratory_and_perfusion_triage",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: состояние вентиляции или перфузии."
+            },
+            {
+              "id": "chf_pleural_or_abdominal_effusion_assessment",
+              "classification": "required_if_ventilation_limited",
+              "result": "Клиническая оценка показала: путь дренажа или жидкости или причины."
+            },
+            {
+              "id": "chf_echocardiography_and_cardiac_phenotype",
+              "classification": "after_stabilization",
+              "result": "При ультразвуковом исследовании: сердечный вклад."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "ventilation_limiting_effusion_gets_oxygen_and_drainage_route_before_exhaustive_imaging",
+              "drainage_is_therapeutic_and_diagnostic_context_not_full_cause_proof"
+            ],
+            "confirmedDiagnosisRequires": [
+              "effusion_plus_cardiac_phenotype_or_cause_specific_evidence"
+            ],
+            "dangerStates": [
+              "ventilatory_failure",
+              "hypoxemia",
+              "rapid_reaccumulation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_distress_minimal_handling",
+              "oxygen",
+              "thoracic_pocus"
+            ],
+            "external": [
+              "thoracocentesis_referral",
+              "cardiology_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_emergency_triage_route",
+              "chf_effusion_drainage_route",
+              "chf_echo_phenotype_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "pleural_effusion_plan",
+          "followUp": {
+            "timing": "Непрерывная вентиляция, затем контрольная точка причины или повторного накопления.",
+            "required": true,
+            "targets": [
+              "effort",
+              "fluid",
+              "cause",
+              "reaccumulation",
+              "perfusion"
+            ]
+          },
+          "outcomes": {
+            "safe": "Вентиляция улучшается, а причина остается научно обоснованной.",
+            "unsafe": "Стрессовая визуализация предшествует спасительному дренированию."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему может потребоваться введение жидкости перед полным обследованием сердца."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "hands_off_oxygen_and_drainage_referral",
+            "ownerModifiers": [
+              "panicked",
+              "procedure_fear"
+            ]
+          }
+        },
+        {
+          "id": "p2_effusion_requires_sampling_or_competing_cause",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_complex",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что выпот требует жидкостного контекста и оценки конкурирующих причин, несмотря на известное или предполагаемое заболевание сердца.",
+          "historyAnswers": {
+            "effusion_drainage_history": "По нашим наблюдениям, история жидкости.",
+            "prior_echo_xray_ecg_diagnosis": "Дома мы заметили, что сердечный фенотип фиксирован.",
+            "appetite_water_urine_weight": "Насколько мы можем судить, системная тенденция.",
+            "owner_goals_cost_and_qol": "Мы записали, что возможность диагностики или направления."
+          },
+          "examFindings": [
+            {
+              "factId": "cardiac_disease_does_not_own_every_effusion",
+              "source": "differential_rule",
+              "finding": "Неопластические, инфекционные, хилезные и другие причины остаются."
+            },
+            {
+              "factId": "biomarker_or_fluid_character_alone_does_not_prove_cardiac_cause",
+              "source": "test_limit",
+              "finding": "Требуются комплексные доказательства."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "cardiac_disease_does_not_own_every_effusion",
+              "discoveryPaths": [
+                "prior_echo_xray_ecg_diagnosis",
+                "pleural_abdominal_fluid_impact_record"
+              ]
+            },
+            {
+              "factId": "biomarker_or_fluid_character_alone_does_not_prove_cardiac_cause",
+              "discoveryPaths": [
+                "cardiac_biomarker_context_record",
+                "echo_cardiac_phenotype_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_pleural_or_abdominal_effusion_assessment",
+              "classification": "required",
+              "result": "Клиническая оценка показала: контекст воздействия или пробы или причины жидкости."
+            },
+            {
+              "id": "chf_cardiac_biomarker_as_support_not_proof",
+              "classification": "supportive_only",
+              "result": "Кардиологическая оценка показала: вероятностная поддержка."
+            },
+            {
+              "id": "chf_echocardiography_and_cardiac_phenotype",
+              "classification": "required_if_cardiac_claimed",
+              "result": "При ультразвуковом исследовании: фенотип."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "cardiac_disease_does_not_own_every_effusion",
+              "biomarker_or_fluid_character_alone_does_not_prove_cardiac_cause"
+            ],
+            "confirmedDiagnosisRequires": [
+              "integrated_effusion_and_cause_evidence"
+            ],
+            "dangerStates": [
+              "pyothorax",
+              "neoplasia",
+              "rapid_reaccumulation",
+              "tamponade"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "thoracic_pocus",
+              "general_exam"
+            ],
+            "external": [
+              "thoracocentesis_referral",
+              "cardiac_biomarker_external",
+              "echocardiography_external",
+              "oncology_staging_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_effusion_drainage_route",
+              "chf_biomarker_route",
+              "chf_echo_phenotype_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "pleural_effusion_plan",
+          "followUp": {
+            "timing": "Жидкость или причина результат и контрольная точка дыхания.",
+            "required": true,
+            "targets": [
+              "fluid",
+              "effort",
+              "cause",
+              "phenotype"
+            ]
+          },
+          "outcomes": {
+            "safe": "Сердечные и конкурирующие причины остаются разделенными.",
+            "unsafe": "Известный шум позволяет отнести каждый выпот к ЗСН."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему болезнь сердца может сосуществовать с другой причиной появления жидкости в грудной клетке."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "stabilize_then_targeted_fluid_and_phenotype_referral",
+            "ownerModifiers": [
+              "requests_single_cause",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_reaccumulating_effusion_and_drainage_decision",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_or_emergency_by_ventilation",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что выпот снова накапливается, что требует комфорта или вентиляции и принятия решений по расширенному контролю.",
+          "historyAnswers": {
+            "effusion_drainage_history": "По нашим наблюдениям, дата, контекст объема, ответы и частота повторений.",
+            "home_sleeping_rr_video": "Дома мы заметили, что междренажный тренд.",
+            "exact_medication_and_actual_use": "Насколько мы можем судить, фактический план зафиксирован.",
+            "owner_goals_cost_and_qol": "Мы записали, что цели комфорта фиксированы."
+          },
+          "examFindings": [
+            {
+              "factId": "repeat_drainage_is_based_on_ventilation_comfort_and_reaccumulation_not_calendar",
+              "source": "impact_rule",
+              "finding": "Клиническое воздействие движет маршрутом."
+            },
+            {
+              "factId": "reaccumulation_stays_linked_to_underlying_control_and_original_episode",
+              "source": "continuity_rule",
+              "finding": "Никаких случайных новых событий с жидкостью."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "repeat_drainage_is_based_on_ventilation_comfort_and_reaccumulation_not_calendar",
+              "discoveryPaths": [
+                "effusion_drainage_history",
+                "hands_off_rr_effort_posture",
+                "pleural_abdominal_fluid_impact_record"
+              ]
+            },
+            {
+              "factId": "reaccumulation_stays_linked_to_underlying_control_and_original_episode",
+              "discoveryPaths": [
+                "same_episode_response_qol_record",
+                "echo_cardiac_phenotype_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_pleural_or_abdominal_effusion_assessment",
+              "classification": "required_by_impact",
+              "result": "Клиническая оценка показала: текущее ограничение жидкости и путь дренирования."
+            },
+            {
+              "id": "chf_response_renal_perfusion_and_quality_of_life_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: компромисс контроль или орган или качество жизни."
+            },
+            {
+              "id": "chf_refractory_or_advanced_cardiology_referral",
+              "classification": "required_if_recurrent",
+              "result": "По итогам консультации специалиста: расширенный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "repeat_drainage_is_based_on_ventilation_comfort_and_reaccumulation_not_calendar",
+              "reaccumulation_stays_linked_to_underlying_control_and_original_episode"
+            ],
+            "confirmedDiagnosisRequires": [
+              "serial_effusion_and_underlying_cause_record"
+            ],
+            "dangerStates": [
+              "ventilatory_failure",
+              "rapid_reaccumulation",
+              "refractory_chf"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "thoracic_pocus",
+              "chf_longitudinal_monitoring"
+            ],
+            "external": [
+              "thoracocentesis_referral",
+              "advanced_heart_failure_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_effusion_drainage_route",
+              "chf_longitudinal_safety_route",
+              "chf_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "pleural_effusion_plan",
+          "followUp": {
+            "timing": "Контрольная точка рецидива или комфорта того же масштаба и расширенного плана.",
+            "required": true,
+            "targets": [
+              "effort",
+              "fluid_rate",
+              "comfort",
+              "renal",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Решения по дренажу и контролю учитывают воздействие и траекторию.",
+            "unsafe": "Повторное введение жидкости становится изолированной процедурой без причины или плана контроля."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: когда дренаж улучшает дыхание и когда требуется более серьезная помощь."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic",
+              "fearful",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "impact_based_drainage_and_advanced_referral",
+            "ownerModifiers": [
+              "procedure_fatigue",
+              "financial_fatigue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "chf_right_sided_systemic_congestion",
+      "version": "2026.07.16.40",
+      "title": "Правосторонняя недостаточность и системный застой",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Правосторонняя ЗСН требует наличия системного венозного застоя и совместимого сосудистого фенотипа правых отделов сердца или перикарда или легочных сосудов, в то время как печеночные, белковые, неопластические и другие причины остаются видимыми.",
+      "exclusions": [
+        "ascites_alone",
+        "drainage_as_diagnosis",
+        "right_heart_label_without_phenotype"
+      ],
+      "planBundleId": "right_systemic_congestion_plan",
+      "sourceIds": [
+        "merck_heart_failure_2025",
+        "merck_heart_diagnosis",
+        "acvim_feline_cardiomyopathy_consensus"
+      ],
+      "presentations": [
+        {
+          "id": "p1_ascites_jugular_distension_or_hepatomegaly",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_or_urgent_by_state",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что асцит, растяжение яремных вен, гепатомегалия или системный отек предполагают венозный застой.",
+          "historyAnswers": {
+            "appetite_water_urine_weight": "По нашим наблюдениям, фиксированная тенденция в области живота или веса.",
+            "prior_echo_xray_ecg_diagnosis": "Дома мы заметили, что контекст правых отделов сердца или перикарда фиксирован.",
+            "effusion_drainage_history": "Насколько мы можем судить, история дренажа.",
+            "owner_goals_cost_and_qol": "Мы записали, что комфорт и диагностические цели."
+          },
+          "examFindings": [
+            {
+              "factId": "ascites_alone_does_not_prove_right_sided_chf",
+              "source": "differential_rule",
+              "finding": "Печень, белок, опухолевые и другие причины остаются."
+            },
+            {
+              "factId": "systemic_venous_findings_and_cardiac_phenotype_are_assessed_together",
+              "source": "diagnostic_rule",
+              "finding": "Место скопления указано явно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "ascites_alone_does_not_prove_right_sided_chf",
+              "discoveryPaths": [
+                "appetite_water_urine_weight",
+                "pleural_abdominal_fluid_impact_record",
+                "serial_renal_electrolyte_pressure_record"
+              ]
+            },
+            {
+              "factId": "systemic_venous_findings_and_cardiac_phenotype_are_assessed_together",
+              "discoveryPaths": [
+                "mucosa_temperature_mentation_perfusion",
+                "echo_cardiac_phenotype_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_echocardiography_and_cardiac_phenotype",
+              "classification": "required_if_cardiac_cause_claimed",
+              "result": "При ультразвуковом исследовании: фенотип правых отделов сердца или перикарда."
+            },
+            {
+              "id": "chf_pleural_or_abdominal_effusion_assessment",
+              "classification": "required_by_impact",
+              "result": "Клиническая оценка показала: воздействие жидкости и контекст причины."
+            },
+            {
+              "id": "chf_cbc_biochemistry_electrolyte_renal_and_thyroid_context",
+              "classification": "required_context",
+              "result": "В лабораторных показателях крови: системные альтернативы и безопасность."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "ascites_alone_does_not_prove_right_sided_chf",
+              "systemic_venous_findings_and_cardiac_phenotype_are_assessed_together"
+            ],
+            "confirmedDiagnosisRequires": [
+              "systemic_congestion_plus_compatible_cardiac_phenotype"
+            ],
+            "dangerStates": [
+              "respiratory_restriction",
+              "tamponade",
+              "low_output",
+              "severe_discomfort"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "blood_pressure",
+              "biochemistry"
+            ],
+            "external": [
+              "echocardiography_external",
+              "abdominocentesis_referral",
+              "cardiology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_echo_phenotype_route",
+              "chf_effusion_drainage_route",
+              "chf_systemic_lab_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "right_systemic_congestion_plan",
+          "followUp": {
+            "timing": "Причина или заложенность и комфорт или контрольная точка органа.",
+            "required": true,
+            "targets": [
+              "ascites",
+              "jugular",
+              "liver",
+              "respiration",
+              "renal",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Системный застой связан с совместимым фенотипом.",
+            "unsafe": "Любой асцит называют сердечным."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему жидкость в брюшной полости требует как оценки комфорта, так и подтверждения причины."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "low_stress_imaging_and_cardiology_referral",
+            "ownerModifiers": [
+              "requests_drain_only",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_pulmonary_hypertension_or_tricuspid_context",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_complex",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что системный застой возникает при легочной гипертензии, трикуспидальном или правосердечном контексте.",
+          "historyAnswers": {
+            "cough_effort_syncope": "По нашим наблюдениям, фиксированные дыхательные усилия или обмороки.",
+            "prior_echo_xray_ecg_diagnosis": "Дома мы заметили, что данные правых отделов сердца.",
+            "home_sleeping_rr_video": "Насколько мы можем судить, респираторная тенденция фиксирована.",
+            "exact_medication_and_actual_use": "Мы записали, что фактическое использование фиксировано."
+          },
+          "examFindings": [
+            {
+              "factId": "right_heart_and_respiratory_cause_routes_remain_linked",
+              "source": "causal_rule",
+              "finding": "Легочные заболевания не стерты."
+            },
+            {
+              "factId": "echo_probability_requires_clinical_congestion_and_context",
+              "source": "echo_limit",
+              "finding": "По одной оценке, не полный диагноз."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "right_heart_and_respiratory_cause_routes_remain_linked",
+              "discoveryPaths": [
+                "cough_effort_syncope",
+                "quality_thoracic_radiograph_record",
+                "echo_cardiac_phenotype_record"
+              ]
+            },
+            {
+              "factId": "echo_probability_requires_clinical_congestion_and_context",
+              "discoveryPaths": [
+                "prior_echo_xray_ecg_diagnosis",
+                "signal_qualified_spo2_bp_ecg"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_echocardiography_and_cardiac_phenotype",
+              "classification": "required",
+              "result": "При ультразвуковом исследовании: фенотип правых отделов сердца или легочных сосудов."
+            },
+            {
+              "id": "chf_thoracic_radiography_or_pocus_route",
+              "classification": "required_context",
+              "result": "При ультразвуковом исследовании: респираторный или сосудистый или застойный характер."
+            },
+            {
+              "id": "chf_ecg_blood_pressure_and_oxygenation",
+              "classification": "required_by_state",
+              "result": "На электрокардиограмме: ритм или АД или оксигенация."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "right_heart_and_respiratory_cause_routes_remain_linked",
+              "echo_probability_requires_clinical_congestion_and_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_echo_plus_congestion_and_cause_context"
+            ],
+            "dangerStates": [
+              "syncope",
+              "hypoxemia",
+              "low_output",
+              "progressive_effusion"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "pulse_oximetry",
+              "blood_pressure",
+              "ecg"
+            ],
+            "external": [
+              "echocardiography_external",
+              "cardiology_referral",
+              "advanced_heart_failure_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_echo_phenotype_route",
+              "chf_rhythm_pressure_oxygen_route",
+              "chf_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "right_systemic_congestion_plan",
+          "followUp": {
+            "timing": "Фенотип или причина и перегрузка или функциональные контрольные точки.",
+            "required": true,
+            "targets": [
+              "syncope",
+              "oxygenation",
+              "right_heart",
+              "effusion",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Сердечные и респираторные факторы остаются связанными.",
+            "unsafe": "Эхо-метка удаляет основную респираторную причину."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: как заболевания легких или сосудов и правых отделов сердца могут влиять друг на друга."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "weak",
+              "dyspneic"
+            ],
+            "requiredHandlingAlternative": "oxygen_by_state_and_cardiology_referral",
+            "ownerModifiers": [
+              "requests_single_cause",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_refractory_ascites_with_quality_of_life_tradeoff",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "complex_by_comfort_and_respiration",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что рефрактерный асцит приводит к ухудшению дыхания, подвижности, аппетита и качества жизни.",
+          "historyAnswers": {
+            "appetite_water_urine_weight": "По нашим наблюдениям, фиксированная тенденция веса или потребления или мочи.",
+            "effusion_drainage_history": "Дома мы заметили, что рецидивы и реакции.",
+            "exact_medication_and_actual_use": "Насколько мы можем судить, фактическое использование фиксировано.",
+            "owner_goals_cost_and_qol": "Мы записали, что цели и нагрузка фиксированы."
+          },
+          "examFindings": [
+            {
+              "factId": "drainage_is_for_clinical_impact_not_routine_calendar",
+              "source": "comfort_rule",
+              "finding": "Путь движения дыхания или дискомфорта."
+            },
+            {
+              "factId": "renal_protein_liver_and_neoplastic_alternatives_remain_visible",
+              "source": "differential_rule",
+              "finding": "Огнеупорная этикетка не закрывает обработку."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "drainage_is_for_clinical_impact_not_routine_calendar",
+              "discoveryPaths": [
+                "effusion_drainage_history",
+                "pleural_abdominal_fluid_impact_record",
+                "same_episode_response_qol_record"
+              ]
+            },
+            {
+              "factId": "renal_protein_liver_and_neoplastic_alternatives_remain_visible",
+              "discoveryPaths": [
+                "appetite_water_urine_weight",
+                "serial_renal_electrolyte_pressure_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_pleural_or_abdominal_effusion_assessment",
+              "classification": "required_by_impact",
+              "result": "Клиническая оценка показала: комфорт или дыхание и контекст причины."
+            },
+            {
+              "id": "chf_response_renal_perfusion_and_quality_of_life_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: настоящий компромисс."
+            },
+            {
+              "id": "chf_refractory_or_advanced_cardiology_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: расширенный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "drainage_is_for_clinical_impact_not_routine_calendar",
+              "renal_protein_liver_and_neoplastic_alternatives_remain_visible"
+            ],
+            "confirmedDiagnosisRequires": [
+              "serial_refractory_congestion_and_cause_evidence"
+            ],
+            "dangerStates": [
+              "respiratory_restriction",
+              "renal_compromise",
+              "severe_qol_decline"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "chf_longitudinal_monitoring",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "abdominocentesis_referral",
+              "advanced_heart_failure_referral",
+              "renal_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_effusion_drainage_route",
+              "chf_longitudinal_safety_route",
+              "chf_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "right_systemic_congestion_plan",
+          "followUp": {
+            "timing": "Контрольные точки комфорта или перегруженности или органов одинакового масштаба.",
+            "required": true,
+            "targets": [
+              "abdomen",
+              "respiration",
+              "appetite",
+              "renal",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Комфорт и безопасность органов определяют передовые решения.",
+            "unsafe": "Бесконечный дренаж заменяет планирование причины или контроля или качества жизни."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: открыто обсуждайте преимущества комфорта, рецидивы, компромиссы в отношении органов и цели."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "painful",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "impact_based_drainage_and_advanced_referral",
+            "ownerModifiers": [
+              "financial_fatigue",
+              "qol_priority"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "chf_acute_decompensated_or_low_output",
+      "version": "2026.07.16.40",
+      "title": "Острая декомпенсация, аритмия или низкий сердечный выброс",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Тяжелый респираторный дистресс, аритмия, гипотония, низкий выброс или тромбоэмболия требуют немедленной стабилизации с минимальным лечением и направления в отделение интенсивной терапии или кардиологии до полного завершения фенотипа.",
+      "exclusions": [
+        "full_echo_before_life_support",
+        "universal_cardiovascular_drug",
+        "detached_thromboembolism"
+      ],
+      "planBundleId": "acute_low_output_plan",
+      "sourceIds": [
+        "merck_heart_failure_2025",
+        "acvim_feline_cardiomyopathy_consensus",
+        "merck_heart_diagnosis"
+      ],
+      "presentations": [
+        {
+          "id": "p1_severe_hypoxemic_distress_needing_minimal_handling",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что тяжелый гипоксический респираторный дистресс требует стабилизации без вмешательства до окончательного фенотипа.",
+          "historyAnswers": {
+            "collapse_open_mouth_cyanosis": "По нашим наблюдениям, серьезные тревожные признаки.",
+            "cough_effort_syncope": "Дома мы заметили, что дыхание стало заметно тяжелее, особенно в покое.",
+            "prior_echo_xray_ecg_diagnosis": "Насколько мы можем судить, известный или неизвестный фенотип.",
+            "exact_medication_and_actual_use": "Мы записали, что получается только в случае безопасности."
+          },
+          "examFindings": [
+            {
+              "factId": "oxygen_and_minimal_handling_precede_stressful_imaging",
+              "source": "emergency_rule",
+              "finding": "Стабильность прежде всего."
+            },
+            {
+              "factId": "full_echo_is_not_required_before_life_saving_effusion_or_edema_route",
+              "source": "sequence_rule",
+              "finding": "Фенотип следует за стабилизацией."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "oxygen_and_minimal_handling_precede_stressful_imaging",
+              "discoveryPaths": [
+                "collapse_open_mouth_cyanosis",
+                "hands_off_rr_effort_posture",
+                "mucosa_temperature_mentation_perfusion"
+              ]
+            },
+            {
+              "factId": "full_echo_is_not_required_before_life_saving_effusion_or_edema_route",
+              "discoveryPaths": [
+                "thoracic_pocus_edema_effusion_screen",
+                "pleural_abdominal_fluid_impact_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_minimal_handling_respiratory_and_perfusion_triage",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: выявлены признаки неотложного состояния."
+            },
+            {
+              "id": "chf_thoracic_radiography_or_pocus_route",
+              "classification": "pocus_or_safe_imaging_only",
+              "result": "При ультразвуковом исследовании: непосредственный путь застоя или выпота."
+            },
+            {
+              "id": "chf_refractory_or_advanced_cardiology_referral",
+              "classification": "required_if_unstable",
+              "result": "По итогам консультации специалиста: передача отделения интенсивной терапии или кардиологии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "oxygen_and_minimal_handling_precede_stressful_imaging",
+              "full_echo_is_not_required_before_life_saving_effusion_or_edema_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "post_stabilization_congestion_and_phenotype_evidence"
+            ],
+            "dangerStates": [
+              "respiratory_fatigue",
+              "cyanosis",
+              "hypothermia",
+              "collapse"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_distress_minimal_handling",
+              "oxygen",
+              "thoracic_pocus"
+            ],
+            "external": [
+              "intensive_care_referral",
+              "cardiology_referral",
+              "thoracocentesis_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_emergency_triage_route",
+              "chf_congestion_imaging_route",
+              "chf_effusion_drainage_route",
+              "chf_advanced_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "acute_low_output_plan",
+          "followUp": {
+            "timing": "Продолжительный экстренный и постстабилизационный фенотип.",
+            "required": true,
+            "targets": [
+              "effort",
+              "oxygenation",
+              "temperature",
+              "perfusion",
+              "congestion"
+            ]
+          },
+          "outcomes": {
+            "safe": "Жизнеобеспечение предшествует окончательному фенотипу.",
+            "unsafe": "Пациент должен закончить эхо или рентгенографию перед кислородом."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему стабилизация происходит до полного обследования сердца."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic",
+              "collapsed",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "hands_off_oxygen_and_icu_transfer",
+            "ownerModifiers": [
+              "panicked",
+              "requests_full_diagnosis_first"
+            ]
+          }
+        },
+        {
+          "id": "p2_arrhythmia_syncope_hypotension_or_cardiogenic_shock",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_icu",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что опасный ритм, обморок, гипотония или кардиогенный шок угрожают перфузии.",
+          "historyAnswers": {
+            "cough_effort_syncope": "По нашим наблюдениям, зафиксировано время синкопе.",
+            "collapse_open_mouth_cyanosis": "Дома мы заметили, что коллапс или перфузия зафиксирована.",
+            "prior_echo_xray_ecg_diagnosis": "Насколько мы можем судить, история ритма или фенотипа.",
+            "exact_medication_and_actual_use": "Мы записали, что фактические риски согласованы."
+          },
+          "examFindings": [
+            {
+              "factId": "rhythm_and_perfusion_require_continuous_monitoring_and_specialist_route",
+              "source": "icu_rule",
+              "finding": "Ни одного снимка ЭКГ."
+            },
+            {
+              "factId": "ui_cannot_choose_universal_pressor_inotrope_or_antiarrhythmic",
+              "source": "treatment_boundary",
+              "finding": "Требуется проверенный протокол."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "rhythm_and_perfusion_require_continuous_monitoring_and_specialist_route",
+              "discoveryPaths": [
+                "signal_qualified_spo2_bp_ecg",
+                "mucosa_temperature_mentation_perfusion"
+              ]
+            },
+            {
+              "factId": "ui_cannot_choose_universal_pressor_inotrope_or_antiarrhythmic",
+              "discoveryPaths": [
+                "prior_echo_xray_ecg_diagnosis",
+                "exact_medication_and_actual_use"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_ecg_blood_pressure_and_oxygenation",
+              "classification": "required_continuous",
+              "result": "На электрокардиограмме: контекст ритма или АД или оксигенации."
+            },
+            {
+              "id": "chf_echocardiography_and_cardiac_phenotype",
+              "classification": "after_stabilization",
+              "result": "При ультразвуковом исследовании: механизм или фенотип."
+            },
+            {
+              "id": "chf_refractory_or_advanced_cardiology_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: протокол специалиста отделения интенсивной терапии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "rhythm_and_perfusion_require_continuous_monitoring_and_specialist_route",
+              "ui_cannot_choose_universal_pressor_inotrope_or_antiarrhythmic"
+            ],
+            "confirmedDiagnosisRequires": [
+              "documented_rhythm_and_low_output_mechanism"
+            ],
+            "dangerStates": [
+              "shock",
+              "malignant_arrhythmia",
+              "sudden_death",
+              "organ_hypoperfusion"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ecg",
+              "blood_pressure",
+              "pulse_oximetry",
+              "vital_monitor"
+            ],
+            "external": [
+              "intensive_care_referral",
+              "advanced_heart_failure_referral",
+              "echocardiography_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_rhythm_pressure_oxygen_route",
+              "chf_echo_phenotype_route",
+              "chf_advanced_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "acute_low_output_plan",
+          "followUp": {
+            "timing": "Непрерывный ритм или перфузия и исход фенотипа.",
+            "required": true,
+            "targets": [
+              "rhythm",
+              "bp",
+              "mentation",
+              "urine",
+              "phenotype"
+            ]
+          },
+          "outcomes": {
+            "safe": "Шок или ритм достигает контролируемой специализированной помощи.",
+            "unsafe": "Создан универсальный сердечно-сосудистый препарат."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: ритм и артериальное давление определяют необходимость оказания неотложной помощи специалистом."
+          ],
+          "compatibility": {
+            "temperament": [
+              "collapsed",
+              "weak",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "continuous_monitoring_and_icu_referral",
+            "ownerModifiers": [
+              "panicked",
+              "medication_confusion"
+            ]
+          }
+        },
+        {
+          "id": "p3_concurrent_arterial_thromboembolism_or_other_emergency",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_multisystem",
+          "workload": 4.25,
+          "complaint": "Мы обратились, потому что у кошки с сердечной недостаточностью также случается внезапный болезненный холодный паралич конечности или другая неотложная тромбоэмболическая ситуация.",
+          "historyAnswers": {
+            "cold_painful_limb_neuro_deficit": "По нашим наблюдениям, начало или местоположение фиксировано.",
+            "collapse_open_mouth_cyanosis": "Дома мы заметили, что сердечно-легочный статус фиксированный.",
+            "prior_echo_xray_ecg_diagnosis": "Насколько мы можем судить, история сердечного фенотипа.",
+            "owner_goals_cost_and_qol": "Мы записали, что обсуждение целей и прогнозов."
+          },
+          "examFindings": [
+            {
+              "factId": "cold_painful_paresed_limb_creates_simultaneous_cardiac_and_thromboembolic_emergency",
+              "source": "multisystem_rule",
+              "finding": "Ни один маршрут не исчезает."
+            },
+            {
+              "factId": "thromboembolic_complication_remains_same_patient_and_episode",
+              "source": "continuity_rule",
+              "finding": "Никаких случайных новых случаев."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "cold_painful_paresed_limb_creates_simultaneous_cardiac_and_thromboembolic_emergency",
+              "discoveryPaths": [
+                "cold_painful_limb_neuro_deficit",
+                "limb_perfusion_neurologic_emergency_record",
+                "hands_off_rr_effort_posture"
+              ]
+            },
+            {
+              "factId": "thromboembolic_complication_remains_same_patient_and_episode",
+              "discoveryPaths": [
+                "prior_echo_xray_ecg_diagnosis",
+                "same_episode_response_qol_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_minimal_handling_respiratory_and_perfusion_triage",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: сердечно-легочная стабильность."
+            },
+            {
+              "id": "chf_ecg_blood_pressure_and_oxygenation",
+              "classification": "required",
+              "result": "На электрокардиограмме: ритм или перфузия."
+            },
+            {
+              "id": "chf_refractory_or_advanced_cardiology_referral",
+              "classification": "required_multisystem",
+              "result": "По итогам консультации специалиста: маршрут неотложной помощи в кардиологии или реанимации."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "cold_painful_paresed_limb_creates_simultaneous_cardiac_and_thromboembolic_emergency",
+              "thromboembolic_complication_remains_same_patient_and_episode"
+            ],
+            "confirmedDiagnosisRequires": [
+              "limb_perfusion_neurologic_and_cardiac_evidence"
+            ],
+            "dangerStates": [
+              "severe_pain",
+              "ischemia",
+              "chf",
+              "shock"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oxygen",
+              "neurovascular_limb_assessment",
+              "neurologic_exam",
+              "ecg"
+            ],
+            "external": [
+              "intensive_care_referral",
+              "advanced_heart_failure_referral",
+              "cardiology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_emergency_triage_route",
+              "chf_rhythm_pressure_oxygen_route",
+              "chf_advanced_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "acute_low_output_plan",
+          "followUp": {
+            "timing": "Непрерывные контрольные точки сердечно-легочной системы или конечностей и качества жизни.",
+            "required": true,
+            "targets": [
+              "pain",
+              "limb_perfusion",
+              "respiration",
+              "rhythm",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Обе чрезвычайные ситуации остаются видимыми и объяснимыми.",
+            "unsafe": "Событие конечности отделяется от сердечного эпизода."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: одновременную чрезвычайную ситуацию и неопределенность в отношении сердца или легких и конечностей."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "dyspneic",
+              "fearful",
+              "collapsed"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_analgesia_route_and_icu",
+            "ownerModifiers": [
+              "panicked",
+              "qol_priority"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "chf_longitudinal_control_or_respiratory_mimic",
+      "version": "2026.07.16.40",
+      "title": "Продольный контроль застойная сердечная недостаточность или респираторная имитация",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Стабильный продольный контроль использует изученные домашние тенденции и безопасность почек или АД; кашель или учащенное дыхание без заложенности носа сохраняют респираторные, болевые, ожирение и другие мимики.",
+      "exclusions": [
+        "one_clinic_rr_relapse",
+        "murmur_or_cardiomegaly_as_congestion",
+        "renal_tradeoff_hidden"
+      ],
+      "planBundleId": "longitudinal_or_mimic_plan",
+      "sourceIds": [
+        "merck_heart_failure_2025",
+        "acvim_mmvd_consensus",
+        "acvim_feline_cardiomyopathy_consensus",
+        "merck_heart_diagnosis"
+      ],
+      "presentations": [
+        {
+          "id": "p1_stable_home_resting_respiratory_rate_followup",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_follow_up",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что пациент со стабильной сердечной недостаточностью возвращается с частота дыхания сна и журналом веса для контрольного анализа того же масштаба.",
+          "historyAnswers": {
+            "home_log_technique_and_baseline": "По нашим наблюдениям, техника или базовая линия проверена.",
+            "home_sleeping_rr_video": "Дома мы заметили, что в течение семи ночей частота дыхания во сне держалась в диапазоне 18–22 в минуту без нарастания.",
+            "exact_medication_and_actual_use": "Насколько мы можем судить, помирились.",
+            "appetite_water_urine_weight": "Мы записали, что тенденция безопасности."
+          },
+          "examFindings": [
+            {
+              "factId": "one_excited_clinic_rr_does_not_equal_relapse",
+              "source": "measurement_rule",
+              "finding": "Интегрированы домашний тренд и контекст экзамена."
+            },
+            {
+              "factId": "home_monitoring_requires_taught_technique_and_individual_baseline",
+              "source": "quality_rule",
+              "finding": "Не магическое число."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "one_excited_clinic_rr_does_not_equal_relapse",
+              "discoveryPaths": [
+                "home_sleeping_rr_video",
+                "hands_off_rr_effort_posture",
+                "same_scale_home_rr_weight_log"
+              ]
+            },
+            {
+              "factId": "home_monitoring_requires_taught_technique_and_individual_baseline",
+              "discoveryPaths": [
+                "home_log_technique_and_baseline",
+                "same_scale_home_rr_weight_log"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_home_resting_respiratory_rate_and_weight_log",
+              "classification": "required",
+              "result": "При динамическом наблюдении: качественный тренд."
+            },
+            {
+              "id": "chf_response_renal_perfusion_and_quality_of_life_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: перегруженность или безопасность или качество жизни."
+            },
+            {
+              "id": "chf_ecg_blood_pressure_and_oxygenation",
+              "classification": "selected_by_phenotype",
+              "result": "На электрокардиограмме: контекст безопасности клиники."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "one_excited_clinic_rr_does_not_equal_relapse",
+              "home_monitoring_requires_taught_technique_and_individual_baseline"
+            ],
+            "confirmedDiagnosisRequires": [
+              "same_scale_longitudinal_control_evidence"
+            ],
+            "dangerStates": [
+              "rising_home_rr",
+              "syncope",
+              "poor_intake",
+              "hypotension"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cardiac_home_monitoring",
+              "chf_longitudinal_monitoring",
+              "blood_pressure"
+            ],
+            "external": [
+              "cardiology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_home_monitoring_route",
+              "chf_longitudinal_safety_route",
+              "chf_rhythm_pressure_oxygen_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "longitudinal_or_mimic_plan",
+          "followUp": {
+            "timing": "Срок контрольного осмотра назначают по состоянию пациента; при тревожных признаках нужно обратиться раньше.",
+            "required": true,
+            "targets": [
+              "home_rr",
+              "weight",
+              "bp",
+              "renal",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Стабильный контроль оценивается на основании квалифицированных продольных данных.",
+            "unsafe": "Одно стрессовое измерение приводит к рецидиву."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: проверьте, как расинтерпретируется частота дыхания, и объясните отдельные тревожные сигналы, основанные на тенденциях."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "home_evidence_and_low_stress_exam",
+            "ownerModifiers": [
+              "anxious_about_one_number",
+              "good_logger"
+            ]
+          }
+        },
+        {
+          "id": "p2_azotemia_electrolyte_or_blood_pressure_tradeoff",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_tradeoff",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что контроль застоя осложняется азотемией, изменением электролитов или проблемами артериального давления или перфузии.",
+          "historyAnswers": {
+            "appetite_water_urine_weight": "По нашим наблюдениям, гидратация или потребление или моча фиксированы.",
+            "exact_medication_and_actual_use": "Дома мы заметили, что фактическое использование фиксировано.",
+            "home_sleeping_rr_video": "Насколько мы можем судить, тенденция к перегрузкам зафиксирована.",
+            "owner_goals_cost_and_qol": "Мы записали, что цели компромисса."
+          },
+          "examFindings": [
+            {
+              "factId": "congestion_and_kidney_perfusion_safety_form_a_real_tradeoff",
+              "source": "safety_rule",
+              "finding": "Ни одна из сторон не выигрывает автоматически."
+            },
+            {
+              "factId": "renal_change_is_not_owner_failure_or_optional_surprise",
+              "source": "communication_rule",
+              "finding": "Ожидаемая стоимость мониторинга."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "congestion_and_kidney_perfusion_safety_form_a_real_tradeoff",
+              "discoveryPaths": [
+                "home_sleeping_rr_video",
+                "serial_renal_electrolyte_pressure_record",
+                "same_episode_response_qol_record"
+              ]
+            },
+            {
+              "factId": "renal_change_is_not_owner_failure_or_optional_surprise",
+              "discoveryPaths": [
+                "exact_medication_and_actual_use",
+                "appetite_water_urine_weight"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_cbc_biochemistry_electrolyte_renal_and_thyroid_context",
+              "classification": "required",
+              "result": "В лабораторных показателях крови: почечный или электролитный контекст."
+            },
+            {
+              "id": "chf_ecg_blood_pressure_and_oxygenation",
+              "classification": "required_pressure_context",
+              "result": "На электрокардиограмме: перфузия или АД."
+            },
+            {
+              "id": "chf_response_renal_perfusion_and_quality_of_life_monitoring",
+              "classification": "required_tradeoff",
+              "result": "При динамическом наблюдении: пробки против безопасности."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "congestion_and_kidney_perfusion_safety_form_a_real_tradeoff",
+              "renal_change_is_not_owner_failure_or_optional_surprise"
+            ],
+            "confirmedDiagnosisRequires": [
+              "serial_congestion_renal_electrolyte_and_bp_evidence"
+            ],
+            "dangerStates": [
+              "dehydration",
+              "hypotension",
+              "severe_azotemia",
+              "electrolyte_disorder",
+              "recurrent_congestion"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "biochemistry",
+              "electrolytes",
+              "blood_pressure",
+              "chf_longitudinal_monitoring"
+            ],
+            "external": [
+              "renal_referral",
+              "cardiology_referral",
+              "advanced_heart_failure_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_systemic_lab_route",
+              "chf_longitudinal_safety_route",
+              "chf_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "longitudinal_or_mimic_plan",
+          "followUp": {
+            "timing": "Кратковременный обзор застоя одного и того же масштаба или почек или АД.",
+            "required": true,
+            "targets": [
+              "rr",
+              "weight",
+              "renal",
+              "electrolytes",
+              "bp",
+              "intake"
+            ]
+          },
+          "outcomes": {
+            "safe": "Рассмотренный план балансирует дыхание и перфузию органов.",
+            "unsafe": "Почечная безопасность исчезает или застойные явления игнорируются."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: необходимый баланс и почему повторные лабораторные проверки или АД являются частью лечения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "frail"
+            ],
+            "requiredHandlingAlternative": "low_stress_serial_monitoring_and_dual_referral",
+            "ownerModifiers": [
+              "financial_fatigue",
+              "medication_confusion"
+            ]
+          }
+        },
+        {
+          "id": "p3_cough_tachypnea_without_confirmed_congestion",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_by_effort",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что кашель или учащенное дыхание возникают с шумом или кардиомегалией, но без подтвержденного застоя.",
+          "historyAnswers": {
+            "cough_effort_syncope": "По нашим наблюдениям, картина зависимости кашля от усилий.",
+            "home_sleeping_rr_video": "Дома мы заметили, что домашний тренд зафиксирован.",
+            "prior_echo_xray_ecg_diagnosis": "Насколько мы можем судить, контекст сердечно-сосудистых заболеваний.",
+            "exact_medication_and_actual_use": "Мы записали, что никаких выводов о лечении."
+          },
+          "examFindings": [
+            {
+              "factId": "murmur_or_cardiomegaly_alone_cannot_unlock_chf_treatment",
+              "source": "diagnostic_boundary",
+              "finding": "Требуется перегруженность."
+            },
+            {
+              "factId": "bronchitis_pneumonia_asthma_pain_obesity_and_other_causes_remain_visible",
+              "source": "differential_rule",
+              "finding": "Маршрут принимающей семьи сохранен."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "murmur_or_cardiomegaly_alone_cannot_unlock_chf_treatment",
+              "discoveryPaths": [
+                "prior_echo_xray_ecg_diagnosis",
+                "quality_thoracic_radiograph_record",
+                "echo_cardiac_phenotype_record"
+              ]
+            },
+            {
+              "factId": "bronchitis_pneumonia_asthma_pain_obesity_and_other_causes_remain_visible",
+              "discoveryPaths": [
+                "cough_effort_syncope",
+                "home_sleeping_rr_video",
+                "hands_off_rr_effort_posture"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chf_thoracic_radiography_or_pocus_route",
+              "classification": "required_discriminator",
+              "result": "При ультразвуковом исследовании: застойные явления отсутствуют или неопределенные и респираторный контекст."
+            },
+            {
+              "id": "chf_cardiac_biomarker_as_support_not_proof",
+              "classification": "optional_support",
+              "result": "Кардиологическая оценка показала: только вероятность."
+            },
+            {
+              "id": "chf_home_resting_respiratory_rate_and_weight_log",
+              "classification": "required_if_stable",
+              "result": "При динамическом наблюдении: домашний тренд."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "murmur_or_cardiomegaly_alone_cannot_unlock_chf_treatment",
+              "bronchitis_pneumonia_asthma_pain_obesity_and_other_causes_remain_visible"
+            ],
+            "confirmedDiagnosisRequires": [
+              "congestion_evidence_before_chf_label"
+            ],
+            "dangerStates": [
+              "missed_respiratory_disease",
+              "false_chf_treatment",
+              "progressive_effort"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "thoracic_pocus",
+              "cardiac_home_monitoring"
+            ],
+            "external": [
+              "xray_or_referral",
+              "cardiac_biomarker_external",
+              "cardiology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chf_congestion_imaging_route",
+              "chf_biomarker_route",
+              "chf_home_monitoring_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "longitudinal_or_mimic_plan",
+          "followUp": {
+            "timing": "Респираторный критерий срочности и контроль с тревожным признаком.",
+            "required": true,
+            "targets": [
+              "cough",
+              "effort",
+              "home_rr",
+              "congestion",
+              "mimic_route"
+            ]
+          },
+          "outcomes": {
+            "safe": "Болезни сердца и респираторные заболевания сосуществуют без ложной ЗСН.",
+            "unsafe": "Кашель плюс шум автоматически запускают план застойная сердечная недостаточность."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему болезнь сердца может сосуществовать с отдельной причиной кашля."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "dyspneic"
+            ],
+            "requiredHandlingAlternative": "low_stress_discriminator_or_respiratory_referral",
+            "ownerModifiers": [
+              "expects_heart_explanation",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if murmur, cardiomegaly, cough, biomarker or echo alone equals CHF.",
+    "Reject if lack of feline murmur excludes cardiomyopathy or every effusion is cardiac.",
+    "Reject if unstable patient must finish radiographs or echo before oxygen/drainage.",
+    "Reject if one clinic RR overrides a taught home trend or renal/electrolyte safety disappears.",
+    "Reject if external echo/drainage is instantaneous.",
+    "Reject if code generates a cardiovascular drug, dose, oxygen target or drainage technique."
+  ]
+}

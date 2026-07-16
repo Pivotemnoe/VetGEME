@@ -1,0 +1,3732 @@
+{
+  "schemaVersion": 1,
+  "familyId": "gi_acute",
+  "familyVersion": "2026.07.16.40",
+  "title": "Острые желудочно-кишечные симптомы",
+  "campaignPhase": "chapter_1_to_chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "syndromeRule": "Жалоба на рвоту или диарею не является этиологическим диагнозом.",
+    "severityRule": "Тяжесть определяется ментальным статусом, циркуляцией, гидратацией и системными признаками, а не внешним видом стула.",
+    "regurgitationRule": "Регургитация и рвота имеют разные -механизмы.",
+    "doseRule": "Названия препаратов, дозировки и скорость инфузии определяет ветеринарный врач; они не расинтерпретируются автоматически."
+  },
+  "coreCapabilities": [
+    "general_exam",
+    "abdominal_palpation",
+    "hydration_assessment"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "pcv_or_safe_referral",
+      "anyOf": [
+        "pcv_total_solids",
+        "safe_referral"
+      ],
+      "purpose": "hemoconcentration_and_protein_assessment"
+    },
+    {
+      "id": "laboratory_or_safe_referral",
+      "anyOf": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "safe_referral"
+      ],
+      "purpose": "systemic_and_metabolic_assessment"
+    },
+    {
+      "id": "imaging_or_safe_referral",
+      "anyOf": [
+        "xray_or_referral",
+        "ultrasound_or_referral",
+        "safe_referral"
+      ],
+      "purpose": "abdominal_or_thoracic_imaging"
+    },
+    {
+      "id": "emergency_stabilization_or_referral",
+      "anyOf": [
+        "emergency_stabilization",
+        "safe_referral"
+      ],
+      "purpose": "shock_or_surgical_emergency"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "gi_general_exam",
+      "requires": [
+        "general_exam"
+      ],
+      "availability": "local_from_start"
+    },
+    {
+      "researchId": "gi_hydration_perfusion_assessment",
+      "requires": [
+        "hydration_assessment"
+      ],
+      "availability": "local_from_start"
+    },
+    {
+      "researchId": "gi_abdominal_palpation",
+      "requires": [
+        "abdominal_palpation"
+      ],
+      "availability": "local_from_start"
+    },
+    {
+      "researchId": "gi_fecal_microscopy",
+      "requires": [
+        "fecal_microscopy"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "gi_infectious_rapid_test",
+      "requires": [
+        "infectious_rapid_test"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "gi_pcv_total_solids",
+      "requires": [
+        "pcv_total_solids"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "gi_cbc_biochemistry_electrolytes",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "electrolytes"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "gi_urinalysis",
+      "requires": [
+        "urinalysis"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "gi_abdominal_xray",
+      "requires": [
+        "xray_or_referral"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "gi_abdominal_ultrasound",
+      "requires": [
+        "ultrasound_or_referral"
+      ],
+      "availability": "local_or_external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "gi_thoracic_xray",
+      "requires": [
+        "xray_or_referral"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "gi_pulse_oximetry",
+      "requires": [
+        "pulse_oximetry"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "onset_duration",
+      "text": "Когда началось и сколько продолжается?"
+    },
+    {
+      "id": "episode_count",
+      "text": "Сколько было эпизодов и когда последний?"
+    },
+    {
+      "id": "vomiting_or_regurgitation",
+      "text": "Были ли тошнота и сокращения живота или содержимое вышло пассивно?"
+    },
+    {
+      "id": "water_tolerance",
+      "text": "Удерживает ли воду или сразу возвращает её?"
+    },
+    {
+      "id": "blood_character",
+      "text": "Есть ли свежая кровь, мелена или содержимое типа кофейной гущи?"
+    },
+    {
+      "id": "pain_distension",
+      "text": "Есть ли боль, напряжение или увеличение живота?"
+    },
+    {
+      "id": "intake_output",
+      "text": "Как ест, пьёт, мочится и испражняется?"
+    },
+    {
+      "id": "diet_foreign_toxin_access",
+      "text": "Были ли новая или жирная еда, мусор, игрушка, нить, лекарства или химия?"
+    },
+    {
+      "id": "vaccination_contacts",
+      "text": "Каков вакцинальный статус и были ли приют или передержка или групповой контакт?"
+    },
+    {
+      "id": "home_treatment",
+      "text": "Что уже давали дома и пытались ли вызывать рвоту?"
+    },
+    {
+      "id": "owner_video",
+      "text": "Есть ли видео эпизода?"
+    },
+    {
+      "id": "systemic_history",
+      "text": "Есть ли похудение, жажда, изменения мочи, хронические болезни или препараты?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "general_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "mental_status_and_vitals",
+      "source": "measurement",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "hydration_and_perfusion_separate",
+      "source": "physical_exam",
+      "requires": [
+        "hydration_assessment"
+      ]
+    },
+    {
+      "id": "gentle_abdominal_palpation",
+      "source": "physical_exam",
+      "requires": [
+        "abdominal_palpation"
+      ]
+    },
+    {
+      "id": "oral_and_sublingual_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "respiratory_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "fecal_microscopy",
+      "source": "diagnostic_test",
+      "requires": [
+        "fecal_microscopy"
+      ]
+    },
+    {
+      "id": "infectious_rapid_test",
+      "source": "diagnostic_test",
+      "requires": [
+        "infectious_rapid_test"
+      ]
+    },
+    {
+      "id": "pcv_total_solids",
+      "source": "diagnostic_test",
+      "requires": [
+        "pcv_total_solids"
+      ]
+    },
+    {
+      "id": "cbc_biochemistry_electrolytes",
+      "source": "diagnostic_test",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "electrolytes"
+      ]
+    },
+    {
+      "id": "urinalysis",
+      "source": "diagnostic_test",
+      "requires": [
+        "urinalysis"
+      ]
+    },
+    {
+      "id": "abdominal_xray",
+      "source": "diagnostic_test",
+      "requires": [
+        "xray_or_referral"
+      ]
+    },
+    {
+      "id": "abdominal_ultrasound",
+      "source": "diagnostic_test",
+      "requires": [
+        "ultrasound_or_referral"
+      ]
+    },
+    {
+      "id": "thoracic_xray",
+      "source": "diagnostic_test",
+      "requires": [
+        "xray_or_referral"
+      ]
+    },
+    {
+      "id": "pulse_oximetry",
+      "source": "measurement",
+      "requires": [
+        "pulse_oximetry"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "uncomplicated_vomiting_outpatient",
+      "fullPlan": [
+        "confirm_true_vomiting",
+        "general_exam",
+        "hydration_perfusion_and_abdomen",
+        "exclude_authored_red_flags",
+        "symptom_and_diet_support_without_auto_etiologic_label",
+        "small_portions_after_control",
+        "written_red_flags",
+        "short_recheck"
+      ],
+      "stagedPlan": [
+        "minimum_safe_exam",
+        "outpatient_support",
+        "defined_24_hour_checkpoint",
+        "escalate_if_persistent"
+      ],
+      "minimumSafePlan": [
+        "exam",
+        "hydration_and_abdomen",
+        "feasible_support",
+        "written_return_conditions",
+        "contact_route"
+      ],
+      "stabilizeAndRefer": [
+        "minimal_initial_support",
+        "analgesia_or_antiemetic_only_if_safe",
+        "same_day_referral"
+      ],
+      "unsafeOrInadequate": [
+        "diagnose_gastritis_without_evidence",
+        "full_panel_for_single_stable_episode",
+        "repeat_symptomatic_plan_indefinitely",
+        "ignore_inability_to_hold_water"
+      ]
+    },
+    {
+      "id": "acute_diarrhea_stratified",
+      "fullPlan": [
+        "grade_by_systemic_state",
+        "hydration_perfusion_assessment",
+        "targeted_fecal_or_infectious_testing_by_risk",
+        "outpatient_or_inpatient_support_by_grade",
+        "avoid_routine_antimicrobial_without_indication",
+        "isolation_when_indicated",
+        "recheck"
+      ],
+      "stagedPlan": [
+        "exam_and_grade",
+        "support",
+        "collect_stool_if_risk",
+        "defined_recheck"
+      ],
+      "minimumSafePlan": [
+        "exam",
+        "hydration",
+        "support",
+        "red_flags",
+        "sample_or_referral_when_infectious_risk"
+      ],
+      "stabilizeAndRefer": [
+        "isolate_if_infectious",
+        "restore_perfusion_if_needed",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "severity_from_stool_appearance_only",
+        "automatic_antibiotic",
+        "ignore_group_exposure",
+        "send_infectious_risk_through_common_queue"
+      ]
+    },
+    {
+      "id": "dietary_indiscretion_risk_screen",
+      "fullPlan": [
+        "identify_exact_exposure",
+        "separate_food_from_toxin_and_foreign_material",
+        "general_exam_and_abdomen",
+        "targeted_labs_or_imaging_when_pain_or_uncertainty",
+        "support_by_state",
+        "red_flags_and_recheck"
+      ],
+      "stagedPlan": [
+        "exposure_inventory",
+        "exam",
+        "stable_support_or_targeted_workup",
+        "short_recheck"
+      ],
+      "minimumSafePlan": [
+        "exposure_and_packaging_check",
+        "exam",
+        "do_not_induce_vomiting_without_toxicology_decision",
+        "safe_route_if_uncertain"
+      ],
+      "stabilizeAndRefer": [
+        "collect_product_packaging_time_and_weight",
+        "do_not_induce_vomiting_blindly",
+        "support_by_state",
+        "urgent_referral"
+      ],
+      "unsafeOrInadequate": [
+        "assume_all_garbage_is_benign",
+        "confirm_pancreatitis_from_fatty_food_history",
+        "home_peroxide_or_salt_emesis",
+        "delay_toxin_or_foreign_body_route"
+      ]
+    },
+    {
+      "id": "regurgitation_esophageal_route",
+      "fullPlan": [
+        "confirm_passive_process",
+        "oral_pharyngeal_and_respiratory_exam",
+        "thoracic_imaging_or_referral",
+        "assess_aspiration",
+        "search_esophageal_or_systemic_cause",
+        "feeding_safety_plan",
+        "recheck"
+      ],
+      "stagedPlan": [
+        "reclassify_observed_process",
+        "respiratory_screen",
+        "imaging_route",
+        "safe_feeding_and_followup"
+      ],
+      "minimumSafePlan": [
+        "do_not_label_gastritis",
+        "aspiration_red_flags",
+        "imaging_or_referral",
+        "safe_interim_feeding_instruction_by_reviewer"
+      ],
+      "stabilizeAndRefer": [
+        "prioritize_breathing",
+        "oxygen_if_indicated",
+        "minimal_handling",
+        "urgent_referral"
+      ],
+      "unsafeOrInadequate": [
+        "treat_as_vomiting_only",
+        "diagnose_megaesophagus_from_video",
+        "feed_normally_with_aspiration_signs",
+        "delay_respiratory_route"
+      ]
+    },
+    {
+      "id": "ahds_exclusion_and_resuscitation",
+      "fullPlan": [
+        "grade_perfusion_and_mentation",
+        "pcv_total_solids",
+        "infection_and_surgical_differentials_by_context",
+        "individualized_iv_rehydration_and_ongoing_loss_plan",
+        "supportive_antiemetic_and_analgesia_by_indication",
+        "antimicrobial_only_if_severe_systemic_indication",
+        "serial_monitoring"
+      ],
+      "stagedPlan": [
+        "perfusion_exam",
+        "pcv_total_solids_or_referral",
+        "iv_support_by_state",
+        "targeted_differentials",
+        "recheck"
+      ],
+      "minimumSafePlan": [
+        "perfusion_assessment",
+        "pcv_total_solids_or_safe_referral",
+        "prompt_fluid_route",
+        "serial_reassessment"
+      ],
+      "stabilizeAndRefer": [
+        "emergency_circulatory_support",
+        "monitor_response",
+        "urgent_inpatient_referral"
+      ],
+      "unsafeOrInadequate": [
+        "diagnose_from_blood_appearance_only",
+        "automatic_antimicrobial_in_mild_case",
+        "delay_fluids_for_all_tests",
+        "home_observation_with_shock"
+      ]
+    },
+    {
+      "id": "dehydration_hypovolemia_separated",
+      "fullPlan": [
+        "separate_dehydration_from_hypovolemia",
+        "calculate_individual_deficit_and_ongoing_losses_after_review",
+        "choose_enteral_subcutaneous_iv_or_io_by_state",
+        "monitor_response_and_overload",
+        "treat_cause",
+        "serial_reassessment"
+      ],
+      "stagedPlan": [
+        "volume_status",
+        "appropriate_route",
+        "replace_and_monitor",
+        "escalate_if_water_not_tolerated"
+      ],
+      "minimumSafePlan": [
+        "volume_status",
+        "appropriate_fluid_route",
+        "ongoing_loss_plan",
+        "recheck"
+      ],
+      "stabilizeAndRefer": [
+        "iv_or_io_for_hypovolemia",
+        "emergency_stabilization",
+        "urgent_referral"
+      ],
+      "unsafeOrInadequate": [
+        "one_rate_for_all",
+        "subcutaneous_fluids_for_hypovolemic_shock",
+        "no_monitoring",
+        "delay_abc_for_full_history"
+      ]
+    },
+    {
+      "id": "feline_nausea_anorexia_workup",
+      "fullPlan": [
+        "recognize_subtle_nausea",
+        "oral_abdominal_hydration_and_urinary_exam",
+        "duration_and_weight_risk",
+        "targeted_blood_urine_and_imaging",
+        "control_nausea_and_pain",
+        "nutrition_support_plan",
+        "close_followup"
+      ],
+      "stagedPlan": [
+        "minimum_exam",
+        "symptom_control",
+        "targeted_first_tests",
+        "short_recheck_and_escalation"
+      ],
+      "minimumSafePlan": [
+        "exam",
+        "hydration",
+        "urination_and_duration_check",
+        "nausea_pain_and_nutrition_route",
+        "close_contact"
+      ],
+      "stabilizeAndRefer": [
+        "support_by_state",
+        "do_not_force_feed_when_contraindicated",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "wait_for_more_vomiting",
+        "label_gastritis_without_workup",
+        "ignore_anorexia_duration",
+        "support_without_cause_search_when_persistent"
+      ]
+    },
+    {
+      "id": "red_flag_abdomen_emergency",
+      "fullPlan": [
+        "immediate_triage",
+        "perfusion_and_electrolytes",
+        "analgesia_and_stabilization",
+        "targeted_imaging_without_delay",
+        "do_not_pull_linear_foreign_body",
+        "surgical_or_endoscopic_route",
+        "documented_handoff"
+      ],
+      "stagedPlan": [
+        "triage",
+        "stabilize",
+        "imaging_or_direct_emergency_referral",
+        "surgical_decision"
+      ],
+      "minimumSafePlan": [
+        "recognize_surgical_risk",
+        "pain_and_perfusion_support",
+        "urgent_safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "emergency_stabilization",
+        "minimal_delay",
+        "urgent_surgical_handoff"
+      ],
+      "unsafeOrInadequate": [
+        "diet_and_wait",
+        "mask_and_observe_for_days",
+        "pull_sublingual_string",
+        "delay_gdv_for_tests_or_queue"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "gi_acute_uncomplicated_vomiting",
+      "version": "2026.07.16.40",
+      "title": "Острая неосложнённая рвота",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Острый синдром истинной рвоты без выявленных тревожных признаков; этиологический диагноз не присваивается.",
+      "primaryDiagnosisId": "dx_acute_uncomplicated_vomiting_syndrome",
+      "differentials": [
+        "dx_dietary_indiscretion",
+        "dx_gi_obstruction",
+        "dx_toxin_exposure",
+        "dx_pancreatitis_suspected",
+        "dx_systemic_disease"
+      ],
+      "planBundleId": "uncomplicated_vomiting_outpatient",
+      "sourceIds": [
+        "merck_gastritis",
+        "aaha_fluid_2024"
+      ],
+      "presentations": [
+        {
+          "id": "p1_single_episode_stable",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что один эпизод рвоты за сутки; питомец почти обычный и удерживает воду.",
+          "historyAnswers": {
+            "onset_duration": "По нашим наблюдениям, началось сегодня.",
+            "episode_count": "Дома мы заметили, что один подтверждённый эпизод.",
+            "vomiting_or_regurgitation": "Насколько мы можем судить, были тошнота и активные сокращения живота.",
+            "water_tolerance": "Мы записали, что малые порции воды удерживает.",
+            "pain_distension": "По нашим наблюдениям, боли и вздутия не замечали.",
+            "diet_foreign_toxin_access": "Дома мы заметили, что подтверждённого доступа нет."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_single_episode_exam",
+              "source": "physical_exam",
+              "finding": "состояние сознания, перфузия и гидратация нормальные; живот мягкий, без значимой боли или массы или вздутия."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "true_vomiting",
+              "discoveryPaths": [
+                "vomiting_or_regurgitation"
+              ]
+            },
+            {
+              "factId": "stable_single_episode_exam",
+              "discoveryPaths": [
+                "mental_status_and_vitals",
+                "hydration_and_perfusion_separate",
+                "gentle_abdominal_palpation"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_general_exam",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: стабильное состояние."
+            },
+            {
+              "id": "gi_hydration_perfusion_assessment",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: дегидратация или гиповолемия не выявлены."
+            },
+            {
+              "id": "gi_abdominal_xray",
+              "classification": "low_value_in_context",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "low_value_in_context",
+              "result": "В лабораторных показателях крови: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "true_vomiting",
+              "stable_single_episode_exam"
+            ],
+            "confirmedDiagnosisRequires": [
+              "syndrome_only_no_etiologic_confirmation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "abdominal_palpation"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "uncomplicated_vomiting_outpatient",
+          "followUp": {
+            "timing": "В течение 24 часов, если проблема не решена; сразу за тревожные признаки.",
+            "required": true,
+            "targets": [
+              "new_vomiting",
+              "water_tolerance",
+              "pain",
+              "mentation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Самоограничивающийся эпизод улучшается либо своевременно эскалируется.",
+            "unsafe": "Необоснованный этиологический ярлык скрывает изменение состояния."
+          },
+          "ownerCommunication": [
+            "Я дам вам письменные условия немедленного возврата.",
+            "Я объясню вам: не обещать, что один нормальный осмотр исключил все причины."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "inattentive",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_two_episodes_low_budget",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что было два эпизода, аппетит немного снижен, но воду питомец удерживает; бюджет ограничен.",
+          "historyAnswers": {
+            "episode_count": "По нашим наблюдениям, два эпизода за сутки.",
+            "water_tolerance": "Дома мы заметили, что вода удерживается.",
+            "pain_distension": "Насколько мы можем судить, боли или вздутия нет.",
+            "diet_foreign_toxin_access": "Мы записали, что риск токсина или предмета не выявлен."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_low_budget_exam",
+              "source": "physical_exam",
+              "finding": "Циркуляция стабильна, значимой дегидратации и абдоминальных красных флагов нет."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stable_low_budget_exam",
+              "discoveryPaths": [
+                "general_exam",
+                "hydration_and_perfusion_separate",
+                "gentle_abdominal_palpation"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_general_exam",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: стабильный амбулаторный пациент."
+            },
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "optional_adds_information",
+              "result": "В лабораторных показателях крови: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "gi_abdominal_xray",
+              "classification": "low_value_in_context",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stable_low_budget_exam"
+            ],
+            "confirmedDiagnosisRequires": [
+              "syndrome_only_no_etiologic_confirmation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "abdominal_palpation"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "uncomplicated_vomiting_outpatient",
+          "followUp": {
+            "timing": "Определен контроль на следующий день.",
+            "required": true,
+            "targets": [
+              "episode_count",
+              "appetite",
+              "water_tolerance",
+              "new_red_flags"
+            ]
+          },
+          "outcomes": {
+            "safe": "Минимальный план остаётся медицински безопасным без панели «на всё».",
+            "unsafe": "Бюджет используется как повод пропустить осмотр или, наоборот, назначить необоснованный дорогой набор."
+          },
+          "ownerCommunication": [
+            "Я покажу минимальный безопасный и расширенный варианты обследования, спокойно объясню разницу и стоимость каждого."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "budget_limited",
+              "skeptical",
+              "observant"
+            ]
+          }
+        },
+        {
+          "id": "p3_persistent_next_day",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что на следующий день рвота повторилась, аппетит и активность снижаются.",
+          "historyAnswers": {
+            "onset_duration": "По нашим наблюдениям, более суток и продолжается.",
+            "episode_count": "Дома мы заметили, что новые эпизоды после первичного визита.",
+            "water_tolerance": "Насколько мы можем судить, удерживает не всегда.",
+            "intake_output": "Мы записали, что ест меньше, стул или моча переоцениваются."
+          },
+          "examFindings": [
+            {
+              "factId": "persistent_course_requires_reassessment",
+              "source": "physical_exam",
+              "finding": "Повторный осмотр имеет новые находки гидратации или боли, которые нельзя копировать из первого визита."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "persistent_course_requires_reassessment",
+              "discoveryPaths": [
+                "general_exam",
+                "hydration_and_perfusion_separate",
+                "gentle_abdominal_palpation"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "recommended_changes_plan",
+              "result": "В лабораторных показателях крови: результаты текущего повторного визита."
+            },
+            {
+              "id": "gi_urinalysis",
+              "classification": "recommended_changes_plan",
+              "result": "В анализе мочи: по системным дифференциалам."
+            },
+            {
+              "id": "gi_abdominal_xray",
+              "classification": "recommended_changes_plan",
+              "result": "На рентгенограммах: по боли, доступу к предмету или продолжающейся рвоте."
+            },
+            {
+              "id": "gi_abdominal_ultrasound",
+              "classification": "recommended_changes_plan",
+              "result": "При ультразвуковом исследовании: по находкам или доступности."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "persistent_course_requires_reassessment"
+            ],
+            "confirmedDiagnosisRequires": [
+              "syndrome_or_transferred_family_after_workup"
+            ],
+            "unexcludedRisks": [
+              "obstruction",
+              "pancreatitis",
+              "renal_hepatic_or_endocrine_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "laboratory_or_safe_referral",
+              "imaging_or_safe_referral"
+            ]
+          },
+          "carePlanId": "uncomplicated_vomiting_outpatient",
+          "followUp": {
+            "timing": "Повторная оценка в тот же день и маршрут получения результатов.",
+            "required": true,
+            "targets": [
+              "hydration",
+              "pain",
+              "laboratory",
+              "imaging",
+              "etiologic_transfer"
+            ]
+          },
+          "outcomes": {
+            "safe": "Сохранившийся синдром переводится в диагностическую клинический вариант.",
+            "unsafe": "Бесконечное повторение первичной поддержки задерживает выявление причины."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему нормальный вчерашний осмотр не гарантирует нормальное состояние сегодня."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "weak",
+              "pain_defensive"
+            ],
+            "ownerModifiers": [
+              "budget_limited",
+              "frustrated",
+              "anxious"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "gi_acute_uncomplicated_diarrhea",
+      "version": "2026.07.16.40",
+      "title": "Острая неосложнённая диарея",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Острая диарея без клинически значимой системной болезни; этиология не угадывается по виду стула.",
+      "primaryDiagnosisId": "dx_acute_uncomplicated_diarrhea_syndrome",
+      "differentials": [
+        "dx_parasitic_enteropathy",
+        "dx_infectious_enteritis",
+        "dx_dietary_indiscretion",
+        "dx_ahds",
+        "dx_systemic_disease"
+      ],
+      "planBundleId": "acute_diarrhea_stratified",
+      "sourceIds": [
+        "wsava_acute_diarrhea_2025",
+        "enovat_antimicrobial_diarrhea_2024",
+        "aaha_fluid_2024"
+      ],
+      "presentations": [
+        {
+          "id": "p1_mild_small_bowel",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что мягкий или водянистый стул при сохранной активности, питье и отсутствии рвоты или боли.",
+          "historyAnswers": {
+            "onset_duration": "По нашим наблюдениям, менее двух суток.",
+            "blood_character": "Дома мы заметили, что крови или мелены нет.",
+            "water_tolerance": "Насколько мы можем судить, пьёт и удерживает воду.",
+            "vaccination_contacts": "Мы записали, что нет явного группового инфекционного риска."
+          },
+          "examFindings": [
+            {
+              "factId": "mild_systemically_well",
+              "source": "physical_exam",
+              "finding": "ясное сознание, стабильная циркуляция, нормальная или минимально изменённая гидратация, нет боли."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "mild_systemically_well",
+              "discoveryPaths": [
+                "mental_status_and_vitals",
+                "hydration_and_perfusion_separate",
+                "gentle_abdominal_palpation"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_general_exam",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: лёгкая системная категория."
+            },
+            {
+              "id": "gi_fecal_microscopy",
+              "classification": "optional_adds_information",
+              "result": "При микроскопии материала: становится рекомендовано при возрасте или происхождении или просроченной профилактике."
+            },
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "low_value_in_context",
+              "result": "В лабораторных показателях крови: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "mild_systemically_well"
+            ],
+            "confirmedDiagnosisRequires": [
+              "syndrome_only"
+            ],
+            "mustNotAssume": [
+              "bacterial_cause"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "abdominal_palpation"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_diarrhea_stratified",
+          "followUp": {
+            "timing": "24–48 часов или раньше при системных признаках.",
+            "required": true,
+            "targets": [
+              "mentation",
+              "hydration",
+              "stool_frequency",
+              "vomiting",
+              "blood"
+            ]
+          },
+          "outcomes": {
+            "safe": "Большинство лёгких случаев получают обоснованную амбулаторную поддержку.",
+            "unsafe": "Автоматический антибиотик создаёт лишний риск без показаний."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: оценивать не только стул, но активность, питьё, рвоту и боль."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "internet_diagnosis",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_large_bowel_tenesmus",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "routine_or_priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что частый малый стул, слизь и тенезмы; возможна небольшая свежая кровь, но состояние стабильное.",
+          "historyAnswers": {
+            "blood_character": "По нашим наблюдениям, небольшая свежая кровь, не мелена и не профузная потеря.",
+            "episode_count": "Дома мы заметили, что частые малые порции.",
+            "pain_distension": "Насколько мы можем судить, нет сильной абдоминальной боли или вздутия."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_large_bowel_pattern",
+              "source": "physical_exam",
+              "finding": "Стабильная циркуляция; совместимый колитический картина без системной болезни."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stable_large_bowel_pattern",
+              "discoveryPaths": [
+                "general_exam",
+                "hydration_and_perfusion_separate",
+                "gentle_abdominal_palpation"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_fecal_microscopy",
+              "classification": "recommended_changes_plan",
+              "result": "При микроскопии материала: паразитологический результат по риску."
+            },
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "low_value_in_context",
+              "result": "В лабораторных показателях крови: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stable_large_bowel_pattern"
+            ],
+            "confirmedDiagnosisRequires": [
+              "syndrome_only"
+            ],
+            "unexcludedRisks": [
+              "parasitic_or_infectious_cause_by_context"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "abdominal_palpation"
+            ],
+            "external": [
+              "fecal_microscopy"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_diarrhea_stratified",
+          "followUp": {
+            "timing": "Короткая перепроверка.",
+            "required": true,
+            "targets": [
+              "fresh_blood_amount",
+              "tenesmus",
+              "systemic_state",
+              "fecal_result"
+            ]
+          },
+          "outcomes": {
+            "safe": "Пациент остаётся амбулаторным при сохранной циркуляции и чётких красных флагах.",
+            "unsafe": "Мелена, профузная кровь или слабость ошибочно остаются в варианте лёгкого течения."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: разницу между небольшой свежей кровью при тенезмах и системными красными флагами."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "anxious",
+              "observant",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_group_exposure",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority_infection_control",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что диарея после приюта или передержки или у нескольких животных; вакцинация неизвестна.",
+          "historyAnswers": {
+            "vaccination_contacts": "По нашим наблюдениям, групповой контакт и неполная или неизвестная вакцинация.",
+            "onset_duration": "Дома мы заметили, что острое начало.",
+            "systemic_history": "Насколько мы можем судить, данные этого случая показывают наличие лихорадки или вялости."
+          },
+          "examFindings": [
+            {
+              "factId": "group_infectious_risk",
+              "source": "owner_history",
+              "finding": "Совместимый кластер требует изоляционного маршрута до обычной очереди."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "group_infectious_risk",
+              "discoveryPaths": [
+                "vaccination_contacts"
+              ]
+            },
+            {
+              "factId": "systemic_grade",
+              "discoveryPaths": [
+                "general_exam",
+                "hydration_and_perfusion_separate"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_infectious_rapid_test",
+              "classification": "recommended_changes_plan",
+              "result": "Целевое лабораторное исследование показало: целевой результат по виду, возрасту и риску."
+            },
+            {
+              "id": "gi_fecal_microscopy",
+              "classification": "recommended_changes_plan",
+              "result": "При микроскопии материала: паразитологический результат."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "group_infectious_risk",
+              "systemic_grade"
+            ],
+            "confirmedDiagnosisRequires": [
+              "target_test_or_transferred_infectious_family"
+            ],
+            "mustNotAssume": [
+              "all_group_diarrhea_same_pathogen"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "isolation_protocol"
+            ],
+            "external": [
+              "infectious_rapid_test",
+              "fecal_microscopy"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_diarrhea_stratified",
+          "followUp": {
+            "timing": "Целевой результат и сопровождение кластера.",
+            "required": true,
+            "targets": [
+              "isolation",
+              "systemic_state",
+              "test_result",
+              "contacts"
+            ]
+          },
+          "outcomes": {
+            "safe": "Инфекционный риск не проходит через общую очередь.",
+            "unsafe": "Отсутствие изоляции создаёт клиническую и операционную вспышку."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: изоляционный маршрут без преждевременного названия возбудителя."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "weak",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "shelter_adopter",
+              "multi_pet",
+              "anxious"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "gi_acute_dietary_indiscretion",
+      "version": "2026.07.16.40",
+      "title": "Пищевая погрешность",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Подтверждённая пищевая погрешность поддерживает, но не доказывает единственную причину острых симптомов; токсин и инородный материал исключаются отдельно.",
+      "primaryDiagnosisId": "dx_dietary_indiscretion_syndrome",
+      "differentials": [
+        "dx_toxin_exposure",
+        "dx_gi_obstruction",
+        "dx_pancreatitis_suspected",
+        "dx_acute_vomiting_syndrome"
+      ],
+      "planBundleId": "dietary_indiscretion_risk_screen",
+      "sourceIds": [
+        "merck_gastritis",
+        "merck_gi_obstruction"
+      ],
+      "presentations": [
+        {
+          "id": "p1_garbage_access_stable",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что после доступа к мусору было 1–2 эпизода рвоты и мягкий стул, но собака стабильна.",
+          "historyAnswers": {
+            "diet_foreign_toxin_access": "Мы проверили, к чему был доступ: лекарств, бытовой химии, острых костей и упаковки в мусоре не было.",
+            "water_tolerance": "Дома мы заметили, что воду удерживает.",
+            "pain_distension": "Насколько мы можем судить, боли и вздутия нет."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_confirmed_food_access",
+              "source": "physical_exam",
+              "finding": "Стабильная перфузия или гидратация, мягкий неболезненный живот."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "exposure_inventory_benign_branch",
+              "discoveryPaths": [
+                "diet_foreign_toxin_access"
+              ]
+            },
+            {
+              "factId": "stable_confirmed_food_access",
+              "discoveryPaths": [
+                "general_exam",
+                "hydration_and_perfusion_separate",
+                "gentle_abdominal_palpation"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_general_exam",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: стабильный пациент."
+            },
+            {
+              "id": "gi_abdominal_xray",
+              "classification": "low_value_in_context",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "exposure_inventory_benign_branch",
+              "stable_confirmed_food_access"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_temporal_association_no_red_flags"
+            ],
+            "mustNotAssume": [
+              "all_garbage_benign"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "abdominal_palpation"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "dietary_indiscretion_risk_screen",
+          "followUp": {
+            "timing": "Через 24 часа или раньше при появлении тревожных признаков.",
+            "required": true,
+            "targets": [
+              "vomiting",
+              "pain",
+              "water_tolerance",
+              "stool"
+            ]
+          },
+          "outcomes": {
+            "safe": "Стабильная клинический вариант улучшается либо эскалируется по ясным условиям.",
+            "unsafe": "Если не уточнить, что именно животное могло съесть, можно пропустить токсин или инородное тело."
+          },
+          "ownerCommunication": [
+            "Пожалуйста, сохранить упаковки или фото содержимого мусора при неопределённости."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "guilty",
+              "inattentive",
+              "observant"
+            ]
+          }
+        },
+        {
+          "id": "p2_fatty_food_abdominal_pain",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что после жирной еды повторная рвота, снижение аппетита и боль в передней части живота.",
+          "historyAnswers": {
+            "diet_foreign_toxin_access": "По нашим наблюдениям, подтверждена жирная еда, но это не подтверждает панкреатит.",
+            "episode_count": "Дома мы заметили, что повторная рвота.",
+            "pain_distension": "Насколько мы можем судить, есть абдоминальная боль."
+          },
+          "examFindings": [
+            {
+              "factId": "painful_acute_abdomen_without_shock",
+              "source": "physical_exam",
+              "finding": "Болезненность передней части живота; перфузия пока стабильна."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "painful_acute_abdomen_without_shock",
+              "discoveryPaths": [
+                "gentle_abdominal_palpation",
+                "hydration_and_perfusion_separate"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "recommended_changes_plan",
+              "result": "В лабораторных показателях крови: метаболический или системный профиль."
+            },
+            {
+              "id": "gi_abdominal_ultrasound",
+              "classification": "recommended_changes_plan",
+              "result": "При ультразвуковом исследовании: целевая визуализация по доступности; не единственное основание диагноза."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "painful_acute_abdomen_without_shock"
+            ],
+            "confirmedDiagnosisRequires": [
+              "transferred_pancreas_or_other_family_after_workup"
+            ],
+            "unexcludedRisks": [
+              "pancreatitis",
+              "obstruction",
+              "other_acute_abdominal_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "abdominal_palpation",
+              "analgesia"
+            ],
+            "conditional": [
+              "laboratory_or_safe_referral",
+              "imaging_or_safe_referral"
+            ]
+          },
+          "carePlanId": "dietary_indiscretion_risk_screen",
+          "followUp": {
+            "timing": "Маршрут диагностики в тот же день.",
+            "required": true,
+            "targets": [
+              "pain",
+              "vomiting",
+              "labs",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Пациент получает поддержку и поэтапную диагностику без ложного окончательного диагноза.",
+            "unsafe": "«Жирное = панкреатит» подменяет дифференциальное решение."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: использовать формулировку «подозрение на острую абдоминальную болезнь», пока причина не подтверждена."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "analgesia_or_referral",
+            "ownerModifiers": [
+              "guilty",
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_uncertain_toxin_or_foreign_material",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что в мусоре были лекарства, химия или упаковка; неизвестно, что и сколько проглочено.",
+          "historyAnswers": {
+            "diet_foreign_toxin_access": "По нашим наблюдениям, доступ возможен, точное вещество или предмет неизвестны.",
+            "home_treatment": "Дома мы заметили, что дома рвоту ещё не вызывали либо опасная попытка уже была зафиксирована.",
+            "onset_duration": "Насколько мы можем судить, время доступа уточняется."
+          },
+          "examFindings": [
+            {
+              "factId": "uncertain_high_risk_exposure",
+              "source": "owner_history",
+              "finding": "Нельзя безопасно свести ситуацию к пищевой погрешности."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "uncertain_high_risk_exposure",
+              "discoveryPaths": [
+                "diet_foreign_toxin_access"
+              ]
+            },
+            {
+              "factId": "home_emesis_attempt",
+              "discoveryPaths": [
+                "home_treatment"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_general_exam",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: текущая стабильность не исключает отсроченный токсический или обструктивный риск."
+            },
+            {
+              "id": "gi_abdominal_xray",
+              "classification": "recommended_changes_plan",
+              "result": "На рентгенограммах: по вероятному материалу и симптомам."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "uncertain_high_risk_exposure",
+              "home_emesis_attempt"
+            ],
+            "confirmedDiagnosisRequires": [
+              "toxicology_or_imaging_route"
+            ],
+            "mustNotAssume": [
+              "safe_to_induce_emesis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam"
+            ],
+            "conditional": [
+              "imaging_or_safe_referral"
+            ]
+          },
+          "carePlanId": "dietary_indiscretion_risk_screen",
+          "followUp": {
+            "timing": "Немедленная токсикология или путь инородного тела.",
+            "required": true,
+            "targets": [
+              "substance_or_material",
+              "time",
+              "dose_or_amount",
+              "stability"
+            ]
+          },
+          "outcomes": {
+            "safe": "Упаковка, время и масса переданы в срочный маршрут без слепого вызова рвоты.",
+            "unsafe": "Домашняя соль или перекись или задержка могут добавить токсичность или аспирацию."
+          },
+          "ownerCommunication": [
+            "Пожалуйста, привезти упаковку и не давать ничего до профессионального решения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "weak",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "panicked",
+              "guilty",
+              "home_treatment"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "gi_acute_regurgitation",
+      "version": "2026.07.16.40",
+      "title": "Регургитация как жалоба на рвоту",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Пассивное возвращение пищеводного содержимого без типичных рвотных позывов; причина пищеводной дисфункции не подтверждается одним наблюдением.",
+      "primaryDiagnosisId": "dx_regurgitation_syndrome",
+      "differentials": [
+        "dx_esophageal_foreign_body",
+        "dx_megaesophagus_suspected",
+        "dx_pharyngeal_disorder",
+        "dx_true_vomiting",
+        "dx_aspiration_pneumonia"
+      ],
+      "planBundleId": "regurgitation_esophageal_route",
+      "sourceIds": [
+        "merck_digestive_intro",
+        "merck_esophageal_foreign_body",
+        "merck_gi_obstruction"
+      ],
+      "presentations": [
+        {
+          "id": "p1_passive_after_meal",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что непереваренная пища пассивно выходит вскоре после еды, без тошноты и сокращений живота.",
+          "historyAnswers": {
+            "vomiting_or_regurgitation": "По нашим наблюдениям, пассивный выход, иногда цилиндрическая пища.",
+            "onset_duration": "Дома мы заметили, что остро или повторяется несколько дней.",
+            "water_tolerance": "Насколько мы можем судить, вода может регургитироваться отдельно.",
+            "owner_video": "Мы записали, что видео совместимо с пассивным процессом."
+          },
+          "examFindings": [
+            {
+              "factId": "passive_regurgitation_pattern",
+              "source": "owner_history",
+              "finding": "История или видео отличают процесс от рвоты."
+            },
+            {
+              "factId": "no_current_aspiration_signs",
+              "source": "physical_exam",
+              "finding": "в этом случае дыхание и температура без тревожных признаков."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "passive_regurgitation_pattern",
+              "discoveryPaths": [
+                "vomiting_or_regurgitation",
+                "owner_video"
+              ]
+            },
+            {
+              "factId": "no_current_aspiration_signs",
+              "discoveryPaths": [
+                "respiratory_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_thoracic_xray",
+              "classification": "recommended_changes_plan",
+              "result": "На рентгенограммах: оценка пищевода и грудной клетки или направление к специалисту маршрут."
+            },
+            {
+              "id": "gi_general_exam",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: оральный или глотательный и респираторный осмотр."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "passive_regurgitation_pattern",
+              "no_current_aspiration_signs"
+            ],
+            "confirmedDiagnosisRequires": [
+              "syndrome_only_pending_esophageal_workup"
+            ],
+            "mustNotAssume": [
+              "megaesophagus"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam"
+            ],
+            "conditional": [
+              "imaging_or_safe_referral"
+            ]
+          },
+          "carePlanId": "regurgitation_esophageal_route",
+          "followUp": {
+            "timing": "Быстрая визуализация или обработка.",
+            "required": true,
+            "targets": [
+              "aspiration",
+              "esophageal_cause",
+              "feeding_safety"
+            ]
+          },
+          "outcomes": {
+            "safe": "Наблюдаемый процесс правильно переименован и направлен.",
+            "unsafe": "Противорвотная помощь без пищеводной оценки задерживает причину."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: различие процесса и диагноза: видео подтверждает регургитацию, но не её причину."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "video_available",
+              "inattentive"
+            ]
+          }
+        },
+        {
+          "id": "p2_owner_video_clarifies",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что владелец называет эпизоды рвотой, но видео показывает пассивную регургитацию.",
+          "historyAnswers": {
+            "owner_video": "По нашим наблюдениям, есть качественная запись без активных рвотных позывов.",
+            "vomiting_or_regurgitation": "Дома мы заметили, что после просмотра владелец уточняет пассивный процесс.",
+            "episode_count": "Насколько мы можем судить, несколько эпизодов после еды."
+          },
+          "examFindings": [
+            {
+              "factId": "video_reclassifies_process",
+              "source": "owner_history",
+              "finding": "Видео является путём уточнения механизма, но не этиологии."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "video_reclassifies_process",
+              "discoveryPaths": [
+                "owner_video"
+              ]
+            },
+            {
+              "factId": "respiratory_screen",
+              "discoveryPaths": [
+                "respiratory_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_thoracic_xray",
+              "classification": "recommended_changes_plan",
+              "result": "На рентгенограммах: не заменяется видео."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "video_reclassifies_process",
+              "respiratory_screen"
+            ],
+            "confirmedDiagnosisRequires": [
+              "regurgitation_syndrome_only"
+            ],
+            "mustNotAssume": [
+              "megaesophagus",
+              "gastritis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam"
+            ],
+            "conditional": [
+              "imaging_or_safe_referral"
+            ]
+          },
+          "carePlanId": "regurgitation_esophageal_route",
+          "followUp": {
+            "timing": "Маршрут визуализации или обработки.",
+            "required": true,
+            "targets": [
+              "episode_pattern",
+              "aspiration",
+              "cause"
+            ]
+          },
+          "outcomes": {
+            "safe": "Термин зафиксирован без преждевременного заболевания-ярлыка.",
+            "unsafe": "Видео используется для неподтверждённого мегаэзофагуса."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: поблагодарить за видео и объяснить, какие вопросы оно решает, а какие нет."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "video_available",
+              "observant",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_aspiration_warning",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что регургитация сопровождается кашлем, учащённым или затруднённым дыханием, лихорадкой или вялостью.",
+          "historyAnswers": {
+            "vomiting_or_regurgitation": "По нашим наблюдениям, подтверждён пассивный процесс.",
+            "onset_duration": "Дома мы заметили, что респираторные признаки появились после эпизодов.",
+            "systemic_history": "Насколько мы можем судить, есть вялость или лихорадка тяжести."
+          },
+          "examFindings": [
+            {
+              "factId": "aspiration_risk_signs",
+              "source": "physical_exam",
+              "finding": "Тахипноэ или усилие, кашель, аускультативные изменения или гипоксемический риск."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "aspiration_risk_signs",
+              "discoveryPaths": [
+                "respiratory_exam",
+                "mental_status_and_vitals",
+                "pulse_oximetry"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_pulse_oximetry",
+              "classification": "required_for_safe_decision",
+              "result": "Пульсоксиметрия показала: оксигенация по стабильности."
+            },
+            {
+              "id": "gi_thoracic_xray",
+              "classification": "required_for_safe_decision",
+              "result": "На рентгенограммах: срочная грудная визуализация или направление."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "aspiration_risk_signs"
+            ],
+            "confirmedDiagnosisRequires": [
+              "thoracic_workup_or_transferred_pneumonia_family"
+            ],
+            "unexcludedRisks": [
+              "aspiration_pneumonia",
+              "respiratory_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam"
+            ],
+            "external": [
+              "pulse_oximetry",
+              "xray_or_referral",
+              "oxygen"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "regurgitation_esophageal_route",
+          "followUp": {
+            "timing": "Срочный дыхательный путь.",
+            "required": true,
+            "targets": [
+              "oxygenation",
+              "thoracic_imaging",
+              "respiratory_effort",
+              "esophageal_cause"
+            ]
+          },
+          "outcomes": {
+            "safe": "Дыхание получает приоритет перед полной ЖКТ-анкетой.",
+            "unsafe": "Обычное кормление и ожидание усиливают аспирационный риск."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: срочность дыхательных признаков и безопасную транспортировку."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "respiratory_distress"
+            ],
+            "requiredHandlingAlternative": "minimal_handling",
+            "ownerModifiers": [
+              "panicked",
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "gi_acute_hemorrhagic_diarrhea",
+      "version": "2026.07.16.40",
+      "title": "Острый геморрагический диарейный синдром собак",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Совместимый синдром острой геморрагической диареи является диагнозом исключения; кровь в стуле и одна порода не подтверждают его без системной оценки и гематокрит или белка.",
+      "primaryDiagnosisId": "dx_ahds_suspected",
+      "differentials": [
+        "dx_parvoviral_enteritis",
+        "dx_parasitic_enteritis",
+        "dx_coagulopathy",
+        "dx_gi_obstruction_or_perforation",
+        "dx_pancreatitis"
+      ],
+      "planBundleId": "ahds_exclusion_and_resuscitation",
+      "sourceIds": [
+        "merck_ahds",
+        "wsava_acute_diarrhea_2025",
+        "enovat_antimicrobial_diarrhea_2024",
+        "aaha_fluid_2024"
+      ],
+      "presentations": [
+        {
+          "id": "p1_early_bloody_stable",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что остро началась выраженная свежая кровавая диарея; перфузия пока сохранена.",
+          "historyAnswers": {
+            "onset_duration": "По нашим наблюдениям, острое начало.",
+            "blood_character": "Дома мы заметили, что профузная свежая геморрагическая диарея.",
+            "vaccination_contacts": "Насколько мы можем судить, возраст или вакцинация определяют инфекционный тест."
+          },
+          "examFindings": [
+            {
+              "factId": "early_hemorrhagic_stable",
+              "source": "physical_exam",
+              "finding": "Циркуляция пока стабильна, но риск быстрых потерь высок."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "early_hemorrhagic_stable",
+              "discoveryPaths": [
+                "hydration_and_perfusion_separate",
+                "mental_status_and_vitals"
+              ]
+            },
+            {
+              "factId": "pcv_ts_result",
+              "discoveryPaths": [
+                "pcv_total_solids"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_pcv_total_solids",
+              "classification": "required_for_safe_decision",
+              "result": "В лабораторных показателях крови: полученное значение гематокрита или общий белый для ранних веток."
+            },
+            {
+              "id": "gi_infectious_rapid_test",
+              "classification": "recommended_changes_plan",
+              "result": "Целевое лабораторное исследование показало: экспресс-тест на парвовирус отрицательный; качество образца и сроки болезни позволяют интерпретировать результат."
+            },
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "recommended_changes_plan",
+              "result": "В лабораторных показателях крови: умеренная гемоконцентрация без критических электролитных сдвигов; показатели нужно контролировать в динамике."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "early_hemorrhagic_stable",
+              "pcv_ts_result"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_ahds_pattern_after_key_differentials"
+            ],
+            "unexcludedRisks": [
+              "parvovirus",
+              "parasites",
+              "coagulopathy",
+              "surgical_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment"
+            ],
+            "conditional": [
+              "pcv_or_safe_referral"
+            ]
+          },
+          "carePlanId": "ahds_exclusion_and_resuscitation",
+          "followUp": {
+            "timing": "Мониторинг или маршрут в тот же день.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "pcv_ts",
+              "losses",
+              "mentation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ранний стабильный пациент не остаётся без мониторинга.",
+            "unsafe": "Домашнее наблюдение только по виду крови пропускает быстрое ухудшение."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: возможность быстрой гиповолемии до явной дегидратации."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "weak",
+              "pain_defensive"
+            ],
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited",
+              "observant"
+            ]
+          }
+        },
+        {
+          "id": "p2_hemoconcentration_dehydration",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "urgent",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что частая кровавая диарея, вялость, липкие слизистые и тахикардия.",
+          "historyAnswers": {
+            "episode_count": "По нашим наблюдениям, профузные продолжающиеся потери.",
+            "water_tolerance": "Дома мы заметили, что питьё недостаточно или есть рвота.",
+            "blood_character": "Насколько мы можем судить, острая геморрагическая диарея."
+          },
+          "examFindings": [
+            {
+              "factId": "dehydration_without_current_shock",
+              "source": "physical_exam",
+              "finding": "Клинически значимая дегидратация; перфузия требует частой переоценки."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "dehydration_without_current_shock",
+              "discoveryPaths": [
+                "hydration_and_perfusion_separate"
+              ]
+            },
+            {
+              "factId": "hemoconcentration_pattern",
+              "discoveryPaths": [
+                "pcv_total_solids"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_pcv_total_solids",
+              "classification": "required_for_safe_decision",
+              "result": "В лабораторных показателях крови: гемоконцентрация с полученным значением общего белка от нормальной до низкой, совместимая с синдром острой геморрагической диареи-контекстом."
+            },
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "recommended_changes_plan",
+              "result": "В лабораторных показателях крови: оценивает системную тяжесть состояния или электролиты; Антимикробное решение не является автоматическим."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "dehydration_without_current_shock",
+              "hemoconcentration_pattern"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_ahds_pattern_after_differentials"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "pcv_total_solids"
+            ],
+            "external": [
+              "cbc",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "ahds_exclusion_and_resuscitation",
+          "followUp": {
+            "timing": "Стационарный серийный мониторинг.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "pcv_ts",
+              "body_weight",
+              "ongoing_losses",
+              "mentation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Индивидуальная внутривенный поддержка корректируется по ответу и потерям.",
+            "unsafe": "Фиксированная скорость без мониторинга создаёт недостаточность или перегрузку."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему антибиотик не является автоматической частью любого кровавого поноса."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "low_stress_monitoring",
+            "ownerModifiers": [
+              "anxious",
+              "internet_antibiotic_request",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_hypovolemic_shock",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что профузные потери, депрессия, слабый пульс и плохая перфузия.",
+          "historyAnswers": {
+            "episode_count": "По нашим наблюдениям, многократные профузные потери.",
+            "systemic_history": "Дома мы заметили, что резкое ухудшение ментального статуса.",
+            "water_tolerance": "Насколько мы можем судить, не способен компенсировать потери питьём."
+          },
+          "examFindings": [
+            {
+              "factId": "hypovolemic_shock",
+              "source": "physical_exam",
+              "finding": "Нарушенная перфузия, слабый пульс, изменённое сознание или гипотермия."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "hypovolemic_shock",
+              "discoveryPaths": [
+                "mental_status_and_vitals",
+                "hydration_and_perfusion_separate"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_pcv_total_solids",
+              "classification": "recommended_changes_plan",
+              "result": "В лабораторных показателях крови: не задерживает реанимацию."
+            },
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "recommended_changes_plan",
+              "result": "В лабораторных показателях крови: берётся параллельно, если не задерживает циркуляцию."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "hypovolemic_shock"
+            ],
+            "confirmedDiagnosisRequires": [
+              "shock_syndrome_immediate"
+            ],
+            "unexcludedRisks": [
+              "sepsis",
+              "dic",
+              "severe_hypoproteinemia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment"
+            ],
+            "conditional": [
+              "emergency_stabilization_or_referral"
+            ]
+          },
+          "carePlanId": "ahds_exclusion_and_resuscitation",
+          "followUp": {
+            "timing": "Непрерывный непрерывный мониторинг и передача обслуживания.",
+            "required": true,
+            "targets": [
+              "perfusion_response",
+              "mentation",
+              "temperature",
+              "losses",
+              "labs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Восстановление циркуляции начинается без задержки на полную диагностику.",
+            "unsafe": "Очередь или полный набор тестов до стабилизации повышают риск смерти."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: кратко сообщить экстренность, необходимый маршрут и ближайшую точку обновления."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "emergency_minimal_delay",
+            "ownerModifiers": [
+              "panicked",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "gi_acute_dehydrating_gastroenteritis",
+      "version": "2026.07.16.40",
+      "title": "Острый гастроэнтерит с обезвоживанием",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Острые потери жидкости; дегидратация и гиповолемия оцениваются раздельно, а путь жидкости выбирается индивидуально.",
+      "primaryDiagnosisId": "dx_acute_gi_fluid_loss_syndrome",
+      "differentials": [
+        "dx_ahds",
+        "dx_infectious_enteritis",
+        "dx_gi_obstruction",
+        "dx_pancreatitis",
+        "dx_systemic_disease"
+      ],
+      "planBundleId": "dehydration_hypovolemia_separated",
+      "sourceIds": [
+        "aaha_fluid_2024",
+        "wsava_acute_diarrhea_2025"
+      ],
+      "presentations": [
+        {
+          "id": "p1_mild_oral_tolerant",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine_or_priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что небольшие потери, лёгкая сухость слизистых, но малые порции воды удерживаются.",
+          "historyAnswers": {
+            "water_tolerance": "По нашим наблюдениям, малые порции удерживает.",
+            "episode_count": "Дома мы заметили, что потери ограниченные.",
+            "systemic_history": "Насколько мы можем судить, активность почти сохранена."
+          },
+          "examFindings": [
+            {
+              "factId": "mild_dehydration_stable_perfusion",
+              "source": "physical_exam",
+              "finding": "Лёгкий дефицит жидкости при стабильной циркуляции."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "mild_dehydration_stable_perfusion",
+              "discoveryPaths": [
+                "hydration_and_perfusion_separate"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_hydration_perfusion_assessment",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: лёгкая дегидратация без гиповолемии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "mild_dehydration_stable_perfusion"
+            ],
+            "confirmedDiagnosisRequires": [
+              "fluid_loss_syndrome"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "dehydration_hypovolemia_separated",
+          "followUp": {
+            "timing": "Короткая проверка гидратации и потерь.",
+            "required": true,
+            "targets": [
+              "water_tolerance",
+              "body_weight",
+              "ongoing_losses",
+              "perfusion"
+            ]
+          },
+          "outcomes": {
+            "safe": "энтеральный или подходящий маршрут контролируется по ответу.",
+            "unsafe": "Отсутствие контроля позволяет продолжающимся потерям незаметно усилить дефицит."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: как давать малые порции и какие признаки меняют маршрут."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "budget_limited",
+              "inattentive"
+            ]
+          }
+        },
+        {
+          "id": "p2_moderate_cannot_hold_water",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "urgent",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что пациент вялый, слизистые сухие, вода сразу возвращается, потери продолжаются.",
+          "historyAnswers": {
+            "water_tolerance": "По нашим наблюдениям, не удерживает воду.",
+            "episode_count": "Дома мы заметили, что многократные продолжающиеся потери.",
+            "pain_distension": "Насколько мы можем судить, сильная боль или вздутие данными об отсутствии или переводит в красный флаг."
+          },
+          "examFindings": [
+            {
+              "factId": "moderate_dehydration_not_shock",
+              "source": "physical_exam",
+              "finding": "Клинически значимая дегидратация; перфузия ещё не соответствует шоку."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "moderate_dehydration_not_shock",
+              "discoveryPaths": [
+                "hydration_and_perfusion_separate"
+              ]
+            },
+            {
+              "factId": "cannot_hold_water",
+              "discoveryPaths": [
+                "water_tolerance"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "recommended_changes_plan",
+              "result": "В лабораторных показателях крови: электролитный или метаболический профиль."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "moderate_dehydration_not_shock",
+              "cannot_hold_water"
+            ],
+            "confirmedDiagnosisRequires": [
+              "fluid_loss_syndrome"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment"
+            ],
+            "conditional": [
+              "laboratory_or_safe_referral"
+            ]
+          },
+          "carePlanId": "dehydration_hypovolemia_separated",
+          "followUp": {
+            "timing": "Стационарный или внутривенный маршрут с серийной повторной оценкой.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "hydration",
+              "body_weight",
+              "electrolytes",
+              "losses"
+            ]
+          },
+          "outcomes": {
+            "safe": "внутривенный или стационарный маршрут корректируется по ответу.",
+            "unsafe": "Подкожная жидкость ошибочно заменяет необходимый внутривенный маршрут при ухудшении циркуляции."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему невозможность удерживать воду меняет уровень помощи."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "anxious",
+              "pain_defensive"
+            ],
+            "ownerModifiers": [
+              "budget_limited",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_hypovolemia_systemic_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что изменённый состояние сознания, слабый пульс, плохая перфузия или гипотермия на фоне ЖКТ-потерь.",
+          "historyAnswers": {
+            "episode_count": "По нашим наблюдениям, значительные продолжающиеся потери.",
+            "water_tolerance": "Дома мы заметили, что не способен компенсировать питьём.",
+            "systemic_history": "Насколько мы можем судить, быстрое системное ухудшение."
+          },
+          "examFindings": [
+            {
+              "factId": "gi_loss_hypovolemia",
+              "source": "physical_exam",
+              "finding": "Гиповолемия или шок отделены от процента дегидратации."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "gi_loss_hypovolemia",
+              "discoveryPaths": [
+                "mental_status_and_vitals",
+                "hydration_and_perfusion_separate"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "recommended_changes_plan",
+              "result": "В лабораторных показателях крови: параллельно, без задержки стабилизации."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "gi_loss_hypovolemia"
+            ],
+            "confirmedDiagnosisRequires": [
+              "hypovolemia_syndrome_immediate"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment"
+            ],
+            "conditional": [
+              "emergency_stabilization_or_referral"
+            ]
+          },
+          "carePlanId": "dehydration_hypovolemia_separated",
+          "followUp": {
+            "timing": "Непрерывный мониторинг реагирования на чрезвычайные ситуации.",
+            "required": true,
+            "targets": [
+              "perfusion_response",
+              "mentation",
+              "temperature",
+              "urine_output",
+              "overload"
+            ]
+          },
+          "outcomes": {
+            "safe": "внутривенная или внутрикостная реанимация получает приоритет с частой переоценкой.",
+            "unsafe": "Одинаковая скорость или подкожный маршрут не восстанавливают внутрисосудистый объём."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: кратко подтвердить экстренный статус и необходимость немедленного стационарного маршрута."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "emergency_minimal_delay",
+            "ownerModifiers": [
+              "panicked",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "gi_acute_feline_nausea_anorexia",
+      "version": "2026.07.16.40",
+      "title": "Острая тошнота и анорексия кошки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Тошнота или анорексия кошки является синдромом; отсутствие многократной рвоты не делает состояние автоматически лёгким.",
+      "primaryDiagnosisId": "dx_feline_nausea_anorexia_syndrome",
+      "differentials": [
+        "dx_oral_pain",
+        "dx_gi_obstruction",
+        "dx_pancreatitis",
+        "dx_renal_hepatic_disease",
+        "dx_urinary_disease",
+        "dx_infectious_or_inflammatory_disease"
+      ],
+      "planBundleId": "feline_nausea_anorexia_workup",
+      "sourceIds": [
+        "merck_digestive_intro",
+        "aaha_fluid_2024",
+        "merck_gi_obstruction"
+      ],
+      "presentations": [
+        {
+          "id": "p1_subtle_nausea",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "routine_or_priority_by_duration",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что кошка облизывается, слюнотечение, отворачивается от еды и прячется; рвоты может не быть.",
+          "historyAnswers": {
+            "onset_duration": "По нашим наблюдениям, длительность точно уточнена.",
+            "intake_output": "Дома мы заметили, что аппетит снижен; мочеиспускание и стул проверены.",
+            "systemic_history": "Насколько мы можем судить, масса или хронические признаки определяют риск."
+          },
+          "examFindings": [
+            {
+              "factId": "subtle_feline_nausea",
+              "source": "physical_exam",
+              "finding": "Тошнота и снижение аппетита без грубых красных флагов; оральная полость или живот или гидратация оценены."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "subtle_feline_nausea",
+              "discoveryPaths": [
+                "general_exam",
+                "oral_and_sublingual_exam",
+                "gentle_abdominal_palpation",
+                "hydration_and_perfusion_separate"
+              ]
+            },
+            {
+              "factId": "anorexia_duration",
+              "discoveryPaths": [
+                "onset_duration",
+                "intake_output"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_general_exam",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: стабильность и орально-абдоминальные находки клинического варианта."
+            },
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "optional_adds_information",
+              "result": "В лабораторных показателях крови: становится рекомендовано по возрасту или длительности или осмотру."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "subtle_feline_nausea",
+              "anorexia_duration"
+            ],
+            "confirmedDiagnosisRequires": [
+              "syndrome_only"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "abdominal_palpation"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_nausea_anorexia_workup",
+          "followUp": {
+            "timing": "Закрыть определенный контроль.",
+            "required": true,
+            "targets": [
+              "food_intake",
+              "nausea",
+              "hydration",
+              "urination",
+              "weight"
+            ]
+          },
+          "outcomes": {
+            "safe": "Малозаметная кошачья тошнота получает ранний контроль.",
+            "unsafe": "Ожидание многократной рвоты задерживает помощь и питание."
+          },
+          "ownerCommunication": [
+            "Я дам вам измеримый домашний журнал еды, воды, мочи и поведения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "handling_limited"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "inattentive",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_repeated_vomiting",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что кошка не ест, многократно рвёт и стала вялой.",
+          "historyAnswers": {
+            "episode_count": "По нашим наблюдениям, повторные эпизоды.",
+            "water_tolerance": "Дома мы заметили, что удерживает плохо.",
+            "intake_output": "Насколько мы можем судить, не ест; моча или стул уточнены.",
+            "diet_foreign_toxin_access": "Мы записали, что нить или игрушка или токсин целенаправленно проверены."
+          },
+          "examFindings": [
+            {
+              "factId": "feline_repeated_vomiting_risk",
+              "source": "physical_exam",
+              "finding": "Дегидратация или боль и системный статус зафиксированы в этом случае, не выводятся из числа эпизодов."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "feline_repeated_vomiting_risk",
+              "discoveryPaths": [
+                "general_exam",
+                "hydration_and_perfusion_separate",
+                "gentle_abdominal_palpation",
+                "oral_and_sublingual_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "recommended_changes_plan",
+              "result": "В лабораторных показателях крови: умеренная гемоконцентрация и электролитные изменения соответствуют повторной рвоте и обезвоживанию."
+            },
+            {
+              "id": "gi_urinalysis",
+              "classification": "recommended_changes_plan",
+              "result": "В анализе мочи: оценивает мочевой или данные об общем состоянии."
+            },
+            {
+              "id": "gi_abdominal_xray",
+              "classification": "recommended_changes_plan",
+              "result": "На рентгенограммах: по предмету или боли или продолжающейся рвоте."
+            },
+            {
+              "id": "gi_abdominal_ultrasound",
+              "classification": "recommended_changes_plan",
+              "result": "При ультразвуковом исследовании: по осмотру и доступности."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "feline_repeated_vomiting_risk"
+            ],
+            "confirmedDiagnosisRequires": [
+              "transferred_etiologic_family_after_workup"
+            ],
+            "unexcludedRisks": [
+              "linear_foreign_body",
+              "pancreatitis",
+              "renal_or_urinary_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "laboratory_or_safe_referral",
+              "imaging_or_safe_referral"
+            ]
+          },
+          "carePlanId": "feline_nausea_anorexia_workup",
+          "followUp": {
+            "timing": "Маршрут диагностики или поддержки в тот же день.",
+            "required": true,
+            "targets": [
+              "hydration",
+              "nutrition",
+              "labs",
+              "imaging",
+              "cause"
+            ]
+          },
+          "outcomes": {
+            "safe": "Поддержка не заменяет поиск причины.",
+            "unsafe": "Противорвотное средство маскирует продолжающуюся обструкцию или системную болезнь."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: необходимость одновременно контролировать симптомы и искать причину."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "weak",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "low_stress_or_referral",
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_systemic_disease_differential",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_or_urgent",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что пожилая кошка не ест и тошнит; есть похудение, жажда, изменения мочи, лихорадка или желтушность.",
+          "historyAnswers": {
+            "systemic_history": "По нашим наблюдениям, один или несколько системных сигналов.",
+            "onset_duration": "Дома мы заметили, что острое ухудшение на фоне более длительных изменений.",
+            "intake_output": "Насколько мы можем судить, аппетит, вода и моча изменены."
+          },
+          "examFindings": [
+            {
+              "factId": "systemic_disease_signals",
+              "source": "physical_exam",
+              "finding": "Потеря массы, дегидратация, желтушность или лихорадка или другие находки."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "systemic_disease_signals",
+              "discoveryPaths": [
+                "systemic_history",
+                "general_exam",
+                "hydration_and_perfusion_separate"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "required_for_safe_decision",
+              "result": "В лабораторных показателях крови: системные отклонения."
+            },
+            {
+              "id": "gi_urinalysis",
+              "classification": "required_for_safe_decision",
+              "result": "В анализе мочи: мочевой контекст."
+            },
+            {
+              "id": "gi_abdominal_ultrasound",
+              "classification": "recommended_changes_plan",
+              "result": "При ультразвуковом исследовании: целевая визуализация по результатам."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "systemic_disease_signals"
+            ],
+            "confirmedDiagnosisRequires": [
+              "transferred_renal_hepatic_endocrine_or_other_family"
+            ],
+            "mustNotAssume": [
+              "simple_gastritis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment"
+            ],
+            "conditional": [
+              "laboratory_or_safe_referral",
+              "imaging_or_safe_referral"
+            ]
+          },
+          "carePlanId": "feline_nausea_anorexia_workup",
+          "followUp": {
+            "timing": "Системное обследование или маршрут в тот же день.",
+            "required": true,
+            "targets": [
+              "labs",
+              "urine",
+              "imaging",
+              "nutrition",
+              "etiologic_transfer"
+            ]
+          },
+          "outcomes": {
+            "safe": "Синдром передаётся в соответствующее семейство после данных.",
+            "unsafe": "Ярлык «гастрит» задерживает системную болезнь."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: тошнота может быть проявлением болезни вне желудка."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "calm"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "budget_limited",
+              "overwhelmed"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "gi_acute_red_flag_abdomen",
+      "version": "2026.07.16.40",
+      "title": "Острая ЖКТ-жалоба с признаками хирургического риска",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Острая абдоминальная болезнь с хирургическим риском; первая клиника обязана распознать и маршрутизировать риск, даже если не подтверждает окончательную причину.",
+      "primaryDiagnosisId": "dx_red_flag_acute_abdomen",
+      "differentials": [
+        "dx_gi_obstruction",
+        "dx_linear_foreign_body",
+        "dx_gdv",
+        "dx_perforation_or_peritonitis",
+        "dx_pancreatitis"
+      ],
+      "planBundleId": "red_flag_abdomen_emergency",
+      "sourceIds": [
+        "merck_gi_obstruction",
+        "merck_esophageal_foreign_body",
+        "aaha_fluid_2024"
+      ],
+      "presentations": [
+        {
+          "id": "p1_foreign_body_access",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что есть доступ к игрушке или кости, повторная рвота, отказ от еды, боль и уменьшение стула.",
+          "historyAnswers": {
+            "diet_foreign_toxin_access": "По нашим наблюдениям, предмет мог быть проглочен.",
+            "episode_count": "Дома мы заметили, что повторная рвота.",
+            "intake_output": "Насколько мы можем судить, еда отсутствует, стул уменьшился или изменился.",
+            "pain_distension": "Мы записали, что есть боль."
+          },
+          "examFindings": [
+            {
+              "factId": "foreign_body_obstruction_risk",
+              "source": "physical_exam",
+              "finding": "Боль или масса или обезвоживание или другой риск; нормальная пальпация не исключает обструкцию."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "foreign_body_obstruction_risk",
+              "discoveryPaths": [
+                "diet_foreign_toxin_access",
+                "gentle_abdominal_palpation",
+                "hydration_and_perfusion_separate"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_abdominal_xray",
+              "classification": "required_for_safe_decision",
+              "result": "На рентгенограммах: целевая визуализация или направление."
+            },
+            {
+              "id": "gi_abdominal_ultrasound",
+              "classification": "recommended_changes_plan",
+              "result": "При ультразвуковом исследовании: по рентгену или доступности."
+            },
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "recommended_changes_plan",
+              "result": "В лабораторных показателях крови: перфузия, электролиты и системный риск."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "foreign_body_obstruction_risk"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_or_surgical_assessment"
+            ],
+            "unexcludedRisks": [
+              "perforation",
+              "ischemia",
+              "sepsis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "abdominal_palpation",
+              "analgesia"
+            ],
+            "conditional": [
+              "imaging_or_safe_referral"
+            ]
+          },
+          "carePlanId": "red_flag_abdomen_emergency",
+          "followUp": {
+            "timing": "Срочная визуализация или передача хирургического вмешательства.",
+            "required": true,
+            "targets": [
+              "imaging",
+              "perfusion",
+              "pain",
+              "passage_or_surgery"
+            ]
+          },
+          "outcomes": {
+            "safe": "Пациент своевременно получает визуализацию и хирургическое решение.",
+            "unsafe": "Диета и ожидание несколько дней позволяют обструкции прогрессировать."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: обезболивание не заменяет визуализацию и контроль прохождения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "pain_defensive",
+              "weak",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "analgesia_and_low_stress",
+            "ownerModifiers": [
+              "guilty",
+              "budget_limited",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_cat_linear_foreign_body",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_or_urgent",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что кошка могла проглотить нить; под языком виден линейный материал, есть боль или рвота.",
+          "historyAnswers": {
+            "diet_foreign_toxin_access": "По нашим наблюдениям, доступ к нити или ленте или пряже подтверждён или вероятен.",
+            "home_treatment": "Дома мы заметили, что нить не тянули либо опасная попытка зафиксирована.",
+            "episode_count": "Насколько мы можем судить, рвота или анорексия тяжести."
+          },
+          "examFindings": [
+            {
+              "factId": "sublingual_linear_material",
+              "source": "physical_exam",
+              "finding": "Линейный материал у основания языка; не тянуть."
+            },
+            {
+              "factId": "linear_obstruction_risk",
+              "source": "physical_exam",
+              "finding": "Боль или пликация или обструктивный риск требует срочного хирургического маршрута."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "sublingual_linear_material",
+              "discoveryPaths": [
+                "oral_and_sublingual_exam"
+              ]
+            },
+            {
+              "factId": "linear_obstruction_risk",
+              "discoveryPaths": [
+                "gentle_abdominal_palpation",
+                "abdominal_xray",
+                "abdominal_ultrasound"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_abdominal_xray",
+              "classification": "required_for_safe_decision",
+              "result": "На рентгенограммах: ищет обструктивный картина или пликацию; не тянуть нить."
+            },
+            {
+              "id": "gi_abdominal_ultrasound",
+              "classification": "recommended_changes_plan",
+              "result": "При ультразвуковом исследовании: дополняет оценку жизнеспособности или пликации."
+            },
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "recommended_changes_plan",
+              "result": "В лабораторных показателях крови: предоперационный или данные об общем состоянии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "sublingual_linear_material",
+              "linear_obstruction_risk"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_and_surgical_assessment"
+            ],
+            "mustNotAssume": [
+              "safe_to_pull_or_cut_without_plan"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "analgesia"
+            ],
+            "conditional": [
+              "imaging_or_safe_referral",
+              "emergency_stabilization_or_referral"
+            ]
+          },
+          "carePlanId": "red_flag_abdomen_emergency",
+          "followUp": {
+            "timing": "Немедленная хирургическая передача.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "imaging",
+              "surgery",
+              "perforation_risk"
+            ]
+          },
+          "outcomes": {
+            "safe": "Нить не вытягивается, хирургический маршрут не задерживается.",
+            "unsafe": "Вытягивание может прорезать кишечник и вызвать перфорацию."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: прямо запретить тянуть видимую нить и объяснить причину."
+          ],
+          "compatibility": {
+            "temperament": [
+              "pain_defensive",
+              "weak",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "minimal_manipulation",
+            "ownerModifiers": [
+              "panicked",
+              "guilty",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_distension_nonproductive_retching",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что быстро увеличивается живот, беспокойство, слюнотечение и безрезультатные рвотные позывы.",
+          "historyAnswers": {
+            "onset_duration": "По нашим наблюдениям, острое быстрое начало.",
+            "vomiting_or_regurgitation": "Дома мы заметили, что безрезультатные позывы, не обычная рвота.",
+            "pain_distension": "Насколько мы можем судить, быстрое вздутие и боль."
+          },
+          "examFindings": [
+            {
+              "factId": "gdv_emergency_pattern",
+              "source": "physical_exam",
+              "finding": "Вздутие, боль и ухудшающаяся перфузия у совместимого пациента."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "gdv_emergency_pattern",
+              "discoveryPaths": [
+                "mental_status_and_vitals",
+                "hydration_and_perfusion_separate",
+                "gentle_abdominal_palpation"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "gi_abdominal_xray",
+              "classification": "required_for_safe_decision_without_harmful_delay",
+              "result": "На рентгенограммах: срочная визуализация, если не задерживает хирургический маршрут."
+            },
+            {
+              "id": "gi_cbc_biochemistry_electrolytes",
+              "classification": "recommended_changes_plan",
+              "result": "В лабораторных показателях крови: параллельно стабилизации, не перед ней."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "gdv_emergency_pattern"
+            ],
+            "confirmedDiagnosisRequires": [
+              "emergency_imaging_or_surgical_assessment"
+            ],
+            "unexcludedRisks": [
+              "shock",
+              "gastric_necrosis",
+              "arrhythmia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "analgesia"
+            ],
+            "conditional": [
+              "emergency_stabilization_or_referral",
+              "imaging_or_safe_referral"
+            ]
+          },
+          "carePlanId": "red_flag_abdomen_emergency",
+          "followUp": {
+            "timing": "Маршрут неотложной неотложной хирургической помощи.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "decompression_or_surgical_plan",
+              "imaging",
+              "handoff"
+            ]
+          },
+          "outcomes": {
+            "safe": "Стабилизация и хирургический маршрут начинаются немедленно.",
+            "unsafe": "Очередь, анализы или наблюдение задерживают лечение жизнеугрожающего состояния."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: кратко сообщить подозрение на жизнеугрожающее вздутие и немедленный маршрут."
+          ],
+          "compatibility": {
+            "temperament": [
+              "distressed",
+              "weak",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "emergency_minimal_delay",
+            "ownerModifiers": [
+              "panicked",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "wsava_acute_diarrhea_2025",
+      "title": "WSAVA: Five Steps of Canine Acute Diarrhea Treatment",
+      "url": "https://wsava.org/wp-content/uploads/2025/02/Canine-acute-diarrhea_V11.pdf",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "severity_by_systemic_signs",
+        "mild_outpatient_route",
+        "fluid_route_by_grade"
+      ]
+    },
+    {
+      "id": "enovat_antimicrobial_diarrhea_2024",
+      "title": "ENOVAT/WSAVA Guidelines for Antimicrobial Use in Canine Acute Diarrhea",
+      "url": "https://wsava.org/wp-content/uploads/2024/09/ENOVAT-GUIDELINES-FOR-ANTIMICROBIAL-USE-IN-CANINE-ACUTE-DIARRHEA.pdf",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "no_routine_antimicrobial_for_mild_or_moderate_diarrhea",
+        "systemic_indications"
+      ]
+    },
+    {
+      "id": "aaha_fluid_2024",
+      "title": "2024 AAHA Fluid Therapy Guidelines for Dogs and Cats",
+      "url": "https://www.aaha.org/resources/2024-aaha-fluid-therapy-guidelines-for-dogs-and-cats/",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "dehydration_vs_hypovolemia",
+        "iv_or_io_for_hypovolemia",
+        "individualized_rates",
+        "serial_monitoring",
+        "avoid_overload"
+      ]
+    },
+    {
+      "id": "merck_gastritis",
+      "title": "Merck Veterinary Manual: Gastritis in Small Animals",
+      "url": "https://www.merckvetmanual.com/digestive-system/diseases-of-the-stomach-in-small-animals/gastritis-in-small-animals",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "acute_vomiting_assessment",
+        "dietary_or_toxic_exposure",
+        "support_and_red_flags"
+      ]
+    },
+    {
+      "id": "merck_ahds",
+      "title": "Merck Veterinary Manual: Acute Hemorrhagic Diarrhea Syndrome in Dogs",
+      "url": "https://www.merckvetmanual.com/digestive-system/diseases-of-the-large-intestine-in-small-animals/acute-hemorrhagic-diarrhea-syndrome-in-dogs",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "ahds_pattern",
+        "hemoconcentration",
+        "rapid_hypovolemia",
+        "prompt_iv_fluids",
+        "antimicrobial_indications"
+      ]
+    },
+    {
+      "id": "merck_gi_obstruction",
+      "title": "Merck Veterinary Manual: Gastrointestinal Obstruction in Small Animals",
+      "url": "https://www.merckvetmanual.com/digestive-system/surgical-problems-of-the-gastrointestinal-tract-in-small-animals/gastrointestinal-obstruction-in-small-animals",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "obstruction_emergency",
+        "imaging",
+        "linear_foreign_body",
+        "never_pull_sublingual_string",
+        "surgical_route"
+      ]
+    },
+    {
+      "id": "merck_esophageal_foreign_body",
+      "title": "Merck Veterinary Manual: Esophageal Foreign Bodies in Small Animals",
+      "url": "https://www.merckvetmanual.com/digestive-system/diseases-of-the-esophagus-in-small-animals/esophageal-foreign-bodies-in-small-animals",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "regurgitation_and_esophageal_route",
+        "aspiration_risk",
+        "imaging_or_endoscopy"
+      ]
+    },
+    {
+      "id": "merck_digestive_intro",
+      "title": "Merck Veterinary Manual: The Digestive System in Animals",
+      "url": "https://www.merckvetmanual.com/digestive-system/digestive-system-introduction/the-digestive-system-in-animals",
+      "accessedAt": "2026-07-15",
+      "supports": [
+        "vomiting_vs_regurgitation",
+        "syndrome_based_reasoning"
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "rabbit_or_other_exotic_is_not_eligible",
+    "vomiting_and_regurgitation_have_distinct_mechanisms",
+    "uncomplicated_branch_has_no_pain_hypovolemia_water_intolerance_or_major_bleeding",
+    "surgical_risk_never_has_diet_and_observe_only",
+    "linear_foreign_body_is_never_pulled",
+    "suspected_pancreatitis_obstruction_infection_or_gastritis_is_not_marked_confirmed_without_data",
+    "antimicrobial_is_not_automatic_for_acute_diarrhea",
+    "hypovolemia_is_not_treated_subcutaneously",
+    "fluid_plan_is_individualized_and_monitored",
+    "all_critical_facts_have_available_discovery_paths",
+    "required_unavailable_test_has_safe_referral"
+  ]
+}
