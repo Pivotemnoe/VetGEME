@@ -43,6 +43,7 @@
   const ACTIVATION_MANIFEST_SHA256 = "fd056331fa894f9689bbd794f4ece12fb964ebb3e69b95e907282811ae7ad3bd";
   const PACKAGE_ID = "pet-clinic-local-full-activation";
   const PACKAGE_VERSION = "2026.07.17.1";
+  const DAY_PLAN_ADAPTER_VERSION = "medical-40-day-plan-v11.1";
   const EXPECTED_COUNTS = Object.freeze({ families: 39, variants: 215, presentations: 645 });
   const SUPPORT_OPTIONS = Object.freeze({
     packId: "tier-01-v2",
@@ -53,6 +54,19 @@
 
   function clone(value) {
     return value === undefined ? undefined : JSON.parse(JSON.stringify(value));
+  }
+
+  function activationDayPlan(sourcePlan, cases) {
+    const caseIds = new Set(cases.map((item) => item.id));
+    let removedLegacyUrgentPoolIds = 0;
+    const dayPlan = clone(sourcePlan);
+    dayPlan.days = dayPlan.days.map((day) => {
+      if (!Array.isArray(day.urgentPool)) return day;
+      const urgentPool = day.urgentPool.filter((caseId) => caseIds.has(caseId));
+      removedLegacyUrgentPoolIds += day.urgentPool.length - urgentPool.length;
+      return { ...day, urgentPool };
+    });
+    return { dayPlan, removedLegacyUrgentPoolIds };
   }
 
   function assert(condition, message) {
@@ -450,7 +464,8 @@
       p9CrosswalkDocument.sha256,
       p9ArtSourceManifestDocument.sha256,
       p9RuntimeArtManifestDocument.sha256,
-      visualBundle.version
+      visualBundle.version,
+      DAY_PLAN_ADAPTER_VERSION
     ].join("|")));
     const index = buildIndex(families);
     const modeId = options.modeId || "campaign";
@@ -471,6 +486,7 @@
       })
     )));
     assert(new Set(cases.map((item) => item.id)).size === cases.length, "duplicate runtime medical identity");
+    const adaptedDayPlan = activationDayPlan(supportCatalog.dayPlan, cases);
     const sequenceIds = trainingCaseIds(trainingDocument.value);
     sequenceIds.forEach((id) => assert(cases.some((item) => item.id === id), `unknown training source ${id}`));
     sequenceIds.forEach((id) => assert(cases.find((item) => item.id === id)?.generationEligible,
@@ -505,6 +521,7 @@
     const catalog = visualLoader.applyCatalog(visualBundle, economyLoader.applyCatalog(economyBundle,
       p5Api.applyCatalog(p5Bundle, operationalApi.applyCatalog(operationalBundle, {
       ...supportCatalog,
+      dayPlan: adaptedDayPlan.dayPlan,
       manifest: activationManifest(medicalDocument.sha256, runtimeContentHash, cases),
       cases,
       casesById: Object.fromEntries(cases.map((item) => [item.id, item])),
@@ -532,6 +549,7 @@
         economy: clone(economyBundle.audit),
         visual: clone(visualBundle.audit),
         unresolvedDynamicPresentations: cases.filter((item) => !item.generationEligible).length,
+        removedLegacyUrgentPoolIds: adaptedDayPlan.removedLegacyUrgentPoolIds,
         testerPool: "medical_2026.07.16.40"
       },
       activationIndex: index,
@@ -725,6 +743,7 @@
     ACTIVATION_MANIFEST_SHA256,
     PACKAGE_ID,
     PACKAGE_VERSION,
+    DAY_PLAN_ADAPTER_VERSION,
     EXPECTED_COUNTS,
     internalCaseId,
     loadFromFetch,

@@ -51,6 +51,8 @@ function generatedDay(catalog, seed, storage = generatorApi.createMemoryStorage(
   assert.equal(campaign.p5Activation.audit.affectedTemplates, 0);
   assert.equal(campaign.p5Activation.audit.predicateGaps, 0);
   assert.equal(campaign.activationAudit.unresolvedDynamicPresentations, 2);
+  assert.equal(campaign.activationAudit.removedLegacyUrgentPoolIds, 4);
+  assert.deepEqual(campaign.dayPlan.days.find((day) => day.day === 4).urgentPool, []);
   assert.equal(campaign.operationalActivation.audit.exactUrgencyValues, 206);
   assert.equal(campaign.operationalActivation.audit.exactClassificationValues, 875);
   assert.equal(campaign.operationalActivation.audit.investigationUsages, 1864);

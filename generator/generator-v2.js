@@ -769,7 +769,7 @@
       treatmentCoverage: 0,
       family: caseData.family,
       severity: caseData.severity,
-      urgency: caseIsUrgent(caseData) ? "urgent" : caseData.severity,
+      urgency: caseData.severity,
       operationalUrgencyBand: caseData.operationalUrgencyBand,
       patient: identity,
       owner,
