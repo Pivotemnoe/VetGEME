@@ -7,7 +7,7 @@
 Исходный HEAD перед activation-slice: `e6ee42fba381d52c80197eb134900d21fd6dce7d`.
 
 Проверенный implementation HEAD перед последней редакцией этого отчёта:
-`8e28d3e294c37ce3fdd57e3b58e7f0f988907160`.
+`202e356bb705b4049a29faadff4246b387977ca5`.
 
 ## Что теперь работает
 
@@ -52,7 +52,11 @@
 11. `00543272318fcc38523092050055bc237447db72` — Docker browser gate переведён
     со старого v10-контракта на полный v11-сценарий с CSP и same-origin контролем;
 12. `8e28d3e294c37ce3fdd57e3b58e7f0f988907160` — Docker shipping inventory
-    дополнен всеми девятью новыми v11 runtime-модулями (276 точных файлов).
+    дополнен всеми девятью новыми v11 runtime-модулями;
+13. `202e356bb705b4049a29faadff4246b387977ca5` — в Docker shipping добавлены
+    immutable activation JSON, P5/P6/P9 contracts, economy approval и 14 новых
+    runtime art assets; nginx открывает только утверждённый versioned activation
+    каталог, а точный inventory расширен до 311 файлов.
 
 Каждый коммит отправлен в `origin/codex/tier-01-v2-integration`.
 
@@ -96,9 +100,8 @@ Review-only метаданные исходных пакетов не переп
 - Content registry, medical catalog, capability registry, tier-01 и tier-01-v2
   validators — PASS.
 - `git diff --check` — PASS.
-- Финальный Docker prebuild сначала fail-closed обнаружил отсутствие девяти v11
-  модулей в shipping allowlist. После отдельного исправления exact inventory
-  содержит 276 файлов; полный gate повторяется на финальном HEAD перед сборкой.
+- Docker prebuild: PASS — 191 JavaScript-файл, 43 validation/test-команды и 311
+  точных runtime-файлов.
 
 ### Browser и visual matrix
 
@@ -124,6 +127,33 @@ Review-only метаданные исходных пакетов не переп
 актуальная save/reload-граница проверены activation tests и новым объединённым
 browser gate.
 
+### Docker runtime
+
+- Первая разрешённая сборка исходного HEAD `a5dd9dc6f823d713bb79b8655278f465de0e9fe8`
+  fail-closed выявила shipping-дефект: меню загружалось, но запуск кампании получал
+  HTTP 404 для `ACTIVATION_MANIFEST.json`. Этот образ не принят как запускаемый
+  результат и заменён отдельным исправлением `202e356`.
+- Исправленный образ собран из чистого `git archive`, без пользовательских
+  untracked-файлов. Build-context SHA-256:
+  `a54944e0627b595fc5e82248f93798666ba23242eae1a3c9e2812dc6a3b53ec3`.
+- Image validator: PASS — OCI revision и context labels точны, `BUILD_DIRTY=false`,
+  311/311 файлов и SHA-256 совпадают; контейнер работает от `101:101`, rootfs
+  read-only, capabilities удалены, `no-new-privileges`, лимиты CPU/RAM/PID
+  соблюдены и публикация ограничена `127.0.0.1:5185`.
+- HTTP/security validator: PASS — activation/economy/P5/P9/art доступны только по
+  разрешённым versioned путям; review-only inputs, handoff, scripts и авторские
+  каталоги возвращают 404; небезопасные HTTP-методы отклоняются.
+- Docker browser smoke: PASS — четыре режима, reload, mode-only reset,
+  39/215/645 + архивные 30, room reservations, atomic GDV handoff, economy,
+  follow-up, P8 emergency boundaries и четыре viewport; 3 765 same-origin
+  запросов, 0 CSP violations и 0 browser issues.
+- Независимая видимая проверка: новая кампания открывает день 1/30, runtime имеет
+  `data-app-status=ready`, горизонтальный и вертикальный overflow равны нулю,
+  новая вкладка консоли содержит 0 ошибок.
+- Отчёт не входит в `DOCKER_BUILD_INPUT_PATHS`. После report-only коммита образ
+  пересобирается с тем же runtime-context, но с OCI revision точного итогового
+  HEAD, повторно проходит image/HTTP/browser checks и остаётся запущенным.
+
 ## Независимый P0/P1-review
 
 - P0: 0 открытых замечаний.
@@ -146,6 +176,5 @@ browser gate.
 - Четыре поздних срочных представления и один менее частый срочный случай не попали
   в фиксированную случайную выборку 10 000 дней, но прошли прямое открытие в
   тестировщике, exact urgency validation и полный author validation.
-- Docker image/http/browser gate и точный финальный контейнер выполняются после
-  коммита этого отчёта, чтобы образ содержал сам отчёт и соответствовал финальному
-  HEAD.
+- Открытых Docker-блокеров после проверки запуска кампании нет. Контейнер
+  предназначен только для локального ручного тестирования на loopback-интерфейсе.
