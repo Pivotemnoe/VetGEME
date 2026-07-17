@@ -14,10 +14,13 @@
     return MODES.includes(saved) ? saved : "current";
   }
 
-  function exposeMode(mode) {
+  function exposeMode(mode, gameModeId = null) {
     window.PET_CLINIC_GENERATOR_MODE = Object.freeze({
       mode,
-      gameSaveKey: window.PET_CLINIC_SAVE_NAMESPACES.gameSaveKey(mode),
+      gameSaveKey: gameModeId && window.PET_CLINIC_SAVE_MANAGER_V11
+        ? window.PET_CLINIC_SAVE_MANAGER_V11.modeKey(gameModeId)
+        : window.PET_CLINIC_SAVE_NAMESPACES.gameSaveKey(mode),
+      gameModeId,
       modes: MODES.slice(),
       isCurrent: mode === "current",
       isLegacy: mode === "legacy-v1",
@@ -43,7 +46,7 @@
     };
   }
 
-  function loadTier01V2() {
+  function loadTier01V2(storage = window.localStorage) {
     return window.PET_CLINIC_CONTENT_V2
       .loadFromFetch({
         packId: "tier-01-v2",
@@ -56,7 +59,7 @@
           return {
             mode: "tier-01-v2",
             catalog,
-            generator: window.PET_CLINIC_GENERATOR_V2.createGenerator({ catalog })
+            generator: window.PET_CLINIC_GENERATOR_V2.createGenerator({ catalog, storage })
           };
         } catch (error) {
           return { mode: "tier-01-v2", catalog, generator: null, initializationError: error };
@@ -82,9 +85,15 @@
 
   window.PET_CLINIC_GENERATOR_READY = gameModeSelection.then((selection) => {
     const mode = MODES.includes(selection.runtimeGeneratorMode) ? selection.runtimeGeneratorMode : "tier-01-v2";
-    localStorage.setItem(STORAGE_KEY, mode);
-    exposeMode(mode);
-    if (mode === "tier-01-v2") return loadTier01V2();
+    const isV11Mode = selection.source !== "legacy-test-route";
+    if (!isV11Mode) localStorage.setItem(STORAGE_KEY, mode);
+    exposeMode(mode, isV11Mode ? selection.modeId : null);
+    if (mode === "tier-01-v2") {
+      const storage = isV11Mode
+        ? window.PET_CLINIC_SAVE_MANAGER_V11.generatorStorage(localStorage, selection.modeId)
+        : localStorage;
+      return loadTier01V2(storage);
+    }
     if (mode === "legacy-v1") return loadLegacyV1();
     return { mode: "current", catalog: null, generator: null };
   });

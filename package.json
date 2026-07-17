@@ -69,6 +69,7 @@
     "test:new-game-reset-browser": "node scripts/playtest-new-game-reset.js",
     "test:generator-mode-fail-closed": "node scripts/test-generator-mode-fail-closed.js",
     "test:game-modes:v11": "node scripts/test-game-modes-v11.js",
+    "test:save-manager:v11": "node scripts/test-save-manager-v11.js",
     "build:static-dist": "node scripts/build-static-dist.mjs",
     "test:docker:prebuild": "node scripts/test-docker-prebuild.mjs",
     "docker:build": "node scripts/docker-build.mjs",

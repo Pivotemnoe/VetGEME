@@ -91,11 +91,16 @@ async function main() {
   assert.match(indexSource, /systems\/identity-runtime-v4\.js\?v=20260715a/u);
   assert.match(indexSource, /generator\/atomic-save-migration\.js\?v=20260715a/u);
   assert.match(indexSource, /generator\/content-loader-v2\.js\?v=20260715c/u);
-  assert.match(indexSource, /generator\/generator-mode\.js\?v=20260717a/u);
-  assert.match(indexSource, /systems\/game-mode-v11\.js\?v=20260717a/u);
+  assert.match(indexSource, /generator\/generator-mode\.js\?v=20260717b/u);
+  assert.match(indexSource, /systems\/game-mode-v11\.js\?v=20260717b/u);
+  assert.match(indexSource, /systems\/save-manager-v11\.js\?v=20260717a/u);
   assert.ok(
     indexSource.indexOf("systems/game-mode-v11.js") < indexSource.indexOf("generator/generator-mode.js"),
     "game mode selection must load before generator mode initialization"
+  );
+  assert.ok(
+    indexSource.indexOf("systems/save-manager-v11.js") < indexSource.indexOf("systems/game-mode-v11.js"),
+    "v11 save manager must load before game mode selection"
   );
   assert.ok(
     indexSource.indexOf("generator/medical-catalog-v2.js") < indexSource.indexOf("generator/content-loader-v2.js"),

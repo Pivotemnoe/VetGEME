@@ -8,6 +8,8 @@
   "use strict";
 
   const SCHEMA_VERSION = 11;
+  const saveManager = window.PET_CLINIC_SAVE_MANAGER_V11
+    || (typeof require === "function" ? require("./save-manager-v11.js") : null);
   const MODE_IDS = Object.freeze(["campaign", "training", "endless", "tester"]);
   const MODE_DEFINITIONS = Object.freeze({
     campaign: Object.freeze({
@@ -57,7 +59,8 @@
 
   function storageHasSave(modeId) {
     try {
-      return Boolean(window.localStorage?.getItem(modeDefinition(modeId).saveKey));
+      const key = saveManager?.modeKey(modeId) || modeDefinition(modeId).saveKey;
+      return Boolean(window.localStorage?.getItem(key));
     } catch (error) {
       console.warn("Не удалось проверить сохранение режима.", error);
       return false;
@@ -103,6 +106,14 @@
     if (!isModeId(modeId)) throw new RangeError(`Unknown Pet Clinic mode: ${modeId}`);
     if (!['new', 'continue'].includes(launchAction)) throw new RangeError(`Unknown launch action: ${launchAction}`);
 
+    if (launchAction === "new" && storageHasSave(modeId)) {
+      const confirmed = typeof window.confirm !== "function" || window.confirm(
+        `Начать заново в режиме «${modeDefinition(modeId).title}»? Сохранение только этого режима будет удалено.`
+      );
+      if (!confirmed) return null;
+      saveManager?.clearMode(window.localStorage, modeId);
+    }
+
     selected = Object.freeze({
       schemaVersion: SCHEMA_VERSION,
       modeId,
@@ -113,6 +124,11 @@
     });
 
     updateRoute(selected);
+    try {
+      saveManager?.writeSettings(window.localStorage, { lastModeId: modeId });
+    } catch (error) {
+      console.warn("Не удалось сохранить выбранный режим.", error);
+    }
     updateLoadingCopy(selected);
     if (window.document?.documentElement) {
       window.document.documentElement.dataset.gameMode = modeId;
@@ -159,15 +175,30 @@
       if (openDialog) setDialog(openDialog.dataset.menuDialog, true);
       const closeDialog = event.target.closest("[data-menu-dialog-close]");
       if (closeDialog) setDialog(closeDialog.dataset.menuDialogClose, false);
+      if (event.target.closest("[data-legacy-clear]")) {
+        try {
+          saveManager?.clearLegacy(window.localStorage);
+          setDialog("legacySaveNotice", false);
+          refreshContinueButtons();
+        } catch (error) {
+          console.error("Не удалось удалить старые сохранения.", error);
+        }
+      }
+      if (event.target.closest("[data-legacy-later]")) setDialog("legacySaveNotice", false);
     });
 
     window.document.addEventListener("keydown", (event) => {
       if (event.key !== "Escape") return;
       setDialog("startMenuSettings", false);
       setDialog("startMenuAbout", false);
+      setDialog("legacySaveNotice", false);
     });
 
-    menu.querySelector("[data-mode-launch]")?.focus();
+    if (saveManager?.legacyCleanupRequired(window.localStorage)) {
+      setDialog("legacySaveNotice", true);
+    } else {
+      menu.querySelector("[data-mode-launch]")?.focus();
+    }
   }
 
   function initialize() {

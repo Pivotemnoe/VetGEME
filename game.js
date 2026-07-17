@@ -67,6 +67,12 @@
     return generatorRuntime.mode === "tier-01-v2";
   }
 
+  function usesV11Save() {
+    return Boolean(activeGameMode?.modeId
+      && activeGameMode.source !== "legacy-test-route"
+      && window.PET_CLINIC_SAVE_MANAGER_V11);
+  }
+
   const speciesLabels = {
     dog: "собака",
     cat: "кошка",
@@ -915,10 +921,22 @@
         ensureP6RuntimeState();
         ensureP7RuntimeState();
       }
-      window.PET_CLINIC_GAME_STATE_SAVE.save(window.localStorage, generatorRuntime.mode, state, {
+      const saveOptions = {
         catalog: generatorRuntime.catalog,
-        campaignIdentity: isTier01V2() ? tierCampaignIdentity() : undefined
-      });
+        campaignIdentity: isTier01V2() ? tierCampaignIdentity() : undefined,
+        snapshotApi: window.PET_CLINIC_GAME_STATE_SAVE
+      };
+      if (usesV11Save()) {
+        window.PET_CLINIC_SAVE_MANAGER_V11.saveGame(
+          window.localStorage,
+          activeGameMode.modeId,
+          generatorRuntime.mode,
+          state,
+          saveOptions
+        );
+      } else {
+        window.PET_CLINIC_GAME_STATE_SAVE.save(window.localStorage, generatorRuntime.mode, state, saveOptions);
+      }
       lastGameSaveAt = now;
     } catch (error) {
       blockGameForSaveError(error);
@@ -936,10 +954,19 @@
   function restoreGameState() {
     if (!window.PET_CLINIC_GAME_STATE_SAVE || !window.localStorage) return false;
     try {
-      const snapshot = window.PET_CLINIC_GAME_STATE_SAVE.load(window.localStorage, generatorRuntime.mode, {
+      const loadOptions = {
         catalog: generatorRuntime.catalog,
-        campaignIdentity: isTier01V2() ? tierCampaignIdentity() : undefined
-      });
+        campaignIdentity: isTier01V2() ? tierCampaignIdentity() : undefined,
+        snapshotApi: window.PET_CLINIC_GAME_STATE_SAVE
+      };
+      const snapshot = usesV11Save()
+        ? window.PET_CLINIC_SAVE_MANAGER_V11.loadGame(
+          window.localStorage,
+          activeGameMode.modeId,
+          generatorRuntime.mode,
+          loadOptions
+        )
+        : window.PET_CLINIC_GAME_STATE_SAVE.load(window.localStorage, generatorRuntime.mode, loadOptions);
       if (!snapshot) return "empty";
       Object.assign(state, snapshot.state);
       state.appointments = Array.isArray(state.appointments) ? state.appointments : [];
@@ -4209,17 +4236,20 @@
 
   function startNewGame() {
     const mode = generatorRuntime.mode;
-    const modeLabels = {
-      current: "текущий режим",
-      "legacy-v1": "контрольный режим legacy-v1",
-      "tier-01-v2": "режим tier-01-v2"
-    };
+    const modeLabel = activeGameMode?.modeId
+      ? window.PET_CLINIC_GAME_MODE_V11.modeDefinition(activeGameMode.modeId).title
+      : mode;
     const confirmed = window.confirm(
-      `Начать новую игру в режиме «${modeLabels[mode] || mode}»? Текущая кампания этого режима будет удалена.`
+      `Начать новую игру в режиме «${modeLabel}»? Текущее сохранение только этого режима будет удалено.`
     );
     if (!confirmed) return;
 
     try {
+      if (usesV11Save()) {
+        window.PET_CLINIC_SAVE_MANAGER_V11.clearMode(window.localStorage, activeGameMode.modeId);
+        window.location.reload();
+        return;
+      }
       const gameSaveKey = window.PET_CLINIC_GENERATOR_MODE?.gameSaveKey
         || window.PET_CLINIC_SAVE_NAMESPACES?.gameSaveKey(mode);
       if (gameSaveKey) window.localStorage.removeItem(gameSaveKey);
@@ -6113,6 +6143,7 @@
       setLog(restoreStatus === "blocked"
         ? "Несовместимое сохранение этого режима не загружено и не перезаписано. Начата временная новая сессия."
         : "Выберите врача и режим работы перед открытием клиники.");
+      if (restoreStatus === "empty") persistGameState(true);
     }
 
     await prepareVisualRenderer();

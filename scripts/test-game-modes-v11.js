@@ -30,6 +30,7 @@ for (const modeId of gameModes.modeIds) {
 
 assert.ok(indexSource.indexOf("systems/game-mode-v11.js") < indexSource.indexOf("generator/generator-mode.js"));
 assert.ok(indexSource.indexOf("systems/game-mode-v11.js") < indexSource.indexOf("game.js"));
+assert.ok(indexSource.indexOf("systems/save-manager-v11.js") < indexSource.indexOf("systems/game-mode-v11.js"));
 assert.match(gameSource, /activeGameMode = await window\.PET_CLINIC_GAME_MODE_V11\.requireSelection\(\);/u);
 assert.ok(
   gameSource.indexOf("activeGameMode = await window.PET_CLINIC_GAME_MODE_V11.requireSelection();")

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pet Clinic: ветеринарная клиника</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eaf6ff'/%3E%3Cpath d='M13 5h6v22h-6zM5 13h22v6H5z' fill='%231976d2'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="styles.css?v=20260717a">
+    <link rel="stylesheet" href="styles.css?v=20260717b">
   </head>
   <body>
     <section class="start-menu" id="startMenu" aria-labelledby="startMenuTitle" hidden>
@@ -48,6 +48,13 @@
       </section>
       <section class="start-menu-dialog" id="startMenuAbout" role="dialog" aria-modal="true" aria-labelledby="startMenuAboutTitle" hidden>
         <div><h2 id="startMenuAboutTitle">О сборке</h2><p>Это локальная сборка для ручной проверки владельцем проекта. Она не является публичным релизом или заявлением о внешней ветеринарной сертификации.</p><button class="primary" data-menu-dialog-close="startMenuAbout" type="button">Закрыть</button></div>
+      </section>
+      <section class="start-menu-dialog" id="legacySaveNotice" role="dialog" aria-modal="true" aria-labelledby="legacySaveNoticeTitle" hidden>
+        <div>
+          <h2 id="legacySaveNoticeTitle">Обновление сохранений</h2>
+          <p>В игре появилась новая медицинская база и новые режимы. Старые сохранения с этой версией несовместимы и будут удалены.</p>
+          <div class="dialog-actions"><button class="primary" data-legacy-clear type="button">Понятно, удалить старые сохранения</button><button data-legacy-later type="button">Не сейчас</button></div>
+        </div>
       </section>
     </section>
     <div class="app-loading-veil" id="appLoadingVeil" role="status" aria-live="polite" hidden>
@@ -302,7 +309,8 @@
         <button class="settings-button" id="developerBtn" type="button" title="Настройки" aria-label="Открыть настройки">⚙</button>
       </section>
     </main>
-    <script src="systems/game-mode-v11.js?v=20260717a" defer></script>
+    <script src="systems/save-manager-v11.js?v=20260717a" defer></script>
+    <script src="systems/game-mode-v11.js?v=20260717b" defer></script>
     <script src="campaign.js?v=20260712k" defer></script>
     <script src="generator/save-namespaces.js?v=20260712a" defer></script>
     <script src="generator/atomic-save-migration.js?v=20260715a" defer></script>
@@ -332,8 +340,8 @@
     <script src="generator/generator-v2.js?v=20260715a" defer></script>
     <script src="generator/game-adapter-v2.js?v=20260714c" defer></script>
     <script src="generator/multi-diagnosis-engine-v2.js?v=20260713a" defer></script>
-    <script src="generator/generator-mode.js?v=20260717a" defer></script>
+    <script src="generator/generator-mode.js?v=20260717b" defer></script>
     <script src="visual/clinic-renderer-v2.js?v=20260715d" defer></script>
-    <script src="game.js?v=20260717a" defer></script>
+    <script src="game.js?v=20260717b" defer></script>
   </body>
 </html>

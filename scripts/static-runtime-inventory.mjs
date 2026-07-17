@@ -5,9 +5,9 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const EXPECTED_RUNTIME_FILE_COUNT = 202;
+export const EXPECTED_RUNTIME_FILE_COUNT = 203;
 export const EXPECTED_RUNTIME_GROUP_COUNTS = Object.freeze({
-  base: 37,
+  base: 38,
   canonicalContent: 100,
   visual: 65,
 });
@@ -49,6 +49,7 @@ const EXPECTED_BASE_RUNTIME_FILES = Object.freeze([
   "systems/reputation-runtime-v6.js",
   "systems/resource-scheduler-v5.js",
   "systems/research-orders-v3.js",
+  "systems/save-manager-v11.js",
   "visual/clinic-renderer-v2.js",
 ]);
 

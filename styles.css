@@ -142,6 +142,7 @@ body {
 .start-menu-dialog > div { width: min(500px, 100%); padding: 26px; border: 1px solid #78b8cd; border-radius: 14px; background: #102e40; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45); }
 .start-menu-dialog h2 { margin-top: 0; }
 .start-menu-dialog p { color: #c9dce6; line-height: 1.5; }
+.start-menu-dialog .dialog-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
 
 @media (max-width: 760px) {
   .start-menu { align-items: start; padding: 96px 16px 24px; }
