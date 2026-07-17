@@ -36,6 +36,21 @@
     return Math.max(min, Math.min(max, Number(value) || 0));
   }
 
+  function dayCount(value) {
+    const amount = Math.max(0, Math.round(Number(value) || 0));
+    const lastTwo = amount % 100;
+    const last = amount % 10;
+    const word = lastTwo >= 11 && lastTwo <= 14
+      ? "дней"
+      : last === 1 ? "день" : last >= 2 && last <= 4 ? "дня" : "дней";
+    return `${amount} ${word}`;
+  }
+
+  function sentence(value) {
+    const text = String(value || "").trim();
+    return /[.!?…]$/u.test(text) ? text : `${text}.`;
+  }
+
   function hashString(value) {
     let hash = 2166136261;
     for (const character of String(value)) {
@@ -236,13 +251,13 @@
     if (!care || !course) return [];
     const next = course.appointments.find((item) => item.status === "confirmed");
     return [
-      course.durationDays ? `Лечение: ${course.durationDays} игровых дней.` : "Лечение: длительность определяется выбранным планом.",
+      course.durationDays ? `Лечение рассчитано на ${dayCount(course.durationDays)}.` : "Длительность лечения определяется выбранным планом.",
       CARE_SETTING_LABELS[course.setting] ? `Где: ${CARE_SETTING_LABELS[course.setting]}.` : null,
-      care.homeSummary ? `Дома: ${care.homeSummary}.` : null,
-      care.clinicSummary ? `В клинике: ${care.clinicSummary}.` : null,
+      care.homeSummary ? `Дома: ${sentence(care.homeSummary)}` : null,
+      care.clinicSummary ? `В клинике: ${sentence(care.clinicSummary)}` : null,
       next ? `Контроль: день ${next.scheduledDay}.` : course.controlConsent ? "Контроль: дата не выбрана." : "Контроль: владелец не подтвердил запись.",
-      care.followUpGoal ? `Цель контроля: ${care.followUpGoal}.` : null,
-      care.earlyReturnSummary ? `Обратиться раньше при: ${care.earlyReturnSummary}.` : null
+      care.followUpGoal ? `Цель контроля: ${sentence(care.followUpGoal)}` : null,
+      care.earlyReturnSummary ? `Обратиться раньше при: ${sentence(care.earlyReturnSummary)}` : null
     ].filter(Boolean);
   }
 

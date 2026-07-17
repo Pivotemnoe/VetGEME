@@ -46,6 +46,7 @@
   const reputationRuntime = window.PET_CLINIC_REPUTATION_RUNTIME_V6;
   const campaignDirector = window.PET_CLINIC_CAMPAIGN_DIRECTOR_V7;
   const resourceSurfaceFactory = window.PET_CLINIC_RESOURCE_STATE_SURFACE_V11;
+  const playerText = window.PET_CLINIC_PLAYER_TEXT_V11;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
   let appBootstrapComplete = false;
@@ -258,7 +259,7 @@
     {
       id: "inflammatoryOtitis",
       label: "Воспалительный отит",
-      note: "Легкое воспаление без явной бактериальной или клещевой картины."
+      note: "Лёгкое воспаление без явной бактериальной или клещевой картины."
     },
     {
       id: "miteOtitis",
@@ -342,7 +343,7 @@
             label: "Что уже применяли дома?",
             answer: patient.flags.oldDrops
               ? "После уточнения владелец вспоминает: несколько дней капал оставшиеся с прошлого раза ушные капли, название и срок годности не проверял."
-              : "До приема ушные препараты и антибиотики не применяли."
+              : "До приёма ушные препараты и антибиотики не применяли."
           },
           {
             id: "discharge",
@@ -471,7 +472,7 @@
         "в ухе темная грязь",
         "трясет головой",
         "есть корочки",
-        "дома еще одно животное чешется",
+        "дома ещё одно животное чешется",
         "новый питомец появился недавно",
         "не дает трогать уши"
       ],
@@ -493,7 +494,7 @@
           {
             id: "others",
             label: "Другие животные дома чешутся?",
-            answer: "Да, еще одно животное тоже трясет головой."
+            answer: "Да, ещё одно животное тоже трясёт головой."
           },
           {
             id: "debris",
@@ -530,7 +531,7 @@
       evaluate(patient, treatmentId) {
         if (treatmentId === "antiparasitic") return outcome("correct", 0.04, "Клещевой отит получает противопаразитарную обработку.");
         if (treatmentId === "antibacterialDrops" || treatmentId === "antiInflammatoryDrops") return outcome("partial", 0.22, "Воспаление может стихнуть, но причина останется.");
-        return outcome("wrong", 0.28, "Без противопаразитарной обработки клещевой отит вернется.");
+        return outcome("wrong", 0.28, "Без противопаразитарной обработки клещевой отит вернётся.");
       }
     },
     pancreatitis: {
@@ -864,7 +865,7 @@
     speed: 1,
     spawnMeter: 0,
     lastTick: 0,
-    log: "Клиника открыта. Владелец с животным ждет приема.",
+    log: "Клиника открыта. Владелец с животным ждёт приёма.",
     treatedToday: 0,
     revenueToday: 0,
     expensesToday: 0,
@@ -1188,13 +1189,25 @@
     const hours = Math.floor(overtime / 60);
     const minutes = overtime % 60;
     const parts = [];
-    if (hours) parts.push(`${hours} ч`);
-    if (minutes || !parts.length) parts.push(`${minutes} мин`);
+    if (hours) parts.push(playerText.hours(hours));
+    if (minutes || !parts.length) parts.push(formatMinutes(minutes));
     return `${formatTime(state.dayEnd)} + ${parts.join(" ")}`;
   }
 
   function formatMoney(value) {
-    return Math.round(value).toLocaleString("ru-RU");
+    return playerText.formatNumber(value);
+  }
+
+  function formatMinutes(value) {
+    return playerText.minutes(value);
+  }
+
+  function formatWaitingMinutes(value) {
+    return playerText.waitingMinutes(value);
+  }
+
+  function formatVetcoins(value, signed = false) {
+    return playerText.vetcoins(value, { signed });
   }
 
   function diseaseFor(patient) {
@@ -1334,6 +1347,19 @@
       .every((question) => patient.asked[question.id]);
   }
 
+  function requiredHistorySummary(patient) {
+    if (!patient?.v2Visit) {
+      return compactClinicalSummary("Анамнез собран.", patient?.clinicalRecord?.history, "Анамнез ещё не собран.");
+    }
+    const answersById = new Map(diseaseFor(patient).anamnesis(patient).map((question) => [question.id, question.answer]));
+    const questions = patient.v2Visit.medicalContent.historyQuestions.map((question) => ({
+      id: question.id,
+      required: Boolean(question.required),
+      answer: answersById.get(question.id) || ""
+    }));
+    return playerText.requiredHistorySummary(questions, patient.asked);
+  }
+
   function isFreeClinicalVisit(patient) {
     return Boolean(patient?.v2Visit && Number(patient.v2Visit.day || state.day) >= 2);
   }
@@ -1462,7 +1488,7 @@
     const freeVisit = isFreeClinicalVisit(patient);
     const selectedDiagnosis = diagnosisLabel(patient.selectedDiagnosisId);
     el.complaintSummary.textContent = patient.v2Visit.complaint.text;
-    el.anamnesisSummary.textContent = compactClinicalSummary("Анамнез собран.", patient.clinicalRecord.history, "Анамнез ещё не собран.");
+    el.anamnesisSummary.textContent = requiredHistorySummary(patient);
     el.examSummary.textContent = compactClinicalSummary("Осмотр выполнен.", patient.clinicalRecord.physicalExam, "Осмотр ещё не выполнен.");
     el.researchSummary.textContent = patient.diagnosticUncertainty?.text
       || compactClinicalSummary("Исследования выполнены.", patient.clinicalRecord.diagnosticTests, "Исследования ещё не выполнены.");
@@ -1614,7 +1640,7 @@
       const action = patient.v2Visit?.medicalContent?.sampleActions?.[0];
       return {
         title: action?.label || "Возьмите материал",
-        text: "Осмотр показывает, какие изменения есть, но не всегда позволяет определить их причину. Выполните предусмотренное случаем действие."
+        text: "Осмотр показывает, какие изменения есть, но не всегда позволяет определить их причину. Выполните нужное действие для уточнения состояния."
       };
     }
     return { title: step.title, text: step.text };
@@ -1792,7 +1818,7 @@
     const maxSpeed = maxAllowedSpeed();
     if (maxSpeed === 1) {
       state.speed = 1;
-      setLog("На первом обучающем приеме доступна только скорость 1x.");
+      setLog("На первом обучающем приёме доступна только скорость 1x.");
       renderHud();
       return;
     }
@@ -1860,8 +1886,8 @@
     patient.waitingStage = nextStage;
     const messages = {
       1: `${patient.owner} начинает беспокоиться во время ожидания.`,
-      2: `${patient.animal} ждет уже ${Math.round(patient.age)} минут. Владелец теряет терпение.`,
-      3: `${patient.owner} недоволен задержкой и ждет объяснения.`,
+      2: `${patient.animal} ждёт уже ${formatWaitingMinutes(patient.age)}. Владелец теряет терпение.`,
+      3: `${patient.owner} недоволен задержкой и ждёт объяснения.`,
       4: `${patient.owner} собирается уйти. Требуется немедленная реакция.`
     };
     setLog(messages[nextStage]);
@@ -1936,7 +1962,7 @@
       patient.overtimeWarned = true;
       adjustTrust(patient, -6);
       adjustOwnerState(patient, 7, 11);
-      patient.findings.push("Прием затянулся: владелец начинает уставать от долгого процесса.");
+      patient.findings.push("Приём затянулся: владелец начинает уставать от долгого процесса.");
     }
   }
 
@@ -2378,7 +2404,7 @@
       label: action.label,
       note: freeClinicalFlow.isPerformed(patient, "general", action.id)
         ? "Уже выполнено — результат сохранён."
-        : `${action.importantForSafety ? "Важное действие" : "Дополнительное действие"}. ${action.timeMinutes} мин. · стресс +${action.stressDelta || 0}.`,
+        : `${action.importantForSafety ? "Важное действие" : "Дополнительное действие"}. ${formatMinutes(action.timeMinutes)} · стресс +${action.stressDelta || 0}.`,
       disabled: freeClinicalFlow.isPerformed(patient, "general", action.id),
       onClick: () => performGeneralExamAction(action)
     }));
@@ -2803,7 +2829,7 @@
         data: {
           waitingCount: waiting.length,
           inRoomCount: state.queue.filter((patient) => isPatientInConsult(patient)).length,
-          patientCards: waiting.map((patient) => `${patient.animal}, ${speciesLabels[patient.species] || "животное"} — ожидает ${Math.max(0, Math.round(patient.age || 0))} минут`)
+          patientCards: waiting.map((patient) => `${patient.animal}, ${speciesLabels[patient.species] || "животное"} — ожидает ${formatWaitingMinutes(Math.max(0, patient.age || 0))}`)
         }
       },
       {
@@ -3065,12 +3091,12 @@
   }
 
   function authoredPriceLabel(test) {
-    return Number.isFinite(test?.costVetcoins) ? `${test.costVetcoins} V` : "цена не указана";
+    return Number.isFinite(test?.costVetcoins) ? formatVetcoins(test.costVetcoins) : "цена не указана";
   }
 
   function authoredDurationLabel(test) {
     return Number.isInteger(test?.durationMinutes) && test.durationMinutes > 0
-      ? `${test.durationMinutes} мин.`
+      ? formatMinutes(test.durationMinutes)
       : "срок не указан";
   }
 
@@ -3398,7 +3424,7 @@
       patient.pendingDiagnosticTestId = test.id;
       patient.diagnosticUncertainty = null;
       if (diagnosticTestRequiresSample(patient, test) && !patient.sampleTaken) {
-        setLog(`${diagnosticDecisionText(decision.decision)} Сначала нужно взять предусмотренный карточкой материал.`);
+        setLog(`${diagnosticDecisionText(decision.decision)} Сначала нужно взять материал, необходимый для исследования.`);
         passTime(1);
         return;
       }
@@ -3448,7 +3474,7 @@
     const pending = options.find((test) => test.id === patient.pendingDiagnosticTestId);
     if (pending) {
       if (diagnosticTestRequiresSample(patient, pending) && !patient.sampleTaken) {
-        setLog("Сначала нужно взять предусмотренный карточкой материал.");
+        setLog("Сначала нужно взять материал, необходимый для исследования.");
         return;
       }
       doMicroscopy({ test: pending, ownerApproved: true });
@@ -3459,7 +3485,7 @@
       const capabilityStatus = capabilityStatuses.get(test.id);
       const capabilityUnavailable = capabilityStatus.mapped && !capabilityStatus.available;
       const noteParts = [
-        `Материал: ${test.materialLabel || (diagnosticTestRequiresSample(patient, test) ? "образец, предусмотренный карточкой" : "не требуется")}.`,
+        `Материал: ${test.materialLabel || (diagnosticTestRequiresSample(patient, test) ? "образец для исследования" : "не требуется")}.`,
         `Стоимость: ${authoredPriceLabel(test)}; время: ${authoredDurationLabel(test)}.`
       ];
       if (capabilityUnavailable) noteParts.push(`Локально недоступно: ${capabilityReasonText(capabilityStatus.reasonCode)}.`);
@@ -3568,7 +3594,7 @@
     patient.executedDiagnosticTestId = approvedTest?.id || null;
     const result = patient.v2Visit ? approvedTest.resultText : diseaseFor(patient).microscopy(patient);
     patient.findings.push(Number.isFinite(testFee)
-      ? `${result} Стоимость исследования: ${testFee} V.`
+      ? `${result} Стоимость исследования: ${formatVetcoins(testFee)}.`
       : `${result} Стоимость исследования не указана в карточке.`);
     recordClinical(patient, "diagnosticTests", result);
     assessClinicalUrgency(patient);
@@ -3610,7 +3636,7 @@
     }
     if (!patient.v2Visit || ["laboratory", "system_low_value"].includes(approvedTest?.type)) startDoctorLabTrip();
     if (!lowValueTest) setLog(Number.isFinite(testFee)
-      ? `Исследование выполнено и оплачено: +${testFee} V.`
+      ? `Исследование выполнено и оплачено: ${formatVetcoins(testFee, true)}.`
       : "Исследование выполнено; цена в карточке не указана, начисление не создано.");
     if (tutorialPatient(patient)) advanceTutorial("test", `${approvedTest?.label || "Исследование"}: результат получен.`);
     if (elapsedMinutes) passTime(elapsedMinutes);
@@ -3946,7 +3972,7 @@
     if (overtime > 0) {
       risk += Math.min(0.12, overtime / 100);
       if (overtime >= 12) ownerTrustChange -= 1;
-      patient.findings.push(`Прием занял ${patient.visitTimeUsed} минут при комфортном лимите ${patient.visitTimeLimit} минут.`);
+      patient.findings.push(`Приём занял ${formatWaitingMinutes(patient.visitTimeUsed)} при комфортном лимите ${formatWaitingMinutes(patient.visitTimeLimit)}.`);
     }
 
     if (!patient.selectedDiagnosisId) {
@@ -3989,7 +4015,7 @@
     }
 
     const reputationReason = effectiveQuality === "correct"
-      ? "корректно завершенный прием"
+      ? "корректно завершённый приём"
       : effectiveQuality === "partial" ? "неполный результат лечения" : "ошибка в лечении";
     if (isTier01V2()) {
       changeOwnerTrust(ownerTrustChange, reputationReason);
@@ -4525,7 +4551,7 @@
   function requestShiftClose(forced = false) {
     if (!state.dayStarted || !el.closeShiftWindow.classList.contains("hidden")) return;
     if (!forced && state.queue.length > 0 && state.minute < state.dayEnd - 120) {
-      setLog("Смену рано закрывать: в очереди остаются пациенты и рабочее время еще не закончилось.");
+      setLog("Смену рано закрывать: в очереди остаются пациенты и рабочее время ещё не закончилось.");
       return;
     }
     state.modalOpen = true;
@@ -4579,7 +4605,7 @@
     if (state.queue.length > 0) {
       state.lostToday += state.queue.length;
       state.goalStats.noLost = 0;
-      changeReputation(-Math.min(5, state.queue.length * 2), "клиника закрылась с незавершенной очередью");
+      changeReputation(-Math.min(5, state.queue.length * 2), "клиника закрылась с незавершённой очередью");
       state.queue = [];
       state.activeId = null;
     }
@@ -4729,7 +4755,7 @@
         ? dayPosition?.chapterNumber
           ? `Глава ${dayPosition.chapterNumber} завершена`
           : "Первая глава завершена"
-        : `День ${state.day} завершен`;
+        : `День ${state.day} завершён`;
     }
     if (ledger) {
       const ownerDelta = ledger.ownerTrustEnd - ledger.ownerTrustStart;
@@ -4740,15 +4766,15 @@
       state.summaryHtml = [
         `<b>${plan ? plan.title : "Свободная смена"}</b>`,
         `Врач: <b>${doctor.name}</b>. Усталость: ${Math.round(ledger.fatigueStart)}% → ${Math.round(fatigueBeforeClosing)}% за работу (+${Math.round(fatigueDuringShift)}), закрытие смены +${Math.round(closingFatigueLoad)}, итог <b>${Math.round(doctor.fatigue)}%</b>. После дня отдыха ожидается ${Math.round(campaignMechanics.expectedRecovery(doctor.fatigue, 1).afterRest)}%.`,
-        `Посетителей пришло: <b>${state.arrivalsToday} из ${state.plannedArrivalsToday}</b>. Принято: <b>${state.treatedToday}</b>. Ушло без приема: <b>${state.lostToday}</b>.`,
+        `Посетителей пришло: <b>${state.arrivalsToday} из ${state.plannedArrivalsToday}</b>. Принято: <b>${state.treatedToday}</b>. Ушло без приёма: <b>${state.lostToday}</b>.`,
         state.specialEventsToday ? `Особые события: <b>${state.handledSpecialEventsToday}/${state.specialEventsToday}</b> обработано.` : "",
-        `Доход приёмов: <b>${formatMoney(ledger.consultationRevenue)} V</b>. Доход исследований: <b>${formatMoney(ledger.diagnosticRevenue)} V</b>.`,
-        `Стоимость процедур: <b>${formatMoney(ledger.procedureCost)} V</b>. Зарплаты: <b>${formatMoney(ledger.payroll)} V</b>. Обслуживание: <b>${formatMoney(ledger.maintenance)} V</b>.`,
-        `Возвраты: <b>${formatMoney(ledger.refunds)} V</b>. Бесплатные повторные приёмы: <b>${ledger.freeRechecks}</b> (${formatMoney(ledger.freeRecheckValue)} V).`,
+        `Доход приёмов: <b>${formatVetcoins(ledger.consultationRevenue)}</b>. Доход исследований: <b>${formatVetcoins(ledger.diagnosticRevenue)}</b>.`,
+        `Стоимость процедур: <b>${formatVetcoins(ledger.procedureCost)}</b>. Зарплаты: <b>${formatVetcoins(ledger.payroll)}</b>. Обслуживание: <b>${formatVetcoins(ledger.maintenance)}</b>.`,
+        `Возвраты: <b>${formatVetcoins(ledger.refunds)}</b>. Бесплатные повторные приёмы: <b>${ledger.freeRechecks}</b> (${formatVetcoins(ledger.freeRecheckValue)}).`,
         attendanceSummary,
-        `Итог дня: <b>${ledger.net >= 0 ? "+" : ""}${formatMoney(ledger.net)} V</b>. Баланс: <b>${formatMoney(state.money)} V</b>. Долг: <b>${formatMoney(state.campaignFinance.debt)} V</b> из ${formatMoney(state.campaignFinance.creditLimit)} V.`,
+        `Итог дня: <b>${formatVetcoins(ledger.net, true)}</b>. Баланс: <b>${formatVetcoins(state.money)}</b>. Долг: <b>${formatVetcoins(state.campaignFinance.debt)}</b> из ${formatVetcoins(state.campaignFinance.creditLimit)}.`,
         `Доверие владельцев: <b>${state.ownerTrust.toFixed(1)}/100</b> (${ownerDelta >= 0 ? "+" : ""}${ownerDelta.toFixed(1)}). Клиническая надёжность: <b>${state.clinicalReliability.toFixed(1)}/100</b> (${reliabilityDelta >= 0 ? "+" : ""}${reliabilityDelta.toFixed(1)}).`,
-        weekly ? `Недельная финансовая проверка: риск закрытия <b>${weeklyRiskLabels[weekly.closureRisk]}</b>, обязательные расходы следующей смены ${formatMoney(weekly.mandatoryExpenses)} V, доступный кредит ${formatMoney(weekly.remainingCredit)} V.${weekly.recoveryMeasures.length ? ` Меры: ${weekly.recoveryMeasures.join(", ")}.` : ""}` : "",
+        weekly ? `Недельная финансовая проверка: риск закрытия <b>${weeklyRiskLabels[weekly.closureRisk]}</b>, обязательные расходы следующей смены ${formatVetcoins(weekly.mandatoryExpenses)}, доступный кредит ${formatVetcoins(weekly.remainingCredit)}.${weekly.recoveryMeasures.length ? ` Меры: ${weekly.recoveryMeasures.join(", ")}.` : ""}` : "",
         state.day === 30 && state.campaignOutcome?.completed ? `Итог кампании: <b>${state.campaignOutcome.success ? "условия успеха выполнены" : "не все условия успеха выполнены"}</b>. Клиническая оценка: ${state.campaignOutcome.clinicalAssessment}. Финансовая оценка: ${state.campaignOutcome.financialAssessment}. Доступен свободный режим.` : "",
         `Цели: <b>${completedGoals}/${goals.length}</b>.<br>${goalsHtml}`
       ].filter(Boolean).join("<br>");
@@ -4756,10 +4782,10 @@
       state.summaryHtml = [
         `<b>${plan ? plan.title : "Свободная смена"}</b>`,
         `Врач: <b>${doctor.name}</b>. Усталость после смены: <b>${Math.round(doctor.fatigue)}%</b>.`,
-        `Посетителей пришло: <b>${state.arrivalsToday} из ${state.plannedArrivalsToday}</b>. Принято: <b>${state.treatedToday}</b>. Ушло без приема: <b>${state.lostToday}</b>.`,
+        `Посетителей пришло: <b>${state.arrivalsToday} из ${state.plannedArrivalsToday}</b>. Принято: <b>${state.treatedToday}</b>. Ушло без приёма: <b>${state.lostToday}</b>.`,
         state.specialEventsToday ? `Особые события: <b>${state.handledSpecialEventsToday}/${state.specialEventsToday}</b> обработано.` : "",
-        `Доход: <b>${formatMoney(state.revenueToday)} V</b>. Расходы: <b>${formatMoney(state.expensesToday)} V</b>. Итог: <b>${net >= 0 ? "+" : ""}${formatMoney(net)} V</b>.`,
-        `Исследования: <b>${state.microscopyToday}</b>, доход от них: <b>${formatMoney(state.diagnosticRevenueToday)} V</b>.`,
+        `Доход: <b>${formatVetcoins(state.revenueToday)}</b>. Расходы: <b>${formatVetcoins(state.expensesToday)}</b>. Итог: <b>${formatVetcoins(net, true)}</b>.`,
+        `Исследования: <b>${state.microscopyToday}</b>, доход от них: <b>${formatVetcoins(state.diagnosticRevenueToday)}</b>.`,
         attendanceSummary,
         `Репутация: <b>${state.reputation.toFixed(1)}/100</b> (${reputationDelta >= 0 ? "+" : ""}${reputationDelta.toFixed(1)} за день).<br>${reputationReasons}`,
         `Цели: <b>${completedGoals}/${goals.length}</b>.<br>${goalsHtml}`
@@ -4934,7 +4960,7 @@
       label: question.label,
       note: patient.asked[question.id]
         ? "Уже уточнено — повторно не задаётся."
-        : `${question.requiredForSafeDecision ? "Важный вопрос" : "Дополнительный вопрос"}. Потратит ${question.timeMinutes || (question.id === "budget" ? 1 : 2)} мин. приёма.`,
+        : `${question.requiredForSafeDecision ? "Важный вопрос" : "Дополнительный вопрос"}. Займёт ${formatWaitingMinutes(question.timeMinutes || (question.id === "budget" ? 1 : 2))}.`,
       disabled: patient.asked[question.id],
       onClick: () => {
         askQuestion(patient, question);
@@ -4972,7 +4998,7 @@
         ? "Уже выполнено — результат сохранён."
         : !structured && patient.localUsed >= MAX_LOCAL_EXAMS
           ? "Лимит локальных осмотров исчерпан."
-          : `${option.importantForSafety ? "Важное действие" : "Дополнительное действие"}. ${option.time} мин. · стресс +${option.stressDelta || 0}.`,
+          : `${option.importantForSafety ? "Важное действие" : "Дополнительное действие"}. ${formatMinutes(option.time)} · стресс +${option.stressDelta || 0}.`,
       disabled: patient.localDone[option.id] || (!structured && patient.localUsed >= MAX_LOCAL_EXAMS),
       onClick: () => doLocalExam(option)
     }));
@@ -5025,7 +5051,7 @@
         ? "Этот диагноз уже выбран."
         : schema.diagnosisMode === "multiple" && selectedIds.length >= schema.maximumDiagnosisSelections
           ? "Оба диагностических слота уже заняты."
-          : `Клиническая оценка. Потратит 3 минуты приема.`,
+          : "Клиническая оценка. Займёт 3 минуты приёма.",
       sections: patient.v2Visit && !isFreeClinicalVisit(patient) ? [
         { label: "Поддерживает", items: diagnosis.supportingEvidence },
         { label: "Не хватает данных", items: diagnosis.missingEvidence },
@@ -5051,7 +5077,7 @@
     if (!patient.v2Visit) {
       openChoice("Объяснение", "Как объяснить владельцу результат?", legacyCommunicationOptions.map((option) => ({
         label: option.label,
-        note: `${option.note} Потратит 4 минуты приема.`,
+        note: `${option.note} Займёт 4 минуты приёма.`,
         onClick: () => selectCommunication(option)
       })));
       return;
@@ -5067,7 +5093,7 @@
       label: option.label,
       note: patient.selectedCommunicationId === option.id
         ? "Сейчас выбран этот стиль."
-        : `${option.playerDescription} ${option.playerTradeoff} Время: ${option.timeCost} мин.`,
+        : `${option.playerDescription} ${option.playerTradeoff} Время: ${formatMinutes(option.timeCost)}.`,
       sections: [{ label: "Наблюдаемые признаки", items: observedSigns }],
       onClick: () => selectCommunication(option)
     }));
@@ -5107,8 +5133,8 @@
       selectCarePlan({ ...treatment, followUpOptionId: followUpOptions.find((option) => option.default)?.id || followUpOptions[0]?.id || null });
     };
     const items = availableTreatments.map((treatment) => ({
-      label: `${treatment.label} (+${treatment.fee} вет.)`,
-      note: `${treatment.longitudinalCare?.durationDays ? `Длительность: ${treatment.longitudinalCare.durationDays} игровых дней. ` : ""}${treatment.note} ${patient.budgetAsked
+      label: `${treatment.label} (${formatVetcoins(treatment.fee, true)})`,
+      note: `${treatment.longitudinalCare?.durationDays ? `Длительность: ${playerText.days(treatment.longitudinalCare.durationDays)}. ` : ""}${treatment.note} ${patient.budgetAsked
         ? diseaseFor(patient).baseFee + treatment.fee > patient.budget
           ? "Выше обсужденного бюджета."
           : "В обсужденный бюджет помещается."
@@ -5132,17 +5158,17 @@
     const waiting = waitingPatients();
     const inConsultation = state.queue.filter((patient) => isPatientInConsult(patient)).length;
     el.queueCountLabel.textContent = state.dayStarted
-      ? `${waiting.length} ждут · ${inConsultation} в кабинете`
-      : `${waiting.length} ждут · ${state.arrivalsToday} пришло`;
+      ? `${playerText.waitingCount(waiting.length)} · ${inConsultation} в кабинете`
+      : `${playerText.waitingCount(waiting.length)} · ${playerText.arrivedCount(state.arrivalsToday)}`;
     if (!state.dayStarted) {
       el.queueForecast.textContent = state.arrivalsToday > 0
-        ? `Дневной поток завершен: ${state.arrivalsToday} из ${state.plannedArrivalsToday} пришло`
+        ? `Дневной поток завершён: ${playerText.arrivedCount(state.arrivalsToday)} из ${state.plannedArrivalsToday}`
         : "Поток появится после открытия клиники";
     } else if (state.arrivalSchedule.some((arrival) => arrival.template?.source !== "walkIn")) {
       const booked = state.arrivalSchedule.filter((arrival) => arrival.template?.source !== "walkIn");
-      el.queueForecast.textContent = `${state.arrivalsToday}/${state.plannedArrivalsToday} пришло · записано ещё ${booked.length} · следующий приём в ${formatTime(booked[0].minute)}`;
+      el.queueForecast.textContent = `${playerText.arrivedCount(state.arrivalsToday)} из ${state.plannedArrivalsToday} · записано ещё ${booked.length} · следующий приём в ${formatTime(booked[0].minute)}`;
     } else {
-      el.queueForecast.textContent = `${state.arrivalsToday}/${state.plannedArrivalsToday} пришло · все запланированные пациенты уже здесь`;
+      el.queueForecast.textContent = `${playerText.arrivedCount(state.arrivalsToday)} из ${state.plannedArrivalsToday} · все запланированные пациенты уже здесь`;
     }
     waiting.forEach((patient, index) => {
       const button = document.createElement("button");
@@ -5163,10 +5189,10 @@
       note.textContent = patient.eventLabel
         ? `СОБЫТИЕ · ${patient.eventLabel}`
         : patient.selectedUrgency === "urgent"
-        ? `СРОЧНО · ждет ${Math.max(1, Math.round(patient.age))} мин.`
+        ? `СРОЧНО · ждёт ${formatWaitingMinutes(Math.max(1, Math.round(patient.age)))}`
         : patient.returnVisit
           ? longitudinalCare.reasonLabel(patient.appointmentReason)
-          : `Ждет ${Math.max(1, Math.round(patient.age))} мин.`;
+          : `Ждёт ${formatWaitingMinutes(Math.max(1, Math.round(patient.age)))}`;
       if (patient.selectedUrgency === "urgent") button.classList.add("urgent");
       const owner = document.createElement("span");
       owner.className = "queue-complaint";
@@ -5255,7 +5281,7 @@
     el.caseOwner.textContent = `Владелец: ${patient.owner}`;
     el.caseUrgencyBtn.textContent = `Срочность: ${clinicalUrgencyLabel(patient)}`;
     el.caseUrgencyBtn.classList.toggle("urgent", ["urgent", "emergency"].includes(patient.clinicalUrgency));
-    el.caseDuration.textContent = `Прием длится: ${patient.visitTimeUsed} мин.`;
+    el.caseDuration.textContent = `Приём длится: ${formatMinutes(patient.visitTimeUsed)}`;
     el.ownerComplaint.textContent = patient.v2Visit
       ? patient.v2Visit.complaint.text
       : patient.returnVisit
@@ -5300,7 +5326,11 @@
       renderClinicalList(el.reviewUncertain, decisionReview.uncertain, "Дополнительная неопределённость не отмечена.");
       renderClinicalList(el.reviewSupporting, decisionReview.supporting, "Собранных поддерживающих данных пока нет.");
       renderClinicalList(el.reviewContradicting, decisionReview.contradicting, "Собранных противоречащих данных нет.");
-      renderClinicalList(el.reviewMissing, decisionReview.missing, "Важные пропуски не выявлены.");
+      const safetySummary = playerText.clinicalSafetySummary(
+        decisionReview.clinicalSafety === "safe",
+        decisionReview.missing
+      );
+      renderClinicalList(el.reviewMissing, decisionReview.missing, safetySummary.missingFallback);
       el.reviewAssessment.textContent = decisionReview.assessment;
       el.reviewTreatmentCoverage.textContent = decisionReview.treatmentCoverage === null || decisionReview.treatmentCoverage === undefined
         ? "Назначения ещё не сделаны."
@@ -5308,9 +5338,7 @@
       el.reviewUnnecessaryTreatment.textContent = decisionReview.unnecessaryActions?.length
         ? decisionReview.unnecessaryActions.join(" ")
         : decisionReview.unnecessaryTreatment ? "В назначениях есть лишние действия." : "Лишних действий не выявлено.";
-      el.reviewClinicalSafety.textContent = decisionReview.clinicalSafety === "safe"
-        ? "По собранным данным решение безопасно."
-        : `Нужно проверить пропущенные данные: ${(decisionReview.missing || []).join(" ") || "не завершена оценка важных признаков"}.`;
+      el.reviewClinicalSafety.textContent = safetySummary.safetyText;
       el.reviewCommunicationQuality.textContent = decisionReview.communicationQuality || "Объяснение ещё не завершено.";
       el.reviewOwnerDecision.textContent = decisionReview.ownerDecision || "Решение по назначениям ещё не принято.";
     }
@@ -5334,7 +5362,7 @@
     el.caseWindow.dataset.ownerCueCount = String(authoredOwnerCues.length);
     el.ownerName.textContent = patient.owner;
     el.ownerBudget.textContent = patient.budgetAsked
-      ? `${Math.max(100, Math.floor((patient.budget - 60) / 50) * 50)}–${Math.ceil((patient.budget + 60) / 50) * 50} V`
+      ? `от ${formatMoney(Math.max(100, Math.floor((patient.budget - 60) / 50) * 50))} до ${formatVetcoins(Math.ceil((patient.budget + 60) / 50) * 50)}`
       : "не обсуждался";
     el.ownerConsent.textContent = ownerStatusFor(patient);
     const selectedDiagnosisIds = Array.isArray(patient.selectedDiagnosisIds) && patient.selectedDiagnosisIds.length
@@ -5382,14 +5410,14 @@
         ? "Выполнить согласованное исследование"
         : /микроскоп/iu.test(diagnosticTest?.label || "") ? "Предложить микроскопию" : "Предложить исследование";
       el.communicationBtn.querySelector("span").textContent = "Объяснить результат";
-      el.communicationBtn.querySelector("small").textContent = "3–6 мин. · зависит от стиля";
+      el.communicationBtn.querySelector("small").textContent = "3–6 минут · зависит от стиля";
       el.microscopyBtn.querySelector("small").textContent = diagnosticTest
         ? `${diagnosticTest.label} · ${authoredDurationLabel(diagnosticTest)} · ${authoredPriceLabel(diagnosticTest)}`
         : "варианты недоступны";
     } else {
       el.sampleBtn.querySelector("span").textContent = "Взять материал";
       el.microscopyBtn.querySelector("span").textContent = "Микроскопия";
-      el.microscopyBtn.querySelector("small").textContent = "7 мин. · доход 90 V";
+      el.microscopyBtn.querySelector("small").textContent = "7 минут · доход 90 веткоинов";
     }
     el.sampleBtn.disabled = patient.sampleTaken || !supportsSample;
     const testRequiresSample = !patient.v2Visit || diagnosticTestRequiresSample(patient, diagnosticTest);
@@ -5457,13 +5485,13 @@
       `Истинный диагноз: ${diseaseFor(patient).name}`,
       `Истинная срочность: ${patient.urgency === "urgent" ? "высокая" : "обычная"}`,
       `Тип владельца: ${patient.ownerProfile.label}`,
-      `Точный бюджет: ${patient.budget} V`,
-      `Надежность назначений: ${Math.round(patient.ownerProfile.reliability * 100)}%`,
+      `Точный бюджет: ${formatVetcoins(patient.budget)}`,
+      `Надёжность назначений: ${Math.round(patient.ownerProfile.reliability * 100)}%`,
       `Диагностические очки: ${patient.dxPoints}`,
       `Врач смены: ${currentDoctor().name}, усталость ${Math.round(currentDoctor().fatigue)}%`,
       ...(isTier01V2() ? (() => {
         const summary = operationsSummary();
-        return [`Операционный scheduler: ${summary.activeTaskCount} активных, ${summary.queuedTaskCount} в очереди`];
+        return [`Операционный планировщик: ${summary.activeTaskCount} активных задач, ${summary.queuedTaskCount} в очереди`];
       })() : [])
     ].join("\n");
     drawPortrait(patient);
@@ -5523,10 +5551,10 @@
   function renderHud() {
     const doctor = currentDoctor();
     el.moneyValue.textContent = formatMoney(state.money);
-    el.todayRevenue.textContent = `+${formatMoney(state.revenueToday)} V`;
+    el.todayRevenue.textContent = formatVetcoins(state.revenueToday, true);
     el.dateValue.textContent = `День ${state.day}/30`;
     el.timeValue.textContent = formatClinicTime(state.minute);
-    el.closingTime.textContent = `${Math.max(0, Math.ceil((state.dayEnd - state.minute) / 60))} ч.`;
+    el.closingTime.textContent = playerText.hours(Math.max(0, Math.ceil((state.dayEnd - state.minute) / 60)));
     const tierMetrics = isTier01V2();
     const displayedTrust = tierMetrics ? state.ownerTrust : state.reputation;
     el.ownerTrustTitle.textContent = tierMetrics ? "Доверие владельцев" : "Репутация клиники";
@@ -5546,7 +5574,11 @@
     el.reputationLabel.textContent = lastReputationEvent
       ? `${reputationDelta >= 0 ? "+" : ""}${reputationDelta.toFixed(1)} сегодня · ${lastReputationEvent.reason}`
       : "Сегодня без изменений";
-    el.queueValue.textContent = `${waitingPatients().length} / 12`;
+    const waitingCount = waitingPatients().length;
+    el.queueValue.textContent = `${waitingCount} / 12`;
+    if (el.queueValue.nextElementSibling) {
+      el.queueValue.nextElementSibling.textContent = waitingCount === 1 ? "ожидает приёма" : "ожидают приёма";
+    }
     el.doctorHudName.textContent = state.dayStarted ? doctor.shortName : "Смена не открыта";
     el.doctorFatigue.textContent = `${Math.round(doctor.fatigue)}%`;
     el.doctorFatigueMeter.style.width = `${doctor.fatigue}%`;
@@ -5564,9 +5596,16 @@
     }
     el.pauseBtn.textContent = state.paused ? "▶" : "II";
     el.speedBtn.textContent = `${state.speed}x`;
+    const pauseLabel = state.paused ? "Продолжить игру" : "Поставить игру на паузу";
+    el.pauseBtn.title = pauseLabel;
+    el.pauseBtn.setAttribute("aria-label", pauseLabel);
+    const speedLabel = `Изменить скорость игры, сейчас ${state.speed}x`;
+    el.speedBtn.setAttribute("aria-label", speedLabel);
     el.speedBtn.title = maxAllowedSpeed() < 4
       ? `Скорость ограничена до ${maxAllowedSpeed()}x условиями обучения и очереди`
-      : "Скорость";
+      : speedLabel;
+    el.nextPatientBtn.setAttribute("aria-label", "Открыть следующего ожидающего пациента");
+    el.closeShiftBtn.setAttribute("aria-label", "Перейти к закрытию смены");
     el.messageLog.textContent = `${formatClinicTime(state.minute)} · ${state.log}`;
     updateVisualModeSettings();
   }
@@ -6287,7 +6326,7 @@
   function drawFloatingLabels() {
     state.queue.forEach((patient, index) => {
       if (patient.id === state.activeId && !el.caseWindow.classList.contains("hidden")) return;
-      if (patient.motion === "waiting" && patient.mood < 38) drawBubble(patient.screenX + 18, patient.screenY - 42, "ждет долго");
+      if (patient.motion === "waiting" && patient.mood < 38) drawBubble(patient.screenX + 18, patient.screenY - 42, "долго ждёт");
     });
   }
 
@@ -6570,7 +6609,7 @@
       state.modalOpen = true;
       state.paused = true;
       state.dayStarted = false;
-      el.summaryTitle.textContent = state.summaryTitle || `День ${state.day} завершен`;
+      el.summaryTitle.textContent = state.summaryTitle || `День ${state.day} завершён`;
       el.summaryText.innerHTML = state.summaryHtml || "Смена завершена.";
       el.nextDayBtn.textContent = state.chapterComplete ? "Продолжить после главы" : "Планировать следующий день";
       el.summaryWindow.classList.remove("hidden");
