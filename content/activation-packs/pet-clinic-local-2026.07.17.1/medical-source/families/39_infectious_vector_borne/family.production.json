@@ -1,0 +1,1778 @@
+{
+  "schemaVersion": 1,
+  "familyId": "infectious_vector_borne",
+  "familyVersion": "2026.07.16.40",
+  "title": "Трансмиссивные и региональные инфекции",
+  "campaignPhase": "chapter_4_to_post_chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": [
+    "Семейство представляет собой версионную региональную матрицу заболеваний, а не вариации расплывчатых карточек.",
+    "Каждая презентация имеет свой патоген или путь доказательства; Варианты группируются только по первоначальному решению и оборудованию.",
+    "Предыдущее заболевание требует соответствующего географического положения, сезона, путешествия или импорта, воздействия переносчиков или непереносчиков и видов.",
+    "Обновления региональных наборов данных меняют только будущие возможности и не регенерируют сохранённого пациента.",
+    "Серопозитивность обычно доказывает воздействие или иммунный ответ, а не текущее причинное заболевание.",
+    "Раннее острое заболевание может быть серонегативным; антитела могут сохраняться в хронических или выздоровевших состояниях.",
+    "ПЦР или мазок может быть отрицательным при низкой обсемененности организма или после лечения; один отрицательный мазок никогда не исключает инфекции.",
+    "Тип клеток морулы и морфология зрительных паразитов имеют ограничения и не всегда позволяют идентифицировать вид.",
+    "Коинфекция является допустимым состоянием и должна оставаться доступной, когда симптомы тяжелые или противоречивые.",
+    "Алгоритмы тестирования на сердечных червей у собак и кошек различаются, поскольку нагрузка на кошачьих гельминтов и выявляемость антигенов ниже.",
+    "Микроскопия остается доступной, но не всеведущей; Видоспецифическая ПЦР или серология, парные титры и визуализация требуют отдельных затрат.",
+    "Автоматически не назначаются противопаразитарные или антимикробные препараты, средства для переливания, жидкости, профилактики, протоколы общественного здравоохранения, лекарства или дозу."
+  ],
+  "coreCapabilities": [
+    "cbc",
+    "blood_smear",
+    "biochemistry",
+    "urinalysis",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "vector_exposure_route",
+      "anyOf": [
+        "vector_exposure_map",
+        "safe_referral"
+      ],
+      "purpose": "region_season_travel_import_transfusion_vector_and_prevention_timeline"
+    },
+    {
+      "id": "vector_core_lab_route",
+      "anyOf": [
+        "vector_core_lab_assessment",
+        "cbc",
+        "blood_smear",
+        "biochemistry",
+        "urinalysis",
+        "safe_referral"
+      ],
+      "purpose": "cbc_reticulocyte_smear_organ_severity"
+    },
+    {
+      "id": "vector_tick_bacterial_route",
+      "anyOf": [
+        "tick_bacterial_testing_external",
+        "safe_referral"
+      ],
+      "purpose": "ehrlichia_anaplasma_pcr_morula_serology_and_paired_titer"
+    },
+    {
+      "id": "vector_borrelia_route",
+      "anyOf": [
+        "borrelia_evidence_review",
+        "safe_referral"
+      ],
+      "purpose": "exposure_test_compatible_syndrome_and_complication_review"
+    },
+    {
+      "id": "vector_babesia_route",
+      "anyOf": [
+        "babesia_testing_external",
+        "safe_referral"
+      ],
+      "purpose": "smear_species_pcr_and_coinfection"
+    },
+    {
+      "id": "vector_hemoplasma_route",
+      "anyOf": [
+        "hemoplasma_testing_external",
+        "safe_referral"
+      ],
+      "purpose": "feline_smear_pcr_retrovirus_anemia_and_carrier_context"
+    },
+    {
+      "id": "vector_leishmania_route",
+      "anyOf": [
+        "leishmania_testing_external",
+        "safe_referral"
+      ],
+      "purpose": "quantitative_serology_tissue_cytology_pcr_and_renal_staging"
+    },
+    {
+      "id": "vector_heartworm_route",
+      "anyOf": [
+        "heartworm_staged_testing",
+        "canine_heartworm_testing",
+        "safe_referral"
+      ],
+      "purpose": "species_specific_antigen_antibody_microfilaria_and_imaging"
+    },
+    {
+      "id": "vector_emergency_route",
+      "anyOf": [
+        "vector_emergency_stabilization",
+        "safe_referral"
+      ],
+      "purpose": "hemolysis_shock_bleeding_respiratory_or_renal_emergency"
+    },
+    {
+      "id": "vector_longitudinal_route",
+      "anyOf": [
+        "vector_longitudinal_monitoring",
+        "safe_referral"
+      ],
+      "purpose": "response_relapse_transmission_prevention_and_retest"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "vector_region_season_travel_import_transfusion_vector_and_prevention_timeline",
+      "requires": [
+        "vector_exposure_map"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vector_cbc_reticulocyte_smear_biochemistry_urinalysis_and_organ_severity",
+      "requires": [
+        "vector_core_lab_assessment"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vector_ehrlichia_anaplasma_pcr_morula_serology_and_paired_titer_context",
+      "requires": [
+        "tick_bacterial_testing_external"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vector_borrelia_exposure_test_compatible_syndrome_and_complication_review",
+      "requires": [
+        "borrelia_evidence_review"
+      ],
+      "availability": "local_plus_external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vector_babesia_smear_species_pcr_and_coinfection_assessment",
+      "requires": [
+        "babesia_testing_external"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vector_feline_hemoplasma_smear_pcr_retrovirus_and_carrier_context",
+      "requires": [
+        "hemoplasma_testing_external"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vector_leishmania_quantitative_serology_tissue_cytology_pcr_and_renal_staging",
+      "requires": [
+        "leishmania_testing_external"
+      ],
+      "availability": "external_post_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vector_heartworm_species_specific_antigen_antibody_microfilaria_and_imaging_route",
+      "requires": [
+        "heartworm_staged_testing"
+      ],
+      "availability": "local_plus_external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vector_hemolysis_shock_bleeding_respiratory_or_renal_emergency_route",
+      "requires": [
+        "vector_emergency_stabilization"
+      ],
+      "availability": "urgent_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vector_longitudinal_response_relapse_transmission_prevention_and_retest_plan",
+      "requires": [
+        "vector_longitudinal_monitoring"
+      ],
+      "availability": "longitudinal_chapter_4",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "lifetime_current_geography_travel_import_and_dates",
+      "prompt": "Каковы пожизненный или текущий география, поездка или ввоз и точные даты?"
+    },
+    {
+      "id": "season_vector_sighting_removal_and_attachment",
+      "prompt": "Каковы сезон, переносчик обнаружение или удаление и прикрепление контекст?"
+    },
+    {
+      "id": "prevention_product_date_adherence_and_gaps",
+      "prompt": "Какой профилактический препарат применяли, когда, насколько регулярно и были ли пропуски?"
+    },
+    {
+      "id": "transfusion_fight_splenectomy_and_nonvector_exposure",
+      "prompt": "Были ли переливание крови, драки, удаление селезёнки или другие нетрансмиссивные факторы риска?"
+    },
+    {
+      "id": "onset_fever_lameness_bleeding_collapse_and_weight",
+      "prompt": "Каков начало лихорадка, хромота, кровотечение, коллапс и масса тела изменение?"
+    },
+    {
+      "id": "anemia_jaundice_urine_respiration_skin_eye_and_renal_signs",
+      "prompt": "Есть ли анемия, желтуха, изменения мочи, дыхания, кожи, глаз и почек признаки?"
+    },
+    {
+      "id": "raw_cbc_reticulocytes_smear_platelets_and_organ_values",
+      "prompt": "Каковы сырой общий анализ крови, ретикулоциты, мазок, тромбоциты и орган значения?"
+    },
+    {
+      "id": "organism_test_sample_time_titer_pcr_and_reference_identity",
+      "prompt": "Какой возбудитель исследовался, какой пробой и методом, когда взят материал, каковы титр, ПЦР и референсный диапазон?"
+    },
+    {
+      "id": "coinfection_retrovirus_and_immune_mediated_mimics",
+      "prompt": "Есть ли сочетанная инфекция, ретровирус или иммуноопосредованный сходные состояния?"
+    },
+    {
+      "id": "cardiopulmonary_microfilaria_antigen_antibody_imaging_history",
+      "prompt": "Каковы сердечно-лёгочный, микрофилярии, антиген, антитело и визуализация данные?"
+    },
+    {
+      "id": "regional_dataset_version_and_saved_case_identity",
+      "prompt": "Какая регион набор данных версия создала предыдущий и сохранённый случай?"
+    },
+    {
+      "id": "owner_prevention_cost_transport_referral_and_recheck_feasibility",
+      "prompt": "Каковы профилактика, стоимость, перевозка, направление и контроль возможности?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "vector_region_travel_prevention_exposure_record",
+      "source": "history",
+      "requires": [
+        "vector_exposure_map"
+      ]
+    },
+    {
+      "id": "vector_cbc_retic_smear_organ_severity_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "vector_core_lab_assessment"
+      ]
+    },
+    {
+      "id": "ehrlichia_anaplasma_pcr_morula_paired_titer_record",
+      "source": "external_report",
+      "requires": [
+        "tick_bacterial_testing_external"
+      ]
+    },
+    {
+      "id": "borrelia_exposure_syndrome_complication_record",
+      "source": "diagnostic_review",
+      "requires": [
+        "borrelia_evidence_review"
+      ]
+    },
+    {
+      "id": "babesia_smear_species_pcr_coinfection_record",
+      "source": "external_report",
+      "requires": [
+        "babesia_testing_external"
+      ]
+    },
+    {
+      "id": "feline_hemoplasma_pcr_anemia_carrier_record",
+      "source": "external_report",
+      "requires": [
+        "hemoplasma_testing_external"
+      ]
+    },
+    {
+      "id": "leishmania_serology_tissue_pcr_renal_record",
+      "source": "external_report",
+      "requires": [
+        "leishmania_testing_external"
+      ]
+    },
+    {
+      "id": "heartworm_species_antigen_antibody_microfilaria_imaging_record",
+      "source": "diagnostic_review",
+      "requires": [
+        "heartworm_staged_testing"
+      ]
+    },
+    {
+      "id": "vector_hemolysis_shock_bleeding_respiratory_renal_record",
+      "source": "emergency_assessment",
+      "requires": [
+        "vector_emergency_stabilization"
+      ]
+    },
+    {
+      "id": "vector_same_case_response_relapse_prevention_retest_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "vector_longitudinal_monitoring"
+      ]
+    },
+    {
+      "id": "coinfection_matrix_and_mimic_record",
+      "source": "diagnostic_review",
+      "requires": [
+        "vector_core_lab_assessment"
+      ]
+    },
+    {
+      "id": "saved_case_region_version_persistence_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "vector_longitudinal_monitoring"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "tick_bacterial_plan",
+      "fullPlan": [
+        "regional_exposure_gate",
+        "core_lab_and_smear",
+        "compatible_syndrome",
+        "pcr_serology_paired_titer_context",
+        "coinfection_mimic_review",
+        "serial_response"
+      ],
+      "stagedPlan": [
+        "gate",
+        "phenotype",
+        "test",
+        "reassess"
+      ],
+      "minimumSafePlan": [
+        "antibody_not_active_disease",
+        "early_seronegative_possible",
+        "morula_limits",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "bleeding_renal_neuro_safety",
+        "vector_referral"
+      ],
+      "unsafeOrInadequate": [
+        "tick_or_antibody_proves_cause",
+        "generated_antimicrobial",
+        "coinfection_impossible"
+      ]
+    },
+    {
+      "id": "hemoparasite_plan",
+      "fullPlan": [
+        "regional_and_nonvector_gate",
+        "hemolysis_cbc_retic_smear",
+        "species_pcr",
+        "coinfection_retrovirus_review",
+        "emergency_assessment",
+        "relapse_monitoring"
+      ],
+      "stagedPlan": [
+        "gate",
+        "triage",
+        "confirm",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "one_smear_not_exclusion",
+        "species_matters",
+        "carrier_not_disease",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "hemolysis_shock_safety",
+        "critical_referral"
+      ],
+      "unsafeOrInadequate": [
+        "visual_species_without_limits",
+        "generated_transfusion_or_drug",
+        "low_parasitemia_ignored"
+      ]
+    },
+    {
+      "id": "travel_regional_plan",
+      "fullPlan": [
+        "versioned_region_travel_gate",
+        "species_specific_phenotype",
+        "core_organ_staging",
+        "specific_serology_pcr_imaging",
+        "subclinical_or_discordant_state",
+        "longitudinal_prevention_retest"
+      ],
+      "stagedPlan": [
+        "gate",
+        "stage",
+        "confirm",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "subclinical_infection_possible",
+        "dog_cat_algorithms_differ",
+        "saved_case_not_regenerated",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "renal_respiratory_cardiovascular_safety",
+        "specialist_referral"
+      ],
+      "unsafeOrInadequate": [
+        "region_update_changes_saved_case",
+        "identical_heartworm_tests",
+        "generated_prevention_or_drug"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_ehrlichiosis_2026",
+      "title": "Merck Veterinary Manual: Ehrlichiosis in Dogs",
+      "url": "https://www.merckvetmanual.com/infectious-diseases/rickettsial-diseases-in-dogs/ehrlichiosis-in-dogs",
+      "scope": "clinical_cbc_smear_pcr_serology_pairing_and_coinfection"
+    },
+    {
+      "id": "merck_anaplasmosis_2026",
+      "title": "Merck Veterinary Manual: Anaplasmosis in Dogs",
+      "url": "https://www.merckvetmanual.com/infectious-diseases/rickettsial-diseases-in-dogs/anaplasmosis-in-dogs",
+      "scope": "subclinical_acute_cytopenia_morula_pcr_and_serology_limits"
+    },
+    {
+      "id": "merck_lyme_borreliosis",
+      "title": "Merck Veterinary Manual: Lyme Borreliosis in Animals",
+      "url": "https://www.merckvetmanual.com/infectious-diseases/lyme-borreliosis/lyme-borreliosis-in-animals",
+      "scope": "exposure_serology_clinical_disease_and_renal_complications"
+    },
+    {
+      "id": "merck_hemotropic_mycoplasma",
+      "title": "Merck Veterinary Manual: Hemotropic Mycoplasma Infections",
+      "url": "https://www.merckvetmanual.com/circulatory-system/blood-parasites/hemotropic-mycoplasma-infections-in-animals",
+      "scope": "feline_anemia_smear_pcr_carrier_and_comorbidity"
+    },
+    {
+      "id": "merck_canine_leishmaniosis",
+      "title": "Merck Veterinary Manual: Leishmaniosis in Dogs",
+      "url": "https://www.merckvetmanual.com/infectious-diseases/leishmaniosis/leishmaniosis-in-dogs",
+      "scope": "regional_cutaneous_systemic_renal_subclinical_and_testing"
+    },
+    {
+      "id": "capc_heartworm",
+      "title": "Companion Animal Parasite Council: Heartworm Guidelines",
+      "url": "https://capcvet.org/guidelines/heartworm/",
+      "scope": "canine_feline_species_specific_testing_staging_and_prevention_context"
+    }
+  ],
+  "variants": [
+    {
+      "id": "vector_tick_borne_bacterial_complex",
+      "version": "2026.07.16.40",
+      "title": "Бактериальные клещевые инфекции: эрлихии, анаплазмы и боррелии",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Совместимое географическое положение и контакт с переносчиками позволяют установить предыдущую ситуацию, в то время как синдром, серийный анализ крови или повреждение органа и время специфической для организма ПЦР или серологии отличают активный эрлихиоз или анаплазмоз, воздействие Borrelia от совместимого клинического заболевания, а также дискордантные острые, хронические или коинфицированные состояния.",
+      "exclusions": [
+        "tick_sighting_or_antibody_equals_active_disease",
+        "early_negative_serology_excludes",
+        "morula_always_names_species",
+        "coinfection_impossible"
+      ],
+      "planBundleId": "tick_bacterial_plan",
+      "sourceIds": [
+        "merck_ehrlichiosis_2026",
+        "merck_anaplasmosis_2026",
+        "merck_lyme_borreliosis"
+      ],
+      "presentations": [
+        {
+          "id": "p1_ehrlichia_or_anaplasma_fever_cytopenia_lameness_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_condition",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что у собаки с совместимым региональным воздействием клеща наблюдается лихорадка, вялость, цитопения, кровотечение или подвижная хромота.",
+          "historyAnswers": {
+            "lifetime_current_geography_travel_import_and_dates": "По нашим наблюдениям, совместимое местоположение и даты сохраняются.",
+            "season_vector_sighting_removal_and_attachment": "Дома мы заметили, что контакт с клещом датирован, но не является диагностическим доказательством.",
+            "onset_fever_lameness_bleeding_collapse_and_weight": "Насколько мы можем судить, выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного.",
+            "raw_cbc_reticulocytes_smear_platelets_and_organ_values": "Мы записали, что серийные цитопении и показатели органов остаются неудовлетворительными."
+          },
+          "examFindings": [
+            {
+              "factId": "compatible_tick_bacterial_syndrome_requires_severity_pcr_and_timed_serology_not_morula_guess",
+              "source": "diagnostic_rule",
+              "finding": "Лихорадка, цитопения или морулы сужают путь, но не сами по себе определяют возбудитель."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "compatible_tick_bacterial_syndrome_requires_severity_pcr_and_timed_serology_not_morula_guess",
+              "discoveryPaths": [
+                "season_vector_sighting_removal_and_attachment",
+                "vector_cbc_retic_smear_organ_severity_record",
+                "ehrlichia_anaplasma_pcr_morula_paired_titer_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vector_region_season_travel_import_transfusion_vector_and_prevention_timeline",
+              "classification": "required_first",
+              "result": "При уточнении анамнеза: совместимое воздействие предварительно установлено."
+            },
+            {
+              "id": "vector_cbc_reticulocyte_smear_biochemistry_urinalysis_and_organ_severity",
+              "classification": "required",
+              "result": "При микроскопии материала: цитопения и органная тяжесть стадий."
+            },
+            {
+              "id": "vector_ehrlichia_anaplasma_pcr_morula_serology_and_paired_titer_context",
+              "classification": "required_confirmatory",
+              "result": "Целевое лабораторное исследование показало: данные об организме, интерпретированные по времени выборки."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "compatible_tick_bacterial_syndrome_requires_severity_pcr_and_timed_serology_not_morula_guess"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_syndrome_plus_organism_specific_or_serial_evidence"
+            ],
+            "dangerStates": [
+              "severe_bleeding",
+              "marked_pancytopenia",
+              "neurologic_signs",
+              "renal_injury",
+              "collapse"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vector_exposure_map",
+              "vector_core_lab_assessment",
+              "cbc",
+              "blood_smear",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "tick_bacterial_testing_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vector_exposure_route",
+              "vector_core_lab_route",
+              "vector_tick_bacterial_route",
+              "vector_emergency_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "tick_bacterial_plan",
+          "followUp": {
+            "timing": "Серийный клинический анализ, клинический анализ крови, обзор данных по органам и организмам.",
+            "required": true,
+            "targets": [
+              "temperature",
+              "cbc",
+              "platelets",
+              "organ_injury",
+              "pcr_serology_context"
+            ]
+          },
+          "outcomes": {
+            "safe": "Игрок определяет степень тяжести и проверяет данные организма, не превращая воздействие в диагноз.",
+            "unsafe": "Клещ, антитело или морула рассматриваются как полное причинно-следственное доказательство."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: воздействие клещей вызывает подозрения, но активная инфекция и ее тяжесть требуют сопоставимых результатов и правильно рассчитанного тестирования организма."
+          ],
+          "compatibility": {
+            "temperament": [
+              "febrile",
+              "weak",
+              "painful_or_lame"
+            ],
+            "requiredHandlingAlternative": "low_stress_recumbent_sampling_or_referral",
+            "ownerModifiers": [
+              "expects_tick_to_be_complete_answer"
+            ]
+          }
+        },
+        {
+          "id": "p2_borrelia_exposure_vs_compatible_clinical_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "routine_to_urgent_by_renal_state",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что тест на воздействие Боррелии дает положительный результат у собаки без каких-либо признаков, периодической хромоты, лихорадки или возможного поражения почек.",
+          "historyAnswers": {
+            "lifetime_current_geography_travel_import_and_dates": "По нашим наблюдениям, эндемическое воздействие и даты ясны.",
+            "season_vector_sighting_removal_and_attachment": "Дома мы заметили, что возможность вектора фиксируется.",
+            "onset_fever_lameness_bleeding_collapse_and_weight": "Насколько мы можем судить, владелец не отмечает этого признака на текущем этапе.",
+            "raw_cbc_reticulocytes_smear_platelets_and_organ_values": "Мы записали, что показатели мочи и почек сохраняются без суммарных потерь."
+          },
+          "examFindings": [
+            {
+              "factId": "borrelia_antibody_is_exposure_evidence_and_requires_compatible_syndrome_and_renal_review",
+              "source": "evidence_interpretation",
+              "finding": "Серопозитивность сама по себе не доказывает, что Боррелии являются причиной данной жалобы."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "borrelia_antibody_is_exposure_evidence_and_requires_compatible_syndrome_and_renal_review",
+              "discoveryPaths": [
+                "lifetime_current_geography_travel_import_and_dates",
+                "borrelia_exposure_syndrome_complication_record",
+                "vector_cbc_retic_smear_organ_severity_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vector_region_season_travel_import_transfusion_vector_and_prevention_timeline",
+              "classification": "required_first",
+              "result": "При уточнении анамнеза: воздействие предварительно зафиксировано."
+            },
+            {
+              "id": "vector_borrelia_exposure_test_compatible_syndrome_and_complication_review",
+              "classification": "required_interpretation",
+              "result": "При уточнении анамнеза: воздействие отделено от совместимого клинического заболевания."
+            },
+            {
+              "id": "vector_cbc_reticulocyte_smear_biochemistry_urinalysis_and_organ_severity",
+              "classification": "required_if_symptomatic_or_renal_concern",
+              "result": "При микроскопии материала: оценивали почечные и системные осложнения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "borrelia_antibody_is_exposure_evidence_and_requires_compatible_syndrome_and_renal_review"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_clinical_syndrome_plus_exposure_evidence_and_mimic_review"
+            ],
+            "dangerStates": [
+              "azotemia",
+              "proteinuria",
+              "edema",
+              "hypertension",
+              "systemic_deterioration"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vector_exposure_map",
+              "borrelia_evidence_review",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "tick_bacterial_testing_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vector_exposure_route",
+              "vector_borrelia_route",
+              "vector_core_lab_route",
+              "vector_emergency_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "tick_bacterial_plan",
+          "followUp": {
+            "timing": "Клинические и почечные тенденции соответствуют одному и тому же определению теста воздействия.",
+            "required": true,
+            "targets": [
+              "lameness",
+              "fever",
+              "creatinine",
+              "urinalysis",
+              "proteinuria"
+            ]
+          },
+          "outcomes": {
+            "safe": "Здоровые, совместимые клинические состояния и состояния с почечным риском остаются разными.",
+            "unsafe": "Каждый положительный результат теста на воздействие вызывает активную болезнь Лайма."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: положительный результат теста на воздействие является важным контекстом, но многие собаки, подвергшиеся воздействию, не являются клинически больными, и результаты исследования почек требуют срочности."
+          ],
+          "compatibility": {
+            "temperament": [
+              "comfortable",
+              "lame",
+              "systemically_unwell"
+            ],
+            "requiredHandlingAlternative": "pain_aware_exam_and_low_stress_sampling",
+            "ownerModifiers": [
+              "anxious_about_positive_screen"
+            ]
+          }
+        },
+        {
+          "id": "p3_acute_seronegative_chronic_seropositive_or_tick_coinfection_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_condition",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что у совместимой собаки, подвергшейся воздействию клещей, наблюдаются несогласованные ПЦР, мазки или серологические исследования, стойкие антитела или характер тяжести заболевания, предполагающий коинфекцию.",
+          "historyAnswers": {
+            "organism_test_sample_time_titer_pcr_and_reference_identity": "По нашим наблюдениям, каждый результат сохраняет организм, метод, образец и время.",
+            "coinfection_retrovirus_and_immune_mediated_mimics": "Дома мы заметили, что коинфекция и мимики остаются открытыми гипотезами.",
+            "raw_cbc_reticulocytes_smear_platelets_and_organ_values": "Насколько мы можем судить, серийные тенденции фиксируются.",
+            "prevention_product_date_adherence_and_gaps": "Мы записали, что история профилактики изменяет предыдущую, но никогда не стирает болезнь."
+          },
+          "examFindings": [
+            {
+              "factId": "discordant_tick_tests_require_timeline_serial_evidence_and_coinfection_matrix",
+              "source": "discordance_rule",
+              "finding": "Острая серонегативность, стойкие антитела и низкая нагрузка на организм являются ожидаемыми состояниями, а не ошибками данных."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "discordant_tick_tests_require_timeline_serial_evidence_and_coinfection_matrix",
+              "discoveryPaths": [
+                "organism_test_sample_time_titer_pcr_and_reference_identity",
+                "ehrlichia_anaplasma_pcr_morula_paired_titer_record",
+                "coinfection_matrix_and_mimic_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vector_ehrlichia_anaplasma_pcr_morula_serology_and_paired_titer_context",
+              "classification": "required_serial",
+              "result": "Целевое лабораторное исследование показало: расхождение интерпретируется в зависимости от времени заболевания."
+            },
+            {
+              "id": "vector_borrelia_exposure_test_compatible_syndrome_and_complication_review",
+              "classification": "conditional_coinfection",
+              "result": "При уточнении анамнеза: экспозиция и совместимый синдром рассматриваются отдельно."
+            },
+            {
+              "id": "vector_longitudinal_response_relapse_transmission_prevention_and_retest_plan",
+              "classification": "required",
+              "result": "Целевое исследование показало: определения тестов и ответы для тех же случаев сохраняются."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "discordant_tick_tests_require_timeline_serial_evidence_and_coinfection_matrix"
+            ],
+            "confirmedDiagnosisRequires": [
+              "time_coherent_organism_evidence_or_serial_conversion_plus_compatible_syndrome"
+            ],
+            "dangerStates": [
+              "progressive_cytopenia",
+              "bleeding",
+              "renal_injury",
+              "neurologic_deterioration",
+              "multi_pathogen_severity"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vector_core_lab_assessment",
+              "cbc",
+              "blood_smear"
+            ],
+            "external": [
+              "tick_bacterial_testing_external",
+              "borrelia_evidence_review"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vector_tick_bacterial_route",
+              "vector_borrelia_route",
+              "vector_longitudinal_route",
+              "vector_emergency_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "tick_bacterial_plan",
+          "followUp": {
+            "timing": "Парные или серийные данные через клинически обоснованные промежутки времени.",
+            "required": true,
+            "targets": [
+              "cbc",
+              "organ_values",
+              "pcr",
+              "paired_serology",
+              "clinical_response",
+              "coinfection_matrix"
+            ]
+          },
+          "outcomes": {
+            "safe": "Разногласия сохраняются и разрешаются посредством времени, фенотипа и серийных данных.",
+            "unsafe": "Один отрицательный тест или сохраняющиеся антитела ошибочно принимают за окончательное доказательство отсутствия либо активности инфекции."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему ранние и хронические тесты могут не совпадать и почему дополнительные временные доказательства могут быть безопаснее, чем немедленная бинарная метка."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "febrile",
+              "repeat_visit_sensitive"
+            ],
+            "requiredHandlingAlternative": "minimal_repeat_sampling_with_external_route",
+            "ownerModifiers": [
+              "frustrated_by_nonbinary_results"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "vector_hemoparasite_complex",
+      "version": "2026.07.16.40",
+      "title": "Гемопаразитарные инфекции: Babesia и гемотропные микоплазмы",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Гемолиз, тромбоцитопения и регенеративная анемия требуют соответствующего вида воздействия, необработанных гематологических данных и тяжести состояния органов, а также контекста мазка или ПЦР; Острые состояния с высоким бременем, хронические с низким уровнем паразитемии, коинфекция и кошачье носительство остаются отдельными.",
+      "exclusions": [
+        "single_negative_smear_excludes",
+        "visual_morphology_always_species",
+        "pcr_positive_carrier_equals_current_cause",
+        "generated_transfusion_or_drug"
+      ],
+      "planBundleId": "hemoparasite_plan",
+      "sourceIds": [
+        "merck_hemotropic_mycoplasma",
+        "merck_ehrlichiosis_2026",
+        "merck_anaplasmosis_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_canine_babesia_acute_hemolysis_thrombocytopenia_or_collapse",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 4.75,
+          "complaint": "Мы обратились, потому что у собаки после совместимого клеща, путешествия, драки или переливания крови наблюдается резкая бледность, желтуха, темная моча, тромбоцитопения, слабость или коллапс.",
+          "historyAnswers": {
+            "transfusion_fight_splenectomy_and_nonvector_exposure": "По нашим наблюдениям, векторные и невекторные маршруты датированы.",
+            "anemia_jaundice_urine_respiration_skin_eye_and_renal_signs": "Дома мы заметили, что гемолиз и органные признаки выражены.",
+            "raw_cbc_reticulocytes_smear_platelets_and_organ_values": "Насколько мы можем судить, общий анализ крови, ретикулоциты, мазок и показатели органов остаются необработанными.",
+            "coinfection_retrovirus_and_immune_mediated_mimics": "Мы записали, что коинфекция и иммунно-опосредованная мимика сохраняются."
+          },
+          "examFindings": [
+            {
+              "factId": "acute_canine_babesia_pattern_requires_emergency_staging_species_pcr_and_coinfection_review",
+              "source": "emergency_diagnostic_rule",
+              "finding": "Гемолиз и коллапс лечат до определения вида, без составления инструкций по лечению."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "acute_canine_babesia_pattern_requires_emergency_staging_species_pcr_and_coinfection_review",
+              "discoveryPaths": [
+                "transfusion_fight_splenectomy_and_nonvector_exposure",
+                "vector_cbc_retic_smear_organ_severity_record",
+                "babesia_smear_species_pcr_coinfection_record",
+                "vector_hemolysis_shock_bleeding_respiratory_renal_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vector_hemolysis_shock_bleeding_respiratory_or_renal_emergency_route",
+              "classification": "required_first",
+              "result": "По итогам консультации специалиста: установлена немедленная тяжесть и безопасность передачи."
+            },
+            {
+              "id": "vector_cbc_reticulocyte_smear_biochemistry_urinalysis_and_organ_severity",
+              "classification": "required",
+              "result": "При микроскопии материала: стадия гемолиза, тромбоцитов и поражения органов."
+            },
+            {
+              "id": "vector_babesia_smear_species_pcr_and_coinfection_assessment",
+              "classification": "required_confirmatory",
+              "result": "При микроскопии материала: оценены бабезии или виды и пути коинфекции."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "acute_canine_babesia_pattern_requires_emergency_staging_species_pcr_and_coinfection_review"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_hemolytic_pattern_plus_babesia_evidence"
+            ],
+            "dangerStates": [
+              "shock",
+              "severe_anemia",
+              "respiratory_distress",
+              "acute_kidney_injury",
+              "dic",
+              "neurologic_signs"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vector_emergency_stabilization",
+              "vector_core_lab_assessment",
+              "cbc",
+              "blood_smear",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "babesia_testing_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vector_emergency_route",
+              "vector_core_lab_route",
+              "vector_babesia_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "hemoparasite_plan",
+          "followUp": {
+            "timing": "Постоянная тенденция к неотложной ситуации, затем серийные гематологические исследования, анализы органов и организма.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "pcv_hematocrit",
+              "reticulocytes",
+              "platelets",
+              "bilirubin",
+              "renal_values",
+              "pcr"
+            ]
+          },
+          "outcomes": {
+            "safe": "Окончательной маркировке вида предшествуют экстренная безопасность и тяжесть гемолиза.",
+            "unsafe": "Изображение мазка запускает создание протокола приема препарата или переливания крови."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: непосредственный риск анемии, кровотечения и повреждения органов, пределы одного мазка и необходимость подтверждения вида или коинфекции."
+          ],
+          "compatibility": {
+            "temperament": [
+              "collapsed",
+              "dyspneic",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "oxygen_capable_minimal_handling_and_urgent_referral",
+            "ownerModifiers": [
+              "cost_or_transport_crisis"
+            ]
+          }
+        },
+        {
+          "id": "p2_babesia_low_parasitemia_chronic_or_coinfection_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "routine_to_urgent_by_condition",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что у собаки хроническая или рецидивирующая анемия или тромбоцитопения, отрицательный или сомнительный мазок, предшествующие поездки или драки или переливание крови или противоречивые данные о коинфекции.",
+          "historyAnswers": {
+            "transfusion_fight_splenectomy_and_nonvector_exposure": "По нашим наблюдениям, путь воздействия в течение всей жизни сохраняется.",
+            "organism_test_sample_time_titer_pcr_and_reference_identity": "Дома мы заметили, что время проведения мазка или ПЦР и предварительная обработка указаны четко.",
+            "coinfection_retrovirus_and_immune_mediated_mimics": "Насколько мы можем судить, коинфекция и иммунно-опосредованные альтернативы остаются видимыми.",
+            "raw_cbc_reticulocytes_smear_platelets_and_organ_values": "Мы записали, что продольная гематология не уплощена."
+          },
+          "examFindings": [
+            {
+              "factId": "low_parasitemia_or_relapse_requires_pcr_serial_hematology_and_coinfection_review_despite_negative_smear",
+              "source": "test_limit_rule",
+              "finding": "Один отрицательный мазок не может исключить инфекцию с низким бременем или ранее леченную инфекцию."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "low_parasitemia_or_relapse_requires_pcr_serial_hematology_and_coinfection_review_despite_negative_smear",
+              "discoveryPaths": [
+                "organism_test_sample_time_titer_pcr_and_reference_identity",
+                "babesia_smear_species_pcr_coinfection_record",
+                "coinfection_matrix_and_mimic_record",
+                "vector_same_case_response_relapse_prevention_retest_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vector_babesia_smear_species_pcr_and_coinfection_assessment",
+              "classification": "required_despite_negative_smear",
+              "result": "При микроскопии материала: маршрут с низким бременем или видами сохранен."
+            },
+            {
+              "id": "vector_cbc_reticulocyte_smear_biochemistry_urinalysis_and_organ_severity",
+              "classification": "required_serial",
+              "result": "При микроскопии материала: измерено течение хронической анемии и тромбоцитопении."
+            },
+            {
+              "id": "vector_longitudinal_response_relapse_transmission_prevention_and_retest_plan",
+              "classification": "required",
+              "result": "Целевое исследование показало: история рецидивов и профилактики связана с одним и тем же случаем."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "low_parasitemia_or_relapse_requires_pcr_serial_hematology_and_coinfection_review_despite_negative_smear"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_chronic_pattern_plus_species_appropriate_molecular_or_serial_evidence"
+            ],
+            "dangerStates": [
+              "progressive_anemia",
+              "bleeding",
+              "splenectomized_host",
+              "renal_injury",
+              "coinfection_deterioration"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vector_core_lab_assessment",
+              "cbc",
+              "blood_smear",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "babesia_testing_external",
+              "tick_bacterial_testing_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vector_core_lab_route",
+              "vector_babesia_route",
+              "vector_tick_bacterial_route",
+              "vector_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "hemoparasite_plan",
+          "followUp": {
+            "timing": "Серийная гематология и обзор организма одним и тем же методом.",
+            "required": true,
+            "targets": [
+              "anemia",
+              "reticulocytes",
+              "platelets",
+              "pcr",
+              "coinfection",
+              "relapse"
+            ]
+          },
+          "outcomes": {
+            "safe": "Остаются возможными состояния с низким бременем, хронические, рецидивирующие и коинфекционные состояния.",
+            "unsafe": "Отрицательная микроскопия закрывает дело, или новый тест незаметно меняет прежнюю истину."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: численность микроорганизмов может быть низкой и что путешествия, лечение и ко-инфекция могут привести к несоответствию результатов микроскопии и молекулярного анализа."
+          ],
+          "compatibility": {
+            "temperament": [
+              "chronically_weak",
+              "handling_tolerant",
+              "repeat_sampling_sensitive"
+            ],
+            "requiredHandlingAlternative": "planned_low_volume_sampling_or_external_collection",
+            "ownerModifiers": [
+              "fatigued_by_repeat_testing"
+            ]
+          }
+        },
+        {
+          "id": "p3_feline_hemotropic_mycoplasma_anemia_or_carrier_state",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_anemia_state",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что у кошки регенеративная анемия, лихорадка, бледность или желтуха или положительный результат на гемоплазму без совместимого заболевания.",
+          "historyAnswers": {
+            "origin_group_housing_contacts_fights_outdoor_wildlife": "По нашим наблюдениям, контекст «На улице или драке или контакте».",
+            "transfusion_fight_splenectomy_and_nonvector_exposure": "Дома мы заметили, что трансфузионный и селезёночный статус выражены.",
+            "coinfection_retrovirus_and_immune_mediated_mimics": "Насколько мы можем судить, вирус лейкоза и вирус иммунодефицита кошек и иммуноопосредованные или коморбидные альтернативы сохраняются.",
+            "anemia_jaundice_urine_respiration_skin_eye_and_renal_signs": "Мы записали, что приведены данные о тяжести анемии и клинической совместимости."
+          },
+          "examFindings": [
+            {
+              "factId": "feline_hemoplasma_requires_anemia_compatibility_pcr_and_retrovirus_context_while_carrier_state_remains_possible",
+              "source": "diagnostic_rule",
+              "finding": "Чувствительность мазка и морфология ограничены, а положительный результат ПЦР может сохраняться, не являясь единственной причиной заболевания."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "feline_hemoplasma_requires_anemia_compatibility_pcr_and_retrovirus_context_while_carrier_state_remains_possible",
+              "discoveryPaths": [
+                "coinfection_retrovirus_and_immune_mediated_mimics",
+                "feline_hemoplasma_pcr_anemia_carrier_record",
+                "vector_cbc_retic_smear_organ_severity_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vector_cbc_reticulocyte_smear_biochemistry_urinalysis_and_organ_severity",
+              "classification": "required",
+              "result": "При микроскопии материала: оценивается регенеративная анемия и ее тяжесть."
+            },
+            {
+              "id": "vector_feline_hemoplasma_smear_pcr_retrovirus_and_carrier_context",
+              "classification": "required_confirmatory",
+              "result": "При микроскопии материала: интерпретация ПЦР, пределов мазка и статуса носителя или коморбидности."
+            },
+            {
+              "id": "vector_hemolysis_shock_bleeding_respiratory_or_renal_emergency_route",
+              "classification": "required_if_severe_anemia",
+              "result": "По итогам консультации специалиста: определены экстренная стабилизация, безопасный перевод и порядок контроля анемии и функции органов."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "feline_hemoplasma_requires_anemia_compatibility_pcr_and_retrovirus_context_while_carrier_state_remains_possible"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_regenerative_anemia_plus_valid_hemoplasma_evidence_and_comorbidity_review"
+            ],
+            "dangerStates": [
+              "severe_anemia",
+              "hypoxia",
+              "collapse",
+              "rapid_hematocrit_decline",
+              "retrovirus_comorbidity"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vector_core_lab_assessment",
+              "cbc",
+              "blood_smear",
+              "biochemistry"
+            ],
+            "external": [
+              "hemoplasma_testing_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vector_core_lab_route",
+              "vector_hemoplasma_route",
+              "vector_emergency_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "hemoparasite_plan",
+          "followUp": {
+            "timing": "Обзор серийной анемии, организма и сопутствующих заболеваний.",
+            "required": true,
+            "targets": [
+              "hematocrit",
+              "reticulocytes",
+              "bilirubin",
+              "pcr_context",
+              "retrovirus_status",
+              "clinical_recovery"
+            ]
+          },
+          "outcomes": {
+            "safe": "Клиническая анемия и состояния носительства или коинфекции разделены.",
+            "unsafe": "Кошку с отрицательным мазком мокроты исключают, или каждый носитель с положительным результатом ПЦР помечается как активно больной."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: результат анализа на организм следует интерпретировать с учетом тяжести анемии и других кошачьих инфекций, и что состояния носителя могут усложнить бинарный ответ."
+          ],
+          "compatibility": {
+            "temperament": [
+              "feline_sensitive",
+              "weak",
+              "dyspneic_if_severe"
+            ],
+            "requiredHandlingAlternative": "feline_low_stress_minimal_sampling_or_referral",
+            "ownerModifiers": [
+              "expects_single_pcr_answer"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "vector_travel_regional_complex",
+      "version": "2026.07.16.40",
+      "title": "Региональные инфекции: лейшманиоз и дирофиляриоз собак и кошек",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Версионный регион, создание контекстных шлюзов для поездок или импорта и предотвращения; собачий лейшманиоз и собачий или кошачий сердечный червь требуют четких видоспецифичных клинических, лабораторных, серологических, молекулярных и визуализирующих данных с сохранением субклинических и дискордантных состояний.",
+      "exclusions": [
+        "region_name_alone_confirms",
+        "seropositive_equals_clinical_leishmaniosis",
+        "dog_and_cat_heartworm_algorithm_identical",
+        "region_update_regenerates_saved_case",
+        "generated_prevention_or_treatment"
+      ],
+      "planBundleId": "travel_regional_plan",
+      "sourceIds": [
+        "merck_canine_leishmaniosis",
+        "capc_heartworm"
+      ],
+      "presentations": [
+        {
+          "id": "p1_canine_leishmaniosis_cutaneous_systemic_renal_or_subclinical_infection",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_to_urgent_by_renal_state",
+          "workload": 4.5,
+          "complaint": "Мы обратились, потому что у импортированной или путешествовавшей собаки наблюдаются кожные, глазные, системные или почечные признаки или положительные признаки лейшмании без клинического заболевания.",
+          "historyAnswers": {
+            "lifetime_current_geography_travel_import_and_dates": "По нашим наблюдениям, эндемичное проживание или поездки или импорт и даты сохраняются в версии набора данных.",
+            "anemia_jaundice_urine_respiration_skin_eye_and_renal_signs": "Дома мы заметили, что описаны кожный, глазной, системный и почечный фенотипы.",
+            "organism_test_sample_time_titer_pcr_and_reference_identity": "Насколько мы можем судить, количественные серологические данные и идентичность ткани или образца остаются точными.",
+            "regional_dataset_version_and_saved_case_identity": "Мы записали, что сохраненный случай сохраняет свою исходную предыдущую региональную версию."
+          },
+          "examFindings": [
+            {
+              "factId": "canine_leishmania_infection_requires_regional_gate_multimodal_evidence_and_renal_staging_while_subclinical_state_remains_distinct",
+              "source": "regional_multimodal_rule",
+              "finding": "Воздействие или инфекция не являются автоматически клиническим лейшманиозом."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "canine_leishmania_infection_requires_regional_gate_multimodal_evidence_and_renal_staging_while_subclinical_state_remains_distinct",
+              "discoveryPaths": [
+                "lifetime_current_geography_travel_import_and_dates",
+                "leishmania_serology_tissue_pcr_renal_record",
+                "vector_cbc_retic_smear_organ_severity_record",
+                "saved_case_region_version_persistence_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vector_region_season_travel_import_transfusion_vector_and_prevention_timeline",
+              "classification": "required_first",
+              "result": "При уточнении анамнеза: версия региона или путешествия установлена ранее."
+            },
+            {
+              "id": "vector_leishmania_quantitative_serology_tissue_cytology_pcr_and_renal_staging",
+              "classification": "required_confirmatory",
+              "result": "При микроскопии материала: серологические данные и данные тканей или образцов интерпретируются вместе."
+            },
+            {
+              "id": "vector_cbc_reticulocyte_smear_biochemistry_urinalysis_and_organ_severity",
+              "classification": "required",
+              "result": "При микроскопии материала: стадийное системное и почечное поражение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "canine_leishmania_infection_requires_regional_gate_multimodal_evidence_and_renal_staging_while_subclinical_state_remains_distinct"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_region_plus_multimodal_infection_evidence_plus_clinical_or_renal_staging"
+            ],
+            "dangerStates": [
+              "renal_failure",
+              "severe_proteinuria",
+              "bleeding",
+              "ocular_emergency",
+              "marked_systemic_deterioration"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vector_exposure_map",
+              "vector_core_lab_assessment",
+              "cbc",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "leishmania_testing_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vector_exposure_route",
+              "vector_leishmania_route",
+              "vector_core_lab_route",
+              "vector_emergency_route",
+              "vector_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "travel_regional_plan",
+          "followUp": {
+            "timing": "Серийный обзор клинических, почечных и организменных данных с использованием одного и того же метода.",
+            "required": true,
+            "targets": [
+              "skin_eye_signs",
+              "weight",
+              "cbc",
+              "renal_values",
+              "urinalysis",
+              "proteinuria",
+              "quantitative_serology_or_pcr_context"
+            ]
+          },
+          "outcomes": {
+            "safe": "Субклиническая инфекция, клиническое заболевание и тяжесть поражения почек остаются отдельными отдельными клиническими состояниями.",
+            "unsafe": "Путешествие или положительный результат сами по себе становятся болезнью, или ответ на лечение становится диагностическим тестом."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: региональное воздействие и инфекция не всегда означают текущее заболевание, а поражение почек меняет необходимость срочного наблюдения и долгосрочного наблюдения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "chronically_unwell",
+              "skin_pain",
+              "handling_tolerant"
+            ],
+            "requiredHandlingAlternative": "staged_low_stress_sampling_and_external_tissue_route",
+            "ownerModifiers": [
+              "import_history_uncertain"
+            ]
+          }
+        },
+        {
+          "id": "p2_canine_heartworm_antigen_microfilaria_and_cardiopulmonary_staging",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "routine_to_emergency_by_cardiopulmonary_state",
+          "workload": 4.25,
+          "complaint": "Мы обратились, потому что собака из региона риска сердечного червя или путешествующая через него имеет положительные, отрицательные или несогласованные тесты на антиген или микрофилярии с сердечно-легочными симптомами или без них.",
+          "historyAnswers": {
+            "lifetime_current_geography_travel_import_and_dates": "По нашим наблюдениям, география воздействия и окно созревания четко определены.",
+            "prevention_product_date_adherence_and_gaps": "Дома мы заметили, что даты выпуска продукции и пробелы в соблюдении режима лечения сохраняются без создания режима.",
+            "cardiopulmonary_microfilaria_antigen_antibody_imaging_history": "Насколько мы можем судить, данные об антигенах, микрофиляриях, изображениях и симптомах остаются разными.",
+            "regional_dataset_version_and_saved_case_identity": "Мы записали, что предыдущая версия остается привязанной к созданному пациенту."
+          },
+          "examFindings": [
+            {
+              "factId": "canine_heartworm_requires_antigen_microfilaria_confirmation_and_cardiopulmonary_staging_with_discordance_retained",
+              "source": "species_specific_testing_rule",
+              "finding": "Одиночный тест не заменяет подтверждение, контекст окна созревания или определение степени серьезности."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "canine_heartworm_requires_antigen_microfilaria_confirmation_and_cardiopulmonary_staging_with_discordance_retained",
+              "discoveryPaths": [
+                "cardiopulmonary_microfilaria_antigen_antibody_imaging_history",
+                "heartworm_species_antigen_antibody_microfilaria_imaging_record",
+                "vector_hemolysis_shock_bleeding_respiratory_renal_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vector_region_season_travel_import_transfusion_vector_and_prevention_timeline",
+              "classification": "required_first",
+              "result": "При уточнении анамнеза: зафиксированы сроки воздействия и предотвращения."
+            },
+            {
+              "id": "vector_heartworm_species_specific_antigen_antibody_microfilaria_and_imaging_route",
+              "classification": "required_species_specific",
+              "result": "Целевое лабораторное исследование показало: подтверждение собачьего антигена или микрофилярий и использованный метод визуализации."
+            },
+            {
+              "id": "vector_hemolysis_shock_bleeding_respiratory_or_renal_emergency_route",
+              "classification": "required_if_respiratory_or_caval_signs",
+              "result": "По итогам консультации специалиста: оценена безопасность неотложной сердечно-легочной помощи и направления к специалистам."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "canine_heartworm_requires_antigen_microfilaria_confirmation_and_cardiopulmonary_staging_with_discordance_retained"
+            ],
+            "confirmedDiagnosisRequires": [
+              "species_appropriate_confirmed_heartworm_evidence_plus_stage"
+            ],
+            "dangerStates": [
+              "respiratory_distress",
+              "syncope",
+              "right_sided_failure",
+              "hemoglobinuria_or_caval_pattern",
+              "severe_pulmonary_hypertension"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vector_exposure_map",
+              "heartworm_staged_testing",
+              "canine_heartworm_testing"
+            ],
+            "external": [
+              "vector_emergency_stabilization"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vector_exposure_route",
+              "vector_heartworm_route",
+              "vector_emergency_route",
+              "vector_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "travel_regional_plan",
+          "followUp": {
+            "timing": "Серийное тестирование с учетом вида и повторная сердечно-легочная оценка.",
+            "required": true,
+            "targets": [
+              "antigen",
+              "microfilaria",
+              "respiratory_signs",
+              "imaging_stage",
+              "prevention_history"
+            ]
+          },
+          "outcomes": {
+            "safe": "Признаки инфекции у собак, разногласия и сердечно-легочная стадия остаются связанными, но разными.",
+            "unsafe": "Один результат антигена создает протокол лечения или профилактики или игнорирует серьезные сердечно-легочные признаки."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему результаты тестов на антиген и микрофилярии могут не совпадать, почему время воздействия имеет значение и почему определение стадии заболевания сердца или легких определяет неотложность."
+          ],
+          "compatibility": {
+            "temperament": [
+              "comfortable",
+              "exercise_intolerant",
+              "dyspneic"
+            ],
+            "requiredHandlingAlternative": "minimal_exertion_cardiopulmonary_exam_or_referral",
+            "ownerModifiers": [
+              "prevention_gap_guilt"
+            ]
+          }
+        },
+        {
+          "id": "p3_feline_heartworm_antibody_antigen_imaging_and_low_worm_burden_uncertainty",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "routine_to_emergency_by_respiratory_state",
+          "workload": 4.5,
+          "complaint": "Мы обратились, потому что у кошки из региона риска сердечного червя наблюдается кашель, одышка, рвота, коллапс или риск внезапной смерти с отрицательными или несогласованными тестами на антитела или антиген и низким содержанием гельминтов.",
+          "historyAnswers": {
+            "lifetime_current_geography_travel_import_and_dates": "По нашим наблюдениям, регион воздействия и даты указаны явно.",
+            "prevention_product_date_adherence_and_gaps": "Дома мы заметили, что профилактика истории изменений предыдущая, не правда.",
+            "cardiopulmonary_microfilaria_antigen_antibody_imaging_history": "Насколько мы можем судить, кошачьи антитела, обработка антигена и визуализация регистрируются отдельно.",
+            "anemia_jaundice_urine_respiration_skin_eye_and_renal_signs": "Мы записали, что фенотип и тяжесть респираторного или желудочно-кишечного коллапса фиксированы."
+          },
+          "examFindings": [
+            {
+              "factId": "feline_heartworm_low_burden_requires_combined_antibody_antigen_imaging_and_clinical_context_not_canine_algorithm",
+              "source": "species_specific_testing_rule",
+              "finding": "Низкая нагрузка самок червей может сделать антиген отрицательным; антитела поддерживают контакт, но не обязательно текущую инфекцию у взрослых."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "feline_heartworm_low_burden_requires_combined_antibody_antigen_imaging_and_clinical_context_not_canine_algorithm",
+              "discoveryPaths": [
+                "cardiopulmonary_microfilaria_antigen_antibody_imaging_history",
+                "heartworm_species_antigen_antibody_microfilaria_imaging_record",
+                "vector_hemolysis_shock_bleeding_respiratory_renal_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vector_region_season_travel_import_transfusion_vector_and_prevention_timeline",
+              "classification": "required_first",
+              "result": "При уточнении анамнеза: воздействие на кошек ранее установлено."
+            },
+            {
+              "id": "vector_heartworm_species_specific_antigen_antibody_microfilaria_and_imaging_route",
+              "classification": "required_feline_combination",
+              "result": "Целевое лабораторное исследование показало: антитела, ограничения по антигенам и визуализация интерпретируются вместе."
+            },
+            {
+              "id": "vector_hemolysis_shock_bleeding_respiratory_or_renal_emergency_route",
+              "classification": "required_if_dyspnea_or_collapse",
+              "result": "По итогам консультации специалиста: установлены респираторная безопасность и маршрут направления."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "feline_heartworm_low_burden_requires_combined_antibody_antigen_imaging_and_clinical_context_not_canine_algorithm"
+            ],
+            "confirmedDiagnosisRequires": [
+              "feline_compatible_context_plus_combined_species_specific_evidence"
+            ],
+            "dangerStates": [
+              "dyspnea",
+              "collapse",
+              "acute_respiratory_deterioration",
+              "neurologic_signs",
+              "sudden_death_risk"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vector_exposure_map",
+              "heartworm_staged_testing"
+            ],
+            "external": [
+              "vector_emergency_stabilization"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vector_exposure_route",
+              "vector_heartworm_route",
+              "vector_emergency_route",
+              "vector_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "travel_regional_plan",
+          "followUp": {
+            "timing": "Серийная клиническая, серологическая и визуализирующая повторная оценка, специфичная для кошек.",
+            "required": true,
+            "targets": [
+              "respiratory_rate",
+              "antibody_context",
+              "antigen_context",
+              "thoracic_imaging",
+              "echocardiographic_findings"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неопределенность с низким бременем и данные, специфичные для кошек, сохраняются.",
+            "unsafe": "Алгоритм собачьего антигена или микрофилярий копируется на кошек, или один отрицательный тест исключает заболевание."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: кошки часто переносят очень мало глистов, поэтому ни один анализ крови не дает достоверного ответа на каждый случай, а затрудненное дыхание требует срочного лечения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "feline_sensitive",
+              "dyspneic",
+              "collapse_prone"
+            ],
+            "requiredHandlingAlternative": "oxygen_first_minimal_restraint_feline_route",
+            "ownerModifiers": [
+              "expects_canine_style_test_certainty"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if disease appears without compatible region/travel/exposure or species.",
+    "Reject if one tick sighting or positive antibody proves active disease, or negative early serology/one smear excludes infection.",
+    "Reject if all morulae/parasites are visually identified without limits or coinfection is impossible.",
+    "Reject if dog and cat heartworm testing is identical.",
+    "Reject if a saved case changes when regional prevalence data updates.",
+    "Reject if external results are instant.",
+    "Reject if code generates antiparasitic/antimicrobial, transfusion, fluid, prevention, public-health protocol or dose."
+  ]
+}

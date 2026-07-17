@@ -1,0 +1,2457 @@
+{
+  "schemaVersion": 1,
+  "familyId": "infectious_canine_major",
+  "familyVersion": "2026.07.16.40",
+  "title": "Основные инфекции собак",
+  "campaignPhase": "chapter_2_to_5",
+  "species": [
+    "dog"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": [
+    "Пакет содержит четыре заболевания и один регулируемый маршрут общественного здравоохранения, а не универсальную клиническую запись вирусной инфекции.",
+    "Клиническая картина и история вакцинации проводят проверки, но не подтверждают и не проверяют заболевание сами на себе.",
+    "До попадания в общую очередь заразный пациент получает инфекционный контроль сортировка по срочности, изоляция или средства индивидуальной защиты поток и контакт журнал.",
+    "Отрицательный быстрый исследование не стирает воспроизводимый инфекционный клиническая картина после повторная загрузка; срок, разведение, выделение возбудителя и проба место сохраняются.",
+    "Положительный ПЦР или серология не автоматически доказывает активную причинную инфекцию без клинического и проба контекст.",
+    "недавний вакцинация может осложнять интерпретацию отдельных тестов и всегда сохраняется с название препарата, дата и возраст при введении идентификация.",
+    "Парвовирусная тяжесть определяется гидратацией, перфузия, лейкопения, глюкоза, сепсис и орган состояние, а не только антиген результат.",
+    "Чума плотоядных может иметь отсроченную или прогрессирующую неврологическую фазу без одновременных респираторных признаков.",
+    "собачий аденовирус печёночный картина требует свёртывание и функция органов безопасность и исключения печёночный сходные состояния.",
+    "лептоспироз возможен у любого вид, возраст и пол или условия жизни, имеет почки, печень и дыхательная система картины и зоонозный моча и кровь барьер маршрут.",
+    "реакция микроагглютинации не считается надёжным определителем инфицирующий серовар; кровь и моча ПЦР, острый период и период выздоровления реакция микроагглютинации и вакцинация контекст интерпретируются вместе.",
+    "Подозрение на бешенство не относится к обычному приёму. Способ безопасной фиксации, исследование, наблюдение и дальнейший маршрут определяются местными правилами и уполномоченной службой.",
+    "Автоматически не назначаются препарат, доза, инфузия, противомикробный, изоляция продолжительность, вакцина график или правовой или регулирующий дальнейший маршрут."
+  ],
+  "coreCapabilities": [
+    "isolation_protocol",
+    "infectious_rapid_test",
+    "cbc",
+    "biochemistry",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "canine_infectious_history_route",
+      "anyOf": [
+        "canine_infectious_history",
+        "safe_referral"
+      ],
+      "purpose": "exposure_travel_origin_contacts_vaccine_and_timeline"
+    },
+    {
+      "id": "canine_infectious_control_route",
+      "anyOf": [
+        "canine_infectious_control",
+        "isolation_protocol",
+        "safe_referral"
+      ],
+      "purpose": "triage_isolation_ppe_flow_and_outbreak_log"
+    },
+    {
+      "id": "canine_parvo_route",
+      "anyOf": [
+        "canine_parvo_testing",
+        "infectious_rapid_test",
+        "safe_referral"
+      ],
+      "purpose": "fecal_antigen_pcr_and_false_negative_context"
+    },
+    {
+      "id": "canine_distemper_route",
+      "anyOf": [
+        "canine_distemper_testing_external",
+        "safe_referral"
+      ],
+      "purpose": "multisite_rt_pcr_antibody_and_vaccine_context"
+    },
+    {
+      "id": "canine_adenovirus_route",
+      "anyOf": [
+        "canine_adenovirus_testing_external",
+        "safe_referral"
+      ],
+      "purpose": "hepatic_coagulation_and_pcr_confirmation"
+    },
+    {
+      "id": "canine_lepto_test_route",
+      "anyOf": [
+        "canine_lepto_testing_external",
+        "safe_referral"
+      ],
+      "purpose": "blood_urine_pcr_acute_convalescent_mat_and_vaccine_context"
+    },
+    {
+      "id": "canine_lepto_zoonotic_route",
+      "anyOf": [
+        "canine_lepto_zoonotic_protocol",
+        "safe_referral"
+      ],
+      "purpose": "urine_blood_barrier_environment_and_owner_health_guidance"
+    },
+    {
+      "id": "canine_rabies_route",
+      "anyOf": [
+        "rabies_regulated_protocol",
+        "safe_referral"
+      ],
+      "purpose": "no_routine_handling_public_health_notification_and_exposure_log"
+    },
+    {
+      "id": "canine_infectious_longitudinal_route",
+      "anyOf": [
+        "canine_infectious_longitudinal_monitoring",
+        "safe_referral"
+      ],
+      "purpose": "organ_support_contagious_window_contacts_and_household_monitoring"
+    },
+    {
+      "id": "canine_infectious_referral_route",
+      "anyOf": [
+        "infectious_disease_referral",
+        "safe_referral"
+      ],
+      "purpose": "external_lab_emergency_and_regulated_handoff"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "canine_infectious_exposure_travel_origin_contacts_vaccine_and_timeline_inventory",
+      "requires": [
+        "canine_infectious_history"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "canine_infectious_triage_isolation_ppe_flow_and_outbreak_log",
+      "requires": [
+        "canine_infectious_control"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "canine_parvovirus_fecal_antigen_pcr_and_false_negative_context",
+      "requires": [
+        "canine_parvo_testing"
+      ],
+      "availability": "local_plus_external_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "canine_distemper_multisite_rt_pcr_antibody_and_vaccine_context",
+      "requires": [
+        "canine_distemper_testing_external"
+      ],
+      "availability": "external_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "canine_adenovirus_hepatic_coagulation_and_pcr_confirmation_route",
+      "requires": [
+        "canine_adenovirus_testing_external"
+      ],
+      "availability": "external_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "canine_leptospira_blood_urine_pcr_acute_convalescent_mat_and_vaccine_context",
+      "requires": [
+        "canine_lepto_testing_external"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "canine_leptospira_barrier_precautions_environment_and_owner_health_guidance",
+      "requires": [
+        "canine_lepto_zoonotic_protocol"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "canine_rabies_no_routine_handling_public_health_notification_and_exposure_log",
+      "requires": [
+        "rabies_regulated_protocol"
+      ],
+      "availability": "regulated_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "canine_serial_organ_support_contagious_window_and_household_monitoring",
+      "requires": [
+        "canine_infectious_longitudinal_monitoring"
+      ],
+      "availability": "longitudinal_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "canine_infectious_external_lab_emergency_and_regulated_referral_route",
+      "requires": [
+        "infectious_disease_referral"
+      ],
+      "availability": "external_chapter_2",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "origin_shelter_travel_wildlife_water_and_contact_dates",
+      "prompt": "Каковы происхождение, приют, поездка, дикие животные и природная вода и контакт даты?"
+    },
+    {
+      "id": "vaccine_product_dates_age_series_and_recent_vaccination",
+      "prompt": "Каковы вакцина препарат, даты, возраст серия и недавний вакцинация?"
+    },
+    {
+      "id": "onset_fever_gi_respiratory_ocular_neurologic_timeline",
+      "prompt": "Каков начало и порядок лихорадка, желудочно-кишечный тракт, дыхательный, глазной и неврологический признаки?"
+    },
+    {
+      "id": "household_animals_shared_spaces_and_exposure_log",
+      "prompt": "Какие домашняя группа животные и общий помещения были был контакт?"
+    },
+    {
+      "id": "vomiting_diarrhea_intake_urine_and_hydration",
+      "prompt": "Каковы частота рвоты и диареи, объём съеденного и выпитого, мочеиспускание и признаки обезвоживания?"
+    },
+    {
+      "id": "behavior_swallowing_salivation_paralysis_and_bite_history",
+      "prompt": "Есть ли поведение, глотание, слюноотделение и паралич изменения или укус анамнез?"
+    },
+    {
+      "id": "kidney_liver_bleeding_respiratory_and_neurologic_red_flags",
+      "prompt": "Есть ли почки, печень, кровотечение, дыхательный или неврологический тревожные признаки?"
+    },
+    {
+      "id": "sample_type_site_time_storage_and_pretest_treatment",
+      "prompt": "Каковы проба тип, место, время и условия хранения и до исследования лечение?"
+    },
+    {
+      "id": "prior_antigen_pcr_serology_mat_and_reference_identity",
+      "prompt": "Каковы предыдущий антиген, ПЦР, серология и реакция микроагглютинации и лаборатория идентификация?"
+    },
+    {
+      "id": "human_urine_blood_saliva_and_bite_exposure_log",
+      "prompt": "Кто контактировал с моча, кровь, слюна или укус?"
+    },
+    {
+      "id": "isolation_ppe_decontamination_and_room_capacity",
+      "prompt": "Каковы изоляция, средства индивидуальной защиты, обеззараживание и помещение возможность ухода?"
+    },
+    {
+      "id": "owner_transport_referral_public_health_and_recheck_feasibility",
+      "prompt": "Возможны ли направление, санитарно-эпидемиологический контакт и повторный осмотр?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "exposure_vaccine_contact_timeline_record",
+      "source": "history",
+      "requires": [
+        "canine_infectious_history"
+      ]
+    },
+    {
+      "id": "pre_waiting_room_isolation_ppe_outbreak_record",
+      "source": "infection_control",
+      "requires": [
+        "canine_infectious_control"
+      ]
+    },
+    {
+      "id": "parvo_antigen_pcr_timing_and_false_negative_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "canine_parvo_testing"
+      ]
+    },
+    {
+      "id": "distemper_multisite_pcr_vaccine_context_record",
+      "source": "external_report",
+      "requires": [
+        "canine_distemper_testing_external"
+      ]
+    },
+    {
+      "id": "adenovirus_hepatic_coagulation_pcr_record",
+      "source": "external_report",
+      "requires": [
+        "canine_adenovirus_testing_external"
+      ]
+    },
+    {
+      "id": "lepto_blood_urine_pcr_mat_vaccine_record",
+      "source": "external_report",
+      "requires": [
+        "canine_lepto_testing_external"
+      ]
+    },
+    {
+      "id": "lepto_barrier_environment_owner_health_record",
+      "source": "zoonotic_protocol",
+      "requires": [
+        "canine_lepto_zoonotic_protocol"
+      ]
+    },
+    {
+      "id": "rabies_no_handling_authority_exposure_record",
+      "source": "regulated_protocol",
+      "requires": [
+        "rabies_regulated_protocol"
+      ]
+    },
+    {
+      "id": "serial_organ_contagious_contact_monitoring_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "canine_infectious_longitudinal_monitoring"
+      ]
+    },
+    {
+      "id": "external_lab_emergency_regulated_handoff_record",
+      "source": "referral_plan",
+      "requires": [
+        "infectious_disease_referral"
+      ]
+    },
+    {
+      "id": "organ_severity_cbc_chemistry_glucose_urine_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "canine_infectious_history"
+      ]
+    },
+    {
+      "id": "same_patient_test_context_and_exposure_persistence_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "canine_infectious_longitudinal_monitoring"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "parvo_plan",
+      "fullPlan": [
+        "isolate_before_queue",
+        "exposure_vaccine_timeline",
+        "severity_and_sepsis_screen",
+        "antigen_with_timing_limits",
+        "pcr_or_repeat_if_discordant",
+        "household_environment_followup"
+      ],
+      "stagedPlan": [
+        "isolate",
+        "triage",
+        "test",
+        "reassess"
+      ],
+      "minimumSafePlan": [
+        "vaccine_not_exclusion",
+        "negative_rapid_not_absolute",
+        "severe_case_referral",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "dehydration_sepsis_safety",
+        "isolation_icu_referral"
+      ],
+      "unsafeOrInadequate": [
+        "negative_antigen_rerolls_disease",
+        "generated_fluid_or_drug",
+        "no_environment_log"
+      ]
+    },
+    {
+      "id": "distemper_plan",
+      "fullPlan": [
+        "isolate",
+        "multisystem_timeline",
+        "complete_neurologic_and_organ_screen",
+        "multisite_test_with_vaccine_context",
+        "concurrent_infection_review",
+        "serial_neurologic_followup"
+      ],
+      "stagedPlan": [
+        "isolate",
+        "phenotype",
+        "sample_sites",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "neuro_without_resp_possible",
+        "vaccine_not_absolute",
+        "sample_site_visible",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "respiratory_neurologic_safety",
+        "infectious_neurology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "resp_signs_required_for_neuro_disease",
+        "positive_pcr_always_causal",
+        "generated_antimicrobial_or_steroid"
+      ]
+    },
+    {
+      "id": "adenovirus_plan",
+      "fullPlan": [
+        "isolate",
+        "hepatic_and_systemic_pattern",
+        "coagulation_and_failure_safety",
+        "mimic_review",
+        "pcr_or_specific_confirmation",
+        "organ_followup"
+      ],
+      "stagedPlan": [
+        "triage",
+        "hepatic_risk",
+        "confirm",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "enzyme_not_diagnosis",
+        "coagulation_visible",
+        "mimics_open",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "acute_failure_bleeding_safety",
+        "critical_referral"
+      ],
+      "unsafeOrInadequate": [
+        "vaccine_or_alt_proves_excludes",
+        "generated_fluid_or_drug",
+        "no_pcr_context"
+      ]
+    },
+    {
+      "id": "lepto_plan",
+      "fullPlan": [
+        "zoonotic_barrier_first",
+        "exposure_and_vaccine_timeline",
+        "kidney_liver_lung_severity",
+        "timed_blood_urine_pcr_and_mat",
+        "owner_health_guidance",
+        "serial_organ_and_contact_followup"
+      ],
+      "stagedPlan": [
+        "barrier",
+        "triage",
+        "timed_tests",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "any_signalment_possible",
+        "mat_serovar_limit",
+        "human_exposure_log",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "renal_hepatic_pulmonary_safety",
+        "zoonotic_icu_referral"
+      ],
+      "unsafeOrInadequate": [
+        "outdoor_large_dog_only",
+        "mat_names_serovar",
+        "generated_antimicrobial_or_isolation_duration"
+      ]
+    },
+    {
+      "id": "rabies_regulated_plan",
+      "fullPlan": [
+        "avoid_routine_handling",
+        "secure_distance_and_exposure_log",
+        "verify_exposure_and_vaccine_documents",
+        "notify_public_health_authority",
+        "follow_local_regulated_route",
+        "human_health_handoff"
+      ],
+      "stagedPlan": [
+        "do_not_expose",
+        "notify",
+        "document",
+        "authority_controls"
+      ],
+      "minimumSafePlan": [
+        "no_waiting_room",
+        "no_gameplay_guess",
+        "human_exposure_log",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "regulated_no_contact_route",
+        "public_health_handoff"
+      ],
+      "unsafeOrInadequate": [
+        "invented_quarantine_or_disposition",
+        "routine_exam",
+        "owner_reassurance_without_authority"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "wsava_vaccination_2024",
+      "title": "WSAVA 2024 Vaccination Guidelines",
+      "url": "https://wsava.org/wp-content/uploads/2024/04/WSAVA-Vaccination-guidelines-2024.pdf",
+      "scope": "core_vaccines_maternal_antibody_series_and_context"
+    },
+    {
+      "id": "merck_canine_parvovirus",
+      "title": "Merck Veterinary Manual: Canine Parvovirus Infection",
+      "url": "https://www.merckvetmanual.com/digestive-system/infectious-diseases-of-the-gastrointestinal-tract-in-small-animals/canine-parvovirus-infection-parvoviral-enteritis-in-dogs",
+      "scope": "parvo_clinical_testing_severity_and_control"
+    },
+    {
+      "id": "merck_canine_distemper",
+      "title": "Merck Veterinary Manual: Canine Distemper",
+      "url": "https://www.merckvetmanual.com/infectious-diseases/canine-distemper/canine-distemper",
+      "scope": "multisystem_neurologic_testing_and_vaccine_context"
+    },
+    {
+      "id": "merck_infectious_canine_hepatitis",
+      "title": "Merck Veterinary Manual: Infectious Canine Hepatitis",
+      "url": "https://www.merckvetmanual.com/infectious-diseases/infectious-canine-hepatitis/infectious-canine-hepatitis",
+      "scope": "adenovirus_hepatic_coagulation_and_confirmation"
+    },
+    {
+      "id": "merck_leptospirosis_dogs",
+      "title": "Merck Veterinary Manual: Leptospirosis in Dogs",
+      "url": "https://www.merckvetmanual.com/infectious-diseases/leptospirosis/leptospirosis-in-dogs",
+      "scope": "organ_patterns_pcr_mat_timing_zoonosis"
+    },
+    {
+      "id": "who_rabies",
+      "title": "World Health Organization: Rabies",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/rabies",
+      "scope": "human_exposure_public_health_and_fatal_zoonotic_risk"
+    }
+  ],
+  "variants": [
+    {
+      "id": "canine_parvoviral_enteritis",
+      "version": "2026.07.16.40",
+      "title": "Парвовирусный энтерит собак",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Острое желудочно-кишечное заболевание, контактный и вакцинальный анамнез, антиген кала с учётом срока и ПЦР или повторный тест формируют доказательства парвовируса. Тяжёлая лейкопения, обезвоживание и сепсис определяют срочность.",
+      "exclusions": [
+        "young_unvaccinated_equals_confirmed",
+        "negative_antigen_always_excludes",
+        "recent_vaccine_positive_always_active"
+      ],
+      "planBundleId": "parvo_plan",
+      "sourceIds": [
+        "wsava_vaccination_2024",
+        "merck_canine_parvovirus"
+      ],
+      "presentations": [
+        {
+          "id": "p1_young_incompletely_vaccinated_dog_with_acute_gi_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "urgent",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что у молодой собаки с незавершённой вакцинацией остро начались рвота и диарея; был возможный контакт с заражённой средой.",
+          "historyAnswers": {
+            "vaccine_product_dates_age_series_and_recent_vaccination": "По нашим наблюдениям, владелец показывает даты, названия препаратов и возраст собаки при каждой вакцинации.",
+            "vomiting_diarrhea_intake_urine_and_hydration": "Дома мы заметили, что выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного.",
+            "origin_shelter_travel_wildlife_water_and_contact_dates": "Насколько мы можем судить, известны дата поступления из приюта и день возможного контакта с заболевшей собакой."
+          },
+          "examFindings": [
+            {
+              "factId": "young_gi_pattern_requires_isolation_and_timed_testing_not_vaccine_assumption",
+              "source": "triage_rule",
+              "finding": "Изоляцию начинают при обоснованном подозрении, не дожидаясь окончательного подтверждения."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "young_gi_pattern_requires_isolation_and_timed_testing_not_vaccine_assumption",
+              "discoveryPaths": [
+                "vaccine_product_dates_age_series_and_recent_vaccination",
+                "pre_waiting_room_isolation_ppe_outbreak_record",
+                "parvo_antigen_pcr_timing_and_false_negative_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_infectious_triage_isolation_ppe_flow_and_outbreak_log",
+              "classification": "required_first",
+              "result": "При динамическом наблюдении: пациента изолировали от других животных."
+            },
+            {
+              "id": "canine_parvovirus_fecal_antigen_pcr_and_false_negative_context",
+              "classification": "required",
+              "result": "Целевое лабораторное исследование показало: результат связан с точной датой и этапом заболевания."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "young_gi_pattern_requires_isolation_and_timed_testing_not_vaccine_assumption"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_pattern_plus_valid_test"
+            ],
+            "dangerStates": [
+              "shock",
+              "severe_dehydration",
+              "hypoglycemia",
+              "sepsis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "canine_infectious_control",
+              "canine_parvo_testing",
+              "isolation_protocol",
+              "infectious_rapid_test"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_infectious_control_route",
+              "canine_parvo_route",
+              "canine_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "parvo_plan",
+          "followUp": {
+            "timing": "Тяжесть состояния оценивают последовательно; результат теста каждый раз сопоставляют со сроком болезни и вакцинацией.",
+            "required": true,
+            "targets": [
+              "hydration",
+              "perfusion",
+              "glucose",
+              "cbc",
+              "contacts"
+            ]
+          },
+          "outcomes": {
+            "safe": "Изоляция начата сразу, а результат теста трактуется вместе со сроком болезни и клинической картиной.",
+            "unsafe": "Диагноз ошибочно ставят только по возрасту и незавершённой вакцинации."
+          },
+          "ownerCommunication": [
+            "Сейчас мы сразу изолируем собаку, чтобы защитить других пациентов. История вакцинации меняет вероятность болезни, но не заменяет исследование."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "nauseous"
+            ],
+            "requiredHandlingAlternative": "isolation_floor_level_triage",
+            "ownerModifiers": [
+              "vaccine_confusion"
+            ]
+          }
+        },
+        {
+          "id": "p2_early_or_late_false_negative_antigen_with_pcr_review",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_condition",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что совместимый случай имеет отрицательный фекальный антиген в момент времени или в точке разведения, что может снизить чувствительность.",
+          "historyAnswers": {
+            "sample_type_site_time_storage_and_pretest_treatment": "По нашим наблюдениям, валидность выборки сохранена.",
+            "prior_antigen_pcr_serology_mat_and_reference_identity": "Дома мы заметили, что контекст отрицательного результата.",
+            "onset_fever_gi_respiratory_ocular_neurologic_timeline": "Насколько мы можем судить, день болезни известен."
+          },
+          "examFindings": [
+            {
+              "factId": "discordant_negative_antigen_requires_timing_dilution_and_pcr_or_repeat_review",
+              "source": "test_limit_rule",
+              "finding": "Отрицательный результат не исключает болезнь."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "discordant_negative_antigen_requires_timing_dilution_and_pcr_or_repeat_review",
+              "discoveryPaths": [
+                "sample_type_site_time_storage_and_pretest_treatment",
+                "parvo_antigen_pcr_timing_and_false_negative_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_parvovirus_fecal_antigen_pcr_and_false_negative_context",
+              "classification": "required_discordance_review",
+              "result": "Целевое лабораторное исследование показало: повторный маршрут или ПЦР."
+            },
+            {
+              "id": "canine_serial_organ_support_contagious_window_and_household_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: клиническая картина сохраняется."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "discordant_negative_antigen_requires_timing_dilution_and_pcr_or_repeat_review"
+            ],
+            "confirmedDiagnosisRequires": [
+              "valid_repeat_or_pcr_with_context"
+            ],
+            "dangerStates": [
+              "worsening_despite_negative",
+              "leukopenia",
+              "sepsis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "canine_parvo_testing",
+              "canine_infectious_longitudinal_monitoring"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_parvo_route",
+              "canine_infectious_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "parvo_plan",
+          "followUp": {
+            "timing": "Быстрый повтор или ПЦР и серийный клинический статус.",
+            "required": true,
+            "targets": [
+              "test_validity",
+              "cbc",
+              "hydration",
+              "contagious_risk"
+            ]
+          },
+          "outcomes": {
+            "safe": "Разногласия разрешаются без восстановления истины.",
+            "unsafe": "Один негатив закрывает изоляцию и диагностику."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: выбор времени и разбавление стула могут привести к отрицательному результату экспресс-теста, несмотря на совместимое заболевание."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "isolation_required"
+            ],
+            "requiredHandlingAlternative": "continue_isolation_external_pcr",
+            "ownerModifiers": [
+              "wants_discharge_after_negative"
+            ]
+          }
+        },
+        {
+          "id": "p3_severe_leukopenia_dehydration_sepsis_or_household_exposure",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 4.5,
+          "complaint": "Мы обратились, потому что заболевания, совместимые с парвовирусом, включают тяжелую лейкопению, обезвоживание, риск сепсиса или риск заражения домашних собак.",
+          "historyAnswers": {
+            "kidney_liver_bleeding_respiratory_and_neurologic_red_flags": "По нашим наблюдениям, тревожные признаки органов или сепсиса.",
+            "household_animals_shared_spaces_and_exposure_log": "Дома мы заметили, что список контактов сохранен.",
+            "isolation_ppe_decontamination_and_room_capacity": "Насколько мы можем судить, емкость известна."
+          },
+          "examFindings": [
+            {
+              "factId": "severe_parvo_pattern_requires_isolation_critical_referral_and_contact_environment_plan",
+              "source": "severity_rule",
+              "finding": "Экспресс-тест – не единственное решение."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "severe_parvo_pattern_requires_isolation_critical_referral_and_contact_environment_plan",
+              "discoveryPaths": [
+                "household_animals_shared_spaces_and_exposure_log",
+                "organ_severity_cbc_chemistry_glucose_urine_record",
+                "serial_organ_contagious_contact_monitoring_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_infectious_triage_isolation_ppe_flow_and_outbreak_log",
+              "classification": "required",
+              "result": "При динамическом наблюдении: контроль или мощность."
+            },
+            {
+              "id": "canine_serial_organ_support_contagious_window_and_household_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: тяжесть или контакты."
+            },
+            {
+              "id": "canine_infectious_external_lab_emergency_and_regulated_referral_route",
+              "classification": "required_if_capacity_missing",
+              "result": "По итогам консультации специалиста: безопасный трансфер."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "severe_parvo_pattern_requires_isolation_critical_referral_and_contact_environment_plan"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_pattern_plus_test_context"
+            ],
+            "dangerStates": [
+              "septic_shock",
+              "refractory_hypoglycemia",
+              "severe_leukopenia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "canine_infectious_control",
+              "canine_infectious_longitudinal_monitoring",
+              "isolation_protocol",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_infectious_control_route",
+              "canine_infectious_longitudinal_route",
+              "canine_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "parvo_plan",
+          "followUp": {
+            "timing": "Непрерывное отслеживание серьезности и воздействия в домашних условиях.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "cbc",
+              "glucose",
+              "contacts",
+              "environment"
+            ]
+          },
+          "outcomes": {
+            "safe": "Логика интенсивной терапии и вспышки остаются связанными.",
+            "unsafe": "Отсутствие вместимости помещений приводит к стандартному ожиданию или отсутствию направления."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: как непосредственную серьезность, так и отдельные обязательства по воздействию на дом или окружающую среду."
+          ],
+          "compatibility": {
+            "temperament": [
+              "collapsed",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "barrier_nursing_emergency_transfer",
+            "ownerModifiers": [
+              "multiple_dogs",
+              "cost_crisis"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "canine_distemper_multisystemic",
+      "version": "2026.07.16.40",
+      "title": "Чума плотоядных: мультисистемное заболевание",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Подозрение на чуму объединяет респираторную, желудочно-кишечную, глазную, дерматологическую и неврологическую хронологию с многоцентровым тестированием и контекстом вакцинации; отсроченное неврологическое заболевание может протекать без активных респираторных признаков.",
+      "exclusions": [
+        "respiratory_signs_required_for_neuro",
+        "positive_pcr_without_site_context_is_causal",
+        "vaccine_status_alone_excludes"
+      ],
+      "planBundleId": "distemper_plan",
+      "sourceIds": [
+        "wsava_vaccination_2024",
+        "merck_canine_distemper"
+      ],
+      "presentations": [
+        {
+          "id": "p1_febrile_respiratory_gi_and_ocular_multisystem_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что лихорадка, респираторные или желудочно-кишечные симптомы и заболевания глаз образуют мультисистемную картину чумы.",
+          "historyAnswers": {
+            "onset_fever_gi_respiratory_ocular_neurologic_timeline": "По нашим наблюдениям, последовательность действий системы зафиксирована.",
+            "vaccine_product_dates_age_series_and_recent_vaccination": "Дома мы заметили, что точный контекст вакцины.",
+            "origin_shelter_travel_wildlife_water_and_contact_dates": "Насколько мы можем судить, контекст воздействия известен."
+          },
+          "examFindings": [
+            {
+              "factId": "multisystem_pattern_requires_isolation_and_multisite_test_context",
+              "source": "phenotype_rule",
+              "finding": "Модель – это подозрение, а не доказательство."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "multisystem_pattern_requires_isolation_and_multisite_test_context",
+              "discoveryPaths": [
+                "onset_fever_gi_respiratory_ocular_neurologic_timeline",
+                "distemper_multisite_pcr_vaccine_context_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_infectious_triage_isolation_ppe_flow_and_outbreak_log",
+              "classification": "required_first",
+              "result": "При динамическом наблюдении: пациента изолировали от других животных."
+            },
+            {
+              "id": "canine_distemper_multisite_rt_pcr_antibody_and_vaccine_context",
+              "classification": "required",
+              "result": "Целевое лабораторное исследование показало: доказательства места или времени."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "multisystem_pattern_requires_isolation_and_multisite_test_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_pattern_plus_valid_distemper_evidence"
+            ],
+            "dangerStates": [
+              "pneumonia",
+              "dehydration",
+              "neurologic_onset"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "canine_infectious_control",
+              "isolation_protocol"
+            ],
+            "external": [
+              "canine_distemper_testing_external",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_infectious_control_route",
+              "canine_distemper_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "distemper_plan",
+          "followUp": {
+            "timing": "Периодический респираторный и неврологический мониторинг.",
+            "required": true,
+            "targets": [
+              "respiration",
+              "ocular_signs",
+              "gi",
+              "neurologic_signs",
+              "contacts"
+            ]
+          },
+          "outcomes": {
+            "safe": "Многоцентровые данные и курс определяют диагноз.",
+            "unsafe": "Опасно считать, что один лишь прививочный анамнез или внешняя клиническая картина окончательно подтверждают диагноз."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему для этой инфекции важны несколько систем организма и мест отбора проб."
+          ],
+          "compatibility": {
+            "temperament": [
+              "febrile",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "isolation_low_stress_sampling",
+            "ownerModifiers": [
+              "vaccine_confusion"
+            ]
+          }
+        },
+        {
+          "id": "p2_delayed_or_progressive_neurologic_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent_to_emergency",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что неврологическое заболевание появляется после перенесенного системного заболевания или прогрессирует без текущих респираторных признаков.",
+          "historyAnswers": {
+            "onset_fever_gi_respiratory_ocular_neurologic_timeline": "По нашим наблюдениям, отсроченная хронология сохранена.",
+            "kidney_liver_bleeding_respiratory_and_neurologic_red_flags": "Дома мы заметили, что выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного.",
+            "prior_antigen_pcr_serology_mat_and_reference_identity": "Насколько мы можем судить, более ранние доказательства сохранены."
+          },
+          "examFindings": [
+            {
+              "factId": "delayed_neurologic_distemper_does_not_require_simultaneous_respiratory_signs",
+              "source": "course_rule",
+              "finding": "Исторический мультиданные об общем состоянии сохраняется."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "delayed_neurologic_distemper_does_not_require_simultaneous_respiratory_signs",
+              "discoveryPaths": [
+                "onset_fever_gi_respiratory_ocular_neurologic_timeline",
+                "same_patient_test_context_and_exposure_persistence_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_distemper_multisite_rt_pcr_antibody_and_vaccine_context",
+              "classification": "required_contextual",
+              "result": "Целевое лабораторное исследование показало: отсроченные признаки заболевания."
+            },
+            {
+              "id": "canine_serial_organ_support_contagious_window_and_household_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: курс у одного и того же пациента."
+            },
+            {
+              "id": "canine_infectious_external_lab_emergency_and_regulated_referral_route",
+              "classification": "required_by_severity",
+              "result": "По итогам консультации специалиста: неврологическое или инфекционное направление."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "delayed_neurologic_distemper_does_not_require_simultaneous_respiratory_signs"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_course_plus_specific_evidence"
+            ],
+            "dangerStates": [
+              "seizure",
+              "dysphagia",
+              "aspiration",
+              "rapid_progression"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "canine_infectious_longitudinal_monitoring"
+            ],
+            "external": [
+              "canine_distemper_testing_external",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_distemper_route",
+              "canine_infectious_longitudinal_route",
+              "canine_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "distemper_plan",
+          "followUp": {
+            "timing": "Срочный серийный неврологический курс.",
+            "required": true,
+            "targets": [
+              "mentation",
+              "seizures",
+              "swallowing",
+              "respiration"
+            ]
+          },
+          "outcomes": {
+            "safe": "Отсроченная неврологическая фаза остается связанной с предшествующим заболеванием.",
+            "unsafe": "Отсутствие кашля теперь исключает чумку."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: неврологические симптомы могут появиться после исчезновения респираторных или желудочных симптомов."
+          ],
+          "compatibility": {
+            "temperament": [
+              "neurologically_abnormal"
+            ],
+            "requiredHandlingAlternative": "neuro_safe_isolation_referral",
+            "ownerModifiers": [
+              "confused_by_delayed_signs"
+            ]
+          }
+        },
+        {
+          "id": "p3_recent_vaccination_sample_site_or_concurrent_infection_complicates_testing",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_condition",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что недавняя вакцинация, место взятия образца или сопутствующая инфекция затрудняют интерпретацию результата чумы.",
+          "historyAnswers": {
+            "vaccine_product_dates_age_series_and_recent_vaccination": "По нашим наблюдениям, последний продукт или дата известны.",
+            "sample_type_site_time_storage_and_pretest_treatment": "Дома мы заметили, что место или время сохранено.",
+            "prior_antigen_pcr_serology_mat_and_reference_identity": "Насколько мы можем судить, идентичность анализа известна."
+          },
+          "examFindings": [
+            {
+              "factId": "distemper_result_requires_vaccine_strain_sample_site_timing_and_concurrent_disease_context",
+              "source": "test_interpretation_rule",
+              "finding": "Позитивное или негативное выражение не является контекстно-свободным."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "distemper_result_requires_vaccine_strain_sample_site_timing_and_concurrent_disease_context",
+              "discoveryPaths": [
+                "sample_type_site_time_storage_and_pretest_treatment",
+                "distemper_multisite_pcr_vaccine_context_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_distemper_multisite_rt_pcr_antibody_and_vaccine_context",
+              "classification": "required_discordance_review",
+              "result": "Целевое лабораторное исследование показало: контекстуальный результат."
+            },
+            {
+              "id": "canine_infectious_exposure_travel_origin_contacts_vaccine_and_timeline_inventory",
+              "classification": "required",
+              "result": "При уточнении анамнеза: график вакцинации или воздействия."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "distemper_result_requires_vaccine_strain_sample_site_timing_and_concurrent_disease_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "context_resolved_specific_evidence"
+            ],
+            "dangerStates": [
+              "progressive_neurologic_or_respiratory_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "canine_infectious_history"
+            ],
+            "external": [
+              "canine_distemper_testing_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_infectious_history_route",
+              "canine_distemper_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "distemper_plan",
+          "followUp": {
+            "timing": "После лабораторной интерпретации и клинического курса.",
+            "required": true,
+            "targets": [
+              "sample_site",
+              "vaccine_date",
+              "concurrent_infection",
+              "course"
+            ]
+          },
+          "outcomes": {
+            "safe": "Разногласия сохраняются и разрешаются.",
+            "unsafe": "Любой ПЦР-сигнал является активной причинной чумкой."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему недавняя вакцина и откуда взялся образец могут изменить интерпретацию."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable_or_sick"
+            ],
+            "requiredHandlingAlternative": "external_lab_review",
+            "ownerModifiers": [
+              "expects_binary_test"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "canine_infectious_hepatitis_adenovirus",
+      "version": "2026.07.16.40",
+      "title": "Инфекционный гепатит собак (аденовирус)",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Лихорадка, боль в животе, повреждение печени, кровотечение и острая недостаточность создают дифференциальную диагностику с аденовирусом, но ферменты печени и вакцинация не заменяют оценку коагуляции или функции, анализ печеночной мимики и специфическое подтверждение.",
+      "exclusions": [
+        "alt_equals_adenovirus",
+        "vaccinated_equals_impossible",
+        "hepatic_pattern_skips_coagulation"
+      ],
+      "planBundleId": "adenovirus_plan",
+      "sourceIds": [
+        "wsava_vaccination_2024",
+        "merck_infectious_canine_hepatitis"
+      ],
+      "presentations": [
+        {
+          "id": "p1_fever_abdominal_pain_hepatic_injury_or_adenoviral_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что лихорадка, боль в животе и повреждение печени могут быть признаками аденовирусной инфекции.",
+          "historyAnswers": {
+            "onset_fever_gi_respiratory_ocular_neurologic_timeline": "По нашим наблюдениям, курс системы зафиксирован.",
+            "vaccine_product_dates_age_series_and_recent_vaccination": "Дома мы заметили, что история вакцинации точная.",
+            "kidney_liver_bleeding_respiratory_and_neurologic_red_flags": "Насколько мы можем судить, явный риск поражения печени или кровотечения."
+          },
+          "examFindings": [
+            {
+              "factId": "adenoviral_pattern_requires_specific_confirmation_and_hepatic_safety",
+              "source": "diagnostic_boundary",
+              "finding": "АЛТ – это не диагноз."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "adenoviral_pattern_requires_specific_confirmation_and_hepatic_safety",
+              "discoveryPaths": [
+                "kidney_liver_bleeding_respiratory_and_neurologic_red_flags",
+                "adenovirus_hepatic_coagulation_pcr_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_adenovirus_hepatic_coagulation_and_pcr_confirmation_route",
+              "classification": "required",
+              "result": "Целевое лабораторное исследование показало: коагуляция и подтверждение."
+            },
+            {
+              "id": "canine_infectious_triage_isolation_ppe_flow_and_outbreak_log",
+              "classification": "required",
+              "result": "При динамическом наблюдении: контроль."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "adenoviral_pattern_requires_specific_confirmation_and_hepatic_safety"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_pattern_plus_specific_confirmation"
+            ],
+            "dangerStates": [
+              "coagulopathy",
+              "hypoglycemia",
+              "acute_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "canine_infectious_control",
+              "cbc",
+              "biochemistry",
+              "isolation_protocol"
+            ],
+            "external": [
+              "canine_adenovirus_testing_external",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_infectious_control_route",
+              "canine_adenovirus_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "adenovirus_plan",
+          "followUp": {
+            "timing": "Серийное исследование функции печени или коагуляции и лабораторное подтверждение.",
+            "required": true,
+            "targets": [
+              "coagulation",
+              "glucose",
+              "bilirubin",
+              "organ_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Риск со стороны печени и этиология остаются отдельными.",
+            "unsafe": "Ферменты печени становятся диагнозом аденовируса."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: заболевание печени является серьезным заболеванием, но его могут вызвать несколько заболеваний, и требуется конкретное подтверждение."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "febrile"
+            ],
+            "requiredHandlingAlternative": "pain_aware_isolation_sampling",
+            "ownerModifiers": [
+              "vaccine_reassurance"
+            ]
+          }
+        },
+        {
+          "id": "p2_coagulopathy_acute_failure_or_peracute_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 4.5,
+          "complaint": "Мы обратились, потому что подозрение на инфекционный гепатит включает коагулопатию, острую печеночную недостаточность или острый коллапс.",
+          "historyAnswers": {
+            "kidney_liver_bleeding_respiratory_and_neurologic_red_flags": "По нашим наблюдениям, признаки неисправности.",
+            "vomiting_diarrhea_intake_urine_and_hydration": "Дома мы заметили, что перфузия или поступление известны.",
+            "sample_type_site_time_storage_and_pretest_treatment": "Насколько мы можем судить, подтверждение выполняется параллельно."
+          },
+          "examFindings": [
+            {
+              "factId": "coagulopathy_or_acute_failure_requires_emergency_referral_before_etiologic_certainty",
+              "source": "emergency_rule",
+              "finding": "Подтверждение не задерживает безопасность."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "coagulopathy_or_acute_failure_requires_emergency_referral_before_etiologic_certainty",
+              "discoveryPaths": [
+                "kidney_liver_bleeding_respiratory_and_neurologic_red_flags",
+                "external_lab_emergency_regulated_handoff_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_adenovirus_hepatic_coagulation_and_pcr_confirmation_route",
+              "classification": "required_parallel",
+              "result": "Целевое лабораторное исследование показало: недостаточность и этиология."
+            },
+            {
+              "id": "canine_infectious_external_lab_emergency_and_regulated_referral_route",
+              "classification": "required_immediate",
+              "result": "По итогам консультации специалиста: критический перенос."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "coagulopathy_or_acute_failure_requires_emergency_referral_before_etiologic_certainty"
+            ],
+            "confirmedDiagnosisRequires": [
+              "specific_adenovirus_evidence"
+            ],
+            "dangerStates": [
+              "active_bleeding",
+              "shock",
+              "encephalopathy",
+              "hypoglycemia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "canine_adenovirus_testing_external",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_adenovirus_route",
+              "canine_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "adenovirus_plan",
+          "followUp": {
+            "timing": "Непрерывная стабилизация и экстренная передача в стационар.",
+            "required": true,
+            "targets": [
+              "bleeding",
+              "glucose",
+              "mentation",
+              "coagulation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Критическая печеночная недостаточность устраняется немедленно.",
+            "unsafe": "Перед переносом ожидается ПЦР."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: неудача и кровотечение являются экстренными ситуациями, независимо от конечной инфекционной причины."
+          ],
+          "compatibility": {
+            "temperament": [
+              "collapsed",
+              "bleeding"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_emergency_isolation_transfer",
+            "ownerModifiers": [
+              "emergency_distress"
+            ]
+          }
+        },
+        {
+          "id": "p3_hepatic_mimics_and_laboratory_confirmation_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_function",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что печеночный синдром может быть вызван аденовирусом, лептоспирозом, токсином или другим гепатобилиарным заболеванием.",
+          "historyAnswers": {
+            "origin_shelter_travel_wildlife_water_and_contact_dates": "По нашим наблюдениям, нанесены на карту инфекционные воздействия.",
+            "kidney_liver_bleeding_respiratory_and_neurologic_red_flags": "Дома мы заметили, что рисунок органа разделен.",
+            "prior_antigen_pcr_serology_mat_and_reference_identity": "Насколько мы можем судить, существующие тесты контекстуализированы."
+          },
+          "examFindings": [
+            {
+              "factId": "hepatic_mimics_remain_open_until_specific_evidence_resolves_cause",
+              "source": "differential_rule",
+              "finding": "Никакого ярлыка фермента."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "hepatic_mimics_remain_open_until_specific_evidence_resolves_cause",
+              "discoveryPaths": [
+                "origin_shelter_travel_wildlife_water_and_contact_dates",
+                "organ_severity_cbc_chemistry_glucose_urine_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_adenovirus_hepatic_coagulation_and_pcr_confirmation_route",
+              "classification": "required",
+              "result": "Целевое лабораторное исследование показало: специфический для аденовируса путь."
+            },
+            {
+              "id": "canine_leptospira_blood_urine_pcr_acute_convalescent_mat_and_vaccine_context",
+              "classification": "differential_if_compatible",
+              "result": "Целевое лабораторное исследование показало: лепто маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "hepatic_mimics_remain_open_until_specific_evidence_resolves_cause"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cause_specific_evidence"
+            ],
+            "dangerStates": [
+              "failure",
+              "coagulopathy",
+              "acute_kidney_injury"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "canine_adenovirus_testing_external",
+              "canine_lepto_testing_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_adenovirus_route",
+              "canine_lepto_test_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "adenovirus_plan",
+          "followUp": {
+            "timing": "После достижения конкретных результатов.",
+            "required": true,
+            "targets": [
+              "adenovirus",
+              "lepto",
+              "toxin_context",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Этиологии остаются отдельными.",
+            "unsafe": "Поражение печени переименовано в инфекционный гепатит."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: несколько неотложных заболеваний имеют одну и ту же картину заболевания печени и требуют разных путей подтверждения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "sick",
+              "stable_or_weak"
+            ],
+            "requiredHandlingAlternative": "barrier_sampling_and_external_testing",
+            "ownerModifiers": [
+              "expects_one_liver_test"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "canine_leptospirosis_zoonotic",
+      "version": "2026.07.16.40",
+      "title": "Лептоспироз собак: зоонозный путь",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Лептоспироз может поразить любую собаку и требует зоонозных барьеров, оценки структуры органов и своевременной ПЦР крови или мочи, а также МАТ в острой стадии или выздоравливающей болезни, интерпретируемой с помощью вакцинации; серовар и активная причинность не интерпретируются с одного титра.",
+      "exclusions": [
+        "outdoor_large_dog_only",
+        "one_mat_titer_names_serovar",
+        "vaccination_excludes_lepto"
+      ],
+      "planBundleId": "lepto_plan",
+      "sourceIds": [
+        "wsava_vaccination_2024",
+        "merck_leptospirosis_dogs"
+      ],
+      "presentations": [
+        {
+          "id": "p1_acute_kidney_liver_or_respiratory_pattern_in_any_signalment",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency_by_organ_status",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что остро заболела собака; образ жизни, порода, возраст и пол сами по себе не исключают поражение почек, печени или дыхательной системы.",
+          "historyAnswers": {
+            "origin_shelter_travel_wildlife_water_and_contact_dates": "По нашим наблюдениям, контекст воды или грызунов или окружающей среды записан, но не обязателен.",
+            "kidney_liver_bleeding_respiratory_and_neurologic_red_flags": "Дома мы заметили, что выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного.",
+            "human_urine_blood_saliva_and_bite_exposure_log": "Насколько мы можем судить, открыт журнал воздействия на человека."
+          },
+          "examFindings": [
+            {
+              "factId": "leptospirosis_remains_possible_in_any_signalment_and_triggers_barriers",
+              "source": "zoonotic_triage_rule",
+              "finding": "Стереотип образа жизни заблокирован."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "leptospirosis_remains_possible_in_any_signalment_and_triggers_barriers",
+              "discoveryPaths": [
+                "human_urine_blood_saliva_and_bite_exposure_log",
+                "lepto_barrier_environment_owner_health_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_leptospira_barrier_precautions_environment_and_owner_health_guidance",
+              "classification": "required_first",
+              "result": "Целевое исследование показало: зоонозный барьер."
+            },
+            {
+              "id": "canine_leptospira_blood_urine_pcr_acute_convalescent_mat_and_vaccine_context",
+              "classification": "required",
+              "result": "Целевое лабораторное исследование показало: результат связан с точной датой и этапом заболевания."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "leptospirosis_remains_possible_in_any_signalment_and_triggers_barriers"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_organ_pattern_plus_timed_evidence"
+            ],
+            "dangerStates": [
+              "oliguria",
+              "acute_failure",
+              "pulmonary_hemorrhage",
+              "shock"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "canine_lepto_zoonotic_protocol",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "canine_lepto_testing_external",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_lepto_zoonotic_route",
+              "canine_lepto_test_route",
+              "canine_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "lepto_plan",
+          "followUp": {
+            "timing": "Постоянное состояние органов и тестирование по времени.",
+            "required": true,
+            "targets": [
+              "kidney",
+              "liver",
+              "respiration",
+              "urine_exposure"
+            ]
+          },
+          "outcomes": {
+            "safe": "Барьеры и уход за органами начинаются до подтверждения.",
+            "unsafe": "Статус домашней или маленькой собаки исключает заболевание."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: меры предосторожности в отношении зоонозной мочи или крови и объясните, что заразиться может любая собака."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "nauseous"
+            ],
+            "requiredHandlingAlternative": "zoonotic_barrier_minimal_handling",
+            "ownerModifiers": [
+              "human_health_anxiety"
+            ]
+          }
+        },
+        {
+          "id": "p2_pcr_mat_timing_vaccination_and_convalescent_sample_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_organ_status",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что результаты ПЦР крови или мочи и реакция микроагглютинации требуют определения времени, вакцинации и интерпретации образцов выздоравливающих.",
+          "historyAnswers": {
+            "sample_type_site_time_storage_and_pretest_treatment": "По нашим наблюдениям, точное время сравнения крови и мочи.",
+            "vaccine_product_dates_age_series_and_recent_vaccination": "Дома мы заметили, что контекст вакцины против лепто.",
+            "prior_antigen_pcr_serology_mat_and_reference_identity": "Насколько мы можем судить, признаки острого или выздоравливающего заболевания сохранены."
+          },
+          "examFindings": [
+            {
+              "factId": "lepto_pcr_and_mat_require_combined_timing_and_vaccine_context",
+              "source": "test_interpretation_rule",
+              "finding": "Один титр не может назвать достоверно инфицирующим серовар."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "lepto_pcr_and_mat_require_combined_timing_and_vaccine_context",
+              "discoveryPaths": [
+                "sample_type_site_time_storage_and_pretest_treatment",
+                "lepto_blood_urine_pcr_mat_vaccine_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_leptospira_blood_urine_pcr_acute_convalescent_mat_and_vaccine_context",
+              "classification": "required",
+              "result": "Целевое лабораторное исследование показало: комбинированные доказательства."
+            },
+            {
+              "id": "canine_serial_organ_support_contagious_window_and_household_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: курс во время поворота."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "lepto_pcr_and_mat_require_combined_timing_and_vaccine_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "contextual_combined_or_serial_evidence"
+            ],
+            "dangerStates": [
+              "worsening_organ_injury_during_turnaround"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "canine_infectious_longitudinal_monitoring"
+            ],
+            "external": [
+              "canine_lepto_testing_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_lepto_test_route",
+              "canine_infectious_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "lepto_plan",
+          "followUp": {
+            "timing": "Острые признаки и признаки выздоровления с тенденцией к органам.",
+            "required": true,
+            "targets": [
+              "blood_pcr",
+              "urine_pcr",
+              "mat",
+              "vaccine_context",
+              "organ_trend"
+            ]
+          },
+          "outcomes": {
+            "safe": "Временные тесты интерпретируются вместе.",
+            "unsafe": "Одиночный титр реакция микроагглютинации указывает на серовар и причину."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему образцы крови, мочи и парных антител отвечают на разные временные вопросы."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable_or_weak"
+            ],
+            "requiredHandlingAlternative": "barrier_external_testing",
+            "ownerModifiers": [
+              "turnaround_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_zoonotic_urine_blood_barrier_precautions_and_owner_guidance",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_public_health",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что при подозрении или подтверждении лептоспироза необходимо контролировать мочевой или кровяной барьер и соблюдать рекомендации по здоровью человека.",
+          "historyAnswers": {
+            "human_urine_blood_saliva_and_bite_exposure_log": "По нашим наблюдениям, все подвергшиеся воздействию люди зафиксированы.",
+            "isolation_ppe_decontamination_and_room_capacity": "Дома мы заметили, что пропускная способность барьера.",
+            "household_animals_shared_spaces_and_exposure_log": "Насколько мы можем судить, известны домашние контакты."
+          },
+          "examFindings": [
+            {
+              "factId": "lepto_zoonotic_precautions_and_human_health_guidance_are_required_state",
+              "source": "public_health_rule",
+              "finding": "Не обязательный диалог."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "lepto_zoonotic_precautions_and_human_health_guidance_are_required_state",
+              "discoveryPaths": [
+                "human_urine_blood_saliva_and_bite_exposure_log",
+                "lepto_barrier_environment_owner_health_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_leptospira_barrier_precautions_environment_and_owner_health_guidance",
+              "classification": "required",
+              "result": "Целевое исследование показало: сИЗ или окружающая среда или руководство для владельца."
+            },
+            {
+              "id": "canine_serial_organ_support_contagious_window_and_household_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: непрерывность экспозиции."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "lepto_zoonotic_precautions_and_human_health_guidance_are_required_state"
+            ],
+            "confirmedDiagnosisRequires": [
+              "suspected_or_confirmed_lepto_state"
+            ],
+            "dangerStates": [
+              "unprotected_urine_contact",
+              "human_symptoms",
+              "capacity_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "canine_lepto_zoonotic_protocol",
+              "canine_infectious_longitudinal_monitoring"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_lepto_zoonotic_route",
+              "canine_infectious_longitudinal_route",
+              "canine_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "lepto_plan",
+          "followUp": {
+            "timing": "Через окно контагиозности или экспозиции, определенное пересмотренным протоколом.",
+            "required": true,
+            "targets": [
+              "barrier",
+              "urine_contact",
+              "human_handoff",
+              "household_contacts"
+            ]
+          },
+          "outcomes": {
+            "safe": "Воздействие на человека и уход за животными остаются взаимосвязанными.",
+            "unsafe": "Зоонозное руководство опускается или придумывается продолжительность."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: дайте инструкции по барьерам и направьте людей, подвергшихся воздействию или симптомам, в медицинское учреждение без постановки им диагноза."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable_or_sick"
+            ],
+            "requiredHandlingAlternative": "trained_barrier_staff_or_referral",
+            "ownerModifiers": [
+              "human_exposure",
+              "pregnant_or_vulnerable_household"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "canine_rabies_exposure_or_suspected_case",
+      "version": "2026.07.16.40",
+      "title": "Заражение бешенством или подозрительный случай",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Подозрение на контакт с бешенством или необъяснимое неврологическое заболевание требует прекратить обычный контакт, немедленно зафиксировать обстоятельства воздействия и связаться с уполномоченной ветеринарной и санитарной службой. Дальнейшие меры определяются местными правилами.",
+      "exclusions": [
+        "routine_waiting_room_exam",
+        "gameplay_diagnoses_or_excludes_rabies",
+        "invented_quarantine_testing_or_disposition"
+      ],
+      "planBundleId": "rabies_regulated_plan",
+      "sourceIds": [
+        "wsava_vaccination_2024",
+        "who_rabies"
+      ],
+      "presentations": [
+        {
+          "id": "p1_bite_wildlife_contact_or_vaccination_status_question",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "regulated_urgent",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что укус или контакт с дикой природой поднимает вопрос о бешенстве, поскольку документация о вакцинации неясна.",
+          "historyAnswers": {
+            "behavior_swallowing_salivation_paralysis_and_bite_history": "По нашим наблюдениям, событие воздействия точное.",
+            "vaccine_product_dates_age_series_and_recent_vaccination": "Дома мы заметили, что документы, отделенные от воспоминаний.",
+            "human_urine_blood_saliva_and_bite_exposure_log": "Насколько мы можем судить, открыт журнал контактов с людьми."
+          },
+          "examFindings": [
+            {
+              "factId": "rabies_exposure_requires_authority_route_before_routine_handling",
+              "source": "regulated_rule",
+              "finding": "Никакого потока в смотровом зале."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "rabies_exposure_requires_authority_route_before_routine_handling",
+              "discoveryPaths": [
+                "behavior_swallowing_salivation_paralysis_and_bite_history",
+                "rabies_no_handling_authority_exposure_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_rabies_no_routine_handling_public_health_notification_and_exposure_log",
+              "classification": "required_first",
+              "result": "При динамическом наблюдении: итетный маршрут."
+            },
+            {
+              "id": "canine_infectious_external_lab_emergency_and_regulated_referral_route",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: регулируемая передача."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "rabies_exposure_requires_authority_route_before_routine_handling"
+            ],
+            "confirmedDiagnosisRequires": [
+              "authority_controlled_process"
+            ],
+            "dangerStates": [
+              "unprotected_human_contact",
+              "animal_escaping_control"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "rabies_regulated_protocol"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_rabies_route",
+              "canine_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "rabies_regulated_plan",
+          "followUp": {
+            "timing": "По указанию власти.",
+            "required": true,
+            "targets": [
+              "exposure_log",
+              "documents",
+              "authority_contact"
+            ]
+          },
+          "outcomes": {
+            "safe": "Воздействие контролируется законом или органом власти.",
+            "unsafe": "Опасно, если администратор самостоятельно определяет карантин или дальнейший маршрут без уполномоченного врача и действующих правил."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: избегайте использования инструкций, выходящих за рамки безопасности, и заявите, что следующие юридические шаги определяет орган общественного здравоохранения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "unknown_or_normal"
+            ],
+            "requiredHandlingAlternative": "no_routine_contact_regulated_handoff",
+            "ownerModifiers": [
+              "panic",
+              "missing_documents"
+            ]
+          }
+        },
+        {
+          "id": "p2_behavior_swallowing_salivation_paralysis_or_unexplained_neurologic_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "regulated_emergency",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что необъяснимое поведение, глотание, слюнотечение, паралич или неврологические симптомы создают угрозу для общественного здравоохранения, связанную с бешенством.",
+          "historyAnswers": {
+            "behavior_swallowing_salivation_paralysis_and_bite_history": "По нашим наблюдениям, знаки и возможность воздействия.",
+            "human_urine_blood_saliva_and_bite_exposure_log": "Дома мы заметили, что зарегистрированы контакты слюны или укуса.",
+            "vaccine_product_dates_age_series_and_recent_vaccination": "Насколько мы можем судить, документация точная."
+          },
+          "examFindings": [
+            {
+              "factId": "compatible_unexplained_neurologic_signs_require_no_contact_regulated_route",
+              "source": "public_health_safety_rule",
+              "finding": "Дифференциал не может быть решен при обычном обследовании."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "compatible_unexplained_neurologic_signs_require_no_contact_regulated_route",
+              "discoveryPaths": [
+                "human_urine_blood_saliva_and_bite_exposure_log",
+                "rabies_no_handling_authority_exposure_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_rabies_no_routine_handling_public_health_notification_and_exposure_log",
+              "classification": "required_immediate",
+              "result": "При динамическом наблюдении: бесконтактный маршрут власти."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "compatible_unexplained_neurologic_signs_require_no_contact_regulated_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "authority_controlled_testing_if_applicable"
+            ],
+            "dangerStates": [
+              "saliva_exposure",
+              "bite",
+              "uncontrolled_animal"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "rabies_regulated_protocol"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_rabies_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "rabies_regulated_plan",
+          "followUp": {
+            "timing": "Власть контролируется.",
+            "required": true,
+            "targets": [
+              "human_exposures",
+              "animal_control",
+              "authority_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Облучение персонала предотвращается и уведомляется уполномоченный орган.",
+            "unsafe": "Неврологическое обследование проводится в обычном пространстве."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: соблюдайте дистанцию, предотвращайте дальнейшее воздействие и немедленно свяжитесь с уполномоченным органом."
+          ],
+          "compatibility": {
+            "temperament": [
+              "aggressive_or_paralyzed_or_unknown"
+            ],
+            "requiredHandlingAlternative": "no_contact_secure_distance",
+            "ownerModifiers": [
+              "denial",
+              "fear"
+            ]
+          }
+        },
+        {
+          "id": "p3_human_exposure_public_health_and_regulated_disposition_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "regulated_emergency",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что воздействие укуса человека или слюны требует уведомления органов здравоохранения и регламентированного пути утилизации животных.",
+          "historyAnswers": {
+            "human_urine_blood_saliva_and_bite_exposure_log": "По нашим наблюдениям, записаны люди, место и время.",
+            "owner_transport_referral_public_health_and_recheck_feasibility": "Дома мы заметили, что доступны контакты органа власти.",
+            "behavior_swallowing_salivation_paralysis_and_bite_history": "Насколько мы можем судить, событие с животными сохранено."
+          },
+          "examFindings": [
+            {
+              "factId": "human_exposure_and_animal_disposition_are_authority_controlled_not_game_selected",
+              "source": "legal_boundary",
+              "finding": "Контакт с человеком и дальнейший маршрут животного фиксируют и передают уполномоченной службе; клиника не устанавливает местные правовые меры самостоятельно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "human_exposure_and_animal_disposition_are_authority_controlled_not_game_selected",
+              "discoveryPaths": [
+                "human_urine_blood_saliva_and_bite_exposure_log",
+                "external_lab_emergency_regulated_handoff_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "canine_rabies_no_routine_handling_public_health_notification_and_exposure_log",
+              "classification": "required",
+              "result": "При динамическом наблюдении: журнал или уведомление о воздействии."
+            },
+            {
+              "id": "canine_infectious_external_lab_emergency_and_regulated_referral_route",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: передача полномочий."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "human_exposure_and_animal_disposition_are_authority_controlled_not_game_selected"
+            ],
+            "confirmedDiagnosisRequires": [
+              "authority_process_only"
+            ],
+            "dangerStates": [
+              "unreported_human_exposure",
+              "further_contact"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "rabies_regulated_protocol"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "canine_rabies_route",
+              "canine_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "rabies_regulated_plan",
+          "followUp": {
+            "timing": "Власть направлена.",
+            "required": true,
+            "targets": [
+              "human_handoff",
+              "authority_case",
+              "animal_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Маршруты движения людей и животных документированы и контролируются властями.",
+            "unsafe": "Опасно самостоятельно назначать карантин, тестирование или эвтаназию без решения уполномоченной службы по действующим правилам."
+          },
+          "ownerCommunication": [
+            "Пожалуйста, людей, подвергшихся воздействию, немедленно обратиться в систему здравоохранения или общественного здравоохранения и не обещать, что животное будет относиться к конкретному животному."
+          ],
+          "compatibility": {
+            "temperament": [
+              "regulated_no_contact"
+            ],
+            "requiredHandlingAlternative": "authority_only_handoff",
+            "ownerModifiers": [
+              "human_exposure_distress"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if vaccination or breed alone proves or excludes disease.",
+    "Reject if one negative rapid test always excludes parvovirus or any positive PCR proves active causal disease without context.",
+    "Reject if distemper neurologic disease requires simultaneous respiratory signs.",
+    "Reject if leptospirosis is restricted to outdoor large dogs or MAT reliably names infecting serovar.",
+    "Reject if suspected rabies enters routine waiting-room flow or receives an invented legal disposition.",
+    "Reject if external results are instant.",
+    "Reject if code generates drug, dose, fluid, antimicrobial, isolation duration, vaccine or regulatory protocol."
+  ]
+}

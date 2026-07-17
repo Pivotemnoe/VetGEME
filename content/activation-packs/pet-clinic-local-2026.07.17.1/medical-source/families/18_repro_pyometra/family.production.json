@@ -1,0 +1,2413 @@
+{
+  "schemaVersion": 1,
+  "familyId": "repro_pyometra",
+  "familyVersion": "2026.07.16.40",
+  "title": "Пиометра собак и кошек",
+  "campaignPhase": "chapter_4_to_post_chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "patientRule": "Обычная клинический вариант допускается только нестерилизованную самку; культя пиометры требует остаточной маточной ткани и гормонального источника.",
+    "cervixRule": "Выделения не делают открытую форму безопасной, а отсутствие выделений не исключает закрытую форму.",
+    "diagnosisRule": "Репродуктивная история, системное состояние, матовая визуализация и лабораторная напряженность интерпретируются совместно; запах или анализ крови отдельно не подтверждают диагноз.",
+    "sourceControlRule": "Нестабильная пациентка получает параллельную стабилизацию и срочное направление из системы контроля источника; Культура не контролирует маршрут.",
+    "breedingRule": "Репродуктивно-сберегающий маршрут не является дешёвой альтернативой и возможен только по внешне утверждённому специальному протоколу для строго наблюдаемой стабильной пациентки.",
+    "protocolRule": "Контент не задаёт препараты, дозы, инфузионные схемы, анестезию, пункцию, промывание или хирургическую технику."
+  },
+  "coreCapabilities": [
+    "reproductive_history",
+    "female_reproductive_exam",
+    "general_exam",
+    "hydration_assessment",
+    "pain_assessment",
+    "blood_pressure",
+    "cbc",
+    "biochemistry",
+    "electrolytes",
+    "coagulation",
+    "urinalysis",
+    "pyometra_ultrasound_external",
+    "perioperative_stabilization",
+    "postoperative_monitoring"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "pyometra_imaging_route",
+      "anyOf": [
+        "ultrasound",
+        "pyometra_ultrasound_external",
+        "advanced_imaging_referral",
+        "safe_referral"
+      ],
+      "purpose": "uterus_contents_pregnancy_and_abdominal_fluid"
+    },
+    {
+      "id": "pyometra_differential_imaging_route",
+      "anyOf": [
+        "xray",
+        "pyometra_ultrasound_external",
+        "advanced_imaging_referral",
+        "safe_referral"
+      ],
+      "purpose": "pregnancy_mucometra_hydrometra_mass_or_other_abdomen"
+    },
+    {
+      "id": "pyometra_systemic_route",
+      "anyOf": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "coagulation",
+        "urinalysis",
+        "blood_gas_external",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "inflammation_renal_hepatic_electrolyte_coagulation_and_sepsis_risk"
+    },
+    {
+      "id": "pyometra_stabilization_route",
+      "anyOf": [
+        "perioperative_stabilization",
+        "oxygen",
+        "infusion_pump",
+        "vital_monitor",
+        "trained_stabilization",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "parallel_emergency_support"
+    },
+    {
+      "id": "pyometra_source_control_route",
+      "anyOf": [
+        "reproductive_surgery_referral",
+        "reproductive_specialist_referral",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "timely_reviewed_source_control"
+    },
+    {
+      "id": "pyometra_culture_route",
+      "anyOf": [
+        "uterine_culture_external",
+        "culture_external",
+        "blood_culture_external",
+        "safe_referral"
+      ],
+      "purpose": "appropriately_sourced_culture_without_delaying_source_control"
+    },
+    {
+      "id": "pyometra_postoperative_route",
+      "anyOf": [
+        "postoperative_monitoring",
+        "cbc",
+        "biochemistry",
+        "urinalysis",
+        "pyometra_ultrasound_external",
+        "reproductive_surgery_referral",
+        "safe_referral"
+      ],
+      "purpose": "linked_postoperative_response_and_complication_workup"
+    },
+    {
+      "id": "pyometra_rupture_route",
+      "anyOf": [
+        "abdominal_fluid_analysis_external",
+        "pyometra_ultrasound_external",
+        "reproductive_surgery_referral",
+        "intensive_care_referral",
+        "safe_referral"
+      ],
+      "purpose": "rupture_peritonitis_or_free_fluid_emergency"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "pyometra_reproductive_and_cycle_history",
+      "requires": [
+        "reproductive_history"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "reproductive_specialist_referral"
+    },
+    {
+      "researchId": "pyometra_stability_perfusion_and_abdominal_exam",
+      "requires": [
+        "general_exam",
+        "female_reproductive_exam"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pyometra_cbc_biochemistry_electrolytes_coagulation",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "coagulation"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "hospital_referral"
+    },
+    {
+      "researchId": "pyometra_abdominal_ultrasound",
+      "requires": [
+        "ultrasound",
+        "pyometra_ultrasound_external"
+      ],
+      "availability": "external_chapter_4_local_chapter_5",
+      "fallback": "reproductive_specialist_referral"
+    },
+    {
+      "researchId": "pyometra_radiography_for_differentials",
+      "requires": [
+        "xray",
+        "advanced_imaging_referral"
+      ],
+      "availability": "local_chapter_5_or_external",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pyometra_urinalysis_and_renal_assessment",
+      "requires": [
+        "urinalysis",
+        "renal_home_monitoring"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pyometra_culture_when_appropriate",
+      "requires": [
+        "uterine_culture_external"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pyometra_surgical_or_specialist_route",
+      "requires": [
+        "perioperative_stabilization",
+        "reproductive_surgery_referral"
+      ],
+      "availability": "local_stabilization_external_surgery_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pyometra_postoperative_response_monitoring",
+      "requires": [
+        "postoperative_monitoring"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "reproductive_surgery_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "spay_status_documents",
+      "text": "Стерилизована ли пациентка и есть ли операционная выписка?"
+    },
+    {
+      "id": "last_heat_date",
+      "text": "Когда была последняя течка или циклические признаки?"
+    },
+    {
+      "id": "mating_pregnancy_birth",
+      "text": "Были ли вязка, беременность, роды или послеродовой период?"
+    },
+    {
+      "id": "hormonal_exposure",
+      "text": "Применялись ли гормональные препараты и когда?"
+    },
+    {
+      "id": "vaginal_discharge",
+      "text": "Есть ли выделения и как они менялись?"
+    },
+    {
+      "id": "pupd_pattern",
+      "text": "Изменились ли жажда и мочеиспускание?"
+    },
+    {
+      "id": "appetite_vomiting_diarrhea",
+      "text": "Каков аппетит, есть ли рвота или диарея?"
+    },
+    {
+      "id": "abdominal_distension",
+      "text": "Увеличился или стал болезненным живот?"
+    },
+    {
+      "id": "weakness_collapse_breathing",
+      "text": "Есть ли слабость, обморок или одышка?"
+    },
+    {
+      "id": "prior_treatment",
+      "text": "Что уже применяли и есть ли выписка?"
+    },
+    {
+      "id": "comorbidity_anesthesia_risk",
+      "text": "Есть ли ХБП, диабет, сердечная или другая системная болезнь?"
+    },
+    {
+      "id": "breeding_priority",
+      "text": "Важна ли будущая племенная функция?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "reproductive_status_record_review",
+      "source": "history_and_record",
+      "requires": [
+        "reproductive_history"
+      ]
+    },
+    {
+      "id": "perfusion_temperature_bp_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "temperature",
+        "blood_pressure"
+      ]
+    },
+    {
+      "id": "hydration_pain_abdominal_exam",
+      "source": "physical_exam",
+      "requires": [
+        "hydration_assessment",
+        "pain_assessment",
+        "abdominal_palpation"
+      ]
+    },
+    {
+      "id": "external_discharge_reproductive_exam",
+      "source": "physical_exam",
+      "requires": [
+        "female_reproductive_exam"
+      ]
+    },
+    {
+      "id": "dated_pyometra_laboratory_snapshot",
+      "source": "diagnostic_test",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "coagulation"
+      ]
+    },
+    {
+      "id": "expert_uterine_ultrasound",
+      "source": "diagnostic_test",
+      "requires": [
+        "pyometra_ultrasound_external"
+      ]
+    },
+    {
+      "id": "renal_urine_snapshot",
+      "source": "diagnostic_test",
+      "requires": [
+        "urinalysis",
+        "biochemistry"
+      ]
+    },
+    {
+      "id": "linked_postoperative_response",
+      "source": "follow_up",
+      "requires": [
+        "postoperative_monitoring"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_ceh_pyometra_2024",
+      "title": "Merck Veterinary Manual: Cystic Endometrial Hyperplasia–Pyometra Complex",
+      "url": "https://www.merckvetmanual.com/reproductive-system/reproductive-diseases-of-the-female-small-animal/cystic-endometrial-hyperplasia-pyometra-complex-in-small-animals",
+      "scope": "etiology_clinical_signs_imaging_surgery_and_restricted_medical_management"
+    },
+    {
+      "id": "ucdavis_pyometra",
+      "title": "UC Davis School of Veterinary Medicine: Pyometra",
+      "url": "https://healthtopics.vetmed.ucdavis.edu/health-topics/canine/pyometra",
+      "scope": "open_closed_cervix_emergency_owner_communication"
+    },
+    {
+      "id": "canine_pyometra_review_2023",
+      "title": "Canine Pyometra: A Short Review of Current Advances",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10647846/",
+      "scope": "current_pathophysiology_diagnosis_prognosis_and_management_review"
+    },
+    {
+      "id": "wsava_reproduction_2024",
+      "title": "WSAVA Guidelines for the Control of Reproduction in Dogs and Cats",
+      "url": "https://wsava.org/wp-content/uploads/2024/05/J-of-Small-Animal-Practice-2024-Romagnoli-WSAVA-guidelines-for-the-control-of-reproduction-in-dogs-and-cats.pdf",
+      "scope": "reproductive_control_welfare_and_specialist_context"
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "open_pyometra_plan",
+      "fullPlan": [
+        "confirm_female_reproductive_status_and_cycle",
+        "triage_perfusion_hydration_pain_and_systemic_signs",
+        "cbc_chem_electrolytes_renal_urine",
+        "expert_ultrasound_with_pregnancy_and_differentials",
+        "parallel_stabilization_and_source_control_route",
+        "culture_only_from_appropriate_source",
+        "linked_postoperative_followup"
+      ],
+      "stagedPlan": [
+        "triage",
+        "integrated_confirmation",
+        "stabilize_and_refer",
+        "postoperative_monitoring"
+      ],
+      "minimumSafePlan": [
+        "discharge_not_safe_label",
+        "no_cbc_only_diagnosis",
+        "no_days_of_watchful_waiting",
+        "safe_surgical_route"
+      ],
+      "stabilizeAndRefer": [
+        "perioperative_stabilization",
+        "urgent_reproductive_surgery_referral"
+      ],
+      "unsafeOrInadequate": [
+        "treat_as_vaginitis_only",
+        "discharge_means_mild",
+        "delay_for_culture",
+        "breeding_value_overrides_safety"
+      ]
+    },
+    {
+      "id": "closed_pyometra_plan",
+      "fullPlan": [
+        "treat_no_discharge_as_non_exclusion",
+        "urgent_perfusion_and_abdominal_triage",
+        "expert_ultrasound_and_pregnancy_differential",
+        "systemic_renal_coagulation_assessment",
+        "avoid_repeated_rough_palpation_or_blind_cystocentesis",
+        "parallel_stabilization_and_emergency_source_control",
+        "serial_organ_monitoring"
+      ],
+      "stagedPlan": [
+        "emergency_triage",
+        "imaging_and_severity",
+        "stabilize_and_transfer",
+        "serial_response"
+      ],
+      "minimumSafePlan": [
+        "absence_of_discharge_not_reassuring",
+        "distended_uterus_handled_gently",
+        "culture_does_not_delay",
+        "home_observation_forbidden_if_systemic"
+      ],
+      "stabilizeAndRefer": [
+        "reserve_monitor_pump_and_staff",
+        "emergency_reproductive_surgery_referral"
+      ],
+      "unsafeOrInadequate": [
+        "wait_for_discharge",
+        "rough_repeat_palpation",
+        "blind_cystocentesis",
+        "routine_conservative_route"
+      ]
+    },
+    {
+      "id": "atypical_stump_pyometra_plan",
+      "fullPlan": [
+        "verify_species_sex_spay_records_cycle_and_hormone_exposure",
+        "triage_current_systemic_state",
+        "expert_imaging_for_residual_uterine_tissue_and_differentials",
+        "require_authored_hormonal_source_for_stump_truth",
+        "specialist_or_surgical_route",
+        "preserve_uncertainty_if_requirements_missing",
+        "linked_followup"
+      ],
+      "stagedPlan": [
+        "verify_guard",
+        "triage",
+        "expert_imaging",
+        "specialist_route"
+      ],
+      "minimumSafePlan": [
+        "no_pyometra_without_uterine_tissue",
+        "reported_spay_not_automatic_exclusion",
+        "feline_subtle_signs_allowed",
+        "critical_hormone_fact_has_multiple_paths"
+      ],
+      "stabilizeAndRefer": [
+        "urgent_route_if_systemic",
+        "reproductive_specialist_for_stump_or_remnant_question"
+      ],
+      "unsafeOrInadequate": [
+        "invent_uterus_after_complete_spay",
+        "copy_dog_signs_to_cat",
+        "secret_owner_confession_only_path",
+        "generate_hormonal_protocol"
+      ]
+    },
+    {
+      "id": "complicated_postoperative_pyometra_plan",
+      "fullPlan": [
+        "map_perfusion_renal_hepatic_coagulation_respiratory_flags",
+        "parallel_sepsis_support_and_source_control",
+        "expert_imaging_and_fluid_route_for_rupture_question",
+        "do_not_define_sepsis_by_wbc_alone",
+        "link_postoperative_findings_to_operation_time",
+        "separate_expected_early_change_from_failure_to_improve",
+        "repeat_imaging_culture_or_referral_when_indicated"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "source_control",
+        "organ_monitoring",
+        "linked_postoperative_reassessment"
+      ],
+      "minimumSafePlan": [
+        "each_organ_flag_explicit",
+        "rupture_never_home",
+        "postop_timing_required",
+        "safe_reoperation_referral"
+      ],
+      "stabilizeAndRefer": [
+        "intensive_and_surgical_referral",
+        "abdominal_fluid_route_under_specialist_protocol"
+      ],
+      "unsafeOrInadequate": [
+        "high_wbc_equals_sepsis",
+        "free_fluid_sent_home",
+        "single_postop_cbc_equals_complication",
+        "unlinked_followup"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "pyometra_open_cervix",
+      "version": "2026.07.16.40",
+      "title": "Пиометра с открытой шейкой матки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Инфицированная матка сообщается через открытую шейку; выделения помогают распознаванию, но не устраняют источник и не гарантируют стабильность.",
+      "exclusions": [
+        "vaginitis_only",
+        "normal_estrus_without_uterine_infection",
+        "male_or_documented_complete_spay"
+      ],
+      "planBundleId": "open_pyometra_plan",
+      "sourceIds": [
+        "merck_ceh_pyometra_2024",
+        "ucdavis_pyometra"
+      ],
+      "presentations": [
+        {
+          "id": "p1_discharge_with_stable_patient",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что у нестерилизованной самки появились гнойные или кровянистые выделения, пока перфузия стабильна.",
+          "historyAnswers": {
+            "spay_status_documents": "По нашим наблюдениям, целостность подтверждена.",
+            "last_heat_date": "Дома мы заметили, что по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой.",
+            "vaginal_discharge": "Насколько мы можем судить, постоянные аномальные выделения.",
+            "weakness_collapse_breathing": "Мы записали, что отсутствует."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_open_pyometra_still_requires_urgent_source_control",
+              "source": "integrated_record",
+              "finding": "Стабильная перфузия не превращает маточную инфекцию в обычный вагинит."
+            },
+            {
+              "factId": "normal_wbc_does_not_exclude",
+              "source": "clinical_reasoning",
+              "finding": "общий анализ крови — это контекст серьезности, а не единственное подтверждение."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stable_open_pyometra_still_requires_urgent_source_control",
+              "discoveryPaths": [
+                "spay_status_documents",
+                "vaginal_discharge",
+                "perfusion_temperature_bp_exam",
+                "expert_uterine_ultrasound"
+              ]
+            },
+            {
+              "factId": "normal_wbc_does_not_exclude",
+              "discoveryPaths": [
+                "last_heat_date",
+                "dated_pyometra_laboratory_snapshot"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pyometra_reproductive_and_cycle_history",
+              "classification": "required_guard",
+              "result": "При уточнении анамнеза: неповрежденный женский и циклический контекст."
+            },
+            {
+              "id": "pyometra_abdominal_ultrasound",
+              "classification": "required_confirmation",
+              "result": "При ультразвуковом исследовании: заполненная жидкостью матка с оценкой беременности или дифференциалов."
+            },
+            {
+              "id": "pyometra_cbc_biochemistry_electrolytes_coagulation",
+              "classification": "required_severity",
+              "result": "В лабораторных показателях крови: системный базовый уровень."
+            },
+            {
+              "id": "pyometra_surgical_or_specialist_route",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: срочный маршрут контроля источника."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stable_open_pyometra_still_requires_urgent_source_control",
+              "normal_wbc_does_not_exclude"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_reproductive_patient_plus_uterine_imaging_and_clinical_context"
+            ],
+            "dangerStates": [
+              "sepsis",
+              "aki",
+              "rupture",
+              "rapid_deterioration"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "female_reproductive_exam",
+              "cbc",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "pyometra_ultrasound_external",
+              "reproductive_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pyometra_imaging_route",
+              "pyometra_systemic_route",
+              "pyometra_source_control_route"
+            ],
+            "referralFallback": "reproductive_surgery_referral"
+          },
+          "carePlanId": "open_pyometra_plan",
+          "followUp": {
+            "timing": "Срочный перевод и связанный послеоперационный осмотр.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "temperature",
+              "renal",
+              "pain",
+              "discharge",
+              "postoperative_response"
+            ]
+          },
+          "outcomes": {
+            "safe": "Стабильный пациент получает оперативную визуализацию, исходные данные и маршрут контроля источника.",
+            "unsafe": "Выделения трактуются как самодренирование или вагинит."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: дренаж не удаляет инфицированную матку, и ухудшение состояния может быть быстрым."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "gentle_reproductive_exam_and_external_imaging",
+            "ownerModifiers": [
+              "budget_limited",
+              "breeding_priority"
+            ]
+          }
+        },
+        {
+          "id": "p2_pupd_lethargy_and_open_drainage",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_emergency",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что на фоне выделений пациентка вялая, больше пьёт и мочится, аппетит снижен.",
+          "historyAnswers": {
+            "vaginal_discharge": "По нашим наблюдениям, имеется открытый дренаж.",
+            "pupd_pattern": "Дома мы заметили, что увеличено.",
+            "appetite_vomiting_diarrhea": "Насколько мы можем судить, снижение аппетита; Знаки ГИ.",
+            "weakness_collapse_breathing": "Мы записали, что выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного."
+          },
+          "examFindings": [
+            {
+              "factId": "systemic_open_pyometra_not_mild",
+              "source": "clinical_record",
+              "finding": "ПУ или ПД и летаргия требуют проведения почечной или системной оценки."
+            },
+            {
+              "factId": "stabilization_and_source_control_run_in_parallel",
+              "source": "safety_rule",
+              "finding": "Открытая шейка матки не задерживает срочное направление."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "systemic_open_pyometra_not_mild",
+              "discoveryPaths": [
+                "pupd_pattern",
+                "appetite_vomiting_diarrhea",
+                "renal_urine_snapshot"
+              ]
+            },
+            {
+              "factId": "stabilization_and_source_control_run_in_parallel",
+              "discoveryPaths": [
+                "weakness_collapse_breathing",
+                "perfusion_temperature_bp_exam",
+                "dated_pyometra_laboratory_snapshot"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pyometra_stability_perfusion_and_abdominal_exam",
+              "classification": "immediate",
+              "result": "Клиническая оценка показала: текущая стабильность документально подтверждена."
+            },
+            {
+              "id": "pyometra_urinalysis_and_renal_assessment",
+              "classification": "required",
+              "result": "В анализе мочи: почечный или мочевой контекст."
+            },
+            {
+              "id": "pyometra_cbc_biochemistry_electrolytes_coagulation",
+              "classification": "required_urgent",
+              "result": "В лабораторных показателях крови: системная тяжесть."
+            },
+            {
+              "id": "pyometra_surgical_or_specialist_route",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: параллельное обращение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "systemic_open_pyometra_not_mild",
+              "stabilization_and_source_control_run_in_parallel"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_supported_open_pyometra"
+            ],
+            "dangerStates": [
+              "aki",
+              "sepsis",
+              "shock",
+              "electrolyte_disorder"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "urinalysis",
+              "cbc",
+              "biochemistry",
+              "electrolytes",
+              "perioperative_stabilization"
+            ],
+            "external": [
+              "pyometra_ultrasound_external",
+              "reproductive_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "hospital_referral"
+            ],
+            "conditional": [
+              "pyometra_systemic_route",
+              "pyometra_stabilization_route",
+              "pyometra_source_control_route"
+            ],
+            "referralFallback": "reproductive_surgery_referral"
+          },
+          "carePlanId": "open_pyometra_plan",
+          "followUp": {
+            "timing": "Непрерывно до передачи, затем после операции.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "renal",
+              "electrolytes",
+              "mentation",
+              "urine"
+            ]
+          },
+          "outcomes": {
+            "safe": "Системный риск стимулирует поддержку, несмотря на дренаж.",
+            "unsafe": "Открытая шейка матки ошибочно считается низким риском."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: укажите признаки ухудшения транспортировки и объясните почечный или системный риск."
+          ],
+          "compatibility": {
+            "temperament": [
+              "lethargic",
+              "fearful",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "low_stress_stabilization",
+            "ownerModifiers": [
+              "transport_difficult",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_owner_thinks_it_is_normal_heat",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что владелец считает выделения обычной течкой, но срок или общее состояние не совпадают.",
+          "historyAnswers": {
+            "last_heat_date": "По нашим наблюдениям, время цикла восстановлено.",
+            "vaginal_discharge": "Дома мы заметили, что цвет или запах или динамика документируется без автоматической диагностики.",
+            "spay_status_documents": "Насколько мы можем судить, репродуктивный статус подтвержден.",
+            "mating_pregnancy_birth": "Мы записали, что проверен контекст беременности или послеродового периода."
+          },
+          "examFindings": [
+            {
+              "factId": "owner_label_does_not_replace_cycle_and_source_assessment",
+              "source": "clinical_reasoning",
+              "finding": "Дифференциацией остаются течка, вагинит, беременность и заболевания матки."
+            },
+            {
+              "factId": "completed_work_transfers_if_final_reproductive_truth_differs",
+              "source": "workflow_rule",
+              "finding": "Сортировка и визуализация сохраняются после коррекции диагноза."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "owner_label_does_not_replace_cycle_and_source_assessment",
+              "discoveryPaths": [
+                "last_heat_date",
+                "vaginal_discharge",
+                "external_discharge_reproductive_exam"
+              ]
+            },
+            {
+              "factId": "completed_work_transfers_if_final_reproductive_truth_differs",
+              "discoveryPaths": [
+                "spay_status_documents",
+                "mating_pregnancy_birth",
+                "expert_uterine_ultrasound"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pyometra_reproductive_and_cycle_history",
+              "classification": "required",
+              "result": "При уточнении анамнеза: цикл или статус документирован."
+            },
+            {
+              "id": "pyometra_abdominal_ultrasound",
+              "classification": "required_if_suspicious",
+              "result": "При ультразвуковом исследовании: разница между маткой и беременностью."
+            },
+            {
+              "id": "pyometra_stability_perfusion_and_abdominal_exam",
+              "classification": "required_triage",
+              "result": "Клиническая оценка показала: системное состояние."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "owner_label_does_not_replace_cycle_and_source_assessment",
+              "completed_work_transfers_if_final_reproductive_truth_differs"
+            ],
+            "confirmedDiagnosisRequires": [
+              "uterine_infection_evidence_not_discharge_description_only"
+            ],
+            "dangerStates": [
+              "missed_closed_or_open_pyometra",
+              "pregnancy_complication",
+              "metritis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "reproductive_history",
+              "female_reproductive_exam",
+              "general_exam"
+            ],
+            "external": [
+              "pyometra_ultrasound_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pyometra_imaging_route",
+              "pyometra_differential_imaging_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "open_pyometra_plan",
+          "followUp": {
+            "timing": "Маршрут в тот же день на основе визуализации или состояния системы.",
+            "required": true,
+            "targets": [
+              "diagnostic_classification",
+              "perfusion",
+              "discharge",
+              "cycle_context"
+            ]
+          },
+          "outcomes": {
+            "safe": "Каждому аномальному выделению проводится оценка цикла, источника и системности.",
+            "unsafe": "Визуальная метка игрока или владельца завершает обработку."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему по внешнему виду нельзя отличить жар от инфекции матки."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "gentle_external_exam",
+            "ownerModifiers": [
+              "mislabels_heat",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pyometra_closed_cervix",
+      "version": "2026.07.16.40",
+      "title": "Пиометра с закрытой шейкой матки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "При закрытой шейке наружного дренирования нет; матка растягивается, а системная болезнь может быстро прогрессировать.",
+      "exclusions": [
+        "pregnancy",
+        "mucometra_or_hydrometra_without_infection",
+        "male_or_complete_spay"
+      ],
+      "planBundleId": "closed_pyometra_plan",
+      "sourceIds": [
+        "merck_ceh_pyometra_2024",
+        "ucdavis_pyometra",
+        "canine_pyometra_review_2023"
+      ],
+      "presentations": [
+        {
+          "id": "p1_no_discharge_progressive_systemic_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что после течки нарастают вялость, анорексия, полиурия и полидипсия или рвота, но выделений нет.",
+          "historyAnswers": {
+            "last_heat_date": "По нашим наблюдениям, совместимое время диэструса.",
+            "vaginal_discharge": "Дома мы заметили, что нет.",
+            "pupd_pattern": "Насколько мы можем судить, владелец не отмечает этого признака на текущем этапе.",
+            "appetite_vomiting_diarrhea": "Мы записали, что прогрессивные системные признаки."
+          },
+          "examFindings": [
+            {
+              "factId": "absence_of_discharge_increases_imaging_need",
+              "source": "clinical_reasoning",
+              "finding": "Отсутствие выделений не исключает инфицированной матки, наполненной жидкостью."
+            },
+            {
+              "factId": "waiting_for_discharge_is_dangerous",
+              "source": "safety_rule",
+              "finding": "Требуется срочная визуализация или системный маршрут."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "absence_of_discharge_increases_imaging_need",
+              "discoveryPaths": [
+                "last_heat_date",
+                "vaginal_discharge",
+                "expert_uterine_ultrasound"
+              ]
+            },
+            {
+              "factId": "waiting_for_discharge_is_dangerous",
+              "discoveryPaths": [
+                "pupd_pattern",
+                "appetite_vomiting_diarrhea",
+                "perfusion_temperature_bp_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pyometra_reproductive_and_cycle_history",
+              "classification": "required",
+              "result": "При уточнении анамнеза: совместимый цикл."
+            },
+            {
+              "id": "pyometra_abdominal_ultrasound",
+              "classification": "urgent_required",
+              "result": "При ультразвуковом исследовании: оценивается растяжение или содержимое матки и беременность."
+            },
+            {
+              "id": "pyometra_cbc_biochemistry_electrolytes_coagulation",
+              "classification": "required_severity",
+              "result": "В лабораторных показателях крови: системный риск."
+            },
+            {
+              "id": "pyometra_surgical_or_specialist_route",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: срочный контроль источников."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "absence_of_discharge_increases_imaging_need",
+              "waiting_for_discharge_is_dangerous"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_history_plus_uterine_imaging_and_systemic_context"
+            ],
+            "dangerStates": [
+              "rapid_sepsis",
+              "rupture",
+              "aki",
+              "shock"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "cbc",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "pyometra_ultrasound_external",
+              "reproductive_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pyometra_imaging_route",
+              "pyometra_systemic_route",
+              "pyometra_source_control_route"
+            ],
+            "referralFallback": "reproductive_surgery_referral"
+          },
+          "carePlanId": "closed_pyometra_plan",
+          "followUp": {
+            "timing": "Срочная передача и последовательный ответ.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "uterine_status",
+              "renal",
+              "temperature",
+              "mentation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Отсутствие выделений не исключает закрытую пиометру; нужны срочная визуализация и устранение источника инфекции.",
+            "unsafe": "Случай ждет видимого дренажа."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: заболевание закрытой шейки матки часто не сопровождается выделениями и может быть более критическим."
+          ],
+          "compatibility": {
+            "temperament": [
+              "lethargic",
+              "fearful",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "gentle_urgent_imaging",
+            "ownerModifiers": [
+              "reassured_by_no_discharge",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_abdominal_distension_and_fluid_filled_uterus",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_emergency",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что живот увеличен; УЗИ показывает растянутую наполненную матку, беременность не подтверждается.",
+          "historyAnswers": {
+            "abdominal_distension": "По нашим наблюдениям, прогрессивный.",
+            "mating_pregnancy_birth": "Дома мы заметили, что беременность оценена.",
+            "vaginal_discharge": "Насколько мы можем судить, отсутствует.",
+            "weakness_collapse_breathing": "Мы записали, что серьезность зафиксирована."
+          },
+          "examFindings": [
+            {
+              "factId": "fluid_filled_uterus_requires_infection_and_pregnancy_context",
+              "source": "imaging_record",
+              "finding": "Визуализация плюс системные или лабораторные данные отделяют пиометру от других состояний жидкости в матке."
+            },
+            {
+              "factId": "distended_uterus_prohibits_rough_palpation_and_blind_cystocentesis",
+              "source": "safety_rule",
+              "finding": "Обращение позволяет избежать ятрогенного разрыва."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "fluid_filled_uterus_requires_infection_and_pregnancy_context",
+              "discoveryPaths": [
+                "mating_pregnancy_birth",
+                "expert_uterine_ultrasound",
+                "dated_pyometra_laboratory_snapshot"
+              ]
+            },
+            {
+              "factId": "distended_uterus_prohibits_rough_palpation_and_blind_cystocentesis",
+              "discoveryPaths": [
+                "abdominal_distension",
+                "hydration_pain_abdominal_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pyometra_abdominal_ultrasound",
+              "classification": "required_expert",
+              "result": "При ультразвуковом исследовании: растянутая матка и беременность или дифференциалы."
+            },
+            {
+              "id": "pyometra_radiography_for_differentials",
+              "classification": "conditional",
+              "result": "На рентгенограммах: поддерживающее, но не окончательное."
+            },
+            {
+              "id": "pyometra_cbc_biochemistry_electrolytes_coagulation",
+              "classification": "required_severity",
+              "result": "В лабораторных показателях крови: риск инфекции или органа."
+            },
+            {
+              "id": "pyometra_surgical_or_specialist_route",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: срочное направление."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "fluid_filled_uterus_requires_infection_and_pregnancy_context",
+              "distended_uterus_prohibits_rough_palpation_and_blind_cystocentesis"
+            ],
+            "confirmedDiagnosisRequires": [
+              "uterine_imaging_plus_infectious_systemic_context"
+            ],
+            "dangerStates": [
+              "rupture",
+              "peritonitis",
+              "shock",
+              "pregnancy_misclassification"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "pain_assessment",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "pyometra_ultrasound_external",
+              "reproductive_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pyometra_imaging_route",
+              "pyometra_differential_imaging_route",
+              "pyometra_source_control_route"
+            ],
+            "referralFallback": "reproductive_surgery_referral"
+          },
+          "carePlanId": "closed_pyometra_plan",
+          "followUp": {
+            "timing": "Непрерывно до хирургической передачи.",
+            "required": true,
+            "targets": [
+              "pain",
+              "perfusion",
+              "abdominal_change",
+              "organ_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Визуализация интегрирована, и раздутая матка защищена.",
+            "unsafe": "Жидкость называется гноем только по изображению или вслепую."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему растянутая матка требует срочного квалифицированного лечения и бережного обращения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "pain_defensive",
+              "lethargic",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "minimal_abdominal_manipulation",
+            "ownerModifiers": [
+              "pregnancy_assumption",
+              "transport_difficult"
+            ]
+          }
+        },
+        {
+          "id": "p3_rapid_deterioration_despite_subtle_start",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что после малозаметного начала за часы ухудшились перфузия, температура, сознание или органные показатели.",
+          "historyAnswers": {
+            "appetite_vomiting_diarrhea": "По нашим наблюдениям, незначительное, затем ухудшение.",
+            "weakness_collapse_breathing": "Дома мы заметили, что новые тревожные признаки.",
+            "prior_treatment": "Насколько мы можем судить, не задерживает контроль версий.",
+            "vaginal_discharge": "Мы записали, что отсутствует."
+          },
+          "examFindings": [
+            {
+              "factId": "rapid_closed_pyometra_deterioration_is_emergency",
+              "source": "triage_record",
+              "finding": "Выявленные тревожные сигналы шока или сепсиса или органа требуют немедленной поддержки."
+            },
+            {
+              "factId": "external_culture_cannot_delay_source_control",
+              "source": "safety_rule",
+              "finding": "Культуру собирают соответствующим образом, не дожидаясь результата."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "rapid_closed_pyometra_deterioration_is_emergency",
+              "discoveryPaths": [
+                "weakness_collapse_breathing",
+                "perfusion_temperature_bp_exam",
+                "dated_pyometra_laboratory_snapshot"
+              ]
+            },
+            {
+              "factId": "external_culture_cannot_delay_source_control",
+              "discoveryPaths": [
+                "prior_treatment",
+                "external_discharge_reproductive_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pyometra_stability_perfusion_and_abdominal_exam",
+              "classification": "immediate",
+              "result": "Клиническая оценка показала: выявлены признаки неотложного состояния."
+            },
+            {
+              "id": "pyometra_cbc_biochemistry_electrolytes_coagulation",
+              "classification": "parallel_urgent",
+              "result": "В лабораторных показателях крови: карта органов или коагуляции."
+            },
+            {
+              "id": "pyometra_culture_when_appropriate",
+              "classification": "non_delaying",
+              "result": "По результатам посева и определения чувствительности: источник или время записано."
+            },
+            {
+              "id": "pyometra_surgical_or_specialist_route",
+              "classification": "immediate_required",
+              "result": "По итогам консультации специалиста: экстренный трансфер."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "rapid_closed_pyometra_deterioration_is_emergency",
+              "external_culture_cannot_delay_source_control"
+            ],
+            "confirmedDiagnosisRequires": [
+              "integrated_uterine_and_systemic_evidence"
+            ],
+            "dangerStates": [
+              "septic_shock",
+              "aki",
+              "coagulopathy",
+              "rupture",
+              "respiratory_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oxygen",
+              "infusion_pump",
+              "vital_monitor",
+              "trained_stabilization",
+              "perioperative_stabilization"
+            ],
+            "external": [
+              "reproductive_surgery_referral",
+              "intensive_care_referral"
+            ],
+            "missingLocalRoute": [
+              "intensive_care_referral"
+            ],
+            "conditional": [
+              "pyometra_stabilization_route",
+              "pyometra_systemic_route",
+              "pyometra_source_control_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "closed_pyometra_plan",
+          "followUp": {
+            "timing": "До стабилизации требуется непрерывный контроль дыхания, кровообращения и сознания.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "mentation",
+              "temperature",
+              "renal",
+              "coagulation",
+              "respiration"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ресурсы клиники или перевод мобилизуются немедленно.",
+            "unsafe": "Пациент ждет посева или обычного режима визуализации."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: чрезвычайную ситуацию, риск передачи и почему нельзя дождаться полных результатов анализа."
+          ],
+          "compatibility": {
+            "temperament": [
+              "obtunded",
+              "pain_defensive",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_stabilization",
+            "ownerModifiers": [
+              "budget_limited",
+              "transport_difficult"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pyometra_atypical_or_stump",
+      "version": "2026.07.16.40",
+      "title": "Атипичная, кошачья или культёвая пиометра",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Кошачья клиника может быть малозаметной; культя пиометры возможна только при доказуемой остаточной ткани и гормональном влиянии.",
+      "exclusions": [
+        "documented_complete_removal_without_residual_tissue_or_hormonal_source",
+        "male_patient"
+      ],
+      "planBundleId": "atypical_stump_pyometra_plan",
+      "sourceIds": [
+        "merck_ceh_pyometra_2024",
+        "wsava_reproduction_2024"
+      ],
+      "presentations": [
+        {
+          "id": "p1_intact_cat_with_nonspecific_illness",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что нестерилизованная кошка вялая, мало ест и обезвожена; течка могла быть незаметна, выделений мало или нет.",
+          "historyAnswers": {
+            "spay_status_documents": "По нашим наблюдениям, нетронутый.",
+            "last_heat_date": "Дома мы заметили, что не наблюдалось и не было приблизительным.",
+            "vaginal_discharge": "Насколько мы можем судить, отсутствует или скудно.",
+            "appetite_vomiting_diarrhea": "Мы записали, что преобладает анорексия или вялость."
+          },
+          "examFindings": [
+            {
+              "factId": "feline_nonspecific_pattern_does_not_lower_pyometra_risk",
+              "source": "clinical_record",
+              "finding": "Допускается специфическая для кошек тонкая подача."
+            },
+            {
+              "factId": "dog_classic_pupd_or_discharge_not_required",
+              "source": "species_rule",
+              "finding": "Визуализация и полный дифференциал определяют маршрут."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "feline_nonspecific_pattern_does_not_lower_pyometra_risk",
+              "discoveryPaths": [
+                "last_heat_date",
+                "appetite_vomiting_diarrhea",
+                "hydration_pain_abdominal_exam"
+              ]
+            },
+            {
+              "factId": "dog_classic_pupd_or_discharge_not_required",
+              "discoveryPaths": [
+                "vaginal_discharge",
+                "pupd_pattern",
+                "expert_uterine_ultrasound"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pyometra_reproductive_and_cycle_history",
+              "classification": "required",
+              "result": "При уточнении анамнеза: неопределенность статуса или цикла у кошек."
+            },
+            {
+              "id": "pyometra_abdominal_ultrasound",
+              "classification": "required",
+              "result": "При ультразвуковом исследовании: матка и ее альтернативы."
+            },
+            {
+              "id": "pyometra_cbc_biochemistry_electrolytes_coagulation",
+              "classification": "required_severity",
+              "result": "В лабораторных показателях крови: данные об общем состоянии."
+            },
+            {
+              "id": "pyometra_surgical_or_specialist_route",
+              "classification": "required_if_supported",
+              "result": "По итогам консультации специалиста: срочный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "feline_nonspecific_pattern_does_not_lower_pyometra_risk",
+              "dog_classic_pupd_or_discharge_not_required"
+            ],
+            "confirmedDiagnosisRequires": [
+              "intact_cat_plus_uterine_infection_evidence"
+            ],
+            "dangerStates": [
+              "sepsis",
+              "hepatic_lipidosis",
+              "dehydration",
+              "aki"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "female_reproductive_exam",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "pyometra_ultrasound_external",
+              "reproductive_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pyometra_imaging_route",
+              "pyometra_systemic_route",
+              "pyometra_source_control_route"
+            ],
+            "referralFallback": "reproductive_surgery_referral"
+          },
+          "carePlanId": "atypical_stump_pyometra_plan",
+          "followUp": {
+            "timing": "Срочная визуализация или маршрут с мониторингом приема у кошек.",
+            "required": true,
+            "targets": [
+              "intake",
+              "hydration",
+              "temperature",
+              "perfusion",
+              "uterine_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Незаметные заболевания кошек остаются актуальными и актуальными с точки зрения вида.",
+            "unsafe": "Отсутствие выделений или ПУ или ПД исключают пиометру."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: кошки могут скрывать репродуктивные и системные признаки."
+          ],
+          "compatibility": {
+            "temperament": [
+              "withdrawn",
+              "fearful",
+              "irritable"
+            ],
+            "requiredHandlingAlternative": "feline_low_stress_imaging",
+            "ownerModifiers": [
+              "heat_not_observed",
+              "multiple_cats"
+            ]
+          }
+        },
+        {
+          "id": "p2_reported_spayed_patient_with_stump_or_remnant_risk",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что пациентка считается стерилизованной, но документы неполны, есть циклические признаки или риск остаточной ткани.",
+          "historyAnswers": {
+            "spay_status_documents": "По нашим наблюдениям, заявлено о стерилизации; запись неполная или тип процедуры неизвестен.",
+            "last_heat_date": "Дома мы заметили, что возможны циклические знаки.",
+            "hormonal_exposure": "Насколько мы можем судить, исследован эндогенный или экзогенный источник.",
+            "vaginal_discharge": "Мы записали, что владелец не отмечает этого признака на текущем этапе."
+          },
+          "examFindings": [
+            {
+              "factId": "stump_truth_requires_residual_uterine_tissue_and_hormonal_source",
+              "source": "eligibility_rule",
+              "finding": "Обе предпосылки уже присутствуют в данных случая и не выводятся только из симптомов."
+            },
+            {
+              "factId": "documented_complete_spay_without_source_prohibits_variant",
+              "source": "exclusion_rule",
+              "finding": "Без документов о полной операции остаточную ткань матки нельзя ни предполагать, ни исключать."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stump_truth_requires_residual_uterine_tissue_and_hormonal_source",
+              "discoveryPaths": [
+                "spay_status_documents",
+                "hormonal_exposure",
+                "expert_uterine_ultrasound"
+              ]
+            },
+            {
+              "factId": "documented_complete_spay_without_source_prohibits_variant",
+              "discoveryPaths": [
+                "reproductive_status_record_review",
+                "last_heat_date"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pyometra_reproductive_and_cycle_history",
+              "classification": "required_guard",
+              "result": "При уточнении анамнеза: показания к операции или циклу или гормонам."
+            },
+            {
+              "id": "pyometra_abdominal_ultrasound",
+              "classification": "required_expert",
+              "result": "При ультразвуковом исследовании: остаточная ткань или коллекция и альтернативы."
+            },
+            {
+              "id": "pyometra_surgical_or_specialist_route",
+              "classification": "required_if_supported",
+              "result": "По итогам консультации специалиста: специализированный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stump_truth_requires_residual_uterine_tissue_and_hormonal_source",
+              "documented_complete_spay_without_source_prohibits_variant"
+            ],
+            "confirmedDiagnosisRequires": [
+              "residual_tissue_plus_hormonal_source_plus_infection_evidence"
+            ],
+            "dangerStates": [
+              "sepsis",
+              "missed_foreign_body_or_mass",
+              "false_stump_diagnosis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "reproductive_history",
+              "female_reproductive_exam",
+              "general_exam"
+            ],
+            "external": [
+              "pyometra_ultrasound_external",
+              "reproductive_specialist_referral",
+              "reproductive_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pyometra_imaging_route",
+              "pyometra_source_control_route"
+            ],
+            "referralFallback": "reproductive_specialist_referral"
+          },
+          "carePlanId": "atypical_stump_pyometra_plan",
+          "followUp": {
+            "timing": "Определенный специалистом срочный или плановый маршрут по стабильности.",
+            "required": true,
+            "targets": [
+              "residual_tissue_evidence",
+              "hormonal_source",
+              "infection",
+              "systemic_state"
+            ]
+          },
+          "outcomes": {
+            "safe": "Редкая клинический вариант имеет доказательную базу.",
+            "unsafe": "Каждому стерилизованному пациенту с выделениями назначают культевую пиометру."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: первоначальный тип операции и наличие остаточных тканей имеют значение."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "expert_low_stress_imaging",
+            "ownerModifiers": [
+              "missing_records",
+              "surprised_by_rare_diagnosis"
+            ]
+          }
+        },
+        {
+          "id": "p3_hormonal_exposure_or_uncertain_reproductive_history",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_urgent",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что репродуктивная история неясна или в доме применялось гормональное средство.",
+          "historyAnswers": {
+            "hormonal_exposure": "По нашим наблюдениям, упаковка или дата или другой источник в доме может указать на воздействие.",
+            "spay_status_documents": "Дома мы заметили, что неизвестно или неполно.",
+            "last_heat_date": "Насколько мы можем судить, неизвестно или приблизительно.",
+            "prior_treatment": "Мы записали, что список лекарств пересмотрен."
+          },
+          "examFindings": [
+            {
+              "factId": "critical_hormonal_exposure_has_multiple_discovery_paths",
+              "source": "information_design",
+              "finding": "Упаковка, записи и осмотр лекарств могут выявить это без признания."
+            },
+            {
+              "factId": "code_does_not_generate_reproductive_drug_protocol",
+              "source": "safety_rule",
+              "finding": "Воздействие информирует только о риске."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "critical_hormonal_exposure_has_multiple_discovery_paths",
+              "discoveryPaths": [
+                "hormonal_exposure",
+                "prior_treatment",
+                "reproductive_status_record_review"
+              ]
+            },
+            {
+              "factId": "code_does_not_generate_reproductive_drug_protocol",
+              "discoveryPaths": [
+                "spay_status_documents",
+                "last_heat_date"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pyometra_reproductive_and_cycle_history",
+              "classification": "required",
+              "result": "При уточнении анамнеза: зарегистрирована неопределенность воздействия или статуса."
+            },
+            {
+              "id": "pyometra_abdominal_ultrasound",
+              "classification": "required_if_suspicious",
+              "result": "При ультразвуковом исследовании: оценивается ткань или содержимое матки."
+            },
+            {
+              "id": "pyometra_cbc_biochemistry_electrolytes_coagulation",
+              "classification": "required_by_severity",
+              "result": "В лабораторных показателях крови: системный риск."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "critical_hormonal_exposure_has_multiple_discovery_paths",
+              "code_does_not_generate_reproductive_drug_protocol"
+            ],
+            "confirmedDiagnosisRequires": [
+              "uterine_infection_evidence_with_reproductive_guard"
+            ],
+            "dangerStates": [
+              "hidden_exposure",
+              "sepsis",
+              "pregnancy",
+              "alternative_reproductive_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "reproductive_history",
+              "general_exam",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "pyometra_ultrasound_external",
+              "reproductive_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pyometra_imaging_route",
+              "pyometra_systemic_route"
+            ],
+            "referralFallback": "reproductive_specialist_referral"
+          },
+          "carePlanId": "atypical_stump_pyometra_plan",
+          "followUp": {
+            "timing": "В тот же день, если систематический; специализированный маршрут, если он стабилен или двусмысленен.",
+            "required": true,
+            "targets": [
+              "exposure_evidence",
+              "uterine_status",
+              "systemic_state"
+            ]
+          },
+          "outcomes": {
+            "safe": "Воздействие можно обнаружить и оно не создает автоматическая система лечения.",
+            "unsafe": "Только признание владельца раскрывает важнейший факт или автоматическая система выбирает гормоны."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: используйте нейтральные вопросы и требуйте упаковку или записи без обвинений."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "staged_history_and_imaging",
+            "ownerModifiers": [
+              "embarrassed",
+              "incomplete_history"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pyometra_complicated_or_postoperative",
+      "version": "2026.07.16.40",
+      "title": "Осложнённая пиометра и послеоперационное наблюдение",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Сепсис или органная дисфункция, разрыв или перитонит и отсутствие ожидаемого послеоперационного улучшения требуют отдельных доказательств и мониторинга связанных эпизодов.",
+      "exclusions": [
+        "isolated_wbc_change_without_clinical_context",
+        "unlinked_postoperative_visit"
+      ],
+      "planBundleId": "complicated_postoperative_pyometra_plan",
+      "sourceIds": [
+        "merck_ceh_pyometra_2024",
+        "canine_pyometra_review_2023"
+      ],
+      "presentations": [
+        {
+          "id": "p1_sepsis_or_organ_dysfunction",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что на фоне пиометры нарушены перфузия, почки, печень, свёртывание или дыхание.",
+          "historyAnswers": {
+            "weakness_collapse_breathing": "По нашим наблюдениям, присутствуют тревожные признаки.",
+            "pupd_pattern": "Дома мы заметили, что почечный контекст.",
+            "comorbidity_anesthesia_risk": "Насколько мы можем судить, зарегистрированы базовые риски.",
+            "prior_treatment": "Мы записали, что не задерживает контроль версий."
+          },
+          "examFindings": [
+            {
+              "factId": "organ_flags_are_stored_separately",
+              "source": "monitoring_record",
+              "finding": "Выражены состояния перфузии, почек, печени, коагуляции и дыхания."
+            },
+            {
+              "factId": "wbc_alone_does_not_define_sepsis",
+              "source": "clinical_reasoning",
+              "finding": "Требуются клинические физиологии и тенденции."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "organ_flags_are_stored_separately",
+              "discoveryPaths": [
+                "weakness_collapse_breathing",
+                "perfusion_temperature_bp_exam",
+                "dated_pyometra_laboratory_snapshot"
+              ]
+            },
+            {
+              "factId": "wbc_alone_does_not_define_sepsis",
+              "discoveryPaths": [
+                "pupd_pattern",
+                "comorbidity_anesthesia_risk",
+                "renal_urine_snapshot"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pyometra_stability_perfusion_and_abdominal_exam",
+              "classification": "immediate",
+              "result": "Клиническая оценка показала: экстренная физиология."
+            },
+            {
+              "id": "pyometra_cbc_biochemistry_electrolytes_coagulation",
+              "classification": "required_serial",
+              "result": "В лабораторных показателях крови: карта органов или коагуляции."
+            },
+            {
+              "id": "pyometra_urinalysis_and_renal_assessment",
+              "classification": "required",
+              "result": "В анализе мочи: состояние почек или мочи."
+            },
+            {
+              "id": "pyometra_surgical_or_specialist_route",
+              "classification": "immediate_required",
+              "result": "По итогам консультации специалиста: интенсивный хирургический маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "organ_flags_are_stored_separately",
+              "wbc_alone_does_not_define_sepsis"
+            ],
+            "confirmedDiagnosisRequires": [
+              "uterine_source_plus_clinical_organ_dysfunction_evidence"
+            ],
+            "dangerStates": [
+              "septic_shock",
+              "aki",
+              "coagulopathy",
+              "respiratory_failure",
+              "multiorgan_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oxygen",
+              "infusion_pump",
+              "vital_monitor",
+              "trained_stabilization",
+              "cbc",
+              "biochemistry",
+              "electrolytes",
+              "coagulation"
+            ],
+            "external": [
+              "reproductive_surgery_referral",
+              "intensive_care_referral"
+            ],
+            "missingLocalRoute": [
+              "intensive_care_referral"
+            ],
+            "conditional": [
+              "pyometra_stabilization_route",
+              "pyometra_systemic_route",
+              "pyometra_source_control_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "complicated_postoperative_pyometra_plan",
+          "followUp": {
+            "timing": "Непрерывный органоспецифичный мониторинг.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "renal",
+              "hepatic",
+              "coagulation",
+              "respiration",
+              "mentation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Дисфункция органов распознается и поддерживается контролем источника.",
+            "unsafe": "Сепсис снижается до количества лейкоцитов."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: риски, связанные с конкретными органами, и проведите безопасный курс неотложной помощи."
+          ],
+          "compatibility": {
+            "temperament": [
+              "obtunded",
+              "pain_defensive",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_intensive_support",
+            "ownerModifiers": [
+              "budget_limited",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_uterine_rupture_or_peritonitis_suspicion",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что внезапно усилились боль и слабость; выявлена свободная жидкость или признаки перитонита.",
+          "historyAnswers": {
+            "abdominal_distension": "По нашим наблюдениям, внезапное изменение или боль.",
+            "weakness_collapse_breathing": "Дома мы заметили, что экстренное ухудшение.",
+            "prior_treatment": "Насколько мы можем судить, записано предыдущее обращение или процедура.",
+            "appetite_vomiting_diarrhea": "Мы записали, что тяжелая системная картина желудочно-кишечного тракта."
+          },
+          "examFindings": [
+            {
+              "factId": "rupture_or_peritonitis_never_home",
+              "source": "safety_rule",
+              "finding": "Требуется немедленное интенсивное хирургическое вмешательство."
+            },
+            {
+              "factId": "fluid_sampling_and_surgery_technique_are_protocol_gated",
+              "source": "procedure_boundary",
+              "finding": "Указание и направление ов кода, а не методика."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "rupture_or_peritonitis_never_home",
+              "discoveryPaths": [
+                "abdominal_distension",
+                "weakness_collapse_breathing",
+                "hydration_pain_abdominal_exam",
+                "expert_uterine_ultrasound"
+              ]
+            },
+            {
+              "factId": "fluid_sampling_and_surgery_technique_are_protocol_gated",
+              "discoveryPaths": [
+                "prior_treatment",
+                "perfusion_temperature_bp_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pyometra_abdominal_ultrasound",
+              "classification": "urgent_expert",
+              "result": "При ультразвуковом исследовании: подозрение на наличие свободной жидкости или целостности матки."
+            },
+            {
+              "id": "pyometra_cbc_biochemistry_electrolytes_coagulation",
+              "classification": "parallel_urgent",
+              "result": "В лабораторных показателях крови: системный или коагуляционный статус."
+            },
+            {
+              "id": "pyometra_surgical_or_specialist_route",
+              "classification": "immediate_required",
+              "result": "По итогам консультации специалиста: хирургическая или интенсивная передача."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "rupture_or_peritonitis_never_home",
+              "fluid_sampling_and_surgery_technique_are_protocol_gated"
+            ],
+            "confirmedDiagnosisRequires": [
+              "expert_fluid_or_surgical_evidence"
+            ],
+            "dangerStates": [
+              "septic_peritonitis",
+              "shock",
+              "hemorrhage",
+              "multiorgan_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oxygen",
+              "infusion_pump",
+              "vital_monitor",
+              "perioperative_stabilization"
+            ],
+            "external": [
+              "abdominal_fluid_analysis_external",
+              "reproductive_surgery_referral",
+              "intensive_care_referral"
+            ],
+            "missingLocalRoute": [
+              "intensive_care_referral"
+            ],
+            "conditional": [
+              "pyometra_rupture_route",
+              "pyometra_stabilization_route",
+              "pyometra_source_control_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "complicated_postoperative_pyometra_plan",
+          "followUp": {
+            "timing": "Постоянная неотложная помощь и связанная с ней послеоперационная.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "pain",
+              "abdominal_fluid",
+              "temperature",
+              "organ_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Подозрение на разрыв вызывает немедленный экспертный контроль источника.",
+            "unsafe": "Свободную жидкость наблюдают дома или берут пробы вслепую."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: немедленный риск развития перитонита или разрыва и необходимость перевода."
+          ],
+          "compatibility": {
+            "temperament": [
+              "obtunded",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "minimal_abdominal_handling",
+            "ownerModifiers": [
+              "transport_difficult",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_postoperative_failure_to_improve_or_expected_recheck",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "follow_up_urgent_by_signs",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что после операции оценивают температуру, перфузию, боль, аппетит, рану, мочу и лабораторную динамику.",
+          "historyAnswers": {
+            "appetite_vomiting_diarrhea": "По нашим наблюдениям, тенденция восстановления или неудачи.",
+            "weakness_collapse_breathing": "Дома мы заметили, что новые красные флаги да или нет.",
+            "prior_treatment": "Насколько мы можем судить, дата операции и план выгрузки связаны.",
+            "pupd_pattern": "Мы записали, что тенденция диуреза или ПУ-ФД."
+          },
+          "examFindings": [
+            {
+              "factId": "postoperative_snapshot_is_linked_and_time_interpreted",
+              "source": "follow_up_record",
+              "finding": "Результаты интерпретируются относительно времени операции и исходного уровня."
+            },
+            {
+              "factId": "failure_to_improve_triggers_repeat_workup",
+              "source": "clinical_reasoning",
+              "finding": "Стойкая лихорадка, рвота, слабость, раны или выделения или ухудшение состояния органов требуют визуализации или посева или направления."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "postoperative_snapshot_is_linked_and_time_interpreted",
+              "discoveryPaths": [
+                "prior_treatment",
+                "linked_postoperative_response",
+                "dated_pyometra_laboratory_snapshot"
+              ]
+            },
+            {
+              "factId": "failure_to_improve_triggers_repeat_workup",
+              "discoveryPaths": [
+                "appetite_vomiting_diarrhea",
+                "weakness_collapse_breathing",
+                "pupd_pattern"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pyometra_postoperative_response_monitoring",
+              "classification": "required_linked",
+              "result": "При динамическом наблюдении: клинический или раневой или лабораторный ответ связан с операцией."
+            },
+            {
+              "id": "pyometra_cbc_biochemistry_electrolytes_coagulation",
+              "classification": "conditional_trend",
+              "result": "В лабораторных показателях крови: лабораторный тренд, учитывающий время."
+            },
+            {
+              "id": "pyometra_culture_when_appropriate",
+              "classification": "conditional_failure",
+              "result": "По результатам посева и определения чувствительности: источник или время записано."
+            },
+            {
+              "id": "pyometra_abdominal_ultrasound",
+              "classification": "conditional_failure",
+              "result": "При ультразвуковом исследовании: повторите визуализацию, если есть клинические показания."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "postoperative_snapshot_is_linked_and_time_interpreted",
+              "failure_to_improve_triggers_repeat_workup"
+            ],
+            "confirmedDiagnosisRequires": [
+              "expected_recovery_or_specific_complication_evidence"
+            ],
+            "dangerStates": [
+              "persistent_sepsis",
+              "peritonitis",
+              "hemorrhage",
+              "aki",
+              "wound_complication"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "postoperative_monitoring",
+              "general_exam",
+              "pain_assessment",
+              "cbc",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "pyometra_ultrasound_external",
+              "uterine_culture_external",
+              "reproductive_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pyometra_postoperative_route",
+              "pyometra_culture_route",
+              "pyometra_rupture_route"
+            ],
+            "referralFallback": "reproductive_surgery_referral"
+          },
+          "carePlanId": "complicated_postoperative_pyometra_plan",
+          "followUp": {
+            "timing": "Запланированная связанная повторная проверка или немедленная, если есть тревожные признаки.",
+            "required": true,
+            "targets": [
+              "temperature",
+              "perfusion",
+              "pain",
+              "appetite",
+              "wound",
+              "urine",
+              "lab_trend"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ожидаемое выздоровление и осложнения разделены временем и клиническим контекстом.",
+            "unsafe": "Один ранний общий анализ крови определяет осложнение или последующее наблюдение теряет исходный эпизод."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: укажите явные маркеры ожидаемого восстановления и признаки немедленного возврата."
+          ],
+          "compatibility": {
+            "temperament": [
+              "recovering",
+              "fearful",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "brief_gentle_postoperative_exam",
+            "ownerModifiers": [
+              "anxious",
+              "transport_difficult"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject ordinary pyometra in a sterilized patient unless authored stump tissue and hormonal source are present.",
+    "Reject if vaginal discharge makes the case safe or absence of discharge excludes closed pyometra.",
+    "Reject if odor, CBC or one imaging sign confirms the diagnosis without reproductive and systemic context.",
+    "Reject if culture delays stabilization and urgent source-control referral in an unstable patient.",
+    "Reject if breeding value overrides safety or creates an unreviewed conservative route.",
+    "Reject if the generator creates a drug, dose, fluid, anesthesia, lavage, puncture or surgical technique."
+  ]
+}

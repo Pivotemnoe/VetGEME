@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "activationId": "pet-clinic-local-full-activation-2026.07.17.1",
+  "scope": "local_manual_testing",
+  "authorizedAt": "2026-07-17",
+  "authorizedByRole": "product_owner",
+  "publicReleaseAuthorized": false,
+  "externalVeterinaryCertificationClaimed": false,
+  "medicalSource": {
+    "packageId": "vetgeme-medical-production-authoring",
+    "packageVersion": "2026.07.16.40",
+    "manifestPath": "content/review-inputs/vetgeme-medical-production-authoring-2026.07.16.40/source/MANIFEST.json",
+    "manifestSha256": "87ded58e62ecf0b05d87af83e00570004cadafa9a0edd74768eda6e8cb9b3f49",
+    "selection": "all_manifest_entries",
+    "familyCount": 39,
+    "variantCount": 215,
+    "presentationCount": 645,
+    "allowProgrammerAuthoredMedicalText": false
+  },
+  "operationalSource": {
+    "packageId": "vetgeme-operational-production-authoring",
+    "packageVersion": "2026.07.16.4",
+    "manifestPath": "content/review-inputs/vetgeme-operational-production-authoring-2026.07.16.4/source/MANIFEST.json",
+    "manifestSha256": "5fc89dc34234d0626846fef797ba247ea0154068eeeb6b0953a990b3745f146d"
+  },
+  "resourceSource": {
+    "packageId": "vetgeme-p5-production-authoring",
+    "packageVersion": "2026.07.16.2",
+    "manifestPath": "content/review-inputs/vetgeme-p5-production-authoring-2026.07.16.2/source/MANIFEST.json",
+    "manifestSha256": "25730b20dcc3d0ac840082f353ccea14d11c35aa9c107bf2cb52ccd21e3e69c6",
+    "correctionOverlay": "P5_ROOM_RESERVATION_CORRECTIONS.json"
+  },
+  "visualSource": {
+    "packageId": "vetgeme-p9-visual-state-authoring",
+    "packageVersion": "2026.07.16.2",
+    "manifestPath": "content/review-inputs/vetgeme-p9-visual-state-authoring-2026.07.16.2/source/MANIFEST.json",
+    "manifestSha256": "7f940f8ba3df745670fc5b4c262a6f79caf5db9edd4f3068a379f18ec4327515",
+    "artOverlay": "ART_ASSET_MANIFEST.json"
+  },
+  "enabledModes": ["campaign", "training", "endless", "tester"],
+  "legacyCompatibilityPool": {
+    "activeInNormalGeneration": false,
+    "caseCount": 30,
+    "access": "tester_explicit_archive_toggle_only"
+  },
+  "requiredSafety": {
+    "persistGeneratedDayImmediately": true,
+    "safeReferralOnMissingCapability": true,
+    "unknownMedicalOrOperationalJoinFailsClosed": true,
+    "showRawIdsToPlayer": false
+  }
+}
+

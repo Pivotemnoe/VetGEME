@@ -1,0 +1,3356 @@
+{
+  "schemaVersion": 1,
+  "familyId": "skin_atopy",
+  "familyVersion": "2026.07.16.40",
+  "title": "Атопия и хронический зуд",
+  "campaignPhase": "chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": [
+    "Атопия представляет собой клинический диагноз после последовательного исключения вероятного зудящего заболевания, а также отсутствия результатов ни одного теста на аллергию.",
+    "Внутрикожные или сывороточные аллерген-специфичные иммуноглобулин Е указывают на сенсибилизацию или воздействие и в основном используются для выбора совместимых с анамнезом аллергенов для иммунотерапии после клинического диагноза.",
+    "Порода, возраст, критерии Фавро и противовоспалительная реакция меняют вероятность, но никогда не доказывают наличие заболевания сами по себе.",
+    "Атопический дерматит собак, атопический кожный синдром кошек, пищевые заболевания, перекрытие блох или паразитов или контактов и вторичная инфекция остаются отдельными компонентами доказательств.",
+    "У одного пациента могут одновременно действовать несколько клинически совместимых триггеров.",
+    "Отсутствие блох, обнаруженных при одном осмотре, не исключает блошиного аллергического дерматита.",
+    "Такие реакции, как милиарный дерматит или эозинофильные поражения, не являются этиологическим диагнозом.",
+    "Пищевая аллергия требует строгого устранения и контролируемой провокации; Пищевые тесты сыворотки или слюны не заменяют его.",
+    "Цитология кожи и ушей, специфичная для конкретного участка, интерпретируется с учетом поражений и не является универсальным результатом для организма.",
+    "Вторичная инфекция может усилить зуд, не устраняя основную аллергию.",
+    "Никакого препарата, дозы, снижения дозы, рецепта диеты, смеси аллергенов или схемы иммунотерапии не задаётся автоматически."
+  ],
+  "coreCapabilities": [
+    "skin_exam",
+    "skin_cytology",
+    "skin_scraping",
+    "longitudinal_care",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "atopy_mapping_route",
+      "anyOf": [
+        "pruritus_lesion_mapping",
+        "skin_exam",
+        "dermatology_referral",
+        "safe_referral"
+      ],
+      "purpose": "onset_distribution_seasonality_primary_secondary_and_qol_map"
+    },
+    {
+      "id": "atopy_cytology_route",
+      "anyOf": [
+        "skin_cytology",
+        "ear_cytology",
+        "ear_exam",
+        "dermatology_referral",
+        "safe_referral"
+      ],
+      "purpose": "site_specific_skin_ear_infection_mapping"
+    },
+    {
+      "id": "atopy_ectoparasite_route",
+      "anyOf": [
+        "skin_scraping",
+        "strict_ectoparasite_control_trial",
+        "parasite_environment_control",
+        "safe_referral"
+      ],
+      "purpose": "flea_mite_household_and_environment_exclusion"
+    },
+    {
+      "id": "atopy_dermatophyte_mimic_route",
+      "anyOf": [
+        "dermatophyte_direct_exam",
+        "dermatophyte_culture_external",
+        "histology_external",
+        "dermatology_referral",
+        "safe_referral"
+      ],
+      "purpose": "fungal_autoimmune_neoplastic_and_other_mimics"
+    },
+    {
+      "id": "atopy_diet_route",
+      "anyOf": [
+        "allergy_elimination_provocation_trial",
+        "diet_trial",
+        "comprehensive_diet_history",
+        "safe_referral"
+      ],
+      "purpose": "strict_food_trial_and_controlled_challenge"
+    },
+    {
+      "id": "atopy_culture_route",
+      "anyOf": [
+        "skin_bacterial_culture_external",
+        "culture_external",
+        "dermatology_referral",
+        "safe_referral"
+      ],
+      "purpose": "recurrent_deep_or_nonresponsive_infection"
+    },
+    {
+      "id": "atopy_testing_route",
+      "anyOf": [
+        "allergy_testing_external",
+        "dermatology_referral",
+        "safe_referral"
+      ],
+      "purpose": "history_compatible_allergen_selection_after_clinical_diagnosis"
+    },
+    {
+      "id": "atopy_environment_route",
+      "anyOf": [
+        "skin_barrier_environment_plan",
+        "dermatophyte_environment_control",
+        "parasite_environment_control",
+        "safe_referral"
+      ],
+      "purpose": "barrier_bathing_contact_environment_and_home_feasibility"
+    },
+    {
+      "id": "atopy_longitudinal_route",
+      "anyOf": [
+        "atopy_longitudinal_monitoring",
+        "longitudinal_care",
+        "safe_referral"
+      ],
+      "purpose": "same_scale_itch_lesion_qol_and_flare_monitoring"
+    },
+    {
+      "id": "atopy_refractory_route",
+      "anyOf": [
+        "dermatology_referral",
+        "histology_external",
+        "oncology_biopsy_planning_referral",
+        "safe_referral"
+      ],
+      "purpose": "refractory_atypical_mucosal_deep_or_neoplastic_route"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "atopy_full_pruritus_history_distribution_and_seasonality",
+      "requires": [
+        "pruritus_lesion_mapping"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "atopy_skin_ear_cytology_and_infection_mapping",
+      "requires": [
+        "skin_cytology",
+        "ear_cytology"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "atopy_flea_comb_scraping_and_ectoparasite_control_trial",
+      "requires": [
+        "strict_ectoparasite_control_trial"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "atopy_dermatophyte_and_other_mimic_route",
+      "requires": [
+        "dermatophyte_direct_exam",
+        "dermatophyte_culture_external"
+      ],
+      "availability": "local_plus_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "atopy_strict_elimination_and_provocation_trial",
+      "requires": [
+        "allergy_elimination_provocation_trial"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "atopy_secondary_infection_culture_when_indicated",
+      "requires": [
+        "skin_bacterial_culture_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "atopy_allergy_testing_only_for_immunotherapy_selection",
+      "requires": [
+        "allergy_testing_external"
+      ],
+      "availability": "external_post_diagnosis_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "atopy_environment_barrier_and_home_feasibility_review",
+      "requires": [
+        "skin_barrier_environment_plan"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+      "requires": [
+        "atopy_longitudinal_monitoring"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "atopy_refractory_dermatology_referral",
+      "requires": [
+        "dermatology_referral"
+      ],
+      "availability": "external_post_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "onset_first_site_date",
+      "prompt": "Когда начался зуд и что или где было первым?"
+    },
+    {
+      "id": "itch_before_lesions_infection",
+      "prompt": "Был ли зуд до высыпаний или инфекции?"
+    },
+    {
+      "id": "lick_scratch_rub_body_map_video",
+      "prompt": "Где лижет, чешет, трёт или выкусывает и есть ли видеозапись?"
+    },
+    {
+      "id": "seasonality_flare_windows",
+      "prompt": "Есть ли месяцы, среда или сезонные обострение окна?"
+    },
+    {
+      "id": "household_flea_control_inventory",
+      "prompt": "Чем, когда и у всех ли животных проводится блоха контроль?"
+    },
+    {
+      "id": "prior_scraping_cytology_culture",
+      "prompt": "Есть ли с датой и точным местом соскоб, цитология или посев?"
+    },
+    {
+      "id": "complete_recent_diet_exposures",
+      "prompt": "Что именно ел пациент, включая лакомства, со вкусом лекарства и общий миски?"
+    },
+    {
+      "id": "gi_signs_context",
+      "prompt": "Есть ли стул, рвота и другие желудочно-кишечные признаки признаки и какова частота?"
+    },
+    {
+      "id": "home_contact_environment_changes",
+      "prompt": "Что менялось: чистящие средства, трава, подстилка, лоток, переезд или насекомые?"
+    },
+    {
+      "id": "prior_components_and_response",
+      "prompt": "Какие компоненты помогали, насколько и на какой срок?"
+    },
+    {
+      "id": "adverse_effects_comorbidities",
+      "prompt": "Есть ли нежелательный эффекты или подтверждённые сопутствующие болезни?"
+    },
+    {
+      "id": "owner_feasibility_and_handling",
+      "prompt": "Что владелец и пациент реально могут выполнять?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "full_body_pruritus_lesion_map",
+      "source": "skin_exam",
+      "requires": [
+        "pruritus_lesion_mapping",
+        "skin_exam"
+      ]
+    },
+    {
+      "id": "primary_secondary_lesion_self_trauma_record",
+      "source": "skin_exam",
+      "requires": [
+        "skin_exam"
+      ]
+    },
+    {
+      "id": "ears_paws_face_flexures_dorsolumbar_perianal_map",
+      "source": "skin_exam",
+      "requires": [
+        "pruritus_lesion_mapping"
+      ]
+    },
+    {
+      "id": "site_specific_skin_ear_cytology",
+      "source": "diagnostic_test",
+      "requires": [
+        "skin_cytology",
+        "ear_cytology"
+      ]
+    },
+    {
+      "id": "flea_comb_scraping_household_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "skin_scraping",
+        "strict_ectoparasite_control_trial"
+      ]
+    },
+    {
+      "id": "dermatophyte_mimic_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "dermatophyte_direct_exam",
+        "dermatophyte_culture_external"
+      ]
+    },
+    {
+      "id": "strict_diet_log_and_hidden_exposure_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "allergy_elimination_provocation_trial"
+      ]
+    },
+    {
+      "id": "site_specific_culture_susceptibility_record",
+      "source": "external_report",
+      "requires": [
+        "skin_bacterial_culture_external"
+      ]
+    },
+    {
+      "id": "history_compatible_allergen_selection_record",
+      "source": "external_report",
+      "requires": [
+        "allergy_testing_external"
+      ]
+    },
+    {
+      "id": "environment_barrier_home_technique_record",
+      "source": "care_plan",
+      "requires": [
+        "skin_barrier_environment_plan"
+      ]
+    },
+    {
+      "id": "same_scale_itch_lesion_qol_flare_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "atopy_longitudinal_monitoring"
+      ]
+    },
+    {
+      "id": "refractory_biopsy_specialist_record",
+      "source": "external_report",
+      "requires": [
+        "dermatology_referral"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "canine_environmental_atopy_plan",
+      "fullPlan": [
+        "map_onset_distribution_seasonality",
+        "exclude_parasites_and_mimics",
+        "map_site_specific_infection",
+        "decide_food_trial",
+        "clinical_diagnosis_without_test_shortcut",
+        "reviewed_multimodal_barrier_and_symptom_plan",
+        "same_scale_flare_monitoring"
+      ],
+      "stagedPlan": [
+        "map",
+        "exclude",
+        "classify",
+        "control_and_monitor"
+      ],
+      "minimumSafePlan": [
+        "breed_favrot_response_not_proof",
+        "parasite_route",
+        "cytology",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "protect_self_trauma",
+        "treat_reviewed_infection_component",
+        "dermatology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "ige_test_diagnoses_atopy",
+        "same_treatment_every_patient",
+        "otitis_generic_allergy_only"
+      ]
+    },
+    {
+      "id": "feline_atopic_skin_plan",
+      "fullPlan": [
+        "recognize_grooming_as_pruritus",
+        "map_feline_reaction_pattern",
+        "exclude_fleas_food_parasites_infection",
+        "preserve_validated_overlap",
+        "reviewed_feline_safe_control",
+        "home_video_and_qol",
+        "refractory_referral"
+      ],
+      "stagedPlan": [
+        "detect_itch",
+        "separate_pattern_from_cause",
+        "test_compatible_causes",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "reaction_pattern_not_etiology",
+        "no_flea_seen_not_exclusion",
+        "food_route",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "protect_skin",
+        "infection_component",
+        "dermatology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "alopecia_not_itch",
+        "eosinophilic_pattern_proves_cause",
+        "arbitrary_trigger_combination"
+      ]
+    },
+    {
+      "id": "food_induced_plan",
+      "fullPlan": [
+        "complete_diet_and_gi_history",
+        "control_parasites_and_infection",
+        "strict_eligible_elimination_trial",
+        "track_hidden_exposure_and_feasibility",
+        "same_scale_response",
+        "controlled_provocation_when_safe",
+        "confirmed_trigger_and_long_term_plan"
+      ],
+      "stagedPlan": [
+        "establish_baseline",
+        "eliminate_strictly",
+        "verify_response",
+        "provoke_and_confirm"
+      ],
+      "minimumSafePlan": [
+        "gi_signs_not_required",
+        "serum_saliva_not_diagnosis",
+        "hidden_exposure_not_blame",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "safe_symptom_support",
+        "nutrition_or_dermatology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "improvement_alone_always_confirms",
+        "generated_diet_recipe",
+        "uncontrolled_treats_ignored"
+      ]
+    },
+    {
+      "id": "parasite_contact_overlap_plan",
+      "fullPlan": [
+        "map_distribution_and_exposure",
+        "all_household_flea_control",
+        "scraping_and_sensitivity_limit",
+        "compatible_control_trial",
+        "contact_insect_environment_timeline",
+        "preserve_separate_trigger_evidence",
+        "longitudinal_response"
+      ],
+      "stagedPlan": [
+        "exposure_map",
+        "parasite_control",
+        "contact_discriminator",
+        "validate_overlap"
+      ],
+      "minimumSafePlan": [
+        "one_exam_no_flea_not_exclusion",
+        "scraping_negative_not_absolute",
+        "household_route",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "protect_skin",
+        "parasite_environment_control",
+        "dermatology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "owner_pet_only_control",
+        "contact_correlation_proves_trigger",
+        "random_multiple_allergies"
+      ]
+    },
+    {
+      "id": "secondary_infection_flare_plan",
+      "fullPlan": [
+        "map_primary_and_secondary_lesions",
+        "site_specific_cytology",
+        "reviewed_infection_component",
+        "continue_underlying_trigger_workup",
+        "culture_if_deep_recurrent_nonresponsive",
+        "audit_protocol_adherence_and_comorbidity",
+        "infection_and_itch_recheck"
+      ],
+      "stagedPlan": [
+        "identify_infection",
+        "treat_reviewed_component",
+        "verify_response",
+        "audit_recurrence"
+      ],
+      "minimumSafePlan": [
+        "infection_not_only_diagnosis_forever",
+        "cytology_site_specific",
+        "culture_before_random_escalation",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "deep_infection_urgent_route",
+        "dermatology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "yeast_count_without_lesions",
+        "infection_erases_allergy",
+        "endless_empiric_antimicrobial"
+      ]
+    },
+    {
+      "id": "poor_control_immunotherapy_plan",
+      "fullPlan": [
+        "verify_diagnosis_and_current_flare",
+        "audit_flea_diet_environment_barrier_and_technique",
+        "record_comorbidity_and_adverse_effect",
+        "select_reviewed_alternative_or_referral",
+        "allergy_testing_only_after_clinical_diagnosis",
+        "history_compatible_immunotherapy_selection",
+        "delayed_same_scale_monitoring"
+      ],
+      "stagedPlan": [
+        "audit_failure",
+        "remove_barriers",
+        "select_long_term_route",
+        "monitor_delayed_response"
+      ],
+      "minimumSafePlan": [
+        "no_owner_blame_before_audit",
+        "testing_not_diagnosis",
+        "immunotherapy_not_instant",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "safe_flare_control",
+        "dermatology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "random_escalation",
+        "unsafe_comorbidity_continuation",
+        "generator_makes_allergen_mix"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_canine_atopy_2026",
+      "title": "Merck Veterinary Manual: Atopic Dermatitis in Dogs",
+      "url": "https://www.merckvetmanual.com/integumentary-system/atopic-skin-conditions-in-dogs-and-cats/atopic-dermatitis-in-dogs",
+      "scope": "clinical_diagnosis_exclusion_distribution_secondary_infection_testing_limit_and_lifelong_management"
+    },
+    {
+      "id": "icada_diagnosis_2015",
+      "title": "ICADA detailed guidelines for diagnosis and allergen identification",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4531508/",
+      "scope": "sequential_pruritus_workup_favrot_limits_and_allergen_testing_role"
+    },
+    {
+      "id": "icada_treatment_2015",
+      "title": "ICADA updated treatment guidelines",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4537558/",
+      "scope": "multimodal_flare_chronic_infection_barrier_and_monitoring_context"
+    },
+    {
+      "id": "aaha_allergic_skin_2023",
+      "title": "2023 AAHA Management of Allergic Skin Diseases Guidelines",
+      "url": "https://www.aaha.org/wp-content/uploads/2023/10/2023-aaha-management-of-allergic-skin-diseases-guidelines-new.pdf",
+      "scope": "practical_diagnostic_workup_food_trial_infection_and_client_feasibility"
+    },
+    {
+      "id": "merck_flea_allergy",
+      "title": "Merck Veterinary Manual: Flea Allergy Dermatitis",
+      "url": "https://www.merckvetmanual.com/integumentary-system/fleas-and-flea-allergy-dermatitis/flea-allergy-dermatitis-in-dogs-and-cats",
+      "scope": "flea_exposure_distribution_household_control_and_no_flea_seen_limit"
+    }
+  ],
+  "variants": [
+    {
+      "id": "atopy_canine_environmental_pattern",
+      "version": "2026.07.16.40",
+      "title": "Собачий атопический дерматит: средовой картина",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Атопический дерматит собак представляет собой совместимый зудящий фенотип, установленный клинически после исключения и контроля паразитов, инфекции, пищевой реакции и других симптомов; сезонность, порода и критерии Фавро изменяют только вероятность.",
+      "exclusions": [
+        "breed_or_favrot_only",
+        "allergen_test_as_diagnosis",
+        "infection_unmapped"
+      ],
+      "planBundleId": "canine_environmental_atopy_plan",
+      "sourceIds": [
+        "merck_canine_atopy_2026",
+        "icada_diagnosis_2015",
+        "aaha_allergic_skin_2023"
+      ],
+      "presentations": [
+        {
+          "id": "p1_seasonal_face_feet_ears_flexural_pruritus",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "routine_or_urgent_by_self_trauma",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что сезонный рецидивирующий зуд поражает лицо, стопы, уши и сгибы, сопровождающийся облизыванием и растиранием перед появлением вторичных поражений.",
+          "historyAnswers": {
+            "onset_first_site_date": "По нашим наблюдениям, зуд начался на лапах или лице еще до появления поражений.",
+            "itch_before_lesions_infection": "Дома мы заметили, что зуд предшествовал заражению.",
+            "seasonality_flare_windows": "Насколько мы можем судить, повторяющаяся вспышка теплого сезона.",
+            "household_flea_control_inventory": "Мы записали, что история контроля должна быть проверена."
+          },
+          "examFindings": [
+            {
+              "factId": "compatible_distribution_and_seasonality_raise_probability_but_do_not_prove_atopy",
+              "source": "diagnostic_rule",
+              "finding": "Нанесены на карту лицо, лапы, ушные раковины и изгибы."
+            },
+            {
+              "factId": "parasites_infection_food_and_mimics_require_separate_evidence",
+              "source": "exclusion_rule",
+              "finding": "Последовательная обработка остается обязательной."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "compatible_distribution_and_seasonality_raise_probability_but_do_not_prove_atopy",
+              "discoveryPaths": [
+                "onset_first_site_date",
+                "seasonality_flare_windows",
+                "ears_paws_face_flexures_dorsolumbar_perianal_map"
+              ]
+            },
+            {
+              "factId": "parasites_infection_food_and_mimics_require_separate_evidence",
+              "discoveryPaths": [
+                "household_flea_control_inventory",
+                "site_specific_skin_ear_cytology",
+                "flea_comb_scraping_household_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_full_pruritus_history_distribution_and_seasonality",
+              "classification": "required_first",
+              "result": "При уточнении анамнеза: совместимая, но недиагностическая картина окружающей среды."
+            },
+            {
+              "id": "atopy_skin_ear_cytology_and_infection_mapping",
+              "classification": "required_by_site",
+              "result": "При микроскопии материала: статус вторичной инфекции в зависимости от места отбора проб."
+            },
+            {
+              "id": "atopy_flea_comb_scraping_and_ectoparasite_control_trial",
+              "classification": "required_exclusion",
+              "result": "При микроскопии материала: вероятность паразитирования и контролируемая реакция."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "compatible_distribution_and_seasonality_raise_probability_but_do_not_prove_atopy",
+              "parasites_infection_food_and_mimics_require_separate_evidence"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_longitudinal_pattern_after_sequential_exclusions"
+            ],
+            "dangerStates": [
+              "severe_self_trauma",
+              "deep_infection"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "skin_exam",
+              "pruritus_lesion_mapping",
+              "skin_cytology",
+              "ear_cytology",
+              "skin_scraping"
+            ],
+            "external": [
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_mapping_route",
+              "atopy_cytology_route",
+              "atopy_ectoparasite_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "canine_environmental_atopy_plan",
+          "followUp": {
+            "timing": "После контрольных точек исключения или контроля и снова в том же сезонном масштабе.",
+            "required": true,
+            "targets": [
+              "itch",
+              "lesions",
+              "ears",
+              "infection",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Экологическая атопия остается клиническим лонгитудинальным заключением с разными участниками.",
+            "unsafe": "Сезон, порода или один тест сами по себе позволяют поставить диагноз."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: дистрибутив направляет работу, но не заменяет ее."
+          ],
+          "compatibility": {
+            "temperament": [
+              "itchy",
+              "fearful",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "low_restraint_site_specific_sampling_or_referral",
+            "ownerModifiers": [
+              "expects_one_allergy_test",
+              "seasonal_normalization"
+            ]
+          }
+        },
+        {
+          "id": "p2_nonseasonal_or_seasonal_flare_on_chronic_background",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "routine_or_urgent_by_flare",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что хронический круглогодичный зуд имеет сезонное ухудшение и неполный ответ на предшествующий контроль симптомов.",
+          "historyAnswers": {
+            "seasonality_flare_windows": "По нашим наблюдениям, базовый уровень зуда плюс воспроизводимое окно бликов.",
+            "prior_components_and_response": "Дома мы заметили, что частичное временное облегчение; нет доказательств этиологии.",
+            "complete_recent_diet_exposures": "Насколько мы можем судить, перечень воздействия диеты неполный, пока его не спросят.",
+            "home_contact_environment_changes": "Мы записали, что хронология окружающей среды записана."
+          },
+          "examFindings": [
+            {
+              "factId": "partial_response_does_not_prove_or_disprove_atopy",
+              "source": "diagnostic_rule",
+              "finding": "Ответ – это только один продольный ключ."
+            },
+            {
+              "factId": "year_round_pruritus_requires_food_parasite_infection_and_environment_components",
+              "source": "differential_rule",
+              "finding": "Каждый выявленный компонент заболевания оценивают отдельно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "partial_response_does_not_prove_or_disprove_atopy",
+              "discoveryPaths": [
+                "prior_components_and_response",
+                "same_scale_itch_lesion_qol_flare_record"
+              ]
+            },
+            {
+              "factId": "year_round_pruritus_requires_food_parasite_infection_and_environment_components",
+              "discoveryPaths": [
+                "complete_recent_diet_exposures",
+                "household_flea_control_inventory",
+                "site_specific_skin_ear_cytology"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_full_pruritus_history_distribution_and_seasonality",
+              "classification": "required",
+              "result": "При уточнении анамнеза: исходная интенсивность зуда и характер обострения зафиксированы отдельно."
+            },
+            {
+              "id": "atopy_strict_elimination_and_provocation_trial",
+              "classification": "conditional_if_food_component_unresolved",
+              "result": "Целевое исследование показало: пищевой компонент разделен продольно."
+            },
+            {
+              "id": "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+              "classification": "required_longitudinal",
+              "result": "При динамическом наблюдении: сопоставимый отклик и запись вспышки."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "partial_response_does_not_prove_or_disprove_atopy",
+              "year_round_pruritus_requires_food_parasite_infection_and_environment_components"
+            ],
+            "confirmedDiagnosisRequires": [
+              "sequential_exclusions_plus_reproducible_longitudinal_pattern"
+            ],
+            "dangerStates": [
+              "uncontrolled_self_trauma",
+              "recurrent_infection",
+              "unsafe_empiric_escalation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "pruritus_lesion_mapping",
+              "skin_cytology",
+              "atopy_longitudinal_monitoring"
+            ],
+            "external": [
+              "allergy_elimination_provocation_trial",
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_mapping_route",
+              "atopy_diet_route",
+              "atopy_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "canine_environmental_atopy_plan",
+          "followUp": {
+            "timing": "Покомпонентные контрольные точки по базовой линии и факелу.",
+            "required": true,
+            "targets": [
+              "itch_scale",
+              "lesion_scale",
+              "infection",
+              "exposures",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Прежде чем выбирать долгосрочный контроль, необходимо распутать хронические и сезонные компоненты.",
+            "unsafe": "Неполный ответ на симптом становится диагностической неудачей или автоматической эскалацией."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: покажите, какой компонент тестируется на каждой контрольной точке."
+          ],
+          "compatibility": {
+            "temperament": [
+              "itchy",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "short_site_specific_visits_and_home_logs",
+            "ownerModifiers": [
+              "treatment_fatigue",
+              "expects_cure"
+            ]
+          }
+        },
+        {
+          "id": "p3_recurrent_otitis_as_dominant_manifestation",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "urgent_by_pain_or_neurologic_sign",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что рецидивирующий отит является доминирующим проявлением с легким зудом лап или лица между выступами ушей.",
+          "historyAnswers": {
+            "onset_first_site_date": "По нашим наблюдениям, эпизоды в ушах предшествовали явным генерализованным поражениям.",
+            "lick_scratch_rub_body_map_video": "Дома мы заметили, что зарегистрирован незначительный зуд лап или лица.",
+            "prior_scraping_cytology_culture": "Насколько мы можем судить, при предшествующем лечении уха не было достоверных цитологических данных.",
+            "prior_components_and_response": "Мы записали, что реакция только на ухо, неоднократно временная."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrent_otitis_can_be_an_atopic_manifestation_but_needs_ear_specific_workup",
+              "source": "diagnostic_rule",
+              "finding": "Компоненты уха и кожи нанесены на карту отдельно."
+            },
+            {
+              "factId": "ear_cytology_is_site_and_episode_specific",
+              "source": "sampling_rule",
+              "finding": "Текущая выборка из уха, а не повторное использование старых общих результатов."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "recurrent_otitis_can_be_an_atopic_manifestation_but_needs_ear_specific_workup",
+              "discoveryPaths": [
+                "onset_first_site_date",
+                "lick_scratch_rub_body_map_video",
+                "ears_paws_face_flexures_dorsolumbar_perianal_map"
+              ]
+            },
+            {
+              "factId": "ear_cytology_is_site_and_episode_specific",
+              "discoveryPaths": [
+                "prior_scraping_cytology_culture",
+                "site_specific_skin_ear_cytology"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_skin_ear_cytology_and_infection_mapping",
+              "classification": "required_each_relevant_episode",
+              "result": "При микроскопии материала: текущая карта организма или воспаления уха."
+            },
+            {
+              "id": "atopy_full_pruritus_history_distribution_and_seasonality",
+              "classification": "required",
+              "result": "При уточнении анамнеза: вероятность ушно-доминантного аллергического картины."
+            },
+            {
+              "id": "atopy_secondary_infection_culture_when_indicated",
+              "classification": "conditional_recurrent_nonresponsive",
+              "result": "По результатам посева и определения чувствительности: культурный маршрут при соблюдении критериев."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "recurrent_otitis_can_be_an_atopic_manifestation_but_needs_ear_specific_workup",
+              "ear_cytology_is_site_and_episode_specific"
+            ],
+            "confirmedDiagnosisRequires": [
+              "ear_specific_evidence_plus_sequential_allergy_workup"
+            ],
+            "dangerStates": [
+              "severe_pain",
+              "tympanum_risk",
+              "neurologic_sign",
+              "refractory_infection"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "ear_exam",
+              "ear_cytology",
+              "skin_exam"
+            ],
+            "external": [
+              "skin_bacterial_culture_external",
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_cytology_route",
+              "atopy_culture_route",
+              "atopy_refractory_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "canine_environmental_atopy_plan",
+          "followUp": {
+            "timing": "Повторная проверка уха плюс последующий контрольный пункт для проверки аллергии у всего пациента.",
+            "required": true,
+            "targets": [
+              "pain",
+              "ear_cytology",
+              "canal",
+              "skin_itch",
+              "recurrence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Эпизод уха разрешен, а рецидив связан с утвержденным планом лечения всего пациента.",
+            "unsafe": "Каждое рецидивирующее ухо маркируется общей аллергией без обследования или цитологического исследования."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему каждое обострение в ушах требует текущих доказательств и почему рецидив требует более широкого плана."
+          ],
+          "compatibility": {
+            "temperament": [
+              "ear_pain",
+              "head_shy",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "pain_aware_ear_sampling_or_referral",
+            "ownerModifiers": [
+              "expects_repeat_drops",
+              "frustrated_by_recurrence"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "atopy_feline_atopic_skin_syndrome",
+      "version": "2026.07.16.40",
+      "title": "Кошачий атопический кожный синдром",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Синдром атопической кожи кошек диагностируется после исключения и разделения блох, пищевых продуктов, паразитов, инфекции и других причин; алопеция, милиарный дерматит и эозинофильные проявления являются скорее картиной реакции, чем этиологией.",
+      "exclusions": [
+        "reaction_pattern_as_etiology",
+        "alopecia_without_pruritus_assessment",
+        "arbitrary_overlap"
+      ],
+      "planBundleId": "feline_atopic_skin_plan",
+      "sourceIds": [
+        "icada_diagnosis_2015",
+        "aaha_allergic_skin_2023",
+        "merck_flea_allergy"
+      ],
+      "presentations": [
+        {
+          "id": "p1_head_neck_pruritus_or_self_induced_alopecia",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "routine_or_urgent_by_excoriation",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что у кошки зуд головы и шеи или явно симметричная алопеция, вызванная постоянным уходом за шерстью.",
+          "historyAnswers": {
+            "lick_scratch_rub_body_map_video": "По нашим наблюдениям, домашнее видео показывает уход или царапание.",
+            "itch_before_lesions_infection": "Дома мы заметили, что поведение предшествовало алопеции или экскориациям.",
+            "household_flea_control_inventory": "Насколько мы можем судить, требуется информация обо всех домашних животных и окружающей среде.",
+            "complete_recent_diet_exposures": "Мы записали, что требуется полная подробный перечень возможных воздействий."
+          },
+          "examFindings": [
+            {
+              "factId": "self_induced_alopecia_is_a_pruritus_pattern_not_a_cause",
+              "source": "species_rule",
+              "finding": "Сломанные волосы и домашнее поведение способствуют самотравмированию."
+            },
+            {
+              "factId": "feline_pruritus_requires_flea_food_parasite_infection_and_mimic_routes",
+              "source": "exclusion_rule",
+              "finding": "Ни одна видимая причина не предполагается."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "self_induced_alopecia_is_a_pruritus_pattern_not_a_cause",
+              "discoveryPaths": [
+                "lick_scratch_rub_body_map_video",
+                "primary_secondary_lesion_self_trauma_record"
+              ]
+            },
+            {
+              "factId": "feline_pruritus_requires_flea_food_parasite_infection_and_mimic_routes",
+              "discoveryPaths": [
+                "household_flea_control_inventory",
+                "complete_recent_diet_exposures",
+                "flea_comb_scraping_household_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_full_pruritus_history_distribution_and_seasonality",
+              "classification": "required_first",
+              "result": "При уточнении анамнеза: кошачий зуд и карта картин реакций."
+            },
+            {
+              "id": "atopy_flea_comb_scraping_and_ectoparasite_control_trial",
+              "classification": "required_exclusion",
+              "result": "При микроскопии материала: реакция паразитного компонента."
+            },
+            {
+              "id": "atopy_strict_elimination_and_provocation_trial",
+              "classification": "required_if_food_component_unresolved",
+              "result": "Целевое исследование показало: доказательства пищевых компонентов."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "self_induced_alopecia_is_a_pruritus_pattern_not_a_cause",
+              "feline_pruritus_requires_flea_food_parasite_infection_and_mimic_routes"
+            ],
+            "confirmedDiagnosisRequires": [
+              "persistent_compatible_feline_pattern_after_sequential_exclusions"
+            ],
+            "dangerStates": [
+              "deep_excoriation",
+              "severe_stress",
+              "unsafe_restraint"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "skin_exam",
+              "pruritus_lesion_mapping",
+              "skin_scraping",
+              "strict_ectoparasite_control_trial"
+            ],
+            "external": [
+              "allergy_elimination_provocation_trial",
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_mapping_route",
+              "atopy_ectoparasite_route",
+              "atopy_diet_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_atopic_skin_plan",
+          "followUp": {
+            "timing": "После каждого испытания исключения с использованием домашнего видео и той же карты тела.",
+            "required": true,
+            "targets": [
+              "grooming",
+              "alopecia",
+              "excoriation",
+              "qol",
+              "trial_adherence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Выявляется зуд и проверяются причины, не превращая алопецию в этиологию.",
+            "unsafe": "Алопеция предполагается поведенческой или атопической без исключения обследования."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: вылизывание может скрывать зуд, а одна только картина поражений ещё не указывает точную причину."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "grooming_hidden",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "home_video_low_stress_sampling_or_referral",
+            "ownerModifiers": [
+              "does_not_see_itch",
+              "fears_behavior_label"
+            ]
+          }
+        },
+        {
+          "id": "p2_miliary_dermatitis_or_eosinophilic_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "urgent_by_ulceration_or_pain",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что милиарные папулы или эозинофильное поражение сопровождают зуд, но основной триггер пока неизвестен.",
+          "historyAnswers": {
+            "onset_first_site_date": "По нашим наблюдениям, записана хронология поражений и зуда.",
+            "household_flea_control_inventory": "Дома мы заметили, что воздействие остается возможным даже при отсутствии замеченных блох.",
+            "complete_recent_diet_exposures": "Насколько мы можем судить, путь питания не предполагается и не исключается.",
+            "home_contact_environment_changes": "Мы записали, что записана временная шкала контактов или насекомых."
+          },
+          "examFindings": [
+            {
+              "factId": "miliary_or_eosinophilic_pattern_does_not_identify_the_trigger",
+              "source": "diagnostic_rule",
+              "finding": "Морфология документируется как образец реакции."
+            },
+            {
+              "factId": "atypical_persistent_ulcerative_or_mass_like_lesions_need_mimic_or_biopsy_route",
+              "source": "safety_rule",
+              "finding": "Рефрактерная морфология не остается родовой аллергией."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "miliary_or_eosinophilic_pattern_does_not_identify_the_trigger",
+              "discoveryPaths": [
+                "onset_first_site_date",
+                "primary_secondary_lesion_self_trauma_record"
+              ]
+            },
+            {
+              "factId": "atypical_persistent_ulcerative_or_mass_like_lesions_need_mimic_or_biopsy_route",
+              "discoveryPaths": [
+                "dermatophyte_mimic_record",
+                "refractory_biopsy_specialist_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_full_pruritus_history_distribution_and_seasonality",
+              "classification": "required",
+              "result": "При уточнении анамнеза: характер реакции и ее распространение."
+            },
+            {
+              "id": "atopy_dermatophyte_and_other_mimic_route",
+              "classification": "required_by_morphology",
+              "result": "По итогам консультации специалиста: инфекционные или другие имитирующие признаки."
+            },
+            {
+              "id": "atopy_refractory_dermatology_referral",
+              "classification": "conditional_persistent_atypical",
+              "result": "По итогам консультации специалиста: направление к специалисту или биопсии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "miliary_or_eosinophilic_pattern_does_not_identify_the_trigger",
+              "atypical_persistent_ulcerative_or_mass_like_lesions_need_mimic_or_biopsy_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "etiology_supported_beyond_reaction_pattern"
+            ],
+            "dangerStates": [
+              "oral_ulceration",
+              "deep_lesion",
+              "mass_like_lesion",
+              "progressive_nonresponse"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "skin_exam",
+              "pruritus_lesion_mapping",
+              "dermatophyte_direct_exam"
+            ],
+            "external": [
+              "dermatophyte_culture_external",
+              "histology_external",
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_mapping_route",
+              "atopy_dermatophyte_mimic_route",
+              "atopy_refractory_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_atopic_skin_plan",
+          "followUp": {
+            "timing": "Морфология и триггерная контрольная точка после первоначального обследования.",
+            "required": true,
+            "targets": [
+              "lesion_type",
+              "itch",
+              "ulceration",
+              "mimic_results",
+              "response"
+            ]
+          },
+          "outcomes": {
+            "safe": "Характер реакции отделяется от этиологии, и атипичное заболевание прогрессирует.",
+            "unsafe": "Эозинофильное или милиарное появление рассматривается как доказательство одной аллергии."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: назовите рисунок кожи, четко указав, что его могут вызвать несколько причин."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "photographic_map_minimal_sampling_or_referral",
+            "ownerModifiers": [
+              "expects_visual_diagnosis",
+              "worried_about_ulcer"
+            ]
+          }
+        },
+        {
+          "id": "p3_multifactorial_feline_pruritus_without_single_visible_cause",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_qol",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что у кошки периодический зуд с редкими высыпаниями и возможными воздействиями блох, еды, окружающей среды или стресса, индивидуально не доказанные.",
+          "historyAnswers": {
+            "lick_scratch_rub_body_map_video": "По нашим наблюдениям, эпизоды в основном видны дома.",
+            "seasonality_flare_windows": "Дома мы заметили, что нет простого стабильного сезона.",
+            "complete_recent_diet_exposures": "Насколько мы можем судить, зарегистрировано смешанное угощение или ароматизированное воздействие.",
+            "owner_feasibility_and_handling": "Мы записали, что необходим поэтапный план с низким уровнем стресса."
+          },
+          "examFindings": [
+            {
+              "factId": "multiple_causes_may_coexist_only_when_each_has_authored_evidence",
+              "source": "compatibility_rule",
+              "finding": "Перекрытие не назначается автоматически случайным образом."
+            },
+            {
+              "factId": "sparse_clinic_lesions_do_not_erase_home_pruritus_evidence",
+              "source": "longitudinal_rule",
+              "finding": "Видео и повтор карты сохранены."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "multiple_causes_may_coexist_only_when_each_has_authored_evidence",
+              "discoveryPaths": [
+                "complete_recent_diet_exposures",
+                "household_flea_control_inventory",
+                "home_contact_environment_changes"
+              ]
+            },
+            {
+              "factId": "sparse_clinic_lesions_do_not_erase_home_pruritus_evidence",
+              "discoveryPaths": [
+                "lick_scratch_rub_body_map_video",
+                "same_scale_itch_lesion_qol_flare_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_full_pruritus_history_distribution_and_seasonality",
+              "classification": "required_longitudinal",
+              "result": "При уточнении анамнеза: доказательства дома и клиники объединены."
+            },
+            {
+              "id": "atopy_environment_barrier_and_home_feasibility_review",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: реальный поэтапный план."
+            },
+            {
+              "id": "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: отдельный компонент ответа."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "multiple_causes_may_coexist_only_when_each_has_authored_evidence",
+              "sparse_clinic_lesions_do_not_erase_home_pruritus_evidence"
+            ],
+            "confirmedDiagnosisRequires": [
+              "authored_component_evidence_and_longitudinal_response"
+            ],
+            "dangerStates": [
+              "unmeasurable_polytherapy",
+              "catastrophic_owner_burden",
+              "severe_qol_loss"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "pruritus_lesion_mapping",
+              "skin_barrier_environment_plan",
+              "atopy_longitudinal_monitoring"
+            ],
+            "external": [
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_mapping_route",
+              "atopy_environment_route",
+              "atopy_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_atopic_skin_plan",
+          "followUp": {
+            "timing": "Покомпонентные контрольные осмотры с домашними доказательствами.",
+            "required": true,
+            "targets": [
+              "grooming",
+              "lesions",
+              "qol",
+              "component_response",
+              "feasibility"
+            ]
+          },
+          "outcomes": {
+            "safe": "Сохраняется только подтвержденное фактическими данными совпадение, и план остается измеримым.",
+            "unsafe": "Случайная маркировка с указанием нескольких аллергенов приводит к непроверяемой политерапии."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему поэтапный план более информативен, чем изменение всего сразу."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "clinic_inhibited",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "home_evidence_and_staged_low_stress_visits",
+            "ownerModifiers": [
+              "limited_handling_capacity",
+              "multiple_theories"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "atopy_food_induced_allergic_dermatitis",
+      "version": "2026.07.16.40",
+      "title": "Пищеиндуцированный аллергический дерматит",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Компонент кожи, вызывающий пищевую аллергию, оценивается с помощью полной истории воздействия, строгого выполнимого испытания на исключение и контролируемой провокации, если это безопасно; круглогодичный зуд, желудочно-кишечные симптомы или улучшение сами по себе не являются подтверждающими.",
+      "exclusions": [
+        "serum_or_saliva_food_test",
+        "improvement_without_provocation_as_universal_confirmation",
+        "generated_diet_recipe"
+      ],
+      "planBundleId": "food_induced_plan",
+      "sourceIds": [
+        "aaha_allergic_skin_2023",
+        "icada_diagnosis_2015"
+      ],
+      "presentations": [
+        {
+          "id": "p1_year_round_pruritus_with_or_without_gi_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_skin_state",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что круглогодичный зуд поднимает вопрос о пищевых компонентах; желудочно-кишечные симптомы могут присутствовать или отсутствовать.",
+          "historyAnswers": {
+            "complete_recent_diet_exposures": "По нашим наблюдениям, учтены продукты питания, угощения, ароматизированные лекарства и общие миски.",
+            "gi_signs_context": "Дома мы заметили, что знаки желудочно-кишечный тракт зарегистрированы, но не обязательны.",
+            "household_flea_control_inventory": "Насколько мы можем судить, паразитарный компонент оценивается отдельно.",
+            "prior_components_and_response": "Мы записали, что предыдущие изменения в диете не были автоматически действительными исследованиями."
+          },
+          "examFindings": [
+            {
+              "factId": "gi_signs_change_context_but_are_not_required_for_food_induced_pruritus",
+              "source": "diagnostic_rule",
+              "finding": "Данные о коже и желудочно-кишечном тракте остаются отдельными."
+            },
+            {
+              "factId": "year_round_itch_is_compatible_but_not_specific_for_food_trigger",
+              "source": "differential_rule",
+              "finding": "Другие причины зуда остаются активными."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "gi_signs_change_context_but_are_not_required_for_food_induced_pruritus",
+              "discoveryPaths": [
+                "gi_signs_context",
+                "complete_recent_diet_exposures"
+              ]
+            },
+            {
+              "factId": "year_round_itch_is_compatible_but_not_specific_for_food_trigger",
+              "discoveryPaths": [
+                "seasonality_flare_windows",
+                "household_flea_control_inventory",
+                "site_specific_skin_ear_cytology"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_full_pruritus_history_distribution_and_seasonality",
+              "classification": "required_baseline",
+              "result": "При уточнении анамнеза: неспецифический круглогодичный режим."
+            },
+            {
+              "id": "atopy_strict_elimination_and_provocation_trial",
+              "classification": "required_for_confirmation",
+              "result": "Целевое исследование показало: реакция на устранение и результат вызова."
+            },
+            {
+              "id": "atopy_skin_ear_cytology_and_infection_mapping",
+              "classification": "required_by_lesion_site",
+              "result": "При микроскопии материала: сопутствующая инфекция выделена."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "gi_signs_change_context_but_are_not_required_for_food_induced_pruritus",
+              "year_round_itch_is_compatible_but_not_specific_for_food_trigger"
+            ],
+            "confirmedDiagnosisRequires": [
+              "strict_elimination_response_plus_controlled_provocation_when_safe"
+            ],
+            "dangerStates": [
+              "nutritionally_unsafe_trial",
+              "severe_gi_signs",
+              "uncontrolled_skin_infection"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "comprehensive_diet_history",
+              "pruritus_lesion_mapping",
+              "skin_cytology"
+            ],
+            "external": [
+              "allergy_elimination_provocation_trial",
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_diet_route",
+              "atopy_mapping_route",
+              "atopy_cytology_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "food_induced_plan",
+          "followUp": {
+            "timing": "Базовый уровень, строгие контрольные точки испытания и контролируемый вызов.",
+            "required": true,
+            "targets": [
+              "itch",
+              "lesions",
+              "gi_signs",
+              "exposures",
+              "challenge"
+            ]
+          },
+          "outcomes": {
+            "safe": "Участие продуктов питания подтверждается или отвергается измеримым продольным путем.",
+            "unsafe": "Круглогодичный зуд или симптомы желудочно-кишечного тракта сами по себе создают постоянную маркировку пищевой аллергии."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: пищевая аллергия не может быть подтверждена только симптомами или анализом крови или слюны."
+          ],
+          "compatibility": {
+            "temperament": [
+              "itchy",
+              "food_motivated",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "home_log_and_safe_nutrition_referral",
+            "ownerModifiers": [
+              "expects_quick_food_test",
+              "multiple_household_feeders"
+            ]
+          }
+        },
+        {
+          "id": "p2_elimination_trial_with_hidden_exposure_or_poor_feasibility",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что очевидный провал попытки ликвидации осложняется скрытыми воздействиями, домашней логистикой или неосуществимым планом.",
+          "historyAnswers": {
+            "complete_recent_diet_exposures": "По нашим наблюдениям, скрытые угощения или ароматизированные лекарства или совместная еда выявлены или активно проверяются.",
+            "owner_feasibility_and_handling": "Дома мы заметили, что зарегистрировано разделение бюджета, домашнего хозяйства и кормления.",
+            "prior_components_and_response": "Насколько мы можем судить, восстановлены даты испытаний и пробелы в соблюдении режима лечения.",
+            "gi_signs_context": "Мы записали, что тенденция желудочно-кишечный тракт зафиксирована на той же временной шкале."
+          },
+          "examFindings": [
+            {
+              "factId": "an_uncontrolled_trial_cannot_confirm_or_exclude_food_trigger",
+              "source": "validity_rule",
+              "finding": "Проверяются достоверность воздействия и продолжительности."
+            },
+            {
+              "factId": "feasibility_failure_is_a_plan_problem_not_automatic_owner_noncompliance",
+              "source": "communication_rule",
+              "finding": "Предлагается альтернативный безопасный маршрут."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "an_uncontrolled_trial_cannot_confirm_or_exclude_food_trigger",
+              "discoveryPaths": [
+                "complete_recent_diet_exposures",
+                "strict_diet_log_and_hidden_exposure_record"
+              ]
+            },
+            {
+              "factId": "feasibility_failure_is_a_plan_problem_not_automatic_owner_noncompliance",
+              "discoveryPaths": [
+                "owner_feasibility_and_handling",
+                "environment_barrier_home_technique_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_strict_elimination_and_provocation_trial",
+              "classification": "required_validity_audit",
+              "result": "Целевое исследование показало: приемлемое, контролируемое, измеримое испытание или недействительный статус."
+            },
+            {
+              "id": "atopy_environment_barrier_and_home_feasibility_review",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: реальный план дома."
+            },
+            {
+              "id": "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+              "classification": "required_baseline",
+              "result": "При динамическом наблюдении: сопоставимый клинический ответ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "an_uncontrolled_trial_cannot_confirm_or_exclude_food_trigger",
+              "feasibility_failure_is_a_plan_problem_not_automatic_owner_noncompliance"
+            ],
+            "confirmedDiagnosisRequires": [
+              "valid_trial_and_controlled_provocation"
+            ],
+            "dangerStates": [
+              "malnutrition_risk",
+              "uncontrolled_exposure",
+              "owner_overload"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "comprehensive_diet_history",
+              "diet_trial_compliance_log",
+              "atopy_longitudinal_monitoring"
+            ],
+            "external": [
+              "allergy_elimination_provocation_trial",
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_diet_route",
+              "atopy_environment_route",
+              "atopy_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "food_induced_plan",
+          "followUp": {
+            "timing": "Ранняя проверка осуществимости, затем заранее определенные контрольные точки для испытаний и проблем.",
+            "required": true,
+            "targets": [
+              "hidden_exposure",
+              "adherence",
+              "itch",
+              "lesions",
+              "nutrition"
+            ]
+          },
+          "outcomes": {
+            "safe": "Обнаруживается недействительность, и маршрут перепроектируется или передается без вины.",
+            "unsafe": "Неконтролируемое испытание называют отрицательным или обвиняют владельца."
+          },
+          "ownerCommunication": [
+            "Вместе проверьте план и назовите каждый путь воздействия без моральных суждений."
+          ],
+          "compatibility": {
+            "temperament": [
+              "food_motivated",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "simplified_feasible_trial_or_referral",
+            "ownerModifiers": [
+              "budget_limited",
+              "multi_pet_household",
+              "shared_feeding"
+            ]
+          }
+        },
+        {
+          "id": "p3_improvement_then_controlled_provocation_confirms_food_trigger",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что зуд улучшился в ходе действительного испытания на устранение и воспроизводимо вернулся во время контролируемой, клинически безопасной провокации.",
+          "historyAnswers": {
+            "complete_recent_diet_exposures": "По нашим наблюдениям, даты испытаний и испытаний.",
+            "prior_components_and_response": "Дома мы заметили, что зарегистрировано такое же масштабное улучшение и рецидив.",
+            "gi_signs_context": "Насколько мы можем судить, ответ желудочно-кишечного тракта включен, если он присутствует.",
+            "owner_feasibility_and_handling": "Мы записали, что рассмотрена возможность долгосрочного предотвращения."
+          },
+          "examFindings": [
+            {
+              "factId": "controlled_reproducible_provocation_supports_food_trigger_after_valid_elimination",
+              "source": "confirmation_rule",
+              "finding": "Исходный уровень, улучшение и рецидив связаны."
+            },
+            {
+              "factId": "confirmed_food_component_does_not_erase_other_authored_pruritus_components",
+              "source": "compatibility_rule",
+              "finding": "Остаточный зуд оценивается заново, а не сводится к какой-то одной причине."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "controlled_reproducible_provocation_supports_food_trigger_after_valid_elimination",
+              "discoveryPaths": [
+                "strict_diet_log_and_hidden_exposure_record",
+                "same_scale_itch_lesion_qol_flare_record"
+              ]
+            },
+            {
+              "factId": "confirmed_food_component_does_not_erase_other_authored_pruritus_components",
+              "discoveryPaths": [
+                "prior_components_and_response",
+                "full_body_pruritus_lesion_map"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_strict_elimination_and_provocation_trial",
+              "classification": "confirmation_route",
+              "result": "Целевое исследование показало: воспроизводимый рецидив после достоверного улучшения."
+            },
+            {
+              "id": "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+              "classification": "required_comparison",
+              "result": "При динамическом наблюдении: величина и время фиксированы."
+            },
+            {
+              "id": "atopy_environment_barrier_and_home_feasibility_review",
+              "classification": "required_long_term",
+              "result": "По итогам консультации специалиста: план устойчивого избегания."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "controlled_reproducible_provocation_supports_food_trigger_after_valid_elimination",
+              "confirmed_food_component_does_not_erase_other_authored_pruritus_components"
+            ],
+            "confirmedDiagnosisRequires": [
+              "valid_elimination_and_controlled_reproducible_provocation"
+            ],
+            "dangerStates": [
+              "unsafe_challenge",
+              "nutritionally_incomplete_long_term_plan",
+              "residual_unmapped_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "diet_trial_compliance_log",
+              "atopy_longitudinal_monitoring",
+              "skin_exam"
+            ],
+            "external": [
+              "allergy_elimination_provocation_trial",
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_diet_route",
+              "atopy_longitudinal_route",
+              "atopy_environment_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "food_induced_plan",
+          "followUp": {
+            "timing": "Постпровокационное восстановление и долгосрочный обзор остаточного зуда.",
+            "required": true,
+            "targets": [
+              "itch",
+              "lesions",
+              "gi_signs",
+              "avoidance",
+              "residual_components"
+            ]
+          },
+          "outcomes": {
+            "safe": "Конкретный пищевой компонент подтверждается устойчивым планом и анализом остаточных заболеваний.",
+            "unsafe": "Само по себе улучшение или небезопасный вызов становятся подтверждением."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: доказала задача и чего она не доказала в отношении других триггеров."
+          ],
+          "compatibility": {
+            "temperament": [
+              "itchy",
+              "food_motivated"
+            ],
+            "requiredHandlingAlternative": "clinically_safe_challenge_or_specialist_route",
+            "ownerModifiers": [
+              "reluctant_to_challenge",
+              "needs_long_term_plan"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "atopy_flea_parasite_or_contact_overlap",
+      "version": "2026.07.16.40",
+      "title": "Перекрытие с блошиным, паразитарным или контактным зудом",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Аллергия на блох, клещей, других эктопаразитов, возбудители контакта или насекомых и атопия являются отдельными компонентами; отсутствие видимых блох или отрицательный результат соскоба сами по себе не исключают их, и перекрытие сохраняется только тогда, когда каждый компонент имеет доказательства.",
+      "exclusions": [
+        "no_flea_seen_exclusion",
+        "negative_scraping_absolute",
+        "correlation_as_contact_proof"
+      ],
+      "planBundleId": "parasite_contact_overlap_plan",
+      "sourceIds": [
+        "merck_flea_allergy",
+        "icada_diagnosis_2015",
+        "aaha_allergic_skin_2023"
+      ],
+      "presentations": [
+        {
+          "id": "p1_no_fleas_seen_but_exposure_and_distribution_compatible",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "routine_or_urgent_by_self_trauma",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что сегодня блох не наблюдается, но воздействие, пробелы в домашнем контроле и распространение поражений по-прежнему совместимы с аллергией на блох.",
+          "historyAnswers": {
+            "household_flea_control_inventory": "По нашим наблюдениям, продукты, даты, все домашние животные и окружающая среда являются неполными или обнаруживают пробелы.",
+            "onset_first_site_date": "Дома мы заметили, что зарегистрирован картина дорсолюмбальной или перианальной или кошачьей изменчивости.",
+            "home_contact_environment_changes": "Насколько мы можем судить, зарегистрировано воздействие на открытом воздухе или в быту.",
+            "prior_components_and_response": "Мы записали, что предварительный непостоянный контроль не может исключить заболевание."
+          },
+          "examFindings": [
+            {
+              "factId": "no_visible_flea_on_one_exam_does_not_exclude_flea_allergy",
+              "source": "sensitivity_rule",
+              "finding": "Распространение и совместимое распространение остаются действенными."
+            },
+            {
+              "factId": "effective_control_includes_all_household_animals_and_environment_context",
+              "source": "control_rule",
+              "finding": "Обработка пятен от одного домашнего животного не считается адекватной."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "no_visible_flea_on_one_exam_does_not_exclude_flea_allergy",
+              "discoveryPaths": [
+                "household_flea_control_inventory",
+                "flea_comb_scraping_household_record"
+              ]
+            },
+            {
+              "factId": "effective_control_includes_all_household_animals_and_environment_context",
+              "discoveryPaths": [
+                "household_flea_control_inventory",
+                "home_contact_environment_changes"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_flea_comb_scraping_and_ectoparasite_control_trial",
+              "classification": "required",
+              "result": "При микроскопии материала: воздействие, расчесывание и контролируемая реакция домохозяйств."
+            },
+            {
+              "id": "atopy_full_pruritus_history_distribution_and_seasonality",
+              "classification": "required",
+              "result": "При уточнении анамнеза: совместимое распределение и время."
+            },
+            {
+              "id": "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+              "classification": "required_response",
+              "result": "При динамическом наблюдении: реакция управления того же масштаба."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "no_visible_flea_on_one_exam_does_not_exclude_flea_allergy",
+              "effective_control_includes_all_household_animals_and_environment_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_exposure_distribution_and_control_response"
+            ],
+            "dangerStates": [
+              "severe_excoriation",
+              "household_treatment_toxicity_risk"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "skin_exam",
+              "skin_scraping",
+              "strict_ectoparasite_control_trial",
+              "parasite_environment_control"
+            ],
+            "external": [
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_ectoparasite_route",
+              "atopy_mapping_route",
+              "atopy_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "parasite_contact_overlap_plan",
+          "followUp": {
+            "timing": "Контрольный пункт контроля домохозяйства и ответ на карте поражений.",
+            "required": true,
+            "targets": [
+              "exposure",
+              "all_pet_control",
+              "itch",
+              "lesions",
+              "environment"
+            ]
+          },
+          "outcomes": {
+            "safe": "Компонент от блох тестируется по всему дому, несмотря на отрицательный результат.",
+            "unsafe": "Ни одной блохи не видно, замыкает дифференциал."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему пациент с аллергией может отреагировать, даже если во время визита не будут обнаружены блохи."
+          ],
+          "compatibility": {
+            "temperament": [
+              "itchy",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "brief_comb_scrape_and_household_route",
+            "ownerModifiers": [
+              "denies_fleas",
+              "multi_pet_household"
+            ]
+          }
+        },
+        {
+          "id": "p2_mite_or_other_ectoparasite_mimic",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "routine_or_urgent_by_contagion_or_skin_state",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что клещ или другой эктопаразит может имитировать или сосуществовать с аллергическим зудом с различной чувствительностью к соскобу.",
+          "historyAnswers": {
+            "onset_first_site_date": "По нашим наблюдениям, записаны сроки распространения и заражения.",
+            "household_flea_control_inventory": "Дома мы заметили, что покрытие эктопаразитами специально проверено.",
+            "prior_scraping_cytology_culture": "Насколько мы можем судить, проанализированы места отбора проб и предыдущие результаты.",
+            "home_contact_environment_changes": "Мы записали, что записаны новые животные или контактный контекст."
+          },
+          "examFindings": [
+            {
+              "factId": "negative_scraping_does_not_absolutely_exclude_a_low_sensitivity_ectoparasite",
+              "source": "test_limit_rule",
+              "finding": "Учитываются качество выборки и совместимое контрольное исследование."
+            },
+            {
+              "factId": "contagion_and_household_evidence_modify_the_route_without_proving_species",
+              "source": "probability_rule",
+              "finding": "Зарегистрированы и другие пострадавшие контакты."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "negative_scraping_does_not_absolutely_exclude_a_low_sensitivity_ectoparasite",
+              "discoveryPaths": [
+                "prior_scraping_cytology_culture",
+                "flea_comb_scraping_household_record"
+              ]
+            },
+            {
+              "factId": "contagion_and_household_evidence_modify_the_route_without_proving_species",
+              "discoveryPaths": [
+                "home_contact_environment_changes",
+                "household_flea_control_inventory"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_flea_comb_scraping_and_ectoparasite_control_trial",
+              "classification": "required",
+              "result": "При микроскопии материала: отбор проб плюс совместимое контрольное исследование, где указано."
+            },
+            {
+              "id": "atopy_skin_ear_cytology_and_infection_mapping",
+              "classification": "required_by_lesion",
+              "result": "При микроскопии материала: вторичная инфекция отделилась."
+            },
+            {
+              "id": "atopy_full_pruritus_history_distribution_and_seasonality",
+              "classification": "required",
+              "result": "При уточнении анамнеза: контекст модели «аллергия против паразитов»."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "negative_scraping_does_not_absolutely_exclude_a_low_sensitivity_ectoparasite",
+              "contagion_and_household_evidence_modify_the_route_without_proving_species"
+            ],
+            "confirmedDiagnosisRequires": [
+              "direct_evidence_or_compatible_control_response"
+            ],
+            "dangerStates": [
+              "contagious_household_spread",
+              "severe_infection",
+              "unsafe_empiric_product"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "skin_scraping",
+              "strict_ectoparasite_control_trial",
+              "skin_cytology",
+              "parasite_environment_control"
+            ],
+            "external": [
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_ectoparasite_route",
+              "atopy_cytology_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "parasite_contact_overlap_plan",
+          "followUp": {
+            "timing": "Постконтроль после устранения бытовых триггеров.",
+            "required": true,
+            "targets": [
+              "itch",
+              "lesions",
+              "contacts",
+              "infection",
+              "control_response"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ограничения тестов и семейный риск интегрированы в измеримый маршрут.",
+            "unsafe": "Одна отрицательная царапина закрывает все дифференциалы эктопаразитов."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: предел чувствительности и какой результат или ответ решит вопрос."
+          ],
+          "compatibility": {
+            "temperament": [
+              "itchy",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "site_selected_sampling_or_referral",
+            "ownerModifiers": [
+              "household_cases",
+              "concerned_about_contagion"
+            ]
+          }
+        },
+        {
+          "id": "p3_contact_insect_or_multiple_allergic_triggers",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_urgent_by_reaction",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что зуд коррелирует с контактом, насекомыми или окружающей средой, тогда как другой аллергический компонент остается возможным, но не доказанным.",
+          "historyAnswers": {
+            "home_contact_environment_changes": "По нашим наблюдениям, чистящее средство, подстилка, трава, мусор, насекомые и график перемещения записываются.",
+            "seasonality_flare_windows": "Дома мы заметили, что сравнение окон, связанных с воздействием.",
+            "prior_components_and_response": "Насколько мы можем судить, реакция на удаление или контроль записывается.",
+            "owner_feasibility_and_handling": "Мы записали, что оценено реалистичное изменение воздействия."
+          },
+          "examFindings": [
+            {
+              "factId": "temporal_contact_correlation_supports_a_trial_but_does_not_prove_causation",
+              "source": "causality_rule",
+              "finding": "Необходимы доказательства удаления и повторного воздействия."
+            },
+            {
+              "factId": "multiple_allergic_triggers_require_separate_authored_evidence",
+              "source": "compatibility_rule",
+              "finding": "Никакой случайной метки с несколькими триггерами."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "temporal_contact_correlation_supports_a_trial_but_does_not_prove_causation",
+              "discoveryPaths": [
+                "home_contact_environment_changes",
+                "seasonality_flare_windows",
+                "environment_barrier_home_technique_record"
+              ]
+            },
+            {
+              "factId": "multiple_allergic_triggers_require_separate_authored_evidence",
+              "discoveryPaths": [
+                "prior_components_and_response",
+                "same_scale_itch_lesion_qol_flare_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_environment_barrier_and_home_feasibility_review",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: возможная модификация контролируемого воздействия."
+            },
+            {
+              "id": "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: реакция на удаление или повторное воздействие."
+            },
+            {
+              "id": "atopy_full_pruritus_history_distribution_and_seasonality",
+              "classification": "required",
+              "result": "При уточнении анамнеза: распространение и время воздействия."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "temporal_contact_correlation_supports_a_trial_but_does_not_prove_causation",
+              "multiple_allergic_triggers_require_separate_authored_evidence"
+            ],
+            "confirmedDiagnosisRequires": [
+              "reproducible_exposure_response_or_separate_component_evidence"
+            ],
+            "dangerStates": [
+              "acute_severe_reaction",
+              "uncontrolled_environmental_hazard",
+              "untestable_polytherapy"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "skin_barrier_environment_plan",
+              "pruritus_lesion_mapping",
+              "atopy_longitudinal_monitoring"
+            ],
+            "external": [
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_environment_route",
+              "atopy_mapping_route",
+              "atopy_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "parasite_contact_overlap_plan",
+          "followUp": {
+            "timing": "После контролируемого удаления и, только если это безопасно, повторное наблюдение.",
+            "required": true,
+            "targets": [
+              "exposure",
+              "distribution",
+              "itch",
+              "lesions",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Контактный или насекомый-компонент тестируется без постановки диагноза мультиаллергии.",
+            "unsafe": "Совпадение или одно улучшение доказывают каждый предполагаемый триггер."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: разницу между полезным признаком воздействия и подтвержденной причинно-следственной связью."
+          ],
+          "compatibility": {
+            "temperament": [
+              "itchy",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "home_exposure_log_and_low_stress_recheck",
+            "ownerModifiers": [
+              "strong_trigger_theory",
+              "cannot_remove_all_exposures"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "atopy_secondary_infection_or_flare",
+      "version": "2026.07.16.40",
+      "title": "Вторичная инфекция или инфекционный обострение",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Стафилококковая пиодермия, разрастание Malassezia и отит могут усиливать аллергический зуд; Текущая местно-специфическая цитология определяет инфекционный компонент, в то время как рецидивирующее, глубокое или не поддающееся лечению заболевание требует посева и анализа основной причины.",
+      "exclusions": [
+        "infection_erases_underlying_allergy",
+        "generic_whole_body_cytology",
+        "endless_empiric_antimicrobial"
+      ],
+      "planBundleId": "secondary_infection_flare_plan",
+      "sourceIds": [
+        "merck_canine_atopy_2026",
+        "icada_treatment_2015",
+        "aaha_allergic_skin_2023"
+      ],
+      "presentations": [
+        {
+          "id": "p1_staphylococcal_pyoderma_amplifies_pruritus",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "urgent_by_depth_or_systemic_state",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что папулы, пустулы, корки или эпидермальные воротнички сопровождают внезапное усиление зуда на фоне хронической аллергии.",
+          "historyAnswers": {
+            "itch_before_lesions_infection": "По нашим наблюдениям, исходный зуд предшествовал нынешней вспышке инфекции.",
+            "prior_scraping_cytology_culture": "Дома мы заметили, что предыдущие места или результаты и ответные меры зафиксированы.",
+            "prior_components_and_response": "Насколько мы можем судить, до заражения контроль аллергии был частичным.",
+            "adverse_effects_comorbidities": "Мы записали, что зарегистрирован коморбидный риск и предшествующие побочные эффекты."
+          },
+          "examFindings": [
+            {
+              "factId": "site_specific_cytology_supports_the_current_bacterial_infection_component",
+              "source": "sampling_rule",
+              "finding": "Образец репрезентативного текущего поражения."
+            },
+            {
+              "factId": "infection_control_does_not_end_the_underlying_pruritus_workup",
+              "source": "continuity_rule",
+              "finding": "Аллергические и другие триггеры остаются активными вопросами."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "site_specific_cytology_supports_the_current_bacterial_infection_component",
+              "discoveryPaths": [
+                "prior_scraping_cytology_culture",
+                "site_specific_skin_ear_cytology"
+              ]
+            },
+            {
+              "factId": "infection_control_does_not_end_the_underlying_pruritus_workup",
+              "discoveryPaths": [
+                "itch_before_lesions_infection",
+                "same_scale_itch_lesion_qol_flare_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_skin_ear_cytology_and_infection_mapping",
+              "classification": "required_current_site",
+              "result": "При микроскопии материала: бактериальный или воспалительный компонент в месте поражения."
+            },
+            {
+              "id": "atopy_secondary_infection_culture_when_indicated",
+              "classification": "conditional_deep_recurrent_nonresponsive",
+              "result": "По результатам посева и определения чувствительности: организм и чувствительность при наличии показаний."
+            },
+            {
+              "id": "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+              "classification": "required_recheck",
+              "result": "При динамическом наблюдении: реакция зуда в зависимости от инфекции и исходного уровня."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "site_specific_cytology_supports_the_current_bacterial_infection_component",
+              "infection_control_does_not_end_the_underlying_pruritus_workup"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_lesion_plus_site_specific_cytology"
+            ],
+            "dangerStates": [
+              "deep_pyoderma",
+              "systemic_illness",
+              "rapid_spread",
+              "severe_pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "skin_exam",
+              "skin_cytology",
+              "pruritus_lesion_mapping"
+            ],
+            "external": [
+              "skin_bacterial_culture_external",
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_cytology_route",
+              "atopy_culture_route",
+              "atopy_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "secondary_infection_flare_plan",
+          "followUp": {
+            "timing": "Реакция на инфекцию, затем остаточный зуд и ревизия рецидива.",
+            "required": true,
+            "targets": [
+              "lesions",
+              "cytology",
+              "itch",
+              "depth",
+              "underlying_trigger"
+            ]
+          },
+          "outcomes": {
+            "safe": "Текущая инфекция и сопутствующий зуд отслеживаются до разрешения или направления к врачу.",
+            "unsafe": "Инфекцию лечат повторно без цитологического исследования или проверки причин."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: инфекция может усугубить зуд, но может быть следствием, а не самим диагнозом."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "itchy",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "representative_minimal_sampling_or_referral",
+            "ownerModifiers": [
+              "expects_repeat_antimicrobial",
+              "frustrated_by_recurrence"
+            ]
+          }
+        },
+        {
+          "id": "p2_malassezia_skin_or_ear_overgrowth",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "routine_or_urgent_by_ear_pain_or_skin_extent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что жирная, эритематозная кожа с неприятным запахом или отит сопровождают усиление зуда и подозрение на чрезмерный рост Malassezia.",
+          "historyAnswers": {
+            "lick_scratch_rub_body_map_video": "По нашим наблюдениям, нанесены на карту участки кожи или ушей.",
+            "prior_scraping_cytology_culture": "Дома мы заметили, что предыдущий результат дрожжей не используется повторно для каждого сайта.",
+            "prior_components_and_response": "Насколько мы можем судить, зарегистрирован временный ответ и рецидив.",
+            "adverse_effects_comorbidities": "Мы записали, что ограничения безопасности зафиксированы."
+          },
+          "examFindings": [
+            {
+              "factId": "malassezia_numbers_are_interpreted_with_site_and_compatible_lesions",
+              "source": "interpretation_rule",
+              "finding": "Сайт-специфическая цитология, интегрированная с морфологией."
+            },
+            {
+              "factId": "skin_and_ear_results_are_not_interchangeable",
+              "source": "sampling_rule",
+              "finding": "Из каждого клинически пораженного участка отбирались образцы по мере необходимости."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "malassezia_numbers_are_interpreted_with_site_and_compatible_lesions",
+              "discoveryPaths": [
+                "primary_secondary_lesion_self_trauma_record",
+                "site_specific_skin_ear_cytology"
+              ]
+            },
+            {
+              "factId": "skin_and_ear_results_are_not_interchangeable",
+              "discoveryPaths": [
+                "prior_scraping_cytology_culture",
+                "site_specific_skin_ear_cytology"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_skin_ear_cytology_and_infection_mapping",
+              "classification": "required_by_site",
+              "result": "При микроскопии материала: дрожжевые грибки или воспаление интерпретируются как текущие поражения."
+            },
+            {
+              "id": "atopy_full_pruritus_history_distribution_and_seasonality",
+              "classification": "required_context",
+              "result": "При уточнении анамнеза: основной характер зуда."
+            },
+            {
+              "id": "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+              "classification": "required_recheck",
+              "result": "При динамическом наблюдении: цитология и зуд."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "malassezia_numbers_are_interpreted_with_site_and_compatible_lesions",
+              "skin_and_ear_results_are_not_interchangeable"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_site_lesions_plus_site_specific_cytology"
+            ],
+            "dangerStates": [
+              "severe_otitis_pain",
+              "neurologic_sign",
+              "extensive_skin_disease",
+              "treatment_adverse_effect"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "skin_cytology",
+              "ear_cytology",
+              "ear_exam",
+              "skin_exam"
+            ],
+            "external": [
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_cytology_route",
+              "atopy_mapping_route",
+              "atopy_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "secondary_infection_flare_plan",
+          "followUp": {
+            "timing": "Специфическая цитология и клиническая повторная проверка.",
+            "required": true,
+            "targets": [
+              "yeast",
+              "inflammation",
+              "odor",
+              "pain",
+              "itch",
+              "recurrence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Значимость и реакция дрожжей проверяются на месте, в то время как основной фактор остается в поле зрения.",
+            "unsafe": "Общее количество дрожжевых грибков требует лечения повсеместно или становится постоянной причиной."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему результат уха и результат кожи отвечают на разные вопросы сайта."
+          ],
+          "compatibility": {
+            "temperament": [
+              "ear_pain",
+              "itchy",
+              "head_shy"
+            ],
+            "requiredHandlingAlternative": "pain_aware_site_sampling_or_referral",
+            "ownerModifiers": [
+              "odor_focused",
+              "expects_same_old_treatment"
+            ]
+          }
+        },
+        {
+          "id": "p3_recurrent_or_treatment_unresponsive_infection_requires_culture_and_cause_review",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_depth_systemic_or_rapid_progression",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что инфекция кожи или уха быстро вернулась либо не отвечает на ранее назначенное лечение; нужно проверить выполнение плана, взять материал на посев и снова искать основную причину.",
+          "historyAnswers": {
+            "prior_scraping_cytology_culture": "По нашим наблюдениям, датированные места, предшествующие организмы, реконструированы восприимчивость и реакция.",
+            "prior_components_and_response": "Дома мы заметили, что фактическая техника, завершение и реакция проверены.",
+            "adverse_effects_comorbidities": "Насколько мы можем судить, зарегистрированы сопутствующие заболевания и риски для безопасности.",
+            "owner_feasibility_and_handling": "Мы записали, что владелец прямо сообщает о доступных времени и бюджете; эти ограничения учитывают без обвинений."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrent_deep_or_nonresponsive_infection_requires_culture_before_random_escalation",
+              "source": "stewardship_rule",
+              "finding": "Репрезентативный активный сайт направлен в культуру."
+            },
+            {
+              "factId": "protocol_technique_comorbidity_and_underlying_allergy_are_audited_together",
+              "source": "recurrence_rule",
+              "finding": "Не считается, что неудача – это только сопротивление."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "recurrent_deep_or_nonresponsive_infection_requires_culture_before_random_escalation",
+              "discoveryPaths": [
+                "prior_scraping_cytology_culture",
+                "site_specific_culture_susceptibility_record"
+              ]
+            },
+            {
+              "factId": "protocol_technique_comorbidity_and_underlying_allergy_are_audited_together",
+              "discoveryPaths": [
+                "prior_components_and_response",
+                "adverse_effects_comorbidities",
+                "environment_barrier_home_technique_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_skin_ear_cytology_and_infection_mapping",
+              "classification": "required_current_site",
+              "result": "При микроскопии материала: текущий фенотип рецидива."
+            },
+            {
+              "id": "atopy_secondary_infection_culture_when_indicated",
+              "classification": "required",
+              "result": "По результатам посева и определения чувствительности: культура или восприимчивость до эскалации."
+            },
+            {
+              "id": "atopy_refractory_dermatology_referral",
+              "classification": "required_if_deep_atypical_or_persistent",
+              "result": "По итогам консультации специалиста: специализированная причина или путь биопсии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "recurrent_deep_or_nonresponsive_infection_requires_culture_before_random_escalation",
+              "protocol_technique_comorbidity_and_underlying_allergy_are_audited_together"
+            ],
+            "confirmedDiagnosisRequires": [
+              "current_site_cytology_plus_culture_when_indicated"
+            ],
+            "dangerStates": [
+              "deep_tissue_infection",
+              "systemic_illness",
+              "resistant_pattern",
+              "unsafe_repeated_empiricism"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "skin_cytology",
+              "ear_cytology",
+              "skin_exam"
+            ],
+            "external": [
+              "skin_bacterial_culture_external",
+              "dermatology_referral",
+              "histology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_culture_route",
+              "atopy_refractory_route",
+              "atopy_cytology_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "secondary_infection_flare_plan",
+          "followUp": {
+            "timing": "Контрольная точка, ориентированная на культуру, затем проверка причины рецидива.",
+            "required": true,
+            "targets": [
+              "culture",
+              "cytology",
+              "depth",
+              "response",
+              "technique",
+              "underlying_disease"
+            ]
+          },
+          "outcomes": {
+            "safe": "Рецидив подтверждён цитологией или посевом; основную причину снова оценивают и при необходимости направляют к специалисту.",
+            "unsafe": "Повторяющаяся эмпирическая эскалация продолжается без проверки культуры или причин."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: рецидив может отражать биологию, технику, осуществимость или другое заболевание, а не личный провал."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "treatment_fatigued",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "representative_sample_with_analgesia_or_referral",
+            "ownerModifiers": [
+              "financial_fatigue",
+              "prior_treatment_failure"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "atopy_longitudinal_poor_control_or_immunotherapy",
+      "version": "2026.07.16.40",
+      "title": "Продольный плохой контроль и маршрут иммунотерапии",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Плохой контроль проверяется по диагнозу, текущему обострению, паразитам, пище, инфекции, окружающей среде, технике, соблюдению режима лечения, сопутствующим заболеваниям и побочным эффектам; Аллергенное тестирование используется только после клинического диагноза для выбора совместимых с анамнезом аллергенов для иммунотерапии, направленной на специалиста, ответ на которую является отсроченным и продольным.",
+      "exclusions": [
+        "owner_blame_before_audit",
+        "allergen_test_as_diagnosis",
+        "instant_immunotherapy_response",
+        "generated_allergen_mix"
+      ],
+      "planBundleId": "poor_control_immunotherapy_plan",
+      "sourceIds": [
+        "merck_canine_atopy_2026",
+        "icada_diagnosis_2015",
+        "icada_treatment_2015",
+        "aaha_allergic_skin_2023"
+      ],
+      "presentations": [
+        {
+          "id": "p1_trigger_adherence_or_home_plan_gap",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "routine_or_urgent_by_qol",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что ранее подтверждённое аллергическое заболевание кожи снова плохо контролируется: возможны новые провоцирующие факторы, пропуски, ошибки техники или невыполнимый домашний план.",
+          "historyAnswers": {
+            "prior_components_and_response": "По нашим наблюдениям, фактические компоненты, время и реакция реконструированы.",
+            "owner_feasibility_and_handling": "Дома мы заметили, что учет управляемости, бюджета и нагрузки на дом.",
+            "home_contact_environment_changes": "Насколько мы можем судить, обзор новых экспозиций и сезона.",
+            "household_flea_control_inventory": "Мы записали, что контроль над всеми домашними животными скорее подтвержден, чем предполагаем."
+          },
+          "examFindings": [
+            {
+              "factId": "poor_control_requires_component_audit_before_escalation",
+              "source": "failure_analysis_rule",
+              "finding": "Вспышка, заражение, облучение, техника и осуществимость разделены."
+            },
+            {
+              "factId": "adherence_gap_is_described_operationally_without_owner_blame",
+              "source": "communication_rule",
+              "finding": "Наблюдаемые барьеры приводят к реальной альтернативе."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "poor_control_requires_component_audit_before_escalation",
+              "discoveryPaths": [
+                "prior_components_and_response",
+                "site_specific_skin_ear_cytology",
+                "same_scale_itch_lesion_qol_flare_record"
+              ]
+            },
+            {
+              "factId": "adherence_gap_is_described_operationally_without_owner_blame",
+              "discoveryPaths": [
+                "owner_feasibility_and_handling",
+                "environment_barrier_home_technique_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_environment_barrier_and_home_feasibility_review",
+              "classification": "required_audit",
+              "result": "По итогам консультации специалиста: триггер, техника и пробелы в осуществимости."
+            },
+            {
+              "id": "atopy_skin_ear_cytology_and_infection_mapping",
+              "classification": "required_current_flare",
+              "result": "При микроскопии материала: вклад инфекции."
+            },
+            {
+              "id": "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: сопоставимые данные об отказах и реакциях."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "poor_control_requires_component_audit_before_escalation",
+              "adherence_gap_is_described_operationally_without_owner_blame"
+            ],
+            "confirmedDiagnosisRequires": [
+              "original_clinical_diagnosis_reverified_and_gap_evidence"
+            ],
+            "dangerStates": [
+              "severe_qol_loss",
+              "uncontrolled_infection",
+              "unsafe_escalation",
+              "owner_overload"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "skin_barrier_environment_plan",
+              "skin_cytology",
+              "ear_cytology",
+              "atopy_longitudinal_monitoring"
+            ],
+            "external": [
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_environment_route",
+              "atopy_cytology_route",
+              "atopy_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "poor_control_immunotherapy_plan",
+          "followUp": {
+            "timing": "После одного зафиксированного барьера за раз.",
+            "required": true,
+            "targets": [
+              "itch",
+              "lesions",
+              "infection",
+              "technique",
+              "feasibility",
+              "qol"
+            ]
+          },
+          "outcomes": {
+            "safe": "Устранимые препятствия устраняются до расширения лечения.",
+            "unsafe": "Плохой контроль провоцирует обвинения или случайную эскалацию."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: представьте аудит как переработку плана с учетом реальной жизни, а не как проверку послушания."
+          ],
+          "compatibility": {
+            "temperament": [
+              "treatment_fatigued",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "simplified_plan_and_home_monitoring",
+            "ownerModifiers": [
+              "overwhelmed",
+              "budget_limited",
+              "multiple_caregivers"
+            ]
+          }
+        },
+        {
+          "id": "p2_treatment_limited_by_comorbidity_or_adverse_effect",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_adverse_effect_or_comorbidity",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что ранее полезный компонент контроля теперь ограничен побочным эффектом или подтвержденной сопутствующей патологией, в то время как зуд остается клинически важным.",
+          "historyAnswers": {
+            "adverse_effects_comorbidities": "По нашим наблюдениям, записаны датированный эффект, диагноз и текущее состояние безопасности.",
+            "prior_components_and_response": "Дома мы заметили, что польза и вред каждого компонента разделены.",
+            "owner_feasibility_and_handling": "Насколько мы можем судить, записано осуществимость альтернативного маршрута.",
+            "itch_before_lesions_infection": "Мы записали, что нанесена на карту текущая хронология вспышек и инфекций."
+          },
+          "examFindings": [
+            {
+              "factId": "comorbidity_or_adverse_effect_changes_the_safe_plan_without_erasing_the_skin_diagnosis",
+              "source": "safety_rule",
+              "finding": "Конфликт выгоды и риска очевиден."
+            },
+            {
+              "factId": "the_generator_does_not_substitute_a_drug_dose_or_taper",
+              "source": "scope_rule",
+              "finding": "Требуется проверенный маршрут врача или специалиста."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "comorbidity_or_adverse_effect_changes_the_safe_plan_without_erasing_the_skin_diagnosis",
+              "discoveryPaths": [
+                "adverse_effects_comorbidities",
+                "prior_components_and_response"
+              ]
+            },
+            {
+              "factId": "the_generator_does_not_substitute_a_drug_dose_or_taper",
+              "discoveryPaths": [
+                "owner_feasibility_and_handling",
+                "refractory_biopsy_specialist_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_environment_barrier_and_home_feasibility_review",
+              "classification": "required_nonpharmacologic_audit",
+              "result": "По итогам консультации специалиста: возможная поддержка барьеров или триггеров."
+            },
+            {
+              "id": "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: польза-риск и бремя болезней."
+            },
+            {
+              "id": "atopy_refractory_dermatology_referral",
+              "classification": "required_if_safe_local_plan_unavailable",
+              "result": "По итогам консультации специалиста: рассмотрен альтернативный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "comorbidity_or_adverse_effect_changes_the_safe_plan_without_erasing_the_skin_diagnosis",
+              "the_generator_does_not_substitute_a_drug_dose_or_taper"
+            ],
+            "confirmedDiagnosisRequires": [
+              "verified_skin_diagnosis_plus_documented_safety_constraint"
+            ],
+            "dangerStates": [
+              "active_adverse_effect",
+              "decompensated_comorbidity",
+              "uncontrolled_pruritus",
+              "unsafe_continuation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "skin_exam",
+              "skin_barrier_environment_plan",
+              "atopy_longitudinal_monitoring"
+            ],
+            "external": [
+              "dermatology_referral",
+              "safe_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_environment_route",
+              "atopy_longitudinal_route",
+              "atopy_refractory_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "poor_control_immunotherapy_plan",
+          "followUp": {
+            "timing": "Контрольная точка безопасности, затем мониторинг кожи или качества жизни.",
+            "required": true,
+            "targets": [
+              "adverse_effect",
+              "comorbidity",
+              "itch",
+              "lesions",
+              "qol",
+              "alternative_feasibility"
+            ]
+          },
+          "outcomes": {
+            "safe": "Небезопасный компонент рассматривается, и альтернатива, поддерживаемая специалистами, сохраняет контроль над кожей.",
+            "unsafe": "Опасно продолжать противопоказанный компонент лечения или самостоятельно придумывать схему замены без врача."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: границы безопасности и почему конкретная альтернатива должна быть проверена врачом."
+          ],
+          "compatibility": {
+            "temperament": [
+              "treatment_fatigued",
+              "medically_fragile"
+            ],
+            "requiredHandlingAlternative": "minimal_safe_monitoring_and_specialist_route",
+            "ownerModifiers": [
+              "afraid_of_prior_adverse_effect",
+              "expects_automatic_substitute"
+            ]
+          }
+        },
+        {
+          "id": "p3_allergy_testing_for_immunotherapy_after_clinical_diagnosis",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что клинически установленный, постоянно обременительный пациент с атопией направляется на тестирование на аллергены для выбора совместимых с анамнезом компонентов иммунотерапии.",
+          "historyAnswers": {
+            "seasonality_flare_windows": "По нашим наблюдениям, клиническая картина воздействия фиксируется перед тестированием.",
+            "prior_components_and_response": "Дома мы заметили, что документируется диагностика и мультимодальный контрольный аудит.",
+            "adverse_effects_comorbidities": "Насколько мы можем судить, записаны ограничения безопасности.",
+            "owner_feasibility_and_handling": "Мы записали, что обязательства по отложенному реагированию и их осуществимость рассмотрены."
+          },
+          "examFindings": [
+            {
+              "factId": "allergen_testing_selects_history_compatible_immunotherapy_components_after_clinical_diagnosis",
+              "source": "test_role_rule",
+              "finding": "Тестирование не используется в качестве диагностического ярлыка."
+            },
+            {
+              "factId": "immunotherapy_response_is_delayed_and_requires_same_scale_longitudinal_monitoring",
+              "source": "expectation_rule",
+              "finding": "Никакого немедленного лечения или образования смеси."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "allergen_testing_selects_history_compatible_immunotherapy_components_after_clinical_diagnosis",
+              "discoveryPaths": [
+                "seasonality_flare_windows",
+                "history_compatible_allergen_selection_record"
+              ]
+            },
+            {
+              "factId": "immunotherapy_response_is_delayed_and_requires_same_scale_longitudinal_monitoring",
+              "discoveryPaths": [
+                "owner_feasibility_and_handling",
+                "same_scale_itch_lesion_qol_flare_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "atopy_allergy_testing_only_for_immunotherapy_selection",
+              "classification": "post_diagnosis_specialist_selection",
+              "result": "Целевое исследование показало: сенсибилизация интерпретируется на основании анамнеза для выбора иммунотерапии."
+            },
+            {
+              "id": "atopy_pruritus_lesion_quality_of_life_and_flare_monitoring",
+              "classification": "required_baseline_and_longitudinal",
+              "result": "При динамическом наблюдении: задержка ответа в том же масштабе."
+            },
+            {
+              "id": "atopy_refractory_dermatology_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: отбор и сопровождение под руководством специалиста."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "allergen_testing_selects_history_compatible_immunotherapy_components_after_clinical_diagnosis",
+              "immunotherapy_response_is_delayed_and_requires_same_scale_longitudinal_monitoring"
+            ],
+            "confirmedDiagnosisRequires": [
+              "clinical_atopy_diagnosis_completed_before_testing"
+            ],
+            "dangerStates": [
+              "testing_used_as_diagnosis",
+              "history_incompatible_panel_selection",
+              "abandoned_control_during_delay"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "atopy_longitudinal_monitoring",
+              "pruritus_lesion_mapping"
+            ],
+            "external": [
+              "allergy_testing_external",
+              "dermatology_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "atopy_testing_route",
+              "atopy_longitudinal_route",
+              "atopy_refractory_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "poor_control_immunotherapy_plan",
+          "followUp": {
+            "timing": "Определенные специалистами отложенные контрольные точки со стабильными базовыми шкалами.",
+            "required": true,
+            "targets": [
+              "itch",
+              "lesions",
+              "flares",
+              "qol",
+              "supportive_control",
+              "feasibility"
+            ]
+          },
+          "outcomes": {
+            "safe": "Тестирование используется для выполнения своей надлежащей функции отбора, а реакция оценивается в продольном направлении.",
+            "unsafe": "Положительная панель диагностирует атопию или смесь составляют автоматически смесь аллергенов."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: тест показывает сенсибилизацию, а не доказательство заболевания, и что польза оценивается с течением времени."
+          ],
+          "compatibility": {
+            "temperament": [
+              "treatment_fatigued",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "specialist_low_stress_testing_route",
+            "ownerModifiers": [
+              "expects_test_to_name_cause",
+              "expects_immediate_response"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if breed, Favrot criteria, IgE test or treatment response alone proves atopy.",
+    "Reject if no visible flea excludes flea allergy or reaction pattern becomes etiology.",
+    "Reject if serum/saliva food test replaces elimination/provocation.",
+    "Reject if secondary infection is ignored or becomes the only diagnosis forever.",
+    "Reject if allergy testing is sold before clinical workup or immunotherapy response is instant.",
+    "Reject if code generates a drug, dose, taper, diet recipe, allergen mixture or immunotherapy schedule."
+  ]
+}

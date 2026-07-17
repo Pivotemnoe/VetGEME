@@ -1,0 +1,3632 @@
+{
+  "schemaVersion": 1,
+  "familyId": "gi_chronic_enteropathy",
+  "familyVersion": "2026.07.16.40",
+  "title": "Хроническая энтеропатия собак и кошек",
+  "campaignPhase": "chapter_4_to_post_chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "syndromeRule": "Хроническая энтеропатия — группа длительных или рецидивирующих желудочно-кишечный состояний; симптомы сами по себе не создают воспалительное заболевание кишечника.",
+    "ibdRule": "Термин воспалительное заболевание кишечника резервируется для стойкой клиники с гистологическим воспалением неизвестной причины после разумного исключения имитаторов и результатов ответа.",
+    "dietRule": "Диетическая проба включает выбранную лечебную категорию, полную историю прежних рационов, строгое исключение другой еды, достаточную продолжительность и еженедельную оценку симптомов. Простая смена корма пробой не считается.",
+    "pleRule": "энтеропатия с потерей белка требует контекста потери кишечного белка после исключения почечной, печеночной и первичной кровопотери; тяжёлая гипоальбуминемия сокращает эмпирические ступени.",
+    "histologyRule": "Гистология хранит места, качество образцов и стандартизированный отчет и интерпретируется с клиникой; Нормальное УЗИ не исключает микроскопических заболеваний.",
+    "felineRule": "В словах триадит не возникает энтеропатии, панкреатита и холангита без отдельных доказательств каждой системы.",
+    "protocolRule": "Содержание не определяет препарат, дозу, конкретный состав рациона, метод эндоскопии или биопсии или протокол иммуномодуляции."
+  },
+  "coreCapabilities": [
+    "comprehensive_diet_history",
+    "nutritional_assessment",
+    "chronic_gi_activity_score",
+    "cbc",
+    "biochemistry",
+    "electrolytes",
+    "urinalysis",
+    "fecal_flotation_centrifugal",
+    "fecal_pathogen_panel_external",
+    "cobalamin_folate_external",
+    "tli_external",
+    "hypoalbuminemia_monitoring",
+    "gi_ultrasound_external",
+    "diet_trial",
+    "diet_trial_compliance_log",
+    "longitudinal_care"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "chronic_gi_baseline_route",
+      "anyOf": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "urinalysis",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "systemic_baseline_albumin_renal_hepatic_and_electrolyte_context"
+    },
+    {
+      "id": "chronic_gi_fecal_route",
+      "anyOf": [
+        "fecal_flotation_centrifugal",
+        "fecal_antigen_external",
+        "fecal_pcr_external",
+        "fecal_pathogen_panel_external",
+        "safe_referral"
+      ],
+      "purpose": "parasite_and_targeted_pathogen_workup"
+    },
+    {
+      "id": "chronic_gi_diet_route",
+      "anyOf": [
+        "comprehensive_diet_history",
+        "diet_trial",
+        "diet_trial_compliance_log",
+        "nutritional_assessment",
+        "gi_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "complete_history_exclusive_trial_and_measured_response"
+    },
+    {
+      "id": "chronic_gi_function_route",
+      "anyOf": [
+        "cobalamin_folate_external",
+        "tli_external",
+        "pancreatic_marker_external",
+        "gi_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "malabsorption_epi_and_pancreatic_context"
+    },
+    {
+      "id": "chronic_gi_protein_loss_route",
+      "anyOf": [
+        "hypoalbuminemia_monitoring",
+        "urinalysis",
+        "urine_protein_creatinine_ratio_external",
+        "fecal_alpha1_protease_inhibitor_external",
+        "hepatobiliary_ultrasound_external",
+        "safe_referral"
+      ],
+      "purpose": "enteric_renal_hepatic_and_bleeding_loss_localization"
+    },
+    {
+      "id": "chronic_gi_imaging_route",
+      "anyOf": [
+        "ultrasound",
+        "gi_ultrasound_external",
+        "advanced_imaging_referral",
+        "gi_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "bowel_layers_nodes_liver_pancreas_mass_and_fluid"
+    },
+    {
+      "id": "chronic_gi_endoscopy_route",
+      "anyOf": [
+        "gi_endoscopy_referral",
+        "gi_histopathology_external",
+        "gi_specialist_referral",
+        "oncology_biopsy_planning_referral",
+        "safe_referral"
+      ],
+      "purpose": "adequate_multisite_sampling_and_contextual_pathology"
+    },
+    {
+      "id": "chronic_gi_emergency_route",
+      "anyOf": [
+        "stabilization",
+        "oxygen",
+        "vital_monitor",
+        "abdominal_fluid_analysis_external",
+        "hospital_referral",
+        "intensive_care_referral",
+        "safe_referral"
+      ],
+      "purpose": "severe_hypoalbuminemia_effusion_shock_bleeding_obstruction_or_rapid_decline"
+    },
+    {
+      "id": "chronic_gi_feline_multisystem_route",
+      "anyOf": [
+        "t4_external",
+        "blood_glucose",
+        "urinalysis",
+        "pancreatic_marker_external",
+        "hepatobiliary_ultrasound_external",
+        "gi_ultrasound_external",
+        "gi_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "feline_thyroid_renal_diabetes_pancreatic_hepatobiliary_and_gi_evidence"
+    },
+    {
+      "id": "chronic_gi_oncology_route",
+      "anyOf": [
+        "gi_endoscopy_referral",
+        "gi_histopathology_external",
+        "oncology_biopsy_planning_referral",
+        "oncology_advanced_pathology_external",
+        "oncology_staging_external",
+        "safe_referral"
+      ],
+      "purpose": "lymphoma_or_infiltrative_disease_question"
+    },
+    {
+      "id": "chronic_gi_longitudinal_route",
+      "anyOf": [
+        "chronic_gi_activity_score",
+        "diet_trial_compliance_log",
+        "hypoalbuminemia_monitoring",
+        "longitudinal_care",
+        "safe_referral"
+      ],
+      "purpose": "same_scale_same_episode_weight_score_albumin_and_diet_response"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "chronic_enteropathy_timeline_diet_and_fecal_character",
+      "requires": [
+        "comprehensive_diet_history"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chronic_enteropathy_nutritional_and_activity_score",
+      "requires": [
+        "nutritional_assessment",
+        "chronic_gi_activity_score"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chronic_enteropathy_cbc_biochemistry_urinalysis",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "urinalysis"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chronic_enteropathy_fecal_parasite_and_pathogen_workup",
+      "requires": [
+        "fecal_flotation_centrifugal",
+        "fecal_pathogen_panel_external"
+      ],
+      "availability": "local_and_external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "chronic_enteropathy_cobalamin_folate_tli_and_pancreatic_markers",
+      "requires": [
+        "cobalamin_folate_external",
+        "tli_external",
+        "pancreatic_marker_external"
+      ],
+      "availability": "external_chapter_4_to_post_chapter_5",
+      "fallback": "gi_specialist_referral"
+    },
+    {
+      "researchId": "chronic_enteropathy_albumin_and_protein_loss_localization",
+      "requires": [
+        "hypoalbuminemia_monitoring",
+        "fecal_alpha1_protease_inhibitor_external"
+      ],
+      "availability": "local_and_external_chapter_4",
+      "fallback": "gi_specialist_referral"
+    },
+    {
+      "researchId": "chronic_enteropathy_abdominal_ultrasound",
+      "requires": [
+        "ultrasound",
+        "gi_ultrasound_external"
+      ],
+      "availability": "external_chapter_4_local_chapter_5",
+      "fallback": "gi_specialist_referral"
+    },
+    {
+      "researchId": "chronic_enteropathy_exclusive_diet_trials",
+      "requires": [
+        "diet_trial",
+        "diet_trial_compliance_log"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "gi_specialist_referral"
+    },
+    {
+      "researchId": "chronic_enteropathy_endoscopy_biopsy_and_histopathology",
+      "requires": [
+        "gi_endoscopy_referral",
+        "gi_histopathology_external"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "gi_specialist_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "duration_normal_intervals",
+      "text": "Сколько длится проблема и бывают ли полностью нормальные периоды?"
+    },
+    {
+      "id": "vomiting_diarrhea_appetite",
+      "text": "Что преобладает: рвота, диарея или изменение аппетита?"
+    },
+    {
+      "id": "fecal_character",
+      "text": "Каковы объём, частота, слизь, свежая кровь, мелена или жирность стула?"
+    },
+    {
+      "id": "weight_muscle_change",
+      "text": "Как быстро менялись масса и мышцы?"
+    },
+    {
+      "id": "complete_diet_access",
+      "text": "Что пациент ел за последние месяцы, включая лакомства, стол, добавки и чужие миски?"
+    },
+    {
+      "id": "prior_diet_trials",
+      "text": "Какие диеты пробовали, как долго и насколько эксклюзивно?"
+    },
+    {
+      "id": "fecal_test_methods",
+      "text": "Какие тесты на паразиты или патогены проводились и каким методом?"
+    },
+    {
+      "id": "edema_ascites",
+      "text": "Есть ли отёки или увеличение живота?"
+    },
+    {
+      "id": "extraintestinal_signs",
+      "text": "Есть ли полиурия и полидипсия, кашель, желтуха, боль или другие внекишечные признаки?"
+    },
+    {
+      "id": "medication_response",
+      "text": "Какие лекарства применялись, как долго и с каким ответом?"
+    },
+    {
+      "id": "household_symptoms",
+      "text": "Есть ли другие животные или люди с похожими симптомами?"
+    },
+    {
+      "id": "owner_diet_log_capacity",
+      "text": "Реально ли обеспечить раздельное кормление, строгую диету и журнал?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "serial_weight_bcs_mcs_activity",
+      "source": "physical_exam",
+      "requires": [
+        "body_weight",
+        "body_condition_score",
+        "muscle_condition_score",
+        "chronic_gi_activity_score"
+      ]
+    },
+    {
+      "id": "hydration_temperature_perfusion_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "hydration_assessment",
+        "temperature",
+        "blood_pressure"
+      ]
+    },
+    {
+      "id": "abdominal_pain_mass_fluid_exam",
+      "source": "physical_exam",
+      "requires": [
+        "abdominal_palpation",
+        "pain_assessment"
+      ]
+    },
+    {
+      "id": "rectal_perianal_localization_exam",
+      "source": "physical_exam",
+      "requires": [
+        "digital_rectal_exam"
+      ]
+    },
+    {
+      "id": "dated_cbc_chem_electrolyte_urine_snapshot",
+      "source": "diagnostic_test",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "urinalysis"
+      ]
+    },
+    {
+      "id": "method_identified_fecal_results",
+      "source": "diagnostic_test",
+      "requires": [
+        "fecal_flotation_centrifugal",
+        "fecal_pathogen_panel_external"
+      ]
+    },
+    {
+      "id": "functional_gi_pancreatic_results",
+      "source": "diagnostic_test",
+      "requires": [
+        "cobalamin_folate_external",
+        "tli_external",
+        "pancreatic_marker_external"
+      ]
+    },
+    {
+      "id": "protein_loss_localization_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "hypoalbuminemia_monitoring",
+        "urinalysis",
+        "fecal_alpha1_protease_inhibitor_external"
+      ]
+    },
+    {
+      "id": "expert_gi_ultrasound_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "gi_ultrasound_external"
+      ]
+    },
+    {
+      "id": "exclusive_diet_weekly_record",
+      "source": "follow_up",
+      "requires": [
+        "diet_trial",
+        "diet_trial_compliance_log",
+        "chronic_gi_activity_score"
+      ]
+    },
+    {
+      "id": "multisite_gi_histopathology_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "gi_endoscopy_referral",
+        "gi_histopathology_external"
+      ]
+    },
+    {
+      "id": "same_episode_gi_response",
+      "source": "follow_up",
+      "requires": [
+        "longitudinal_care",
+        "chronic_gi_activity_score"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "acvim_cie_dog_2026",
+      "title": "ACVIM-endorsed consensus statement on chronic inflammatory enteropathy in dogs",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41742497/",
+      "scope": "diagnostic_algorithm_diet_trials_endoscopy_biopsy_histopathology_and_response"
+    },
+    {
+      "id": "merck_chronic_enteropathy_2026",
+      "title": "Merck Veterinary Manual: Chronic Enteropathies in Small Animals",
+      "url": "https://www.merckvetmanual.com/digestive-system/diseases-of-the-small-intestine-in-small-animals/chronic-enteropathies-in-small-animals",
+      "scope": "dog_cat_classification_staged_diagnosis_diet_ple_histology_and_prognosis"
+    },
+    {
+      "id": "wsava_gi_histopathology",
+      "title": "WSAVA Gastrointestinal Guidelines",
+      "url": "https://wsava.org/Global-Guidelines/Gastrointestinal-Guidelines/",
+      "scope": "standardized_endoscopy_biopsy_quality_and_histopathology_reporting"
+    },
+    {
+      "id": "canine_ce_state_art_2022",
+      "title": "Canine Chronic Enteropathy: Current State of the Art",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9534534/",
+      "scope": "phenotypes_biomarkers_diet_response_and_refractory_disease"
+    },
+    {
+      "id": "ple_pathophysiology_2019",
+      "title": "Comparative pathophysiology of protein-losing enteropathy",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30762910/",
+      "scope": "protein_loss_mechanisms_localization_and_complications"
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "food_responsive_enteropathy_plan",
+      "fullPlan": [
+        "confirm_chronicity_localization_and_stability",
+        "complete_diet_and_access_history",
+        "weight_bcs_mcs_and_same_activity_score",
+        "targeted_fecal_and_basic_systemic_screen",
+        "choose_distinct_therapeutic_diet_category",
+        "document_exclusivity_duration_and_weekly_response",
+        "escalate_if_anorexia_weight_loss_hypoalbuminemia_or_no_adequate_response"
+      ],
+      "stagedPlan": [
+        "baseline",
+        "exclusive_trial",
+        "weekly_measurement",
+        "classify_response"
+      ],
+      "minimumSafePlan": [
+        "simple_food_change_not_trial",
+        "outcome_authored_before_player_choice",
+        "no_anorexia_forced_diet",
+        "safe_referral_if_red_flags"
+      ],
+      "stabilizeAndRefer": [
+        "hospital_if_uncontrolled_vomiting_or_decompensated",
+        "gi_referral_if_severe_or_trial_unsafe"
+      ],
+      "unsafeOrInadequate": [
+        "ibd_from_symptoms",
+        "two_day_failure",
+        "hidden_treats_ignored",
+        "automatic_endoscopy_after_response"
+      ]
+    },
+    {
+      "id": "inflammatory_small_intestinal_plan",
+      "fullPlan": [
+        "confirm_small_bowel_pattern_weight_and_severity",
+        "basic_lab_fecal_and_systemic_mimic_screen",
+        "cobalamin_tli_pancreatic_tests_by_pattern",
+        "document_adequate_diet_trials",
+        "expert_ultrasound_and_early_referral_if_mass_or_rapid_loss",
+        "multisite_endoscopy_histopathology_if_indicated",
+        "interpret_histology_with_clinical_response"
+      ],
+      "stagedPlan": [
+        "phenotype",
+        "mimics_and_diet",
+        "imaging",
+        "biopsy_and_response"
+      ],
+      "minimumSafePlan": [
+        "no_endless_random_food_switching",
+        "normal_ultrasound_not_exclusion",
+        "histology_not_standalone_severity",
+        "no_generated_immunomodulation"
+      ],
+      "stabilizeAndRefer": [
+        "early_specialist_for_rapid_loss_or_imaging_concern",
+        "hospital_if_debilitated_or_anorectic"
+      ],
+      "unsafeOrInadequate": [
+        "one_negative_fecal_closes_mimics",
+        "ibd_without_histology",
+        "biopsy_before_valid_diet_in_stable_case",
+        "histology_alone_selects_drug"
+      ]
+    },
+    {
+      "id": "protein_losing_enteropathy_plan",
+      "fullPlan": [
+        "triage_hypoalbuminemia_effusion_edema_and_perfusion",
+        "serial_weight_bcs_mcs_activity_and_albumin",
+        "exclude_renal_hepatic_and_significant_bleeding_loss",
+        "targeted_fecal_functional_and_imaging_workup",
+        "shorten_empirical_steps_by_severity",
+        "hospital_gi_and_biopsy_route",
+        "serial_albumin_weight_score_effusion_and_complication_followup"
+      ],
+      "stagedPlan": [
+        "stabilize_and_localize_loss",
+        "phenotype_and_imaging",
+        "specialist_pathology",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "low_albumin_not_automatically_ple",
+        "severe_ple_not_wait_multiple_diets",
+        "effusion_thrombotic_risk_explicit",
+        "safe_hospital_route"
+      ],
+      "stabilizeAndRefer": [
+        "hospital_if_effusion_dyspnea_shock_or_severe_decline",
+        "gi_specialist_for_lymphangiectasia_or_infiltration"
+      ],
+      "unsafeOrInadequate": [
+        "urine_liver_not_checked",
+        "low_fat_for_every_patient_generated",
+        "fluid_ignored",
+        "random_infusions_or_antithrombotics"
+      ]
+    },
+    {
+      "id": "large_bowel_colitis_plan",
+      "fullPlan": [
+        "localize_large_bowel_vs_melena_small_bowel",
+        "rectal_perianal_exam_and_severity",
+        "method_identified_fecal_and_pathogen_workup",
+        "complete_diet_fiber_and_medication_history",
+        "reviewed_diet_or_fiber_trial_with_score",
+        "targeted_breed_histology_culture_route_if_severe",
+        "same_episode_compliance_and_relapse_followup"
+      ],
+      "stagedPlan": [
+        "localize",
+        "fecal_and_diet",
+        "measure_response",
+        "specialist_if_severe"
+      ],
+      "minimumSafePlan": [
+        "fresh_blood_not_automatic_severe_systemic_therapy",
+        "melena_changes_localization",
+        "breed_not_diagnosis",
+        "antimicrobial_requires_specific_evidence"
+      ],
+      "stabilizeAndRefer": [
+        "hospital_if_hemodynamic_or_severe_loss",
+        "gi_referral_for_refractory_bloody_or_weight_loss_pattern"
+      ],
+      "unsafeOrInadequate": [
+        "one_fresh_blood_episode_equals_ibd",
+        "random_fiber_addition_as_trial",
+        "breed_autodiagnosis",
+        "empirical_antimicrobial_loop"
+      ]
+    },
+    {
+      "id": "feline_multisystem_enteropathy_plan",
+      "fullPlan": [
+        "confirm_chronic_feline_gi_and_nutrition_pattern",
+        "age_specific_thyroid_renal_diabetes_and_fecal_screen",
+        "cobalamin_tli_pli_and_imaging_by_pattern",
+        "preserve_separate_intestinal_biliary_and_pancreatic_evidence",
+        "prevent_anorexia_and_nutritional_decline",
+        "specialist_sampling_route_by_safety_and_decision",
+        "joint_weight_intake_score_and_system_specific_followup"
+      ],
+      "stagedPlan": [
+        "feline_baseline",
+        "system_specific_evidence",
+        "nutrition_and_imaging",
+        "joint_followup"
+      ],
+      "minimumSafePlan": [
+        "recurrent_vomiting_not_normal",
+        "triaditis_not_three_diagnoses",
+        "positive_pli_not_whole_cluster",
+        "nutrition_route_if_anorectic"
+      ],
+      "stabilizeAndRefer": [
+        "hospital_if_anorectic_hypothermic_or_decompensated",
+        "gi_hepatobiliary_pancreatic_specialist_route"
+      ],
+      "unsafeOrInadequate": [
+        "cat_vomiting_normalized",
+        "one_marker_opens_all_treatments",
+        "low_cobalamin_names_cause",
+        "unsafe_force_feeding"
+      ]
+    },
+    {
+      "id": "refractory_or_mimic_enteropathy_plan",
+      "fullPlan": [
+        "audit_entire_staged_path_and_compliance",
+        "repeat_or_add_targeted_parasite_pathogen_epi_and_systemic_mimic_tests",
+        "review_ultrasound_structure_nodes_and_mass",
+        "review_multisite_sample_quality_and_pathology_context",
+        "select_oncology_or_advanced_pathology_only_if_evidence",
+        "version_specialist_plan_without_random_drug_stack",
+        "same_patient_response_adverse_effect_and_reclassification_followup"
+      ],
+      "stagedPlan": [
+        "audit",
+        "close_mimics",
+        "review_structure_and_pathology",
+        "specialist_reclassification"
+      ],
+      "minimumSafePlan": [
+        "refractory_label_requires_complete_path",
+        "ambiguous_biopsy_not_lymphoma_exclusion",
+        "supportive_nutrition_continues",
+        "no_random_antibiotic_steroid_supplement_stack"
+      ],
+      "stabilizeAndRefer": [
+        "hospital_if_rapid_decline_bleeding_obstruction_or_severe_protein_loss",
+        "oncology_or_gi_referral_for_mass_or_conflicted_histology"
+      ],
+      "unsafeOrInadequate": [
+        "wrong_single_fecal_test_then_immunosuppression",
+        "one_ambiguous_report_closes_lymphoma",
+        "pathology_quality_ignored",
+        "random_refractory_treatment"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "chronic_enteropathy_food_responsive",
+      "version": "2026.07.16.40",
+      "title": "Пищевой ответ при хронической энтеропатии",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Стабильный пациент с хроническими желудочно-кишечными симптомами обеспечивает адекватную эксклюзивную терапевтическую диету с сопутствующим ответом.",
+      "exclusions": [
+        "severe_hypoalbuminemia",
+        "rapid_weight_loss",
+        "obstruction_or_mass",
+        "invalid_nonexclusive_trial"
+      ],
+      "planBundleId": "food_responsive_enteropathy_plan",
+      "sourceIds": [
+        "acvim_cie_dog_2026",
+        "merck_chronic_enteropathy_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_chronic_diarrhea_stable_for_diet_trial",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "routine_priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что диарея продолжается неделями, но масса и альбумин стабильны, а системных тревожных сигналов нет.",
+          "historyAnswers": {
+            "duration_normal_intervals": "По нашим наблюдениям, хронический или интермиттирующий.",
+            "fecal_character": "Дома мы заметили, что характер тонкой или толстой кишки.",
+            "complete_diet_access": "Насколько мы можем судить, все продукты или доступ зафиксированы.",
+            "owner_diet_log_capacity": "Мы записали, что выполнимо."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_patient_is_eligible_for_measured_diet_trial",
+              "source": "eligibility_record",
+              "finding": "Никакого серьезного веса, потери белка или системного тревожного сигнала."
+            },
+            {
+              "factId": "diet_selection_uses_complete_history_not_random_product",
+              "source": "clinical_reasoning",
+              "finding": "Терапевтическая категория существенно отличается от предшествующего воздействия."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stable_patient_is_eligible_for_measured_diet_trial",
+              "discoveryPaths": [
+                "duration_normal_intervals",
+                "fecal_character",
+                "serial_weight_bcs_mcs_activity",
+                "dated_cbc_chem_electrolyte_urine_snapshot"
+              ]
+            },
+            {
+              "factId": "diet_selection_uses_complete_history_not_random_product",
+              "discoveryPaths": [
+                "complete_diet_access",
+                "owner_diet_log_capacity"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_timeline_diet_and_fecal_character",
+              "classification": "required",
+              "result": "При уточнении анамнеза: полная локализация диеты и стула."
+            },
+            {
+              "id": "chronic_enteropathy_nutritional_and_activity_score",
+              "classification": "required_baseline",
+              "result": "Целевое исследование показало: масса тела и мышечная масса продолжают снижаться, упитанность ниже предыдущего значения."
+            },
+            {
+              "id": "chronic_enteropathy_fecal_parasite_and_pathogen_workup",
+              "classification": "targeted_baseline",
+              "result": "Целевое исследование показало: исключение, определяемое методом."
+            },
+            {
+              "id": "chronic_enteropathy_exclusive_diet_trials",
+              "classification": "required_diagnostic_trial",
+              "result": "При уточнении анамнеза: исключительный проба и еженедельный исход."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stable_patient_is_eligible_for_measured_diet_trial",
+              "diet_selection_uses_complete_history_not_random_product"
+            ],
+            "confirmedDiagnosisRequires": [
+              "objective_remission_on_valid_exclusive_diet_trial"
+            ],
+            "dangerStates": [
+              "weight_loss",
+              "hypoalbuminemia",
+              "anorexia",
+              "bleeding",
+              "obstruction"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "comprehensive_diet_history",
+              "nutritional_assessment",
+              "chronic_gi_activity_score",
+              "diet_trial",
+              "diet_trial_compliance_log"
+            ],
+            "external": [
+              "fecal_pathogen_panel_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_diet_route",
+              "chronic_gi_fecal_route",
+              "chronic_gi_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "food_responsive_enteropathy_plan",
+          "followUp": {
+            "timing": "Еженедельный балл и адекватная контрольная точка, определенная протоколом.",
+            "required": true,
+            "targets": [
+              "stool",
+              "weight",
+              "activity_score",
+              "exclusivity",
+              "appetite"
+            ]
+          },
+          "outcomes": {
+            "safe": "Действительные испытания диеты проводятся без чрезмерного тестирования стабильного пациента.",
+            "unsafe": "Случайная покупка еды или двухдневный ответ решают дело."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: перечислите все виды доступа, нарушающие эксклюзивность, и объясните еженедельные измерения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "food_motivated"
+            ],
+            "requiredHandlingAlternative": "owner_led_log_and_low_stress_baseline",
+            "ownerModifiers": [
+              "multiple_pets",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_vomiting_or_mixed_signs_with_diet_history",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что рвота или смешанные желудочно-кишечный признаки сохраняются после нескольких коротких и неэксклюзивных смен корма.",
+          "historyAnswers": {
+            "vomiting_diarrhea_appetite": "По нашим наблюдениям, рвота или смешанная форма.",
+            "complete_diet_access": "Дома мы заметили, что несколько блюд или угощений или других мисок.",
+            "prior_diet_trials": "Насколько мы можем судить, короткий или неэксклюзивный.",
+            "owner_diet_log_capacity": "Мы записали, что возможность пройти наблюдение или лечение и разделительные барьеры."
+          },
+          "examFindings": [
+            {
+              "factId": "prior_food_changes_are_not_valid_diagnostic_trials",
+              "source": "history_record",
+              "finding": "Категория, продолжительность или эксклюзивность были неадекватными."
+            },
+            {
+              "factId": "diet_trial_stops_if_patient_becomes_anorectic",
+              "source": "safety_rule",
+              "finding": "Безопасность питания важнее соблюдения выбранного продукта."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "prior_food_changes_are_not_valid_diagnostic_trials",
+              "discoveryPaths": [
+                "complete_diet_access",
+                "prior_diet_trials",
+                "exclusive_diet_weekly_record"
+              ]
+            },
+            {
+              "factId": "diet_trial_stops_if_patient_becomes_anorectic",
+              "discoveryPaths": [
+                "vomiting_diarrhea_appetite",
+                "serial_weight_bcs_mcs_activity"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_timeline_diet_and_fecal_character",
+              "classification": "required",
+              "result": "При уточнении анамнеза: все предыдущие диеты или доступы."
+            },
+            {
+              "id": "chronic_enteropathy_cbc_biochemistry_urinalysis",
+              "classification": "required_by_pattern",
+              "result": "В анализе мочи: базовый уровень системности и безопасности."
+            },
+            {
+              "id": "chronic_enteropathy_exclusive_diet_trials",
+              "classification": "required_valid_trial",
+              "result": "При уточнении анамнеза: отдельный категория, исключительность и исход."
+            },
+            {
+              "id": "chronic_enteropathy_nutritional_and_activity_score",
+              "classification": "required",
+              "result": "Целевое исследование показало: аппетит или вес или оценка."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "prior_food_changes_are_not_valid_diagnostic_trials",
+              "diet_trial_stops_if_patient_becomes_anorectic"
+            ],
+            "confirmedDiagnosisRequires": [
+              "objective_response_to_valid_trial"
+            ],
+            "dangerStates": [
+              "anorexia",
+              "dehydration",
+              "rapid_weight_loss",
+              "persistent_vomiting"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "comprehensive_diet_history",
+              "nutritional_assessment",
+              "diet_trial",
+              "diet_trial_compliance_log",
+              "cbc",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_baseline_route",
+              "chronic_gi_diet_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "food_responsive_enteropathy_plan",
+          "followUp": {
+            "timing": "Ранняя проверка безопасности аппетита плюс адекватная конечная точка исследования.",
+            "required": true,
+            "targets": [
+              "appetite",
+              "vomiting",
+              "stool",
+              "weight",
+              "exclusivity"
+            ]
+          },
+          "outcomes": {
+            "safe": "Настоящее испытание заменяет хаотическое переключение продуктов питания без ущерба для потребления.",
+            "unsafe": "Выбранная диета вынужденная, несмотря на анорексию."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: предоставьте возможный план отделения и инструкции, если потребление падает."
+          ],
+          "compatibility": {
+            "temperament": [
+              "food_averse",
+              "fearful",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "nutrition_first_owner_supported_trial",
+            "ownerModifiers": [
+              "multiple_pets",
+              "family_feeding_conflict"
+            ]
+          }
+        },
+        {
+          "id": "p3_response_requires_exclusive_feeding_and_recheck",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "follow_up",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что при подтвержденной эксклюзивности еженедельного рейтинга, стул или рвота и масса объективно ограничиваются.",
+          "historyAnswers": {
+            "prior_diet_trials": "По нашим наблюдениям, текущее адекватное исследование зафиксировано.",
+            "owner_diet_log_capacity": "Дома мы заметили, что журнал завершен.",
+            "vomiting_diarrhea_appetite": "Насколько мы можем судить, улучшено или перенесено.",
+            "weight_muscle_change": "Мы записали, что стабильно или улучшается."
+          },
+          "examFindings": [
+            {
+              "factId": "objective_response_plus_exclusivity_is_diagnostically_meaningful",
+              "source": "follow_up_record",
+              "finding": "До выбора следующего шага уже зафиксирован шестинедельный период строгого рациона: частота стула снизилась с пяти раз до двух раз в сутки, масса тела стабилизировалась."
+            },
+            {
+              "factId": "response_does_not_require_automatic_endoscopy_or_immunosuppression",
+              "source": "proportionality_rule",
+              "finding": "Дальнейшее тестирование имеет значение только для принятия решения."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "objective_response_plus_exclusivity_is_diagnostically_meaningful",
+              "discoveryPaths": [
+                "prior_diet_trials",
+                "owner_diet_log_capacity",
+                "exclusive_diet_weekly_record",
+                "same_episode_gi_response"
+              ]
+            },
+            {
+              "factId": "response_does_not_require_automatic_endoscopy_or_immunosuppression",
+              "discoveryPaths": [
+                "vomiting_diarrhea_appetite",
+                "weight_muscle_change",
+                "serial_weight_bcs_mcs_activity"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_exclusive_diet_trials",
+              "classification": "required_result",
+              "result": "При уточнении анамнеза: эксклюзивный полученный ответ."
+            },
+            {
+              "id": "chronic_enteropathy_nutritional_and_activity_score",
+              "classification": "required_followup",
+              "result": "Целевое исследование показало: объективное улучшение того же масштаба."
+            },
+            {
+              "id": "chronic_enteropathy_endoscopy_biopsy_and_histopathology",
+              "classification": "not_routine_if_remission",
+              "result": "В заключении по гистологическому исследованию: зарезервировано для новых материальных проблем."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "objective_response_plus_exclusivity_is_diagnostically_meaningful",
+              "response_does_not_require_automatic_endoscopy_or_immunosuppression"
+            ],
+            "confirmedDiagnosisRequires": [
+              "food_responsive_enteropathy_by_valid_response"
+            ],
+            "dangerStates": [
+              "relapse_with_weight_loss",
+              "nonexclusive_apparent_response",
+              "new_hypoalbuminemia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "diet_trial_compliance_log",
+              "chronic_gi_activity_score",
+              "body_weight",
+              "longitudinal_care"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_diet_route",
+              "chronic_gi_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "food_responsive_enteropathy_plan",
+          "followUp": {
+            "timing": "Проверенная контрольная точка обслуживания или вызова или перехода.",
+            "required": true,
+            "targets": [
+              "score",
+              "weight",
+              "stool",
+              "vomiting",
+              "exclusivity",
+              "relapse"
+            ]
+          },
+          "outcomes": {
+            "safe": "Реакция на пищевые продукты доказана и контролируется без ненужных инвазивных тестов.",
+            "unsafe": "Улучшение заявляется без каких-либо исключительных прав и не требует автоматической биопсии."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: доказывает ответ и как будут рассматриваться будущие вызовы или переходы."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "food_motivated",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "brief_followup_and_owner_log_review",
+            "ownerModifiers": [
+              "adherent",
+              "multiple_pets"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "chronic_enteropathy_inflammatory_small_intestinal",
+      "version": "2026.07.16.40",
+      "title": "Хроническая воспалительная энтеропатия тонкой кишки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Стойкая тонкокишечная энтеропатия после разумного исключения имитаторов и адекватных диетических исследований; гистологическое воспаление определяется только вместе с клиникой.",
+      "exclusions": [
+        "food_responsive_remission",
+        "unexcluded_parasite_epi_endocrine_or_pancreatic_mimic",
+        "lymphoma_or_focal_mass_unresolved"
+      ],
+      "planBundleId": "inflammatory_small_intestinal_plan",
+      "sourceIds": [
+        "acvim_cie_dog_2026",
+        "merck_chronic_enteropathy_2026",
+        "wsava_gi_histopathology"
+      ],
+      "presentations": [
+        {
+          "id": "p1_weight_loss_small_bowel_diarrhea",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что большой объем стула, рвота и постепенная потеря массы или мышц указывают на поражение тонкого кишечника.",
+          "historyAnswers": {
+            "duration_normal_intervals": "По нашим наблюдениям, недели или месяцы.",
+            "fecal_character": "Дома мы заметили, что крупнообъемный рисунок тонкой кишки.",
+            "weight_muscle_change": "Насколько мы можем судить, прогрессирующая потеря.",
+            "extraintestinal_signs": "Мы записали, что мимические подсказки."
+          },
+          "examFindings": [
+            {
+              "factId": "small_bowel_weight_loss_pattern_requires_staged_mimic_workup",
+              "source": "clinical_reasoning",
+              "finding": "Фекальные, системные, РПИ и пищевые причины остаются активными."
+            },
+            {
+              "factId": "rapid_loss_age_or_imaging_concern_allows_early_referral",
+              "source": "severity_rule",
+              "finding": "Потребности пациента могут сократить эмпирические шаги."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "small_bowel_weight_loss_pattern_requires_staged_mimic_workup",
+              "discoveryPaths": [
+                "duration_normal_intervals",
+                "fecal_character",
+                "weight_muscle_change",
+                "method_identified_fecal_results",
+                "functional_gi_pancreatic_results"
+              ]
+            },
+            {
+              "factId": "rapid_loss_age_or_imaging_concern_allows_early_referral",
+              "discoveryPaths": [
+                "extraintestinal_signs",
+                "serial_weight_bcs_mcs_activity",
+                "expert_gi_ultrasound_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_cbc_biochemistry_urinalysis",
+              "classification": "required",
+              "result": "В анализе мочи: исходный уровень системного или альбуминового или почечного или печеночного уровня."
+            },
+            {
+              "id": "chronic_enteropathy_fecal_parasite_and_pathogen_workup",
+              "classification": "required_targeted",
+              "result": "Целевое исследование показало: мимический статус."
+            },
+            {
+              "id": "chronic_enteropathy_cobalamin_folate_tli_and_pancreatic_markers",
+              "classification": "required_by_pattern",
+              "result": "Целевое исследование показало: мальабсорбция или экзокринная недостаточность поджелудочной железы или поджелудочная железа."
+            },
+            {
+              "id": "chronic_enteropathy_abdominal_ultrasound",
+              "classification": "required_if_weight_loss_or_concern",
+              "result": "При ультразвуковом исследовании: кишечник или узлы или массы или другие системы."
+            },
+            {
+              "id": "chronic_enteropathy_exclusive_diet_trials",
+              "classification": "required_if_safe",
+              "result": "При уточнении анамнеза: планируемый правильный этап диеты."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "small_bowel_weight_loss_pattern_requires_staged_mimic_workup",
+              "rapid_loss_age_or_imaging_concern_allows_early_referral"
+            ],
+            "confirmedDiagnosisRequires": [
+              "persistent_small_bowel_pattern_after_mimic_and_diet_assessment"
+            ],
+            "dangerStates": [
+              "rapid_weight_loss",
+              "mass",
+              "hypoalbuminemia",
+              "obstruction",
+              "neoplasia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "nutritional_assessment",
+              "cbc",
+              "biochemistry",
+              "electrolytes",
+              "urinalysis",
+              "fecal_flotation_centrifugal"
+            ],
+            "external": [
+              "cobalamin_folate_external",
+              "tli_external",
+              "gi_ultrasound_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_baseline_route",
+              "chronic_gi_fecal_route",
+              "chronic_gi_function_route",
+              "chronic_gi_imaging_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "inflammatory_small_intestinal_plan",
+          "followUp": {
+            "timing": "Поэтапная диагностика и контрольные точки веса или оценки по одинаковой шкале.",
+            "required": true,
+            "targets": [
+              "weight",
+              "mcs",
+              "score",
+              "albumin",
+              "stool",
+              "mimics"
+            ]
+          },
+          "outcomes": {
+            "safe": "Фенотип тонкой кишки подвергается пропорциональному поэтапному исследованию.",
+            "unsafe": "Хроническая диарея называется ВЗК до имитации или оценки диеты."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: поэтапный маршрут и почему быстрая потеря может оправдать более раннее специализированное тестирование."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "staged_low_stress_sampling_and_external_imaging",
+            "ownerModifiers": [
+              "budget_limited",
+              "transport_difficult"
+            ]
+          }
+        },
+        {
+          "id": "p2_failed_adequate_diet_trials_needs_staging",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_follow_up",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что несколько категорий разумных диет не дали ремиссии при подтвержденных эксклюзивности, продолжительности и недельных баллах.",
+          "historyAnswers": {
+            "prior_diet_trials": "По нашим наблюдениям, записаны соответствующие категории или продолжительность.",
+            "owner_diet_log_capacity": "Дома мы заметили, что соответствие подтверждено.",
+            "fecal_test_methods": "Насколько мы можем судить, рассмотренные методы.",
+            "medication_response": "Мы записали, что записано предшествующее вводящее в заблуждение лечение."
+          },
+          "examFindings": [
+            {
+              "factId": "diet_failure_requires_proven_adequacy_not_owner_label",
+              "source": "longitudinal_record",
+              "finding": "Категория, продолжительность, эксклюзивность и оценка — все зафиксировано."
+            },
+            {
+              "factId": "after_valid_failure_mimics_are_rechecked_before_biopsy_route",
+              "source": "clinical_reasoning",
+              "finding": "Паразиты, РПИ, эндокринные, поджелудочные и печеночные причины остаются в поле зрения."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "diet_failure_requires_proven_adequacy_not_owner_label",
+              "discoveryPaths": [
+                "prior_diet_trials",
+                "owner_diet_log_capacity",
+                "exclusive_diet_weekly_record"
+              ]
+            },
+            {
+              "factId": "after_valid_failure_mimics_are_rechecked_before_biopsy_route",
+              "discoveryPaths": [
+                "fecal_test_methods",
+                "medication_response",
+                "method_identified_fecal_results",
+                "functional_gi_pancreatic_results"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_exclusive_diet_trials",
+              "classification": "required_failure_evidence",
+              "result": "При уточнении анамнеза: соответствующие документированные отказы."
+            },
+            {
+              "id": "chronic_enteropathy_fecal_parasite_and_pathogen_workup",
+              "classification": "required_audit",
+              "result": "Целевое исследование показало: соответствующий метод мнемосхемы."
+            },
+            {
+              "id": "chronic_enteropathy_cobalamin_folate_tli_and_pancreatic_markers",
+              "classification": "required_by_pattern",
+              "result": "Целевое исследование показало: контекст экзокринная недостаточность поджелудочной железы или мальабсорбции или поджелудочной железы."
+            },
+            {
+              "id": "chronic_enteropathy_abdominal_ultrasound",
+              "classification": "required_staging",
+              "result": "При ультразвуковом исследовании: структурная и узловая оценка."
+            },
+            {
+              "id": "chronic_enteropathy_endoscopy_biopsy_and_histopathology",
+              "classification": "conditional_next_step",
+              "result": "В заключении по гистологическому исследованию: направление к специалисту, если это важно для принятия решения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "diet_failure_requires_proven_adequacy_not_owner_label",
+              "after_valid_failure_mimics_are_rechecked_before_biopsy_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "persistent_enteropathy_after_valid_diets_and_reasonable_mimic_screen"
+            ],
+            "dangerStates": [
+              "missed_epi",
+              "parasite_or_pathogen",
+              "mass",
+              "rapid_decline"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "diet_trial_compliance_log",
+              "chronic_gi_activity_score",
+              "cbc",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "tli_external",
+              "cobalamin_folate_external",
+              "gi_ultrasound_external",
+              "gi_endoscopy_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_diet_route",
+              "chronic_gi_fecal_route",
+              "chronic_gi_function_route",
+              "chronic_gi_endoscopy_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "inflammatory_small_intestinal_plan",
+          "followUp": {
+            "timing": "Контрольная точка промежуточного этапа, ориентированного на результат.",
+            "required": true,
+            "targets": [
+              "diet_adequacy",
+              "score",
+              "weight",
+              "mimics",
+              "imaging",
+              "biopsy_decision"
+            ]
+          },
+          "outcomes": {
+            "safe": "Обоснованные неудачи в диете приводят к целенаправленному стадированию вместо бесконечных изменений в питании.",
+            "unsafe": "Короткие неисключительные изменения называются неудачными, или случайные диеты продолжаются вечно."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: покажите, какие испытания были достоверными и к какому вопросу без ответа обращается следующий тест."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "external_staged_workup",
+            "ownerModifiers": [
+              "diet_fatigue",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_biopsy_supported_inflammation_after_mimic_exclusion",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "resulted_follow_up",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что адекватная многосайтовая биопсия связана с воспалительной энтеропатией и согласуется с клинической картиной.",
+          "historyAnswers": {
+            "duration_normal_intervals": "По нашим наблюдениям, стойкий.",
+            "prior_diet_trials": "Дома мы заметили, что соответствующие отказы зафиксированы.",
+            "medication_response": "Насколько мы можем судить, зарегистрированы факторы, мешающие проведению биопсии.",
+            "weight_muscle_change": "Мы записали, что текущая тенденция серьезности."
+          },
+          "examFindings": [
+            {
+              "factId": "histology_requires_sites_quality_standardized_report_and_clinical_context",
+              "source": "pathology_record",
+              "finding": "Воспаление можно определить не только по этикетке."
+            },
+            {
+              "factId": "histologic_severity_does_not_automatically_equal_clinical_severity",
+              "source": "interpretation_rule",
+              "finding": "Результат зависит от оценки пациента, веса и реакции."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "histology_requires_sites_quality_standardized_report_and_clinical_context",
+              "discoveryPaths": [
+                "duration_normal_intervals",
+                "prior_diet_trials",
+                "medication_response",
+                "multisite_gi_histopathology_record"
+              ]
+            },
+            {
+              "factId": "histologic_severity_does_not_automatically_equal_clinical_severity",
+              "discoveryPaths": [
+                "weight_muscle_change",
+                "serial_weight_bcs_mcs_activity",
+                "same_episode_gi_response"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_endoscopy_biopsy_and_histopathology",
+              "classification": "required_result",
+              "result": "В заключении по гистологическому исследованию: сайты, качество и стандартизированный отчет."
+            },
+            {
+              "id": "chronic_enteropathy_nutritional_and_activity_score",
+              "classification": "required_clinical_context",
+              "result": "Целевое исследование показало: тяжесть одинакового масштаба."
+            },
+            {
+              "id": "chronic_enteropathy_cbc_biochemistry_urinalysis",
+              "classification": "required_monitoring",
+              "result": "В анализе мочи: системный или альбуминовый контекст."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "histology_requires_sites_quality_standardized_report_and_clinical_context",
+              "histologic_severity_does_not_automatically_equal_clinical_severity"
+            ],
+            "confirmedDiagnosisRequires": [
+              "clinical_enteropathy_plus_adequate_inflammatory_histology_after_reasonable_exclusions"
+            ],
+            "dangerStates": [
+              "sampling_error",
+              "lymphoma_concern",
+              "severe_protein_loss",
+              "treatment_adverse_effect"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "nutritional_assessment",
+              "chronic_gi_activity_score",
+              "cbc",
+              "biochemistry",
+              "longitudinal_care"
+            ],
+            "external": [
+              "gi_endoscopy_referral",
+              "gi_histopathology_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_endoscopy_route",
+              "chronic_gi_longitudinal_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "inflammatory_small_intestinal_plan",
+          "followUp": {
+            "timing": "Специальный протокол с клиническими, весовыми и лабораторными контрольными точками.",
+            "required": true,
+            "targets": [
+              "score",
+              "weight",
+              "albumin",
+              "histology_context",
+              "response",
+              "adverse_effects"
+            ]
+          },
+          "outcomes": {
+            "safe": "Данные биопсии являются контекстуальными, а результат остается ориентированным на пациента.",
+            "unsafe": "Только гистологическое прилагательное определяет тяжесть заболевания или схему лечения."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: поддерживает биопсия, пределы ее выборки и как будет измеряться ответ."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "specialist_endoscopy_route",
+            "ownerModifiers": [
+              "complex_case",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "chronic_enteropathy_protein_losing",
+      "version": "2026.07.16.40",
+      "title": "Энтеропатия с потерей белка",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Гипоальбуминемия связана с кишечной потерей после исключения почечной, печеночной и первичной кровопотери; фенотип может включать воспаление, лимфангиэктазию или инфильтрацию.",
+      "exclusions": [
+        "protein_losing_nephropathy",
+        "hepatic_synthetic_failure",
+        "major_blood_loss",
+        "malnutrition_only_without_enteric_evidence"
+      ],
+      "planBundleId": "protein_losing_enteropathy_plan",
+      "sourceIds": [
+        "merck_chronic_enteropathy_2026",
+        "ple_pathophysiology_2019",
+        "acvim_cie_dog_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_hypoalbuminemia_weight_and_muscle_loss",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_priority",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что альбумин снижен; масса тела и мышечная масса продолжают уменьшаться на фоне хронических желудочно-кишечных симптомов.",
+          "historyAnswers": {
+            "weight_muscle_change": "По нашим наблюдениям, прогрессивный.",
+            "vomiting_diarrhea_appetite": "Дома мы заметили, что хроническая картина желудочно-кишечного тракта.",
+            "edema_ascites": "Насколько мы можем судить, владелец не отмечает этого признака на текущем этапе.",
+            "extraintestinal_signs": "Мы записали, что оцениваются признаки почек или печени или кровотечения."
+          },
+          "examFindings": [
+            {
+              "factId": "hypoalbuminemia_requires_loss_localization_before_ple",
+              "source": "clinical_reasoning",
+              "finding": "Оцениваются моча, печень и значительные источники кровотечения."
+            },
+            {
+              "factId": "severity_shortens_empirical_steps_and_accelerates_referral",
+              "source": "severity_rule",
+              "finding": "Плохая тенденция оценка упитанности или оценка мышечной массы и альбумина оправдывает раннее назначение желудочно-кишечный тракт."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "hypoalbuminemia_requires_loss_localization_before_ple",
+              "discoveryPaths": [
+                "extraintestinal_signs",
+                "dated_cbc_chem_electrolyte_urine_snapshot",
+                "protein_loss_localization_record"
+              ]
+            },
+            {
+              "factId": "severity_shortens_empirical_steps_and_accelerates_referral",
+              "discoveryPaths": [
+                "weight_muscle_change",
+                "edema_ascites",
+                "serial_weight_bcs_mcs_activity"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_albumin_and_protein_loss_localization",
+              "classification": "required",
+              "result": "Клиническая оценка показала: кишечная или почечная или печеночная или кровоточащая локализация."
+            },
+            {
+              "id": "chronic_enteropathy_nutritional_and_activity_score",
+              "classification": "required_severity",
+              "result": "Целевое исследование показало: масса тела и мышечная масса продолжают снижаться, упитанность ниже предыдущего значения."
+            },
+            {
+              "id": "chronic_enteropathy_cbc_biochemistry_urinalysis",
+              "classification": "required",
+              "result": "В анализе мочи: системный уровень и исходный уровень мочи."
+            },
+            {
+              "id": "chronic_enteropathy_abdominal_ultrasound",
+              "classification": "required",
+              "result": "При ультразвуковом исследовании: контекст кишечника или лимфатики или масс или жидкости."
+            },
+            {
+              "id": "chronic_enteropathy_endoscopy_biopsy_and_histopathology",
+              "classification": "early_conditional",
+              "result": "В заключении по гистологическому исследованию: специализированный фенотипический маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "hypoalbuminemia_requires_loss_localization_before_ple",
+              "severity_shortens_empirical_steps_and_accelerates_referral"
+            ],
+            "confirmedDiagnosisRequires": [
+              "enteric_protein_loss_after_renal_hepatic_and_bleeding_assessment"
+            ],
+            "dangerStates": [
+              "severe_hypoalbuminemia",
+              "effusion",
+              "thrombosis",
+              "rapid_weight_loss"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "biochemistry",
+              "electrolytes",
+              "urinalysis",
+              "nutritional_assessment",
+              "hypoalbuminemia_monitoring"
+            ],
+            "external": [
+              "urine_protein_creatinine_ratio_external",
+              "fecal_alpha1_protease_inhibitor_external",
+              "gi_ultrasound_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_baseline_route",
+              "chronic_gi_protein_loss_route",
+              "chronic_gi_imaging_route",
+              "chronic_gi_endoscopy_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "protein_losing_enteropathy_plan",
+          "followUp": {
+            "timing": "Ранний серийный альбумин или вес или оценка и контрольная точка специалиста.",
+            "required": true,
+            "targets": [
+              "albumin",
+              "weight",
+              "mcs",
+              "score",
+              "urine_protein",
+              "effusion"
+            ]
+          },
+          "outcomes": {
+            "safe": "Потеря белка локализована, и тяжелые случаи быстро развиваются.",
+            "unsafe": "Низкий уровень альбумина называется энтеропатия с потерей белка без анализа мочи или печени или кровотечения."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему низкий уровень альбумина может быть вызван несколькими системами и почему тяжесть заболевания меняет темп."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "low_stress_external_imaging_and_specialist_route",
+            "ownerModifiers": [
+              "budget_limited",
+              "transport_difficult"
+            ]
+          }
+        },
+        {
+          "id": "p2_edema_ascites_or_thrombotic_risk",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_emergency",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что на фоне тяжёлой гипоальбуминемии появились отёки, асцит, верхний или тромботический синдром.",
+          "historyAnswers": {
+            "edema_ascites": "По нашим наблюдениям, признак присутствует сейчас.",
+            "extraintestinal_signs": "Дома мы заметили, что одышка или боль или коллапс или тромботические признаки.",
+            "weight_muscle_change": "Насколько мы можем судить, серьезный спад.",
+            "vomiting_diarrhea_appetite": "Мы записали, что текущие поступления и потери."
+          },
+          "examFindings": [
+            {
+              "factId": "effusion_edema_with_hypoalbuminemia_requires_hospital_assessment",
+              "source": "severity_record",
+              "finding": "Риски дыхания, перфузии, жидкости и коагуляции очевидны."
+            },
+            {
+              "factId": "antithrombotic_and_infusion_schemes_are_protocol_gated",
+              "source": "protocol_boundary",
+              "finding": "ами являются риск и направление, а не лекарства или расценки."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "effusion_edema_with_hypoalbuminemia_requires_hospital_assessment",
+              "discoveryPaths": [
+                "edema_ascites",
+                "extraintestinal_signs",
+                "hydration_temperature_perfusion_exam",
+                "abdominal_pain_mass_fluid_exam"
+              ]
+            },
+            {
+              "factId": "antithrombotic_and_infusion_schemes_are_protocol_gated",
+              "discoveryPaths": [
+                "weight_muscle_change",
+                "dated_cbc_chem_electrolyte_urine_snapshot",
+                "protein_loss_localization_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_albumin_and_protein_loss_localization",
+              "classification": "required_urgent",
+              "result": "Клиническая оценка показала: тяжелая потеря белка."
+            },
+            {
+              "id": "chronic_enteropathy_abdominal_ultrasound",
+              "classification": "required_urgent",
+              "result": "При ультразвуковом исследовании: проблемы с жидкостью или структурой или сосудами."
+            },
+            {
+              "id": "chronic_enteropathy_cbc_biochemistry_urinalysis",
+              "classification": "required_serial",
+              "result": "В анализе мочи: контекст альбумин или электролит или орган."
+            },
+            {
+              "id": "chronic_enteropathy_endoscopy_biopsy_and_histopathology",
+              "classification": "specialist_when_stable",
+              "result": "В заключении по гистологическому исследованию: определенный фенотипический путь."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "effusion_edema_with_hypoalbuminemia_requires_hospital_assessment",
+              "antithrombotic_and_infusion_schemes_are_protocol_gated"
+            ],
+            "confirmedDiagnosisRequires": [
+              "localized_enteric_protein_loss_plus_effusion_or_complication_evidence"
+            ],
+            "dangerStates": [
+              "dyspnea",
+              "thromboembolism",
+              "shock",
+              "severe_effusion",
+              "electrolyte_disorder"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "oxygen",
+              "vital_monitor",
+              "cbc",
+              "biochemistry",
+              "electrolytes",
+              "coagulation"
+            ],
+            "external": [
+              "abdominal_fluid_analysis_external",
+              "gi_ultrasound_external",
+              "hospital_referral",
+              "intensive_care_referral"
+            ],
+            "missingLocalRoute": [
+              "hospital_referral"
+            ],
+            "conditional": [
+              "chronic_gi_emergency_route",
+              "chronic_gi_protein_loss_route",
+              "chronic_gi_imaging_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "protein_losing_enteropathy_plan",
+          "followUp": {
+            "timing": "Постоянный или ранний стационарный мониторинг.",
+            "required": true,
+            "targets": [
+              "respiration",
+              "perfusion",
+              "albumin",
+              "fluid",
+              "coagulation",
+              "weight"
+            ]
+          },
+          "outcomes": {
+            "safe": "Тяжелые осложнения энтеропатия с потерей белка требуют контролируемого стационарного лечения.",
+            "unsafe": "Опасно откладывать стабилизацию ради серии диетических проб или назначать инфузионную и антитромботическую терапию без стационарного контроля."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: непосредственные риски, связанные с жидкостью или дыханием или тромботическими заболеваниями, и почему детали лечения требуют больничного протокола."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_oxygen_and_hospital_route",
+            "ownerModifiers": [
+              "budget_limited",
+              "transport_difficult"
+            ]
+          }
+        },
+        {
+          "id": "p3_lymphangiectasia_or_severe_mucosal_disease_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что визуализация или гистология требуют лимфангиэктазии или тяжёлой диффузной болезни слизистой оболочки.",
+          "historyAnswers": {
+            "weight_muscle_change": "По нашим наблюдениям, прогрессивный.",
+            "edema_ascites": "Дома мы заметили, что владелец не отмечает этого признака на текущем этапе.",
+            "prior_diet_trials": "Насколько мы можем судить, соответствующие фенотипу исследования зафиксированы или небезопасны.",
+            "medication_response": "Мы записали, что предыдущий ответ и смущающие факторы."
+          },
+          "examFindings": [
+            {
+              "factId": "lymphatic_or_mucosal_phenotype_requires_integrated_imaging_histology",
+              "source": "diagnostic_record",
+              "finding": "Ни один ультразвуковой признак или метка биопсии не действуют в одиночку."
+            },
+            {
+              "factId": "diet_and_management_depend_on_reviewed_phenotype",
+              "source": "protocol_boundary",
+              "finding": "Кодекс не прописывает каждому пациенту обезжиренную композицию."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "lymphatic_or_mucosal_phenotype_requires_integrated_imaging_histology",
+              "discoveryPaths": [
+                "weight_muscle_change",
+                "edema_ascites",
+                "expert_gi_ultrasound_record",
+                "multisite_gi_histopathology_record"
+              ]
+            },
+            {
+              "factId": "diet_and_management_depend_on_reviewed_phenotype",
+              "discoveryPaths": [
+                "prior_diet_trials",
+                "medication_response",
+                "exclusive_diet_weekly_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_abdominal_ultrasound",
+              "classification": "required",
+              "result": "При ультразвуковом исследовании: лимфатическая или кишечная или жидкостная структура."
+            },
+            {
+              "id": "chronic_enteropathy_endoscopy_biopsy_and_histopathology",
+              "classification": "required_if_safe",
+              "result": "В заключении по гистологическому исследованию: адекватная контекстуальная патология."
+            },
+            {
+              "id": "chronic_enteropathy_albumin_and_protein_loss_localization",
+              "classification": "required_serial",
+              "result": "Клиническая оценка показала: тенденция кишечных потерь и альбумина."
+            },
+            {
+              "id": "chronic_enteropathy_exclusive_diet_trials",
+              "classification": "phenotype_reviewed",
+              "result": "При уточнении анамнеза: версионное испытание или ответ без созданного рецепта."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "lymphatic_or_mucosal_phenotype_requires_integrated_imaging_histology",
+              "diet_and_management_depend_on_reviewed_phenotype"
+            ],
+            "confirmedDiagnosisRequires": [
+              "integrated_ple_phenotype_evidence"
+            ],
+            "dangerStates": [
+              "severe_hypoalbuminemia",
+              "effusion",
+              "thrombosis",
+              "lymphoma"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "hypoalbuminemia_monitoring",
+              "nutritional_assessment",
+              "chronic_gi_activity_score",
+              "longitudinal_care"
+            ],
+            "external": [
+              "gi_ultrasound_external",
+              "gi_endoscopy_referral",
+              "gi_histopathology_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_protein_loss_route",
+              "chronic_gi_imaging_route",
+              "chronic_gi_endoscopy_route",
+              "chronic_gi_longitudinal_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "protein_losing_enteropathy_plan",
+          "followUp": {
+            "timing": "Тщательный фенотип-специфичный мониторинг альбумина или веса или оценки.",
+            "required": true,
+            "targets": [
+              "albumin",
+              "weight",
+              "mcs",
+              "score",
+              "effusion",
+              "diet_response"
+            ]
+          },
+          "outcomes": {
+            "safe": "Фенотип энтеропатия с потерей белка выявляется и контролируется без разработки универсального лечения.",
+            "unsafe": "Один визуализирующий признак вызывает лимфангиэктазию и универсальную диету."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: фенотип, неопределенность прогноза и почему диета или другие методы лечения зависят от осмотра специалиста."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "specialist_low_stress_workup",
+            "ownerModifiers": [
+              "complex_case",
+              "diet_feasibility_limits"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "chronic_enteropathy_large_bowel_colitis",
+      "version": "2026.07.16.40",
+      "title": "Хроническая толстокишечная энтеропатия или колит",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Частые малые порции, слизь, свежая кровь и тенезмы локализуются в толстой кишке, но причину не определяют.",
+      "exclusions": [
+        "melena_as_large_bowel",
+        "acute_self_limited_colitis_only",
+        "breed_label_without_specific_evidence"
+      ],
+      "planBundleId": "large_bowel_colitis_plan",
+      "sourceIds": [
+        "merck_chronic_enteropathy_2026",
+        "wsava_gi_histopathology",
+        "canine_ce_state_art_2022"
+      ],
+      "presentations": [
+        {
+          "id": "p1_mucus_fresh_blood_tenesmus",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "routine_priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что частые малые порции стула со слизью, свежей кровью и тенезмами при сохранной или умеренно изменённой массе.",
+          "historyAnswers": {
+            "fecal_character": "По нашим наблюдениям, характеристика толстой кишки.",
+            "duration_normal_intervals": "Дома мы заметили, что хронический или интермиттирующий.",
+            "complete_diet_access": "Насколько мы можем судить, диета или история клетчатки.",
+            "household_symptoms": "Мы записали, что инфекционный контекст."
+          },
+          "examFindings": [
+            {
+              "factId": "fresh_blood_mucus_tenesmus_localize_not_cause",
+              "source": "clinical_reasoning",
+              "finding": "Ректальная, фекальная, диетическая и тяжёлая оценка по-прежнему необходимы."
+            },
+            {
+              "factId": "melena_changes_localization_and_urgency",
+              "source": "localization_rule",
+              "finding": "Черная переваренная кровь не задерживается в этой клинического варианта."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "fresh_blood_mucus_tenesmus_localize_not_cause",
+              "discoveryPaths": [
+                "fecal_character",
+                "duration_normal_intervals",
+                "rectal_perianal_localization_exam",
+                "method_identified_fecal_results"
+              ]
+            },
+            {
+              "factId": "melena_changes_localization_and_urgency",
+              "discoveryPaths": [
+                "fecal_character",
+                "hydration_temperature_perfusion_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_timeline_diet_and_fecal_character",
+              "classification": "required_localization",
+              "result": "При уточнении анамнеза: фенотип толстой кишки."
+            },
+            {
+              "id": "chronic_enteropathy_fecal_parasite_and_pathogen_workup",
+              "classification": "required_targeted",
+              "result": "Целевое исследование показало: контекст паразита или патогена."
+            },
+            {
+              "id": "chronic_enteropathy_nutritional_and_activity_score",
+              "classification": "required_baseline",
+              "result": "Целевое исследование показало: вес или оценка и тяжесть."
+            },
+            {
+              "id": "chronic_enteropathy_exclusive_diet_trials",
+              "classification": "conditional_stable",
+              "result": "При уточнении анамнеза: пересмотренная стратегия диеты и клетчатки."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "fresh_blood_mucus_tenesmus_localize_not_cause",
+              "melena_changes_localization_and_urgency"
+            ],
+            "confirmedDiagnosisRequires": [
+              "chronic_large_bowel_pattern_plus_evidenced_response_or_pathology"
+            ],
+            "dangerStates": [
+              "melena",
+              "severe_blood_loss",
+              "weight_loss",
+              "systemic_illness"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "digital_rectal_exam",
+              "fecal_flotation_centrifugal",
+              "comprehensive_diet_history",
+              "chronic_gi_activity_score"
+            ],
+            "external": [
+              "fecal_pathogen_panel_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_fecal_route",
+              "chronic_gi_diet_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "large_bowel_colitis_plan",
+          "followUp": {
+            "timing": "Контроль стула или тенезмов или веса того же масштаба.",
+            "required": true,
+            "targets": [
+              "frequency",
+              "blood",
+              "mucus",
+              "tenesmus",
+              "weight",
+              "score"
+            ]
+          },
+          "outcomes": {
+            "safe": "Локализация обеспечивает целенаправленную и пропорциональную работу.",
+            "unsafe": "Свежая кровь сама по себе вызывает тяжелую системную терапию, или мелена локализована неправильно."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: свежая кровь часто локализует проблему, но не определяет ее причину."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "rectal_exam_defensive"
+            ],
+            "requiredHandlingAlternative": "gentle_or_staged_rectal_exam",
+            "ownerModifiers": [
+              "alarmed_by_blood",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_fiber_or_diet_responsive_colitis",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "follow_up",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что рассмотренная стратегия диеты или клетчатки при подтверждённом соблюдении ограничений по недельному показателю толстой кишки.",
+          "historyAnswers": {
+            "prior_diet_trials": "По нашим наблюдениям, пересмотренная терапевтическая или волокнистая стратегия.",
+            "owner_diet_log_capacity": "Дома мы заметили, что соответствие документировано.",
+            "fecal_character": "Насколько мы можем судить, улучшено.",
+            "complete_diet_access": "Мы записали, что никаких скрытых дополнений или неучтённых отклонений."
+          },
+          "examFindings": [
+            {
+              "factId": "response_requires_defined_strategy_and_measured_compliance",
+              "source": "follow_up_record",
+              "finding": "Случайная добавка не является диагностическим испытанием."
+            },
+            {
+              "factId": "relapse_after_documented_diet_lapse_preserves_same_disease_timeline",
+              "source": "longitudinal_rule",
+              "finding": "Нельзя автоматически объявлять новую случайную болезнь."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "response_requires_defined_strategy_and_measured_compliance",
+              "discoveryPaths": [
+                "prior_diet_trials",
+                "owner_diet_log_capacity",
+                "exclusive_diet_weekly_record"
+              ]
+            },
+            {
+              "factId": "relapse_after_documented_diet_lapse_preserves_same_disease_timeline",
+              "discoveryPaths": [
+                "complete_diet_access",
+                "fecal_character",
+                "same_episode_gi_response"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_exclusive_diet_trials",
+              "classification": "required_result",
+              "result": "При уточнении анамнеза: рассмотрена стратегия и написан ответ."
+            },
+            {
+              "id": "chronic_enteropathy_nutritional_and_activity_score",
+              "classification": "required_followup",
+              "result": "Целевое исследование показало: улучшение того же масштаба."
+            },
+            {
+              "id": "chronic_enteropathy_fecal_parasite_and_pathogen_workup",
+              "classification": "not_repeated_without_reason",
+              "result": "Целевое исследование показало: предыдущие результаты сохранены."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "response_requires_defined_strategy_and_measured_compliance",
+              "relapse_after_documented_diet_lapse_preserves_same_disease_timeline"
+            ],
+            "confirmedDiagnosisRequires": [
+              "large_bowel_diet_or_fiber_responsive_pattern"
+            ],
+            "dangerStates": [
+              "new_weight_loss",
+              "persistent_heavy_bleeding",
+              "loss_of_response"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "diet_trial",
+              "diet_trial_compliance_log",
+              "chronic_gi_activity_score",
+              "longitudinal_care"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_diet_route",
+              "chronic_gi_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "large_bowel_colitis_plan",
+          "followUp": {
+            "timing": "Рассмотрены контрольные точки обслуживания и рецидива.",
+            "required": true,
+            "targets": [
+              "score",
+              "stool",
+              "blood",
+              "tenesmus",
+              "compliance"
+            ]
+          },
+          "outcomes": {
+            "safe": "Определенная реакция на питание отслеживается в продольном направлении.",
+            "unsafe": "Любое добавление клетчатки считается пробой или рецидивом, порождающим новое заболевание."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: определенную стратегию, как ее регистрировать и как ошибки влияют на интерпретацию."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "food_motivated"
+            ],
+            "requiredHandlingAlternative": "owner_log_followup",
+            "ownerModifiers": [
+              "adherent",
+              "family_feeding_conflict"
+            ]
+          }
+        },
+        {
+          "id": "p3_severe_breed_or_histology_specific_colitis",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_urgent",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что предрасположенная собака или пациент с тяжёлой кровью или потерей массы не ответили на базовый путь молодой толстой кишки.",
+          "historyAnswers": {
+            "fecal_character": "По нашим наблюдениям, тяжелая хроническая гематохезия или тенезмы.",
+            "weight_muscle_change": "Дома мы заметили, что по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой.",
+            "fecal_test_methods": "Насколько мы можем судить, базовые методы проверены.",
+            "medication_response": "Мы записали, что предварительное эмпирическое использование и ответ зафиксированы."
+          },
+          "examFindings": [
+            {
+              "factId": "breed_is_risk_modifier_not_diagnosis",
+              "source": "eligibility_rule",
+              "finding": "Целевые культуральные или молекулярные или гистологические данные по-прежнему необходимы."
+            },
+            {
+              "factId": "antimicrobial_route_requires_specific_confirmed_phenotype",
+              "source": "stewardship_rule",
+              "finding": "Никакой широкой эмпирической петли."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "breed_is_risk_modifier_not_diagnosis",
+              "discoveryPaths": [
+                "fecal_character",
+                "weight_muscle_change",
+                "method_identified_fecal_results",
+                "multisite_gi_histopathology_record"
+              ]
+            },
+            {
+              "factId": "antimicrobial_route_requires_specific_confirmed_phenotype",
+              "discoveryPaths": [
+                "fecal_test_methods",
+                "medication_response",
+                "same_episode_gi_response"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_fecal_parasite_and_pathogen_workup",
+              "classification": "required_targeted",
+              "result": "Целевое исследование показало: фенотип-специфический патоген или культивирующий путь."
+            },
+            {
+              "id": "chronic_enteropathy_abdominal_ultrasound",
+              "classification": "required_by_severity",
+              "result": "При ультразвуковом исследовании: двоеточие или узлы или массовый контекст."
+            },
+            {
+              "id": "chronic_enteropathy_endoscopy_biopsy_and_histopathology",
+              "classification": "required_if_supported",
+              "result": "В заключении по гистологическому исследованию: адекватная специализированная патология."
+            },
+            {
+              "id": "chronic_enteropathy_nutritional_and_activity_score",
+              "classification": "required_serial",
+              "result": "Целевое исследование показало: вес или тяжесть баллов."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "breed_is_risk_modifier_not_diagnosis",
+              "antimicrobial_route_requires_specific_confirmed_phenotype"
+            ],
+            "confirmedDiagnosisRequires": [
+              "targeted_molecular_culture_or_histopathologic_evidence"
+            ],
+            "dangerStates": [
+              "severe_bleeding",
+              "rapid_weight_loss",
+              "granulomatous_colitis",
+              "neoplasia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "biochemistry",
+              "chronic_gi_activity_score",
+              "nutritional_assessment"
+            ],
+            "external": [
+              "fecal_pathogen_panel_external",
+              "gi_ultrasound_external",
+              "gi_endoscopy_referral",
+              "gi_histopathology_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_fecal_route",
+              "chronic_gi_imaging_route",
+              "chronic_gi_endoscopy_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "large_bowel_colitis_plan",
+          "followUp": {
+            "timing": "Специализированный целевой мониторинг реагирования.",
+            "required": true,
+            "targets": [
+              "blood",
+              "frequency",
+              "weight",
+              "score",
+              "targeted_evidence",
+              "adverse_effects"
+            ]
+          },
+          "outcomes": {
+            "safe": "Порода и тяжесть заболевания вызывают целевые доказательства, а не автоматическое лечение.",
+            "unsafe": "Только порода определяет диагноз, иначе эмпирическое применение антибиотиков будет повторяться бесконечно."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: предрасположенность и подтверждение и почему таргетный тест меняет лечение."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "rectal_exam_defensive"
+            ],
+            "requiredHandlingAlternative": "specialist_low_stress_colon_workup",
+            "ownerModifiers": [
+              "breed_anchor",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "chronic_enteropathy_feline_multisystem",
+      "version": "2026.07.16.40",
+      "title": "Кошачья хроническая энтеропатия с сочетанной болезнью",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Кошачья хроническая желудочно-кишечная болезнь может сосуществовать с заболеванием поджелудочной железы или гепатобилиарной системы, но эта система требует собственных доказательств.",
+      "exclusions": [
+        "triaditis_label_without_component_evidence",
+        "normal_intermittent_hairball_only",
+        "anorexia_without_nutrition_route"
+      ],
+      "planBundleId": "feline_multisystem_enteropathy_plan",
+      "sourceIds": [
+        "merck_chronic_enteropathy_2026",
+        "wsava_gi_histopathology"
+      ],
+      "presentations": [
+        {
+          "id": "p1_chronic_vomiting_weight_loss_or_appetite_change",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что кошка хронически рвёт, худеет или меняет аппетит; бытовое объяснение «кошки иногда рвут» недостаточно.",
+          "historyAnswers": {
+            "duration_normal_intervals": "По нашим наблюдениям, хронический или рецидивирующий.",
+            "vomiting_diarrhea_appetite": "Дома мы заметили, что частота и аппетит определены количественно.",
+            "weight_muscle_change": "Насколько мы можем судить, потеря или стабильность документально подтверждена.",
+            "extraintestinal_signs": "Мы записали, что пУ или ПД, желтуха, боль и другие признаки."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrent_feline_vomiting_and_weight_change_are_not_normalized",
+              "source": "species_rule",
+              "finding": "Требуется возрастное системное обследование и обследование желудочно-кишечного тракта."
+            },
+            {
+              "factId": "anorexia_or_nutritional_decline_increases_urgency",
+              "source": "nutrition_rule",
+              "finding": "Безопасность при приеме может преобладать над поэтапным диетическим тестированием."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "recurrent_feline_vomiting_and_weight_change_are_not_normalized",
+              "discoveryPaths": [
+                "duration_normal_intervals",
+                "vomiting_diarrhea_appetite",
+                "weight_muscle_change",
+                "serial_weight_bcs_mcs_activity"
+              ]
+            },
+            {
+              "factId": "anorexia_or_nutritional_decline_increases_urgency",
+              "discoveryPaths": [
+                "vomiting_diarrhea_appetite",
+                "hydration_temperature_perfusion_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_cbc_biochemistry_urinalysis",
+              "classification": "required_age_specific",
+              "result": "В анализе мочи: почечный или глюкозный или печеночный или данные об общем состоянии."
+            },
+            {
+              "id": "chronic_enteropathy_fecal_parasite_and_pathogen_workup",
+              "classification": "required_by_risk",
+              "result": "Целевое исследование показало: статус кошачьего паразита или возбудителя."
+            },
+            {
+              "id": "chronic_enteropathy_cobalamin_folate_tli_and_pancreatic_markers",
+              "classification": "required_by_pattern",
+              "result": "Целевое исследование показало: кобаламин или экзокринная недостаточность поджелудочной железы или поджелудочная железа."
+            },
+            {
+              "id": "chronic_enteropathy_abdominal_ultrasound",
+              "classification": "required_if_weight_loss",
+              "result": "При ультразвуковом исследовании: жКТ, желчевыводящие пути, поджелудочная железа и структурный контекст."
+            },
+            {
+              "id": "chronic_enteropathy_exclusive_diet_trials",
+              "classification": "conditional_if_nutrition_safe",
+              "result": "При уточнении анамнеза: действительное исследование для кошек."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "recurrent_feline_vomiting_and_weight_change_are_not_normalized",
+              "anorexia_or_nutritional_decline_increases_urgency"
+            ],
+            "confirmedDiagnosisRequires": [
+              "persistent_feline_gi_pattern_plus_evidence_or_response_class"
+            ],
+            "dangerStates": [
+              "anorexia",
+              "hepatic_lipidosis",
+              "hyperthyroidism",
+              "ckd",
+              "diabetes",
+              "lymphoma"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "nutritional_assessment",
+              "cbc",
+              "biochemistry",
+              "urinalysis",
+              "blood_glucose"
+            ],
+            "external": [
+              "t4_external",
+              "cobalamin_folate_external",
+              "pancreatic_marker_external",
+              "gi_ultrasound_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_feline_multisystem_route",
+              "chronic_gi_function_route",
+              "chronic_gi_imaging_route",
+              "chronic_gi_diet_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "feline_multisystem_enteropathy_plan",
+          "followUp": {
+            "timing": "Ранний прием или контроль веса и поэтапные результаты.",
+            "required": true,
+            "targets": [
+              "intake",
+              "weight",
+              "mcs",
+              "vomiting",
+              "score",
+              "systemic_results"
+            ]
+          },
+          "outcomes": {
+            "safe": "Хронические кошачьи признаки получают соответствующее возрасту лечение и защитное питание.",
+            "unsafe": "Рвота нормализуется или диета продолжается при анорексии."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: как считать рвоту и прием пищи и почему хроническое изменение веса не является нормальным."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "withdrawn",
+              "irritable"
+            ],
+            "requiredHandlingAlternative": "feline_low_stress_staged_workup",
+            "ownerModifiers": [
+              "normalizes_vomiting",
+              "multiple_cats"
+            ]
+          }
+        },
+        {
+          "id": "p2_enteropathy_with_cholangitis_or_pancreatitis_evidence",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что имеются признаки кишечных, гепатобилиарных или поджелудочных заболеваний, которые частично перевыявляются.",
+          "historyAnswers": {
+            "extraintestinal_signs": "По нашим наблюдениям, желтуха или боль или системные признаки.",
+            "vomiting_diarrhea_appetite": "Дома мы заметили, что структура желудочно-кишечного тракта и потребление.",
+            "medication_response": "Насколько мы можем судить, смущающие факторы или ответ.",
+            "weight_muscle_change": "Мы записали, что тренд."
+          },
+          "examFindings": [
+            {
+              "factId": "each_feline_system_requires_separate_authored_evidence",
+              "source": "evidence_graph",
+              "finding": "Кишечные, желчные и панкреатические проявления остаются разными."
+            },
+            {
+              "factId": "one_positive_pli_does_not_prove_the_entire_cluster",
+              "source": "diagnostic_limit",
+              "finding": "Триадит не является автоматическим ярлыком из трех диагнозов."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "each_feline_system_requires_separate_authored_evidence",
+              "discoveryPaths": [
+                "extraintestinal_signs",
+                "functional_gi_pancreatic_results",
+                "expert_gi_ultrasound_record"
+              ]
+            },
+            {
+              "factId": "one_positive_pli_does_not_prove_the_entire_cluster",
+              "discoveryPaths": [
+                "vomiting_diarrhea_appetite",
+                "medication_response",
+                "dated_cbc_chem_electrolyte_urine_snapshot"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_cbc_biochemistry_urinalysis",
+              "classification": "required_multisystem",
+              "result": "В анализе мочи: контекст печени или почек или глюкозы или альбумина."
+            },
+            {
+              "id": "chronic_enteropathy_cobalamin_folate_tli_and_pancreatic_markers",
+              "classification": "component_specific",
+              "result": "Целевое исследование показало: доказательства нарушения поджелудочной железы или мальабсорбции."
+            },
+            {
+              "id": "chronic_enteropathy_abdominal_ultrasound",
+              "classification": "required_expert",
+              "result": "При ультразвуковом исследовании: находки со стороны желудочно-кишечного тракта, желчевыводящих путей и поджелудочной железы разделены."
+            },
+            {
+              "id": "chronic_enteropathy_endoscopy_biopsy_and_histopathology",
+              "classification": "conditional_component",
+              "result": "В заключении по гистологическому исследованию: выборка, отобранная специалистом."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "each_feline_system_requires_separate_authored_evidence",
+              "one_positive_pli_does_not_prove_the_entire_cluster"
+            ],
+            "confirmedDiagnosisRequires": [
+              "separate_evidence_for_each_confirmed_component"
+            ],
+            "dangerStates": [
+              "biliary_obstruction",
+              "pancreatitis",
+              "hepatic_lipidosis",
+              "lymphoma",
+              "severe_enteropathy"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "nutritional_assessment",
+              "cbc",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "pancreatic_marker_external",
+              "hepatobiliary_ultrasound_external",
+              "gi_ultrasound_external",
+              "gi_endoscopy_referral",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_feline_multisystem_route",
+              "chronic_gi_imaging_route",
+              "chronic_gi_endoscopy_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "feline_multisystem_enteropathy_plan",
+          "followUp": {
+            "timing": "Совместные последующие действия с приоритетом угроз.",
+            "required": true,
+            "targets": [
+              "intake",
+              "weight",
+              "bilirubin_context",
+              "pancreatic_evidence",
+              "gi_score",
+              "component_confidence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Каждая система подтверждена, а угрозы или питание расставлены по приоритетам.",
+            "unsafe": "Триадит или один маркер определяют все диагнозы и методы лечения."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какие доказательства принадлежат каждой системе и какая проблема в признак присутствует сейчас наиболее актуальна."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "withdrawn",
+              "irritable"
+            ],
+            "requiredHandlingAlternative": "staged_feline_multisystem_imaging",
+            "ownerModifiers": [
+              "complex_case",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_hypocobalaminemia_and_nutritional_decline",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что кобаламин снижается одновременно с потерей массы или мышц и хроническими ГИ-признаками.",
+          "historyAnswers": {
+            "weight_muscle_change": "По нашим наблюдениям, прогрессивный.",
+            "vomiting_diarrhea_appetite": "Дома мы заметили, что хроническое и количественное потребление.",
+            "complete_diet_access": "Насколько мы можем судить, история питания.",
+            "medication_response": "Мы записали, что предшествующее применение или лечение."
+          },
+          "examFindings": [
+            {
+              "factId": "low_cobalamin_supports_malabsorption_context_not_specific_etiology",
+              "source": "lab_interpretation",
+              "finding": "Параллельно оценивают хроническое заболевание кишечника, экзокринную недостаточность поджелудочной железы и панкреатит."
+            },
+            {
+              "factId": "correction_and_interval_are_reviewed_protocol_not_generated",
+              "source": "protocol_boundary",
+              "finding": "Результат включает как клинический, так и лабораторный ответ."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "low_cobalamin_supports_malabsorption_context_not_specific_etiology",
+              "discoveryPaths": [
+                "weight_muscle_change",
+                "vomiting_diarrhea_appetite",
+                "functional_gi_pancreatic_results"
+              ]
+            },
+            {
+              "factId": "correction_and_interval_are_reviewed_protocol_not_generated",
+              "discoveryPaths": [
+                "complete_diet_access",
+                "medication_response",
+                "same_episode_gi_response"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_cobalamin_folate_tli_and_pancreatic_markers",
+              "classification": "required",
+              "result": "Целевое исследование показало: низкий уровень кобаламина при трипсиноподобная иммунореактивность или поджелудочной железе."
+            },
+            {
+              "id": "chronic_enteropathy_nutritional_and_activity_score",
+              "classification": "required",
+              "result": "Целевое исследование показало: масса тела и мышечная масса продолжают снижаться, упитанность ниже предыдущего значения."
+            },
+            {
+              "id": "chronic_enteropathy_cbc_biochemistry_urinalysis",
+              "classification": "required",
+              "result": "В анализе мочи: выраженной протеинурии и признаков инфекции нет; потеря белка с мочой не объясняет текущую гипоальбуминемию."
+            },
+            {
+              "id": "chronic_enteropathy_abdominal_ultrasound",
+              "classification": "conditional_cause",
+              "result": "При ультразвуковом исследовании: структурная или мультисистемная проработка."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "low_cobalamin_supports_malabsorption_context_not_specific_etiology",
+              "correction_and_interval_are_reviewed_protocol_not_generated"
+            ],
+            "confirmedDiagnosisRequires": [
+              "hypocobalaminemia_plus_separately_classified_underlying_context"
+            ],
+            "dangerStates": [
+              "severe_malnutrition",
+              "anorexia",
+              "epi",
+              "lymphoma"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "nutritional_assessment",
+              "body_weight",
+              "cbc",
+              "biochemistry",
+              "longitudinal_care"
+            ],
+            "external": [
+              "cobalamin_folate_external",
+              "tli_external",
+              "gi_ultrasound_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_function_route",
+              "chronic_gi_feline_multisystem_route",
+              "chronic_gi_longitudinal_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "feline_multisystem_enteropathy_plan",
+          "followUp": {
+            "timing": "Пересмотренный клинический или весовой или лабораторный интервал.",
+            "required": true,
+            "targets": [
+              "cobalamin",
+              "weight",
+              "mcs",
+              "intake",
+              "gi_score",
+              "underlying_disease"
+            ]
+          },
+          "outcomes": {
+            "safe": "Кобаламин корректируется и контролируется, пока причина остается выявленной.",
+            "unsafe": "Низкий уровень кобаламина становится этиологическим диагнозом или сформированной схемой дозирования."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: низкое значение важно, но обычно указывает на основную проблему поглощения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "withdrawn",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "feline_low_stress_followup",
+            "ownerModifiers": [
+              "chronic_care_burden",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "chronic_enteropathy_refractory_or_mimic",
+      "version": "2026.07.16.40",
+      "title": "Рефрактерная энтеропатия или заболевание-имитатор",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Классификация огнеупорных материалов возможна только после аудита полного поэтапного пути; ошибочная гипотеза, имитация, неадекватное исследование или образец или истинное рефрактерное заболевание, которое отображается состояниями.",
+      "exclusions": [
+        "invalid_diet_trials",
+        "single_inadequate_fecal_test",
+        "unreviewed_sample_quality",
+        "untested_epi_or_systemic_mimic"
+      ],
+      "planBundleId": "refractory_or_mimic_enteropathy_plan",
+      "sourceIds": [
+        "acvim_cie_dog_2026",
+        "merck_chronic_enteropathy_2026",
+        "wsava_gi_histopathology",
+        "canine_ce_state_art_2022"
+      ],
+      "presentations": [
+        {
+          "id": "p1_parasite_infection_or_epi_not_excluded",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_follow_up",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что симптомы назвали устойчивыми к лечению, хотя исследование на паразитов и возбудителей было недостаточным, а трипсиноподобную иммунореактивность при подходящей клинической картине не определяли.",
+          "historyAnswers": {
+            "fecal_test_methods": "По нашим наблюдениям, неправильный или единственный или неполный метод.",
+            "fecal_character": "Дома мы заметили, что экзокринная недостаточность поджелудочной железы или инфекционный ключ.",
+            "weight_muscle_change": "Насколько мы можем судить, потеря или стабильность.",
+            "medication_response": "Мы записали, что предварительная эмпирическая терапия и сроки."
+          },
+          "examFindings": [
+            {
+              "factId": "missing_or_inadequate_mimic_test_prohibits_refractory_label",
+              "source": "audit_rule",
+              "finding": "Целенаправленное повторение предшествует лечению повышенного риска."
+            },
+            {
+              "factId": "positive_mimic_result_transfers_to_own_family_with_history",
+              "source": "workflow_rule",
+              "finding": "Личность пациента и заполненные данные сохраняются."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "missing_or_inadequate_mimic_test_prohibits_refractory_label",
+              "discoveryPaths": [
+                "fecal_test_methods",
+                "fecal_character",
+                "method_identified_fecal_results",
+                "functional_gi_pancreatic_results"
+              ]
+            },
+            {
+              "factId": "positive_mimic_result_transfers_to_own_family_with_history",
+              "discoveryPaths": [
+                "weight_muscle_change",
+                "medication_response",
+                "same_episode_gi_response"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_fecal_parasite_and_pathogen_workup",
+              "classification": "required_corrective",
+              "result": "Целевое исследование показало: целевой повтор, соответствующий методу."
+            },
+            {
+              "id": "chronic_enteropathy_cobalamin_folate_tli_and_pancreatic_markers",
+              "classification": "required_by_pattern",
+              "result": "Целевое исследование показало: эПИ или мальабсорбция или статус поджелудочной железы."
+            },
+            {
+              "id": "chronic_enteropathy_cbc_biochemistry_urinalysis",
+              "classification": "required_audit",
+              "result": "В анализе мочи: системный мимический контекст."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "missing_or_inadequate_mimic_test_prohibits_refractory_label",
+              "positive_mimic_result_transfers_to_own_family_with_history"
+            ],
+            "confirmedDiagnosisRequires": [
+              "mimic_confirmed_or_documented_excluded_before_refractory_class"
+            ],
+            "dangerStates": [
+              "epi",
+              "parasite",
+              "pathogen",
+              "unsafe_immunosuppression",
+              "severe_weight_loss"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "fecal_flotation_centrifugal",
+              "cbc",
+              "biochemistry",
+              "urinalysis",
+              "longitudinal_care"
+            ],
+            "external": [
+              "fecal_pathogen_panel_external",
+              "tli_external",
+              "cobalamin_folate_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_fecal_route",
+              "chronic_gi_function_route",
+              "chronic_gi_longitudinal_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "refractory_or_mimic_enteropathy_plan",
+          "followUp": {
+            "timing": "Целевой результат и контрольная точка реклассификации.",
+            "required": true,
+            "targets": [
+              "mimic_status",
+              "weight",
+              "score",
+              "response",
+              "family_transfer"
+            ]
+          },
+          "outcomes": {
+            "safe": "Отсутствующие мимики закрываются перед рискованным рефрактерным лечением.",
+            "unsafe": "Один отрицательный тест допускает иммуносупрессию, или положительный имитатор теряет анамнез."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какой из предыдущих тестов был недостаточным и почему целевое повторение влияет на безопасность."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "targeted_external_testing",
+            "ownerModifiers": [
+              "test_fatigue",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_ultrasound_or_biopsy_raises_lymphoma_concern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что очаговая масса, потеря слоев стенки, аномальные узлы или неоднозначная гистология позволяют говорить о лимфоме или инфильтрации.",
+          "historyAnswers": {
+            "weight_muscle_change": "По нашим наблюдениям, прогрессивная или быстрая потеря.",
+            "duration_normal_intervals": "Дома мы заметили, что стойкий.",
+            "prior_diet_trials": "Насколько мы можем судить, адекватность зафиксирована.",
+            "medication_response": "Мы записали, что предварительная выборка сбивает с толку."
+          },
+          "examFindings": [
+            {
+              "factId": "lymphoma_concern_requires_adequate_multisite_and_contextual_pathology",
+              "source": "oncology_boundary",
+              "finding": "Ни один результат УЗИ или неоднозначной биопсии не является окончательным."
+            },
+            {
+              "factId": "oncology_route_preserves_gi_nutrition_and_support",
+              "source": "care_continuity",
+              "finding": "Реклассификация не отменяет текущий уход."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "lymphoma_concern_requires_adequate_multisite_and_contextual_pathology",
+              "discoveryPaths": [
+                "weight_muscle_change",
+                "duration_normal_intervals",
+                "expert_gi_ultrasound_record",
+                "multisite_gi_histopathology_record"
+              ]
+            },
+            {
+              "factId": "oncology_route_preserves_gi_nutrition_and_support",
+              "discoveryPaths": [
+                "prior_diet_trials",
+                "medication_response",
+                "serial_weight_bcs_mcs_activity"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_abdominal_ultrasound",
+              "classification": "required_concern",
+              "result": "При ультразвуковом исследовании: контекст массы или слоев или узлов."
+            },
+            {
+              "id": "chronic_enteropathy_endoscopy_biopsy_and_histopathology",
+              "classification": "required_quality_review",
+              "result": "В заключении по гистологическому исследованию: сайты, качество и двусмысленность документированы."
+            },
+            {
+              "id": "chronic_enteropathy_nutritional_and_activity_score",
+              "classification": "required_support",
+              "result": "Целевое исследование показало: вес или оценка мышечной массы или оценка."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "lymphoma_concern_requires_adequate_multisite_and_contextual_pathology",
+              "oncology_route_preserves_gi_nutrition_and_support"
+            ],
+            "confirmedDiagnosisRequires": [
+              "specialist_integrated_oncology_pathology_evidence"
+            ],
+            "dangerStates": [
+              "lymphoma",
+              "obstruction",
+              "severe_weight_loss",
+              "sampling_error"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "nutritional_assessment",
+              "chronic_gi_activity_score",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "gi_ultrasound_external",
+              "gi_endoscopy_referral",
+              "gi_histopathology_external",
+              "oncology_biopsy_planning_referral",
+              "oncology_advanced_pathology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_imaging_route",
+              "chronic_gi_endoscopy_route",
+              "chronic_gi_oncology_route"
+            ],
+            "referralFallback": "oncology_biopsy_planning_referral"
+          },
+          "carePlanId": "refractory_or_mimic_enteropathy_plan",
+          "followUp": {
+            "timing": "Специализированный пункт патологии или стадирования с контролем питания.",
+            "required": true,
+            "targets": [
+              "pathology_confidence",
+              "mass",
+              "nodes",
+              "weight",
+              "mcs",
+              "intake"
+            ]
+          },
+          "outcomes": {
+            "safe": "Проблема лимфомы требует адекватной контекстуальной патологии и непрерывности ухода.",
+            "unsafe": "Одно неоднозначное сообщение само по себе исключает или подтверждает лимфому."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему может потребоваться дополнительная патология и что остается неясным."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "oncology_gi_specialist_route",
+            "ownerModifiers": [
+              "complex_case",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_persistent_signs_after_complete_staged_workup",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что признаки определяются после документированных диетических исследований, мимического скрининга, визуализации и адекватной гистологии или стадирования.",
+          "historyAnswers": {
+            "prior_diet_trials": "По нашим наблюдениям, завершите действительные испытания.",
+            "fecal_test_methods": "Дома мы заметили, что соответствующие методы завершены.",
+            "medication_response": "Насколько мы можем судить, записан ответ или нежелательные эффекты.",
+            "owner_diet_log_capacity": "Мы записали, что соответствие проверено повторно."
+          },
+          "examFindings": [
+            {
+              "factId": "true_refractory_class_requires_complete_auditable_path",
+              "source": "eligibility_rule",
+              "finding": "Диета, мимика, структура, качество образцов и сопутствующие заболевания документированы."
+            },
+            {
+              "factId": "specialist_plan_is_versioned_not_random_drug_stack",
+              "source": "protocol_boundary",
+              "finding": "Кодекс не может сочетать антибиотики, стероиды и специальные добавки."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "true_refractory_class_requires_complete_auditable_path",
+              "discoveryPaths": [
+                "prior_diet_trials",
+                "fecal_test_methods",
+                "owner_diet_log_capacity",
+                "method_identified_fecal_results",
+                "expert_gi_ultrasound_record",
+                "multisite_gi_histopathology_record"
+              ]
+            },
+            {
+              "factId": "specialist_plan_is_versioned_not_random_drug_stack",
+              "discoveryPaths": [
+                "medication_response",
+                "same_episode_gi_response"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "chronic_enteropathy_exclusive_diet_trials",
+              "classification": "required_audit",
+              "result": "При уточнении анамнеза: завершите действительные испытания."
+            },
+            {
+              "id": "chronic_enteropathy_fecal_parasite_and_pathogen_workup",
+              "classification": "required_audit",
+              "result": "Целевое исследование показало: соответствующий мнемоэкран."
+            },
+            {
+              "id": "chronic_enteropathy_abdominal_ultrasound",
+              "classification": "required_audit",
+              "result": "При ультразвуковом исследовании: структурный обзор."
+            },
+            {
+              "id": "chronic_enteropathy_endoscopy_biopsy_and_histopathology",
+              "classification": "required_quality_audit",
+              "result": "В заключении по гистологическому исследованию: адекватная патология."
+            },
+            {
+              "id": "chronic_enteropathy_nutritional_and_activity_score",
+              "classification": "required_outcome",
+              "result": "Целевое исследование показало: персистирующее заболевание того же масштаба."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "true_refractory_class_requires_complete_auditable_path",
+              "specialist_plan_is_versioned_not_random_drug_stack"
+            ],
+            "confirmedDiagnosisRequires": [
+              "complete_staged_path_plus_persistent_objective_disease"
+            ],
+            "dangerStates": [
+              "treatment_adverse_effect",
+              "missed_co_disease",
+              "progressive_protein_loss",
+              "neoplasia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "chronic_gi_activity_score",
+              "diet_trial_compliance_log",
+              "cbc",
+              "biochemistry",
+              "urinalysis",
+              "longitudinal_care"
+            ],
+            "external": [
+              "gi_specialist_referral",
+              "gi_histopathology_external",
+              "oncology_advanced_pathology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "chronic_gi_diet_route",
+              "chronic_gi_fecal_route",
+              "chronic_gi_endoscopy_route",
+              "chronic_gi_oncology_route",
+              "chronic_gi_longitudinal_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "refractory_or_mimic_enteropathy_plan",
+          "followUp": {
+            "timing": "Версионный план специалиста с запланированными контрольными точками.",
+            "required": true,
+            "targets": [
+              "score",
+              "weight",
+              "albumin",
+              "compliance",
+              "adverse_effects",
+              "co_disease"
+            ]
+          },
+          "outcomes": {
+            "safe": "Рефрактерное заболевание доказано и лечится с помощью адаптированного плана специалиста.",
+            "unsafe": "Незавершенное обследование получает случайный набор из нескольких препаратов."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: действительно было исключено, что остается неопределенным и как будет оцениваться следующий план."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "coordinated_specialist_longitudinal_care",
+            "ownerModifiers": [
+              "treatment_fatigue",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if chronic GI signs alone create an IBD diagnosis.",
+    "Reject if a diet change counts as a valid trial without category, full diet history, exclusivity, duration, score and authored outcome.",
+    "Reject PLE without excluding material renal, hepatic and bleeding losses.",
+    "Reject if normal ultrasound excludes microscopic disease or histology loses site and sample quality.",
+    "Reject if feline enteropathy, pancreatitis and cholangitis are opened by one triaditis label without separate evidence.",
+    "Reject if the generator creates a drug, dose, diet composition, biopsy technique or immunomodulatory protocol."
+  ]
+}

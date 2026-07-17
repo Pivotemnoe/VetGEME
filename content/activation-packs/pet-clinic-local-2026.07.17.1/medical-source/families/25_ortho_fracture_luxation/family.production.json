@@ -1,0 +1,3993 @@
+{
+  "schemaVersion": 1,
+  "familyId": "ortho_fracture_luxation",
+  "familyVersion": "2026.07.16.40",
+  "title": "Переломы и вывихи",
+  "campaignPhase": "chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": [
+    "Перелом или вывих — это проблема травмы всего пациента, прежде чем это изображение одной конечности.",
+    "Нагрузка на вес не исключает клинически значимого перелома.",
+    "Открытый перелом требует оценки связи раны с переломом; Размер раны сам по себе не может ее классифицировать.",
+    "Боль, дистальную перфузию, моторику и чувствительность регистрируют до и после временной поддержки.",
+    "Ортогональные рентгенограммы включают соседние суставы, если они безопасны; КТ или специальное планирование выбирается для сложной анатомии.",
+    "Временная поддержка зависит от местоположения и конфигурации и никогда не подтверждает объединение.",
+    "Травмы суставов и мышц сохраняют риски конгруэнтности, роста и продольного выравнивания.",
+    "Травма таза и аксиальная кость сохраняют приоритеты мочеиспускания, прямой кишки, дыхательных путей, питания и неврологии.",
+    "Вывих надколенника классифицируют по функции, боли, прогрессированию и анатомии; случайная находка не требует хирургического вмешательства.",
+    "Патологический перелом исследуется до того, как будет сделан окончательный выбор фиксации, а маршрут биопсии позволяет сохранить будущие планы лечения.",
+    "В этом пакете не создаются никакие лекарственные препараты, дозы, имплантаты, редукционные маневры, конструкции шин или хирургические методы."
+  ],
+  "coreCapabilities": [
+    "trauma_primary_survey",
+    "pain_assessment",
+    "analgesia",
+    "xray_or_referral",
+    "fracture_first_aid_stabilization",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "fracture_whole_patient_route",
+      "anyOf": [
+        "trauma_primary_survey",
+        "emergency_stabilization",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "life_threatening_and_concurrent_trauma_before_limb_only_workup"
+    },
+    {
+      "id": "fracture_pain_route",
+      "anyOf": [
+        "pain_assessment",
+        "analgesia",
+        "anesthesia",
+        "safe_referral"
+      ],
+      "purpose": "pain_control_and_safe_handling"
+    },
+    {
+      "id": "fracture_neurovascular_route",
+      "anyOf": [
+        "neurovascular_limb_assessment",
+        "neurologic_exam",
+        "orthopedic_referral",
+        "safe_referral"
+      ],
+      "purpose": "distal_perfusion_motor_sensation_and_neurologic_risk"
+    },
+    {
+      "id": "fracture_open_wound_route",
+      "anyOf": [
+        "open_fracture_protocol",
+        "wound_exam",
+        "wound_care",
+        "orthopedic_surgery_referral",
+        "safe_referral"
+      ],
+      "purpose": "open_status_contamination_and_soft_tissue_route"
+    },
+    {
+      "id": "fracture_imaging_route",
+      "anyOf": [
+        "fracture_radiographic_planning",
+        "xray",
+        "xray_or_referral",
+        "orthopedic_radiography_external",
+        "safe_referral"
+      ],
+      "purpose": "orthogonal_views_and_adjacent_joint_assessment"
+    },
+    {
+      "id": "fracture_advanced_planning_route",
+      "anyOf": [
+        "advanced_imaging_referral",
+        "orthopedic_surgery_referral",
+        "orthopedic_referral",
+        "safe_referral"
+      ],
+      "purpose": "articular_complex_axial_or_surgical_planning"
+    },
+    {
+      "id": "fracture_support_route",
+      "anyOf": [
+        "fracture_first_aid_stabilization",
+        "trained_fracture_first_aid",
+        "fracture_support_kit",
+        "safe_referral"
+      ],
+      "purpose": "eligible_temporary_support_and_transport"
+    },
+    {
+      "id": "fracture_bandage_monitoring_route",
+      "anyOf": [
+        "bandage_splint_monitoring",
+        "fracture_followup_imaging",
+        "fracture_rehabilitation",
+        "safe_referral"
+      ],
+      "purpose": "skin_toes_perfusion_alignment_and_function_followup"
+    },
+    {
+      "id": "fracture_growth_route",
+      "anyOf": [
+        "physeal_growth_monitoring",
+        "fracture_followup_imaging",
+        "orthopedic_referral",
+        "safe_referral"
+      ],
+      "purpose": "juvenile_length_alignment_and_contralateral_comparison"
+    },
+    {
+      "id": "fracture_pelvic_axial_route",
+      "anyOf": [
+        "pelvic_trauma_assessment",
+        "neurologic_exam",
+        "digital_rectal_exam",
+        "advanced_imaging_referral",
+        "safe_referral"
+      ],
+      "purpose": "pelvic_urinary_rectal_neurologic_or_axial_risk"
+    },
+    {
+      "id": "luxation_reduction_route",
+      "anyOf": [
+        "joint_reduction_referral",
+        "orthopedic_surgery_referral",
+        "orthopedic_referral",
+        "safe_referral"
+      ],
+      "purpose": "joint_congruence_reduction_eligibility_and_associated_injury"
+    },
+    {
+      "id": "fracture_pathology_route",
+      "anyOf": [
+        "bone_pathology_workup_external",
+        "oncology_staging_external",
+        "histology_external",
+        "orthopedic_surgery_referral",
+        "safe_referral"
+      ],
+      "purpose": "pathologic_bone_infection_neoplasia_and_biopsy_planning"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "fracture_whole_patient_trauma_survey",
+      "requires": [
+        "trauma_primary_survey",
+        "stabilization"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "fracture_pain_neurologic_and_neurovascular_assessment",
+      "requires": [
+        "pain_assessment",
+        "neurovascular_limb_assessment"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "fracture_open_closed_and_soft_tissue_classification",
+      "requires": [
+        "open_fracture_protocol"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "fracture_orthogonal_radiography_and_adjacent_joints",
+      "requires": [
+        "fracture_radiographic_planning"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "fracture_cross_sectional_or_surgical_planning_referral",
+      "requires": [
+        "advanced_imaging_referral",
+        "orthopedic_surgery_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "fracture_temporary_support_and_bandage_monitoring",
+      "requires": [
+        "fracture_first_aid_stabilization",
+        "bandage_splint_monitoring"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "fracture_healing_and_implant_followup",
+      "requires": [
+        "fracture_followup_imaging",
+        "fracture_rehabilitation"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "fracture_growth_plate_and_alignment_monitoring",
+      "requires": [
+        "physeal_growth_monitoring"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "fracture_pathologic_bone_workup",
+      "requires": [
+        "bone_pathology_workup_external"
+      ],
+      "availability": "external_post_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "luxation_joint_congruence_and_associated_injury_workup",
+      "requires": [
+        "joint_reduction_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "mechanism_and_time",
+      "prompt": "Что произошло, когда и какой была энергия события?"
+    },
+    {
+      "id": "post_event_weight_bearing",
+      "prompt": "Мог ли пациент идти после события и сколько шагов?"
+    },
+    {
+      "id": "nearby_wound_or_discharge",
+      "prompt": "Есть ли рядом рана, кровь, выделения или был контакт материал?"
+    },
+    {
+      "id": "distal_color_temperature_change",
+      "prompt": "Менялись ли цвет, температура или отёк дистальной конечности?"
+    },
+    {
+      "id": "observed_motor_sensation",
+      "prompt": "Наблюдалось ли движение пальцев или необычная потеря чувствительности?"
+    },
+    {
+      "id": "preexisting_lameness_mass_or_surgery",
+      "prompt": "Были ли раньше хромота, припухлость, операция или имплант?"
+    },
+    {
+      "id": "pelvic_elimination_history",
+      "prompt": "Есть ли мочеиспускание и дефекация после тазовой травмы?"
+    },
+    {
+      "id": "home_analgesic_exposure",
+      "prompt": "Что и когда давали дома от боли?"
+    },
+    {
+      "id": "existing_splint_bandage_status",
+      "prompt": "Кем и когда наложена повязка или шина и как выглядят пальцы?"
+    },
+    {
+      "id": "confinement_feasibility",
+      "prompt": "Может ли семья обеспечить ограничение активности и уход?"
+    },
+    {
+      "id": "prior_images_and_implant_records",
+      "prompt": "Есть ли датированные снимки, операции и данные имплантов?"
+    },
+    {
+      "id": "financial_staging_constraints",
+      "prompt": "Каков доступный сейчас бюджет и возможен ли поэтапный план?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "abc_hemorrhage_chest_abdomen_screen",
+      "source": "trauma_exam",
+      "requires": [
+        "trauma_primary_survey",
+        "stabilization"
+      ]
+    },
+    {
+      "id": "pain_shock_and_handling_assessment",
+      "source": "trauma_exam",
+      "requires": [
+        "pain_assessment",
+        "general_exam"
+      ]
+    },
+    {
+      "id": "whole_patient_neurologic_screen",
+      "source": "trauma_exam",
+      "requires": [
+        "neurologic_exam"
+      ]
+    },
+    {
+      "id": "wound_communication_contamination_record",
+      "source": "wound_exam",
+      "requires": [
+        "open_fracture_protocol",
+        "wound_exam"
+      ]
+    },
+    {
+      "id": "distal_pulse_perfusion_temperature",
+      "source": "orthopedic_exam",
+      "requires": [
+        "neurovascular_limb_assessment"
+      ]
+    },
+    {
+      "id": "distal_motor_sensation_record",
+      "source": "orthopedic_exam",
+      "requires": [
+        "neurovascular_limb_assessment",
+        "neurologic_exam"
+      ]
+    },
+    {
+      "id": "bone_joint_side_segment_configuration",
+      "source": "orthopedic_imaging",
+      "requires": [
+        "orthopedic_exam",
+        "fracture_radiographic_planning"
+      ]
+    },
+    {
+      "id": "orthogonal_views_with_adjacent_joints",
+      "source": "diagnostic_test",
+      "requires": [
+        "fracture_radiographic_planning",
+        "trained_radiography"
+      ]
+    },
+    {
+      "id": "temporary_support_eligibility_record",
+      "source": "procedure_decision",
+      "requires": [
+        "fracture_first_aid_stabilization"
+      ]
+    },
+    {
+      "id": "pre_post_support_neurovascular_check",
+      "source": "procedure_monitoring",
+      "requires": [
+        "bandage_splint_monitoring",
+        "neurovascular_limb_assessment"
+      ]
+    },
+    {
+      "id": "pelvic_urinary_rectal_neurologic_screen",
+      "source": "trauma_exam",
+      "requires": [
+        "pelvic_trauma_assessment",
+        "neurologic_exam"
+      ]
+    },
+    {
+      "id": "joint_congruence_and_stability_record",
+      "source": "orthopedic_exam",
+      "requires": [
+        "joint_stability_exam",
+        "orthopedic_exam"
+      ]
+    },
+    {
+      "id": "serial_alignment_union_and_function",
+      "source": "follow_up",
+      "requires": [
+        "fracture_followup_imaging",
+        "fracture_rehabilitation"
+      ]
+    },
+    {
+      "id": "pathologic_bone_and_planned_biopsy_record",
+      "source": "external_report",
+      "requires": [
+        "bone_pathology_workup_external"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "closed_stable_fracture_plan",
+      "fullPlan": [
+        "whole_patient_survey",
+        "pain_and_neurovascular_baseline",
+        "closed_soft_tissue_classification",
+        "orthogonal_imaging",
+        "location_specific_support_or_referral",
+        "restriction_and_bandage_monitoring",
+        "union_and_function_recheck"
+      ],
+      "stagedPlan": [
+        "stabilize_patient",
+        "classify_fracture",
+        "support_if_eligible",
+        "verify_healing"
+      ],
+      "minimumSafePlan": [
+        "analgesia",
+        "no_weight_bearing_exclusion",
+        "neurovascular_record",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "analgesia",
+        "eligible_temporary_support",
+        "orthopedic_referral"
+      ],
+      "unsafeOrInadequate": [
+        "generic_paw_bandage",
+        "support_proves_union",
+        "youth_guarantees_healing"
+      ]
+    },
+    {
+      "id": "unstable_complex_fracture_plan",
+      "fullPlan": [
+        "whole_patient_high_energy_survey",
+        "pain_hemorrhage_neurovascular_control",
+        "soft_tissue_and_configuration_record",
+        "safe_temporary_alignment",
+        "multilevel_imaging",
+        "specialist_repair_category",
+        "hospital_nursing_and_recheck"
+      ],
+      "stagedPlan": [
+        "protect_life",
+        "protect_tissue",
+        "map_all_injuries",
+        "sequence_specialist_care"
+      ],
+      "minimumSafePlan": [
+        "no_blind_reduction",
+        "all_limbs_and_levels_recorded",
+        "transport_support",
+        "urgent_referral"
+      ],
+      "stabilizeAndRefer": [
+        "stabilization",
+        "analgesia",
+        "orthopedic_surgery_referral"
+      ],
+      "unsafeOrInadequate": [
+        "reduce_without_imaging",
+        "cheapest_limb_hides_other_injury",
+        "single_splint_for_all_locations"
+      ]
+    },
+    {
+      "id": "open_fracture_plan",
+      "fullPlan": [
+        "whole_patient_stability",
+        "sterile_protective_cover",
+        "open_status_and_contamination_record",
+        "neurovascular_and_soft_tissue_viability",
+        "reviewed_surgical_and_antimicrobial_route",
+        "staged_reconstruction_or_salvage",
+        "infection_and_union_followup"
+      ],
+      "stagedPlan": [
+        "protect_wound",
+        "stabilize_patient_and_limb",
+        "classify_soft_tissue",
+        "refer_for_source_control"
+      ],
+      "minimumSafePlan": [
+        "tiny_wound_can_communicate",
+        "no_cosmetic_closure",
+        "sterile_cover",
+        "urgent_referral"
+      ],
+      "stabilizeAndRefer": [
+        "open_fracture_protocol",
+        "analgesia",
+        "orthopedic_surgery_referral"
+      ],
+      "unsafeOrInadequate": [
+        "wound_size_defines_closed",
+        "blind_primary_closure",
+        "guaranteed_limb_salvage"
+      ]
+    },
+    {
+      "id": "articular_physeal_plan",
+      "fullPlan": [
+        "whole_patient_and_pain_assessment",
+        "joint_growth_plate_classification",
+        "quality_orthogonal_or_advanced_imaging",
+        "congruity_alignment_specialist_plan",
+        "age_specific_restriction",
+        "arthritis_or_growth_risk",
+        "longitudinal_alignment_and_function"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "define_joint_or_physis",
+        "specialist_plan",
+        "monitor_growth_and_function"
+      ],
+      "minimumSafePlan": [
+        "small_fragment_can_matter",
+        "breed_not_diagnosis",
+        "contralateral_comparison",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "analgesia",
+        "safe_support_if_eligible",
+        "orthopedic_surgery_referral"
+      ],
+      "unsafeOrInadequate": [
+        "adult_logic_for_physis",
+        "breed_confirms_slip",
+        "initial_union_ends_growth_followup"
+      ]
+    },
+    {
+      "id": "pelvic_axial_trauma_plan",
+      "fullPlan": [
+        "abc_and_concurrent_trauma",
+        "pain_neurologic_and_elimination_record",
+        "site_specific_imaging",
+        "urinary_rectal_airway_nutrition_or_spine_route",
+        "safe_transport_and_nursing",
+        "specialist_stabilization_category",
+        "same_episode_function_followup"
+      ],
+      "stagedPlan": [
+        "protect_life",
+        "identify_organ_and_neural_risk",
+        "image_when_safe",
+        "refer_by_site"
+      ],
+      "minimumSafePlan": [
+        "walking_does_not_exclude",
+        "elimination_plan",
+        "neuro_record",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "stabilization",
+        "site_specific_immobilization",
+        "hospital_or_surgical_referral"
+      ],
+      "unsafeOrInadequate": [
+        "bone_only_pelvis",
+        "discharge_without_urination_plan",
+        "generated_axial_fixation_technique"
+      ]
+    },
+    {
+      "id": "joint_luxation_plan",
+      "fullPlan": [
+        "whole_patient_trauma_survey",
+        "pain_neurovascular_and_joint_record",
+        "pre_reduction_imaging",
+        "timing_architecture_and_fracture_eligibility",
+        "reviewed_reduction_or_surgery_route",
+        "post_reduction_congruence_and_support",
+        "reluxation_function_and_rehabilitation_followup"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "confirm_luxation_and_associated_damage",
+        "select_reviewed_route",
+        "verify_congruence_and_function"
+      ],
+      "minimumSafePlan": [
+        "no_free_put_it_back_action",
+        "pre_post_imaging",
+        "neurovascular_record",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "analgesia",
+        "protect_joint",
+        "joint_reduction_referral"
+      ],
+      "unsafeOrInadequate": [
+        "blind_reduction",
+        "invoice_selects_surgery",
+        "incidental_patella_automatic_operation"
+      ]
+    },
+    {
+      "id": "pathologic_or_repair_complication_plan",
+      "fullPlan": [
+        "retriage_pain_perfusion_infection",
+        "preserve_original_episode_and_implant_record",
+        "serial_imaging_and_function",
+        "biology_mechanics_infection_or_neoplasia_workup",
+        "planned_biopsy_or_culture_route",
+        "revision_salvage_or_receiving_family",
+        "longitudinal_outcome"
+      ],
+      "stagedPlan": [
+        "identify_failure_mode",
+        "protect_patient_and_tissue",
+        "obtain_decision_quality_evidence",
+        "refer_without_data_loss"
+      ],
+      "minimumSafePlan": [
+        "no_blind_blame",
+        "no_random_biopsy_track",
+        "no_more_time_only_answer",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "analgesia",
+        "support_or_wound_protection",
+        "orthopedic_oncology_or_infection_referral"
+      ],
+      "unsafeOrInadequate": [
+        "fix_before_cause_workup",
+        "complication_detached_from_original_case",
+        "owner_blame_before_feasibility_audit"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_bone_fractures_2025",
+      "title": "Merck Veterinary Manual: Bone Fractures in Dogs and Cats",
+      "url": "https://www.merckvetmanual.com/musculoskeletal-system/osteopathies-in-small-animals/bone-fractures-in-dogs-and-cats",
+      "scope": "classification_imaging_repair_factors_rehabilitation_and_followup"
+    },
+    {
+      "id": "acvs_fractured_limbs",
+      "title": "American College of Veterinary Surgeons: Fractured Limbs",
+      "url": "https://www.acvs.org/small-animal/fractured-limbs/",
+      "scope": "whole_patient_trauma_initial_management_support_limits_and_repair_decisions"
+    },
+    {
+      "id": "merck_joint_trauma",
+      "title": "Merck Veterinary Manual: Joint Trauma in Dogs and Cats",
+      "url": "https://www.merckvetmanual.com/musculoskeletal-system/arthropathies-and-related-disorders-in-small-animals/joint-trauma-in-dogs-and-cats",
+      "scope": "joint_injury_luxation_associated_damage_and_longitudinal_function"
+    },
+    {
+      "id": "acvs_hip_luxation",
+      "title": "American College of Veterinary Surgeons: Hip Luxation",
+      "url": "https://www.acvs.org/small-animal/hip-luxation/",
+      "scope": "whole_patient_assessment_imaging_reduction_eligibility_and_reluxation"
+    },
+    {
+      "id": "acvs_femoral_capital_physeal",
+      "title": "American College of Veterinary Surgeons: Femoral Capital Physeal Fractures",
+      "url": "https://www.acvs.org/small-animal/femoral-capital-physeal-fractures/",
+      "scope": "physeal_weakness_slipped_epiphysis_bilateral_and_growth_context"
+    },
+    {
+      "id": "acvs_patellar_luxation",
+      "title": "American College of Veterinary Surgeons: Patellar Luxations",
+      "url": "https://www.acvs.org/small-animal/patellar-luxations/",
+      "scope": "incidental_vs_symptomatic_bilateral_function_alignment_and_specialist_planning"
+    }
+  ],
+  "variants": [
+    {
+      "id": "fracture_closed_stable_limb",
+      "version": "2026.07.16.40",
+      "title": "Закрытый относительно стабильный перелом конечности",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Закрытая, относительно стабильная конфигурация с документированной стабильностью всего пациента, мягких тканей и дистального нервно-сосудистого статуса; Право на поддержку зависит от анатомии.",
+      "exclusions": [
+        "open_fracture",
+        "unstable_configuration",
+        "unassessed_concurrent_trauma"
+      ],
+      "planBundleId": "closed_stable_fracture_plan",
+      "sourceIds": [
+        "merck_bone_fractures_2025",
+        "acvs_fractured_limbs"
+      ],
+      "presentations": [
+        {
+          "id": "p1_incomplete_or_minimally_displaced_young_patient",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что молодой пациент с болезненной конечностью после травмы и закрытым переломом с неполным или минимальным смещением.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, хромота появилась сразу после прыжка с дивана; падения с высоты и столкновения с машиной не было.",
+            "post_event_weight_bearing": "Дома мы заметили, что может предпринять шаги; не исключение.",
+            "nearby_wound_or_discharge": "Насколько мы можем судить, после осмотра сообщающаяся рана отсутствует.",
+            "confinement_feasibility": "Мы записали, что возможность пройти наблюдение или лечение."
+          },
+          "examFindings": [
+            {
+              "factId": "youth_does_not_make_every_fracture_stable",
+              "source": "configuration_rule",
+              "finding": "Риск роста и перемещения сохраняется."
+            },
+            {
+              "factId": "support_eligibility_depends_on_site_and_stability",
+              "source": "support_rule",
+              "finding": "Не типичное актерское решение."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "youth_does_not_make_every_fracture_stable",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "bone_joint_side_segment_configuration",
+                "orthogonal_views_with_adjacent_joints"
+              ]
+            },
+            {
+              "factId": "support_eligibility_depends_on_site_and_stability",
+              "discoveryPaths": [
+                "confinement_feasibility",
+                "temporary_support_eligibility_record",
+                "distal_pulse_perfusion_temperature"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_whole_patient_trauma_survey",
+              "classification": "required_baseline",
+              "result": "Целевое исследование показало: стабильный список пациентов и сопутствующих травм."
+            },
+            {
+              "id": "fracture_orthogonal_radiography_and_adjacent_joints",
+              "classification": "required_when_safe",
+              "result": "На рентгенограммах: неполная или минимально смещенная конфигурация и физический контекст."
+            },
+            {
+              "id": "fracture_temporary_support_and_bandage_monitoring",
+              "classification": "required_if_support_selected",
+              "result": "При динамическом наблюдении: подходящее местоположение и план мониторинга."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "youth_does_not_make_every_fracture_stable",
+              "support_eligibility_depends_on_site_and_stability"
+            ],
+            "confirmedDiagnosisRequires": [
+              "orthogonal_image_defined_closed_configuration"
+            ],
+            "dangerStates": [
+              "secondary_displacement",
+              "growth_disturbance",
+              "bandage_injury"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "trauma_primary_survey",
+              "pain_assessment",
+              "neurovascular_limb_assessment"
+            ],
+            "external": [
+              "xray_or_referral",
+              "orthopedic_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_whole_patient_route",
+              "fracture_imaging_route",
+              "fracture_support_route",
+              "fracture_growth_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "closed_stable_fracture_plan",
+          "followUp": {
+            "timing": "Раннее согласование, а затем создание контрольных точек объединения или роста.",
+            "required": true,
+            "targets": [
+              "pain",
+              "perfusion",
+              "alignment",
+              "growth",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Стабильный перелом остается в соответствии с возрастным мониторингом.",
+            "unsafe": "Юный возраст рассматривается как доказательство безвредного исцеления."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему необходима ранняя повторная проверка, даже если пациент начинает пользоваться конечностью."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "painful"
+            ],
+            "requiredHandlingAlternative": "analgesia_and_low_manipulation_imaging_or_referral",
+            "ownerModifiers": [
+              "budget_limited",
+              "confinement_barrier"
+            ]
+          }
+        },
+        {
+          "id": "p2_distal_metacarpal_metatarsal_or_digit_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_by_pain",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что перелом дистального отдела лапы, затрагивающий отдельные пальцы или пястные или плюсневые кости.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, лапу прищемило дверью около часа назад; после этого животное перестало полностью опираться на пальцы.",
+            "post_event_weight_bearing": "Дома мы заметили, что переменная.",
+            "nearby_wound_or_discharge": "Насколько мы можем судить, открытый статус оценен.",
+            "existing_splint_bandage_status": "Мы записали, что нет или зафиксировано."
+          },
+          "examFindings": [
+            {
+              "factId": "number_location_and_weight_bearing_role_change_support_suitability",
+              "source": "anatomic_rule",
+              "finding": "Универсальная повязка на лапу не является окончательной."
+            },
+            {
+              "factId": "toes_skin_and_alignment_require_serial_checks",
+              "source": "monitoring_rule",
+              "finding": "Проблемы с поддержкой остаются видимыми."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "number_location_and_weight_bearing_role_change_support_suitability",
+              "discoveryPaths": [
+                "post_event_weight_bearing",
+                "bone_joint_side_segment_configuration",
+                "orthogonal_views_with_adjacent_joints"
+              ]
+            },
+            {
+              "factId": "toes_skin_and_alignment_require_serial_checks",
+              "discoveryPaths": [
+                "existing_splint_bandage_status",
+                "pre_post_support_neurovascular_check",
+                "serial_alignment_union_and_function"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_orthogonal_radiography_and_adjacent_joints",
+              "classification": "required",
+              "result": "На рентгенограммах: кости, пальцы, смещение и поражение суставов."
+            },
+            {
+              "id": "fracture_temporary_support_and_bandage_monitoring",
+              "classification": "required_if_supported",
+              "result": "При динамическом наблюдении: запись положения, пальцев ног, кожи и перфузии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "number_location_and_weight_bearing_role_change_support_suitability",
+              "toes_skin_and_alignment_require_serial_checks"
+            ],
+            "confirmedDiagnosisRequires": [
+              "localized_orthogonal_paw_images"
+            ],
+            "dangerStates": [
+              "open_fracture",
+              "loss_of_alignment",
+              "pressure_injury"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "pain_assessment",
+              "neurovascular_limb_assessment",
+              "bandage_splint_monitoring"
+            ],
+            "external": [
+              "xray_or_referral",
+              "orthopedic_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_imaging_route",
+              "fracture_support_route",
+              "fracture_bandage_monitoring_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "closed_stable_fracture_plan",
+          "followUp": {
+            "timing": "Ранняя проверка поддержки и последовательная оценка исцеления.",
+            "required": true,
+            "targets": [
+              "toes",
+              "skin",
+              "perfusion",
+              "alignment",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Поддержка выбирается только для подходящего дистального рисунка.",
+            "unsafe": "При каждом переломе лапы накладывают одну и ту же повязку."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: покажите, какие изменения пальцев, кожи и проскальзывания требуют срочного устранения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "painful"
+            ],
+            "requiredHandlingAlternative": "analgesia_or_referral_for_safe_positioning",
+            "ownerModifiers": [
+              "requests_cheapest_bandage",
+              "monitoring_barrier"
+            ]
+          }
+        },
+        {
+          "id": "p3_stable_after_appropriate_temporary_support",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что подходящий перелом удобен и выровнен после временной поддержки, в ожидании заживления или окончательного плана.",
+          "historyAnswers": {
+            "existing_splint_bandage_status": "По нашим наблюдениям, кто применял, дата, скольжение или запах или отек,.",
+            "post_event_weight_bearing": "Дома мы заметили, что ограничено; не используется в качестве доказательства объединения.",
+            "confinement_feasibility": "Насколько мы можем судить, барьеры сохранились.",
+            "prior_images_and_implant_records": "Мы записали, что доступны базовые изображения."
+          },
+          "examFindings": [
+            {
+              "factId": "improved_comfort_does_not_prove_union",
+              "source": "healing_rule",
+              "finding": "Клинические и рентгенологические критерии сохраняются."
+            },
+            {
+              "factId": "cold_swollen_painful_or_hidden_toes_trigger_urgent_reassessment",
+              "source": "bandage_rule",
+              "finding": "График отмены перфузии и пролежней."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "improved_comfort_does_not_prove_union",
+              "discoveryPaths": [
+                "post_event_weight_bearing",
+                "serial_alignment_union_and_function"
+              ]
+            },
+            {
+              "factId": "cold_swollen_painful_or_hidden_toes_trigger_urgent_reassessment",
+              "discoveryPaths": [
+                "existing_splint_bandage_status",
+                "distal_color_temperature_change",
+                "pre_post_support_neurovascular_check"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_temporary_support_and_bandage_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: положение поддержки, кожа, пальцы ног и перфузия."
+            },
+            {
+              "id": "fracture_healing_and_implant_followup",
+              "classification": "required_longitudinal",
+              "result": "При динамическом наблюдении: клиническое или рентгенографическое заживление и функция."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "improved_comfort_does_not_prove_union",
+              "cold_swollen_painful_or_hidden_toes_trigger_urgent_reassessment"
+            ],
+            "confirmedDiagnosisRequires": [
+              "serial_alignment_and_union_evidence"
+            ],
+            "dangerStates": [
+              "bandage_pressure_injury",
+              "loss_of_reduction",
+              "delayed_union"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "bandage_splint_monitoring",
+              "neurovascular_limb_assessment"
+            ],
+            "external": [
+              "fracture_followup_imaging",
+              "fracture_rehabilitation",
+              "orthopedic_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_bandage_monitoring_route",
+              "fracture_neurovascular_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "closed_stable_fracture_plan",
+          "followUp": {
+            "timing": "Запланированная поддержка и контрольные осмотры сращения, а также срочные тревожные признаки.",
+            "required": true,
+            "targets": [
+              "support",
+              "skin",
+              "perfusion",
+              "alignment",
+              "union",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Комфорт и выравнивание прогрессируют без преждевременной активности.",
+            "unsafe": "Поддержка ошибочно принимается за завершенное исцеление."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: уменьшение боли приветствуется, но не дает права на неограниченную активность."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "painful"
+            ],
+            "requiredHandlingAlternative": "low_stress_bandage_check_or_referral",
+            "ownerModifiers": [
+              "early_activity_pressure",
+              "transport_barrier"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "fracture_unstable_displaced_or_comminuted",
+      "version": "2026.07.16.40",
+      "title": "Нестабильный, смещённый или оскольчатый перелом",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Нестабильный перелом требует стабилизации всего пациента, документирования состояния мягких тканей и нервно-сосудистых заболеваний, временной защиты в зависимости от местоположения и специального планирования ремонта.",
+      "exclusions": [
+        "blind_reduction",
+        "single_limb_tunnel_vision",
+        "generic_splint_as_definitive_care"
+      ],
+      "planBundleId": "unstable_complex_fracture_plan",
+      "sourceIds": [
+        "merck_bone_fractures_2025",
+        "acvs_fractured_limbs"
+      ],
+      "presentations": [
+        {
+          "id": "p1_long_bone_displaced_fracture",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что болезненная конечность, не несущая нагрузку, с неправильным положением в результате перелома длинной кости со смещением.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, травматическое событие и время зафиксированы.",
+            "post_event_weight_bearing": "Дома мы заметили, что отсутствует или преходящее.",
+            "nearby_wound_or_discharge": "Насколько мы можем судить, открытый статус оценен.",
+            "distal_color_temperature_change": "Мы записали, что нейроваскулярный риск."
+          },
+          "examFindings": [
+            {
+              "factId": "displaced_fracture_is_not_safely_reduced_without_imaging_and_reviewed_plan",
+              "source": "safety_rule",
+              "finding": "Манипуляции сведены к минимуму."
+            },
+            {
+              "factId": "proximal_location_may_be_unsuitable_for_splint",
+              "source": "support_rule",
+              "finding": "Использована транспортная поддержка или изоляция или направление."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "displaced_fracture_is_not_safely_reduced_without_imaging_and_reviewed_plan",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "bone_joint_side_segment_configuration",
+                "orthogonal_views_with_adjacent_joints"
+              ]
+            },
+            {
+              "factId": "proximal_location_may_be_unsuitable_for_splint",
+              "discoveryPaths": [
+                "distal_color_temperature_change",
+                "temporary_support_eligibility_record",
+                "distal_pulse_perfusion_temperature"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_whole_patient_trauma_survey",
+              "classification": "required_first",
+              "result": "Целевое исследование показало: состояние пациента стабилизировалось перед планированием конечностей."
+            },
+            {
+              "id": "fracture_pain_neurologic_and_neurovascular_assessment",
+              "classification": "required_pre_post_support",
+              "result": "При динамическом наблюдении: боль, моторика, чувствительность и дистальная перфузия."
+            },
+            {
+              "id": "fracture_orthogonal_radiography_and_adjacent_joints",
+              "classification": "required_when_stable",
+              "result": "На рентгенограммах: смещение, сегмент и связанная с ним травма сустава."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "displaced_fracture_is_not_safely_reduced_without_imaging_and_reviewed_plan",
+              "proximal_location_may_be_unsuitable_for_splint"
+            ],
+            "confirmedDiagnosisRequires": [
+              "orthogonal_image_defined_displaced_fracture"
+            ],
+            "dangerStates": [
+              "absent_perfusion",
+              "open_fracture",
+              "hemorrhage",
+              "soft_tissue_damage"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "trauma_primary_survey",
+              "pain_assessment",
+              "neurovascular_limb_assessment",
+              "fracture_first_aid_stabilization"
+            ],
+            "external": [
+              "xray_or_referral",
+              "orthopedic_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_whole_patient_route",
+              "fracture_neurovascular_route",
+              "fracture_imaging_route",
+              "fracture_support_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "unstable_complex_fracture_plan",
+          "followUp": {
+            "timing": "Пункт срочного приема и пост-поддержки нервно-сосудистый контрольный пункт.",
+            "required": true,
+            "targets": [
+              "stability",
+              "pain",
+              "perfusion",
+              "alignment",
+              "soft_tissue"
+            ]
+          },
+          "outcomes": {
+            "safe": "Планирование восстановления досягаемости пациента и конечностей без дополнительных травм.",
+            "unsafe": "Опасно вправлять перелом до визуализации или накладывать универсальную шину без учёта места повреждения и кровоснабжения конечности."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему временная защита — это не то же самое, что окончательный ремонт."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful",
+              "shocky"
+            ],
+            "requiredHandlingAlternative": "analgesia_minimal_manipulation_and_transport",
+            "ownerModifiers": [
+              "requests_immediate_reduction",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_comminuted_high_energy_injury",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_or_urgent_by_stability",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что высокоэнергетический оскольчатый перелом со значительным риском повреждения мягких тканей и сопутствующей травмы.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, зафиксировано событие высокой энергии.",
+            "post_event_weight_bearing": "Дома мы заметили, что обычно отсутствует; не единственный маркер серьезности.",
+            "nearby_wound_or_discharge": "Насколько мы можем судить, классификация открытая или закрытая находится на рассмотрении или зафиксирована.",
+            "financial_staging_constraints": "Мы записали, что обсуждается поэтапная неопределенность."
+          },
+          "examFindings": [
+            {
+              "factId": "fragment_count_is_not_the_only_prognostic_variable",
+              "source": "biology_rule",
+              "finding": "Энергия, перфузия и мягкие ткани остаются явными."
+            },
+            {
+              "factId": "whole_patient_injury_precedes_reconstruction_category",
+              "source": "triage_rule",
+              "finding": "Травмы грудной клетки, живота, мочевых путей сохранены."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "fragment_count_is_not_the_only_prognostic_variable",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "wound_communication_contamination_record",
+                "distal_pulse_perfusion_temperature",
+                "bone_joint_side_segment_configuration"
+              ]
+            },
+            {
+              "factId": "whole_patient_injury_precedes_reconstruction_category",
+              "discoveryPaths": [
+                "abc_hemorrhage_chest_abdomen_screen",
+                "pain_shock_and_handling_assessment"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_whole_patient_trauma_survey",
+              "classification": "required_first",
+              "result": "Целевое исследование показало: сочетанные травмы и шоковое состояние."
+            },
+            {
+              "id": "fracture_open_closed_and_soft_tissue_classification",
+              "classification": "required",
+              "result": "Целевое исследование показало: коммуникация, загрязнение и жизнеспособность."
+            },
+            {
+              "id": "fracture_cross_sectional_or_surgical_planning_referral",
+              "classification": "required_complex_planning",
+              "result": "По итогам консультации специалиста: категория специалиста по реконструкции или спасению."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "fragment_count_is_not_the_only_prognostic_variable",
+              "whole_patient_injury_precedes_reconstruction_category"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_and_soft_tissue_defined_high_energy_fracture"
+            ],
+            "dangerStates": [
+              "shock",
+              "hemorrhage",
+              "open_injury",
+              "devitalized_tissue",
+              "absent_perfusion"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "trauma_primary_survey",
+              "stabilization",
+              "pain_assessment",
+              "open_fracture_protocol"
+            ],
+            "external": [
+              "advanced_imaging_referral",
+              "orthopedic_surgery_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_whole_patient_route",
+              "fracture_open_wound_route",
+              "fracture_advanced_planning_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "unstable_complex_fracture_plan",
+          "followUp": {
+            "timing": "Непрерывная стабилизация, затем поэтапные контрольные точки мягких тканей и восстановления.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "soft_tissue",
+              "contamination",
+              "associated_injury",
+              "repair_route"
+            ]
+          },
+          "outcomes": {
+            "safe": "Категория восстановления отражает биологию и состояние всего пациента.",
+            "unsafe": "Простая этикетка или цена скрывают серьезность поражения мягких тканей."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: дайте поэтапные оценки и неопределенность, не гарантируя сохранение конечности."
+          ],
+          "compatibility": {
+            "temperament": [
+              "shocky",
+              "painful",
+              "obtunded",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "stabilize_before_definitive_imaging",
+            "ownerModifiers": [
+              "panicked",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_multiple_limb_or_multi_level_fracture",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_complex",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что сломаны несколько конечностей или несколько уровней, что создает риск мобильности, ухода и секвенирования.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, серьезная травма.",
+            "post_event_weight_bearing": "Дома мы заметили, что невозможно или небезопасно оценить ходьбу.",
+            "nearby_wound_or_discharge": "Насколько мы можем судить, каждый сайт засекречен.",
+            "confinement_feasibility": "Мы записали, что возможности ухода на дому,."
+          },
+          "examFindings": [
+            {
+              "factId": "safe_mobility_cannot_assume_three_usable_limbs",
+              "source": "nursing_rule",
+              "finding": "Все травмы и риски давления запланированы."
+            },
+            {
+              "factId": "repair_sequence_preserves_every_identified_injury",
+              "source": "continuity_rule",
+              "finding": "Самый дешевый ремонт одной конечности не может исключать другие участки."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "safe_mobility_cannot_assume_three_usable_limbs",
+              "discoveryPaths": [
+                "post_event_weight_bearing",
+                "whole_patient_neurologic_screen",
+                "bone_joint_side_segment_configuration"
+              ]
+            },
+            {
+              "factId": "repair_sequence_preserves_every_identified_injury",
+              "discoveryPaths": [
+                "prior_images_and_implant_records",
+                "orthogonal_views_with_adjacent_joints",
+                "serial_alignment_union_and_function"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_whole_patient_trauma_survey",
+              "classification": "required_first",
+              "result": "Целевое исследование показало: карта основных травм."
+            },
+            {
+              "id": "fracture_orthogonal_radiography_and_adjacent_joints",
+              "classification": "required_each_site_when_safe",
+              "result": "На рентгенограммах: нанесены на карту все уровни и стыки."
+            },
+            {
+              "id": "fracture_cross_sectional_or_surgical_planning_referral",
+              "classification": "required_sequencing",
+              "result": "По итогам консультации специалиста: последовательность ремонта и госпитализации."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "safe_mobility_cannot_assume_three_usable_limbs",
+              "repair_sequence_preserves_every_identified_injury"
+            ],
+            "confirmedDiagnosisRequires": [
+              "complete_injury_map"
+            ],
+            "dangerStates": [
+              "missed_fracture",
+              "pressure_injury",
+              "unsafe_transport",
+              "untreated_pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "trauma_primary_survey",
+              "pain_assessment",
+              "stabilization"
+            ],
+            "external": [
+              "xray_or_referral",
+              "orthopedic_surgery_referral",
+              "hospital_referral",
+              "fracture_rehabilitation"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_whole_patient_route",
+              "fracture_imaging_route",
+              "fracture_advanced_planning_route",
+              "fracture_bandage_monitoring_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "unstable_complex_fracture_plan",
+          "followUp": {
+            "timing": "Карта травм одного и того же эпизода и поэтапные контрольные точки мобильности или функций.",
+            "required": true,
+            "targets": [
+              "all_sites",
+              "pain",
+              "transport",
+              "nursing",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Все травмы остаются видимыми благодаря последовательности и восстановлению.",
+            "unsafe": "Одна восстановленная конечность закрывает эпизод множественной травмы."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: последовательность действий, госпитализацию и почему ни одна травма не устраняется молча."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "shocky",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "multi_person_safe_transport_and_hospital_referral",
+            "ownerModifiers": [
+              "limited_home_support",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "fracture_open_or_severe_soft_tissue_injury",
+      "version": "2026.07.16.40",
+      "title": "Открытый перелом или тяжёлое повреждение мягких тканей",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Любая сообщающаяся рана создает путь открытого перелома; контаминация, перфузия и жизнеспособность тканей определяют срочность и неопределенность этапа реконструкции.",
+      "exclusions": [
+        "cosmetic_closure_before_assessment",
+        "wound_size_based_closed_classification",
+        "guaranteed_salvage"
+      ],
+      "planBundleId": "open_fracture_plan",
+      "sourceIds": [
+        "merck_bone_fractures_2025",
+        "acvs_fractured_limbs"
+      ],
+      "presentations": [
+        {
+          "id": "p1_small_wound_communicating_with_fracture",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что колотая рана вблизи перелома может сообщаться с костью, несмотря на ограниченное повреждение кожи.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, травмы и время ранения.",
+            "nearby_wound_or_discharge": "Дома мы заметили, что имеется небольшая рана.",
+            "home_analgesic_exposure": "Насколько мы можем судить, записано.",
+            "financial_staging_constraints": "Мы записали, что поэтапный маршрут обсуждается."
+          },
+          "examFindings": [
+            {
+              "factId": "tiny_wound_can_define_open_fracture_if_it_communicates",
+              "source": "classification_rule",
+              "finding": "Размер не может служить подтверждением закрытого статуса."
+            },
+            {
+              "factId": "wound_is_protected_not_cosmetically_closed_before_source_control_plan",
+              "source": "wound_rule",
+              "finding": "Стерильное покрытие и направление."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "tiny_wound_can_define_open_fracture_if_it_communicates",
+              "discoveryPaths": [
+                "nearby_wound_or_discharge",
+                "wound_communication_contamination_record",
+                "bone_joint_side_segment_configuration"
+              ]
+            },
+            {
+              "factId": "wound_is_protected_not_cosmetically_closed_before_source_control_plan",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "pain_shock_and_handling_assessment"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_open_closed_and_soft_tissue_classification",
+              "classification": "required",
+              "result": "Целевое исследование показало: коммуникация и загрязнение."
+            },
+            {
+              "id": "fracture_pain_neurologic_and_neurovascular_assessment",
+              "classification": "required_pre_post_support",
+              "result": "При динамическом наблюдении: боль и дистальная жизнеспособность."
+            },
+            {
+              "id": "fracture_orthogonal_radiography_and_adjacent_joints",
+              "classification": "required_when_stable",
+              "result": "На рентгенограммах: перелом и контекст постороннего материала."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "tiny_wound_can_define_open_fracture_if_it_communicates",
+              "wound_is_protected_not_cosmetically_closed_before_source_control_plan"
+            ],
+            "confirmedDiagnosisRequires": [
+              "wound_fracture_communication_evidence"
+            ],
+            "dangerStates": [
+              "contamination",
+              "infection",
+              "vascular_injury",
+              "delayed_source_control"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "open_fracture_protocol",
+              "wound_exam",
+              "pain_assessment",
+              "neurovascular_limb_assessment"
+            ],
+            "external": [
+              "orthopedic_surgery_referral",
+              "xray_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_open_wound_route",
+              "fracture_neurovascular_route",
+              "fracture_imaging_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "open_fracture_plan",
+          "followUp": {
+            "timing": "Срочная хирургическая передача и контрольные точки инфекции или сращения.",
+            "required": true,
+            "targets": [
+              "wound",
+              "perfusion",
+              "contamination",
+              "infection",
+              "union"
+            ]
+          },
+          "outcomes": {
+            "safe": "Небольшая сообщающаяся рана получает лечение при открытом переломе.",
+            "unsafe": "Маленький размер приводит к косметическому закрытию и пропущенному загрязнению."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему крошечная рана на коже может оказаться серьезным открытым переломом."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "sterile_cover_minimal_manipulation_and_referral",
+            "ownerModifiers": [
+              "minimizes_small_wound",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_contaminated_crush_or_high_energy_open_injury",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что размозжение или высокоэнергетический открытый перелом с контаминацией и неопределенной жизнеспособностью тканей.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, событие с высокоэнергетическим загрязнением.",
+            "nearby_wound_or_discharge": "Дома мы заметили, что открытая рана или обнаженные ткани зафиксированы.",
+            "distal_color_temperature_change": "Насколько мы можем судить, риск перфузии фиксирован.",
+            "financial_staging_constraints": "Мы записали, что поэтапная стоимость и неопределенность."
+          },
+          "examFindings": [
+            {
+              "factId": "soft_tissue_viability_and_perfusion_drive_salvage_uncertainty",
+              "source": "prognosis_rule",
+              "finding": "Одного изображения кости недостаточно."
+            },
+            {
+              "factId": "repeated_debridement_or_salvage_category_is_specialist_authored",
+              "source": "treatment_boundary",
+              "finding": "Никакая техника не создана."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "soft_tissue_viability_and_perfusion_drive_salvage_uncertainty",
+              "discoveryPaths": [
+                "distal_color_temperature_change",
+                "wound_communication_contamination_record",
+                "distal_pulse_perfusion_temperature"
+              ]
+            },
+            {
+              "factId": "repeated_debridement_or_salvage_category_is_specialist_authored",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "abc_hemorrhage_chest_abdomen_screen",
+                "bone_joint_side_segment_configuration"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_whole_patient_trauma_survey",
+              "classification": "required_first",
+              "result": "Целевое исследование показало: стабильность и связанные с ней травмы."
+            },
+            {
+              "id": "fracture_open_closed_and_soft_tissue_classification",
+              "classification": "required_serial",
+              "result": "Целевое исследование показало: загрязнение и жизнеспособность."
+            },
+            {
+              "id": "fracture_cross_sectional_or_surgical_planning_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: категория реконструкции или утилизации."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "soft_tissue_viability_and_perfusion_drive_salvage_uncertainty",
+              "repeated_debridement_or_salvage_category_is_specialist_authored"
+            ],
+            "confirmedDiagnosisRequires": [
+              "open_high_energy_fracture_and_viability_record"
+            ],
+            "dangerStates": [
+              "shock",
+              "hemorrhage",
+              "ischemia",
+              "necrosis",
+              "infection"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "trauma_primary_survey",
+              "stabilization",
+              "open_fracture_protocol",
+              "neurovascular_limb_assessment"
+            ],
+            "external": [
+              "orthopedic_surgery_referral",
+              "hospital_referral",
+              "advanced_imaging_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_whole_patient_route",
+              "fracture_open_wound_route",
+              "fracture_advanced_planning_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "open_fracture_plan",
+          "followUp": {
+            "timing": "Постоянная жизнеспособность, затем поэтапная реконструкция или контрольные точки заражения.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "viability",
+              "contamination",
+              "infection",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Поэтапный план специалиста отражает эволюцию тканей.",
+            "unsafe": "Опасно гарантировать спасение с первого изображения."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: дайте неопределённость и поэтапные оценки, не обещая сохранения конечностей."
+          ],
+          "compatibility": {
+            "temperament": [
+              "shocky",
+              "painful",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "stabilization_and_emergency_transfer",
+            "ownerModifiers": [
+              "panicked",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_delayed_open_fracture_with_infection_risk",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_complex",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что отсроченный открытый перелом с выделениями, запахом, обнажением материала или увеличением боли и риска инфекции.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, отложенный график сохранен.",
+            "nearby_wound_or_discharge": "Дома мы заметили, что Выбросы или запах или экспонированный материал.",
+            "home_analgesic_exposure": "Насколько мы можем судить, записано без вины.",
+            "prior_images_and_implant_records": "Мы записали, что доступен или отсутствует."
+          },
+          "examFindings": [
+            {
+              "factId": "delayed_open_fracture_remains_linked_to_bone_and_original_trauma",
+              "source": "continuity_rule",
+              "finding": "Не конвертируется в несвязанный абсцесс."
+            },
+            {
+              "factId": "culture_or_tissue_strategy_is_planned_with_source_control",
+              "source": "infection_rule",
+              "finding": "Сам по себе мазок с поверхности не является доказательством качества принятия решения."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "delayed_open_fracture_remains_linked_to_bone_and_original_trauma",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "prior_images_and_implant_records",
+                "bone_joint_side_segment_configuration"
+              ]
+            },
+            {
+              "factId": "culture_or_tissue_strategy_is_planned_with_source_control",
+              "discoveryPaths": [
+                "nearby_wound_or_discharge",
+                "wound_communication_contamination_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_open_closed_and_soft_tissue_classification",
+              "classification": "required",
+              "result": "Целевое исследование показало: текущее состояние раны и жизнеспособности."
+            },
+            {
+              "id": "fracture_healing_and_implant_followup",
+              "classification": "required",
+              "result": "При динамическом наблюдении: контекст кость или имплантат или сросток."
+            },
+            {
+              "id": "fracture_cross_sectional_or_surgical_planning_referral",
+              "classification": "required_for_source_control",
+              "result": "По итогам консультации специалиста: специализированный путь заражения и восстановления."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "delayed_open_fracture_remains_linked_to_bone_and_original_trauma",
+              "culture_or_tissue_strategy_is_planned_with_source_control"
+            ],
+            "confirmedDiagnosisRequires": [
+              "deep_tissue_bone_or_implant_infection_evidence"
+            ],
+            "dangerStates": [
+              "sepsis",
+              "necrosis",
+              "implant_failure",
+              "nonunion"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "open_fracture_protocol",
+              "wound_exam",
+              "pain_assessment"
+            ],
+            "external": [
+              "orthopedic_surgery_referral",
+              "bone_pathology_workup_external",
+              "culture_external",
+              "fracture_followup_imaging"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_open_wound_route",
+              "fracture_pathology_route",
+              "fracture_bandage_monitoring_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "open_fracture_plan",
+          "followUp": {
+            "timing": "Срочный план борьбы с источником и проверка серийного заражения или функция.",
+            "required": true,
+            "targets": [
+              "wound",
+              "culture_context",
+              "bone",
+              "implant",
+              "union",
+              "systemic_state"
+            ]
+          },
+          "outcomes": {
+            "safe": "Риск отсроченной инфекции по-прежнему связан с лечением переломов.",
+            "unsafe": "Это становится поверхностным абсцессом или эмпирическим бесконечным лечением."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему задержка меняет ткани и неопределенность в отношении инфекции, не возлагая при этом вину."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful",
+              "systemically_ill"
+            ],
+            "requiredHandlingAlternative": "analgesia_wound_protection_and_referral",
+            "ownerModifiers": [
+              "delayed_access",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "fracture_articular_or_physeal",
+      "version": "2026.07.16.40",
+      "title": "Внутрисуставной перелом или повреждение зоны роста",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Конгруэнтность суставов и состояние открытой зоны роста меняют планирование и определяют артрит, длину и выравнивание в продольном направлении.",
+      "exclusions": [
+        "adult_fracture_logic_copied_to_juvenile",
+        "small_fragment_dismissed",
+        "breed_based_diagnosis"
+      ],
+      "planBundleId": "articular_physeal_plan",
+      "sourceIds": [
+        "merck_bone_fractures_2025",
+        "acvs_femoral_capital_physeal"
+      ],
+      "presentations": [
+        {
+          "id": "p1_articular_surface_disruption",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что перелом нарушает суставную поверхность и угрожает конгруэнтности суставов и функции хряща.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, зафиксировано травмирующее событие.",
+            "post_event_weight_bearing": "Дома мы заметили, что переменная; не исключение серьезности.",
+            "nearby_wound_or_discharge": "Насколько мы можем судить, статус открытия.",
+            "confinement_feasibility": "Мы записали, что обосновано обоснование реабилитации."
+          },
+          "examFindings": [
+            {
+              "factId": "small_articular_fragment_can_have_major_functional_importance",
+              "source": "joint_rule",
+              "finding": "Поверхность и конгруэнтность определяют значимость."
+            },
+            {
+              "factId": "post_traumatic_arthritis_risk_persists_after_union",
+              "source": "outcome_rule",
+              "finding": "Эпизод продолжается в продольном направлении."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "small_articular_fragment_can_have_major_functional_importance",
+              "discoveryPaths": [
+                "bone_joint_side_segment_configuration",
+                "orthogonal_views_with_adjacent_joints",
+                "joint_congruence_and_stability_record"
+              ]
+            },
+            {
+              "factId": "post_traumatic_arthritis_risk_persists_after_union",
+              "discoveryPaths": [
+                "post_event_weight_bearing",
+                "serial_alignment_union_and_function"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_orthogonal_radiography_and_adjacent_joints",
+              "classification": "required",
+              "result": "На рентгенограммах: разрыв сустава и связанный с ним перелом."
+            },
+            {
+              "id": "fracture_cross_sectional_or_surgical_planning_referral",
+              "classification": "required_if_complex_or_planning_changes",
+              "result": "По итогам консультации специалиста: категория соответствия и специального ремонта."
+            },
+            {
+              "id": "fracture_healing_and_implant_followup",
+              "classification": "required_longitudinal",
+              "result": "При динамическом наблюдении: союз, функция суставов и динамика артрита."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "small_articular_fragment_can_have_major_functional_importance",
+              "post_traumatic_arthritis_risk_persists_after_union"
+            ],
+            "confirmedDiagnosisRequires": [
+              "joint_surface_disruption_on_quality_imaging"
+            ],
+            "dangerStates": [
+              "open_joint",
+              "loss_of_congruity",
+              "severe_pain",
+              "progressive_arthritis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "pain_assessment",
+              "neurovascular_limb_assessment"
+            ],
+            "external": [
+              "xray_or_referral",
+              "advanced_imaging_referral",
+              "orthopedic_surgery_referral",
+              "fracture_rehabilitation"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_imaging_route",
+              "fracture_advanced_planning_route",
+              "fracture_bandage_monitoring_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "articular_physeal_plan",
+          "followUp": {
+            "timing": "Специалист по планированию, затем контрольные точки объединения и совместных функций.",
+            "required": true,
+            "targets": [
+              "congruity",
+              "pain",
+              "union",
+              "range",
+              "function",
+              "arthritis"
+            ]
+          },
+          "outcomes": {
+            "safe": "Анатомия суставов и долгосрочные функции определяют решения.",
+            "unsafe": "Небольшой фрагмент удаляется после уменьшения боли."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему травма суставной поверхности может иметь значение, выходящее за рамки сращения костей."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "analgesia_and_safe_imaging_or_referral",
+            "ownerModifiers": [
+              "expects_simple_cast",
+              "rehabilitation_barrier"
+            ]
+          }
+        },
+        {
+          "id": "p2_juvenile_physeal_injury",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что ювенильный перелом пересекает открытую пластинку роста с риском дальнейшей длины и выравнивания.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, травма и возраст фиксированы.",
+            "post_event_weight_bearing": "Дома мы заметили, что переменная.",
+            "preexisting_lameness_mass_or_surgery": "Насколько мы можем судить, история роста зафиксирована.",
+            "confinement_feasibility": "Мы записали, что возможность пройти наблюдение или лечение зафиксировано."
+          },
+          "examFindings": [
+            {
+              "factId": "physeal_injury_requires_age_specific_classification",
+              "source": "growth_rule",
+              "finding": "Предположения о взрослом переломе запрещены."
+            },
+            {
+              "factId": "initial_union_does_not_end_growth_monitoring",
+              "source": "longitudinal_rule",
+              "finding": "Длина и расположение по сравнению с ростом."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "physeal_injury_requires_age_specific_classification",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "bone_joint_side_segment_configuration",
+                "orthogonal_views_with_adjacent_joints"
+              ]
+            },
+            {
+              "factId": "initial_union_does_not_end_growth_monitoring",
+              "discoveryPaths": [
+                "preexisting_lameness_mass_or_surgery",
+                "serial_alignment_union_and_function"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_orthogonal_radiography_and_adjacent_joints",
+              "classification": "required",
+              "result": "На рентгенограммах: физика, смещение и взаимоотношения суставов."
+            },
+            {
+              "id": "fracture_growth_plate_and_alignment_monitoring",
+              "classification": "required_longitudinal",
+              "result": "При динамическом наблюдении: сравнение длины, оси и контралатеральной стороны."
+            },
+            {
+              "id": "fracture_cross_sectional_or_surgical_planning_referral",
+              "classification": "required_if_displaced_or_articular",
+              "result": "По итогам консультации специалиста: специализированный план с учетом возраста."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "physeal_injury_requires_age_specific_classification",
+              "initial_union_does_not_end_growth_monitoring"
+            ],
+            "confirmedDiagnosisRequires": [
+              "open_physis_injury_on_quality_imaging"
+            ],
+            "dangerStates": [
+              "growth_arrest",
+              "angular_deformity",
+              "joint_incongruity"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "pain_assessment",
+              "neurovascular_limb_assessment"
+            ],
+            "external": [
+              "xray_or_referral",
+              "physeal_growth_monitoring",
+              "orthopedic_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_imaging_route",
+              "fracture_growth_route",
+              "fracture_advanced_planning_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "articular_physeal_plan",
+          "followUp": {
+            "timing": "Контрольные точки раннего выравнивания, объединения и сквозного роста.",
+            "required": true,
+            "targets": [
+              "physis",
+              "length",
+              "axis",
+              "joint",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Нарушение роста выявляется рано и остается объяснимым.",
+            "unsafe": "Наличие сращения ошибочно считают завершением случая до оценки дальнейшего роста кости."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему заживший перелом все еще может повлиять на последующий рост конечностей."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful",
+              "active"
+            ],
+            "requiredHandlingAlternative": "analgesia_and_age_appropriate_referral",
+            "ownerModifiers": [
+              "confinement_barrier",
+              "misses_long_followup"
+            ]
+          }
+        },
+        {
+          "id": "p3_feline_capital_physeal_or_slipped_epiphysis_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "priority_or_urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что у кошки острая или хроническая хромота бедра, совместимая с переломом основной пластинки или смещением эпифиза, иногда без памятной травмы.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, травма присутствует, отсутствует или неизвестна.",
+            "post_event_weight_bearing": "Дома мы заметили, что острая потеря веса или хроническое снижение прыжков.",
+            "preexisting_lameness_mass_or_surgery": "Насколько мы можем судить, контралатеральный и хронический анамнез.",
+            "prior_images_and_implant_records": "Мы записали, что доступен или отсутствует."
+          },
+          "examFindings": [
+            {
+              "factId": "absence_of_remembered_trauma_does_not_exclude_capital_physeal_disease",
+              "source": "presentation_rule",
+              "finding": "Маршрут, совместимый с эпифизеолиз головки бедренной кости, остается."
+            },
+            {
+              "factId": "breed_sex_or_age_risk_changes_probability_not_diagnosis",
+              "source": "bias_rule",
+              "finding": "Требуются доказательства двусторонней визуализации."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "absence_of_remembered_trauma_does_not_exclude_capital_physeal_disease",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "post_event_weight_bearing",
+                "bone_joint_side_segment_configuration"
+              ]
+            },
+            {
+              "factId": "breed_sex_or_age_risk_changes_probability_not_diagnosis",
+              "discoveryPaths": [
+                "preexisting_lameness_mass_or_surgery",
+                "orthogonal_views_with_adjacent_joints"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_orthogonal_radiography_and_adjacent_joints",
+              "classification": "required_bilateral_context",
+              "result": "На рентгенограммах: капитальный физис, смещение и противоположное бедро."
+            },
+            {
+              "id": "fracture_cross_sectional_or_surgical_planning_referral",
+              "classification": "required_for_repair_or_salvage_category",
+              "result": "По итогам консультации специалиста: специализированный план, основанный на хронических заболеваниях или анатомии."
+            },
+            {
+              "id": "fracture_growth_plate_and_alignment_monitoring",
+              "classification": "required_if_growth_remaining",
+              "result": "При динамическом наблюдении: двусторонний рост и выравнивание."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "absence_of_remembered_trauma_does_not_exclude_capital_physeal_disease",
+              "breed_sex_or_age_risk_changes_probability_not_diagnosis"
+            ],
+            "confirmedDiagnosisRequires": [
+              "femoral_capital_physeal_separation_on_imaging"
+            ],
+            "dangerStates": [
+              "bilateral_disease",
+              "chronic_joint_damage",
+              "severe_pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "pain_assessment",
+              "orthopedic_exam"
+            ],
+            "external": [
+              "xray_or_referral",
+              "orthopedic_surgery_referral",
+              "physeal_growth_monitoring"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_imaging_route",
+              "fracture_advanced_planning_route",
+              "fracture_growth_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "articular_physeal_plan",
+          "followUp": {
+            "timing": "Решение специалиста и двусторонние контрольные точки функции или роста.",
+            "required": true,
+            "targets": [
+              "pain",
+              "both_hips",
+              "jumping",
+              "alignment",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Атравматический и двусторонний риск оцениваются без учета породы.",
+            "unsafe": "Никакая травма или породная принадлежность не определяют диагноз."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: эта травма зоны роста может произойти и без каких-либо свидетелей несчастного случая."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful",
+              "withdrawn"
+            ],
+            "requiredHandlingAlternative": "low_stress_hip_imaging_or_referral",
+            "ownerModifiers": [
+              "no_trauma_recall",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "fracture_pelvic_or_axial_trauma",
+      "version": "2026.07.16.40",
+      "title": "Перелом таза или осевой скелет с сопутствующей травмой",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "При переломах таза и осевых переломах сохраняются одновременные приоритеты в грудной, брюшной полости, мочевыводящих путях, прямой кишке, дыхательных путях, питании и неврологии, прежде чем принимать решения о восстановлении только кости.",
+      "exclusions": [
+        "walking_excludes_pelvic_fracture",
+        "bone_only_discharge",
+        "generated_site_specific_fixation"
+      ],
+      "planBundleId": "pelvic_axial_trauma_plan",
+      "sourceIds": [
+        "acvs_fractured_limbs",
+        "merck_bone_fractures_2025"
+      ],
+      "presentations": [
+        {
+          "id": "p1_pelvic_fracture_with_weight_bearing_assessment",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_complex",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что перелом таза с различной способностью стоять или ходить и возможным вовлечением вертлужной впадины или несущей нагрузки.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, серьезная травма устранена.",
+            "post_event_weight_bearing": "Дома мы заметили, что ступени возможны или отсутствуют; не исключение.",
+            "pelvic_elimination_history": "Насколько мы можем судить, регистрируется мочеиспускание или дефекация.",
+            "confinement_feasibility": "Мы записали, что возможность ухода за больными."
+          },
+          "examFindings": [
+            {
+              "factId": "ability_to_take_steps_does_not_exclude_important_pelvic_fracture",
+              "source": "function_limit",
+              "finding": "Визуализация и экран органов остаются."
+            },
+            {
+              "factId": "acetabular_weight_bearing_and_stability_change_route",
+              "source": "anatomic_rule",
+              "finding": "Категория консервативного и хирургического лечения рассматривается специалистами."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "ability_to_take_steps_does_not_exclude_important_pelvic_fracture",
+              "discoveryPaths": [
+                "post_event_weight_bearing",
+                "abc_hemorrhage_chest_abdomen_screen",
+                "pelvic_urinary_rectal_neurologic_screen"
+              ]
+            },
+            {
+              "factId": "acetabular_weight_bearing_and_stability_change_route",
+              "discoveryPaths": [
+                "bone_joint_side_segment_configuration",
+                "orthogonal_views_with_adjacent_joints"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_whole_patient_trauma_survey",
+              "classification": "required_first",
+              "result": "Целевое исследование показало: стабильность грудной или брюшной полости."
+            },
+            {
+              "id": "fracture_orthogonal_radiography_and_adjacent_joints",
+              "classification": "required_when_stable",
+              "result": "На рентгенограммах: стабильность таза, вертлужной впадины и канала."
+            },
+            {
+              "id": "fracture_cross_sectional_or_surgical_planning_referral",
+              "classification": "required_if_complex_or_weight_bearing",
+              "result": "По итогам консультации специалиста: специализированный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "ability_to_take_steps_does_not_exclude_important_pelvic_fracture",
+              "acetabular_weight_bearing_and_stability_change_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "pelvic_fracture_map_and_concurrent_injury_screen"
+            ],
+            "dangerStates": [
+              "hemorrhage",
+              "urinary_injury",
+              "canal_narrowing",
+              "acetabular_disruption"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "trauma_primary_survey",
+              "stabilization",
+              "pelvic_trauma_assessment",
+              "pain_assessment"
+            ],
+            "external": [
+              "xray_or_referral",
+              "advanced_imaging_referral",
+              "orthopedic_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_whole_patient_route",
+              "fracture_pelvic_axial_route",
+              "fracture_imaging_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "pelvic_axial_trauma_plan",
+          "followUp": {
+            "timing": "Скрининг органов в том же эпизоде, затем контрольные точки подвижности или элиминации или функции.",
+            "required": true,
+            "targets": [
+              "pain",
+              "urination",
+              "defecation",
+              "mobility",
+              "pelvic_alignment"
+            ]
+          },
+          "outcomes": {
+            "safe": "Управление тазом осуществляется с учетом органов и нагрузки.",
+            "unsafe": "Ходьба позволяет выделять только кости."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: несколько шагов не исключают травму таза или внутренних органов."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful",
+              "shocky"
+            ],
+            "requiredHandlingAlternative": "minimal_movement_stabilization_and_imaging_or_referral",
+            "ownerModifiers": [
+              "sees_walking_as_recovery",
+              "home_nursing_barrier"
+            ]
+          }
+        },
+        {
+          "id": "p2_urinary_neurologic_or_rectal_risk",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_or_urgent",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что травма таза включает невозможность мочеиспускания, гематурию, беспокойство в прямой кишке, дефицит хвоста или промежности или сужение канала.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, травма произошла сегодня; мы точно знаем время и механизм повреждения.",
+            "pelvic_elimination_history": "Дома мы заметили, что владелец не отмечает этого признака на текущем этапе.",
+            "observed_motor_sensation": "Насколько мы можем судить, изменения хвоста или промежности или конечностей.",
+            "distal_color_temperature_change": "Мы записали, что контекст перфузии."
+          },
+          "examFindings": [
+            {
+              "factId": "pelvic_bone_injury_cannot_hide_urinary_rectal_or_neural_emergency",
+              "source": "organ_priority",
+              "finding": "Выгрузка заблокирована, пока маршрут не существует."
+            },
+            {
+              "factId": "unknown_elimination_is_not_normal_elimination",
+              "source": "data_sufficiency",
+              "finding": "Требуется наблюдение или направление."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "pelvic_bone_injury_cannot_hide_urinary_rectal_or_neural_emergency",
+              "discoveryPaths": [
+                "pelvic_elimination_history",
+                "observed_motor_sensation",
+                "pelvic_urinary_rectal_neurologic_screen"
+              ]
+            },
+            {
+              "factId": "unknown_elimination_is_not_normal_elimination",
+              "discoveryPaths": [
+                "pelvic_elimination_history",
+                "abc_hemorrhage_chest_abdomen_screen"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_whole_patient_trauma_survey",
+              "classification": "required_first",
+              "result": "Целевое исследование показало: экран стабильности и повреждений органов."
+            },
+            {
+              "id": "fracture_pain_neurologic_and_neurovascular_assessment",
+              "classification": "required",
+              "result": "При динамическом наблюдении: неврологическая запись хвоста или промежности или конечностей."
+            },
+            {
+              "id": "fracture_cross_sectional_or_surgical_planning_referral",
+              "classification": "required_by_organ_or_canal_risk",
+              "result": "По итогам консультации специалиста: план специалиста по заболеваниям органов малого таза, мочевыводящих путей, прямой кишки и нервной системы."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "pelvic_bone_injury_cannot_hide_urinary_rectal_or_neural_emergency",
+              "unknown_elimination_is_not_normal_elimination"
+            ],
+            "confirmedDiagnosisRequires": [
+              "organ_or_neural_deficit_specific_evidence"
+            ],
+            "dangerStates": [
+              "urinary_rupture",
+              "obstruction",
+              "rectal_injury",
+              "nerve_damage",
+              "hemorrhage"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "trauma_primary_survey",
+              "pelvic_trauma_assessment",
+              "neurologic_exam",
+              "stabilization"
+            ],
+            "external": [
+              "advanced_imaging_referral",
+              "hospital_referral",
+              "orthopedic_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_whole_patient_route",
+              "fracture_pelvic_axial_route",
+              "fracture_advanced_planning_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "pelvic_axial_trauma_plan",
+          "followUp": {
+            "timing": "Непрерывная элиминация или нейромониторинг и контроль приема услуг.",
+            "required": true,
+            "targets": [
+              "urination",
+              "defecation",
+              "tail",
+              "perineum",
+              "canal",
+              "systemic_state"
+            ]
+          },
+          "outcomes": {
+            "safe": "Органные и неврологические риски устранены или безопасно перенесены.",
+            "unsafe": "Выравнивание костей завершает случай, в то время как элиминация неизвестна."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему мочеиспускание, дефекация и функция нервов определяют безопасные выделения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "shocky",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "stabilization_and_urgent_multidisciplinary_referral",
+            "ownerModifiers": [
+              "uncertain_observation",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_mandibular_spinal_or_other_axial_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency_or_urgent_by_airway_neuro",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что перелом нижней челюсти, позвоночника или другой осевой перелом создает приоритеты в обеспечении проходимости дыхательных путей, окклюзии, питании, иммобилизации или неврологических приоритетах.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, травма произошла сегодня; мы точно знаем время и механизм повреждения.",
+            "observed_motor_sensation": "Дома мы заметили, что после травмы мы отдельно записали движения конечностей, хвоста и реакцию на прикосновение.",
+            "post_event_weight_bearing": "Насколько мы можем судить, самостоятельно животное не поднимали: мы только описали движения, которые оно выполняло без принуждения.",
+            "home_analgesic_exposure": "Мы записали, что записано."
+          },
+          "examFindings": [
+            {
+              "factId": "axial_site_preserves_airway_nutrition_occlusion_or_neuro_priority",
+              "source": "site_specific_rule",
+              "finding": "Такую травму нельзя вести как обычный перелом конечности: приоритет зависит от челюсти, позвоночника и сопутствующих повреждений."
+            },
+            {
+              "factId": "ui_does_not_generate_jaw_or_spinal_fixation_technique",
+              "source": "treatment_boundary",
+              "finding": "Требуется специальный протокол."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "axial_site_preserves_airway_nutrition_occlusion_or_neuro_priority",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "abc_hemorrhage_chest_abdomen_screen",
+                "whole_patient_neurologic_screen",
+                "bone_joint_side_segment_configuration"
+              ]
+            },
+            {
+              "factId": "ui_does_not_generate_jaw_or_spinal_fixation_technique",
+              "discoveryPaths": [
+                "observed_motor_sensation",
+                "orthogonal_views_with_adjacent_joints"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_whole_patient_trauma_survey",
+              "classification": "required_first",
+              "result": "Целевое исследование показало: проходимость дыхательных путей сохранена, дыхание стабильное; выявлен неврологический дефицит, требующий специализированной оценки."
+            },
+            {
+              "id": "fracture_pain_neurologic_and_neurovascular_assessment",
+              "classification": "required_by_site",
+              "result": "При динамическом наблюдении: боль и неврологический фон."
+            },
+            {
+              "id": "fracture_cross_sectional_or_surgical_planning_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: определены зона томографии, безопасная временная стабилизация и срочность перевода."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "axial_site_preserves_airway_nutrition_occlusion_or_neuro_priority",
+              "ui_does_not_generate_jaw_or_spinal_fixation_technique"
+            ],
+            "confirmedDiagnosisRequires": [
+              "site_specific_axial_imaging_and_function_record"
+            ],
+            "dangerStates": [
+              "airway_compromise",
+              "spinal_instability",
+              "neurologic_decline",
+              "inability_to_eat"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "trauma_primary_survey",
+              "stabilization",
+              "pain_assessment",
+              "neurologic_exam"
+            ],
+            "external": [
+              "advanced_imaging_referral",
+              "orthopedic_surgery_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_whole_patient_route",
+              "fracture_pelvic_axial_route",
+              "fracture_advanced_planning_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "pelvic_axial_trauma_plan",
+          "followUp": {
+            "timing": "Непрерывно контролировать дыхательные пути, неврологический статус и возможность питания до передачи специалисту.",
+            "required": true,
+            "targets": [
+              "airway",
+              "neuro",
+              "occlusion",
+              "nutrition",
+              "pain",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Пациента направляют к специалисту с учётом точной локализации травмы; технику стабилизации и операции заранее не предполагают.",
+            "unsafe": "Опасно применять к перелому челюсти или позвоночника тот же подход, что к простой травме конечности."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: опасность, специфичную для данного места, и почему требуется специальная стабилизация."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "obtunded",
+              "fearful",
+              "neurologically_impaired"
+            ],
+            "requiredHandlingAlternative": "site_specific_immobilization_and_emergency_referral",
+            "ownerModifiers": [
+              "panicked",
+              "transport_barrier"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "joint_luxation_traumatic_or_developmental",
+      "version": "2026.07.16.40",
+      "title": "Травматический вывих или клинически значимый подвывих",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Вывих сустава требует оценки всего пациента и связанных с ним переломов, конгруэнтности, определяемой при визуализации, и проверки пригодности к репозиции или хирургии с проверкой после репозиции и продольной функции.",
+      "exclusions": [
+        "blind_put_it_back_action",
+        "reduction_without_pre_post_imaging",
+        "incidental_patella_automatic_surgery"
+      ],
+      "planBundleId": "joint_luxation_plan",
+      "sourceIds": [
+        "merck_joint_trauma",
+        "acvs_hip_luxation",
+        "acvs_patellar_luxation"
+      ],
+      "presentations": [
+        {
+          "id": "p1_acute_hip_luxation",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что острый болезненный вывих бедра после травмы с изменением положения конечности и связанным с ним риском травмы.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, травма и время зафиксированы.",
+            "post_event_weight_bearing": "Дома мы заметили, что снижено или отсутствует.",
+            "preexisting_lameness_mass_or_surgery": "Насколько мы можем судить, история болезни тазобедренного сустава.",
+            "confinement_feasibility": "Мы записали, что разработано возможность пройти наблюдение или лечение после сокращения."
+          },
+          "examFindings": [
+            {
+              "factId": "hip_luxation_force_requires_concurrent_trauma_screen",
+              "source": "whole_patient_rule",
+              "finding": "Мочевые, грудные и другие повреждения остаются видимыми."
+            },
+            {
+              "factId": "closed_reduction_eligibility_depends_on_timing_architecture_and_associated_damage",
+              "source": "eligibility_rule",
+              "finding": "Нет универсального действия по сокращению."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "hip_luxation_force_requires_concurrent_trauma_screen",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "abc_hemorrhage_chest_abdomen_screen"
+              ]
+            },
+            {
+              "factId": "closed_reduction_eligibility_depends_on_timing_architecture_and_associated_damage",
+              "discoveryPaths": [
+                "preexisting_lameness_mass_or_surgery",
+                "joint_congruence_and_stability_record",
+                "orthogonal_views_with_adjacent_joints"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_whole_patient_trauma_survey",
+              "classification": "required_first",
+              "result": "Целевое исследование показало: сопутствующая травма и контекст анестезиологического риска."
+            },
+            {
+              "id": "luxation_joint_congruence_and_associated_injury_workup",
+              "classification": "required_pre_post_route",
+              "result": "Целевое исследование показало: направление, связанный перелом и конгруэнтность после маршрута."
+            },
+            {
+              "id": "fracture_orthogonal_radiography_and_adjacent_joints",
+              "classification": "required_when_safe",
+              "result": "На рентгенограммах: архитектура бедра и повреждения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "hip_luxation_force_requires_concurrent_trauma_screen",
+              "closed_reduction_eligibility_depends_on_timing_architecture_and_associated_damage"
+            ],
+            "confirmedDiagnosisRequires": [
+              "radiographic_hip_incongruence_and_direction"
+            ],
+            "dangerStates": [
+              "associated_fracture",
+              "urinary_injury",
+              "neurovascular_injury",
+              "reluxation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "trauma_primary_survey",
+              "pain_assessment",
+              "neurovascular_limb_assessment"
+            ],
+            "external": [
+              "joint_reduction_referral",
+              "xray_or_referral",
+              "orthopedic_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_whole_patient_route",
+              "fracture_imaging_route",
+              "luxation_reduction_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "joint_luxation_plan",
+          "followUp": {
+            "timing": "Срочный специализированный маршрут, затем контрольные точки конгруэнтности или релюксации или функции.",
+            "required": true,
+            "targets": [
+              "congruence",
+              "pain",
+              "support",
+              "reluxation",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Право на снижение и стабильность после маршрута документально подтверждены.",
+            "unsafe": "Сустав слепо вставляют обратно, и эпизод закрывается."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему необходима визуализация до и после маршрута редукции."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful",
+              "shocky"
+            ],
+            "requiredHandlingAlternative": "analgesia_minimal_manipulation_and_referral",
+            "ownerModifiers": [
+              "requests_immediate_reduction",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_other_joint_luxation_or_subluxation",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что локоть, плечо, запястье, предплюсна или другой сустав вывихнут или подвывихнут с возможным повреждением связок, переломом или сосудисто-нервным повреждением.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, травмирующая или нестабильная временная шкала.",
+            "post_event_weight_bearing": "Дома мы заметили, что переменная.",
+            "distal_color_temperature_change": "Насколько мы можем судить, история перфузии.",
+            "prior_images_and_implant_records": "Мы записали, что предыдущие совместные записи."
+          },
+          "examFindings": [
+            {
+              "factId": "joint_name_does_not_remove_fracture_neurovascular_or_ligament_assessment",
+              "source": "associated_injury_rule",
+              "finding": "Все компоненты сохраняются."
+            },
+            {
+              "factId": "post_reduction_imaging_support_and_rehabilitation_remain_same_episode",
+              "source": "continuity_rule",
+              "finding": "Сокращение не является завершением эпизода."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "joint_name_does_not_remove_fracture_neurovascular_or_ligament_assessment",
+              "discoveryPaths": [
+                "distal_color_temperature_change",
+                "distal_pulse_perfusion_temperature",
+                "joint_congruence_and_stability_record",
+                "orthogonal_views_with_adjacent_joints"
+              ]
+            },
+            {
+              "factId": "post_reduction_imaging_support_and_rehabilitation_remain_same_episode",
+              "discoveryPaths": [
+                "prior_images_and_implant_records",
+                "serial_alignment_union_and_function"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_pain_neurologic_and_neurovascular_assessment",
+              "classification": "required_pre_post",
+              "result": "При динамическом наблюдении: боль, дистальная перфузия, моторика и чувствительность."
+            },
+            {
+              "id": "luxation_joint_congruence_and_associated_injury_workup",
+              "classification": "required",
+              "result": "Целевое исследование показало: конгруэнтность, перелом и стабильность."
+            },
+            {
+              "id": "fracture_healing_and_implant_followup",
+              "classification": "required_longitudinal",
+              "result": "При динамическом наблюдении: поддержка, функция связок или суставов и реабилитация."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "joint_name_does_not_remove_fracture_neurovascular_or_ligament_assessment",
+              "post_reduction_imaging_support_and_rehabilitation_remain_same_episode"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_defined_joint_incongruence"
+            ],
+            "dangerStates": [
+              "vascular_compromise",
+              "nerve_injury",
+              "associated_fracture",
+              "reluxation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "pain_assessment",
+              "neurovascular_limb_assessment",
+              "orthopedic_exam"
+            ],
+            "external": [
+              "joint_reduction_referral",
+              "xray_or_referral",
+              "fracture_rehabilitation",
+              "orthopedic_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_neurovascular_route",
+              "fracture_imaging_route",
+              "luxation_reduction_route",
+              "fracture_bandage_monitoring_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "joint_luxation_plan",
+          "followUp": {
+            "timing": "Согласованность до и после маршрута и продольный анализ функций суставов.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "congruence",
+              "stability",
+              "pain",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Сопутствующие травмы и реабилитация остаются видимыми.",
+            "unsafe": "Уменьшение устраняет риск перелома, связки или нерва."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: восстановление положения само по себе не восстанавливает стабильность или функцию."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "analgesia_and_joint_reduction_referral",
+            "ownerModifiers": [
+              "expects_one_visit_fix",
+              "rehabilitation_barrier"
+            ]
+          }
+        },
+        {
+          "id": "p3_patellar_luxation_symptomatic_vs_incidental",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_priority_by_function",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что вывих надколенника бывает случайным или бессимптомным или вызывает пропуск, боль, деформацию или прогрессирующую дисфункцию.",
+          "historyAnswers": {
+            "post_event_weight_bearing": "По нашим наблюдениям, пропуск или частота или функция зафиксирована.",
+            "preexisting_lameness_mass_or_surgery": "Дома мы заметили, что хромота постепенно усиливается; проблемы отмечали с обоими коленями.",
+            "confinement_feasibility": "Насколько мы можем судить, обоснована целесообразность лечения.",
+            "financial_staging_constraints": "Мы записали, что мониторинг остается действительным, когда это необходимо."
+          },
+          "examFindings": [
+            {
+              "factId": "grade_or_incidental_finding_alone_does_not_mandate_surgery",
+              "source": "decision_rule",
+              "finding": "Функция, боль, прогрессирование и анатомия определяют маршрут."
+            },
+            {
+              "factId": "bilateral_alignment_and_deformity_context_are_preserved",
+              "source": "anatomic_rule",
+              "finding": "Одно колено не может скрыть другое."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "grade_or_incidental_finding_alone_does_not_mandate_surgery",
+              "discoveryPaths": [
+                "post_event_weight_bearing",
+                "joint_congruence_and_stability_record"
+              ]
+            },
+            {
+              "factId": "bilateral_alignment_and_deformity_context_are_preserved",
+              "discoveryPaths": [
+                "preexisting_lameness_mass_or_surgery",
+                "orthogonal_views_with_adjacent_joints",
+                "serial_alignment_union_and_function"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "luxation_joint_congruence_and_associated_injury_workup",
+              "classification": "required_functional_classification",
+              "result": "Целевое исследование показало: сторона, направление, стабильность, боль и функция."
+            },
+            {
+              "id": "fracture_orthogonal_radiography_and_adjacent_joints",
+              "classification": "recommended_if_symptomatic_progressive_or_planning",
+              "result": "На рентгенограммах: выравнивание или деформация или другая патология."
+            },
+            {
+              "id": "fracture_healing_and_implant_followup",
+              "classification": "required_if_monitored_or_treated",
+              "result": "При динамическом наблюдении: двусторонняя функция и прогрессирование."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "grade_or_incidental_finding_alone_does_not_mandate_surgery",
+              "bilateral_alignment_and_deformity_context_are_preserved"
+            ],
+            "confirmedDiagnosisRequires": [
+              "trained_bilateral_patellar_exam_with_function_context"
+            ],
+            "dangerStates": [
+              "progressive_deformity",
+              "persistent_pain",
+              "functional_loss"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "orthopedic_exam",
+              "joint_stability_exam",
+              "pain_assessment"
+            ],
+            "external": [
+              "xray_or_referral",
+              "orthopedic_referral",
+              "fracture_rehabilitation"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_imaging_route",
+              "luxation_reduction_route",
+              "fracture_bandage_monitoring_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "joint_luxation_plan",
+          "followUp": {
+            "timing": "Двусторонние функции одинакового масштаба и контрольные точки прогрессирования.",
+            "required": true,
+            "targets": [
+              "skip_frequency",
+              "pain",
+              "both_knees",
+              "alignment",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Случайные случаи можно отслеживать, а симптоматические случаи планировать пропорционально.",
+            "unsafe": "Каждый вывих коленной чашечки требует хирургического вмешательства, а каждая случайная находка игнорируется."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: разницу между анатомической находкой и клинически значимой дисфункцией."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "active"
+            ],
+            "requiredHandlingAlternative": "trained_low_stress_exam_or_referral",
+            "ownerModifiers": [
+              "requests_surgery_for_grade",
+              "worries_about_monitoring"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "fracture_pathologic_delayed_union_or_repair_complication",
+      "version": "2026.07.16.40",
+      "title": "Патологический перелом, нарушение сращения или осложнение ремонта",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Низкоэнергетический перелом, неудачное заживление, осложнения с имплантатом или повязкой или редукцией по-прежнему связаны с исходной анатомией и эпизодом, в то время как биология, механика, инфекция и неоплазия расследуются без вины.",
+      "exclusions": [
+        "fix_before_cause_workup",
+        "random_biopsy_track",
+        "complication_detached_from_original_episode"
+      ],
+      "planBundleId": "pathologic_or_repair_complication_plan",
+      "sourceIds": [
+        "merck_bone_fractures_2025",
+        "acvs_fractured_limbs",
+        "merck_joint_trauma"
+      ],
+      "presentations": [
+        {
+          "id": "p1_pathologic_fracture_without_adequate_trauma",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_complex",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что низкоэнергетический перелом или перелом на месте, где ранее наблюдалась боль, отек или аномальная кость.",
+          "historyAnswers": {
+            "mechanism_and_time": "По нашим наблюдениям, недостаточная травматизация или ее отсутствие.",
+            "preexisting_lameness_mass_or_surgery": "Дома мы заметили, что предыдущая боль или отек устранена.",
+            "prior_images_and_implant_records": "Насколько мы можем судить, записи сравнения.",
+            "financial_staging_constraints": "Мы записали, что возможность пройти наблюдение или лечение."
+          },
+          "examFindings": [
+            {
+              "factId": "insufficient_trauma_requires_bone_cause_and_systemic_workup",
+              "source": "pathology_rule",
+              "finding": "Метаболические, инфекционные и неопластические причины остаются."
+            },
+            {
+              "factId": "biopsy_route_is_planned_to_preserve_future_treatment_planes",
+              "source": "oncologic_rule",
+              "finding": "Случайная выборка запрещена."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "insufficient_trauma_requires_bone_cause_and_systemic_workup",
+              "discoveryPaths": [
+                "mechanism_and_time",
+                "preexisting_lameness_mass_or_surgery",
+                "bone_joint_side_segment_configuration"
+              ]
+            },
+            {
+              "factId": "biopsy_route_is_planned_to_preserve_future_treatment_planes",
+              "discoveryPaths": [
+                "prior_images_and_implant_records",
+                "pathologic_bone_and_planned_biopsy_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_orthogonal_radiography_and_adjacent_joints",
+              "classification": "required",
+              "result": "На рентгенограммах: характер переломов и повреждений костей."
+            },
+            {
+              "id": "fracture_pathologic_bone_workup",
+              "classification": "required_before_definitive_fixation_choice",
+              "result": "При динамическом наблюдении: системный, инфекционный, метаболический или неопластический путь."
+            },
+            {
+              "id": "fracture_cross_sectional_or_surgical_planning_referral",
+              "classification": "required_for_biopsy_and_repair_plan",
+              "result": "По итогам консультации специалиста: запланированная категория постановки или биопсии и стабилизации."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "insufficient_trauma_requires_bone_cause_and_systemic_workup",
+              "biopsy_route_is_planned_to_preserve_future_treatment_planes"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cause_specific_pathology_microbiology_or_systemic_evidence"
+            ],
+            "dangerStates": [
+              "neoplasia",
+              "bone_infection",
+              "additional_pathologic_fracture",
+              "severe_pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "pain_assessment",
+              "fracture_first_aid_stabilization"
+            ],
+            "external": [
+              "bone_pathology_workup_external",
+              "oncology_staging_external",
+              "histology_external",
+              "advanced_imaging_referral",
+              "orthopedic_surgery_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_pathology_route",
+              "fracture_advanced_planning_route",
+              "fracture_support_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "pathologic_or_repair_complication_plan",
+          "followUp": {
+            "timing": "Срочный план стадирования или биопсии, а затем результат перелома с учетом конкретной причины.",
+            "required": true,
+            "targets": [
+              "pain",
+              "bone_lesion",
+              "cause",
+              "staging",
+              "fracture_stability"
+            ]
+          },
+          "outcomes": {
+            "safe": "Причина и путь биопсии определяют окончательное восстановление.",
+            "unsafe": "Перелом фиксируют до причины или стадирования или берут образцы в будущих плоскостях."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему при переломе слабой кости необходимо провести обследование, прежде чем сделать окончательный выбор метода лечения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful",
+              "systemically_ill"
+            ],
+            "requiredHandlingAlternative": "protect_fracture_and_specialist_pathology_route",
+            "ownerModifiers": [
+              "wants_immediate_fix",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_delayed_union_nonunion_or_malunion",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "complex_follow_up",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что при серийных клинических и визуализирующих исследованиях перелом демонстрирует медленное, отсутствующее или неравномерное заживление.",
+          "historyAnswers": {
+            "prior_images_and_implant_records": "По нашим наблюдениям, серийные датированные изображения и запись о ремонте.",
+            "existing_splint_bandage_status": "Дома мы заметили, что история поддержки.",
+            "confinement_feasibility": "Насколько мы можем судить, фактические ограничения и барьеры зафиксированы без обвинений.",
+            "home_analgesic_exposure": "Мы записали, что зафиксировано воздействие плана боли."
+          },
+          "examFindings": [
+            {
+              "factId": "serial_evidence_distinguishes_slow_progress_from_failed_biology_or_mechanics",
+              "source": "healing_rule",
+              "finding": "Одного изображения или календарной даты недостаточно."
+            },
+            {
+              "factId": "infection_instability_perfusion_and_feasibility_are_audited_before_blame",
+              "source": "failure_audit",
+              "finding": "Больше времени – не единственный ответ."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "serial_evidence_distinguishes_slow_progress_from_failed_biology_or_mechanics",
+              "discoveryPaths": [
+                "prior_images_and_implant_records",
+                "serial_alignment_union_and_function"
+              ]
+            },
+            {
+              "factId": "infection_instability_perfusion_and_feasibility_are_audited_before_blame",
+              "discoveryPaths": [
+                "existing_splint_bandage_status",
+                "confinement_feasibility",
+                "distal_pulse_perfusion_temperature",
+                "wound_communication_contamination_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_healing_and_implant_followup",
+              "classification": "required_serial",
+              "result": "При динамическом наблюдении: выравнивание, сращение, динамика имплантата и функции."
+            },
+            {
+              "id": "fracture_pain_neurologic_and_neurovascular_assessment",
+              "classification": "required_reassessment",
+              "result": "При динамическом наблюдении: боль и жизнеспособность."
+            },
+            {
+              "id": "fracture_pathologic_bone_workup",
+              "classification": "required_if_biology_or_infection_suspected",
+              "result": "При динамическом наблюдении: доказательства конкретной причины."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "serial_evidence_distinguishes_slow_progress_from_failed_biology_or_mechanics",
+              "infection_instability_perfusion_and_feasibility_are_audited_before_blame"
+            ],
+            "confirmedDiagnosisRequires": [
+              "serial_clinical_radiographic_and_mechanical_classification"
+            ],
+            "dangerStates": [
+              "infection",
+              "implant_failure",
+              "instability",
+              "progressive_malalignment"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "pain_assessment",
+              "neurovascular_limb_assessment"
+            ],
+            "external": [
+              "fracture_followup_imaging",
+              "orthopedic_surgery_referral",
+              "bone_pathology_workup_external",
+              "fracture_rehabilitation"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_bandage_monitoring_route",
+              "fracture_pathology_route",
+              "fracture_advanced_planning_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "pathologic_or_repair_complication_plan",
+          "followUp": {
+            "timing": "Серийные контрольные точки биологии или механики или функций одного масштаба.",
+            "required": true,
+            "targets": [
+              "union",
+              "alignment",
+              "infection",
+              "implant",
+              "pain",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Режим отказа выявляется до пересмотра или продолжения мониторинга.",
+            "unsafe": "Винят в этом владельца или предлагают только больше времени."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: вызывает ли беспокойство биология, стабильность, инфекция, выравнивание или несколько факторов."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "analgesia_and_comparison_imaging_or_referral",
+            "ownerModifiers": [
+              "confinement_barrier",
+              "financial_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p3_implant_bandage_or_reluxation_complication",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "post_chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_perfusion_pain_or_infection",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что сломанный или мигрировавший имплантат, пролежни, потеря редукции или релюкс после предшествующего лечения перелома или сустава.",
+          "historyAnswers": {
+            "prior_images_and_implant_records": "По нашим наблюдениям, исходная процедура и запись об имплантате или уменьшении зафиксированы.",
+            "existing_splint_bandage_status": "Дома мы заметили, что текущее состояние поддержки зафиксировано.",
+            "distal_color_temperature_change": "Насколько мы можем судить, зафиксировано предупреждение о перфузии.",
+            "nearby_wound_or_discharge": "Мы записали, что признаки ран или инфекции."
+          },
+          "examFindings": [
+            {
+              "factId": "complication_remains_linked_to_original_procedure_and_outcome",
+              "source": "continuity_rule",
+              "finding": "Никаких новых анонимных серий."
+            },
+            {
+              "factId": "perfusion_pain_infection_or_loss_of_stability_sets_urgency",
+              "source": "triage_rule",
+              "finding": "Расписание календаря не может игнорировать тревожные признаки."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "complication_remains_linked_to_original_procedure_and_outcome",
+              "discoveryPaths": [
+                "prior_images_and_implant_records",
+                "serial_alignment_union_and_function"
+              ]
+            },
+            {
+              "factId": "perfusion_pain_infection_or_loss_of_stability_sets_urgency",
+              "discoveryPaths": [
+                "distal_color_temperature_change",
+                "nearby_wound_or_discharge",
+                "pre_post_support_neurovascular_check",
+                "wound_communication_contamination_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "fracture_healing_and_implant_followup",
+              "classification": "required",
+              "result": "При динамическом наблюдении: статус имплантата, выравнивания, сращения и редукции."
+            },
+            {
+              "id": "fracture_pain_neurologic_and_neurovascular_assessment",
+              "classification": "required_urgency",
+              "result": "При динамическом наблюдении: боль и дистальная жизнеспособность."
+            },
+            {
+              "id": "luxation_joint_congruence_and_associated_injury_workup",
+              "classification": "required_if_loss_or_reluxation",
+              "result": "Целевое исследование показало: конгруэнтность суставов и связанные с ней повреждения."
+            },
+            {
+              "id": "fracture_cross_sectional_or_surgical_planning_referral",
+              "classification": "required_for_revision_or_salvage",
+              "result": "По итогам консультации специалиста: категория специализированной редакции."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "complication_remains_linked_to_original_procedure_and_outcome",
+              "perfusion_pain_infection_or_loss_of_stability_sets_urgency"
+            ],
+            "confirmedDiagnosisRequires": [
+              "comparison_imaging_wound_and_neurovascular_evidence"
+            ],
+            "dangerStates": [
+              "ischemia",
+              "pressure_necrosis",
+              "infection",
+              "implant_breakage",
+              "reluxation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "pain_assessment",
+              "neurovascular_limb_assessment",
+              "bandage_splint_monitoring"
+            ],
+            "external": [
+              "fracture_followup_imaging",
+              "orthopedic_surgery_referral",
+              "joint_reduction_referral",
+              "culture_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "fracture_neurovascular_route",
+              "fracture_bandage_monitoring_route",
+              "luxation_reduction_route",
+              "fracture_advanced_planning_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "pathologic_or_repair_complication_plan",
+          "followUp": {
+            "timing": "Срочное разрешение проблемы, а затем результат ревизии или релюкса.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "skin",
+              "wound",
+              "implant",
+              "congruence",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Осложнения классифицируются и присваиваются без потери предварительных доказательств.",
+            "unsafe": "Новый эпизод скрывает результаты предшествующего лечения или неотложную пролежневую травму."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: осложнения, непосредственный риск и неопределенность в отношении пересмотра или спасения без обвинений."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "fearful",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "protect_support_and_urgent_referral",
+            "ownerModifiers": [
+              "lost_records",
+              "financial_fatigue"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if life-threatening trauma is delayed for limb imaging.",
+    "Reject if open status is inferred from wound size alone.",
+    "Reject if distal neurovascular status is missing before or after support.",
+    "Reject if every fracture receives the same splint or any unsuitable proximal support lacks referral.",
+    "Reject if code generates a drug, dose, implant, reduction manoeuvre or operative technique.",
+    "Reject if external imaging, surgery or longitudinal healing returns instantly."
+  ]
+}

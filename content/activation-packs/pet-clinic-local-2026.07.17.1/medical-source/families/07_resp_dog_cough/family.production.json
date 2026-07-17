@@ -1,0 +1,3012 @@
+{
+  "schemaVersion": 1,
+  "familyId": "resp_dog_cough",
+  "familyVersion": "2026.07.16.40",
+  "title": "Кашель и похожие эпизоды у собак",
+  "campaignPhase": "chapter_1_to_chapter_5",
+  "species": [
+    "dog"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "symptomRule": "Кашель является наблюдаемым симптомом, а не диагнозом комплекс инфекционных респираторных заболеваний собак, коллапса трахеи или сердечной недостаточности.",
+    "eventRule": "Обратное чихание, рвотные позывы и регургитация не становятся кашлем без наблюдаемой классификации.",
+    "cardiacRule": "Сердечный шум или ответ на пробное лечение не подтверждают кардиогенный отёк лёгких.",
+    "productiveRule": "Продуктивный кашель не подавляется до оценки пневмонии, отёка и нижних дыхательных путей.",
+    "doseRule": "Ветеринарный врач выбирает препараты, дозы, интервалы, седацию, кислородный или эндоскопический протокол."
+  },
+  "coreCapabilities": [
+    "general_exam",
+    "respiratory_exam",
+    "auscultation"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "event_classification_or_recheck",
+      "anyOf": [
+        "respiratory_exam",
+        "safe_referral"
+      ],
+      "purpose": "observed_event_classification"
+    },
+    {
+      "id": "circdc_testing_or_referral",
+      "anyOf": [
+        "pcr_external",
+        "safe_referral"
+      ],
+      "purpose": "targeted_infectious_testing"
+    },
+    {
+      "id": "thoracic_imaging_or_referral",
+      "anyOf": [
+        "xray_or_referral",
+        "safe_referral"
+      ],
+      "purpose": "lung_and_cardiac_pattern"
+    },
+    {
+      "id": "dynamic_airway_or_referral",
+      "anyOf": [
+        "dynamic_airway_imaging_referral",
+        "airway_endoscopy_referral",
+        "safe_referral"
+      ],
+      "purpose": "dynamic_collapse_confirmation"
+    },
+    {
+      "id": "airway_sampling_or_referral",
+      "anyOf": [
+        "airway_endoscopy_referral",
+        "culture_external",
+        "safe_referral"
+      ],
+      "purpose": "chronic_or_complicated_airway_sampling"
+    },
+    {
+      "id": "cardiac_workup_or_referral",
+      "anyOf": [
+        "ecg",
+        "cardiology_referral",
+        "safe_referral"
+      ],
+      "purpose": "cardiac_and_syncope_workup"
+    },
+    {
+      "id": "oxygen_emergency_or_referral",
+      "anyOf": [
+        "oxygen",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "respiratory_distress_stabilization"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "resp_dog_event_classification",
+      "requires": [
+        "respiratory_exam"
+      ],
+      "availability": "local_from_start",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_dog_resting_respiratory_rate",
+      "requires": [
+        "respiratory_rate"
+      ],
+      "availability": "local_from_start",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_dog_auscultation",
+      "requires": [
+        "auscultation"
+      ],
+      "availability": "local_from_start",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_dog_pulse_oximetry",
+      "requires": [
+        "pulse_oximetry"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_dog_targeted_pcr",
+      "requires": [
+        "respiratory_sample_collection",
+        "pcr_external"
+      ],
+      "availability": "external_chapter_3",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_dog_thoracic_xray",
+      "requires": [
+        "xray_or_referral"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_dog_dynamic_airway_imaging",
+      "requires": [
+        "dynamic_airway_imaging_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_dog_airway_sampling",
+      "requires": [
+        "airway_endoscopy_referral",
+        "culture_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "resp_dog_cardiac_workup",
+      "requires": [
+        "xray_or_referral",
+        "ecg",
+        "cardiology_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "event_video_description",
+      "text": "Покажите видео или аудио и опишите последовательность эпизода."
+    },
+    {
+      "id": "onset_frequency_duration",
+      "text": "Когда началось, как часто и сколько длится?"
+    },
+    {
+      "id": "rest_night_exercise_pattern",
+      "text": "Возникает в покое, ночью, после нагрузки или возбуждения?"
+    },
+    {
+      "id": "interepisode_breathing",
+      "text": "Есть ли тахипноэ, усилие или открытый рот между эпизодами?"
+    },
+    {
+      "id": "dry_or_productive",
+      "text": "Эпизод сухой или с секретом или влажным звуком?"
+    },
+    {
+      "id": "syncope_cyanosis",
+      "text": "Были ли падение, слабость, синие или серые слизистые?"
+    },
+    {
+      "id": "fever_appetite_activity",
+      "text": "Есть ли лихорадка, вялость или снижение аппетита?"
+    },
+    {
+      "id": "group_exposure",
+      "text": "Были ли передержка, выставка, груминг, площадка или больные контакты?"
+    },
+    {
+      "id": "cluster_signal",
+      "text": "Кашляет ли ещё кто-то и есть ли кластер случаев?"
+    },
+    {
+      "id": "vaccination_travel",
+      "text": "Вакцинация, поездки, импорт и региональные риски?"
+    },
+    {
+      "id": "vomiting_regurgitation_swallow",
+      "text": "Есть ли рвота, пассивное возвращение или нарушение глотания независимо от кашля?"
+    },
+    {
+      "id": "cardiac_history_medications",
+      "text": "Есть ли шум, сердечный диагноз и какие лекарства применяются?"
+    },
+    {
+      "id": "weight_collar_heat_irritants",
+      "text": "Вес, ошейник, жара, возбуждение, дым, пыль и аэрозоли?"
+    },
+    {
+      "id": "previous_plan_response",
+      "text": "Что уже делали и какая была объективная динамика?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "observe_before_handling",
+      "source": "observation",
+      "requires": [
+        "respiratory_exam"
+      ]
+    },
+    {
+      "id": "event_video_review",
+      "source": "observation",
+      "requires": [
+        "respiratory_exam"
+      ]
+    },
+    {
+      "id": "general_vitals_perfusion",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "resting_respiratory_rate",
+      "source": "measurement",
+      "requires": [
+        "respiratory_rate"
+      ]
+    },
+    {
+      "id": "heart_lung_auscultation",
+      "source": "physical_exam",
+      "requires": [
+        "auscultation"
+      ]
+    },
+    {
+      "id": "mucous_membrane_color",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "upper_airway_tracheal_exam_if_stable",
+      "source": "physical_exam",
+      "requires": [
+        "respiratory_exam"
+      ]
+    },
+    {
+      "id": "pulse_ox_quality_checked",
+      "source": "measurement",
+      "requires": [
+        "pulse_oximetry"
+      ]
+    },
+    {
+      "id": "body_weight_condition",
+      "source": "measurement",
+      "requires": [
+        "body_weight"
+      ]
+    },
+    {
+      "id": "respiratory_pcr_sample",
+      "source": "diagnostic_test",
+      "requires": [
+        "respiratory_sample_collection",
+        "pcr_external"
+      ]
+    },
+    {
+      "id": "thoracic_xray",
+      "source": "diagnostic_test",
+      "requires": [
+        "xray_or_referral"
+      ]
+    },
+    {
+      "id": "dynamic_airway_imaging",
+      "source": "diagnostic_test",
+      "requires": [
+        "dynamic_airway_imaging_referral"
+      ]
+    },
+    {
+      "id": "airway_sampling",
+      "source": "diagnostic_test",
+      "requires": [
+        "airway_endoscopy_referral",
+        "culture_external"
+      ]
+    },
+    {
+      "id": "ecg_cardiology_route",
+      "source": "diagnostic_test",
+      "requires": [
+        "ecg",
+        "cardiology_referral"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "cough_event_classification",
+      "fullPlan": [
+        "observe_or_review_event",
+        "triage_breathing_before_provocation",
+        "classify_cough_reverse_sneeze_gag_or_regurgitation",
+        "localize_by_history_and_exam",
+        "link_gi_or_aspiration_route_if_needed",
+        "written_red_flags",
+        "recheck_if_event_not_captured"
+      ],
+      "stagedPlan": [
+        "breathing_safety",
+        "event_classification",
+        "targeted_exam",
+        "followup"
+      ],
+      "minimumSafePlan": [
+        "do_not_treat_unclassified_event",
+        "breathing_screen",
+        "video_or_recheck",
+        "red_flags"
+      ],
+      "stabilizeAndRefer": [
+        "no_provocation",
+        "oxygen_if_needed",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "owner_word_equals_cough",
+        "gag_after_cough_equals_vomiting",
+        "provoke_unstable_patient",
+        "cough_drug_before_classification"
+      ]
+    },
+    {
+      "id": "uncomplicated_cirdc_isolation_support",
+      "fullPlan": [
+        "isolate",
+        "confirm_stable_breathing_and_systemic_state",
+        "group_history",
+        "support_and_activity_plan",
+        "targeted_pcr_only_if_changes_group_or_individual_plan",
+        "reviewed_components_only_when_indicated",
+        "recheck_for_pneumonia_signs"
+      ],
+      "stagedPlan": [
+        "isolation_and_exam",
+        "safe_support",
+        "group_plan",
+        "recheck"
+      ],
+      "minimumSafePlan": [
+        "isolate",
+        "exclude_complication",
+        "support",
+        "return_conditions"
+      ],
+      "stabilizeAndRefer": [
+        "recognize_complication",
+        "minimal_support",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "vaccination_excludes_cirdc",
+        "automatic_antimicrobial",
+        "common_waiting_room",
+        "xray_panel_for_every_stable_case"
+      ]
+    },
+    {
+      "id": "complicated_cirdc_pneumonia_gate",
+      "fullPlan": [
+        "strict_isolation",
+        "respiratory_and_systemic_stability",
+        "thoracic_imaging_after_initial_stability",
+        "cbc_and_targeted_testing_by_context",
+        "do_not_suppress_productive_cough_before_evaluation",
+        "link_pneumonia_family_if_criteria_met",
+        "hospital_or_referral"
+      ],
+      "stagedPlan": [
+        "isolate_and_triage",
+        "image_or_refer",
+        "targeted_tests",
+        "linked_lower_airway_plan"
+      ],
+      "minimumSafePlan": [
+        "isolation",
+        "pneumonia_assessment",
+        "oxygen_or_referral_if_needed",
+        "short_recheck"
+      ],
+      "stabilizeAndRefer": [
+        "minimal_handling",
+        "oxygen",
+        "urgent_hospital_referral"
+      ],
+      "unsafeOrInadequate": [
+        "mild_home_plan_for_febrile_puppy",
+        "suppress_productive_cough",
+        "negative_early_test_overrules_deterioration",
+        "delay_for_full_panel"
+      ]
+    },
+    {
+      "id": "dynamic_airway_collapse_route",
+      "fullPlan": [
+        "stability_first",
+        "document_triggers_and_event",
+        "neck_and_thoracic_imaging",
+        "dynamic_confirmation_or_referral",
+        "evaluate_cardiac_and_bronchial_comorbidity",
+        "weight_harness_heat_and_excitement_plan",
+        "emergency_plan"
+      ],
+      "stagedPlan": [
+        "stability",
+        "static_and_dynamic_route",
+        "trigger_reduction",
+        "followup"
+      ],
+      "minimumSafePlan": [
+        "do_not_diagnose_by_breed_or_sound",
+        "avoid_neck_pressure",
+        "reduce_triggers",
+        "dynamic_or_referral_plan"
+      ],
+      "stabilizeAndRefer": [
+        "minimal_handling",
+        "oxygen_and_reviewer_approved_calming",
+        "urgent_referral"
+      ],
+      "unsafeOrInadequate": [
+        "honking_sound_confirms_collapse",
+        "normal_static_xray_excludes_collapse",
+        "weight_loss_only",
+        "provoke_during_distress"
+      ]
+    },
+    {
+      "id": "chronic_airway_exclusion_workup",
+      "fullPlan": [
+        "confirm_chronic_duration",
+        "thoracic_imaging",
+        "exclude_cardiac_infectious_parasitic_and_structural_causes_by_risk",
+        "remove_inhaled_irritants",
+        "airway_sampling_when_nonresponse_or_contradiction",
+        "reviewed_longitudinal_plan",
+        "objective_recheck"
+      ],
+      "stagedPlan": [
+        "baseline_imaging",
+        "first_exclusion_step",
+        "environment_trial",
+        "advanced_sampling_if_needed"
+      ],
+      "minimumSafePlan": [
+        "baseline_cause_route",
+        "remove_smoke_and_irritants",
+        "do_not_repeat_endless_symptomatic_plan",
+        "defined_recheck"
+      ],
+      "stabilizeAndRefer": [
+        "support_by_state",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "duration_alone_confirms_bronchitis",
+        "normal_temperature_excludes_disease",
+        "environment_link_closes_workup",
+        "escalate_symptoms_without_sampling"
+      ]
+    },
+    {
+      "id": "dyspnea_syncope_cardiopulmonary_emergency",
+      "fullPlan": [
+        "minimal_handling_abc",
+        "oxygen_if_distress",
+        "resting_rate_pulse_ox_and_perfusion_by_tolerance",
+        "thoracic_imaging_after_stability",
+        "ecg_and_cardiac_workup_by_findings",
+        "differentiate_edema_pneumonia_collapse_arrhythmia_and_other_causes",
+        "documented_handoff"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "first_discriminating_test",
+        "specialty_route",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "do_not_assume_chf_from_murmur",
+        "oxygen_or_referral",
+        "resting_rate_and_imaging_when_tolerated",
+        "urgent_route"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen",
+        "minimal_manipulation",
+        "urgent_hospital_referral"
+      ],
+      "unsafeOrInadequate": [
+        "full_history_before_oxygen",
+        "murmur_equals_chf",
+        "response_to_trial_equals_diagnosis",
+        "syncope_equals_heart_without_differentials"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "resp_dog_cough_undifferentiated",
+      "version": "2026.07.16.40",
+      "title": "Недифференцированный острый кашель или похожий эпизод",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Наблюдаемый эпизод сначала классифицируется; этиологического диагноза до этого нет.",
+      "primaryDiagnosisId": "dx_dog_undifferentiated_cough_like_event",
+      "differentials": [
+        "dx_true_cough",
+        "dx_reverse_sneeze",
+        "dx_gagging",
+        "dx_regurgitation",
+        "dx_vomiting"
+      ],
+      "planBundleId": "cough_event_classification",
+      "sourceIds": [
+        "merck_respiratory_signs",
+        "merck_respiratory_diagnostics"
+      ],
+      "presentations": [
+        {
+          "id": "p1_owner_video_true_cough",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine_or_priority_by_state",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что владелец говорит, что собаку «тошнит», и показывает видео серии резких эпизодов.",
+          "historyAnswers": {
+            "event_video_description": "По нашим наблюдениям, на видео резкий выдох-кашель с вдохом и позывом после серии.",
+            "interepisode_breathing": "Дома мы заметили, что между эпизодами спокойно.",
+            "vomiting_regurgitation_swallow": "Насколько мы можем судить, пища и вода независимо не возвращаются.",
+            "onset_frequency_duration": "Мы записали, что началось недавно."
+          },
+          "examFindings": [
+            {
+              "factId": "true_cough_event",
+              "source": "observation",
+              "finding": "Видео подтверждает истинный кашель; посткашлевой позыв не является самостоятельной рвотой."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "true_cough_event",
+              "discoveryPaths": [
+                "event_video_description",
+                "event_video_review"
+              ]
+            },
+            {
+              "factId": "stable_between_events",
+              "discoveryPaths": [
+                "interepisode_breathing",
+                "observe_before_handling",
+                "resting_respiratory_rate"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_event_classification",
+              "classification": "required_before_etiologic_route",
+              "result": "Целевое исследование показало: истинный кашель подтверждён."
+            },
+            {
+              "id": "resp_dog_auscultation",
+              "classification": "required_for_localization",
+              "result": "При аускультации: сердечно-лёгочная находка определяет следующий маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "true_cough_event",
+              "stable_between_events"
+            ],
+            "confirmedDiagnosisRequires": [
+              "event_only_then_cause_specific_evidence"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "cough_event_classification",
+          "followUp": {
+            "timing": "Контроль назначают по найденной причине; пока причина не установлена — повторный осмотр в ближайший срок по динамике симптомов.",
+            "required": true,
+            "targets": [
+              "frequency",
+              "breathing",
+              "systemic_signs",
+              "exposure"
+            ]
+          },
+          "outcomes": {
+            "safe": "Процесс правильно назван, дальнейшая причина не выдумана.",
+            "unsafe": "Позыв после кашля ведётся как рвота."
+          },
+          "ownerCommunication": [
+            "Я покажу, какие моменты приступа важно снять; пожалуйста, запишите новое видео, если характер эпизода изменится."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "excitable"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "uses_wrong_term",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_reverse_sneeze_not_cough",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": true
+          },
+          "urgency": "routine_if_stable",
+          "workload": 0.75,
+          "complaint": "Мы обратились, потому что собака сериями шумно втягивает воздух, вытягивает шею, затем полностью нормальна.",
+          "historyAnswers": {
+            "event_video_description": "По нашим наблюдениям, серия быстрых шумных вдохов без типичного выдоха-кашля.",
+            "interepisode_breathing": "Дома мы заметили, что нормально между эпизодами.",
+            "nasal_laterality": "Насколько мы можем судить, неприменимо; триггеры носоглотки уточняются.",
+            "weight_collar_heat_irritants": "Мы записали, что пыль или возбуждение или иной триггер."
+          },
+          "examFindings": [
+            {
+              "factId": "reverse_sneeze_event",
+              "source": "observation",
+              "finding": "Наблюдаемая серия инспираторных движений совместима с обратным чиханием, не с кашлем."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "reverse_sneeze_event",
+              "discoveryPaths": [
+                "event_video_description",
+                "event_video_review"
+              ]
+            },
+            {
+              "factId": "stable_interepisode_exam",
+              "discoveryPaths": [
+                "observe_before_handling",
+                "heart_lung_auscultation",
+                "general_vitals_perfusion"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_event_classification",
+              "classification": "required",
+              "result": "Целевое исследование показало: обратное чихание подтверждено как процесс."
+            },
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "low_value_in_isolated_stable_episode",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "reverse_sneeze_event",
+              "stable_interepisode_exam"
+            ],
+            "confirmedDiagnosisRequires": [
+              "event_classification"
+            ],
+            "unexcludedRisks": [
+              "nasopharyngeal_cause_if_chronic_unilateral_bloody_or_progressive"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "cough_event_classification",
+          "followUp": {
+            "timing": "Повторно обратиться нужно, если приступы участились, стали односторонними, появилась кровь или изменилось дыхание.",
+            "required": true,
+            "targets": [
+              "event_video",
+              "nasal_signs",
+              "interepisode_breathing"
+            ]
+          },
+          "outcomes": {
+            "safe": "Кашлевой препарат не назначен по слову владельца.",
+            "unsafe": "Стабильное обратное чихание автоматически получает схему от кашля."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: разницу процесса и красные флаги носоглоточной причины."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "excitable"
+            ],
+            "ownerModifiers": [
+              "anxious",
+              "observant"
+            ]
+          }
+        },
+        {
+          "id": "p3_gagging_or_regurgitation_differential",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что пища или вода пассивно возвращаются независимо от «кашля», иногда после этого появляется дыхательный шум.",
+          "historyAnswers": {
+            "vomiting_regurgitation_swallow": "По нашим наблюдениям, пассивное возвращение или нарушение глотания независимо от кашля.",
+            "event_video_description": "Дома мы заметили, что видео отделяет процесс от выдоха-кашля.",
+            "interepisode_breathing": "Насколько мы можем судить, нормальное или ухудшенное дыхание.",
+            "onset_frequency_duration": "Мы записали, что повторяется."
+          },
+          "examFindings": [
+            {
+              "factId": "noncough_gi_esophageal_event",
+              "source": "observation",
+              "finding": "Регургитация или глотательный процесс требует связанной желудочно-кишечный клинического варианта и оценки аспирации."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "noncough_gi_esophageal_event",
+              "discoveryPaths": [
+                "vomiting_regurgitation_swallow",
+                "event_video_review"
+              ]
+            },
+            {
+              "factId": "aspiration_resp_status",
+              "discoveryPaths": [
+                "observe_before_handling",
+                "heart_lung_auscultation",
+                "resting_respiratory_rate"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_event_classification",
+              "classification": "required",
+              "result": "Целевое исследование показало: не является первичным кашлем."
+            },
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "recommended_if_aspiration_signs",
+              "result": "На рентгенограммах: при наличии лёгочных изменений случай переводят в диагностический маршрут пневмонии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "noncough_gi_esophageal_event",
+              "aspiration_resp_status"
+            ],
+            "confirmedDiagnosisRequires": [
+              "linked_gi_acute_or_swallowing_workup"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation"
+            ],
+            "conditional": [
+              "thoracic_imaging_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "cough_event_classification",
+          "followUp": {
+            "timing": "Сначала проверяют желудочно-кишечный тракт и пищевод, одновременно оценивая риск аспирации.",
+            "required": true,
+            "targets": [
+              "regurgitation",
+              "swallowing",
+              "respiratory_rate",
+              "lung_findings"
+            ]
+          },
+          "outcomes": {
+            "safe": "Два процесса разделены и аспирационный риск не пропущен.",
+            "unsafe": "Все эпизоды объединены словом «кашель»."
+          },
+          "ownerCommunication": [
+            "Пожалуйста, отдельные видео до, во время и после еды или воды."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "uses_wrong_term",
+              "observant",
+              "anxious"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_dog_cirdc_uncomplicated",
+      "version": "2026.07.16.40",
+      "title": "Неосложнённый инфекционный респираторный комплекс собак",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Совместимый комплекс инфекционных респираторных заболеваний собак без пневмонии, дыхательной недостаточности или выраженной системной болезни; конкретный агент может не устанавливаться.",
+      "primaryDiagnosisId": "dx_cirdc_uncomplicated",
+      "differentials": [
+        "dx_bordetella_bronchiseptica",
+        "dx_canine_parainfluenza",
+        "dx_canine_influenza",
+        "dx_canine_pneumovirus",
+        "dx_noninfectious_tracheobronchitis"
+      ],
+      "planBundleId": "uncomplicated_cirdc_isolation_support",
+      "sourceIds": [
+        "merck_kennel_cough",
+        "iscaid_respiratory_2017"
+      ],
+      "presentations": [
+        {
+          "id": "p1_post_boarding_harsh_cough",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "routine_clinical_priority_isolation",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что через несколько дней после передержки появился резкий кашель; собака активна и ест.",
+          "historyAnswers": {
+            "group_exposure": "По нашим наблюдениям, недавняя передержка или площадка.",
+            "fever_appetite_activity": "Дома мы заметили, что лихорадки, вялости и анорексии нет.",
+            "interepisode_breathing": "Насколько мы можем судить, без тахипноэ или усилия.",
+            "dry_or_productive": "Мы записали, что резкий сухой кашель."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_uncomplicated_cirdc_pattern",
+              "source": "physical_exam",
+              "finding": "Стабильный пациент, нормальная перфузия или дыхание и отсутствие аускультативных признаков пневмонии."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "infectious_exposure",
+              "discoveryPaths": [
+                "group_exposure"
+              ]
+            },
+            {
+              "factId": "stable_uncomplicated_cirdc_pattern",
+              "discoveryPaths": [
+                "observe_before_handling",
+                "general_vitals_perfusion",
+                "heart_lung_auscultation"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_event_classification",
+              "classification": "required",
+              "result": "Целевое исследование показало: истинный кашель."
+            },
+            {
+              "id": "resp_dog_targeted_pcr",
+              "classification": "optional_if_no_group_or_individual_decision_change",
+              "result": "Целевое лабораторное исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "low_value_without_complication_signs",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "infectious_exposure",
+              "stable_uncomplicated_cirdc_pattern"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_syndrome_not_single_agent"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation",
+              "isolation_protocol"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "uncomplicated_cirdc_isolation_support",
+          "followUp": {
+            "timing": "Через 48 часов оценивают клиническую динамику и необходимость дальнейшей изоляции.",
+            "required": true,
+            "targets": [
+              "temperature",
+              "appetite",
+              "resting_rate",
+              "cough_character",
+              "contacts"
+            ]
+          },
+          "outcomes": {
+            "safe": "Стабильный инфекционный синдром ведётся без ненужной панели.",
+            "unsafe": "Изоляция пропущена или антибиотик назначен автоматически."
+          },
+          "ownerCommunication": [
+            "Я дам вам план ограничения контактов и признаки пневмонии."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "excitable"
+            ],
+            "ownerModifiers": [
+              "boarding_user",
+              "expecting_antibiotic",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_vaccinated_dog_still_compatible",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "routine_clinical_priority_isolation",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что вакцинированная собака кашляет после группового контакта, но остаётся активной.",
+          "historyAnswers": {
+            "vaccination_travel": "По нашим наблюдениям, вакцинация актуальна.",
+            "group_exposure": "Дома мы заметили, что совместимый недавний контакт.",
+            "interepisode_breathing": "Насколько мы можем судить, нормально.",
+            "fever_appetite_activity": "Мы записали, что системных красных флагов нет."
+          },
+          "examFindings": [
+            {
+              "factId": "vaccinated_but_compatible_stable_pattern",
+              "source": "physical_exam",
+              "finding": "Вакцинация не исключает многокомпонентный комплекс инфекционных респираторных заболеваний собак; текущая тяжесть неосложнённая."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "vaccinated_exposure_context",
+              "discoveryPaths": [
+                "vaccination_travel",
+                "group_exposure"
+              ]
+            },
+            {
+              "factId": "vaccinated_but_compatible_stable_pattern",
+              "discoveryPaths": [
+                "observe_before_handling",
+                "heart_lung_auscultation",
+                "general_vitals_perfusion"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_targeted_pcr",
+              "classification": "optional_or_group_driven",
+              "result": "Целевое лабораторное исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "low_value_without_red_flags",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "vaccinated_exposure_context",
+              "vaccinated_but_compatible_stable_pattern"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_syndrome"
+            ],
+            "mustNotAssume": [
+              "vaccination_excludes_cirdc"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation",
+              "isolation_protocol"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "uncomplicated_cirdc_isolation_support",
+          "followUp": {
+            "timing": "Повторный осмотр назначен в ближайшие 48 часов.",
+            "required": true,
+            "targets": [
+              "temperature",
+              "resting_rate",
+              "appetite",
+              "cough"
+            ]
+          },
+          "outcomes": {
+            "safe": "Вакцинация учитывается без отмены изоляции.",
+            "unsafe": "Синдром объявлен невозможным по паспорту."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: вакцина снижает отдельные риски или тяжесть, но не покрывает весь комплекс."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "excitable"
+            ],
+            "ownerModifiers": [
+              "confident_vaccine_excludes",
+              "observant"
+            ]
+          }
+        },
+        {
+          "id": "p3_multi_dog_cluster_stable",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "outbreak_priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что после общего мероприятия кашляют несколько собак, но индексный пациент стабилен.",
+          "historyAnswers": {
+            "group_exposure": "По нашим наблюдениям, общий груминг или площадка или передержка.",
+            "cluster_signal": "Дома мы заметили, что несколько отдельных пациентов.",
+            "fever_appetite_activity": "Насколько мы можем судить, у индексного тяжёлых признаков нет.",
+            "vaccination_travel": "Мы записали, что статусы различаются."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_cluster_index_case",
+              "source": "physical_exam",
+              "finding": "Индексный пациент неосложнённый; тяжесть контактов не копируется автоматически."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "cluster_contact_network",
+              "discoveryPaths": [
+                "group_exposure",
+                "cluster_signal"
+              ]
+            },
+            {
+              "factId": "stable_cluster_index_case",
+              "discoveryPaths": [
+                "observe_before_handling",
+                "general_vitals_perfusion",
+                "heart_lung_auscultation"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_targeted_pcr",
+              "classification": "recommended_changes_group_plan",
+              "result": "Целевое лабораторное исследование показало: проба и результат служат управлению группой, не одинаковому диагнозу всем."
+            },
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "low_value_for_stable_index_without_red_flags",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "cluster_contact_network",
+              "stable_cluster_index_case"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cluster_compatible_syndrome_plus_contextual_testing_if_needed"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation",
+              "isolation_protocol",
+              "respiratory_sample_collection"
+            ],
+            "conditional": [
+              "circdc_testing_or_referral"
+            ],
+            "external": [
+              "pcr_external"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "uncomplicated_cirdc_isolation_support",
+          "followUp": {
+            "timing": "Отдельно контролируют пациента и ежедневно проверяют, не появились ли новые случаи в группе.",
+            "required": true,
+            "targets": [
+              "new_cases",
+              "individual_severity",
+              "test_context",
+              "isolation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Группа управляется, каждый пациент сохраняет собственную тяжесть.",
+            "unsafe": "Одинаковая клиническая запись копируется всем контактам."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: разделить рекомендации индексному пациенту и действия для контактов."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "excitable"
+            ],
+            "ownerModifiers": [
+              "multi_dog",
+              "facility_manager",
+              "overwhelmed"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_dog_cirdc_complicated",
+      "version": "2026.07.16.40",
+      "title": "Осложнённый инфекционный кашель с риском бронхопневмонии",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Инфекционно-совместимый кашель с системными или нижнедыхательными признаками требует оценки пневмонии и связанной нижних дыхательных путей клинического варианта.",
+      "primaryDiagnosisId": "dx_cirdc_complicated",
+      "differentials": [
+        "dx_bronchopneumonia",
+        "dx_canine_distemper",
+        "dx_canine_influenza",
+        "dx_aspiration_pneumonia",
+        "dx_noncardiogenic_or_cardiogenic_edema"
+      ],
+      "planBundleId": "complicated_cirdc_pneumonia_gate",
+      "sourceIds": [
+        "merck_kennel_cough",
+        "iscaid_respiratory_2017",
+        "merck_respiratory_diagnostics"
+      ],
+      "presentations": [
+        {
+          "id": "p1_puppy_fever_lethargy",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что щенок кашляет, лихорадит, вялый и хуже ест после контакта с собаками.",
+          "historyAnswers": {
+            "group_exposure": "По нашим наблюдениям, групповой контакт.",
+            "vaccination_travel": "Дома мы заметили, что неполный или неизвестный курс.",
+            "fever_appetite_activity": "Насколько мы можем судить, лихорадка, вялость и снижение аппетита.",
+            "interepisode_breathing": "Мы записали, что нормальное или учащённое."
+          },
+          "examFindings": [
+            {
+              "factId": "febrile_lethargic_puppy_cough",
+              "source": "physical_exam",
+              "finding": "Системно больной щенок не соответствует лёгкому комплекс инфекционных респираторных заболеваний собак пулу."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "febrile_lethargic_puppy_cough",
+              "discoveryPaths": [
+                "fever_appetite_activity",
+                "general_vitals_perfusion"
+              ]
+            },
+            {
+              "factId": "lower_airway_status",
+              "discoveryPaths": [
+                "observe_before_handling",
+                "resting_respiratory_rate",
+                "heart_lung_auscultation"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "required_or_recommended_for_pneumonia_gate",
+              "result": "На рентгенограммах: снимок показывает, есть ли основания перейти к диагностическому маршруту пневмонии."
+            },
+            {
+              "id": "resp_dog_targeted_pcr",
+              "classification": "recommended_by_age_cluster_and_vaccination",
+              "result": "Целевое лабораторное исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "resp_dog_pulse_oximetry",
+              "classification": "recommended_with_quality_check",
+              "result": "Пульсоксиметрия показала: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "febrile_lethargic_puppy_cough",
+              "lower_airway_status"
+            ],
+            "confirmedDiagnosisRequires": [
+              "complicated_infectious_syndrome_or_linked_pneumonia_evidence"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation",
+              "isolation_protocol"
+            ],
+            "conditional": [
+              "thoracic_imaging_or_referral",
+              "circdc_testing_or_referral"
+            ],
+            "external": [
+              "cbc",
+              "biochemistry"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "complicated_cirdc_pneumonia_gate",
+          "followUp": {
+            "timing": "Рентген и анализы выполняют срочно; дыхание повторно оценивают в тот же день.",
+            "required": true,
+            "targets": [
+              "temperature",
+              "resting_rate",
+              "oxygenation",
+              "xray",
+              "appetite"
+            ]
+          },
+          "outcomes": {
+            "safe": "Щенок получает оценку осложнения и основных инфекционных рисков.",
+            "unsafe": "Домашний план лёгкого взрослого пациента копируется щенку."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему возраст и системные признаки меняют срочность."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "calm"
+            ],
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_productive_cough_abnormal_lungs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что кашель стал влажным или продуктивным, дыхание учащено, в лёгких слышны отклонения.",
+          "historyAnswers": {
+            "dry_or_productive": "По нашим наблюдениям, влажный или продуктивный.",
+            "interepisode_breathing": "Дома мы заметили, что тахипноэ или усилие.",
+            "fever_appetite_activity": "Насколько мы можем судить, системные признаки.",
+            "group_exposure": "Мы записали, что инфекционный контакт возможен."
+          },
+          "examFindings": [
+            {
+              "factId": "productive_abnormal_lower_airway_pattern",
+              "source": "physical_exam",
+              "finding": "Тахипноэ и хрипы или ослабление звуков создают нижнедыхательный маршрут."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "productive_abnormal_lower_airway_pattern",
+              "discoveryPaths": [
+                "dry_or_productive",
+                "resting_respiratory_rate",
+                "heart_lung_auscultation"
+              ]
+            },
+            {
+              "factId": "oxygenation_context",
+              "discoveryPaths": [
+                "mucous_membrane_color",
+                "pulse_ox_quality_checked"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "required_after_initial_stability",
+              "result": "На рентгенограммах: лёгочная картина помогает различить пневмонию, отёк и другие причины кашля."
+            },
+            {
+              "id": "resp_dog_pulse_oximetry",
+              "classification": "required_or_recommended_by_effort",
+              "result": "Пульсоксиметрия показала: значение принимается только при качественном сигнале."
+            },
+            {
+              "id": "resp_dog_airway_sampling",
+              "classification": "recommended_by_stability_and_lower_airway_plan",
+              "result": "Целевое исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "productive_abnormal_lower_airway_pattern",
+              "oxygenation_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "linked_lower_airway_evidence"
+            ],
+            "mustNotAssume": [
+              "safe_to_suppress_productive_cough"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "auscultation",
+              "respiratory_rate",
+              "isolation_protocol"
+            ],
+            "conditional": [
+              "thoracic_imaging_or_referral",
+              "airway_sampling_or_referral",
+              "oxygen_emergency_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "complicated_cirdc_pneumonia_gate",
+          "followUp": {
+            "timing": "Частоту и усилие дыхания контролируют ежедневно, снимки повторяют по клинической динамике.",
+            "required": true,
+            "targets": [
+              "resting_rate",
+              "effort",
+              "oxygenation",
+              "xray",
+              "productive_character"
+            ]
+          },
+          "outcomes": {
+            "safe": "Продуктивный кашель не подавляется до оценки причины.",
+            "unsafe": "Симптом скрыт, пневмония или отёк прогрессируют."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему «сделать кашель тише» сейчас не равно безопасному лечению."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "calm"
+            ],
+            "ownerModifiers": [
+              "wants_cough_suppression",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_deterioration_after_mild_course",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "urgent_follow_up",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что после нескольких лёгких дней появились лихорадка, вялость, отказ от еды или учащённое дыхание.",
+          "historyAnswers": {
+            "previous_plan_response": "По нашим наблюдениям, сначала стабильный курс, затем объективное ухудшение.",
+            "fever_appetite_activity": "Дома мы заметили, что новые системные признаки.",
+            "interepisode_breathing": "Насколько мы можем судить, новая тахипноэ или усилие.",
+            "group_exposure": "Мы записали, что исходный контакт сохранён."
+          },
+          "examFindings": [
+            {
+              "factId": "new_complication_after_mild_snapshot",
+              "source": "physical_exam",
+              "finding": "Текущий осмотр противоречит исходной лёгкой тяжести и требует новой клинического варианта."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "new_complication_after_mild_snapshot",
+              "discoveryPaths": [
+                "previous_plan_response",
+                "general_vitals_perfusion",
+                "resting_respiratory_rate"
+              ]
+            },
+            {
+              "factId": "current_lung_status",
+              "discoveryPaths": [
+                "heart_lung_auscultation",
+                "observe_before_handling"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "now_required_or_recommended_changes_plan",
+              "result": "На рентгенограммах: новый снимок."
+            },
+            {
+              "id": "resp_dog_targeted_pcr",
+              "classification": "contextual_not_overrule_deterioration",
+              "result": "Целевое лабораторное исследование показало: ранний отрицательный результат не отменяет текущие данные."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "new_complication_after_mild_snapshot",
+              "current_lung_status"
+            ],
+            "confirmedDiagnosisRequires": [
+              "current_complicated_syndrome_or_linked_pneumonia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation",
+              "respiratory_rate",
+              "isolation_protocol"
+            ],
+            "conditional": [
+              "thoracic_imaging_or_referral",
+              "oxygen_emergency_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "complicated_cirdc_pneumonia_gate",
+          "followUp": {
+            "timing": "Состояние оценивают заново немедленно и выбирают маршрут по текущей тяжести, а не по прежнему лёгкому эпизоду.",
+            "required": true,
+            "targets": [
+              "temperature",
+              "resting_rate",
+              "oxygenation",
+              "xray",
+              "intake"
+            ]
+          },
+          "outcomes": {
+            "safe": "Повторный визит использует новую тяжесть, а не копию старой клинической записи.",
+            "unsafe": "Ранний тест или диагноз блокирует эскалацию."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: план изменился потому, что появились лихорадка, учащённое дыхание и изменения в лёгких, которых не было на первом осмотре."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "adherent",
+              "frustrated",
+              "anxious"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_dog_dynamic_airway_collapse",
+      "version": "2026.07.16.40",
+      "title": "Динамический коллапс трахеи или крупных дыхательных путей",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Динамическое сужение подтверждается совместимой оценкой или динамической визуализацией; порода, звук, ожирение и триггеры только меняют вероятность.",
+      "primaryDiagnosisId": "dx_dynamic_airway_collapse",
+      "differentials": [
+        "dx_cirdc",
+        "dx_chronic_bronchitis",
+        "dx_cardiac_disease",
+        "dx_laryngeal_disease",
+        "dx_fixed_tracheal_obstruction"
+      ],
+      "planBundleId": "dynamic_airway_collapse_route",
+      "sourceIds": [
+        "merck_tracheal_collapse",
+        "merck_respiratory_diagnostics"
+      ],
+      "presentations": [
+        {
+          "id": "p1_toy_breed_honking_excitement",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_between_events",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что у маленькой собаки сухой «гусиный» кашель при возбуждении, питье или натяжении ошейника.",
+          "historyAnswers": {
+            "event_video_description": "По нашим наблюдениям, истинный сухой кашель, но звук не доказательство коллапса.",
+            "rest_night_exercise_pattern": "Дома мы заметили, что возбуждение или ошейник или питьё.",
+            "interepisode_breathing": "Насколько мы можем судить, стабильно.",
+            "weight_collar_heat_irritants": "Мы записали, что шейное давление задано."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_triggered_honking_pattern",
+              "source": "physical_exam",
+              "finding": "Между эпизодами стабилен; порода и звук поддерживают, но не подтверждают динамический коллапс."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stable_triggered_honking_pattern",
+              "discoveryPaths": [
+                "event_video_description",
+                "rest_night_exercise_pattern",
+                "observe_before_handling"
+              ]
+            },
+            {
+              "factId": "comorbidity_screen",
+              "discoveryPaths": [
+                "heart_lung_auscultation",
+                "cardiac_history_medications"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "recommended_baseline_but_normal_static_image_not_exclusion",
+              "result": "На рентгенограммах: статичный снимок и сопутствующие признаки."
+            },
+            {
+              "id": "resp_dog_dynamic_airway_imaging",
+              "classification": "recommended_for_confirmation",
+              "result": "Целевое исследование показало: динамический коллапс или отсутствие."
+            },
+            {
+              "id": "resp_dog_cardiac_workup",
+              "classification": "recommended_by_murmur_or_risk",
+              "result": "Кардиологическая оценка показала: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stable_triggered_honking_pattern",
+              "comorbidity_screen"
+            ],
+            "confirmedDiagnosisRequires": [
+              "dynamic_airway_evidence"
+            ],
+            "mustNotAssume": [
+              "breed_or_sound_confirms_collapse"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation"
+            ],
+            "conditional": [
+              "thoracic_imaging_or_referral",
+              "dynamic_airway_or_referral",
+              "cardiac_workup_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "dynamic_airway_collapse_route",
+          "followUp": {
+            "timing": "После устранения провоцирующего фактора проводят контроль и завершают запланированную диагностику.",
+            "required": true,
+            "targets": [
+              "event_frequency",
+              "resting_breathing",
+              "dynamic_result",
+              "comorbidity"
+            ]
+          },
+          "outcomes": {
+            "safe": "Вероятность подтверждается без ложной уверенности по звуку.",
+            "unsafe": "Диагноз ставится породе без визуализации или дифференциалов."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: пользу шлейки сейчас и отдельную необходимость подтверждения причины."
+          ],
+          "compatibility": {
+            "temperament": [
+              "excitable",
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_obesity_heat_trigger",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что приступы усиливаются в жару и при нагрузке; есть ожирение, но в покое собака стабильна.",
+          "historyAnswers": {
+            "weight_collar_heat_irritants": "По нашим наблюдениям, ожирение, жара и возбуждение — несколько триггеров.",
+            "interepisode_breathing": "Дома мы заметили, что в прохладе и покое стабильно.",
+            "rest_night_exercise_pattern": "Насколько мы можем судить, ухудшение при нагрузке.",
+            "syncope_cyanosis": "Мы записали, что пока отсутствуют."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_multi_trigger_airway_pattern",
+              "source": "physical_exam",
+              "finding": "Избыточная кондиция и триггеры усиливают кашель или усилие, но не заменяют диагностику."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stable_multi_trigger_airway_pattern",
+              "discoveryPaths": [
+                "weight_collar_heat_irritants",
+                "body_weight_condition",
+                "observe_before_handling"
+              ]
+            },
+            {
+              "factId": "no_current_emergency",
+              "discoveryPaths": [
+                "syncope_cyanosis",
+                "mucous_membrane_color",
+                "resting_respiratory_rate"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_dynamic_airway_imaging",
+              "classification": "recommended_changes_plan",
+              "result": "Целевое исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "recommended_for_comorbidity",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stable_multi_trigger_airway_pattern",
+              "no_current_emergency"
+            ],
+            "confirmedDiagnosisRequires": [
+              "dynamic_evidence_if_collapse_label_used"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation",
+              "body_weight"
+            ],
+            "conditional": [
+              "dynamic_airway_or_referral",
+              "thoracic_imaging_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "dynamic_airway_collapse_route",
+          "followUp": {
+            "timing": "Вес, триггер и динамика событий.",
+            "required": true,
+            "targets": [
+              "weight_condition",
+              "heat_plan",
+              "event_frequency",
+              "resting_rate"
+            ]
+          },
+          "outcomes": {
+            "safe": "Управление весом или жарой сочетается с диагностическим маршрутом.",
+            "unsafe": "Фраза «похудеть» заменяет оценку дыхательных путей."
+          },
+          "ownerCommunication": [
+            "Я дам вам измеримые этапы веса, прохлады, шлейки и момента экстренного возврата."
+          ],
+          "compatibility": {
+            "temperament": [
+              "excitable",
+              "calm"
+            ],
+            "ownerModifiers": [
+              "overwhelmed",
+              "motivated",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_cyanosis_or_syncope_escalation",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что во время длительного приступа собака синеет, падает или не может успокоить дыхание.",
+          "historyAnswers": {
+            "syncope_cyanosis": "По нашим наблюдениям, цианоз или обморок подтверждён.",
+            "interepisode_breathing": "Дома мы заметили, что текущее усилие сохраняется.",
+            "weight_collar_heat_irritants": "Насколько мы можем судить, триггер был, но не объясняет безопасно тяжесть.",
+            "cardiac_history_medications": "Мы записали, что сердечные дифференциалы остаются."
+          },
+          "examFindings": [
+            {
+              "factId": "collapse_with_respiratory_emergency",
+              "source": "observation",
+              "finding": "Цианоз, коллапс или тяжёлое усилие требуют минимальной манипуляции и кислорода."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "collapse_with_respiratory_emergency",
+              "discoveryPaths": [
+                "syncope_cyanosis",
+                "observe_before_handling",
+                "mucous_membrane_color"
+              ]
+            },
+            {
+              "factId": "current_oxygenation",
+              "discoveryPaths": [
+                "pulse_ox_quality_checked"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_pulse_oximetry",
+              "classification": "if_tolerated_with_quality_signal_parallel_to_support",
+              "result": "Пульсоксиметрия показала: получены конкретное значение и отметка о качестве измерения."
+            },
+            {
+              "id": "resp_dog_dynamic_airway_imaging",
+              "classification": "deferred_until_stable",
+              "result": "Целевое исследование показало: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            },
+            {
+              "id": "resp_dog_cardiac_workup",
+              "classification": "after_stabilization_by_findings",
+              "result": "Кардиологическая оценка показала: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "collapse_with_respiratory_emergency",
+              "current_oxygenation"
+            ],
+            "confirmedDiagnosisRequires": [
+              "emergency_syndrome_then_post_stability_cause"
+            ],
+            "dangerStates": [
+              "hypoxemia",
+              "airway_obstruction",
+              "arrhythmia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "respiratory_distress_minimal_handling"
+            ],
+            "conditional": [
+              "oxygen_emergency_or_referral",
+              "dynamic_airway_or_referral",
+              "cardiac_workup_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "dynamic_airway_collapse_route",
+          "followUp": {
+            "timing": "Постоянная чрезвычайная ситуация, затем по конкретной причине.",
+            "required": true,
+            "targets": [
+              "oxygenation",
+              "effort",
+              "syncope",
+              "dynamic_and_cardiac_results"
+            ]
+          },
+          "outcomes": {
+            "safe": "Экстренность ведётся до плановой динамической диагностики.",
+            "unsafe": "Приступ провоцируется или пациент ждёт снимок без кислорода."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: назвать цианоз или обморок экстренными независимо от прежнего диагноза."
+          ],
+          "compatibility": {
+            "temperament": [
+              "panic",
+              "weak",
+              "excitable"
+            ],
+            "requiredHandlingAlternative": "oxygen_minimal_handling_referral",
+            "ownerModifiers": [
+              "anxious",
+              "delay_prone"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_dog_chronic_inflammatory_airway",
+      "version": "2026.07.16.40",
+      "title": "Хронический воспалительный кашель дыхательных путей",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Хронический воспалительный бронхиальный синдром устанавливается после исключения альтернатив; длительность и нормальная температура не подтверждают его отдельно.",
+      "primaryDiagnosisId": "dx_dog_chronic_inflammatory_airway_syndrome",
+      "differentials": [
+        "dx_cardiac_disease",
+        "dx_respiratory_parasites",
+        "dx_chronic_infection",
+        "dx_dynamic_airway_collapse",
+        "dx_airway_neoplasia"
+      ],
+      "planBundleId": "chronic_airway_exclusion_workup",
+      "sourceIds": [
+        "merck_tracheobronchitis",
+        "merck_respiratory_diagnostics",
+        "merck_heart_failure"
+      ],
+      "presentations": [
+        {
+          "id": "p1_cough_over_two_months",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что средневозрастная или пожилая собака ежедневно кашляет больше двух месяцев.",
+          "historyAnswers": {
+            "onset_frequency_duration": "По нашим наблюдениям, больше двух месяцев.",
+            "group_exposure": "Дома мы заметили, что острого контакта нет.",
+            "interepisode_breathing": "Насколько мы можем судить, в покое стабильно либо тахипноэ меняет клинический вариант.",
+            "cardiac_history_medications": "Мы записали, что шум или сердечный риск задан, но не считается застойная сердечная недостаточность."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_chronic_cough_pattern",
+              "source": "physical_exam",
+              "finding": "Хронический кашель при стабильном текущем состоянии требует базового маршрута исключений."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stable_chronic_cough_pattern",
+              "discoveryPaths": [
+                "onset_frequency_duration",
+                "observe_before_handling",
+                "heart_lung_auscultation"
+              ]
+            },
+            {
+              "factId": "cardiac_and_regional_context",
+              "discoveryPaths": [
+                "cardiac_history_medications",
+                "vaccination_travel"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "required_or_recommended_baseline",
+              "result": "На рентгенограммах: лёгочный или сердечный картина."
+            },
+            {
+              "id": "resp_dog_cardiac_workup",
+              "classification": "recommended_by_murmur_imaging_or_rate",
+              "result": "Кардиологическая оценка показала: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "resp_dog_airway_sampling",
+              "classification": "recommended_if_nonresponse_or_need_for_confirmation",
+              "result": "Целевое исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stable_chronic_cough_pattern",
+              "cardiac_and_regional_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "chronic_airway_pattern_after_authored_exclusions"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation",
+              "respiratory_rate"
+            ],
+            "conditional": [
+              "thoracic_imaging_or_referral",
+              "cardiac_workup_or_referral",
+              "airway_sampling_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "chronic_airway_exclusion_workup",
+          "followUp": {
+            "timing": "После каждого этапа исключения и исследования объективной терапии.",
+            "required": true,
+            "targets": [
+              "cough_frequency",
+              "sleeping_rate",
+              "xray",
+              "regional_tests",
+              "cardiac_context"
+            ]
+          },
+          "outcomes": {
+            "safe": "Хронический бронхиальный синдром остаётся диагнозом после исключений.",
+            "unsafe": "Длительность одна подтверждает бронхит."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: поэтапный поиск сердца, паразитов, инфекции и структуры."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious",
+              "excitable"
+            ],
+            "ownerModifiers": [
+              "budget_limited",
+              "frustrated"
+            ]
+          }
+        },
+        {
+          "id": "p2_environmental_irritant_exposure",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что кашель усилился после дыма, ремонта, ароматизаторов или пыли.",
+          "historyAnswers": {
+            "weight_collar_heat_irritants": "По нашим наблюдениям, подтверждён дым или пыль или аэрозоль.",
+            "onset_frequency_duration": "Дома мы заметили, что стойкий или хронический кашель.",
+            "previous_plan_response": "Насколько мы можем судить, вне раздражителя частично лучше.",
+            "interepisode_breathing": "Мы записали, что по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой."
+          },
+          "examFindings": [
+            {
+              "factId": "irritant_linked_chronic_pattern",
+              "source": "physical_exam",
+              "finding": "Временная связь поддерживает раздражение, но не закрывает другие причины стойкого кашля."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "irritant_linked_chronic_pattern",
+              "discoveryPaths": [
+                "weight_collar_heat_irritants",
+                "previous_plan_response"
+              ]
+            },
+            {
+              "factId": "baseline_stability_and_lungs",
+              "discoveryPaths": [
+                "observe_before_handling",
+                "heart_lung_auscultation",
+                "resting_respiratory_rate"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "recommended_if_persistent_or_abnormal_exam",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "resp_dog_resting_respiratory_rate",
+              "classification": "required_baseline",
+              "result": "Целевое исследование показало: домашняя или спокойная точка."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "irritant_linked_chronic_pattern",
+              "baseline_stability_and_lungs"
+            ],
+            "confirmedDiagnosisRequires": [
+              "objective_response_plus_appropriate_exclusions"
+            ],
+            "mustNotAssume": [
+              "temporal_link_proves_only_cause"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation",
+              "respiratory_rate"
+            ],
+            "conditional": [
+              "thoracic_imaging_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "chronic_airway_exclusion_workup",
+          "followUp": {
+            "timing": "После измеримого удаления раздражителя.",
+            "required": true,
+            "targets": [
+              "exposure",
+              "cough_frequency",
+              "sleeping_rate",
+              "exam"
+            ]
+          },
+          "outcomes": {
+            "safe": "Раздражитель устранён, а стойкость всё равно имеет диагностический порог.",
+            "unsafe": "Временная связь используется для отказа от обследования."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: сформулировать конкретное устранение дыма или аэрозолей и дату оценки эффекта."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "smoker",
+              "skeptical",
+              "motivated"
+            ]
+          }
+        },
+        {
+          "id": "p3_nonresponse_requires_airway_workup",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что первоначальный безопасный план выполнен, но кашель не изменился или данные противоречат ожиданию.",
+          "historyAnswers": {
+            "previous_plan_response": "По нашим наблюдениям, выполнение подтверждено, объективного ответа нет.",
+            "onset_frequency_duration": "Дома мы заметили, что хронически.",
+            "weight_collar_heat_irritants": "Насколько мы можем судить, раздражители устранены либо не объясняют всё.",
+            "cardiac_history_medications": "Мы записали, что кардиальный этап как выполненный или неполный."
+          },
+          "examFindings": [
+            {
+              "factId": "objective_chronic_nonresponse",
+              "source": "physical_exam",
+              "finding": "Кашель или снимок или аускультация не соответствуют ожидаемому курсу."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "objective_chronic_nonresponse",
+              "discoveryPaths": [
+                "previous_plan_response",
+                "heart_lung_auscultation"
+              ]
+            },
+            {
+              "factId": "advanced_workup_question",
+              "discoveryPaths": [
+                "thoracic_xray",
+                "ecg_cardiology_route"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "required_comparative_review",
+              "result": "На рентгенограммах: исходный или текущий картина."
+            },
+            {
+              "id": "resp_dog_airway_sampling",
+              "classification": "recommended_changes_plan",
+              "result": "Целевое исследование показало: цитология или посев после оценки риска."
+            },
+            {
+              "id": "resp_dog_cardiac_workup",
+              "classification": "complete_if_not_yet_resolved",
+              "result": "Кардиологическая оценка показала: кашель или снимок или аускультация не соответствуют ожидаемому курсу."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "objective_chronic_nonresponse",
+              "advanced_workup_question"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_sampling_or_revised_differential_evidence"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation"
+            ],
+            "conditional": [
+              "thoracic_imaging_or_referral",
+              "airway_sampling_or_referral",
+              "cardiac_workup_or_referral"
+            ],
+            "external": [
+              "airway_endoscopy_referral",
+              "culture_external"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "chronic_airway_exclusion_workup",
+          "followUp": {
+            "timing": "После расширенного образца или результата.",
+            "required": true,
+            "targets": [
+              "cytology",
+              "culture",
+              "revised_diagnosis",
+              "cough_frequency"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неответ меняет диагностический маршрут.",
+            "unsafe": "Симптоматическая схема бесконечно усиливается без отбора материала."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какой новый вопрос решит бронхоскопия или лаваж и какие есть альтернативы."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "budget_limited",
+              "frustrated",
+              "adherent"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resp_dog_cough_dyspnea_or_cardiac_red_flags",
+      "version": "2026.07.16.40",
+      "title": "Кашель с одышкой, обмороком или сердечно-лёгочными красными флагами",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Кашель с тахипноэ в покое, одышкой, обмороком или серьёзной находкой остаётся кардиопульмональным синдромом до различения отёка, пневмонии, обструкции, аритмии и других причин.",
+      "primaryDiagnosisId": "dx_dog_cough_cardiopulmonary_red_flags",
+      "differentials": [
+        "dx_cardiogenic_pulmonary_edema",
+        "dx_pneumonia",
+        "dx_dynamic_airway_collapse",
+        "dx_pulmonary_hypertension",
+        "dx_arrhythmia",
+        "dx_pleural_disease"
+      ],
+      "planBundleId": "dyspnea_syncope_cardiopulmonary_emergency",
+      "sourceIds": [
+        "merck_heart_failure",
+        "merck_respiratory_signs",
+        "merck_respiratory_diagnostics"
+      ],
+      "presentations": [
+        {
+          "id": "p1_tachypnea_at_rest_with_murmur",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что пожилая собака кашляет, дома учащённо дышит в покое; на осмотре слышен сердечный шум.",
+          "historyAnswers": {
+            "rest_night_exercise_pattern": "По нашим наблюдениям, повышенная частота во сне или покое дневником.",
+            "cardiac_history_medications": "Дома мы заметили, что старый шум или известная болезнь.",
+            "interepisode_breathing": "Насколько мы можем судить, тахипноэ, степень усилия задана.",
+            "syncope_cyanosis": "Мы записали, что пока нет или меняет срочность."
+          },
+          "examFindings": [
+            {
+              "factId": "resting_tachypnea_with_murmur_not_chf_proof",
+              "source": "physical_exam",
+              "finding": "Шум плюс тахипноэ требуют различения лёгочного и сердечного картины; шум один не подтверждает застойная сердечная недостаточность."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "resting_tachypnea_with_murmur_not_chf_proof",
+              "discoveryPaths": [
+                "rest_night_exercise_pattern",
+                "resting_respiratory_rate",
+                "heart_lung_auscultation"
+              ]
+            },
+            {
+              "factId": "current_stability",
+              "discoveryPaths": [
+                "observe_before_handling",
+                "mucous_membrane_color",
+                "general_vitals_perfusion"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "required_or_recommended_when_tolerated",
+              "result": "На рентгенограммах: лёгочный картина и размеры сердца."
+            },
+            {
+              "id": "resp_dog_cardiac_workup",
+              "classification": "recommended_changes_plan",
+              "result": "Кардиологическая оценка показала: эКГ или эхо уточняет сердце, но не доказывает отёк отдельно."
+            },
+            {
+              "id": "resp_dog_resting_respiratory_rate",
+              "classification": "required_contextual_measurement",
+              "result": "Целевое исследование показало: домашняя точка и динамика."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "resting_tachypnea_with_murmur_not_chf_proof",
+              "current_stability"
+            ],
+            "confirmedDiagnosisRequires": [
+              "radiographic_and_clinical_concordance_for_edema_or_other_cause"
+            ],
+            "mustNotAssume": [
+              "murmur_equals_chf",
+              "trial_response_equals_cause"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation",
+              "respiratory_rate"
+            ],
+            "conditional": [
+              "thoracic_imaging_or_referral",
+              "cardiac_workup_or_referral",
+              "oxygen_emergency_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "dyspnea_syncope_cardiopulmonary_emergency",
+          "followUp": {
+            "timing": "Неотложная визуализация или кардиопульмональный путь.",
+            "required": true,
+            "targets": [
+              "sleeping_rate",
+              "effort",
+              "xray",
+              "cardiac_findings",
+              "oxygenation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Сердце и лёгкие различаются на данных.",
+            "unsafe": "Шум автоматически превращает кашель в отёк лёгких."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: шум означает болезнь сердца, но не обязательно текущую сердечную недостаточность."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "weak",
+              "anxious"
+            ],
+            "ownerModifiers": [
+              "confident_heart_label",
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_acute_dyspnea_minimal_handling",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что собака не может удобно лечь, дышит с выраженным усилием или синеет.",
+          "historyAnswers": {
+            "interepisode_breathing": "По нашим наблюдениям, острая постоянная одышка.",
+            "syncope_cyanosis": "Дома мы заметили, что цианоз возможен.",
+            "onset_frequency_duration": "Насколько мы можем судить, остро.",
+            "event_video_description": "Мы записали, что кашель вторичен по отношению к дыхательной угрозе."
+          },
+          "examFindings": [
+            {
+              "factId": "acute_dyspnea_emergency",
+              "source": "observation",
+              "finding": "Ортопноэ или усилие или цианоз требуют кислорода и минимальной фиксации."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "acute_dyspnea_emergency",
+              "discoveryPaths": [
+                "interepisode_breathing",
+                "observe_before_handling",
+                "mucous_membrane_color"
+              ]
+            },
+            {
+              "factId": "tolerated_minimum_measurements",
+              "discoveryPaths": [
+                "pulse_ox_quality_checked",
+                "general_vitals_perfusion"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_pulse_oximetry",
+              "classification": "parallel_if_tolerated_and_signal_valid",
+              "result": "Пульсоксиметрия показала: получены конкретное значение и отметка о качестве измерения."
+            },
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "after_initial_stabilization_if_tolerated",
+              "result": "На рентгенограммах: связанной клинического варианта ХСН или пневмонии или других."
+            },
+            {
+              "id": "resp_dog_cardiac_workup",
+              "classification": "after_stability_by_findings",
+              "result": "Кардиологическая оценка показала: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "acute_dyspnea_emergency",
+              "tolerated_minimum_measurements"
+            ],
+            "confirmedDiagnosisRequires": [
+              "emergency_syndrome_then_cause_specific_evidence"
+            ],
+            "dangerStates": [
+              "hypoxemia",
+              "respiratory_failure",
+              "shock"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "respiratory_exam",
+              "respiratory_distress_minimal_handling"
+            ],
+            "conditional": [
+              "oxygen_emergency_or_referral",
+              "thoracic_imaging_or_referral",
+              "cardiac_workup_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "dyspnea_syncope_cardiopulmonary_emergency",
+          "followUp": {
+            "timing": "До стабилизации требуется непрерывный контроль дыхания, кровообращения и сознания.",
+            "required": true,
+            "targets": [
+              "effort",
+              "oxygenation",
+              "perfusion",
+              "xray_after_stability",
+              "cause"
+            ]
+          },
+          "outcomes": {
+            "safe": "Кислород предшествует полной анкете и снимку.",
+            "unsafe": "Пациент ухудшается при фиксации ради диагностики."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: кратко сообщить, что сначала стабилизация, затем уточнение причины."
+          ],
+          "compatibility": {
+            "temperament": [
+              "panic",
+              "weak",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "oxygen_minimal_handling_referral",
+            "ownerModifiers": [
+              "anxious",
+              "overwhelmed"
+            ]
+          }
+        },
+        {
+          "id": "p3_syncope_or_exercise_intolerance",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_or_emergency_by_current_state",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что кашель сопровождается падением, слабостью или выраженной непереносимостью нагрузки.",
+          "historyAnswers": {
+            "syncope_cyanosis": "По нашим наблюдениям, падение или слабость подтверждены на видео или последовательностью.",
+            "rest_night_exercise_pattern": "Дома мы заметили, что связано с нагрузкой или возбуждением либо бывает в покое.",
+            "cardiac_history_medications": "Насколько мы можем судить, аритмия или сердечный риск возможны.",
+            "interepisode_breathing": "Мы записали, что текущая стабильность."
+          },
+          "examFindings": [
+            {
+              "factId": "cough_syncope_multisystem_red_flag",
+              "source": "physical_exam",
+              "finding": "Обморок или непереносимость допускают аритмию, гипоксемию, динамическую обструкцию и другие причины."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "true_syncope_or_collapse",
+              "discoveryPaths": [
+                "syncope_cyanosis",
+                "event_video_review"
+              ]
+            },
+            {
+              "factId": "cough_syncope_multisystem_red_flag",
+              "discoveryPaths": [
+                "observe_before_handling",
+                "heart_lung_auscultation",
+                "mucous_membrane_color"
+              ]
+            },
+            {
+              "factId": "current_oxygenation_and_rhythm_route",
+              "discoveryPaths": [
+                "pulse_ox_quality_checked",
+                "ecg_cardiology_route"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "resp_dog_pulse_oximetry",
+              "classification": "recommended_or_required_by_current_state",
+              "result": "Пульсоксиметрия показала: получены конкретное значение и отметка о качестве измерения."
+            },
+            {
+              "id": "resp_dog_cardiac_workup",
+              "classification": "required_or_recommended_for_rhythm_and_structure",
+              "result": "Кардиологическая оценка показала: эКГ или кардиология."
+            },
+            {
+              "id": "resp_dog_thoracic_xray",
+              "classification": "recommended_when_stable",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "resp_dog_dynamic_airway_imaging",
+              "classification": "recommended_by_trigger_and_airway_pattern",
+              "result": "Целевое исследование показало: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "true_syncope_or_collapse",
+              "cough_syncope_multisystem_red_flag",
+              "current_oxygenation_and_rhythm_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cause_specific_evidence"
+            ],
+            "mustNotAssume": [
+              "all_syncope_is_cardiac"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "respiratory_exam",
+              "auscultation"
+            ],
+            "conditional": [
+              "cardiac_workup_or_referral",
+              "thoracic_imaging_or_referral",
+              "dynamic_airway_or_referral",
+              "oxygen_emergency_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "dyspnea_syncope_cardiopulmonary_emergency",
+          "followUp": {
+            "timing": "Срочный ритм или оксигенация или маршрут дыхательных путей.",
+            "required": true,
+            "targets": [
+              "syncope_recurrence",
+              "ecg",
+              "oxygenation",
+              "imaging",
+              "trigger"
+            ]
+          },
+          "outcomes": {
+            "safe": "Обморок получает дифференциальную оценку без преждевременного ярлыка сердца.",
+            "unsafe": "Причина считается очевидной и альтернативы не проверяются."
+          },
+          "ownerCommunication": [
+            "Пожалуйста, видео и точную последовательность до, во время и после падения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "excitable",
+              "weak"
+            ],
+            "ownerModifiers": [
+              "anxious",
+              "observant",
+              "confident_heart_label"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_respiratory_signs",
+      "title": "Merck Veterinary Manual: Clinical Signs of Respiratory Disease in Animals",
+      "url": "https://www.merckvetmanual.com/respiratory-system/respiratory-system-introduction/clinical-signs-of-respiratory-disease-in-animals",
+      "scope": "cough, respiratory effort, obstruction and symptom localization"
+    },
+    {
+      "id": "merck_kennel_cough",
+      "title": "Merck Veterinary Manual: Kennel Cough",
+      "url": "https://www.merckvetmanual.com/respiratory-system/respiratory-diseases-of-small-animals/kennel-cough",
+      "scope": "CIRDC exposure, uncomplicated and complicated patterns"
+    },
+    {
+      "id": "merck_respiratory_diagnostics",
+      "title": "Merck Veterinary Manual: Diagnostic Techniques for Respiratory Disease",
+      "url": "https://www.merckvetmanual.com/respiratory-system/respiratory-system-introduction/diagnostic-techniques-for-respiratory-disease-in-animals",
+      "scope": "auscultation, imaging, sampling and interpretation"
+    },
+    {
+      "id": "merck_tracheal_collapse",
+      "title": "Merck Veterinary Manual: Tracheal Collapse in Dogs",
+      "url": "https://www.merckvetmanual.com/dog-owners/lung-and-airway-disorders-of-dogs/tracheal-collapse-in-dogs",
+      "scope": "triggers, dynamic collapse, emergency signs and long-term management context"
+    },
+    {
+      "id": "merck_tracheobronchitis",
+      "title": "Merck Veterinary Manual: Tracheobronchitis/Bronchitis in Dogs",
+      "url": "https://www.merckvetmanual.com/dog-owners/lung-and-airway-disorders-of-dogs/tracheobronchitis-bronchitis-in-dogs",
+      "scope": "chronic inflammatory airway differential and workup"
+    },
+    {
+      "id": "merck_heart_failure",
+      "title": "Merck Veterinary Manual: Heart Failure in Dogs and Cats",
+      "url": "https://www.merckvetmanual.com/circulatory-system/heart-failure-in-dogs-and-cats/heart-failure-in-dogs-and-cats",
+      "scope": "resting respiratory rate, cough versus pulmonary edema and limits of murmur/trial response"
+    },
+    {
+      "id": "iscaid_respiratory_2017",
+      "title": "ISCAID Antimicrobial Use Guidelines for Respiratory Tract Disease in Dogs and Cats",
+      "url": "https://doi.org/10.1111/JVIM.14627",
+      "scope": "CIRDC, bacterial indications, pneumonia sampling and antimicrobial stewardship"
+    }
+  ],
+  "familyValidationRules": [
+    "species_must_be_dog",
+    "reverse_sneeze_regurgitation_and_gagging_require_observed_classification",
+    "infectious_compatible_branch_requires_isolation",
+    "vaccination_cannot_exclude_cirdc",
+    "febrile_tachypneic_puppy_requires_pneumonia_route",
+    "productive_cough_cannot_be_suppressed_before_lower_airway_assessment",
+    "breed_or_honking_sound_cannot_confirm_airway_collapse",
+    "murmur_or_trial_response_cannot_confirm_heart_failure",
+    "dyspnea_cyanosis_or_collapse_cannot_wait_for_full_history_pcr_or_planned_xray",
+    "pulse_ox_requires_signal_quality",
+    "normal_static_xray_cannot_exclude_dynamic_collapse",
+    "chronic_cough_requires_cardiac_parasitic_infectious_and_structural_route",
+    "all_levels_remain_generator_ineligible_until_external_veterinary_approval"
+  ]
+}

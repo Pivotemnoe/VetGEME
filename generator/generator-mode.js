@@ -46,20 +46,24 @@
     };
   }
 
-  function loadTier01V2(storage = window.localStorage) {
-    return window.PET_CLINIC_CONTENT_V2
-      .loadFromFetch({
-        packId: "tier-01-v2",
-        packVersion: "2026.07.12.2",
-        mode: "tier-01-v2",
-        context: "review"
-      })
+  function loadTier01V2(storage = window.localStorage, gameModeId = "campaign") {
+    const activationLoader = window.PET_CLINIC_ACTIVATION_MEDICAL_V11;
+    const loadCatalog = activationLoader
+      ? activationLoader.loadFromFetch({ modeId: gameModeId })
+      : window.PET_CLINIC_CONTENT_V2.loadFromFetch({
+          packId: "tier-01-v2",
+          packVersion: "2026.07.12.2",
+          mode: "tier-01-v2",
+          context: "review"
+        });
+    return loadCatalog
       .then((catalog) => {
         try {
+          activationLoader?.installTesterControls(catalog, storage);
           return {
             mode: "tier-01-v2",
             catalog,
-            generator: window.PET_CLINIC_GENERATOR_V2.createGenerator({ catalog, storage })
+            generator: window.PET_CLINIC_GENERATOR_V2.createGenerator({ catalog, storage, gameModeId })
           };
         } catch (error) {
           return { mode: "tier-01-v2", catalog, generator: null, initializationError: error };
@@ -92,7 +96,7 @@
       const storage = isV11Mode
         ? window.PET_CLINIC_SAVE_MANAGER_V11.generatorStorage(localStorage, selection.modeId)
         : localStorage;
-      return loadTier01V2(storage);
+      return loadTier01V2(storage, selection.modeId);
     }
     if (mode === "legacy-v1") return loadLegacyV1();
     return { mode: "current", catalog: null, generator: null };

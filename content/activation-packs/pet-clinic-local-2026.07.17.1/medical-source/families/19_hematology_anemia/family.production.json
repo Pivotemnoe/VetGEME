@@ -1,0 +1,3560 @@
+{
+  "schemaVersion": 1,
+  "familyId": "hematology_anemia",
+  "familyVersion": "2026.07.16.40",
+  "title": "Анемический синдром собак и кошек",
+  "campaignPhase": "chapter_4_to_post_chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "syndromeRule": "Анемия — синдром снижения массы циркулирующих эритроцитов, а не окончательный этиологический диагноз.",
+    "mechanismRule": "После оценки стабильности подтверждают анемию, регенеративную реакцию и механизм: кровопотерю, гемолиз или неадекватную продукцию.",
+    "reticulocyteRule": "Регенерация хранит абсолютное число ретикулоцитов, вид и время от начало; ранняя кровопотеря или гемолиз может ещё выглядеть нерегенеративной.",
+    "smearRule": "Автоматический общий анализ крови не заменяет ручной мазок и обученную морфологическую интерпретацию.",
+    "imhaRule": "Твердая ИМХА требует анемии, признаков иммуноопосредованного разрушения эритроцитов и признаков гемолиза; один сфероцит, желтушный или ДАТ недостаточен.",
+    "transfusionRule": "Переливание поддерживает доставку кислорода и выбирается в зависимости от клиники, скорости изменений и причины; Один порог гематокрит не является решением.",
+    "protocolRule": "В содержании не указаны препараты, дозы, объем или скорость переливания, антикоагулянты, донорский протокол или метод переливания костного мозга."
+  },
+  "coreCapabilities": [
+    "general_exam",
+    "stabilization",
+    "cbc",
+    "pcv_total_solids",
+    "serial_pcv_monitoring",
+    "reticulocyte_count",
+    "blood_smear",
+    "trained_hematology",
+    "biochemistry",
+    "urinalysis",
+    "coagulation",
+    "blood_type_test",
+    "crossmatch_test",
+    "blood_product_referral",
+    "transfusion_monitoring",
+    "longitudinal_care"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "anemia_triage_route",
+      "anyOf": [
+        "general_exam",
+        "stabilization",
+        "oxygen",
+        "emergency_stabilization",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "oxygen_delivery_perfusion_and_active_bleeding"
+    },
+    {
+      "id": "anemia_classification_route",
+      "anyOf": [
+        "cbc",
+        "pcv_total_solids",
+        "reticulocyte_count",
+        "blood_smear",
+        "trained_hematology",
+        "safe_referral"
+      ],
+      "purpose": "confirm_anemia_regeneration_and_morphology"
+    },
+    {
+      "id": "anemia_hemolysis_route",
+      "anyOf": [
+        "biochemistry",
+        "urinalysis",
+        "saline_agglutination_test",
+        "direct_antiglobulin_test_external",
+        "infectious_hemolysis_panel_external",
+        "safe_referral"
+      ],
+      "purpose": "hemolysis_immune_destruction_and_alternatives"
+    },
+    {
+      "id": "anemia_blood_loss_route",
+      "anyOf": [
+        "coagulation",
+        "hemorrhage_source_imaging_external",
+        "gi_ultrasound_external",
+        "advanced_imaging_referral",
+        "safe_referral"
+      ],
+      "purpose": "external_internal_gi_and_coagulopathic_loss_source"
+    },
+    {
+      "id": "anemia_infectious_toxin_route",
+      "anyOf": [
+        "infectious_hemolysis_panel_external",
+        "regional_disease_filter",
+        "infectious_disease_referral",
+        "advanced_imaging_referral",
+        "safe_referral"
+      ],
+      "purpose": "species_region_exposure_specific_infectious_or_toxic_workup"
+    },
+    {
+      "id": "anemia_transfusion_route",
+      "anyOf": [
+        "blood_type_test",
+        "crossmatch_test",
+        "blood_product_referral",
+        "transfusion_monitoring",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "compatible_product_and_monitored_transfusion"
+    },
+    {
+      "id": "anemia_iron_chronic_loss_route",
+      "anyOf": [
+        "iron_panel_external",
+        "fecal_microscopy",
+        "fecal_pcr_external",
+        "hemorrhage_source_imaging_external",
+        "gi_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "iron_deficiency_and_chronic_loss_source"
+    },
+    {
+      "id": "anemia_marrow_route",
+      "anyOf": [
+        "bone_marrow_referral",
+        "infectious_hemolysis_panel_external",
+        "oncology_advanced_pathology_external",
+        "oncology_biopsy_planning_referral",
+        "safe_referral"
+      ],
+      "purpose": "persistent_nonregeneration_multilineage_or_abnormal_cells"
+    },
+    {
+      "id": "anemia_longitudinal_route",
+      "anyOf": [
+        "serial_pcv_monitoring",
+        "longitudinal_care",
+        "renal_home_monitoring",
+        "safe_referral"
+      ],
+      "purpose": "same_episode_clinical_and_laboratory_trend"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "anemia_stability_perfusion_and_bleeding_triage",
+      "requires": [
+        "general_exam",
+        "stabilization"
+      ],
+      "availability": "local_start",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "anemia_cbc_pcv_total_solids_and_serial_trend",
+      "requires": [
+        "cbc",
+        "pcv_total_solids",
+        "serial_pcv_monitoring"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "anemia_absolute_reticulocyte_count",
+      "requires": [
+        "reticulocyte_count"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "anemia_manual_blood_smear_review",
+      "requires": [
+        "blood_smear",
+        "trained_hematology"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "anemia_hemolysis_and_agglutination_workup",
+      "requires": [
+        "biochemistry",
+        "urinalysis",
+        "saline_agglutination_test",
+        "direct_antiglobulin_test_external"
+      ],
+      "availability": "local_and_external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "anemia_coagulation_and_blood_loss_source",
+      "requires": [
+        "coagulation",
+        "hemorrhage_source_imaging_external"
+      ],
+      "availability": "local_and_external_chapter_4",
+      "fallback": "hospital_referral"
+    },
+    {
+      "researchId": "anemia_infectious_toxin_and_comorbidity_screen",
+      "requires": [
+        "infectious_hemolysis_panel_external",
+        "regional_disease_filter"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "infectious_disease_referral"
+    },
+    {
+      "researchId": "anemia_blood_type_crossmatch_and_transfusion_route",
+      "requires": [
+        "blood_type_test",
+        "crossmatch_test",
+        "blood_product_referral",
+        "transfusion_monitoring"
+      ],
+      "availability": "local_and_external_chapter_4",
+      "fallback": "hospital_referral"
+    },
+    {
+      "researchId": "anemia_bone_marrow_or_specialist_referral",
+      "requires": [
+        "bone_marrow_referral"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "weakness_pallor_onset",
+      "text": "Когда появились слабость или бледность и как быстро они меняются?"
+    },
+    {
+      "id": "bleeding_trauma_surgery_melena",
+      "text": "Были ли кровь, травма, операция, рвота кровью или чёрный стул?"
+    },
+    {
+      "id": "jaundice_dark_urine",
+      "text": "Есть ли жёлтые слизистые или тёмная моча?"
+    },
+    {
+      "id": "collapse_dyspnea_tachycardia",
+      "text": "Были ли коллапс, одышка или выраженная тахикардия?"
+    },
+    {
+      "id": "vector_parasite_travel",
+      "text": "Есть ли блохи, клещи, паразиты, поездки или региональный риск?"
+    },
+    {
+      "id": "toxin_food_drug_exposure",
+      "text": "Что пациент мог съесть и какие лекарства получал?"
+    },
+    {
+      "id": "ckd_inflammation_cancer_endocrine",
+      "text": "Подтверждены ли ХБП, воспаление, опухоль или эндокринная болезнь?"
+    },
+    {
+      "id": "medication_vaccine_timeline",
+      "text": "Какие лекарства и вакцины применялись и когда?"
+    },
+    {
+      "id": "transfusion_pregnancy_history",
+      "text": "Были ли переливания, беременности или реакции на кровь?"
+    },
+    {
+      "id": "mucosal_bleeding_petechiae",
+      "text": "Есть ли носовое или десневое кровотечение, петехии или синяки?"
+    },
+    {
+      "id": "appetite_weight_timeline",
+      "text": "Как менялись аппетит и масса?"
+    },
+    {
+      "id": "prior_cbc_records",
+      "text": "Есть ли прежний нормальный или патологический общий анализ крови с датой?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "oxygen_delivery_perfusion_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "respiratory_rate",
+        "auscultation",
+        "blood_pressure"
+      ]
+    },
+    {
+      "id": "pallor_icterus_bleeding_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "temperature"
+      ]
+    },
+    {
+      "id": "hydration_weight_exam",
+      "source": "physical_exam",
+      "requires": [
+        "hydration_assessment",
+        "body_weight"
+      ]
+    },
+    {
+      "id": "active_external_bleeding_control",
+      "source": "clinical_action",
+      "requires": [
+        "stabilization"
+      ]
+    },
+    {
+      "id": "dated_cbc_pcv_ts_platelet_snapshot",
+      "source": "diagnostic_test",
+      "requires": [
+        "cbc",
+        "pcv_total_solids"
+      ]
+    },
+    {
+      "id": "absolute_species_reticulocyte_result",
+      "source": "diagnostic_test",
+      "requires": [
+        "reticulocyte_count"
+      ]
+    },
+    {
+      "id": "manual_smear_morphology_review",
+      "source": "diagnostic_test",
+      "requires": [
+        "blood_smear",
+        "trained_hematology"
+      ]
+    },
+    {
+      "id": "hemolysis_immune_destruction_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "biochemistry",
+        "urinalysis",
+        "saline_agglutination_test"
+      ]
+    },
+    {
+      "id": "blood_loss_source_coagulation_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "coagulation",
+        "hemorrhage_source_imaging_external"
+      ]
+    },
+    {
+      "id": "renal_urine_snapshot",
+      "source": "diagnostic_test",
+      "requires": [
+        "biochemistry",
+        "urinalysis"
+      ]
+    },
+    {
+      "id": "typed_crossmatched_product_record",
+      "source": "treatment_record",
+      "requires": [
+        "blood_type_test",
+        "crossmatch_test",
+        "transfusion_monitoring"
+      ]
+    },
+    {
+      "id": "same_episode_anemia_trend",
+      "source": "follow_up",
+      "requires": [
+        "serial_pcv_monitoring",
+        "longitudinal_care"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "merck_anemia_overview_2026",
+      "title": "Merck Veterinary Manual: Overview of Anemia in Animals",
+      "url": "https://www.merckvetmanual.com/circulatory-system/anemia/overview-of-anemia-in-animals",
+      "scope": "classification_absolute_reticulocytes_smear_loss_hemolysis_production"
+    },
+    {
+      "id": "merck_regenerative_anemia_2026",
+      "title": "Merck Veterinary Manual: Regenerative Anemias in Animals",
+      "url": "https://www.merckvetmanual.com/circulatory-system/anemia/regenerative-anemias-in-animals",
+      "scope": "acute_chronic_blood_loss_hemolysis_toxic_and_infectious_causes"
+    },
+    {
+      "id": "merck_nonregenerative_anemia_2026",
+      "title": "Merck Veterinary Manual: Nonregenerative Anemias in Animals",
+      "url": "https://www.merckvetmanual.com/circulatory-system/anemia/nonregenerative-anemias-in-animals",
+      "scope": "chronic_renal_nutritional_and_bone_marrow_causes"
+    },
+    {
+      "id": "acvim_imha_diagnosis_2019",
+      "title": "ACVIM consensus statement on diagnosis of IMHA in dogs and cats",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30806491/",
+      "scope": "immune_destruction_hemolysis_evidence_and_trigger_screen"
+    },
+    {
+      "id": "isfm_feline_transfusion_2021",
+      "title": "2021 ISFM Consensus Guidelines on Blood and Blood Products in Cats",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33896248/",
+      "scope": "feline_typing_crossmatch_product_selection_and_monitoring"
+    },
+    {
+      "id": "tracs_monitoring_2021",
+      "title": "AVHTM TRACS Part 2: Prevention and monitoring",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33751789/",
+      "scope": "small_animal_transfusion_reaction_prevention_and_monitoring"
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "acute_blood_loss_plan",
+      "fullPlan": [
+        "triage_oxygen_delivery_perfusion_and_active_bleeding",
+        "serial_cbc_pcv_ts_platelets_and_hydration",
+        "absolute_reticulocytes_with_onset_time",
+        "coagulation_and_source_imaging",
+        "safe_hemostasis_and_underlying_source_route",
+        "typed_crossmatched_product_if_clinically_needed",
+        "same_episode_serial_response"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "confirm_and_trend",
+        "find_and_control_source",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "early_normal_pcv_not_reassuring_if_shock",
+        "early_low_reticulocytes_not_marrow_failure",
+        "active_bleeding_control_first",
+        "safe_blood_bank_or_hospital_referral"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen_emergency_stabilization_and_hospital",
+        "blood_product_and_source_control_referral"
+      ],
+      "unsafeOrInadequate": [
+        "cosmetic_wound_care_before_perfusion",
+        "single_pcv_transfusion_decision",
+        "no_external_blood_means_no_loss",
+        "fresh_nonregeneration_means_marrow_failure"
+      ]
+    },
+    {
+      "id": "chronic_blood_loss_iron_plan",
+      "fullPlan": [
+        "confirm_slow_anemia_and_compensation",
+        "serial_cbc_pcv_ts_absolute_reticulocytes_and_smear",
+        "identify_microcytic_hypochromic_pattern_in_context",
+        "iron_panel_and_gi_parasite_or_other_loss_search",
+        "exclude_age_species_and_congenital_microcytosis",
+        "treat_source_through_reviewed_protocol",
+        "weight_cbc_and_iron_followup"
+      ],
+      "stagedPlan": [
+        "confirm_pattern",
+        "search_common_loss",
+        "specialist_imaging_or_endoscopy_if_needed",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "iron_pattern_not_source",
+        "positive_parasite_not_only_source",
+        "supplement_alone_incomplete",
+        "staged_route_only_if_stable"
+      ],
+      "stabilizeAndRefer": [
+        "hospital_if_decompensated",
+        "gi_or_imaging_referral_for_unresolved_source"
+      ],
+      "unsafeOrInadequate": [
+        "iron_for_every_anemia",
+        "ignore_gi_mass_or_ulcer",
+        "random_large_panel",
+        "no_followup_after_owner_declines_endoscopy"
+      ]
+    },
+    {
+      "id": "imha_plan",
+      "fullPlan": [
+        "triage_anemia_and_oxygen_delivery",
+        "confirm_anemia_and_hemolysis",
+        "obtain_two_immune_destruction_markers_or_persistent_washed_agglutination_for_firm_class",
+        "manual_smear_and_species_limitations",
+        "exclude_infectious_toxic_mechanical_and_other_hemolysis",
+        "screen_secondary_triggers_by_patient_and_region",
+        "reviewed_transfusion_thrombotic_and_immunomodulatory_route",
+        "serial_clinical_cbc_and_hemolysis_followup"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "classify_firm_supportive_or_suspicious",
+        "trigger_screen",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "one_spherocyte_or_dat_not_firm_imha",
+        "hemolysis_evidence_required",
+        "unstable_transfusion_not_delayed_for_full_trigger_screen",
+        "no_generated_immunosuppressive_protocol"
+      ],
+      "stabilizeAndRefer": [
+        "blood_product_hospital_route_if_oxygen_delivery_compromised",
+        "internal_medicine_referral_for_conflicted_evidence"
+      ],
+      "unsafeOrInadequate": [
+        "icterus_equals_imha",
+        "rouleaux_equals_agglutination",
+        "primary_means_no_screen",
+        "crossmatch_replaces_monitoring"
+      ]
+    },
+    {
+      "id": "infectious_oxidative_hemolysis_plan",
+      "fullPlan": [
+        "triage_hemolysis_and_oxygen_delivery",
+        "manual_smear_and_specific_morphology",
+        "verify_species_region_travel_vector_or_toxin_exposure",
+        "select_targeted_pcr_or_other_confirmatory_route",
+        "separate_primary_etiology_from_secondary_immune_mechanism",
+        "reviewed_source_removal_or_infectious_route",
+        "serial_cbc_renal_respiratory_and_clinical_response"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "exposure_and_morphology",
+        "targeted_confirmation",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "smear_structure_not_final_species",
+        "regional_filter_required",
+        "feline_baseline_heinz_context",
+        "no_generated_antidote_or_dose"
+      ],
+      "stabilizeAndRefer": [
+        "hospital_if_methemoglobin_oxygen_delivery_or_severe_hemolysis",
+        "infectious_or_toxicology_specialist_route"
+      ],
+      "unsafeOrInadequate": [
+        "exotic_infection_without_exposure",
+        "negative_smear_always_excludes",
+        "heinz_body_alone_names_toxin",
+        "all_hemolysis_is_imha"
+      ]
+    },
+    {
+      "id": "chronic_renal_anemia_plan",
+      "fullPlan": [
+        "confirm_stable_nonregenerative_pattern_and_timeline",
+        "exclude_fresh_anemia_blood_loss_hemolysis_and_multilineage_red_flags",
+        "characterize_ckd_inflammation_neoplasia_or_endocrine_context",
+        "compare_anemia_severity_with_underlying_disease",
+        "iron_bp_gi_loss_and_other_cause_assessment",
+        "reviewed_disease_specific_route",
+        "serial_cbc_weight_quality_of_life_and_primary_disease_followup"
+      ],
+      "stagedPlan": [
+        "confirm_pattern",
+        "test_fit_with_context",
+        "exclude_disproportionate_causes",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "chronic_disease_not_default_explanation",
+        "ckd_not_every_severe_anemia",
+        "unexpected_regeneration_or_multilineage_reopens_workup",
+        "no_generated_renal_anemia_drug"
+      ],
+      "stabilizeAndRefer": [
+        "blood_product_or_hospital_if_decompensated",
+        "renal_oncology_endocrine_referral_by_evidence"
+      ],
+      "unsafeOrInadequate": [
+        "mild_inflammation_explains_severe_drop",
+        "ignore_iron_or_gi_loss_in_ckd",
+        "treat_number_without_quality_of_life",
+        "single_snapshot_closes_timeline"
+      ]
+    },
+    {
+      "id": "bone_marrow_pancytopenia_plan",
+      "fullPlan": [
+        "confirm_persistent_nonregeneration_after_sufficient_time",
+        "repeat_cbc_absolute_reticulocytes_and_manual_smear",
+        "verify_neutrophils_platelets_and_artifacts",
+        "screen_reversible_drug_toxin_infectious_and_systemic_causes",
+        "stabilize_infection_bleeding_or_oxygen_delivery_risk",
+        "bone_marrow_and_specialist_route",
+        "link_pathology_and_serial_multilineage_followup"
+      ],
+      "stagedPlan": [
+        "confirm_persistence",
+        "multilineage_and_reversible_screen",
+        "stabilize",
+        "marrow_referral"
+      ],
+      "minimumSafePlan": [
+        "fresh_anemia_not_marrow_failure",
+        "cat_platelet_clumps_checked",
+        "multiple_lines_not_ignored",
+        "marrow_technique_not_generated"
+      ],
+      "stabilizeAndRefer": [
+        "hospital_for_sepsis_bleeding_or_severe_anemia",
+        "bone_marrow_oncology_or_infectious_referral"
+      ],
+      "unsafeOrInadequate": [
+        "empiric_iron_for_all",
+        "wait_for_marrow_while_septic",
+        "one_size_panel",
+        "abnormal_cells_ignored"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "anemia_acute_blood_loss",
+      "version": "2026.07.16.40",
+      "title": "Острая кровопотеря",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Острая кровопотеря может быть наружной или внутренней. Ранние значения гематокрита и ретикулоцитов ещё не отражают полный объём потери.",
+      "exclusions": [
+        "hemolysis_without_loss",
+        "stable_chronic_nonregenerative_anemia"
+      ],
+      "planBundleId": "acute_blood_loss_plan",
+      "sourceIds": [
+        "merck_anemia_overview_2026",
+        "merck_regenerative_anemia_2026",
+        "tracs_monitoring_2021"
+      ],
+      "presentations": [
+        {
+          "id": "p1_visible_traumatic_or_surgical_bleeding",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency_urgent",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что после травмы или операции продолжается видимое кровотечение, слизистые бледные, пульс или перфузия изменены.",
+          "historyAnswers": {
+            "weakness_pallor_onset": "По нашим наблюдениям, острый.",
+            "bleeding_trauma_surgery_melena": "Дома мы заметили, что видимый источник или недавняя операция.",
+            "collapse_dyspnea_tachycardia": "Насколько мы можем судить, выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного.",
+            "transfusion_pregnancy_history": "Мы записали, что известные или неизвестные сохранились."
+          },
+          "examFindings": [
+            {
+              "factId": "active_bleeding_and_perfusion_take_priority",
+              "source": "triage_record",
+              "finding": "Гемостаз и шоковая поддержка предшествуют косметической обработке раны."
+            },
+            {
+              "factId": "serial_pcv_ts_not_single_threshold_guides_trend",
+              "source": "clinical_reasoning",
+              "finding": "Клиническое состояние, гидратация и динамика интегрированы."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "active_bleeding_and_perfusion_take_priority",
+              "discoveryPaths": [
+                "bleeding_trauma_surgery_melena",
+                "collapse_dyspnea_tachycardia",
+                "oxygen_delivery_perfusion_exam",
+                "active_external_bleeding_control"
+              ]
+            },
+            {
+              "factId": "serial_pcv_ts_not_single_threshold_guides_trend",
+              "discoveryPaths": [
+                "prior_cbc_records",
+                "dated_cbc_pcv_ts_platelet_snapshot",
+                "same_episode_anemia_trend"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_stability_perfusion_and_bleeding_triage",
+              "classification": "immediate",
+              "result": "Клиническая оценка показала: полученное состояние шока или доставки кислорода."
+            },
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "parallel_serial",
+              "result": "При динамическом наблюдении: гематокрит и общий белок или тромбоциты связаны с гидратацией и временем."
+            },
+            {
+              "id": "anemia_coagulation_and_blood_loss_source",
+              "classification": "required_by_context",
+              "result": "В лабораторных показателях крови: оценка коагуляции или источника."
+            },
+            {
+              "id": "anemia_blood_type_crossmatch_and_transfusion_route",
+              "classification": "conditional_clinical_need",
+              "result": "По итогам консультации специалиста: типизированный или сопоставляемый продукт и маршрут мониторинга."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "active_bleeding_and_perfusion_take_priority",
+              "serial_pcv_ts_not_single_threshold_guides_trend"
+            ],
+            "confirmedDiagnosisRequires": [
+              "documented_blood_loss_plus_anemia_or_acute_physiologic_evidence"
+            ],
+            "dangerStates": [
+              "shock",
+              "ongoing_hemorrhage",
+              "coagulopathy",
+              "oxygen_delivery_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "stabilization",
+              "cbc",
+              "pcv_total_solids",
+              "serial_pcv_monitoring"
+            ],
+            "external": [
+              "blood_product_referral",
+              "hemorrhage_source_imaging_external"
+            ],
+            "missingLocalRoute": [
+              "hospital_referral",
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_triage_route",
+              "anemia_blood_loss_route",
+              "anemia_transfusion_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "acute_blood_loss_plan",
+          "followUp": {
+            "timing": "Непрерывно, пока кровотечение не будет остановлено, затем проверяются серийные эпизоды.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "bleeding",
+              "pcv_ts",
+              "platelets",
+              "oxygen_delivery",
+              "reaction"
+            ]
+          },
+          "outcomes": {
+            "safe": "Остановка кровотечения, перфузия и совместимая поддержка выполняются одновременно.",
+            "unsafe": "Косметический уход или один номер гематокрит задерживают стабилизацию."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: непосредственный риск кровотечения, необходимость серийных значений и возможные внешние продукты крови."
+          ],
+          "compatibility": {
+            "temperament": [
+              "pain_defensive",
+              "fearful",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_hemostasis_and_stabilization",
+            "ownerModifiers": [
+              "budget_limited",
+              "transport_difficult"
+            ]
+          }
+        },
+        {
+          "id": "p2_internal_hemorrhage_without_external_blood",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что животное слабеет или коллапсирует, слизистые бледные, но наружной крови нет; живот или грудь вызывают подозрение.",
+          "historyAnswers": {
+            "weakness_pallor_onset": "По нашим наблюдениям, острый.",
+            "bleeding_trauma_surgery_melena": "Дома мы заметили, что никакой внешней крови; контекста травма или масса или коагулопатия.",
+            "collapse_dyspnea_tachycardia": "Насколько мы можем судить, слабость и учащённое дыхание появились сегодня и усиливаются в последние часы.",
+            "mucosal_bleeding_petechiae": "Мы записали, что присутствует или отсутствует."
+          },
+          "examFindings": [
+            {
+              "factId": "no_external_blood_does_not_exclude_internal_hemorrhage",
+              "source": "clinical_reasoning",
+              "finding": "Признаки нарушения кровообращения и подозрение на кровотечение в грудную или брюшную полость требуют срочной визуализации и направления."
+            },
+            {
+              "factId": "early_normal_pcv_cannot_override_poor_perfusion",
+              "source": "time_context",
+              "finding": "Перераспределение жидкости может отставать от острой потери."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "no_external_blood_does_not_exclude_internal_hemorrhage",
+              "discoveryPaths": [
+                "bleeding_trauma_surgery_melena",
+                "mucosal_bleeding_petechiae",
+                "blood_loss_source_coagulation_record"
+              ]
+            },
+            {
+              "factId": "early_normal_pcv_cannot_override_poor_perfusion",
+              "discoveryPaths": [
+                "weakness_pallor_onset",
+                "collapse_dyspnea_tachycardia",
+                "oxygen_delivery_perfusion_exam",
+                "dated_cbc_pcv_ts_platelet_snapshot"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_stability_perfusion_and_bleeding_triage",
+              "classification": "immediate",
+              "result": "Клиническая оценка показала: плохая перфузия или доставка кислорода."
+            },
+            {
+              "id": "anemia_coagulation_and_blood_loss_source",
+              "classification": "urgent_required",
+              "result": "В лабораторных показателях крови: полость или источник и путь коагуляции."
+            },
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "serial_not_exclusionary",
+              "result": "При динамическом наблюдении: раннее и повторное гематокрит и общий белок."
+            },
+            {
+              "id": "anemia_blood_type_crossmatch_and_transfusion_route",
+              "classification": "conditional_urgent",
+              "result": "По итогам консультации специалиста: совместимый маршрут поддержки."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "no_external_blood_does_not_exclude_internal_hemorrhage",
+              "early_normal_pcv_cannot_override_poor_perfusion"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_or_procedure_supported_internal_loss"
+            ],
+            "dangerStates": [
+              "hemoabdomen",
+              "hemothorax",
+              "ruptured_mass",
+              "coagulopathy",
+              "shock"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "oxygen",
+              "emergency_stabilization",
+              "serial_pcv_monitoring"
+            ],
+            "external": [
+              "hemorrhage_source_imaging_external",
+              "blood_product_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "hospital_referral"
+            ],
+            "conditional": [
+              "anemia_triage_route",
+              "anemia_blood_loss_route",
+              "anemia_transfusion_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "acute_blood_loss_plan",
+          "followUp": {
+            "timing": "Непрерывно контролировать пульс, слизистые, давление, гематокрит и признаки продолжающегося кровотечения.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "cavity_fluid",
+              "pcv_ts",
+              "respiration",
+              "source_control"
+            ]
+          },
+          "outcomes": {
+            "safe": "Внутреннее кровотечение остаётся вероятным даже без наружной крови и при ещё нормальном раннем гематокрите.",
+            "unsafe": "Больной выписан в связи с отсутствием наружного кровотечения."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему внутреннее кровотечение может быть тяжелым до того, как показатели крови полностью изменятся."
+          ],
+          "compatibility": {
+            "temperament": [
+              "obtunded",
+              "pain_defensive",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_emergency_imaging_route",
+            "ownerModifiers": [
+              "transport_difficult",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_early_nonregenerative_appearance_before_marrow_response",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "priority_urgent",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что свежая анемия имеет низкий абсолютный ретикулоцитарный ответ, хотя начало совместим с недавней кровопотерей.",
+          "historyAnswers": {
+            "weakness_pallor_onset": "По нашим наблюдениям, в пределах раннего окна реакции костного мозга.",
+            "bleeding_trauma_surgery_melena": "Дома мы заметили, что доказательства недавней потери.",
+            "prior_cbc_records": "Насколько мы можем судить, доступен предварительный или первый снимок.",
+            "collapse_dyspnea_tachycardia": "Мы записали, что выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного."
+          },
+          "examFindings": [
+            {
+              "factId": "early_low_reticulocytes_do_not_prove_marrow_failure",
+              "source": "physiology_rule",
+              "finding": "Время от начала короче ожидаемого видимого ответа."
+            },
+            {
+              "factId": "falling_pcv_keeps_ongoing_loss_and_support_priority",
+              "source": "serial_record",
+              "finding": "Тенденция отменяет преждевременный диагноз добычи."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "early_low_reticulocytes_do_not_prove_marrow_failure",
+              "discoveryPaths": [
+                "weakness_pallor_onset",
+                "absolute_species_reticulocyte_result",
+                "prior_cbc_records"
+              ]
+            },
+            {
+              "factId": "falling_pcv_keeps_ongoing_loss_and_support_priority",
+              "discoveryPaths": [
+                "bleeding_trauma_surgery_melena",
+                "dated_cbc_pcv_ts_platelet_snapshot",
+                "same_episode_anemia_trend"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_absolute_reticulocyte_count",
+              "classification": "required_time_context",
+              "result": "В лабораторных показателях крови: абсолютный видоспецифичный подсчет с указанием времени начала."
+            },
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required_repeat",
+              "result": "При динамическом наблюдении: серийный ПКВ или ТС и тромбоциты."
+            },
+            {
+              "id": "anemia_manual_blood_smear_review",
+              "classification": "required",
+              "result": "При микроскопии материала: морфология и признаки ранней регенерации."
+            },
+            {
+              "id": "anemia_coagulation_and_blood_loss_source",
+              "classification": "required_if_declining",
+              "result": "В лабораторных показателях крови: текущий источник остается открытым."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "early_low_reticulocytes_do_not_prove_marrow_failure",
+              "falling_pcv_keeps_ongoing_loss_and_support_priority"
+            ],
+            "confirmedDiagnosisRequires": [
+              "time_appropriate_repeat_classification"
+            ],
+            "dangerStates": [
+              "ongoing_loss",
+              "delayed_regeneration",
+              "shock",
+              "misclassified_marrow_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "pcv_total_solids",
+              "reticulocyte_count",
+              "blood_smear",
+              "serial_pcv_monitoring"
+            ],
+            "external": [
+              "hemorrhage_source_imaging_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_classification_route",
+              "anemia_blood_loss_route",
+              "anemia_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_blood_loss_plan",
+          "followUp": {
+            "timing": "Физиологически рассчитанный повторный анализ ретикулоцитов и гематокрит.",
+            "required": true,
+            "targets": [
+              "absolute_reticulocytes",
+              "pcv_ts",
+              "clinical_state",
+              "ongoing_loss"
+            ]
+          },
+          "outcomes": {
+            "safe": "Свежие потери подлежат своевременной реклассификации и продолжению поиска источника.",
+            "unsafe": "Один ранний результат с низким уровнем ретикулоцитов приводит к недостаточности костного мозга."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: реакция костного мозга требует времени, а падающие значения все равно требуют срочной повторной оценки."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "small_volume_staged_sampling",
+            "ownerModifiers": [
+              "anxious_about_repeat_test",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "anemia_chronic_blood_loss_iron_deficiency",
+      "version": "2026.07.16.40",
+      "title": "Хроническая кровопотеря и дефицит железа",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Медленная кровопотеря истощает железо и может создавать микроцитарный или гипохромный картина; Картина требует подтверждения и определения источника.",
+      "exclusions": [
+        "heritable_microcytosis_without_iron_deficiency",
+        "acute_blood_loss",
+        "chronic_disease_without_loss"
+      ],
+      "planBundleId": "chronic_blood_loss_iron_plan",
+      "sourceIds": [
+        "merck_anemia_overview_2026",
+        "merck_regenerative_anemia_2026",
+        "merck_nonregenerative_anemia_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_gi_or_parasite_occult_loss",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что бледность и слабость нарастали постепенно; есть похудение, мелена или выраженный паразитарный риск.",
+          "historyAnswers": {
+            "weakness_pallor_onset": "По нашим наблюдениям, постепенно.",
+            "bleeding_trauma_surgery_melena": "Дома мы заметили, что оккультная подсказка желудочно-кишечного тракта или мелена.",
+            "vector_parasite_travel": "Насколько мы можем судить, риск заражения блохами и кишечными паразитами.",
+            "appetite_weight_timeline": "Мы записали, что потеря веса или хроническая картина желудочно-кишечного тракта."
+          },
+          "examFindings": [
+            {
+              "factId": "occult_loss_requires_gi_parasite_and_second_source_assessment",
+              "source": "clinical_reasoning",
+              "finding": "Положительный результат обнаружения паразитов не исключает язву, образование или другой источник."
+            },
+            {
+              "factId": "chronic_compensation_does_not_remove_source_need",
+              "source": "safety_rule",
+              "finding": "Стабильный внешний вид позволяет организовать постановку, а не отказываться от источника."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "occult_loss_requires_gi_parasite_and_second_source_assessment",
+              "discoveryPaths": [
+                "bleeding_trauma_surgery_melena",
+                "vector_parasite_travel",
+                "appetite_weight_timeline",
+                "blood_loss_source_coagulation_record"
+              ]
+            },
+            {
+              "factId": "chronic_compensation_does_not_remove_source_need",
+              "discoveryPaths": [
+                "weakness_pallor_onset",
+                "oxygen_delivery_perfusion_exam",
+                "same_episode_anemia_trend"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required",
+              "result": "При динамическом наблюдении: картина соответствует медленно развивающейся анемии; отдельно оценены тромбоциты и общий белок."
+            },
+            {
+              "id": "anemia_absolute_reticulocyte_count",
+              "classification": "required",
+              "result": "В лабораторных показателях крови: абсолютный ответ."
+            },
+            {
+              "id": "anemia_manual_blood_smear_review",
+              "classification": "required",
+              "result": "При микроскопии материала: морфология."
+            },
+            {
+              "id": "anemia_coagulation_and_blood_loss_source",
+              "classification": "required_source",
+              "result": "В лабораторных показателях крови: маршрут желудочно-кишечный тракт или другого источника."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "occult_loss_requires_gi_parasite_and_second_source_assessment",
+              "chronic_compensation_does_not_remove_source_need"
+            ],
+            "confirmedDiagnosisRequires": [
+              "chronic_loss_evidence_plus_iron_deficiency_context"
+            ],
+            "dangerStates": [
+              "gi_mass",
+              "ulcer",
+              "severe_parasitism",
+              "decompensation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "pcv_total_solids",
+              "reticulocyte_count",
+              "blood_smear",
+              "fecal_microscopy"
+            ],
+            "external": [
+              "iron_panel_external",
+              "hemorrhage_source_imaging_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_iron_chronic_loss_route",
+              "anemia_blood_loss_route",
+              "anemia_longitudinal_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "chronic_blood_loss_iron_plan",
+          "followUp": {
+            "timing": "Поэтапное исследование источника с серийным ОАК или весом.",
+            "required": true,
+            "targets": [
+              "pcv",
+              "indices",
+              "weight",
+              "stool",
+              "source"
+            ]
+          },
+          "outcomes": {
+            "safe": "Оккультная утрата преследуется за пределами первого положительного открытия.",
+            "unsafe": "Результат-паразит прекращает всю оценку источника."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: замена железа без остановки кровопотери является неполной."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "staged_low_volume_sampling",
+            "ownerModifiers": [
+              "budget_limited",
+              "incomplete_stool_history"
+            ]
+          }
+        },
+        {
+          "id": "p2_slow_microcytic_hypochromic_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что оАК и мазок демонстрируют медленно развившийся микроцитарный или гипохромный рисунок.",
+          "historyAnswers": {
+            "weakness_pallor_onset": "По нашим наблюдениям, постепенно.",
+            "appetite_weight_timeline": "Дома мы заметили, что стабильный или худеющий.",
+            "bleeding_trauma_surgery_melena": "Насколько мы можем судить, источник может быть оккультным.",
+            "prior_cbc_records": "Мы записали, что тренд доступен."
+          },
+          "examFindings": [
+            {
+              "factId": "microcytic_hypochromic_pattern_supports_but_does_not_name_source",
+              "source": "lab_record",
+              "finding": "Статус железа и источник кровопотери остаются необходимыми."
+            },
+            {
+              "factId": "species_age_and_heritable_microcytosis_remain_differentials",
+              "source": "clinical_reasoning",
+              "finding": "Индексы не интерпретируются без контекста пациента."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "microcytic_hypochromic_pattern_supports_but_does_not_name_source",
+              "discoveryPaths": [
+                "prior_cbc_records",
+                "dated_cbc_pcv_ts_platelet_snapshot",
+                "manual_smear_morphology_review"
+              ]
+            },
+            {
+              "factId": "species_age_and_heritable_microcytosis_remain_differentials",
+              "discoveryPaths": [
+                "appetite_weight_timeline",
+                "bleeding_trauma_surgery_melena",
+                "hydration_weight_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required_pattern",
+              "result": "При динамическом наблюдении: тенденция средний объём эритроцита и средняя концентрация гемоглобина и гематокрит."
+            },
+            {
+              "id": "anemia_manual_blood_smear_review",
+              "classification": "required",
+              "result": "При микроскопии материала: гипохромия или морфология."
+            },
+            {
+              "id": "anemia_absolute_reticulocyte_count",
+              "classification": "required",
+              "result": "В лабораторных показателях крови: переменная реакция классифицирована."
+            },
+            {
+              "id": "anemia_coagulation_and_blood_loss_source",
+              "classification": "required_source",
+              "result": "В лабораторных показателях крови: расследование убытков."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "microcytic_hypochromic_pattern_supports_but_does_not_name_source",
+              "species_age_and_heritable_microcytosis_remain_differentials"
+            ],
+            "confirmedDiagnosisRequires": [
+              "iron_deficiency_evidence_and_source_or_explicit_unresolved_source"
+            ],
+            "dangerStates": [
+              "occult_gi_bleeding",
+              "neoplasia",
+              "severe_iron_deficiency"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "pcv_total_solids",
+              "reticulocyte_count",
+              "blood_smear"
+            ],
+            "external": [
+              "iron_panel_external",
+              "hemorrhage_source_imaging_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_classification_route",
+              "anemia_iron_chronic_loss_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "chronic_blood_loss_iron_plan",
+          "followUp": {
+            "timing": "Определяемая протоколом повторная проверка общий анализ крови или железа или источника.",
+            "required": true,
+            "targets": [
+              "pcv",
+              "mcv",
+              "mchc",
+              "iron_context",
+              "source"
+            ]
+          },
+          "outcomes": {
+            "safe": "Модель подтверждена, и обработка источника остается активной.",
+            "unsafe": "Железо назначают исключительно по одному показателю."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: картина эритроцитов предполагает истощение запасов железа, но не объясняет, почему это произошло."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "single_planned_sampling_session",
+            "ownerModifiers": [
+              "budget_limited",
+              "wants_supplement_only"
+            ]
+          }
+        },
+        {
+          "id": "p3_source_not_found_requires_imaging_or_endoscopy_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что характер дефицита железа подтвержден, но базовые исследования не выявили причины серьезных заболеваний.",
+          "historyAnswers": {
+            "bleeding_trauma_surgery_melena": "По нашим наблюдениям, источник по базовому маршруту не найден.",
+            "appetite_weight_timeline": "Дома мы заметили, что тенденция зафиксирована.",
+            "prior_cbc_records": "Насколько мы можем судить, стойкий узор.",
+            "collapse_dyspnea_tachycardia": "Мы записали, что стабильные или красные флаги."
+          },
+          "examFindings": [
+            {
+              "factId": "unresolved_source_requires_targeted_not_random_escalation",
+              "source": "clinical_reasoning",
+              "finding": "Маршрут визуализации или эндоскопии или онкологии соответствует анамнезу и стабильности."
+            },
+            {
+              "factId": "staged_monitoring_after_refusal_requires_no_red_flags",
+              "source": "safety_rule",
+              "finding": "Бюджет не скрывает декомпенсации или продолжающихся быстрых потерь."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "unresolved_source_requires_targeted_not_random_escalation",
+              "discoveryPaths": [
+                "bleeding_trauma_surgery_melena",
+                "appetite_weight_timeline",
+                "blood_loss_source_coagulation_record"
+              ]
+            },
+            {
+              "factId": "staged_monitoring_after_refusal_requires_no_red_flags",
+              "discoveryPaths": [
+                "collapse_dyspnea_tachycardia",
+                "oxygen_delivery_perfusion_exam",
+                "same_episode_anemia_trend"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_coagulation_and_blood_loss_source",
+              "classification": "required_escalation",
+              "result": "В лабораторных показателях крови: целевой маршрут внешнего источника."
+            },
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required_monitoring",
+              "result": "При динамическом наблюдении: стабильность или тренд."
+            },
+            {
+              "id": "anemia_bone_marrow_or_specialist_referral",
+              "classification": "conditional_if_pattern_conflicts",
+              "result": "В заключении по гистологическому исследованию: направление к специалисту, если возникнет вопрос о кроветворении."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "unresolved_source_requires_targeted_not_random_escalation",
+              "staged_monitoring_after_refusal_requires_no_red_flags"
+            ],
+            "confirmedDiagnosisRequires": [
+              "iron_deficiency_confirmed_source_unresolved_explicit"
+            ],
+            "dangerStates": [
+              "occult_neoplasia",
+              "ongoing_gi_loss",
+              "decompensation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "serial_pcv_monitoring",
+              "longitudinal_care"
+            ],
+            "external": [
+              "hemorrhage_source_imaging_external",
+              "gi_specialist_referral",
+              "advanced_imaging_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_iron_chronic_loss_route",
+              "anemia_longitudinal_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "chronic_blood_loss_iron_plan",
+          "followUp": {
+            "timing": "Явные установленные сроки, если они стабильны; срочно, если тенденция ухудшится.",
+            "required": true,
+            "targets": [
+              "pcv",
+              "clinical_state",
+              "weight",
+              "source_evidence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неразрешенный источник остается видимым с целевым планом и сроком.",
+            "unsafe": "Случайная комиссия заменяет доводы или отказ прекращает наблюдение."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: для чего предназначена каждая следующая процедура и какие тревожные признаки исключают возможность ожидания."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "external_specialist_route",
+            "ownerModifiers": [
+              "declines_expensive_procedure",
+              "transport_difficult"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "anemia_immune_mediated_hemolysis",
+      "version": "2026.07.16.40",
+      "title": "Иммунно-опосредованный гемолиз",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Твердая ИМХА требует анемии, доказательств иммуноопосредованного разрушения эритроцитов и не менее одного доказательства гемолиза при исключении установленной другой причины.",
+      "exclusions": [
+        "isolated_icterus",
+        "single_spherocyte",
+        "dat_only_without_anemia_or_hemolysis",
+        "infectious_or_oxidative_etiology_only"
+      ],
+      "planBundleId": "imha_plan",
+      "sourceIds": [
+        "acvim_imha_diagnosis_2019",
+        "merck_regenerative_anemia_2026",
+        "tracs_monitoring_2021"
+      ],
+      "presentations": [
+        {
+          "id": "p1_regenerative_anemia_with_hemolysis_markers",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_emergency",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что анемия регенеративная, есть иктеричность, билирубин или гемоглобинурия или другие признаки гемолиза.",
+          "historyAnswers": {
+            "weakness_pallor_onset": "По нашим наблюдениям, острый или подострый.",
+            "jaundice_dark_urine": "Дома мы заметили, что признак присутствует сейчас.",
+            "collapse_dyspnea_tachycardia": "Насколько мы можем судить, выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного.",
+            "vector_parasite_travel": "Мы записали, что записан альтернативный контекст гемолиза."
+          },
+          "examFindings": [
+            {
+              "factId": "hemolysis_evidence_does_not_alone_equal_imha",
+              "source": "diagnostic_reasoning",
+              "finding": "Доказательства разрушения иммунитета и альтернативы по-прежнему необходимы."
+            },
+            {
+              "factId": "unstable_transfusion_does_not_wait_for_complete_trigger_screen",
+              "source": "safety_rule",
+              "finding": "Полному этиологическому закрытию может предшествовать поддержка доставки кислорода."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "hemolysis_evidence_does_not_alone_equal_imha",
+              "discoveryPaths": [
+                "jaundice_dark_urine",
+                "absolute_species_reticulocyte_result",
+                "hemolysis_immune_destruction_record"
+              ]
+            },
+            {
+              "factId": "unstable_transfusion_does_not_wait_for_complete_trigger_screen",
+              "discoveryPaths": [
+                "collapse_dyspnea_tachycardia",
+                "oxygen_delivery_perfusion_exam",
+                "typed_crossmatched_product_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required",
+              "result": "При динамическом наблюдении: тенденция к анемии или тромбоцитам."
+            },
+            {
+              "id": "anemia_absolute_reticulocyte_count",
+              "classification": "required",
+              "result": "В лабораторных показателях крови: регенерация засекречена."
+            },
+            {
+              "id": "anemia_hemolysis_and_agglutination_workup",
+              "classification": "required_algorithm",
+              "result": "Целевое исследование показало: доказательства гемолиза и иммунной деструкции."
+            },
+            {
+              "id": "anemia_infectious_toxin_and_comorbidity_screen",
+              "classification": "required_targeted",
+              "result": "Целевое исследование показало: альтернативный или вторичный экран."
+            },
+            {
+              "id": "anemia_blood_type_crossmatch_and_transfusion_route",
+              "classification": "conditional_urgent",
+              "result": "По итогам консультации специалиста: совместимая контролируемая поддержка."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "hemolysis_evidence_does_not_alone_equal_imha",
+              "unstable_transfusion_does_not_wait_for_complete_trigger_screen"
+            ],
+            "confirmedDiagnosisRequires": [
+              "anemia_plus_immune_destruction_evidence_plus_hemolysis_evidence"
+            ],
+            "dangerStates": [
+              "oxygen_delivery_failure",
+              "rapid_hemolysis",
+              "thrombotic_risk",
+              "transfusion_reaction"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "reticulocyte_count",
+              "blood_smear",
+              "biochemistry",
+              "urinalysis",
+              "saline_agglutination_test"
+            ],
+            "external": [
+              "direct_antiglobulin_test_external",
+              "infectious_hemolysis_panel_external",
+              "blood_product_referral"
+            ],
+            "missingLocalRoute": [
+              "hospital_referral"
+            ],
+            "conditional": [
+              "anemia_hemolysis_route",
+              "anemia_infectious_toxin_route",
+              "anemia_transfusion_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "imha_plan",
+          "followUp": {
+            "timing": "Срочный серийный клинический или ОАК или мониторинг гемолиза.",
+            "required": true,
+            "targets": [
+              "pcv",
+              "reticulocytes",
+              "bilirubin",
+              "urine",
+              "perfusion",
+              "reaction"
+            ]
+          },
+          "outcomes": {
+            "safe": "Гемолиз поддерживается, в то время как уверенность иммуноопосредованная гемолитическая анемия соответствует алгоритму доказательств.",
+            "unsafe": "Желтуха сама по себе ошибочно принимается за доказательство иммуноопосредованной гемолитической анемии, либо подтверждающие исследования задерживают жизненно необходимую помощь."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: разницу между разрушением эритроцитов и доказательством того, что оно является иммуноопосредованным."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "minimal_stress_sampling_and_monitoring",
+            "ownerModifiers": [
+              "budget_limited",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_agglutination_or_spherocyte_supported_imha",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что выполненная стойкая агглютинация или значимая видово-соответствующая сфероцитоз с помощью иммуноопосредованная гемолитическая анемия.",
+          "historyAnswers": {
+            "jaundice_dark_urine": "По нашим наблюдениям, владелец не отмечает этого признака на текущем этапе.",
+            "transfusion_pregnancy_history": "Дома мы заметили, что история предшествующей сенсибилизации сохранена.",
+            "medication_vaccine_timeline": "Насколько мы можем судить, записана временная шкала потенциального триггера.",
+            "prior_cbc_records": "Мы записали, что базовый уровень или тренд доступны."
+          },
+          "examFindings": [
+            {
+              "factId": "immune_destruction_result_preserves_method_washing_operator_and_species",
+              "source": "lab_record",
+              "finding": "Границы морфологии Руло или артефактов и кошек очевидны."
+            },
+            {
+              "factId": "firm_supportive_suspicious_class_not_binary_guess",
+              "source": "acvim_rule",
+              "finding": "Количество доказательств и гемолиз определяют уверенность."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "immune_destruction_result_preserves_method_washing_operator_and_species",
+              "discoveryPaths": [
+                "transfusion_pregnancy_history",
+                "manual_smear_morphology_review",
+                "hemolysis_immune_destruction_record"
+              ]
+            },
+            {
+              "factId": "firm_supportive_suspicious_class_not_binary_guess",
+              "discoveryPaths": [
+                "jaundice_dark_urine",
+                "prior_cbc_records",
+                "dated_cbc_pcv_ts_platelet_snapshot"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_manual_blood_smear_review",
+              "classification": "required_expert",
+              "result": "При микроскопии материала: морфология с учетом видов."
+            },
+            {
+              "id": "anemia_hemolysis_and_agglutination_workup",
+              "classification": "required_algorithm",
+              "result": "Целевое исследование показало: отмытые доказательства солевой тест на агглютинацию и прямой антиглобулиновый тест или гемолиза."
+            },
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required",
+              "result": "При динамическом наблюдении: анемия подтверждена."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "immune_destruction_result_preserves_method_washing_operator_and_species",
+              "firm_supportive_suspicious_class_not_binary_guess"
+            ],
+            "confirmedDiagnosisRequires": [
+              "acvim_firm_pattern_or_explicit_lower_confidence_class"
+            ],
+            "dangerStates": [
+              "rapid_hemolysis",
+              "artifact_misdiagnosis",
+              "thrombosis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "blood_smear",
+              "trained_hematology",
+              "saline_agglutination_test",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "direct_antiglobulin_test_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_classification_route",
+              "anemia_hemolysis_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "imha_plan",
+          "followUp": {
+            "timing": "Ранняя алгоритмическая переоценка и последовательный тренд.",
+            "required": true,
+            "targets": [
+              "confidence_class",
+              "pcv",
+              "hemolysis",
+              "agglutination",
+              "clinical_state"
+            ]
+          },
+          "outcomes": {
+            "safe": "Метод и класс доказательств прозрачны.",
+            "unsafe": "Один сфероцит, руло или неквалифицированный прямой антиглобулиновый тест становится твердым иммуноопосредованная гемолитическая анемия."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему необходимы несколько дополнительных результатов, прежде чем приступить к иммунодиагностике."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "expert_small_sample_review",
+            "ownerModifiers": [
+              "wants_immediate_final_label",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_secondary_trigger_screen_and_thrombotic_risk",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_follow_up",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что иМХА находится под стражей; нужно оценить инфекцию, опухоль, иммунитет, лекарства и другие вторичные триггеры и рекомендации.",
+          "historyAnswers": {
+            "vector_parasite_travel": "По нашим наблюдениям, Экспозиция по видам или регионам.",
+            "medication_vaccine_timeline": "Дома мы заметили, что датированный; не автоматическая причинность.",
+            "ckd_inflammation_cancer_endocrine": "Насколько мы можем судить, зарегистрированы данные о сопутствующей патологии.",
+            "collapse_dyspnea_tachycardia": "Мы записали, что тромботические или кислородные признаки да или нет."
+          },
+          "examFindings": [
+            {
+              "factId": "primary_imha_means_reasonable_screen_negative_not_screen_omitted",
+              "source": "acvim_rule",
+              "finding": "Экран, основанный на фактических данных, для пациента или владельца или географического руководства."
+            },
+            {
+              "factId": "thrombotic_management_belongs_to_reviewed_protocol",
+              "source": "protocol_boundary",
+              "finding": "Риск создается без создания схемы приема лекарств."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "primary_imha_means_reasonable_screen_negative_not_screen_omitted",
+              "discoveryPaths": [
+                "vector_parasite_travel",
+                "medication_vaccine_timeline",
+                "ckd_inflammation_cancer_endocrine"
+              ]
+            },
+            {
+              "factId": "thrombotic_management_belongs_to_reviewed_protocol",
+              "discoveryPaths": [
+                "collapse_dyspnea_tachycardia",
+                "oxygen_delivery_perfusion_exam",
+                "same_episode_anemia_trend"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_infectious_toxin_and_comorbidity_screen",
+              "classification": "required_targeted",
+              "result": "Целевое исследование показало: вторичный экран, основанный на фактических данных."
+            },
+            {
+              "id": "anemia_hemolysis_and_agglutination_workup",
+              "classification": "required_followup",
+              "result": "Целевое исследование показало: тенденция гемолиза или иммунных данных."
+            },
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required_serial",
+              "result": "При динамическом наблюдении: тенденция анализа крови или тромбоцитов."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "primary_imha_means_reasonable_screen_negative_not_screen_omitted",
+              "thrombotic_management_belongs_to_reviewed_protocol"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imha_evidence_class_plus_documented_secondary_screen_scope"
+            ],
+            "dangerStates": [
+              "thromboembolism",
+              "occult_infection",
+              "neoplasia",
+              "relapse"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "biochemistry",
+              "urinalysis",
+              "longitudinal_care"
+            ],
+            "external": [
+              "infectious_hemolysis_panel_external",
+              "advanced_imaging_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_infectious_toxin_route",
+              "anemia_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "imha_plan",
+          "followUp": {
+            "timing": "Тщательное клиническое или клиническое наблюдение в соответствии с протоколом.",
+            "required": true,
+            "targets": [
+              "secondary_trigger",
+              "pcv",
+              "platelets",
+              "hemolysis",
+              "thrombotic_signs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Вторичные причины и осложнения оценивают отдельно, а лечение выбирает врач после подтверждения.",
+            "unsafe": "Случай называется первичным, потому что проверка не проводилась."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему обнаружение и лечение основного триггера может изменить течение."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "staged_targeted_screen",
+            "ownerModifiers": [
+              "budget_limited",
+              "concerned_about_many_tests"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "anemia_infectious_or_oxidative_hemolysis",
+      "version": "2026.07.16.40",
+      "title": "Инфекционный или окислительный гемолиз",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Гемолиз связан с подтверждённой совместимой инфекцией или паразитом или окислительным воздействием; Общий гемолиз не соответствует этиологии.",
+      "exclusions": [
+        "hemolysis_without_species_region_exposure_or_confirmatory_evidence",
+        "primary_imha_only"
+      ],
+      "planBundleId": "infectious_oxidative_hemolysis_plan",
+      "sourceIds": [
+        "merck_anemia_overview_2026",
+        "merck_regenerative_anemia_2026",
+        "acvim_imha_diagnosis_2019"
+      ],
+      "presentations": [
+        {
+          "id": "p1_feline_hemoplasma_or_vector_context",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_priority",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что у кошек анемия и лихорадка или переносчик или контактный контекст; мазок может показывать подозрительные структуры.",
+          "historyAnswers": {
+            "vector_parasite_travel": "По нашим наблюдениям, совместимое кошачье воздействие.",
+            "weakness_pallor_onset": "Дома мы заметили, что острый или подострый.",
+            "jaundice_dark_urine": "Насколько мы можем судить, по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой.",
+            "medication_vaccine_timeline": "Мы записали, что сроки предшествующего лечения сохранены."
+          },
+          "examFindings": [
+            {
+              "factId": "smear_suspicion_requires_species_specific_pcr",
+              "source": "diagnostic_reasoning",
+              "finding": "Сама по себе морфология не подтверждает существование организма."
+            },
+            {
+              "factId": "pcr_interpretation_preserves_treatment_timing_and_comorbidity",
+              "source": "test_context",
+              "finding": "Положительный или отрицательный результат остается контекстуальным."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "smear_suspicion_requires_species_specific_pcr",
+              "discoveryPaths": [
+                "vector_parasite_travel",
+                "manual_smear_morphology_review"
+              ]
+            },
+            {
+              "factId": "pcr_interpretation_preserves_treatment_timing_and_comorbidity",
+              "discoveryPaths": [
+                "medication_vaccine_timeline",
+                "jaundice_dark_urine",
+                "same_episode_anemia_trend"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_manual_blood_smear_review",
+              "classification": "required",
+              "result": "При микроскопии материала: предполагаемые структуры или морфология."
+            },
+            {
+              "id": "anemia_infectious_toxin_and_comorbidity_screen",
+              "classification": "required_targeted_pcr",
+              "result": "Целевое исследование показало: внешнее подтверждение видовой принадлежности кошек."
+            },
+            {
+              "id": "anemia_hemolysis_and_agglutination_workup",
+              "classification": "required_mechanism",
+              "result": "Целевое исследование показало: гемолиз и возможный вторичный иммунный механизм."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "smear_suspicion_requires_species_specific_pcr",
+              "pcr_interpretation_preserves_treatment_timing_and_comorbidity"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_cat_plus_targeted_infectious_evidence"
+            ],
+            "dangerStates": [
+              "severe_hemolysis",
+              "fever",
+              "retroviral_comorbidity",
+              "oxygen_delivery_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "reticulocyte_count",
+              "blood_smear",
+              "trained_hematology",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "infectious_hemolysis_panel_external",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_infectious_toxin_route",
+              "anemia_hemolysis_route",
+              "anemia_transfusion_route"
+            ],
+            "referralFallback": "infectious_disease_referral"
+          },
+          "carePlanId": "infectious_oxidative_hemolysis_plan",
+          "followUp": {
+            "timing": "Целевой результат плюс серийный анализ крови или клинический ответ.",
+            "required": true,
+            "targets": [
+              "pcv",
+              "reticulocytes",
+              "fever",
+              "hemolysis",
+              "pcr_context"
+            ]
+          },
+          "outcomes": {
+            "safe": "Заражение кошек подтверждено целенаправленными доказательствами.",
+            "unsafe": "Артефакт мазка называет организм, или весь гемолиз становится ИМХА."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему при подозрении на мазки крови необходим целенаправленный молекулярный результат."
+          ],
+          "compatibility": {
+            "temperament": [
+              "fearful",
+              "weak",
+              "irritable"
+            ],
+            "requiredHandlingAlternative": "feline_low_stress_small_sample",
+            "ownerModifiers": [
+              "multi_cat_household",
+              "unknown_outdoor_exposure"
+            ]
+          }
+        },
+        {
+          "id": "p2_heinz_body_or_toxin_exposure",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_emergency",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что мазок показывает окислительное повреждение, анамнез содержит совместимую пищевую, металлическую или лекарственную экспозицию.",
+          "historyAnswers": {
+            "toxin_food_drug_exposure": "По нашим наблюдениям, конкретное достоверное воздействие или документированная неопределенность.",
+            "weakness_pallor_onset": "Дома мы заметили, что острый или подострый.",
+            "collapse_dyspnea_tachycardia": "Насколько мы можем судить, риск кислорода или метгемоглобина.",
+            "jaundice_dark_urine": "Мы записали, что по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой."
+          },
+          "examFindings": [
+            {
+              "factId": "heinz_body_context_is_species_and_burden_specific",
+              "source": "morphology_rule",
+              "finding": "У кошек могут быть небольшие исходные цифры; бремя плюс анемия или воздействие."
+            },
+            {
+              "factId": "toxin_name_does_not_generate_antidote_or_dose",
+              "source": "protocol_boundary",
+              "finding": "Только удаление источника и специализированный маршрут."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "heinz_body_context_is_species_and_burden_specific",
+              "discoveryPaths": [
+                "toxin_food_drug_exposure",
+                "manual_smear_morphology_review",
+                "dated_cbc_pcv_ts_platelet_snapshot"
+              ]
+            },
+            {
+              "factId": "toxin_name_does_not_generate_antidote_or_dose",
+              "discoveryPaths": [
+                "collapse_dyspnea_tachycardia",
+                "jaundice_dark_urine",
+                "oxygen_delivery_perfusion_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_manual_blood_smear_review",
+              "classification": "required_species_context",
+              "result": "При микроскопии материала: тельца Хайнца или окислительная морфология."
+            },
+            {
+              "id": "anemia_infectious_toxin_and_comorbidity_screen",
+              "classification": "required_exposure",
+              "result": "Целевое исследование показало: достоверный источник и альтернативный экран."
+            },
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required_serial",
+              "result": "При динамическом наблюдении: динамика анемии."
+            },
+            {
+              "id": "anemia_blood_type_crossmatch_and_transfusion_route",
+              "classification": "conditional_severity",
+              "result": "По итогам консультации специалиста: совместимый маршрут поддержки."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "heinz_body_context_is_species_and_burden_specific",
+              "toxin_name_does_not_generate_antidote_or_dose"
+            ],
+            "confirmedDiagnosisRequires": [
+              "oxidative_morphology_plus_compatible_exposure_or_specialist_evidence"
+            ],
+            "dangerStates": [
+              "methemoglobinemia",
+              "severe_hemolysis",
+              "aki",
+              "oxygen_delivery_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "oxygen",
+              "cbc",
+              "blood_smear",
+              "trained_hematology",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "infectious_disease_referral",
+              "blood_product_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "hospital_referral"
+            ],
+            "conditional": [
+              "anemia_triage_route",
+              "anemia_infectious_toxin_route",
+              "anemia_transfusion_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "infectious_oxidative_hemolysis_plan",
+          "followUp": {
+            "timing": "Тщательное серийное наблюдение ОАК или почечных или респираторных заболеваний.",
+            "required": true,
+            "targets": [
+              "pcv",
+              "heinz_burden",
+              "respiration",
+              "renal",
+              "exposure_removed"
+            ]
+          },
+          "outcomes": {
+            "safe": "Свидетельства и воздействие окисления интегрированы с видовым контекстом.",
+            "unsafe": "Опасно по единичным тельцам Хайнца объявлять конкретный токсин или назначать противоядие без подтверждённого воздействия."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: удаление источника, потребности в мониторинге и почему кошкам требуется интерпретация с учетом конкретных видов."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "minimal_stress_oxygen_and_sampling",
+            "ownerModifiers": [
+              "shared_food_exposure",
+              "medication_uncertainty"
+            ]
+          }
+        },
+        {
+          "id": "p3_babesia_or_regional_vector_borne_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что после совместимой поездки или контакта с переносчиками появились анемия, гемолиз или тромбоцитопения.",
+          "historyAnswers": {
+            "vector_parasite_travel": "По нашим наблюдениям, воздействие региона или поездки или вектора соответствует набору агентов.",
+            "weakness_pallor_onset": "Дома мы заметили, что острый или подострый.",
+            "jaundice_dark_urine": "Насколько мы можем судить, в этом случае гемолиз подтверждают билирубинемия, гемоглобинурия и изменения мазка крови.",
+            "prior_cbc_records": "Мы записали, что тенденция к анемии или тромбоцитам."
+          },
+          "examFindings": [
+            {
+              "factId": "regional_filter_and_exposure_are_required_for_vector_truth",
+              "source": "eligibility_rule",
+              "finding": "Экзотические заболевания не могут возникнуть без совместимой эпидемиологии."
+            },
+            {
+              "factId": "negative_smear_does_not_always_exclude_targeted_infection",
+              "source": "diagnostic_limit",
+              "finding": "ПЦР или целевой внешний тест могут по-прежнему требоваться."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "regional_filter_and_exposure_are_required_for_vector_truth",
+              "discoveryPaths": [
+                "vector_parasite_travel",
+                "prior_cbc_records"
+              ]
+            },
+            {
+              "factId": "negative_smear_does_not_always_exclude_targeted_infection",
+              "discoveryPaths": [
+                "manual_smear_morphology_review",
+                "jaundice_dark_urine",
+                "same_episode_anemia_trend"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_infectious_toxin_and_comorbidity_screen",
+              "classification": "required_targeted",
+              "result": "Целевое исследование показало: региональный или видоспецифичный метод ПЦР или серологии."
+            },
+            {
+              "id": "anemia_manual_blood_smear_review",
+              "classification": "supportive_not_exclusionary",
+              "result": "При микроскопии материала: организмы или морфология или отрицательный мазок."
+            },
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required",
+              "result": "При динамическом наблюдении: тенденция к анемии и тромбоцитам."
+            },
+            {
+              "id": "anemia_hemolysis_and_agglutination_workup",
+              "classification": "required_mechanism",
+              "result": "Целевое исследование показало: гемолиз и вторичные иммунные доказательства."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "regional_filter_and_exposure_are_required_for_vector_truth",
+              "negative_smear_does_not_always_exclude_targeted_infection"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_epidemiology_plus_targeted_agent_evidence"
+            ],
+            "dangerStates": [
+              "severe_hemolysis",
+              "thrombocytopenic_bleeding",
+              "organ_dysfunction"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "reticulocyte_count",
+              "blood_smear",
+              "trained_hematology",
+              "biochemistry",
+              "urinalysis"
+            ],
+            "external": [
+              "infectious_hemolysis_panel_external",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_infectious_toxin_route",
+              "anemia_hemolysis_route",
+              "anemia_longitudinal_route"
+            ],
+            "referralFallback": "infectious_disease_referral"
+          },
+          "carePlanId": "infectious_oxidative_hemolysis_plan",
+          "followUp": {
+            "timing": "Целевой результат и серийное наблюдение за общим анализом крови или органами.",
+            "required": true,
+            "targets": [
+              "pcv",
+              "platelets",
+              "hemolysis",
+              "agent_evidence",
+              "organ_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Переносчики болезней учитывают эпидемиологию и целевые доказательства.",
+            "unsafe": "Без эпидемиологических оснований предполагают экзотическую инфекцию или отрицательный мазок завершает тестирование."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: как путешествие и воздействие переносчиков определяют, какие внешние тесты будут полезны."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "staged_targeted_sampling",
+            "ownerModifiers": [
+              "travel_history_uncertain",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "anemia_chronic_disease_or_renal",
+      "version": "2026.07.16.40",
+      "title": "Анемия хронического заболевания или ХБП",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Обычно легкая или умеренная нерегенеративная анемия связана с подтвержденным хроническим или почечным заболеванием только после проверки потерь, гемолиза и тревожных сигналов костного мозга.",
+      "exclusions": [
+        "fresh_pre_regenerative_anemia",
+        "severe_disproportionate_anemia_without_other_workup",
+        "multilineage_cytopenia_unexplained"
+      ],
+      "planBundleId": "chronic_renal_anemia_plan",
+      "sourceIds": [
+        "merck_anemia_overview_2026",
+        "merck_nonregenerative_anemia_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_stable_mild_to_moderate_nonregenerative_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "routine_priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что компенсированный пациент с потвержденной хронической воспалительной болезнью имеет стойкую легкую или умеренную нерегенеративную анемию.",
+          "historyAnswers": {
+            "weakness_pallor_onset": "По нашим наблюдениям, постепенное или стабильное.",
+            "ckd_inflammation_cancer_endocrine": "Дома мы заметили, что подтвержденное хроническое заболевание.",
+            "bleeding_trauma_surgery_melena": "Насколько мы можем судить, нет поддерживаемых текущих потерь.",
+            "prior_cbc_records": "Мы записали, что стабильная серийная модель."
+          },
+          "examFindings": [
+            {
+              "factId": "chronic_disease_anemia_requires_pattern_fit_and_exclusions",
+              "source": "clinical_reasoning",
+              "finding": "Воспаление не является объяснением по умолчанию."
+            },
+            {
+              "factId": "outcome_tracks_primary_disease_weight_and_cbc",
+              "source": "longitudinal_rule",
+              "finding": "Анемия развивается по тому же графику."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "chronic_disease_anemia_requires_pattern_fit_and_exclusions",
+              "discoveryPaths": [
+                "ckd_inflammation_cancer_endocrine",
+                "bleeding_trauma_surgery_melena",
+                "absolute_species_reticulocyte_result",
+                "manual_smear_morphology_review"
+              ]
+            },
+            {
+              "factId": "outcome_tracks_primary_disease_weight_and_cbc",
+              "discoveryPaths": [
+                "appetite_weight_timeline",
+                "prior_cbc_records",
+                "same_episode_anemia_trend"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required_stable_pattern",
+              "result": "При динамическом наблюдении: легкая или умеренная персистирующая анемия."
+            },
+            {
+              "id": "anemia_absolute_reticulocyte_count",
+              "classification": "required",
+              "result": "В лабораторных показателях крови: истинное отсутствие регенерации по прошествии достаточного времени."
+            },
+            {
+              "id": "anemia_manual_blood_smear_review",
+              "classification": "required",
+              "result": "При микроскопии материала: никаких неожиданных признаков морфологии или многолинейности."
+            },
+            {
+              "id": "anemia_infectious_toxin_and_comorbidity_screen",
+              "classification": "targeted_if_indicated",
+              "result": "Целевое исследование показало: основной контекст."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "chronic_disease_anemia_requires_pattern_fit_and_exclusions",
+              "outcome_tracks_primary_disease_weight_and_cbc"
+            ],
+            "confirmedDiagnosisRequires": [
+              "stable_compatible_nonregenerative_pattern_plus_confirmed_chronic_disease_and_no_better_mechanism"
+            ],
+            "dangerStates": [
+              "unexpected_severity",
+              "new_regeneration",
+              "multilineage_change",
+              "weight_loss"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "cbc",
+              "pcv_total_solids",
+              "reticulocyte_count",
+              "blood_smear",
+              "longitudinal_care"
+            ],
+            "external": [
+              "iron_panel_external",
+              "safe_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_classification_route",
+              "anemia_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "chronic_renal_anemia_plan",
+          "followUp": {
+            "timing": "контрольные осмотры первичного заболевания и общий анализ крови.",
+            "required": true,
+            "targets": [
+              "pcv",
+              "reticulocytes",
+              "weight",
+              "primary_disease",
+              "quality_of_life"
+            ]
+          },
+          "outcomes": {
+            "safe": "Хроническое заболевание объясняет только соответствующую, наблюдаемую закономерность.",
+            "unsafe": "Любое воспаление автоматически объясняет любую анемию."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: анемия контролируется на фоне основного заболевания и будет возобновлена, если картина изменится."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "planned_low_volume_followup",
+            "ownerModifiers": [
+              "chronic_care_burden",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_ckd_with_progressive_anemia",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что у пациента с ХБП анемия постепенно усиливается и влияет на активность или качество жизни.",
+          "historyAnswers": {
+            "ckd_inflammation_cancer_endocrine": "По нашим наблюдениям, ссылка на снимок стадии или подэтапа ХБП.",
+            "weakness_pallor_onset": "Дома мы заметили, что прогрессивный.",
+            "bleeding_trauma_surgery_melena": "Насколько мы можем судить, переоценка желудочно-кишечный тракт или других потерь.",
+            "appetite_weight_timeline": "Мы записали, что тенденция веса или потребления."
+          },
+          "examFindings": [
+            {
+              "factId": "ckd_does_not_automatically_explain_disproportionate_anemia",
+              "source": "clinical_reasoning",
+              "finding": "Железо, потеря желудочно-кишечного тракта, воспаление, АД и другие причины остаются оцененными."
+            },
+            {
+              "factId": "renal_anemia_treatment_requires_reviewed_protocol",
+              "source": "protocol_boundary",
+              "finding": "Ветеринарный врач выбирает стимулятор эритропоэза, дозу или цель."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "ckd_does_not_automatically_explain_disproportionate_anemia",
+              "discoveryPaths": [
+                "ckd_inflammation_cancer_endocrine",
+                "bleeding_trauma_surgery_melena",
+                "dated_cbc_pcv_ts_platelet_snapshot",
+                "renal_urine_snapshot"
+              ]
+            },
+            {
+              "factId": "renal_anemia_treatment_requires_reviewed_protocol",
+              "discoveryPaths": [
+                "appetite_weight_timeline",
+                "same_episode_anemia_trend"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required_linked",
+              "result": "При динамическом наблюдении: хронология ХБП или анемии."
+            },
+            {
+              "id": "anemia_absolute_reticulocyte_count",
+              "classification": "required",
+              "result": "В лабораторных показателях крови: нерегенеративный ответ."
+            },
+            {
+              "id": "anemia_coagulation_and_blood_loss_source",
+              "classification": "conditional_loss",
+              "result": "В лабораторных показателях крови: желудочно-кишечный тракт или другой путь потери."
+            },
+            {
+              "id": "anemia_infectious_toxin_and_comorbidity_screen",
+              "classification": "targeted_comorbidity",
+              "result": "Целевое исследование показало: воспаление или другие причины."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "ckd_does_not_automatically_explain_disproportionate_anemia",
+              "renal_anemia_treatment_requires_reviewed_protocol"
+            ],
+            "confirmedDiagnosisRequires": [
+              "ckd_plus_compatible_nonregenerative_anemia_after_other_causes_assessed"
+            ],
+            "dangerStates": [
+              "severe_symptomatic_anemia",
+              "gi_bleeding",
+              "hypertension",
+              "iron_deficiency"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "reticulocyte_count",
+              "blood_smear",
+              "biochemistry",
+              "urinalysis",
+              "blood_pressure",
+              "longitudinal_care"
+            ],
+            "external": [
+              "iron_panel_external",
+              "renal_referral",
+              "blood_product_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_iron_chronic_loss_route",
+              "anemia_transfusion_route",
+              "anemia_longitudinal_route"
+            ],
+            "referralFallback": "renal_referral"
+          },
+          "carePlanId": "chronic_renal_anemia_plan",
+          "followUp": {
+            "timing": "Контрольные точки суставов, определенные протоколом почек или анемии.",
+            "required": true,
+            "targets": [
+              "pcv",
+              "bp",
+              "renal_stage",
+              "iron_context",
+              "weight",
+              "quality_of_life"
+            ]
+          },
+          "outcomes": {
+            "safe": "ХБП и анемия связаны без диагностической привязки.",
+            "unsafe": "Опасно списывать любую тяжёлую анемию на ХБП или назначать стимулятор эритропоэза без отдельной оценки причин и рисков."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему кровопотеря, уровень железа и кровяное давление по-прежнему требуют проверки, даже если известна ХБП."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "combined_renal_anemia_visit",
+            "ownerModifiers": [
+              "chronic_care_burden",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_inflammation_neoplasia_or_endocrine_context",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что есть подтверждённое состояние, неоплазия или эндокринная болезнь, но картина анемии должна соответствовать контексту.",
+          "historyAnswers": {
+            "ckd_inflammation_cancer_endocrine": "По нашим наблюдениям, подтвержденного контекста.",
+            "appetite_weight_timeline": "Дома мы заметили, что тенденция зафиксирована.",
+            "weakness_pallor_onset": "Насколько мы можем судить, по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой.",
+            "prior_cbc_records": "Мы записали, что серийный образец."
+          },
+          "examFindings": [
+            {
+              "factId": "unexpected_severe_regenerative_or_multilineage_pattern_reopens_workup",
+              "source": "safety_rule",
+              "finding": "Основная маркировка не может объяснить противоречивую гематологию."
+            },
+            {
+              "factId": "specialist_route_follows_existing_evidence",
+              "source": "clinical_reasoning",
+              "finding": "Направление в онкологический или эндокринный отдел является целевым, а не случайным."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "unexpected_severe_regenerative_or_multilineage_pattern_reopens_workup",
+              "discoveryPaths": [
+                "ckd_inflammation_cancer_endocrine",
+                "prior_cbc_records",
+                "absolute_species_reticulocyte_result",
+                "manual_smear_morphology_review"
+              ]
+            },
+            {
+              "factId": "specialist_route_follows_existing_evidence",
+              "discoveryPaths": [
+                "appetite_weight_timeline",
+                "same_episode_anemia_trend"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required_pattern_fit",
+              "result": "При динамическом наблюдении: тенденция к серьезности или многолинейности."
+            },
+            {
+              "id": "anemia_absolute_reticulocyte_count",
+              "classification": "required",
+              "result": "В лабораторных показателях крови: класс регенерации."
+            },
+            {
+              "id": "anemia_manual_blood_smear_review",
+              "classification": "required",
+              "result": "При микроскопии материала: аномальные клетки или морфология."
+            },
+            {
+              "id": "anemia_bone_marrow_or_specialist_referral",
+              "classification": "conditional_if_disproportionate",
+              "result": "В заключении по гистологическому исследованию: целевое направление."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "unexpected_severe_regenerative_or_multilineage_pattern_reopens_workup",
+              "specialist_route_follows_existing_evidence"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_nonregenerative_pattern_plus_evidenced_underlying_disease"
+            ],
+            "dangerStates": [
+              "occult_blood_loss",
+              "hemolysis",
+              "marrow_infiltration",
+              "progressive_neoplasia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "reticulocyte_count",
+              "blood_smear",
+              "biochemistry",
+              "longitudinal_care"
+            ],
+            "external": [
+              "oncology_staging_external",
+              "endocrinology_referral",
+              "bone_marrow_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_marrow_route",
+              "anemia_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "chronic_renal_anemia_plan",
+          "followUp": {
+            "timing": "Контрольные точки основного заболевания и гематологии.",
+            "required": true,
+            "targets": [
+              "pcv",
+              "reticulocytes",
+              "cell_lines",
+              "weight",
+              "primary_disease"
+            ]
+          },
+          "outcomes": {
+            "safe": "Анемию приписывают только тогда, когда ее картина соответствует выявленному заболеванию.",
+            "unsafe": "Любой хронический диагноз прекращает гематологические рассуждения."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какие признаки анемии соответствуют известному заболеванию, а какие требуют нового исследования."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "targeted_specialist_workup",
+            "ownerModifiers": [
+              "complex_case",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "anemia_bone_marrow_or_pancytopenic",
+      "version": "2026.07.16.40",
+      "title": "Костномозговая, апластическая или панцитопеническая анемия",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Стойкая недостаточная регенерация после достаточного времени, особенно с другими цитопениями или аномальными клетками, требует проверки костного мозга или специализированного маршрута после обратимых причин.",
+      "exclusions": [
+        "fresh_pre_regenerative_loss_or_hemolysis",
+        "isolated_artifactual_feline_thrombocytopenia"
+      ],
+      "planBundleId": "bone_marrow_pancytopenia_plan",
+      "sourceIds": [
+        "merck_anemia_overview_2026",
+        "merck_nonregenerative_anemia_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_persistent_severe_nonregenerative_anemia",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что тяжёлая анемия остаётся нерегенеративной после достаточного времени, потеря или гемолиз или хронический контекст не объяснены её.",
+          "historyAnswers": {
+            "weakness_pallor_onset": "По нашим наблюдениям, настойчивое окно ответа, превышающее ожидаемое.",
+            "bleeding_trauma_surgery_melena": "Дома мы заметили, что нет адекватного объяснения потерь.",
+            "toxin_food_drug_exposure": "Насколько мы можем судить, создан экран с реверсивной экспозицией.",
+            "prior_cbc_records": "Мы записали, что устойчивые серийные доказательства."
+          },
+          "examFindings": [
+            {
+              "factId": "persistent_nonregeneration_requires_repeat_and_reversible_screen_before_marrow",
+              "source": "clinical_reasoning",
+              "finding": "Проверяются общий анализ крови или ретики или мазки и причины инфекции или лекарственных препаратов."
+            },
+            {
+              "factId": "empiric_iron_for_all_nonregenerative_anemia_is_inadequate",
+              "source": "safety_rule",
+              "finding": "Дефицит железа требует доказательств."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "persistent_nonregeneration_requires_repeat_and_reversible_screen_before_marrow",
+              "discoveryPaths": [
+                "weakness_pallor_onset",
+                "toxin_food_drug_exposure",
+                "prior_cbc_records",
+                "absolute_species_reticulocyte_result"
+              ]
+            },
+            {
+              "factId": "empiric_iron_for_all_nonregenerative_anemia_is_inadequate",
+              "discoveryPaths": [
+                "bleeding_trauma_surgery_melena",
+                "manual_smear_morphology_review",
+                "same_episode_anemia_trend"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required_persistence",
+              "result": "При динамическом наблюдении: стойкая тяжелая анемия."
+            },
+            {
+              "id": "anemia_absolute_reticulocyte_count",
+              "classification": "required_repeat",
+              "result": "В лабораторных показателях крови: несоответствующее времени нерегенерация."
+            },
+            {
+              "id": "anemia_manual_blood_smear_review",
+              "classification": "required",
+              "result": "При микроскопии материала: морфология или клеточные линии."
+            },
+            {
+              "id": "anemia_infectious_toxin_and_comorbidity_screen",
+              "classification": "required_reversible",
+              "result": "Целевое исследование показало: скрининг на наркотики или инфекционные или системные заболевания."
+            },
+            {
+              "id": "anemia_bone_marrow_or_specialist_referral",
+              "classification": "required_if_unexplained",
+              "result": "В заключении по гистологическому исследованию: костный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "persistent_nonregeneration_requires_repeat_and_reversible_screen_before_marrow",
+              "empiric_iron_for_all_nonregenerative_anemia_is_inadequate"
+            ],
+            "confirmedDiagnosisRequires": [
+              "persistent_nonregeneration_plus_specialist_pathology_or_explicit_suspicion"
+            ],
+            "dangerStates": [
+              "oxygen_delivery_failure",
+              "marrow_failure",
+              "occult_infection",
+              "pure_red_cell_aplasia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "pcv_total_solids",
+              "reticulocyte_count",
+              "blood_smear",
+              "trained_hematology",
+              "serial_pcv_monitoring"
+            ],
+            "external": [
+              "infectious_hemolysis_panel_external",
+              "bone_marrow_referral",
+              "blood_product_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_classification_route",
+              "anemia_marrow_route",
+              "anemia_transfusion_route"
+            ],
+            "referralFallback": "bone_marrow_referral"
+          },
+          "carePlanId": "bone_marrow_pancytopenia_plan",
+          "followUp": {
+            "timing": "Срочный по симптомам; связанная патология и тенденция ОАК.",
+            "required": true,
+            "targets": [
+              "pcv",
+              "reticulocytes",
+              "cell_lines",
+              "pathology",
+              "clinical_state"
+            ]
+          },
+          "outcomes": {
+            "safe": "Стойкое необъяснимое отсутствие регенерации получает оценку специалиста.",
+            "unsafe": "Свежая анемия или каждый нерегенеративный случай приводит к недостаточности костного мозга или железа."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему сохранение и исключение обратимых причин предшествуют взятию проб костного мозга."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "small_volume_sampling_and_external_referral",
+            "ownerModifiers": [
+              "budget_limited",
+              "anxious_about_invasive_test"
+            ]
+          }
+        },
+        {
+          "id": "p2_multiple_cell_lines_reduced",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что анемия сочетается с нейтропенией или тромбоцитопенией, повышая риск инфекции и кровотечения.",
+          "historyAnswers": {
+            "mucosal_bleeding_petechiae": "По нашим наблюдениям, признаки кровотечения да или нет.",
+            "weakness_pallor_onset": "Дома мы заметили, что изменения начались недавно и постепенно усиливаются.",
+            "toxin_food_drug_exposure": "Насколько мы можем судить, скрининг на наркотики или токсины.",
+            "medication_vaccine_timeline": "Мы записали, что датированные экспозиции."
+          },
+          "examFindings": [
+            {
+              "factId": "multilineage_cytopenia_requires_infection_bleeding_and_marrow_route",
+              "source": "clinical_reasoning",
+              "finding": "Каждая клеточная линия и клинический риск очевидны."
+            },
+            {
+              "factId": "feline_platelet_clumping_artifact_requires_smear_check",
+              "source": "species_lab_rule",
+              "finding": "Анализатор тромбоцитопении не принимается вслепую."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "multilineage_cytopenia_requires_infection_bleeding_and_marrow_route",
+              "discoveryPaths": [
+                "mucosal_bleeding_petechiae",
+                "weakness_pallor_onset",
+                "dated_cbc_pcv_ts_platelet_snapshot"
+              ]
+            },
+            {
+              "factId": "feline_platelet_clumping_artifact_requires_smear_check",
+              "discoveryPaths": [
+                "manual_smear_morphology_review",
+                "medication_vaccine_timeline"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required_multilineage",
+              "result": "При динамическом наблюдении: тенденция эритроциты, лейкоциты и тромбоцитов."
+            },
+            {
+              "id": "anemia_manual_blood_smear_review",
+              "classification": "required_artifact_and_cells",
+              "result": "При микроскопии материала: сгустки тромбоцитов или аномальные клетки."
+            },
+            {
+              "id": "anemia_infectious_toxin_and_comorbidity_screen",
+              "classification": "required_reversible",
+              "result": "Целевое исследование показало: инфекционный или наркотический контекст."
+            },
+            {
+              "id": "anemia_bone_marrow_or_specialist_referral",
+              "classification": "required_if_persistent",
+              "result": "В заключении по гистологическому исследованию: показано исследование костного мозга или направление к специалисту без задержки поддерживающей помощи."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "multilineage_cytopenia_requires_infection_bleeding_and_marrow_route",
+              "feline_platelet_clumping_artifact_requires_smear_check"
+            ],
+            "confirmedDiagnosisRequires": [
+              "confirmed_multilineage_cytopenia_plus_specialist_cause_evidence"
+            ],
+            "dangerStates": [
+              "sepsis",
+              "hemorrhage",
+              "pancytopenia",
+              "marrow_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "cbc",
+              "blood_smear",
+              "trained_hematology",
+              "coagulation",
+              "stabilization"
+            ],
+            "external": [
+              "infectious_hemolysis_panel_external",
+              "bone_marrow_referral",
+              "hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "hospital_referral"
+            ],
+            "conditional": [
+              "anemia_triage_route",
+              "anemia_marrow_route",
+              "anemia_blood_loss_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "bone_marrow_pancytopenia_plan",
+          "followUp": {
+            "timing": "Срочный серийный мультилинейный и клинический мониторинг.",
+            "required": true,
+            "targets": [
+              "neutrophils",
+              "platelets",
+              "pcv",
+              "infection",
+              "bleeding",
+              "pathology"
+            ]
+          },
+          "outcomes": {
+            "safe": "Артефакты исключены, а поддержка при инфекциях или кровотечениях не откладывается.",
+            "unsafe": "Другие клеточные линии игнорируются, или отбор проб костного мозга задерживает оказание помощи при сепсисе."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: отдельные риски инфекций, кровотечений и анемии для разных клеточных линий."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "febrile"
+            ],
+            "requiredHandlingAlternative": "protective_low_stress_sampling_and_referral",
+            "ownerModifiers": [
+              "budget_limited",
+              "transport_difficult"
+            ]
+          }
+        },
+        {
+          "id": "p3_drug_infection_or_infiltrative_marrow_suspicion",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что лекарственная или инфекционная экспозиция, аномальные клетки или органомегалия приводят к подавлению или инфильтрации костного мозга.",
+          "historyAnswers": {
+            "toxin_food_drug_exposure": "По нашим наблюдениям, совместимое воздействие зафиксировано или отсутствует.",
+            "medication_vaccine_timeline": "Дома мы заметили, что датировано.",
+            "vector_parasite_travel": "Насколько мы можем судить, инфекционный контекст.",
+            "ckd_inflammation_cancer_endocrine": "Мы записали, что неоплазия или системные доказательства."
+          },
+          "examFindings": [
+            {
+              "factId": "marrow_hypothesis_requires_targeted_specialist_sampling_and_pathology",
+              "source": "clinical_reasoning",
+              "finding": "Маршрут потока или гистологии или культуры следует за данными."
+            },
+            {
+              "factId": "one_size_panel_and_generated_oncology_or_immunotherapy_are_prohibited",
+              "source": "protocol_boundary",
+              "finding": "Лечение остается протоколом внешнего обзора."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "marrow_hypothesis_requires_targeted_specialist_sampling_and_pathology",
+              "discoveryPaths": [
+                "toxin_food_drug_exposure",
+                "vector_parasite_travel",
+                "ckd_inflammation_cancer_endocrine",
+                "manual_smear_morphology_review"
+              ]
+            },
+            {
+              "factId": "one_size_panel_and_generated_oncology_or_immunotherapy_are_prohibited",
+              "discoveryPaths": [
+                "medication_vaccine_timeline",
+                "same_episode_anemia_trend"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "anemia_manual_blood_smear_review",
+              "classification": "required",
+              "result": "При микроскопии материала: аномальные клетки или морфология."
+            },
+            {
+              "id": "anemia_infectious_toxin_and_comorbidity_screen",
+              "classification": "required_targeted",
+              "result": "Целевое исследование показало: контекст воздействия или инфекции или неоплазии."
+            },
+            {
+              "id": "anemia_bone_marrow_or_specialist_referral",
+              "classification": "required_if_supported",
+              "result": "В заключении по гистологическому исследованию: выбранный специалистом маршрут аспирации или биопсии или патологии."
+            },
+            {
+              "id": "anemia_cbc_pcv_total_solids_and_serial_trend",
+              "classification": "required_serial",
+              "result": "При динамическом наблюдении: многолинейная динамика."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "marrow_hypothesis_requires_targeted_specialist_sampling_and_pathology",
+              "one_size_panel_and_generated_oncology_or_immunotherapy_are_prohibited"
+            ],
+            "confirmedDiagnosisRequires": [
+              "specialist_pathology_or_explicit_supported_suspicion"
+            ],
+            "dangerStates": [
+              "acute_leukemia",
+              "aplastic_failure",
+              "sepsis",
+              "bleeding",
+              "severe_anemia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "cbc",
+              "blood_smear",
+              "trained_hematology",
+              "biochemistry",
+              "urinalysis",
+              "longitudinal_care"
+            ],
+            "external": [
+              "bone_marrow_referral",
+              "oncology_advanced_pathology_external",
+              "oncology_biopsy_planning_referral",
+              "infectious_hemolysis_panel_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "anemia_marrow_route",
+              "anemia_longitudinal_route"
+            ],
+            "referralFallback": "bone_marrow_referral"
+          },
+          "carePlanId": "bone_marrow_pancytopenia_plan",
+          "followUp": {
+            "timing": "Патология, определенная специалистом, и серийное наблюдение за клеточными линиями.",
+            "required": true,
+            "targets": [
+              "pathology",
+              "pcv",
+              "neutrophils",
+              "platelets",
+              "exposure_removed",
+              "infection"
+            ]
+          },
+          "outcomes": {
+            "safe": "Доказательства выбирают сфокусированный путь к костному мозгу или патологии.",
+            "unsafe": "Единая панель или назначенное онкологическое или иммуносупрессивное лечение заменяют специализированную диагностику."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему предполагаемый механизм костного мозга определяет, какой специальный образец будет полезен."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "fearful",
+              "calm"
+            ],
+            "requiredHandlingAlternative": "external_specialist_sampling",
+            "ownerModifiers": [
+              "complex_case",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if anemia is treated as a final etiologic diagnosis before blood-loss, hemolysis and production mechanisms are assessed.",
+    "Reject if reticulocyte response loses species, absolute count or onset timing.",
+    "Reject if one PCV threshold automatically selects transfusion or discharge.",
+    "Reject firm IMHA without anemia, immune-mediated destruction evidence and hemolysis evidence.",
+    "Reject if automated CBC replaces trained smear interpretation or one negative smear universally excludes infection.",
+    "Reject if the generator creates a drug, dose, transfusion volume/rate, donor protocol or marrow technique."
+  ]
+}

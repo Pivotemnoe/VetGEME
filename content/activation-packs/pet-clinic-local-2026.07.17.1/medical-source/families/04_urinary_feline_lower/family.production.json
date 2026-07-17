@@ -1,0 +1,3095 @@
+{
+  "schemaVersion": 1,
+  "familyId": "urinary_feline_lower",
+  "familyVersion": "2026.07.16.40",
+  "title": "Заболевания нижних мочевыводящих путей кошек",
+  "campaignPhase": "chapter_1_to_chapter_5",
+  "species": [
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "syndromeRule": "заболевания нижних мочевыводящих путей кошек и симптомы нижних мочевыводящих путей не являются этиологическими диагнозами.",
+    "obstructionRule": "Отсутствие мочи и увеличенный напряжённый болезненный пузырь образуют экстренную обструкционную клинический вариант.",
+    "ficRule": "Стресс поддерживает план ведения, но сам по себе не подтверждает идиопатический цистит кошек.",
+    "microbiologyRule": "Бактерии из несвежего или неконтролируемого образца не подтверждают инфекция мочевыводящих путей.",
+    "crystalRule": "Кристаллурия не равна уролиту или причине симптомов.",
+    "doseRule": "Ветеринарный врач выбирает препараты, дозировки, инфузионные скорости или технику декомпрессии."
+  },
+  "coreCapabilities": [
+    "general_exam",
+    "abdominal_palpation"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "urinalysis_or_safe_referral",
+      "anyOf": [
+        "urinalysis",
+        "safe_referral"
+      ],
+      "purpose": "urine_characterization"
+    },
+    {
+      "id": "culture_or_safe_referral",
+      "anyOf": [
+        "urine_culture_external",
+        "safe_referral"
+      ],
+      "purpose": "bacterial_uti_confirmation"
+    },
+    {
+      "id": "urinary_imaging_or_safe_referral",
+      "anyOf": [
+        "xray_or_referral",
+        "ultrasound_or_referral",
+        "safe_referral"
+      ],
+      "purpose": "urolith_and_anatomic_assessment"
+    },
+    {
+      "id": "obstruction_stabilization_or_referral",
+      "anyOf": [
+        "urinary_obstruction_stabilization",
+        "emergency_stabilization",
+        "safe_referral"
+      ],
+      "purpose": "emergency_obstruction_route"
+    },
+    {
+      "id": "catheterization_or_decompression_referral",
+      "anyOf": [
+        "urinary_catheterization",
+        "urinary_decompression_referral",
+        "safe_referral"
+      ],
+      "purpose": "relief_of_obstruction"
+    },
+    {
+      "id": "monitoring_or_hospital_referral",
+      "anyOf": [
+        "vital_monitor",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "unstable_patient_monitoring"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "urinary_observe_urination",
+      "requires": [
+        "general_exam"
+      ],
+      "availability": "local_from_start"
+    },
+    {
+      "researchId": "urinary_bladder_assessment",
+      "requires": [
+        "abdominal_palpation"
+      ],
+      "availability": "local_from_start"
+    },
+    {
+      "researchId": "urinary_urinalysis",
+      "requires": [
+        "urinalysis",
+        "urine_sediment_microscopy"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urinary_culture",
+      "requires": [
+        "urine_collection",
+        "urine_culture_external"
+      ],
+      "availability": "external_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urinary_blood_electrolytes",
+      "requires": [
+        "biochemistry",
+        "electrolytes",
+        "blood_glucose"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urinary_ecg",
+      "requires": [
+        "ecg"
+      ],
+      "availability": "local_or_external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urinary_xray",
+      "requires": [
+        "xray_or_referral"
+      ],
+      "availability": "local_or_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "urinary_ultrasound",
+      "requires": [
+        "ultrasound_or_referral"
+      ],
+      "availability": "local_or_external_chapter_4",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "urine_output",
+      "text": "Выходит ли моча и в каком количестве?"
+    },
+    {
+      "id": "last_confirmed_stream",
+      "text": "Когда владелец последний раз видел нормальную струю или порцию?"
+    },
+    {
+      "id": "urination_or_defecation",
+      "text": "Видел ли владелец мочу или кал после попытки?"
+    },
+    {
+      "id": "litter_box_attempts",
+      "text": "Как часто и как долго кошка сидит в лотке?"
+    },
+    {
+      "id": "blood_pain_grooming",
+      "text": "Есть ли кровь, вокализация, боль или вылизывание промежности?"
+    },
+    {
+      "id": "systemic_signs",
+      "text": "Есть ли вялость, рвота, отказ от корма или слабость?"
+    },
+    {
+      "id": "previous_episodes",
+      "text": "Были ли похожие эпизоды, камни, катетеризация или обструкция?"
+    },
+    {
+      "id": "water_and_diet",
+      "text": "Какой рацион, сколько источников воды и насколько кошка пьёт?"
+    },
+    {
+      "id": "resources_and_conflict",
+      "text": "Сколько кошек, лотков, мисок, укрытий и есть ли конфликт?"
+    },
+    {
+      "id": "environment_change",
+      "text": "Были ли переезд, ремонт, новый питомец или изменение распорядка?"
+    },
+    {
+      "id": "comorbidities",
+      "text": "Есть ли ХБП, диабет, гипертиреоз, иммуносупрессия или другие болезни?"
+    },
+    {
+      "id": "home_treatment",
+      "text": "Что уже давали дома и ограничивали ли воду?"
+    },
+    {
+      "id": "sample_collection_context",
+      "text": "Как, когда и во что была собрана моча, как хранилась?"
+    },
+    {
+      "id": "memo_adherence_barriers",
+      "text": "Какие пункты среды удалось выполнить и что помешало остальным?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "general_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "mentation_vitals_perfusion",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "heart_rate_and_rhythm",
+      "source": "measurement",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "gentle_bladder_assessment",
+      "source": "physical_exam",
+      "requires": [
+        "abdominal_palpation"
+      ]
+    },
+    {
+      "id": "external_genital_perineal_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "low_stress_pain_assessment",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "observe_urination",
+      "source": "observation",
+      "requires": [
+        "general_exam"
+      ]
+    },
+    {
+      "id": "urinalysis_fresh_sample",
+      "source": "diagnostic_test",
+      "requires": [
+        "urinalysis",
+        "urine_sediment_microscopy"
+      ]
+    },
+    {
+      "id": "culture_correct_sample",
+      "source": "diagnostic_test",
+      "requires": [
+        "urine_collection",
+        "urine_culture_external"
+      ]
+    },
+    {
+      "id": "blood_electrolytes_glucose",
+      "source": "diagnostic_test",
+      "requires": [
+        "biochemistry",
+        "electrolytes",
+        "blood_glucose"
+      ]
+    },
+    {
+      "id": "ecg_monitoring",
+      "source": "measurement",
+      "requires": [
+        "ecg"
+      ]
+    },
+    {
+      "id": "urinary_xray",
+      "source": "diagnostic_test",
+      "requires": [
+        "xray_or_referral"
+      ]
+    },
+    {
+      "id": "urinary_ultrasound",
+      "source": "diagnostic_test",
+      "requires": [
+        "ultrasound_or_referral"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "luts_triage_and_cause_route",
+      "fullPlan": [
+        "confirm_output",
+        "gentle_bladder_and_systemic_exam",
+        "classify_obstructive_or_nonobstructive",
+        "fresh_urinalysis",
+        "risk_based_culture_and_imaging",
+        "analgesia_and_hydration_route",
+        "written_stream_monitoring"
+      ],
+      "stagedPlan": [
+        "output_and_bladder",
+        "safe_nonobstructive_support",
+        "first_diagnostic_step",
+        "defined_recheck"
+      ],
+      "minimumSafePlan": [
+        "exclude_obstruction",
+        "pain_route",
+        "urinalysis_or_plan",
+        "stream_red_flags"
+      ],
+      "stabilizeAndRefer": [
+        "recognize_possible_obstruction",
+        "minimal_handling_and_support",
+        "urgent_safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "diagnose_from_luts_only",
+        "treat_constipation_before_bladder_check",
+        "automatic_antibiotic",
+        "repeated_forceful_bladder_palpation"
+      ]
+    },
+    {
+      "id": "fic_exclusion_and_memo",
+      "fullPlan": [
+        "exclude_obstruction",
+        "appropriate_urine_and_imaging_workup",
+        "do_not_confirm_from_stress_alone",
+        "analgesia",
+        "increase_water_by_feasible_route",
+        "specific_multimodal_environment_plan",
+        "recurrence_triage"
+      ],
+      "stagedPlan": [
+        "safe_exclusion_step",
+        "symptom_support",
+        "one_or_two_feasible_environment_changes",
+        "progressive_recheck"
+      ],
+      "minimumSafePlan": [
+        "output_and_bladder",
+        "pain_control_route",
+        "water_and_litter_plan",
+        "return_for_absent_stream"
+      ],
+      "stabilizeAndRefer": [
+        "retriage_obstruction",
+        "minimal_support",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "stress_equals_diagnosis",
+        "antibiotic_without_infection",
+        "punish_periuria",
+        "generic_remove_stress_instruction"
+      ]
+    },
+    {
+      "id": "bacterial_uti_culture_route",
+      "fullPlan": [
+        "confirm_symptomatic_context",
+        "correct_sample_before_antimicrobial_when_safe",
+        "urinalysis_and_culture",
+        "review_result_and_susceptibility",
+        "reviewer_approved_antimicrobial_plan",
+        "search_comorbidity_or_relapse_factor",
+        "documented_followup"
+      ],
+      "stagedPlan": [
+        "safe_sample",
+        "support",
+        "await_authored_result_when_stable",
+        "targeted_followup"
+      ],
+      "minimumSafePlan": [
+        "correct_sample_or_referral",
+        "pain_and_hydration_route",
+        "result_communication_plan",
+        "stream_red_flags"
+      ],
+      "stabilizeAndRefer": [
+        "support_by_state",
+        "obstruction_or_systemic_route",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "free_catch_bacteria_confirms_uti",
+        "repeat_leftover_antibiotic",
+        "code_selects_drug_from_organism",
+        "no_result_callback"
+      ]
+    },
+    {
+      "id": "crystalluria_contextual",
+      "fullPlan": [
+        "verify_fresh_sample_and_handling",
+        "interpret_crystals_with_signs_and_urine_context",
+        "exclude_obstruction",
+        "imaging_when_symptomatic_or_recurrent",
+        "water_and_reviewed_diet_route",
+        "analgesia_if_symptomatic",
+        "repeat_measurement"
+      ],
+      "stagedPlan": [
+        "fresh_repeat",
+        "output_and_bladder",
+        "targeted_imaging",
+        "contextual_prevention"
+      ],
+      "minimumSafePlan": [
+        "do_not_equate_crystals_with_stones",
+        "stream_check",
+        "fresh_sample_plan",
+        "return_conditions"
+      ],
+      "stabilizeAndRefer": [
+        "obstruction_triage",
+        "urgent_support",
+        "safe_referral"
+      ],
+      "unsafeOrInadequate": [
+        "treat_storage_artifact",
+        "assume_stone_composition",
+        "diet_only_with_obstruction_risk",
+        "reassure_male_cat_without_stream_monitoring"
+      ]
+    },
+    {
+      "id": "urolith_imaging_and_route",
+      "fullPlan": [
+        "confirm_location_number_and_size_by_imaging",
+        "urinalysis_and_culture_by_risk",
+        "do_not_infer_composition_from_crystals_or_image_alone",
+        "reviewed_dissolution_procedural_or_surgical_route",
+        "analgesia_and_hydration",
+        "stone_analysis_when_retrieved",
+        "recurrence_prevention"
+      ],
+      "stagedPlan": [
+        "confirm_imaging",
+        "safe_symptom_support",
+        "choose_route_by_risk",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "imaging_or_referral",
+        "pain_route",
+        "obstruction_warning",
+        "defined_next_step"
+      ],
+      "stabilizeAndRefer": [
+        "urgent_obstruction_assessment",
+        "stabilize",
+        "procedural_or_surgical_referral"
+      ],
+      "unsafeOrInadequate": [
+        "crystals_equal_stone",
+        "diet_without_obstruction_assessment",
+        "assume_recurrence_is_fic",
+        "delay_migrating_urethral_stone"
+      ]
+    },
+    {
+      "id": "urethral_obstruction_emergency",
+      "fullPlan": [
+        "immediate_triage",
+        "venous_access_and_stabilization_by_state",
+        "electrolytes_renal_values_glucose_and_ecg_by_risk",
+        "adequate_analgesia",
+        "relieve_obstruction_by_trained_team",
+        "post_obstructive_monitoring",
+        "cause_and_recurrence_plan"
+      ],
+      "stagedPlan": [
+        "recognize_and_stabilize",
+        "do_not_delay_for_complete_workup",
+        "trained_decompression_or_immediate_referral",
+        "hospital_monitoring"
+      ],
+      "minimumSafePlan": [
+        "emergency_recognition",
+        "initial_stabilization",
+        "urgent_decompression_route",
+        "documented_handoff"
+      ],
+      "stabilizeAndRefer": [
+        "minimal_delay",
+        "emergency_support_with_monitoring",
+        "urgent_urinary_decompression_referral"
+      ],
+      "unsafeOrInadequate": [
+        "home_observation",
+        "wait_for_culture_or_imaging",
+        "forceful_repeated_palpation",
+        "untrained_catheterization",
+        "discharge_without_stream_and_reobstruction_plan"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "urinary_feline_luts_undifferentiated",
+      "version": "2026.07.16.40",
+      "title": "Недифференцированные симптомы нижних мочевыводящих путей",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Симптомы нижних мочевыводящих путей до установления причины; допустим итог «необструктивные симптомы нижних мочевыводящих путей, причина уточняется».",
+      "primaryDiagnosisId": "dx_feline_luts_undifferentiated",
+      "differentials": [
+        "dx_feline_idiopathic_cystitis",
+        "dx_feline_bacterial_uti",
+        "dx_feline_crystalluria",
+        "dx_feline_urolithiasis",
+        "dx_feline_urethral_obstruction"
+      ],
+      "planBundleId": "luts_triage_and_cause_route",
+      "sourceIds": [
+        "icatcare_flutd_2025",
+        "merck_urethral_obstruction_2025"
+      ],
+      "presentations": [
+        {
+          "id": "p1_pollakiuria_periuria",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что кошка часто ходит в лоток, оставляет малые порции и начала мочиться рядом.",
+          "historyAnswers": {
+            "urine_output": "По нашим наблюдениям, малые, но видимые порции выходят.",
+            "last_confirmed_stream": "Дома мы заметили, что сегодня владелец видел мочу.",
+            "blood_pain_grooming": "Насколько мы можем судить, иногда вокализирует и вылизывается.",
+            "systemic_signs": "Мы записали, что рвоты, слабости и отказа от корма нет."
+          },
+          "examFindings": [
+            {
+              "factId": "nonobstructive_stable_bladder",
+              "source": "physical_exam",
+              "finding": "Пациент стабилен; пузырь небольшой или умеренный, мягкий, не напряжённый."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "urine_is_passing",
+              "discoveryPaths": [
+                "urine_output",
+                "observe_urination"
+              ]
+            },
+            {
+              "factId": "nonobstructive_stable_bladder",
+              "discoveryPaths": [
+                "mentation_vitals_perfusion",
+                "gentle_bladder_assessment"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_bladder_assessment",
+              "classification": "required_for_safe_decision",
+              "result": "Клиническая оценка показала: признаков переполненного напряжённого пузыря нет."
+            },
+            {
+              "id": "urinary_urinalysis",
+              "classification": "required_for_safe_decision",
+              "result": "В анализе мочи: результат характеризует мочу, но не присваивает причину автоматически."
+            },
+            {
+              "id": "urinary_culture",
+              "classification": "recommended_changes_plan_by_age_recurrence_or_comorbidity",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "urine_is_passing",
+              "nonobstructive_stable_bladder"
+            ],
+            "confirmedDiagnosisRequires": [
+              "etiology_specific_evidence_or_syndrome_only"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "urinalysis_or_safe_referral"
+            ],
+            "external": [
+              "urine_culture_external"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "luts_triage_and_cause_route",
+          "followUp": {
+            "timing": "В тот же день или в течение 24 часов по результатам заключения; немедленно, если поток остановится.",
+            "required": true,
+            "targets": [
+              "urine_output",
+              "pain",
+              "urinalysis_result",
+              "new_systemic_signs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Обструкция исключена на текущем визите, причина исследуется без ложного ярлыка.",
+            "unsafe": "Симптомы автоматически названы инфекцией или идиопатический цистит кошек."
+          },
+          "ownerCommunication": [
+            "Пожалуйста, фактически контролировать порции или струю, а не только число посещений лотка.",
+            "Я объясню вам: не ругать кошку за мочеиспускание вне лотка."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "defensive"
+            ],
+            "requiredHandlingAlternative": "low_stress_or_referral",
+            "ownerModifiers": [
+              "observant",
+              "inattentive",
+              "frustrated"
+            ]
+          }
+        },
+        {
+          "id": "p2_owner_calls_constipation",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "sexConstraints": [
+            "male"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_1",
+            "localResolution": false
+          },
+          "urgency": "urgent_until_obstruction_excluded",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что кот долго сидит и тужится в лотке; владелец считает, что это запор.",
+          "historyAnswers": {
+            "urination_or_defecation": "По нашим наблюдениям, владелец не видел ни мочи, ни кала.",
+            "last_confirmed_stream": "Дома мы заметили, что последняя нормальная порция неизвестна.",
+            "litter_box_attempts": "Насколько мы можем судить, почти постоянные короткие попытки.",
+            "systemic_signs": "Мы записали, что пока нет выраженной рвоты или коллапса."
+          },
+          "examFindings": [
+            {
+              "factId": "bladder_finding_determines_route",
+              "source": "physical_exam",
+              "finding": "Пальпация немедленно переводит пациента либо в обструкционную, либо в необструктивную клинический вариант."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "output_unknown",
+              "discoveryPaths": [
+                "urination_or_defecation",
+                "last_confirmed_stream"
+              ]
+            },
+            {
+              "factId": "bladder_finding_determines_route",
+              "discoveryPaths": [
+                "gentle_bladder_assessment"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_bladder_assessment",
+              "classification": "required_before_constipation_route",
+              "result": "Клиническая оценка показала: результат до визита и определяет срочность."
+            },
+            {
+              "id": "urinary_observe_urination",
+              "classification": "optional_only_if_it_does_not_delay_emergency_care",
+              "result": "Целевое исследование показало: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "output_unknown",
+              "bladder_finding_determines_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cause_specific_evidence"
+            ],
+            "mustNotAssume": [
+              "constipation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "luts_triage_and_cause_route",
+          "followUp": {
+            "timing": "Маршрут определился сразу.",
+            "required": true,
+            "targets": [
+              "bladder_size_tension",
+              "actual_output",
+              "systemic_state"
+            ]
+          },
+          "outcomes": {
+            "safe": "Жалоба владельца не задерживает исключение смертельно опасной причины.",
+            "unsafe": "Коту дают домашний план от запора без оценки пузыря."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: спокойно объяснить, почему попытки дефекации и мочеиспускания внешне путаются."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "painful_defensive",
+              "panic"
+            ],
+            "requiredHandlingAlternative": "analgesia_low_stress_or_urgent_referral",
+            "ownerModifiers": [
+              "inattentive",
+              "anxious",
+              "confident_wrong_label"
+            ]
+          }
+        },
+        {
+          "id": "p3_female_nonobstructive",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "sexConstraints": [
+            "female"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что у кошки-самки появились кровь и частые малые порции мочи.",
+          "historyAnswers": {
+            "urine_output": "По нашим наблюдениям, моча выходит малыми порциями.",
+            "blood_pain_grooming": "Дома мы заметили, что видима кровь и беспокойство.",
+            "comorbidities": "Насколько мы можем судить, риск зависит от возраста и болезней.",
+            "previous_episodes": "Мы записали, что эпизод первый или рецидив зафиксирован в этом случае."
+          },
+          "examFindings": [
+            {
+              "factId": "female_nonobstructive_exam",
+              "source": "physical_exam",
+              "finding": "Стабильная перфузия; пузырь маленький и мягкий, моча выходит."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "female_nonobstructive_exam",
+              "discoveryPaths": [
+                "mentation_vitals_perfusion",
+                "gentle_bladder_assessment",
+                "observe_urination"
+              ]
+            },
+            {
+              "factId": "risk_context",
+              "discoveryPaths": [
+                "comorbidities",
+                "previous_episodes"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_urinalysis",
+              "classification": "required_for_safe_decision",
+              "result": "В анализе мочи: осадок и удельный вес без автоматической этиологии."
+            },
+            {
+              "id": "urinary_culture",
+              "classification": "recommended_changes_plan_by_risk",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "urinary_xray",
+              "classification": "recommended_for_recurrence_or_stone_risk",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "female_nonobstructive_exam",
+              "risk_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "etiology_specific_evidence_or_syndrome_only"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "urinalysis_or_safe_referral",
+              "culture_or_safe_referral",
+              "urinary_imaging_or_safe_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "luts_triage_and_cause_route",
+          "followUp": {
+            "timing": "В течение 24 часов или по результату теста.",
+            "required": true,
+            "targets": [
+              "urine_output",
+              "pain",
+              "culture_if_sent",
+              "recurrence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Низкий типичный риск мужской обструкции не заменяет поиск причины.",
+            "unsafe": "Пол и кровь используются как готовый диагноз."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: кровь встречается при нескольких причинах и не доказывает бактерии."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "defensive"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "budget_limited",
+              "anxious"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "urinary_feline_idiopathic_cystitis",
+      "version": "2026.07.16.40",
+      "title": "Идиопатический цистит кошек",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "идиопатический цистит кошек — диагноз исключения при совместимом необструктивном эпизоде; стресс и среда влияют на ведение, но не подтверждают диагноз отдельно.",
+      "primaryDiagnosisId": "dx_feline_idiopathic_cystitis",
+      "differentials": [
+        "dx_feline_bacterial_uti",
+        "dx_feline_urolithiasis",
+        "dx_feline_crystalluria",
+        "dx_feline_urethral_obstruction",
+        "dx_behavioral_periuria"
+      ],
+      "planBundleId": "fic_exclusion_and_memo",
+      "sourceIds": [
+        "icatcare_flutd_2025",
+        "aaha_aafp_life_stage_2021",
+        "aafp_environmental_needs_2013"
+      ],
+      "presentations": [
+        {
+          "id": "p1_first_episode_young_adult",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что молодая взрослая кошка часто мочится малыми порциями и испытывает боль; моча выходит.",
+          "historyAnswers": {
+            "urine_output": "По нашим наблюдениям, малые порции подтверждены.",
+            "environment_change": "Дома мы заметили, что недавно изменился распорядок, но это не считается доказательством причины.",
+            "comorbidities": "Насколько мы можем судить, известных факторов инфекции нет.",
+            "previous_episodes": "Мы записали, что первый эпизод."
+          },
+          "examFindings": [
+            {
+              "factId": "stable_patent_first_episode",
+              "source": "physical_exam",
+              "finding": "Пузырь небольшой, не напряжённый; пациент системно стабилен."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stable_patent_first_episode",
+              "discoveryPaths": [
+                "observe_urination",
+                "gentle_bladder_assessment",
+                "mentation_vitals_perfusion"
+              ]
+            },
+            {
+              "factId": "stress_is_context_only",
+              "discoveryPaths": [
+                "environment_change"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_urinalysis",
+              "classification": "required_for_safe_decision",
+              "result": "В анализе мочи: гематурия или воспалительный осадок без достаточного доказательства бактериальной инфекции."
+            },
+            {
+              "id": "urinary_culture",
+              "classification": "optional_or_recommended_by_sampling_and_risk",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "urinary_xray",
+              "classification": "recommended_if_stone_risk_or_course_requires",
+              "result": "На рентгенограммах: объём исключения не выявляет уролитов."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stable_patent_first_episode",
+              "stress_is_context_only"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_luts",
+              "obstruction_excluded",
+              "no_more_likely_specific_cause_in_authored_workup"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "urinalysis_or_safe_referral",
+              "urinary_imaging_or_safe_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fic_exclusion_and_memo",
+          "followUp": {
+            "timing": "Короткая клиническая повторная проверка и немедленный возврат в случае остановки потока.",
+            "required": true,
+            "targets": [
+              "pain",
+              "urine_output",
+              "food_water",
+              "environment_plan"
+            ]
+          },
+          "outcomes": {
+            "safe": "Боль ведётся, вода и среда меняются конкретно, обструкция контролируется.",
+            "unsafe": "Стрессор объявлен единственным доказательством и назначен антибиотик."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: диагноз исключения и дать конкретный план воды, лотка, игры и укрытий."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "defensive"
+            ],
+            "ownerModifiers": [
+              "observant",
+              "anxious",
+              "skeptical"
+            ]
+          }
+        },
+        {
+          "id": "p2_recurrent_multi_cat_stress",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что после конфликта в доме с несколькими кошками вновь появились частые болезненные попытки; моча пока выходит.",
+          "historyAnswers": {
+            "urine_output": "По нашим наблюдениям, струя или малые порции сохраняются.",
+            "resources_and_conflict": "Дома мы заметили, что лотков и раздельных ресурсов мало, одна кошка блокирует проход.",
+            "previous_episodes": "Насколько мы можем судить, ранее был идиопатический цистит кошек, но этот эпизод ещё не прошёл новый триаж.",
+            "environment_change": "Мы записали, что недавно появился новый питомец."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrent_episode_currently_patent",
+              "source": "physical_exam",
+              "finding": "Пузырь не переполнен, системных признаков нет; новый эпизод остаётся проходимым на момент осмотра."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "recurrent_episode_currently_patent",
+              "discoveryPaths": [
+                "urine_output",
+                "gentle_bladder_assessment",
+                "mentation_vitals_perfusion"
+              ]
+            },
+            {
+              "factId": "specific_resource_conflict",
+              "discoveryPaths": [
+                "resources_and_conflict",
+                "environment_change"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_urinalysis",
+              "classification": "required_or_repeated_by_current_context",
+              "result": "В анализе мочи: текущий анализ не подтверждает новую специфическую причину."
+            },
+            {
+              "id": "urinary_xray",
+              "classification": "recommended_changes_plan_if_recurrence_pattern_requires",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "recurrent_episode_currently_patent",
+              "specific_resource_conflict"
+            ],
+            "confirmedDiagnosisRequires": [
+              "current_obstruction_excluded",
+              "recurrence_reassessed",
+              "specific_cause_not_found_in_authored_scope"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "urinalysis_or_safe_referral",
+              "urinary_imaging_or_safe_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fic_exclusion_and_memo",
+          "followUp": {
+            "timing": "Прогрессивное наблюдение комплексное изменение среды плюс немедленные тревожные признаки обструкции.",
+            "required": true,
+            "targets": [
+              "urine_output",
+              "resource_access",
+              "conflict",
+              "recurrence_frequency"
+            ]
+          },
+          "outcomes": {
+            "safe": "Каждый рецидив повторно триажируется, а среда меняется измеримыми шагами.",
+            "unsafe": "Старый диагноз используется для пропуска нынешней обструкции или камня."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: согласовать число и расположение лотков, воды, еды, укрытий и игровых эпизодов."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "territorial"
+            ],
+            "ownerModifiers": [
+              "multi_pet",
+              "overwhelmed",
+              "motivated"
+            ]
+          }
+        },
+        {
+          "id": "p3_environment_plan_incomplete",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "follow_up_priority_by_output",
+          "workload": 1.25,
+          "complaint": "Мы обратились, потому что после лечения боль уменьшилась, но изменения воды, лотков и конфликтов выполнить не удалось; симптомы возвращаются.",
+          "historyAnswers": {
+            "memo_adherence_barriers": "По нашим наблюдениям, владелец выполнил только лекарственную часть из-за места, денег или конфликта в семье.",
+            "urine_output": "Дома мы заметили, что моча сейчас выходит.",
+            "resources_and_conflict": "Насколько мы можем судить, основной барьер ресурсов сохраняется.",
+            "home_treatment": "Мы записали, что прежние лекарства повторять самостоятельно не начал."
+          },
+          "examFindings": [
+            {
+              "factId": "followup_patency_confirmed",
+              "source": "physical_exam",
+              "finding": "Новый осмотр подтверждает проходимость и отсутствие системной нестабильности."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "followup_patency_confirmed",
+              "discoveryPaths": [
+                "observe_urination",
+                "gentle_bladder_assessment",
+                "mentation_vitals_perfusion"
+              ]
+            },
+            {
+              "factId": "real_adherence_barrier",
+              "discoveryPaths": [
+                "memo_adherence_barriers"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_bladder_assessment",
+              "classification": "required_for_safe_recheck",
+              "result": "Клиническая оценка показала: обструкция на повторе не выявлена."
+            },
+            {
+              "id": "urinary_urinalysis",
+              "classification": "recommended_if_signs_persist_or_change",
+              "result": "В анализе мочи: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "followup_patency_confirmed",
+              "real_adherence_barrier"
+            ],
+            "confirmedDiagnosisRequires": [
+              "current_episode_reassessed"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "urinalysis_or_safe_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fic_exclusion_and_memo",
+          "followUp": {
+            "timing": "После каждого возможного шага среды.",
+            "required": true,
+            "targets": [
+              "urine_output",
+              "pain",
+              "chosen_environment_step",
+              "barriers"
+            ]
+          },
+          "outcomes": {
+            "safe": "План адаптирован без наказания владельца, но медицинские красные флаги не ослаблены.",
+            "unsafe": "Невыполнение среды трактуется как повод бесконечно повторять симптоматическую схему."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: выбрать сначала один или два выполнимых изменения и проверить результат."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "overwhelmed",
+              "budget_limited",
+              "nonadherent"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "urinary_feline_bacterial_uti",
+      "version": "2026.07.16.40",
+      "title": "Бактериальная инфекция мочевыводящих путей кошки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Симптоматическая бактериальная инфекция мочевыводящих путей поддерживается корректно отобранным посевом и клиническим контекстом; случайная или контаминированная бактериурия не равна инфекции.",
+      "primaryDiagnosisId": "dx_feline_bacterial_uti",
+      "differentials": [
+        "dx_feline_idiopathic_cystitis",
+        "dx_feline_urolithiasis",
+        "dx_feline_crystalluria",
+        "dx_upper_urinary_infection",
+        "dx_asymptomatic_bacteriuria"
+      ],
+      "planBundleId": "bacterial_uti_culture_route",
+      "sourceIds": [
+        "icatcare_flutd_2025",
+        "iscaid_uti_2019"
+      ],
+      "presentations": [
+        {
+          "id": "p1_older_comorbid_cat",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что пожилая кошка с фоновой болезнью часто мочится малыми порциями; моча выходит.",
+          "historyAnswers": {
+            "comorbidities": "По нашим наблюдениям, есть ХБП, диабет или другой фактор риска.",
+            "urine_output": "Дома мы заметили, что малые порции выходят.",
+            "home_treatment": "Насколько мы можем судить, антибиотик до отбора ещё не давали.",
+            "systemic_signs": "Мы записали, что клинический вариант отделяет нижнюю инфекцию от системного ухудшения."
+          },
+          "examFindings": [
+            {
+              "factId": "older_patent_comorbid_context",
+              "source": "physical_exam",
+              "finding": "Пузырь не переполнен; состояние и признаки верхней инфекции оценены отдельно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "older_patent_comorbid_context",
+              "discoveryPaths": [
+                "comorbidities",
+                "gentle_bladder_assessment",
+                "mentation_vitals_perfusion"
+              ]
+            },
+            {
+              "factId": "pre_treatment_sample_possible",
+              "discoveryPaths": [
+                "home_treatment"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_urinalysis",
+              "classification": "required_for_safe_decision",
+              "result": "В анализе мочи: совместимые изменения, но не единственное доказательство."
+            },
+            {
+              "id": "urinary_culture",
+              "classification": "required_for_confirmation",
+              "result": "По результатам посева и определения чувствительности: корректно отобранный образец отправлен до терапии; результат заранее."
+            },
+            {
+              "id": "urinary_blood_electrolytes",
+              "classification": "recommended_changes_plan_for_comorbidity",
+              "result": "В лабораторных показателях крови: показатели определяют системный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "older_patent_comorbid_context",
+              "pre_treatment_sample_possible"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_signs",
+              "correct_sample_positive_culture",
+              "contamination_assessed"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation",
+              "urine_collection"
+            ],
+            "conditional": [
+              "urinalysis_or_safe_referral",
+              "culture_or_safe_referral"
+            ],
+            "external": [
+              "urine_culture_external",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "bacterial_uti_culture_route",
+          "followUp": {
+            "timing": "Обратный вызов культуры плюс клиническая повторная проверка.",
+            "required": true,
+            "targets": [
+              "culture_result",
+              "susceptibility",
+              "urine_output",
+              "comorbidity"
+            ]
+          },
+          "outcomes": {
+            "safe": "Инфекция подтверждается корректно и ведётся вместе с фоновой болезнью.",
+            "unsafe": "Возраст и лейкоциты используются для эмпирического ярлыка без посева."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: зачем нужен образец до лечения и когда будет сообщён результат."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "frail"
+            ],
+            "requiredHandlingAlternative": "low_stress_collection_or_referral",
+            "ownerModifiers": [
+              "observant",
+              "budget_limited",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_culture_confirmed",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "result_follow_up_priority",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что пришёл результат ранее отправленного посева у кошки с симптомами.",
+          "historyAnswers": {
+            "sample_collection_context": "По нашим наблюдениям, образец получен контролируемым способом до противомикробной терапии.",
+            "urine_output": "Дома мы заметили, что моча выходит; экстренных признаков нет.",
+            "systemic_signs": "Насколько мы можем судить, состояние с момента отбора как стабильное или ухудшившееся."
+          },
+          "examFindings": [
+            {
+              "factId": "current_state_at_result_review",
+              "source": "physical_exam",
+              "finding": "Перед решением проверены текущие симптомы, струя и системное состояние."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "valid_culture_context",
+              "discoveryPaths": [
+                "sample_collection_context",
+                "home_treatment"
+              ]
+            },
+            {
+              "factId": "current_state_at_result_review",
+              "discoveryPaths": [
+                "urine_output",
+                "systemic_signs",
+                "mentation_vitals_perfusion"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_culture",
+              "classification": "required_result_review",
+              "result": "По результатам посева и определения чувствительности: клинически значимый рост и профиль чувствительности; Ветеринарный врач выбирает препарат."
+            },
+            {
+              "id": "urinary_urinalysis",
+              "classification": "supporting_context",
+              "result": "В анализе мочи: сохранён вместе с методом и временем отбора."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "valid_culture_context",
+              "current_state_at_result_review"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_signs",
+              "valid_positive_culture"
+            ],
+            "mustNotAssume": [
+              "drug_choice_from_bacterium_name"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam"
+            ],
+            "external": [
+              "urine_culture_external"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "bacterial_uti_culture_route",
+          "followUp": {
+            "timing": "Владелец незамедлительно связался и провел повторную проверку согласно проверенному протоколу.",
+            "required": true,
+            "targets": [
+              "clinical_response",
+              "adherence",
+              "adverse_effects",
+              "recurrence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Результат становится действием и сообщается владельцу.",
+            "unsafe": "Посев лежит без просмотра либо автоматическая система сам назначает средство."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: скажу прямо: результат, границы интерпретации и согласованный врачом следующий шаг."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "not_present_result_call"
+            ],
+            "ownerModifiers": [
+              "reachable",
+              "hard_to_reach",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_recurrence_after_empirical_treatment",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что симптомы вернулись после оставшегося дома или прежнего антибиотика.",
+          "historyAnswers": {
+            "home_treatment": "По нашим наблюдениям, препарат давали без нового посева; дата последней дозы известна.",
+            "previous_episodes": "Дома мы заметили, что рецидив после эмпирического курса.",
+            "comorbidities": "Насколько мы можем судить, есть или не исключён фактор персистенции.",
+            "urine_output": "Мы записали, что моча пока выходит."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrent_patent_luts",
+              "source": "physical_exam",
+              "finding": "Обструкция исключена на текущем осмотре; рецидив требует нового доказательства причины."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "prior_antimicrobial_exposure",
+              "discoveryPaths": [
+                "home_treatment"
+              ]
+            },
+            {
+              "factId": "recurrent_patent_luts",
+              "discoveryPaths": [
+                "previous_episodes",
+                "gentle_bladder_assessment",
+                "observe_urination"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_culture",
+              "classification": "required_before_new_antimicrobial_when_safe",
+              "result": "По результатам посева и определения чувствительности: повторный корректный посев после учёта предыдущей терапии."
+            },
+            {
+              "id": "urinary_xray",
+              "classification": "recommended_changes_plan",
+              "result": "На рентгенограммах: ищет уролит или анатомический фактор."
+            },
+            {
+              "id": "urinary_ultrasound",
+              "classification": "recommended_changes_plan",
+              "result": "При ультразвуковом исследовании: дополняет поиск структурного фактора."
+            },
+            {
+              "id": "urinary_blood_electrolytes",
+              "classification": "recommended_by_comorbidity",
+              "result": "В лабораторных показателях крови: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "prior_antimicrobial_exposure",
+              "recurrent_patent_luts"
+            ],
+            "confirmedDiagnosisRequires": [
+              "new_valid_culture_and_compatible_signs"
+            ],
+            "unexcludedRisks": [
+              "urolith",
+              "anatomic_factor",
+              "systemic_disease",
+              "noninfectious_luts"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation",
+              "urine_collection"
+            ],
+            "conditional": [
+              "culture_or_safe_referral",
+              "urinary_imaging_or_safe_referral"
+            ],
+            "external": [
+              "urine_culture_external"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "bacterial_uti_culture_route",
+          "followUp": {
+            "timing": "После культуры и инсценированного поиска причины.",
+            "required": true,
+            "targets": [
+              "culture",
+              "imaging",
+              "comorbidity",
+              "clinical_response"
+            ]
+          },
+          "outcomes": {
+            "safe": "Рецидив исследуется, а не получает следующий случайный антибиотик.",
+            "unsafe": "Повторная эмпирическая схема скрывает неверный диагноз или фактор персистенции."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: без обвинения попросить упаковки и точные даты домашних препаратов."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "defensive"
+            ],
+            "ownerModifiers": [
+              "self_medicating",
+              "budget_limited",
+              "skeptical"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "urinary_feline_crystalluria",
+      "version": "2026.07.16.40",
+      "title": "Кристаллурия у кошки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Кристаллы подтверждаются в свежем правильно обработанном образце и интерпретируются в контексте; они могут быть случайными и не равны уролиту или обструкции.",
+      "primaryDiagnosisId": "dx_feline_crystalluria",
+      "differentials": [
+        "dx_sample_storage_artifact",
+        "dx_feline_urolithiasis",
+        "dx_feline_idiopathic_cystitis",
+        "dx_feline_urethral_plug_risk",
+        "dx_feline_bacterial_uti"
+      ],
+      "planBundleId": "crystalluria_contextual",
+      "sourceIds": [
+        "icatcare_flutd_2025",
+        "merck_urolithiasis_overview_2025"
+      ],
+      "presentations": [
+        {
+          "id": "p1_incidental_crystals",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "routine",
+          "workload": 0.75,
+          "complaint": "Мы обратились, потому что в анализе, сданном по другой причине, указаны кристаллы; мочевых симптомов нет.",
+          "historyAnswers": {
+            "sample_collection_context": "По нашим наблюдениям, свободно собранный образец стоял до анализа.",
+            "urine_output": "Дома мы заметили, что нормальные порции без боли.",
+            "blood_pain_grooming": "Насколько мы можем судить, симптомы нижних мочевыводящих путей нет.",
+            "systemic_signs": "Мы записали, что системных признаков нет."
+          },
+          "examFindings": [
+            {
+              "factId": "asymptomatic_normal_output",
+              "source": "physical_exam",
+              "finding": "Пузырь и общее состояние без признаков нижнего мочевого синдрома."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "delayed_sample_artifact_risk",
+              "discoveryPaths": [
+                "sample_collection_context"
+              ]
+            },
+            {
+              "factId": "asymptomatic_normal_output",
+              "discoveryPaths": [
+                "urine_output",
+                "gentle_bladder_assessment"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_urinalysis",
+              "classification": "repeat_fresh_sample_recommended",
+              "result": "В анализе мочи: свежий корректно обработанный образец не воспроизводит либо уточняет находку."
+            },
+            {
+              "id": "urinary_xray",
+              "classification": "low_value_without_signs_or_other_risk",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "delayed_sample_artifact_risk",
+              "asymptomatic_normal_output"
+            ],
+            "confirmedDiagnosisRequires": [
+              "fresh_sample_reproducible_crystals"
+            ],
+            "mustNotAssume": [
+              "urolith",
+              "obstruction",
+              "symptomatic_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam"
+            ],
+            "conditional": [
+              "urinalysis_or_safe_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "crystalluria_contextual",
+          "followUp": {
+            "timing": "Повторная проверка свежего образца по контексту.",
+            "required": true,
+            "targets": [
+              "sample_handling",
+              "crystals",
+              "new_luts"
+            ]
+          },
+          "outcomes": {
+            "safe": "Артефакт не превращается в ненужное лечение от камней.",
+            "unsafe": "По старому свободному образцу назначается пожизненная схема."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему время и способ обработки меняют осадок."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "anxious",
+              "observant",
+              "seeking_prevention"
+            ]
+          }
+        },
+        {
+          "id": "p2_symptomatic_concentrated_urine",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что кошка мочится малыми болезненными порциями; в свежей концентрированной моче обнаружены значимые кристаллы.",
+          "historyAnswers": {
+            "urine_output": "По нашим наблюдениям, малые порции продолжают выходить.",
+            "water_and_diet": "Дома мы заметили, что пьёт мало; рацион и вода зафиксированы, но не считаются причиной сами по себе.",
+            "sample_collection_context": "Насколько мы можем судить, свежий образец быстро исследован.",
+            "previous_episodes": "Мы записали, что первый или повторный эпизод зафиксирован в этом случае."
+          },
+          "examFindings": [
+            {
+              "factId": "symptomatic_nonobstructive_crystalluria",
+              "source": "physical_exam",
+              "finding": "Пузырь не переполнен; пациент стабилен, но болезненность и симптомы нижних мочевыводящих путей подтверждены."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "symptomatic_nonobstructive_crystalluria",
+              "discoveryPaths": [
+                "urine_output",
+                "gentle_bladder_assessment",
+                "low_stress_pain_assessment"
+              ]
+            },
+            {
+              "factId": "fresh_sample_context",
+              "discoveryPaths": [
+                "sample_collection_context",
+                "urinalysis_fresh_sample"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_urinalysis",
+              "classification": "required_for_safe_decision",
+              "result": "В анализе мочи: тип кристаллов, концентрация и остальной осадок сохранены вместе с методом."
+            },
+            {
+              "id": "urinary_xray",
+              "classification": "recommended_changes_plan",
+              "result": "На рентгенограммах: визуализация отличает кристаллурию без видимого уролита либо переводит в каменную клинический вариант."
+            },
+            {
+              "id": "urinary_culture",
+              "classification": "recommended_by_risk",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "symptomatic_nonobstructive_crystalluria",
+              "fresh_sample_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "fresh_sample_crystals"
+            ],
+            "unexcludedRisks": [
+              "urolith_until_imaging_by_indication",
+              "fic",
+              "uti_by_risk"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation",
+              "urinalysis",
+              "urine_sediment_microscopy"
+            ],
+            "conditional": [
+              "urinary_imaging_or_safe_referral",
+              "culture_or_safe_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "crystalluria_contextual",
+          "followUp": {
+            "timing": "Краткая проверка симптомов и потоков; плановый повторный анализ свежей мочи.",
+            "required": true,
+            "targets": [
+              "urine_output",
+              "pain",
+              "urine_concentration",
+              "crystals",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Кристаллы влияют на контекстный план, не подменяя визуализацию и дифференциалы.",
+            "unsafe": "Их называют камнем и автоматически выбирают диету без проверки риска."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: разницу между кристаллами в осадке и сформированным камнем."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "defensive"
+            ],
+            "ownerModifiers": [
+              "budget_limited",
+              "observant",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_male_plug_risk",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult"
+          ],
+          "sexConstraints": [
+            "male"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "priority_or_urgent_by_stream",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что у кота симптомы нижних мочевыводящих путей и кристаллы или детрит, но владелец пока видит только капли мочи.",
+          "historyAnswers": {
+            "urine_output": "По нашим наблюдениям, капли есть, нормальная струя не подтверждена.",
+            "last_confirmed_stream": "Дома мы заметили, что нормальную порцию давно не видели.",
+            "litter_box_attempts": "Насколько мы можем судить, частые болезненные попытки.",
+            "systemic_signs": "Мы записали, что системные признаки на старте отсутствуют или ухудшаются."
+          },
+          "examFindings": [
+            {
+              "factId": "male_near_obstruction_state",
+              "source": "physical_exam",
+              "finding": "Пузырь и системное состояние как проходимая высокорисковая либо уже обструкционная клинический вариант."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "inadequate_stream",
+              "discoveryPaths": [
+                "urine_output",
+                "last_confirmed_stream",
+                "observe_urination"
+              ]
+            },
+            {
+              "factId": "male_near_obstruction_state",
+              "discoveryPaths": [
+                "gentle_bladder_assessment",
+                "mentation_vitals_perfusion"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_bladder_assessment",
+              "classification": "required_immediate_triage",
+              "result": "Клиническая оценка показала: определяет, остаётся ли пациент необструктивным."
+            },
+            {
+              "id": "urinary_urinalysis",
+              "classification": "supporting_not_delay",
+              "result": "В анализе мочи: кристаллы или детрит не заменяют оценку проходимости."
+            },
+            {
+              "id": "urinary_blood_electrolytes",
+              "classification": "required_if_obstruction_or_systemic_risk",
+              "result": "В лабораторных показателях крови: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "inadequate_stream",
+              "male_near_obstruction_state"
+            ],
+            "confirmedDiagnosisRequires": [
+              "fresh_sample_crystals_if_still_nonobstructive"
+            ],
+            "dangerStates": [
+              "urethral_obstruction"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "obstruction_stabilization_or_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "crystalluria_contextual",
+          "followUp": {
+            "timing": "Непрерывный мониторинг потока владельцев с немедленным возвратом при отсутствии выходных данных.",
+            "required": true,
+            "targets": [
+              "true_stream",
+              "bladder",
+              "mentation",
+              "vomiting"
+            ]
+          },
+          "outcomes": {
+            "safe": "Капли не дают ложного успокоения, обструкция обнаруживается без задержки.",
+            "unsafe": "Коту назначают только диету и плановый контроль."
+          },
+          "ownerCommunication": [
+            "Я покажу, как выглядит нормальная струя мочи. Если моча перестанет выходить или останутся только капли при частых попытках, нужно ехать в клинику немедленно."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "painful_defensive",
+              "panic"
+            ],
+            "requiredHandlingAlternative": "low_stress_or_urgent_referral",
+            "ownerModifiers": [
+              "inattentive",
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "urinary_feline_urolithiasis",
+      "version": "2026.07.16.40",
+      "title": "Уролитиаз мочевого пузыря или уретры кошки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Уролит подтверждается визуализацией; кристаллы не равны камню, а внешний вид и кристаллурия не гарантируют его состав.",
+      "primaryDiagnosisId": "dx_feline_urolithiasis",
+      "differentials": [
+        "dx_feline_crystalluria",
+        "dx_feline_idiopathic_cystitis",
+        "dx_feline_bacterial_uti",
+        "dx_feline_urethral_obstruction",
+        "dx_lower_urinary_neoplasia"
+      ],
+      "planBundleId": "urolith_imaging_and_route",
+      "sourceIds": [
+        "icatcare_flutd_2025",
+        "merck_urolithiasis_overview_2025",
+        "merck_urethral_obstruction_2025"
+      ],
+      "presentations": [
+        {
+          "id": "p1_nonobstructive_stone",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что кошка с симптомы нижних мочевыводящих путей мочится самостоятельно; визуализация обнаружила камень мочевого пузыря.",
+          "historyAnswers": {
+            "urine_output": "По нашим наблюдениям, моча выходит.",
+            "previous_episodes": "Дома мы заметили, что первый или повторный каменный эпизод зафиксирован в этом случае.",
+            "water_and_diet": "Насколько мы можем судить, текущий рацион и вода зафиксированы.",
+            "blood_pain_grooming": "Мы записали, что есть боль или гематурия."
+          },
+          "examFindings": [
+            {
+              "factId": "patent_bladder_stone_context",
+              "source": "physical_exam",
+              "finding": "Пузырь не переполнен; пациент стабилен, камень не делает текущую клинический вариант автоматически обструкционной."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "patent_bladder_stone_context",
+              "discoveryPaths": [
+                "urine_output",
+                "gentle_bladder_assessment",
+                "mentation_vitals_perfusion"
+              ]
+            },
+            {
+              "factId": "stone_visualized",
+              "discoveryPaths": [
+                "urinary_xray",
+                "urinary_ultrasound"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_xray",
+              "classification": "required_for_confirmation_or_complementary_imaging",
+              "result": "На рентгенограммах: число, размер и локализация рентгеноконтрастных структур."
+            },
+            {
+              "id": "urinary_ultrasound",
+              "classification": "required_or_recommended_to_characterize",
+              "result": "При ультразвуковом исследовании: подтверждает локализацию и состояние мочевого пузыря."
+            },
+            {
+              "id": "urinary_urinalysis",
+              "classification": "required_changes_plan",
+              "result": "В анализе мочи: характеризует мочу без автоматического определения состава камня."
+            },
+            {
+              "id": "urinary_culture",
+              "classification": "recommended_by_risk",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "patent_bladder_stone_context",
+              "stone_visualized"
+            ],
+            "confirmedDiagnosisRequires": [
+              "stone_visualized"
+            ],
+            "mustNotAssume": [
+              "stone_composition_from_crystals_only"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "urinary_imaging_or_safe_referral",
+              "urinalysis_or_safe_referral"
+            ],
+            "external": [
+              "urine_culture_external"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "urolith_imaging_and_route",
+          "followUp": {
+            "timing": "По выбранному проверенному маршруту с объективной визуализацией или контрольными точками мочи.",
+            "required": true,
+            "targets": [
+              "stone_size_number_location",
+              "urine_output",
+              "pain",
+              "urine_context"
+            ]
+          },
+          "outcomes": {
+            "safe": "Маршрут выбирается по камню и риску, а не по одному кристаллу.",
+            "unsafe": "Предполагаемый состав ведёт к неадекватной или затянутой схеме."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: на снимке мы видим камень и знаем его размер и положение, но состав по изображению определить нельзя — для этого нужны отдельные данные."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "defensive"
+            ],
+            "ownerModifiers": [
+              "budget_limited",
+              "observant",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_recurrent_hematuria",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что после прежнего камня или процедуры вновь появилась гематурия и частые порции.",
+          "historyAnswers": {
+            "previous_episodes": "По нашим наблюдениям, ранее камень подтверждали или удаляли.",
+            "urine_output": "Дома мы заметили, что моча выходит.",
+            "water_and_diet": "Насколько мы можем судить, выполнение профилактического плана как полное или неполное.",
+            "comorbidities": "Мы записали, что фоновые факторы зафиксированы в этом случае."
+          },
+          "examFindings": [
+            {
+              "factId": "recurrent_patent_hematuria",
+              "source": "physical_exam",
+              "finding": "Пузырь не переполнен, но рецидив нельзя объявить идиопатический цистит кошек без новой оценки."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "recurrent_patent_hematuria",
+              "discoveryPaths": [
+                "previous_episodes",
+                "urine_output",
+                "gentle_bladder_assessment"
+              ]
+            },
+            {
+              "factId": "recurrence_context",
+              "discoveryPaths": [
+                "water_and_diet",
+                "comorbidities"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_urinalysis",
+              "classification": "required_for_reassessment",
+              "result": "В анализе мочи: новый анализ мочи."
+            },
+            {
+              "id": "urinary_xray",
+              "classification": "required_for_reassessment",
+              "result": "На рентгенограммах: подтверждает или исключает видимый рецидив."
+            },
+            {
+              "id": "urinary_ultrasound",
+              "classification": "recommended_changes_plan",
+              "result": "При ультразвуковом исследовании: ищет невидимый на рентгене или структурный фактор."
+            },
+            {
+              "id": "urinary_culture",
+              "classification": "recommended_by_risk",
+              "result": "По результатам посева и определения чувствительности: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "recurrent_patent_hematuria",
+              "recurrence_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "repeat_imaging_confirmation_for_recurrent_urolith"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "urinary_imaging_or_safe_referral",
+              "urinalysis_or_safe_referral",
+              "culture_or_safe_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "urolith_imaging_and_route",
+          "followUp": {
+            "timing": "После повторной визуализации и в соответствии с планом профилактики.",
+            "required": true,
+            "targets": [
+              "stone_recurrence",
+              "stone_analysis_history",
+              "diet_water",
+              "comorbidity"
+            ]
+          },
+          "outcomes": {
+            "safe": "Рецидив объективно переоценён и профилактика пересобрана по данным.",
+            "unsafe": "Гематурия автоматически названа прежним диагнозом или идиопатический цистит кошек."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: разделить проверку нынешней причины и разбор выполнимости прежней профилактики."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "ownerModifiers": [
+              "nonadherent",
+              "observant",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_stone_with_obstruction_warning",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "sexConstraints": [
+            "male"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что у кота камень расположен у выхода или в уретре; моча выходит лишь каплями.",
+          "historyAnswers": {
+            "urine_output": "По нашим наблюдениям, только капли, нормальной струи нет.",
+            "last_confirmed_stream": "Дома мы заметили, что последняя нормальная порция была много часов назад.",
+            "systemic_signs": "Насколько мы можем судить, состояние пока стабильно либо начинает ухудшаться.",
+            "previous_episodes": "Мы записали, что камень уже подтверждён визуализацией."
+          },
+          "examFindings": [
+            {
+              "factId": "stone_migration_obstruction_threat",
+              "source": "physical_exam",
+              "finding": "Пузырь и перфузия определяют угрозу или уже наступившую обструкцию; промедление небезопасно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "stone_migration_obstruction_threat",
+              "discoveryPaths": [
+                "urine_output",
+                "last_confirmed_stream",
+                "gentle_bladder_assessment",
+                "mentation_vitals_perfusion"
+              ]
+            },
+            {
+              "factId": "urethral_stone_visualized",
+              "discoveryPaths": [
+                "urinary_xray",
+                "urinary_ultrasound"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_xray",
+              "classification": "required_but_not_delay_if_obstruction_already_clear",
+              "result": "На рентгенограммах: мигрирующий или уретральный камень."
+            },
+            {
+              "id": "urinary_blood_electrolytes",
+              "classification": "required_if_obstructed_or_systemic_risk",
+              "result": "В лабораторных показателях крови: системный риск."
+            },
+            {
+              "id": "urinary_urinalysis",
+              "classification": "after_stability_or_if_safely_available",
+              "result": "В анализе мочи: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "stone_migration_obstruction_threat",
+              "urethral_stone_visualized"
+            ],
+            "confirmedDiagnosisRequires": [
+              "stone_visualized"
+            ],
+            "dangerStates": [
+              "complete_urethral_obstruction"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "obstruction_stabilization_or_referral",
+              "catheterization_or_decompression_referral",
+              "monitoring_or_hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "urolith_imaging_and_route",
+          "followUp": {
+            "timing": "Немедленный маршрут процедуры и постпроцедурный мониторинг.",
+            "required": true,
+            "targets": [
+              "urine_output",
+              "electrolytes",
+              "pain",
+              "stone_route"
+            ]
+          },
+          "outcomes": {
+            "safe": "Кот своевременно получает процедурную или хирургическую оценку.",
+            "unsafe": "Диета используется как единственный ответ на угрозу обструкции."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему сохранение отдельных капель не делает ожидание безопасным."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "painful_defensive",
+              "panic"
+            ],
+            "requiredHandlingAlternative": "analgesia_minimal_handling_and_referral",
+            "ownerModifiers": [
+              "budget_limited",
+              "anxious",
+              "delay_prone"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "urinary_feline_urethral_obstruction",
+      "version": "2026.07.16.40",
+      "title": "Обструкция уретры у кота",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "sexConstraints": [
+        "male"
+      ],
+      "diagnosticTruth": "Клиническая уретральная обструкция у кота определяется отсутствием адекватного оттока и увеличенным напряжённым болезненным пузырём; стабилизация и устранение обструкции предшествуют полному поиску причины.",
+      "primaryDiagnosisId": "dx_feline_urethral_obstruction",
+      "differentials": [
+        "dx_urethral_plug",
+        "dx_urethrolith",
+        "dx_urethral_spasm_or_edema",
+        "dx_urethral_stricture",
+        "dx_lower_urinary_neoplasia"
+      ],
+      "planBundleId": "urethral_obstruction_emergency",
+      "sourceIds": [
+        "icatcare_flutd_2025",
+        "merck_urethral_obstruction_2025",
+        "merck_obstructive_uropathy_2025",
+        "aaha_fluid_therapy_2024"
+      ],
+      "presentations": [
+        {
+          "id": "p1_early_stable",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "sexConstraints": [
+            "male"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_3",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что кот многократно безрезультатно пытается помочиться; пока остаётся в сознании и без коллапса.",
+          "historyAnswers": {
+            "urine_output": "По нашим наблюдениям, адекватной струи или порции нет.",
+            "last_confirmed_stream": "Дома мы заметили, что последняя подтверждённая порция была много часов назад.",
+            "litter_box_attempts": "Насколько мы можем судить, частые болезненные безрезультатные попытки.",
+            "systemic_signs": "Мы записали, что ранний этап без выраженного системного коллапса."
+          },
+          "examFindings": [
+            {
+              "factId": "large_tense_painful_bladder",
+              "source": "physical_exam",
+              "finding": "Увеличенный напряжённый болезненный пузырь; повторное грубое сдавливание запрещено."
+            },
+            {
+              "factId": "currently_compensated_perfusion",
+              "source": "physical_exam",
+              "finding": "Перфузия пока стабильна, что не уменьшает экстренность."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "no_adequate_output",
+              "discoveryPaths": [
+                "urine_output",
+                "last_confirmed_stream"
+              ]
+            },
+            {
+              "factId": "large_tense_painful_bladder",
+              "discoveryPaths": [
+                "gentle_bladder_assessment"
+              ]
+            },
+            {
+              "factId": "currently_compensated_perfusion",
+              "discoveryPaths": [
+                "mentation_vitals_perfusion",
+                "heart_rate_and_rhythm"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_bladder_assessment",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: клиническая обструкция подтверждена."
+            },
+            {
+              "id": "urinary_blood_electrolytes",
+              "classification": "required_without_delaying_relief",
+              "result": "В лабораторных показателях крови: ранние почечные или электролитные показатели."
+            },
+            {
+              "id": "urinary_ecg",
+              "classification": "recommended_or_required_by_rhythm_and_potassium",
+              "result": "На электрокардиограмме: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            },
+            {
+              "id": "urinary_xray",
+              "classification": "recommended_after_initial_stability",
+              "result": "На рентгенограммах: исследование на этом приёме не выполняли, потому что без дополнительных показаний его результат не изменил бы безопасный план."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "no_adequate_output",
+              "large_tense_painful_bladder",
+              "currently_compensated_perfusion"
+            ],
+            "confirmedDiagnosisRequires": [
+              "no_adequate_output",
+              "large_tense_painful_bladder"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "obstruction_stabilization_or_referral",
+              "catheterization_or_decompression_referral",
+              "monitoring_or_hospital_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "urethral_obstruction_emergency",
+          "followUp": {
+            "timing": "Непрерывный экстренный и постобструктивный мониторинг.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "rhythm_electrolytes",
+              "urine_output",
+              "post_obstructive_diuresis",
+              "pain"
+            ]
+          },
+          "outcomes": {
+            "safe": "Ранняя стабильность используется для своевременной помощи, а не ожидания.",
+            "unsafe": "Полный набор тестов, очередь или бюджет задерживают устранение обструкции."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: прямо назвать состояние экстренным и объяснить локальную помощь либо немедленное направление."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "panic",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "analgesia_sedation_by_reviewed_protocol_or_immediate_referral",
+            "ownerModifiers": [
+              "budget_limited",
+              "anxious",
+              "delay_prone"
+            ]
+          }
+        },
+        {
+          "id": "p2_hyperkalemic_azotemic",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "sexConstraints": [
+            "male"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "critical_emergency",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что кот без мочи стал вялым, рвёт, холодный или имеет редкий или неровный пульс.",
+          "historyAnswers": {
+            "urine_output": "По нашим наблюдениям, мочи нет.",
+            "last_confirmed_stream": "Дома мы заметили, что нормальная порция не подтверждалась длительное время.",
+            "systemic_signs": "Насколько мы можем судить, вялость, рвота, слабость и ухудшение.",
+            "home_treatment": "Мы записали, что домашняя помощь не восстановила отток."
+          },
+          "examFindings": [
+            {
+              "factId": "decompensated_obstructed_state",
+              "source": "physical_exam",
+              "finding": "Большой болезненный пузырь, гипотермия или плохая перфузия и брадикардия либо аритмия."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "complete_output_failure",
+              "discoveryPaths": [
+                "urine_output",
+                "last_confirmed_stream"
+              ]
+            },
+            {
+              "factId": "decompensated_obstructed_state",
+              "discoveryPaths": [
+                "gentle_bladder_assessment",
+                "mentation_vitals_perfusion",
+                "heart_rate_and_rhythm"
+              ]
+            },
+            {
+              "factId": "dangerous_metabolic_derangement",
+              "discoveryPaths": [
+                "blood_electrolytes_glucose",
+                "ecg_monitoring"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_blood_electrolytes",
+              "classification": "required_parallel_to_stabilization",
+              "result": "В лабораторных показателях крови: гиперкалиемия или азотемия и сопутствующие нарушения."
+            },
+            {
+              "id": "urinary_ecg",
+              "classification": "required_with_bradycardia_hyperkalemia",
+              "result": "На электрокардиограмме: изменение ритма, требующее мониторинга."
+            },
+            {
+              "id": "urinary_xray",
+              "classification": "deferred_until_stable_unless_immediately_actionable",
+              "result": "На рентгенограммах: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            },
+            {
+              "id": "urinary_urinalysis",
+              "classification": "deferred_until_safe",
+              "result": "В анализе мочи: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "complete_output_failure",
+              "decompensated_obstructed_state",
+              "dangerous_metabolic_derangement"
+            ],
+            "confirmedDiagnosisRequires": [
+              "complete_output_failure",
+              "large_tense_painful_bladder"
+            ],
+            "dangerStates": [
+              "hyperkalemic_bradyarrhythmia",
+              "shock",
+              "uremia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "obstruction_stabilization_or_referral",
+              "catheterization_or_decompression_referral",
+              "monitoring_or_hospital_referral"
+            ],
+            "external": [
+              "biochemistry",
+              "electrolytes",
+              "ecg"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "urethral_obstruction_emergency",
+          "followUp": {
+            "timing": "Непрерывно до стабилизации и в постобструктивный период.",
+            "required": true,
+            "targets": [
+              "ecg",
+              "potassium",
+              "renal_values",
+              "perfusion",
+              "temperature",
+              "urine_output"
+            ]
+          },
+          "outcomes": {
+            "safe": "Опасные нарушения корректируются параллельно с экстренным восстановлением оттока.",
+            "unsafe": "Диагностика или неподготовленная процедура задерживает стабилизацию и направление."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: кратко объяснить непосредственный риск для сердца и жизни без перегрузки деталями."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "obtunded",
+              "painful_defensive"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_emergency_protocol",
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited",
+              "overwhelmed"
+            ]
+          }
+        },
+        {
+          "id": "p3_post_catheter_reobstruction",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "senior"
+          ],
+          "sexConstraints": [
+            "male"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency_follow_up",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что недавно выписанный после катетера кот снова не даёт струи и постоянно пытается помочиться.",
+          "historyAnswers": {
+            "previous_episodes": "По нашим наблюдениям, недавняя обструкция и катетеризация подтверждены.",
+            "urine_output": "Дома мы заметили, что после выписки струя исчезла.",
+            "last_confirmed_stream": "Насколько мы можем судить, последняя подтверждённая струя была ранее сегодня или вчера.",
+            "systemic_signs": "Мы записали, что боль и беспокойство; системное ухудшение определяется временем."
+          },
+          "examFindings": [
+            {
+              "factId": "post_catheter_reobstruction_exam",
+              "source": "physical_exam",
+              "finding": "Пузырь снова увеличен или напряжён, либо осмотр выявляет иную причину без безопасного ожидания."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "recent_catheter_history",
+              "discoveryPaths": [
+                "previous_episodes"
+              ]
+            },
+            {
+              "factId": "renewed_output_failure",
+              "discoveryPaths": [
+                "urine_output",
+                "last_confirmed_stream"
+              ]
+            },
+            {
+              "factId": "post_catheter_reobstruction_exam",
+              "discoveryPaths": [
+                "gentle_bladder_assessment",
+                "mentation_vitals_perfusion"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "urinary_bladder_assessment",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: повторная обструкция подтверждена или срочно дифференцирована."
+            },
+            {
+              "id": "urinary_blood_electrolytes",
+              "classification": "required_by_duration_and_state",
+              "result": "В лабораторных показателях крови: повторные показатели."
+            },
+            {
+              "id": "urinary_xray",
+              "classification": "recommended_after_stabilization_for_cause",
+              "result": "На рентгенограммах: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            },
+            {
+              "id": "urinary_ultrasound",
+              "classification": "recommended_after_stabilization_for_cause",
+              "result": "При ультразвуковом исследовании: исследование на этом этапе не выполняли, потому что сначала требуется стабилизация пациента или безопасный доступ."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "recent_catheter_history",
+              "renewed_output_failure",
+              "post_catheter_reobstruction_exam"
+            ],
+            "confirmedDiagnosisRequires": [
+              "renewed_output_failure",
+              "large_or_tense_bladder_or_procedural_confirmation"
+            ],
+            "unexcludedRisks": [
+              "urethral_edema_or_spasm",
+              "plug_or_urolith",
+              "stricture",
+              "technical_or_anatomic_factor"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "abdominal_palpation"
+            ],
+            "conditional": [
+              "obstruction_stabilization_or_referral",
+              "catheterization_or_decompression_referral",
+              "monitoring_or_hospital_referral",
+              "urinary_imaging_or_safe_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "urethral_obstruction_emergency",
+          "followUp": {
+            "timing": "Постоянная переоценка чрезвычайных ситуаций и пересмотренная долгосрочная профилактика.",
+            "required": true,
+            "targets": [
+              "patency",
+              "electrolytes",
+              "pain",
+              "anatomic_or_urolith_cause",
+              "discharge_plan"
+            ]
+          },
+          "outcomes": {
+            "safe": "Повторная обструкция не маскируется как ожидаемый дискомфорт после катетера.",
+            "unsafe": "Пациента оставляют до планового контроля без проверки пузыря."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: повторная закупорка возможна. Если моча снова перестанет отходить струёй, нужна немедленная экстренная помощь."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_defensive",
+              "fearful",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "analgesia_minimal_handling_and_emergency_route",
+            "ownerModifiers": [
+              "frustrated",
+              "budget_limited",
+              "anxious"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "icatcare_flutd_2025",
+      "title": "2025 iCatCare consensus guidelines on the diagnosis and management of lower urinary tract diseases in cats",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11816079/",
+      "scope": "syndrome differentiation, FIC, UTI, urolithiasis, obstruction, environmental management"
+    },
+    {
+      "id": "iscaid_uti_2019",
+      "title": "ISCAID guidelines for bacterial urinary tract infections in dogs and cats",
+      "url": "https://www.vdl.ndsu.edu/wp-content/uploads/2022/02/ISCAID-Urinary-Guidelines-2019.pdf",
+      "scope": "sample quality, culture, antimicrobial stewardship, recurrent infection"
+    },
+    {
+      "id": "merck_urethral_obstruction_2025",
+      "title": "Merck Veterinary Manual: Urethral Obstruction in Small Animals",
+      "url": "https://www.merckvetmanual.com/urinary-system/urolithiasis-in-small-animals/urethral-obstruction-in-small-animals",
+      "scope": "emergency recognition, systemic risk, ECG/electrolytes, stabilization and relief route"
+    },
+    {
+      "id": "merck_obstructive_uropathy_2025",
+      "title": "Merck Veterinary Manual: Obstructive Uropathy in Dogs and Cats",
+      "url": "https://www.merckvetmanual.com/urinary-system/noninfectious-diseases-of-the-urinary-system-in-small-animals/obstructive-uropathy-in-dogs-and-cats",
+      "scope": "postrenal physiology and obstructive causes"
+    },
+    {
+      "id": "merck_urolithiasis_overview_2025",
+      "title": "Merck Veterinary Manual: Overview of Urolithiasis in Small Animals",
+      "url": "https://www.merckvetmanual.com/urinary-system/urolithiasis-in-small-animals/overview-of-urolithiasis-in-small-animals",
+      "scope": "urolith confirmation, composition limits, obstruction risk"
+    },
+    {
+      "id": "aaha_aafp_life_stage_2021",
+      "title": "2021 AAHA/AAFP Feline Life Stage Guidelines",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10812130/",
+      "scope": "feline LUTS differential context and multimodal environmental modification"
+    },
+    {
+      "id": "aafp_environmental_needs_2013",
+      "title": "AAFP and ISFM Feline Environmental Needs Guidelines",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11383066/",
+      "scope": "specific feline environmental resources and stress reduction"
+    },
+    {
+      "id": "aaha_fluid_therapy_2024",
+      "title": "2024 AAHA Fluid Therapy Guidelines for Dogs and Cats",
+      "url": "https://www.aaha.org/resources/2024-aaha-fluid-therapy-guidelines-for-dogs-and-cats/",
+      "scope": "individualized emergency fluid route and monitoring"
+    }
+  ],
+  "familyValidationRules": [
+    "species_must_be_cat",
+    "male_obstruction_presentations_require_male_sex_constraint",
+    "no_output_plus_large_tense_bladder_cannot_enter_nonobstructive_pool",
+    "obstruction_cannot_wait_for_culture_imaging_or_complete_history",
+    "obstruction_requires_stabilization_and_decompression_or_safe_referral",
+    "fic_cannot_be_confirmed_from_stress_alone",
+    "uti_requires_valid_sample_and_clinical_context",
+    "crystals_cannot_auto_create_urolith_or_obstruction_diagnosis",
+    "aggressive_temperament_requires_low_stress_alternative_or_referral",
+    "unknown_output_requires_independent_bladder_or_observation_path",
+    "all_levels_remain_generator_ineligible_until_external_veterinary_approval"
+  ]
+}

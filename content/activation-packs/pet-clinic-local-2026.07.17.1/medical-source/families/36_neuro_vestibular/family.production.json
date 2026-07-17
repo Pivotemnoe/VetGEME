@@ -1,0 +1,2518 @@
+{
+  "schemaVersion": 1,
+  "familyId": "neuro_vestibular",
+  "familyVersion": "2026.07.16.40",
+  "title": "Вестибулярный синдром",
+  "campaignPhase": "chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": [
+    "Вестибулярный синдром описывает совокупность признаков и локализацию, но не этиологию.",
+    "Первое решение — определить по полному неврологическому осмотру периферическую или центральную локализацию. Возраст, сторона наклона головы и направление нистагма по отдельности этого не решают.",
+    "Идиопатический периферический вестибулярный синдром только при острой непроявляющей боли периферического характера без центральных признаков и с ожидаемым улучшением; это диагноз исключения.",
+    "Серийное течение является частью доказательства: отсутствие улучшения, рецидив или новые дефициты переоткрывают локализацию.",
+    "Остаточный наклон головы после общего улучшения не равен неудаче лечения и не создаёт случайный центральный диагноз.",
+    "Нормальный наружный канал и барабанная перепонка не исключают заболевание среднего или внутреннего уха.",
+    "Дефицит лицевого нерва и синдром Горнера требуют периферического ушного пути, тогда как измененное мышление, постуральный дефицит и дополнительные черепно-мозговые нервы повышают центральную проверку.",
+    "Внутренний отит обычно не меняет сознания; лихорадка, вялость и дополнительные дефициты требуют оценки внутричерепного распространения.",
+    "магнитно-резонансная или компьютерная томография и спинномозговая жидкость являются отдельными внешними маршрутами; безопасность спинномозговая жидкость оценивается после визуализация проверка.",
+    "Гидратация, тошнота, аспирация, способность стоять, есть и пить, падения и травмы определяют немедленную безопасность независимо от причины.",
+    "Токсическая экспозиция, травма, врождённый картина и системная болезнь требуют собственных доказательств и не назначаются автоматически задним числом.",
+    "Автоматически не назначаются противорвотное, противомикробное или стероидное лечение, процедуру на ухе, протокол исследования спинномозговой жидкости, препарат, дозу или технику выполнения."
+  ],
+  "coreCapabilities": [
+    "neurologic_exam",
+    "ear_exam",
+    "blood_pressure",
+    "advanced_imaging_referral",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "vestibular_history_route",
+      "anyOf": [
+        "vestibular_history_video",
+        "neurologic_exam",
+        "safe_referral"
+      ],
+      "purpose": "exact_onset_course_video_falls_vomiting_and_exposures"
+    },
+    {
+      "id": "vestibular_localization_route",
+      "anyOf": [
+        "vestibular_neuro_localization",
+        "neurologic_exam",
+        "safe_referral"
+      ],
+      "purpose": "complete_neurologic_and_cranial_nerve_localization"
+    },
+    {
+      "id": "vestibular_ear_route_group",
+      "anyOf": [
+        "vestibular_ear_route",
+        "ear_exam",
+        "safe_referral"
+      ],
+      "purpose": "external_middle_inner_ear_hearing_and_cranial_nerve_route"
+    },
+    {
+      "id": "vestibular_systemic_route",
+      "anyOf": [
+        "vestibular_systemic_screen",
+        "blood_pressure",
+        "safe_referral"
+      ],
+      "purpose": "selected_cbc_chemistry_electrolyte_glucose_bp_and_thyroid_context"
+    },
+    {
+      "id": "vestibular_advanced_route",
+      "anyOf": [
+        "vestibular_advanced_neuro_referral",
+        "advanced_imaging_referral",
+        "safe_referral"
+      ],
+      "purpose": "mri_ct_and_csf_review_for_central_atypical_or_persistent_disease"
+    },
+    {
+      "id": "vestibular_ear_specialist_route_group",
+      "anyOf": [
+        "vestibular_ear_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "site_specific_middle_ear_polyp_or_mass_sampling"
+    },
+    {
+      "id": "vestibular_support_route",
+      "anyOf": [
+        "vestibular_support_safety",
+        "safe_referral"
+      ],
+      "purpose": "hydration_nausea_aspiration_mobility_and_injury_safety"
+    },
+    {
+      "id": "vestibular_longitudinal_route",
+      "anyOf": [
+        "vestibular_longitudinal_monitoring",
+        "safe_referral"
+      ],
+      "purpose": "serial_localization_recovery_residual_deficit_and_recurrence"
+    },
+    {
+      "id": "vestibular_owner_route",
+      "anyOf": [
+        "vestibular_owner_safety_plan",
+        "safe_referral"
+      ],
+      "purpose": "home_fall_feeding_aspiration_and_new_central_red_flags"
+    },
+    {
+      "id": "vestibular_referral_route",
+      "anyOf": [
+        "vestibular_advanced_neuro_referral",
+        "vestibular_ear_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "neurology_or_ear_specialist_route"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "vestibular_onset_course_video_fall_vomiting_and_exposure_history",
+      "requires": [
+        "vestibular_history_video"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vestibular_complete_neurologic_localization_and_cranial_nerve_exam",
+      "requires": [
+        "vestibular_neuro_localization"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vestibular_otoscopy_middle_inner_ear_and_hearing_route",
+      "requires": [
+        "vestibular_ear_route"
+      ],
+      "availability": "local_plus_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vestibular_cbc_biochemistry_electrolytes_glucose_blood_pressure_and_selected_thyroid_tests",
+      "requires": [
+        "vestibular_systemic_screen"
+      ],
+      "availability": "local_plus_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vestibular_mri_ct_and_csf_referral_when_central_atypical_or_persistent",
+      "requires": [
+        "vestibular_advanced_neuro_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vestibular_ear_sampling_or_polyp_endoscopy_referral",
+      "requires": [
+        "vestibular_ear_specialist_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vestibular_hydration_nausea_aspiration_mobility_and_injury_safety",
+      "requires": [
+        "vestibular_support_safety"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vestibular_serial_localization_recovery_and_recurrence_monitoring",
+      "requires": [
+        "vestibular_longitudinal_monitoring"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vestibular_owner_home_environment_and_emergency_red_flag_plan",
+      "requires": [
+        "vestibular_owner_safety_plan"
+      ],
+      "availability": "home_longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "vestibular_neurology_or_ear_specialist_referral",
+      "requires": [
+        "vestibular_advanced_neuro_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "exact_onset_progression_and_owner_video",
+      "prompt": "Каковы точное начало, прогрессирование и владелец видеозапись?"
+    },
+    {
+      "id": "stand_walk_eat_drink_vomit_aspirate_fall",
+      "prompt": "Может ли пациент стоять, ходить, есть и пить; есть ли рвота, аспирация или падения?"
+    },
+    {
+      "id": "mentation_behavior_and_seizure_change",
+      "prompt": "Изменились ли сознание, поведение или появились судороги?"
+    },
+    {
+      "id": "nystagmus_direction_position_and_variability",
+      "prompt": "Каковы направление, положение и изменчивость нистагма?"
+    },
+    {
+      "id": "postural_reaction_and_additional_cranial_nerve_signs",
+      "prompt": "Есть ли постуральный дефициты или дополнительные черепной нерв признаки?"
+    },
+    {
+      "id": "ear_pain_discharge_chronic_history_and_hearing",
+      "prompt": "Есть ли ухо боль, выделения, хронический рецидив и изменение слуха?"
+    },
+    {
+      "id": "facial_weakness_horner_and_eye_protection",
+      "prompt": "Есть ли лицевой слабость, синдром Горнера признаки и риск для роговицы?"
+    },
+    {
+      "id": "ear_cleaner_medication_or_toxin_exposure",
+      "prompt": "Какие ухо чистящие средства, лекарства или токсины использовались и когда?"
+    },
+    {
+      "id": "head_trauma_and_temporal_bone_risk",
+      "prompt": "Была ли травма головы или риск повреждения височный кость?"
+    },
+    {
+      "id": "fever_weight_appetite_systemic_and_thyroid_context",
+      "prompt": "Есть ли лихорадка, масса тела и аппетит изменение, системный или щитовидная железа контекст?"
+    },
+    {
+      "id": "prior_imaging_csf_ear_sampling_or_polyp_history",
+      "prompt": "Каковы прежние визуализация, спинномозговая жидкость, ухо пробы или полип анамнез?"
+    },
+    {
+      "id": "home_environment_recheck_transport_and_referral_feasibility",
+      "prompt": "Безопасен ли дом и возможны ли повторный осмотр, перевозка и направление?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "onset_video_fall_vomiting_exposure_record",
+      "source": "history",
+      "requires": [
+        "vestibular_history_video"
+      ]
+    },
+    {
+      "id": "complete_neuro_localization_cranial_nerve_record",
+      "source": "neurologic_exam",
+      "requires": [
+        "vestibular_neuro_localization"
+      ]
+    },
+    {
+      "id": "otoscopy_middle_inner_ear_hearing_record",
+      "source": "ear_exam",
+      "requires": [
+        "vestibular_ear_route"
+      ]
+    },
+    {
+      "id": "systemic_lab_glucose_bp_thyroid_context_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "vestibular_systemic_screen"
+      ]
+    },
+    {
+      "id": "mri_ct_csf_safety_and_result_record",
+      "source": "external_report",
+      "requires": [
+        "vestibular_advanced_neuro_referral"
+      ]
+    },
+    {
+      "id": "middle_ear_polyp_site_specific_sample_record",
+      "source": "external_report",
+      "requires": [
+        "vestibular_ear_specialist_referral"
+      ]
+    },
+    {
+      "id": "hydration_nausea_aspiration_mobility_injury_record",
+      "source": "safety_assessment",
+      "requires": [
+        "vestibular_support_safety"
+      ]
+    },
+    {
+      "id": "serial_localization_recovery_residual_recurrence_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "vestibular_longitudinal_monitoring"
+      ]
+    },
+    {
+      "id": "owner_home_fall_feeding_aspiration_red_flag_record",
+      "source": "owner_plan",
+      "requires": [
+        "vestibular_owner_safety_plan"
+      ]
+    },
+    {
+      "id": "neurology_or_ear_specialist_handoff_record",
+      "source": "referral_plan",
+      "requires": [
+        "vestibular_advanced_neuro_referral"
+      ]
+    },
+    {
+      "id": "central_sign_mentation_postural_multicranial_record",
+      "source": "neurologic_exam",
+      "requires": [
+        "vestibular_neuro_localization"
+      ]
+    },
+    {
+      "id": "same_patient_expected_course_and_new_deficit_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "vestibular_longitudinal_monitoring"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "idiopathic_peripheral_plan",
+      "fullPlan": [
+        "exact_onset_and_safety",
+        "complete_localization",
+        "ear_and_systemic_screen",
+        "exclude_central_evidence",
+        "document_expected_improvement",
+        "home_and_recheck_plan"
+      ],
+      "stagedPlan": [
+        "localize",
+        "support_safety",
+        "observe_only_if_stable",
+        "relocalize_if_not_improving"
+      ],
+      "minimumSafePlan": [
+        "age_not_diagnosis",
+        "no_central_signs",
+        "improvement_required",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "aspiration_or_mobility_stabilization",
+        "neurology_referral_if_atypical"
+      ],
+      "unsafeOrInadequate": [
+        "head_tilt_proves_idiopathic",
+        "fixed_recovery_for_all",
+        "residual_tilt_is_failure"
+      ]
+    },
+    {
+      "id": "peripheral_ear_plan",
+      "fullPlan": [
+        "localize_peripheral",
+        "ear_history_and_otoscopy",
+        "recognize_hidden_middle_ear",
+        "site_specific_imaging_sampling",
+        "hearing_facial_eye_safety",
+        "serial_response"
+      ],
+      "stagedPlan": [
+        "localize",
+        "image_or_refer",
+        "sample_site_correctly",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "normal_canal_not_exclusion",
+        "external_sample_not_middle_ear_truth",
+        "pain_fever_red_flags",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "pain_fever_intracranial_safety",
+        "ear_neuro_referral"
+      ],
+      "unsafeOrInadequate": [
+        "external_otitis_automatically_causal",
+        "generated_flush_or_drug",
+        "ignore_other_cranial_nerves"
+      ]
+    },
+    {
+      "id": "central_plan",
+      "fullPlan": [
+        "recognize_central_signs",
+        "safety_and_systemic_screen",
+        "advanced_imaging",
+        "csf_only_after_safety_review",
+        "etiology_specific_referral",
+        "serial_localization"
+      ],
+      "stagedPlan": [
+        "localize_central",
+        "stabilize",
+        "image",
+        "investigate_cause"
+      ],
+      "minimumSafePlan": [
+        "central_signs_not_ignored",
+        "no_age_override",
+        "csf_not_before_imaging_safety",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "neurologic_emergency_safety",
+        "urgent_neurology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "nystagmus_direction_alone_localizes",
+        "instant_mri_csf",
+        "generated_steroid_or_antimicrobial"
+      ]
+    },
+    {
+      "id": "toxic_traumatic_systemic_plan",
+      "fullPlan": [
+        "exposure_or_trauma_timeline",
+        "complete_localization",
+        "systemic_screen",
+        "imaging_when_traumatic_or_atypical",
+        "safety_support",
+        "cause_specific_referral"
+      ],
+      "stagedPlan": [
+        "identify_context",
+        "stabilize",
+        "localize",
+        "confirm"
+      ],
+      "minimumSafePlan": [
+        "exposure_not_invented",
+        "trauma_red_flags",
+        "congenital_bilateral_distinct",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "trauma_or_toxic_safety",
+        "advanced_referral"
+      ],
+      "unsafeOrInadequate": [
+        "post_result_exposure_generation",
+        "hypothyroid_label_without_context",
+        "generated_antidote_or_drug"
+      ]
+    },
+    {
+      "id": "feline_polyp_mass_uncertain_plan",
+      "fullPlan": [
+        "feline_ear_resp_history",
+        "complete_localization",
+        "ear_and_skull_base_imaging",
+        "polyp_or_mass_specialist_route",
+        "serial_course",
+        "reopen_if_not_improving"
+      ],
+      "stagedPlan": [
+        "localize",
+        "ear_route",
+        "image_sample",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "cat_age_not_idiopathic_proof",
+        "polyp_not_visual_guess",
+        "progression_new_central_red_flag",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "aspiration_or_central_safety",
+        "ear_neuro_oncology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "all_cats_recover_same",
+        "generated_polyp_procedure",
+        "persistent_idiopathic_label"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "ivs_definition_diagnosis_treatment_2023",
+      "title": "Definition, diagnosis and treatment of canine and feline idiopathic vestibular syndrome",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10556701/",
+      "scope": "idiopathic_definition_exclusion_course_and_management_boundaries"
+    },
+    {
+      "id": "canine_peripheral_vestibular_mri_outcome_2020",
+      "title": "Clinical features, MRI findings and outcome in dogs with peripheral vestibular disease",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7249679/",
+      "scope": "peripheral_localization_imaging_and_outcome_variability"
+    },
+    {
+      "id": "uk_primary_care_vestibular_2020",
+      "title": "Vestibular disease in dogs under UK primary veterinary care",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7517853/",
+      "scope": "presentation_epidemiology_and_primary_care_course"
+    },
+    {
+      "id": "merck_otitis_media_interna_2026",
+      "title": "Merck Veterinary Manual: Otitis Media and Interna in Animals",
+      "url": "https://www.merckvetmanual.com/ear-disorders/otitis-media-and-interna/otitis-media-and-interna-in-animals",
+      "scope": "ear_signs_hidden_middle_ear_imaging_sampling_intracranial_extension_and_residual_deficits"
+    }
+  ],
+  "variants": [
+    {
+      "id": "vestibular_idiopathic_peripheral_improving",
+      "version": "2026.07.16.40",
+      "title": "Острый улучшающийся идиопатический периферический синдром",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Идиопатический периферический вестибулярный синдром предполагают при остром начале, периферической локализации, отсутствии центральных признаков и последовательном улучшении. Возраст и наклон головы сами по себе диагноз не подтверждают.",
+      "exclusions": [
+        "age_proves_idiopathic",
+        "head_tilt_direction_proves_side",
+        "no_improvement_still_idiopathic"
+      ],
+      "planBundleId": "idiopathic_peripheral_plan",
+      "sourceIds": [
+        "ivs_definition_diagnosis_treatment_2023",
+        "uk_primary_care_vestibular_2020"
+      ],
+      "presentations": [
+        {
+          "id": "p1_geriatric_dog_acute_nonpainful_peripheral_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "urgent_initial_assessment",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что пожилая собака внезапно начала падать и держать голову набок; выявлены периферические признаки без боли и центрального неврологического дефицита.",
+          "historyAnswers": {
+            "exact_onset_progression_and_owner_video": "По нашим наблюдениям, владелец показывает видео: нарушение началось внезапно менее часа назад.",
+            "stand_walk_eat_drink_vomit_aspirate_fall": "Дома мы заметили, что по словам владельца, этот признак связан с текущим эпизодом и менялся вместе с основной жалобой.",
+            "mentation_behavior_and_seizure_change": "Насколько мы можем судить, сознание и поведение сохранены, судорог не было.",
+            "ear_pain_discharge_chronic_history_and_hearing": "Мы записали, что боли в ухе и выделений нет; прежние заболевания уха уточнены."
+          },
+          "examFindings": [
+            {
+              "factId": "geriatric_peripheral_pattern_requires_no_central_signs_and_improvement",
+              "source": "idiopathic_rule",
+              "finding": "Пожилой возраст не заменяет неврологическую локализацию и наблюдение в динамике."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "geriatric_peripheral_pattern_requires_no_central_signs_and_improvement",
+              "discoveryPaths": [
+                "postural_reaction_and_additional_cranial_nerve_signs",
+                "complete_neuro_localization_cranial_nerve_record",
+                "serial_localization_recovery_residual_recurrence_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_complete_neurologic_localization_and_cranial_nerve_exam",
+              "classification": "required",
+              "result": "При динамическом наблюдении: периферический без центральный доказательства."
+            },
+            {
+              "id": "vestibular_hydration_nausea_aspiration_mobility_and_injury_safety",
+              "classification": "required",
+              "result": "Клиническая оценка показала: безопасный поддержка маршрут."
+            },
+            {
+              "id": "vestibular_serial_localization_recovery_and_recurrence_monitoring",
+              "classification": "required_confirmation_by_course",
+              "result": "При динамическом наблюдении: ожидаемый улучшение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "geriatric_peripheral_pattern_requires_no_central_signs_and_improvement"
+            ],
+            "confirmedDiagnosisRequires": [
+              "peripheral_exclusion_plus_serial_improvement"
+            ],
+            "dangerStates": [
+              "aspiration",
+              "cannot_drink",
+              "new_postural_deficit",
+              "altered_mentation"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_history_video",
+              "vestibular_neuro_localization",
+              "vestibular_support_safety",
+              "vestibular_longitudinal_monitoring",
+              "neurologic_exam"
+            ],
+            "external": [
+              "vestibular_advanced_neuro_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_history_route",
+              "vestibular_localization_route",
+              "vestibular_support_route",
+              "vestibular_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "idiopathic_peripheral_plan",
+          "followUp": {
+            "timing": "Наблюдаемый ежедневно курс с быстрой повторной оценкой, если улучшение не наступает.",
+            "required": true,
+            "targets": [
+              "standing",
+              "eating",
+              "nystagmus",
+              "mentation",
+              "postural_reactions"
+            ]
+          },
+          "outcomes": {
+            "safe": "Идиопатическая метка следует за локализацией и улучшением.",
+            "unsafe": "Только старость решает дело."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: картина может улучшиться, но улучшение и отсутствие новых неврологических признаков являются частью диагноза."
+          ],
+          "compatibility": {
+            "temperament": [
+              "nauseous",
+              "anxious",
+              "geriatric"
+            ],
+            "requiredHandlingAlternative": "floor_level_minimal_handling",
+            "ownerModifiers": [
+              "stroke_fear",
+              "home_fall_risk"
+            ]
+          }
+        },
+        {
+          "id": "p2_cat_of_any_age_with_acute_improving_peripheral_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "urgent_initial_assessment",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что кошка любого возраста имеет острый периферический характер и начинает поправляться без центральных признаков.",
+          "historyAnswers": {
+            "exact_onset_progression_and_owner_video": "По нашим наблюдениям, начало или течение зарегистрировано.",
+            "ear_pain_discharge_chronic_history_and_hearing": "Дома мы заметили, что проверен контекст ушей и дыхательных путей или полипов.",
+            "stand_walk_eat_drink_vomit_aspirate_fall": "Насколько мы можем судить, безопасность кормления и падения известна."
+          },
+          "examFindings": [
+            {
+              "factId": "feline_idiopathic_route_requires_ear_polyp_exclusion_and_improving_course",
+              "source": "feline_rule",
+              "finding": "Возраст не подтверждает идиопатическую причину."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "feline_idiopathic_route_requires_ear_polyp_exclusion_and_improving_course",
+              "discoveryPaths": [
+                "prior_imaging_csf_ear_sampling_or_polyp_history",
+                "otoscopy_middle_inner_ear_hearing_record",
+                "serial_localization_recovery_residual_recurrence_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_complete_neurologic_localization_and_cranial_nerve_exam",
+              "classification": "required",
+              "result": "При динамическом наблюдении: периферическая локализация."
+            },
+            {
+              "id": "vestibular_otoscopy_middle_inner_ear_and_hearing_route",
+              "classification": "required",
+              "result": "При эндоскопическом осмотре: путь ухо или полип."
+            },
+            {
+              "id": "vestibular_serial_localization_recovery_and_recurrence_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: курс улучшения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "feline_idiopathic_route_requires_ear_polyp_exclusion_and_improving_course"
+            ],
+            "confirmedDiagnosisRequires": [
+              "peripheral_exclusion_plus_improvement"
+            ],
+            "dangerStates": [
+              "anorexia",
+              "aspiration",
+              "new_central_sign"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_neuro_localization",
+              "vestibular_ear_route",
+              "vestibular_longitudinal_monitoring",
+              "ear_exam"
+            ],
+            "external": [
+              "vestibular_ear_specialist_referral",
+              "vestibular_advanced_neuro_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_localization_route",
+              "vestibular_ear_route_group",
+              "vestibular_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "idiopathic_peripheral_plan",
+          "followUp": {
+            "timing": "Короткий последовательный контроль с оценкой кормления и признаков поражения центральной нервной системы.",
+            "required": true,
+            "targets": [
+              "intake",
+              "mobility",
+              "localization",
+              "ear_signs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Кошке становится лучше после того, как ушные и центральные пути остаются отрицательными.",
+            "unsafe": "Каждый острый наклон у кошек является идиопатическим."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: у кошек могут быть полипы или заболевания ушей в любом возрасте, поэтому важны как улучшение состояния, так и оценка состояния уха."
+          ],
+          "compatibility": {
+            "temperament": [
+              "feline_handling_sensitive",
+              "nauseous"
+            ],
+            "requiredHandlingAlternative": "feline_friendly_floor_exam",
+            "ownerModifiers": [
+              "feeding_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_residual_head_tilt_recurrence_or_incomplete_recovery",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_prompt_by_recurrence",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что наступает общее выздоровление, но наклон головы сохраняется или симптомы повторяются или не проходят полностью.",
+          "historyAnswers": {
+            "exact_onset_progression_and_owner_video": "По нашим наблюдениям, базовое и текущее видео сопоставимы.",
+            "postural_reaction_and_additional_cranial_nerve_signs": "Дома мы заметили, что новые дефициты проверены.",
+            "prior_imaging_csf_ear_sampling_or_polyp_history": "Насколько мы можем судить, предыдущие доказательства сохранены."
+          },
+          "examFindings": [
+            {
+              "factId": "residual_tilt_can_persist_but_recurrence_or_new_deficit_reopens_localization",
+              "source": "course_rule",
+              "finding": "Резидуальный и рецидивный характер различаются."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "residual_tilt_can_persist_but_recurrence_or_new_deficit_reopens_localization",
+              "discoveryPaths": [
+                "exact_onset_progression_and_owner_video",
+                "same_patient_expected_course_and_new_deficit_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_serial_localization_recovery_and_recurrence_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: остаточное против рецидива."
+            },
+            {
+              "id": "vestibular_mri_ct_and_csf_referral_when_central_atypical_or_persistent",
+              "classification": "conditional_new_or_nonimproving",
+              "result": "При томографическом исследовании: расширенная переоценка."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "residual_tilt_can_persist_but_recurrence_or_new_deficit_reopens_localization"
+            ],
+            "confirmedDiagnosisRequires": [
+              "preserved_prior_peripheral_course"
+            ],
+            "dangerStates": [
+              "new_central_sign",
+              "worsening",
+              "recurrent_aspiration"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_longitudinal_monitoring",
+              "vestibular_neuro_localization"
+            ],
+            "external": [
+              "vestibular_advanced_neuro_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_longitudinal_route",
+              "vestibular_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "idiopathic_peripheral_plan",
+          "followUp": {
+            "timing": "Переоценка, вызванная событием.",
+            "required": true,
+            "targets": [
+              "residual_tilt",
+              "recurrence",
+              "new_deficits",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Остаточный наклон допускается, в то время как рецидив возобновляет исследование.",
+            "unsafe": "Остаточный наклон становится случайным отказом или повторение игнорируется."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: наклон может остаться, несмотря на выздоровление, но рецидив или новые признаки требуют повторной оценки."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable",
+              "repeat_visit_fatigued"
+            ],
+            "requiredHandlingAlternative": "video_first_recheck",
+            "ownerModifiers": [
+              "expects_zero_residual_signs"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "vestibular_otitis_media_interna_or_peripheral_ear",
+      "version": "2026.07.16.40",
+      "title": "Среднее или внутреннее ухо и периферическая локализация",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Периферические вестибулярные признаки с симптомами на лице или Горнере или хронический контекст уха требуют визуализации среднего или внутреннего уха и взятия проб для конкретного участка; нормальный внешний вид и внешние пробы не исключают и не определяют заболевание среднего уха.",
+      "exclusions": [
+        "external_otitis_proves_interna",
+        "normal_canal_excludes_media",
+        "external_sample_is_middle_ear_truth"
+      ],
+      "planBundleId": "peripheral_ear_plan",
+      "sourceIds": [
+        "merck_otitis_media_interna_2026",
+        "canine_peripheral_vestibular_mri_outcome_2020"
+      ],
+      "presentations": [
+        {
+          "id": "p1_head_tilt_nystagmus_with_facialis_or_horner_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что периферические вестибулярные симптомы сосуществуют с дефицитом лицевого нерва, синдромом Горнера или изменением слуха.",
+          "historyAnswers": {
+            "facial_weakness_horner_and_eye_protection": "По нашим наблюдениям, безопасность лица или рога и роговицы.",
+            "ear_pain_discharge_chronic_history_and_hearing": "Дома мы заметили, что записан контекст уха или слуха.",
+            "mentation_behavior_and_seizure_change": "Насколько мы можем судить, сознание остаётся ясным; его изменение требует срочно перейти к центральному неврологическому маршруту."
+          },
+          "examFindings": [
+            {
+              "factId": "facial_or_horner_signs_support_middle_inner_ear_route_but_need_imaging",
+              "source": "localization_rule",
+              "finding": "Периферическая локализация не является конечной причиной."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "facial_or_horner_signs_support_middle_inner_ear_route_but_need_imaging",
+              "discoveryPaths": [
+                "facial_weakness_horner_and_eye_protection",
+                "otoscopy_middle_inner_ear_hearing_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_otoscopy_middle_inner_ear_and_hearing_route",
+              "classification": "required",
+              "result": "При эндоскопическом осмотре: ушной путь."
+            },
+            {
+              "id": "vestibular_mri_ct_and_csf_referral_when_central_atypical_or_persistent",
+              "classification": "imaging_required",
+              "result": "При томографическом исследовании: среднее или внутреннее ухо и внутричерепная оценка."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "facial_or_horner_signs_support_middle_inner_ear_route_but_need_imaging"
+            ],
+            "confirmedDiagnosisRequires": [
+              "supporting_ct_or_mri_and_site_specific_evidence"
+            ],
+            "dangerStates": [
+              "corneal_exposure",
+              "altered_mentation",
+              "fever"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_neuro_localization",
+              "vestibular_ear_route",
+              "ear_exam"
+            ],
+            "external": [
+              "vestibular_advanced_neuro_referral",
+              "vestibular_ear_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_localization_route",
+              "vestibular_ear_route_group",
+              "vestibular_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "peripheral_ear_plan",
+          "followUp": {
+            "timing": "После визуализации или проверки уха в зависимости от места.",
+            "required": true,
+            "targets": [
+              "facial_function",
+              "horner",
+              "hearing",
+              "vestibular_signs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Черепные признаки указывают подтвержденный путь через ухо.",
+            "unsafe": "Только внешний вид уха определяет причину."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: эти нервы проходят рядом со средним или внутренним ухом, и визуализация может потребоваться, даже если канал выглядит приемлемым."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful_or_stable",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "eye_safe_low_stress_referral",
+            "ownerModifiers": [
+              "imaging_concern"
+            ]
+          }
+        },
+        {
+          "id": "p2_chronic_ear_history_with_hidden_middle_inner_ear_disease",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что хроническое рецидивирующее заболевание уха предшествует вестибулярным симптомам, несмотря на внешне нормальный или недоступный канал.",
+          "historyAnswers": {
+            "ear_pain_discharge_chronic_history_and_hearing": "По нашим наблюдениям, рецидивы и предыдущие реакции.",
+            "prior_imaging_csf_ear_sampling_or_polyp_history": "Дома мы заметили, что предыдущие места и методы сохранены.",
+            "ear_cleaner_medication_or_toxin_exposure": "Насколько мы можем судить, экспозиция разделена."
+          },
+          "examFindings": [
+            {
+              "factId": "normal_or_inaccessible_external_canal_does_not_exclude_middle_ear_disease",
+              "source": "hidden_compartment_rule",
+              "finding": "Расширенный маршрут остается открытым."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "normal_or_inaccessible_external_canal_does_not_exclude_middle_ear_disease",
+              "discoveryPaths": [
+                "ear_pain_discharge_chronic_history_and_hearing",
+                "otoscopy_middle_inner_ear_hearing_record",
+                "middle_ear_polyp_site_specific_sample_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_otoscopy_middle_inner_ear_and_hearing_route",
+              "classification": "required",
+              "result": "При эндоскопическом осмотре: границы канала или барабанной полости."
+            },
+            {
+              "id": "vestibular_ear_sampling_or_polyp_endoscopy_referral",
+              "classification": "required_when_middle_ear_suspected",
+              "result": "При эндоскопическом осмотре: доказательства, специфичные для конкретного места."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "normal_or_inaccessible_external_canal_does_not_exclude_middle_ear_disease"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_imaging_and_middle_ear_sample_when_indicated"
+            ],
+            "dangerStates": [
+              "severe_pain",
+              "fever",
+              "central_extension"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_ear_route",
+              "ear_exam"
+            ],
+            "external": [
+              "vestibular_ear_specialist_referral",
+              "vestibular_advanced_neuro_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_ear_route_group",
+              "vestibular_ear_specialist_route_group",
+              "vestibular_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "peripheral_ear_plan",
+          "followUp": {
+            "timing": "После визуализации и отбора проб из истинного места.",
+            "required": true,
+            "targets": [
+              "middle_ear",
+              "inner_ear",
+              "hearing",
+              "pain",
+              "recurrence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Болезнь скрытого компартмента остается поддающейся проверке.",
+            "unsafe": "Случай закрывает обычный канал или внешний тампон."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: болезнь может остаться за неповрежденной барабанной перепонкой и требует другого места для взятия проб."
+          ],
+          "compatibility": {
+            "temperament": [
+              "ear_painful",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "no_forced_otoscopy_referral",
+            "ownerModifiers": [
+              "prior_treatment_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p3_otogenic_intracranial_extension_or_severe_pain_fever",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 4.25,
+          "complaint": "Мы обратились, потому что вестибулярное заболевание, связанное с ушами, сопровождается сильной болью, лихорадкой, летаргией или новыми симптомами поражения центральных или множественных черепных нервов.",
+          "historyAnswers": {
+            "fever_weight_appetite_systemic_and_thyroid_context": "По нашим наблюдениям, лихорадка или вялость по времени.",
+            "postural_reaction_and_additional_cranial_nerve_signs": "Дома мы заметили, что нанесены знаки расширения.",
+            "stand_walk_eat_drink_vomit_aspirate_fall": "Насколько мы можем судить, состояние безопасности срочное."
+          },
+          "examFindings": [
+            {
+              "factId": "pain_fever_mentation_or_extra_deficits_trigger_intracranial_extension_route",
+              "source": "emergency_rule",
+              "finding": "Простая периферийная этикетка небезопасна."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "pain_fever_mentation_or_extra_deficits_trigger_intracranial_extension_route",
+              "discoveryPaths": [
+                "postural_reaction_and_additional_cranial_nerve_signs",
+                "central_sign_mentation_postural_multicranial_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_hydration_nausea_aspiration_mobility_and_injury_safety",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: необходимость стабилизации."
+            },
+            {
+              "id": "vestibular_mri_ct_and_csf_referral_when_central_atypical_or_persistent",
+              "classification": "required_urgent",
+              "result": "При томографическом исследовании: внутричерепное расширение."
+            },
+            {
+              "id": "vestibular_neurology_or_ear_specialist_referral",
+              "classification": "required_urgent",
+              "result": "По итогам консультации специалиста: передача специалиста."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "pain_fever_mentation_or_extra_deficits_trigger_intracranial_extension_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_imaging_and_site_specific_evidence"
+            ],
+            "dangerStates": [
+              "meningoencephalitis",
+              "abscess",
+              "aspiration",
+              "sepsis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_support_safety",
+              "vestibular_neuro_localization"
+            ],
+            "external": [
+              "vestibular_advanced_neuro_referral",
+              "vestibular_ear_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_support_route",
+              "vestibular_advanced_route",
+              "vestibular_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "peripheral_ear_plan",
+          "followUp": {
+            "timing": "Постоянный срочный перевод.",
+            "required": true,
+            "targets": [
+              "mentation",
+              "temperature",
+              "pain",
+              "cranial_nerves",
+              "aspiration"
+            ]
+          },
+          "outcomes": {
+            "safe": "Внутричерепное расширение рассматривается как чрезвычайная неопределенность.",
+            "unsafe": "Лихорадка и центральные признаки игнорируются, поскольку существует заболевание уха."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: инфекция или воспаление могли распространиться за пределы уха и необходимы срочные методы визуализации и госпитализация."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "lethargic",
+              "agitated"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_emergency_transfer",
+            "ownerModifiers": [
+              "emergency_distress"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "vestibular_central_syndrome",
+      "version": "2026.07.16.40",
+      "title": "Центральный вестибулярный синдром",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Нарушение мышления, нарушение осанки, наличие дополнительных черепных нервов, парадоксальные мозжечковые или мультифокальные изменения требуют центральной локализации и срочного направления к врачу; сосудистые, воспалительные, инфекционные, неопластические и метаболические причины остаются отдельными.",
+      "exclusions": [
+        "old_age_overrides_central_signs",
+        "nystagmus_direction_alone_localizes",
+        "mri_or_csf_instant_final_cause"
+      ],
+      "planBundleId": "central_plan",
+      "sourceIds": [
+        "ivs_definition_diagnosis_treatment_2023",
+        "canine_peripheral_vestibular_mri_outcome_2020"
+      ],
+      "presentations": [
+        {
+          "id": "p1_mentation_postural_or_additional_cranial_nerve_deficits",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что вестибулярные нарушения сосуществуют с нарушением мышления, нарушениями позы или дополнительными аномалиями черепных нервов.",
+          "historyAnswers": {
+            "mentation_behavior_and_seizure_change": "По нашим наблюдениям, центральное изменение явное.",
+            "postural_reaction_and_additional_cranial_nerve_signs": "Дома мы заметили, что полная раздача.",
+            "stand_walk_eat_drink_vomit_aspirate_fall": "Насколько мы можем судить, непосредственная безопасность известна."
+          },
+          "examFindings": [
+            {
+              "factId": "mentation_postural_or_multicranial_deficits_require_central_localization",
+              "source": "localization_rule",
+              "finding": "Возраст не может игнорировать центральные признаки."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "mentation_postural_or_multicranial_deficits_require_central_localization",
+              "discoveryPaths": [
+                "mentation_behavior_and_seizure_change",
+                "central_sign_mentation_postural_multicranial_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_complete_neurologic_localization_and_cranial_nerve_exam",
+              "classification": "required_immediate",
+              "result": "При динамическом наблюдении: центральная локализация."
+            },
+            {
+              "id": "vestibular_mri_ct_and_csf_referral_when_central_atypical_or_persistent",
+              "classification": "required_urgent",
+              "result": "При томографическом исследовании: визуализация и безопасность спинномозговой жидкости."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "mentation_postural_or_multicranial_deficits_require_central_localization"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_neuro_evidence"
+            ],
+            "dangerStates": [
+              "coma",
+              "seizure",
+              "aspiration",
+              "rapid_progression"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_neuro_localization",
+              "vestibular_support_safety",
+              "neurologic_exam"
+            ],
+            "external": [
+              "vestibular_advanced_neuro_referral",
+              "advanced_imaging_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_localization_route",
+              "vestibular_support_route",
+              "vestibular_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "central_plan",
+          "followUp": {
+            "timing": "Срочный перевод в неврологическое отделение.",
+            "required": true,
+            "targets": [
+              "mentation",
+              "postural_reactions",
+              "cranial_nerves",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Центральные указатели запускают расширенный маршрут.",
+            "unsafe": "Старость или горизонтальный нистагм вызывают идиопатический ярлык."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: дополнительные неврологические нарушения локализуются внутри мозга, а не только в органе равновесия."
+          ],
+          "compatibility": {
+            "temperament": [
+              "obtunded",
+              "agitated",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "neuro_safe_minimal_handling_transfer",
+            "ownerModifiers": [
+              "stroke_assumption"
+            ]
+          }
+        },
+        {
+          "id": "p2_paradoxical_cerebellar_or_multifocal_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что вестибулярные признаки противоречат простым правилам или включают мозжечковые или мультифокальные аномалии.",
+          "historyAnswers": {
+            "nystagmus_direction_position_and_variability": "По нашим наблюдениям, полное описание сохранено.",
+            "postural_reaction_and_additional_cranial_nerve_signs": "Дома мы заметили, что завершена мозжечковая или мультифокальная карта.",
+            "exact_onset_progression_and_owner_video": "Насколько мы можем судить, курс документирован."
+          },
+          "examFindings": [
+            {
+              "factId": "paradoxical_or_multifocal_pattern_blocks_side_guess_and_requires_advanced_localization",
+              "source": "complex_localization_rule",
+              "finding": "Наклон головы в сторону не является доказательством поражения."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "paradoxical_or_multifocal_pattern_blocks_side_guess_and_requires_advanced_localization",
+              "discoveryPaths": [
+                "nystagmus_direction_position_and_variability",
+                "complete_neuro_localization_cranial_nerve_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_complete_neurologic_localization_and_cranial_nerve_exam",
+              "classification": "required",
+              "result": "При динамическом наблюдении: парадоксальная или мультифокальная локализация."
+            },
+            {
+              "id": "vestibular_mri_ct_and_csf_referral_when_central_atypical_or_persistent",
+              "classification": "required",
+              "result": "При томографическом исследовании: расширенное подтверждение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "paradoxical_or_multifocal_pattern_blocks_side_guess_and_requires_advanced_localization"
+            ],
+            "confirmedDiagnosisRequires": [
+              "advanced_imaging_plus_cause_workup"
+            ],
+            "dangerStates": [
+              "progression",
+              "brainstem_signs",
+              "aspiration"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_neuro_localization"
+            ],
+            "external": [
+              "vestibular_advanced_neuro_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_localization_route",
+              "vestibular_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "central_plan",
+          "followUp": {
+            "timing": "Срочная специализированная локализация.",
+            "required": true,
+            "targets": [
+              "cerebellar_signs",
+              "multifocal_signs",
+              "imaging"
+            ]
+          },
+          "outcomes": {
+            "safe": "Сложные знаки препятствуют упрощенному назначению сторон.",
+            "unsafe": "Направление наклона становится точной картой поражения."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: смешанные знаки делают правила ухода за больными ненадежными и требуют более тщательной локализации."
+          ],
+          "compatibility": {
+            "temperament": [
+              "ataxic",
+              "weak"
+            ],
+            "requiredHandlingAlternative": "supported_floor_exam_and_transfer",
+            "ownerModifiers": [
+              "confused_by_side_change"
+            ]
+          }
+        },
+        {
+          "id": "p3_vascular_inflammatory_infectious_neoplastic_or_metabolic_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_to_emergency",
+          "workload": 4.25,
+          "complaint": "Мы обратились, потому что центральная локализация требует различения сосудистых, воспалительных, инфекционных, неопластических и метаболических путей.",
+          "historyAnswers": {
+            "exact_onset_progression_and_owner_video": "По нашим наблюдениям, начальный темп сохранен.",
+            "fever_weight_appetite_systemic_and_thyroid_context": "Дома мы заметили, что сопоставлен данные об общем состоянии.",
+            "prior_imaging_csf_ear_sampling_or_polyp_history": "Насколько мы можем судить, предыдущие доказательства сохранены."
+          },
+          "examFindings": [
+            {
+              "factId": "central_localization_does_not_select_etiology_without_context_imaging_and_safe_ancillary_tests",
+              "source": "etiology_rule",
+              "finding": "Причина остается доказанной."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "central_localization_does_not_select_etiology_without_context_imaging_and_safe_ancillary_tests",
+              "discoveryPaths": [
+                "fever_weight_appetite_systemic_and_thyroid_context",
+                "mri_ct_csf_safety_and_result_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_cbc_biochemistry_electrolytes_glucose_blood_pressure_and_selected_thyroid_tests",
+              "classification": "required_contextual",
+              "result": "При измерении давления: системный или метаболический контекст."
+            },
+            {
+              "id": "vestibular_mri_ct_and_csf_referral_when_central_atypical_or_persistent",
+              "classification": "required",
+              "result": "При томографическом исследовании: визуализация и безопасный вспомогательный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "central_localization_does_not_select_etiology_without_context_imaging_and_safe_ancillary_tests"
+            ],
+            "confirmedDiagnosisRequires": [
+              "etiology_specific_imaging_csf_or_pathology_evidence"
+            ],
+            "dangerStates": [
+              "seizure",
+              "fever_with_progression",
+              "mass_effect"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_systemic_screen",
+              "blood_pressure"
+            ],
+            "external": [
+              "vestibular_advanced_neuro_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_systemic_route",
+              "vestibular_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "central_plan",
+          "followUp": {
+            "timing": "По срочному этиологическому результату.",
+            "required": true,
+            "targets": [
+              "tempo",
+              "systemic_context",
+              "imaging",
+              "csf_safety",
+              "etiology"
+            ]
+          },
+          "outcomes": {
+            "safe": "Дифференциалы остаются отдельными до тех пор, пока не будут поддержаны.",
+            "unsafe": "Центральный синдром случайным образом выбирает опухоль, инсульт или инфекцию."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: локализация показывает, где находится проблема, а визуализация и выбранные тесты определяют ее причину."
+          ],
+          "compatibility": {
+            "temperament": [
+              "neurologically_abnormal"
+            ],
+            "requiredHandlingAlternative": "urgent_neurology_referral",
+            "ownerModifiers": [
+              "demands_instant_cause"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "vestibular_toxic_traumatic_congenital_or_systemic",
+      "version": "2026.07.16.40",
+      "title": "Токсическая, травматическая, врождённая или системная причина",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Ототоксическое воздействие, травма, врожденное двустороннее заболевание и отдельные системные состояния требуют соблюдения сроков и совместимой локализации; они не выводятся по результатам и не обходят центральную оценку безопасности.",
+      "exclusions": [
+        "invented_exposure",
+        "trauma_without_imaging_when_red_flags",
+        "hypothyroidism_from_vestibular_signs_alone"
+      ],
+      "planBundleId": "toxic_traumatic_systemic_plan",
+      "sourceIds": [
+        "ivs_definition_diagnosis_treatment_2023",
+        "merck_otitis_media_interna_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_ear_cleaner_or_otoxic_medication_exposure",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что вестибулярные симптомы возникают после документально подтвержденного использования средства для чистки ушей или воздействия потенциально ототоксичных лекарств.",
+          "historyAnswers": {
+            "ear_cleaner_medication_or_toxin_exposure": "По нашим наблюдениям, товар, маршрут и сроки точны.",
+            "ear_pain_discharge_chronic_history_and_hearing": "Дома мы заметили, что контекст барабанной полости или уха сохранен.",
+            "exact_onset_progression_and_owner_video": "Насколько мы можем судить, временные отношения сохранены."
+          },
+          "examFindings": [
+            {
+              "factId": "ototoxic_route_requires_documented_exposure_timing_and_ear_context",
+              "source": "causality_rule",
+              "finding": "Связь с ушным очистителем или потенциально ототоксичным препаратом подтверждают точным названием средства и временем применения."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "ototoxic_route_requires_documented_exposure_timing_and_ear_context",
+              "discoveryPaths": [
+                "ear_cleaner_medication_or_toxin_exposure",
+                "onset_video_fall_vomiting_exposure_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_onset_course_video_fall_vomiting_and_exposure_history",
+              "classification": "required",
+              "result": "При уточнении анамнеза: график экспозиции."
+            },
+            {
+              "id": "vestibular_otoscopy_middle_inner_ear_and_hearing_route",
+              "classification": "required",
+              "result": "При эндоскопическом осмотре: ушной барьер или контекст."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "ototoxic_route_requires_documented_exposure_timing_and_ear_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_exposure_timeline_and_localization"
+            ],
+            "dangerStates": [
+              "central_signs",
+              "aspiration",
+              "hearing_loss"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_history_video",
+              "vestibular_ear_route",
+              "ear_exam"
+            ],
+            "external": [
+              "vestibular_ear_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_history_route",
+              "vestibular_ear_route_group",
+              "vestibular_ear_specialist_route_group"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "toxic_traumatic_systemic_plan",
+          "followUp": {
+            "timing": "Последовательная локализация и проверка слуха или функций.",
+            "required": true,
+            "targets": [
+              "exposure",
+              "hearing",
+              "mobility",
+              "central_signs"
+            ]
+          },
+          "outcomes": {
+            "safe": "Документированное воздействие оценивается без создания антидота.",
+            "unsafe": "Опасно после ухудшения повторно использовать ушной очиститель или препарат, не установив точное средство и состояние барабанной перепонки."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: спросите, какой именно продукт и время воздействия, и объясните, что воздействие должно соответствовать клиническому течению."
+          ],
+          "compatibility": {
+            "temperament": [
+              "nauseous",
+              "ear_sensitive"
+            ],
+            "requiredHandlingAlternative": "no_additional_ear_product_and_referral",
+            "ownerModifiers": [
+              "guilt_or_uncertain_product"
+            ]
+          }
+        },
+        {
+          "id": "p2_head_trauma_or_temporal_bone_injury",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 4.25,
+          "complaint": "Мы обратились, потому что вестибулярные симптомы возникают после травмы головы или при подозрении на повреждение височной кости.",
+          "historyAnswers": {
+            "head_trauma_and_temporal_bone_risk": "По нашим наблюдениям, механизм или время фиксированы.",
+            "mentation_behavior_and_seizure_change": "Дома мы заметили, что обнаружены признаки черепно-мозговой травмы.",
+            "stand_walk_eat_drink_vomit_aspirate_fall": "Насколько мы можем судить, состояние безопасности при травмах известно."
+          },
+          "examFindings": [
+            {
+              "factId": "post_traumatic_vestibular_signs_require_brain_and_temporal_bone_safety_route",
+              "source": "trauma_rule",
+              "finding": "Периферийный вид не исключает травмы."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "post_traumatic_vestibular_signs_require_brain_and_temporal_bone_safety_route",
+              "discoveryPaths": [
+                "head_trauma_and_temporal_bone_risk",
+                "mri_ct_csf_safety_and_result_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_hydration_nausea_aspiration_mobility_and_injury_safety",
+              "classification": "required_immediate",
+              "result": "Клиническая оценка показала: стабилизация травмы."
+            },
+            {
+              "id": "vestibular_mri_ct_and_csf_referral_when_central_atypical_or_persistent",
+              "classification": "required_imaging",
+              "result": "При томографическом исследовании: травма головного мозга или височной кости."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "post_traumatic_vestibular_signs_require_brain_and_temporal_bone_safety_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "trauma_timeline_plus_imaging"
+            ],
+            "dangerStates": [
+              "altered_mentation",
+              "seizure",
+              "fracture",
+              "hemorrhage"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_support_safety",
+              "vestibular_neuro_localization"
+            ],
+            "external": [
+              "vestibular_advanced_neuro_referral",
+              "advanced_imaging_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_support_route",
+              "vestibular_localization_route",
+              "vestibular_advanced_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "toxic_traumatic_systemic_plan",
+          "followUp": {
+            "timing": "Неотложная визуализация и серийный неврологический статус.",
+            "required": true,
+            "targets": [
+              "mentation",
+              "cranial_nerves",
+              "fracture",
+              "hemorrhage"
+            ]
+          },
+          "outcomes": {
+            "safe": "Травма проходит оценку безопасности головного мозга и черепа.",
+            "unsafe": "Наклон головы наблюдается в домашних условиях после травмы."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: признаки равновесия после травмы головы могут отражать повреждение черепа или головного мозга и требуют срочной визуализации."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "spinal_head_safe_transfer",
+            "ownerModifiers": [
+              "trauma_shock"
+            ]
+          }
+        },
+        {
+          "id": "p3_congenital_bilateral_hypothyroid_or_other_systemic_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "routine_or_prompt_by_function",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что двусторонние, врожденные или системно-контекстные вестибулярные симптомы требуют более широкого неидиопатического пути.",
+          "historyAnswers": {
+            "exact_onset_progression_and_owner_video": "По нашим наблюдениям, фиксированный курс на протяжении всей жизни по сравнению с приобретенным.",
+            "fever_weight_appetite_systemic_and_thyroid_context": "Дома мы заметили, что системный сигнал или контекст записан.",
+            "ear_pain_discharge_chronic_history_and_hearing": "Насколько мы можем судить, известны двусторонние нарушения слуха или уха."
+          },
+          "examFindings": [
+            {
+              "factId": "congenital_bilateral_or_systemic_pattern_requires_context_specific_testing_not_single_label",
+              "source": "systemic_rule",
+              "finding": "Только избранные тесты щитовидной железы или системы."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "congenital_bilateral_or_systemic_pattern_requires_context_specific_testing_not_single_label",
+              "discoveryPaths": [
+                "fever_weight_appetite_systemic_and_thyroid_context",
+                "systemic_lab_glucose_bp_thyroid_context_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_cbc_biochemistry_electrolytes_glucose_blood_pressure_and_selected_thyroid_tests",
+              "classification": "selected_by_context",
+              "result": "При измерении давления: системный дифференциал."
+            },
+            {
+              "id": "vestibular_complete_neurologic_localization_and_cranial_nerve_exam",
+              "classification": "required",
+              "result": "При динамическом наблюдении: двусторонняя или неопределенная локализация."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "congenital_bilateral_or_systemic_pattern_requires_context_specific_testing_not_single_label"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cause_specific_systemic_or_congenital_evidence"
+            ],
+            "dangerStates": [
+              "hypoglycemia",
+              "severe_electrolyte_change",
+              "progression"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_systemic_screen",
+              "vestibular_neuro_localization",
+              "blood_pressure"
+            ],
+            "external": [
+              "vestibular_advanced_neuro_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_systemic_route",
+              "vestibular_localization_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "toxic_traumatic_systemic_plan",
+          "followUp": {
+            "timing": "После выбранных результатов по конкретной причине.",
+            "required": true,
+            "targets": [
+              "hearing",
+              "bilaterality",
+              "systemic_cause",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Тестирование следует за сигналами и контекстом.",
+            "unsafe": "Гипотиреоз или врожденное заболевание определяют только по вестибулярным симптомам."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему двусторонние или пожизненные признаки требуют другого, контекстно-зависимого обследования."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable",
+              "hearing_impaired"
+            ],
+            "requiredHandlingAlternative": "visual_cue_low_stress_exam",
+            "ownerModifiers": [
+              "lifelong_sign_normalization"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "vestibular_feline_polyp_mass_or_uncertain_course",
+      "version": "2026.07.16.40",
+      "title": "Кошачий полип или масса или атипичное течение",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "У кошек респираторный или ушной анамнез, наличие полипов или образований в основании черепа и отсутствие улучшения требуют визуализации уха или основания черепа и направления к конкретному месту; идиопатический ярлык не может пережить прогрессирование, рецидив или появление новых центральных признаков.",
+      "exclusions": [
+        "polyp_from_age_or_history_alone",
+        "mass_from_imaging_guess_without_sample",
+        "persistent_idiopathic_label_after_new_signs"
+      ],
+      "planBundleId": "feline_polyp_mass_uncertain_plan",
+      "sourceIds": [
+        "merck_otitis_media_interna_2026",
+        "ivs_definition_diagnosis_treatment_2023"
+      ],
+      "presentations": [
+        {
+          "id": "p1_feline_nasopharyngeal_or_middle_ear_polyp_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что у кошки есть вестибулярные симптомы, респираторный или ушной анамнез соответствует полипу носоглотки или среднего уха.",
+          "historyAnswers": {
+            "ear_pain_discharge_chronic_history_and_hearing": "По нашим наблюдениям, история ушей.",
+            "prior_imaging_csf_ear_sampling_or_polyp_history": "Дома мы заметили, что наличие полипа отличается от подозрения.",
+            "stand_walk_eat_drink_vomit_aspirate_fall": "Насколько мы можем судить, безопасность кормления или аспирации известна."
+          },
+          "examFindings": [
+            {
+              "factId": "feline_polyp_pattern_requires_imaging_or_endoscopic_site_confirmation",
+              "source": "confirmation_rule",
+              "finding": "История не подтверждает наличие полипа."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "feline_polyp_pattern_requires_imaging_or_endoscopic_site_confirmation",
+              "discoveryPaths": [
+                "prior_imaging_csf_ear_sampling_or_polyp_history",
+                "middle_ear_polyp_site_specific_sample_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_otoscopy_middle_inner_ear_and_hearing_route",
+              "classification": "required",
+              "result": "При эндоскопическом осмотре: ушной путь."
+            },
+            {
+              "id": "vestibular_ear_sampling_or_polyp_endoscopy_referral",
+              "classification": "required_confirmation",
+              "result": "При эндоскопическом осмотре: свидетельство наличия полипа в конкретном месте."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "feline_polyp_pattern_requires_imaging_or_endoscopic_site_confirmation"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_endoscopic_or_pathology_confirmation"
+            ],
+            "dangerStates": [
+              "airway_compromise",
+              "aspiration",
+              "central_signs"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_ear_route",
+              "ear_exam"
+            ],
+            "external": [
+              "vestibular_ear_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_ear_route_group",
+              "vestibular_ear_specialist_route_group"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_polyp_mass_uncertain_plan",
+          "followUp": {
+            "timing": "После подтверждения специалиста.",
+            "required": true,
+            "targets": [
+              "polyp_site",
+              "hearing",
+              "vestibular_signs",
+              "airway"
+            ]
+          },
+          "outcomes": {
+            "safe": "Полип подтверждается специфическим путем.",
+            "unsafe": "Молодая кошка плюс история ушей приводят к процедуре удаления полипа."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: наличие полипа вполне вероятно, но перед принятием процедурного решения необходимо его визуализировать или визуализировать."
+          ],
+          "compatibility": {
+            "temperament": [
+              "feline_handling_sensitive",
+              "nauseous"
+            ],
+            "requiredHandlingAlternative": "feline_friendly_ear_referral",
+            "ownerModifiers": [
+              "procedure_anxiety"
+            ]
+          }
+        },
+        {
+          "id": "p2_ear_or_skull_base_mass_with_progressive_deficits",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что прогрессирующие вестибулярные, лицевые или множественные краниальные нарушения приводят к образованию масс в области ушей или основания черепа.",
+          "historyAnswers": {
+            "postural_reaction_and_additional_cranial_nerve_signs": "По нашим наблюдениям, изменения начались недавно и постепенно усиливаются.",
+            "prior_imaging_csf_ear_sampling_or_polyp_history": "Дома мы заметили, что массовые доказательства отделены от подозрений.",
+            "systemic_weight_appetite_fever_and_energy": "Насколько мы можем судить, записана динамика веса или аппетита."
+          },
+          "examFindings": [
+            {
+              "factId": "progressive_ear_skull_base_pattern_requires_advanced_imaging_and_mass_specific_pathology",
+              "source": "oncology_neuro_rule",
+              "finding": "Визуализация — это не гистология."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "progressive_ear_skull_base_pattern_requires_advanced_imaging_and_mass_specific_pathology",
+              "discoveryPaths": [
+                "postural_reaction_and_additional_cranial_nerve_signs",
+                "mri_ct_csf_safety_and_result_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_mri_ct_and_csf_referral_when_central_atypical_or_persistent",
+              "classification": "required_urgent",
+              "result": "При томографическом исследовании: степень основания черепа."
+            },
+            {
+              "id": "vestibular_ear_sampling_or_polyp_endoscopy_referral",
+              "classification": "site_specific_when_safe",
+              "result": "При эндоскопическом осмотре: путь патологии."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "progressive_ear_skull_base_pattern_requires_advanced_imaging_and_mass_specific_pathology"
+            ],
+            "confirmedDiagnosisRequires": [
+              "imaging_plus_pathology"
+            ],
+            "dangerStates": [
+              "brainstem_compression",
+              "dysphagia",
+              "aspiration",
+              "severe_pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_neuro_localization"
+            ],
+            "external": [
+              "vestibular_advanced_neuro_referral",
+              "vestibular_ear_specialist_referral",
+              "advanced_imaging_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_advanced_route",
+              "vestibular_ear_specialist_route_group",
+              "vestibular_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_polyp_mass_uncertain_plan",
+          "followUp": {
+            "timing": "Срочный обзор визуализации или патологии.",
+            "required": true,
+            "targets": [
+              "extent",
+              "cranial_nerves",
+              "pathology",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Путь прогрессирующей массы безопасен для визуализации и отбора проб.",
+            "unsafe": "Внешний вид изображения становится окончательным типом опухоли."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: прогрессирование и поражение нескольких нервов требуют визуализации основания черепа и, если это безопасно, идентификации тканей."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "feline_handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_advanced_referral",
+            "ownerModifiers": [
+              "oncology_fear"
+            ]
+          }
+        },
+        {
+          "id": "p3_no_expected_improvement_relapse_or_new_central_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что предполагаемое периферическое течение у кошек не улучшается, возникает рецидив или развиваются новые центральные признаки.",
+          "historyAnswers": {
+            "exact_onset_progression_and_owner_video": "По нашим наблюдениям, ожидаемый и наблюдаемый курс явный.",
+            "mentation_behavior_and_seizure_change": "Дома мы заметили, что появились новые центральные указатели.",
+            "prior_imaging_csf_ear_sampling_or_polyp_history": "Насколько мы можем судить, предыдущие исключения сохранены."
+          },
+          "examFindings": [
+            {
+              "factId": "no_improvement_relapse_or_new_central_signs_cancel_persistent_idiopathic_label",
+              "source": "relocalization_rule",
+              "finding": "Диагностика возобновляется."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "no_improvement_relapse_or_new_central_signs_cancel_persistent_idiopathic_label",
+              "discoveryPaths": [
+                "exact_onset_progression_and_owner_video",
+                "same_patient_expected_course_and_new_deficit_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "vestibular_serial_localization_recovery_and_recurrence_monitoring",
+              "classification": "required",
+              "result": "При динамическом наблюдении: отклонение курса."
+            },
+            {
+              "id": "vestibular_mri_ct_and_csf_referral_when_central_atypical_or_persistent",
+              "classification": "required",
+              "result": "При томографическом исследовании: переоткрыта локализация или причина."
+            },
+            {
+              "id": "vestibular_neurology_or_ear_specialist_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: передача специалиста."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "no_improvement_relapse_or_new_central_signs_cancel_persistent_idiopathic_label"
+            ],
+            "confirmedDiagnosisRequires": [
+              "updated_localization_and_etiology_evidence"
+            ],
+            "dangerStates": [
+              "new_mentation_change",
+              "postural_deficit",
+              "aspiration"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vestibular_longitudinal_monitoring",
+              "vestibular_neuro_localization"
+            ],
+            "external": [
+              "vestibular_advanced_neuro_referral",
+              "vestibular_ear_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "vestibular_longitudinal_route",
+              "vestibular_advanced_route",
+              "vestibular_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_polyp_mass_uncertain_plan",
+          "followUp": {
+            "timing": "Срочная релокализация.",
+            "required": true,
+            "targets": [
+              "course",
+              "new_deficits",
+              "imaging",
+              "ear_route"
+            ]
+          },
+          "outcomes": {
+            "safe": "Неожиданный ход вновь открывает диагноз.",
+            "unsafe": "Ярлык «идиопатический» сохраняется, поскольку он был присвоен первым."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: наблюдаемое течение уже не соответствует ранее рабочему диагнозу и требует новой локализации."
+          ],
+          "compatibility": {
+            "temperament": [
+              "feline_handling_sensitive",
+              "treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "video_first_urgent_referral",
+            "ownerModifiers": [
+              "frustrated_by_changed_diagnosis"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if age, head tilt or nystagmus direction alone proves idiopathic disease or lesion side.",
+    "Reject if central signs are ignored or idiopathic label persists without improvement or after new deficits.",
+    "Reject if a normal external canal excludes middle-ear disease.",
+    "Reject if residual head tilt alone becomes treatment failure or a new random central diagnosis.",
+    "Reject if all cats or dogs recover on an identical fixed timeline.",
+    "Reject if MRI, CT or CSF is instant or CSF lacks imaging safety review.",
+    "Reject if code generates antiemetic, antimicrobial, steroid, ear procedure, CSF protocol, drug or dose."
+  ]
+}

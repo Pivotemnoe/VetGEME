@@ -5,10 +5,11 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const EXPECTED_RUNTIME_FILE_COUNT = 203;
+export const EXPECTED_RUNTIME_FILE_COUNT = 246;
 export const EXPECTED_RUNTIME_GROUP_COUNTS = Object.freeze({
-  base: 38,
+  base: 39,
   canonicalContent: 100,
+  activationContent: 42,
   visual: 65,
 });
 
@@ -16,6 +17,7 @@ const EXPECTED_BASE_RUNTIME_FILES = Object.freeze([
   "campaign.js",
   "game.js",
   "generator/atomic-save-migration.js",
+  "generator/activation-medical-v11.js",
   "generator/compact-visit-v2.js",
   "generator/content-loader-v2.js",
   "generator/demand-director-v2.js",
@@ -63,6 +65,14 @@ const EXPECTED_MEDICAL_PACK_RUNTIME_JSON_COUNT = 43;
 const CAPABILITY_CONTENT_ROOT = "content/system-packs/vetgeme-master-2026-07-14";
 const CAPABILITY_REGISTRY_FILE = `${CAPABILITY_CONTENT_ROOT}/capability-registry.json`;
 const EXPECTED_CAPABILITY_PACK_RUNTIME_JSON_COUNT = 1;
+const ACTIVATION_CONTENT_ROOT = "content/activation-packs/pet-clinic-local-2026.07.17.1";
+const ACTIVATION_MANIFEST = `${ACTIVATION_CONTENT_ROOT}/ACTIVATION_MANIFEST.json`;
+const TRAINING_SEQUENCE = `${ACTIVATION_CONTENT_ROOT}/TRAINING_SEQUENCE.json`;
+const ACTIVATION_MEDICAL_ROOT = `${ACTIVATION_CONTENT_ROOT}/medical-source`;
+const ACTIVATION_MEDICAL_MANIFEST = `${ACTIVATION_MEDICAL_ROOT}/MANIFEST.json`;
+const EXPECTED_ACTIVATION_FAMILY_COUNT = 39;
+const EXPECTED_ACTIVATION_CONTENT_COUNT = 42;
+const ACTIVATION_MANIFEST_SHA256 = "fd056331fa894f9689bbd794f4ece12fb964ebb3e69b95e907282811ae7ad3bd";
 const VISUAL_MANIFEST = "art/runtime-v2/manifest.json";
 const VISUAL_LAYOUT = "art/runtime-v2/scene-layout.json";
 const VISUAL_ASSET_ROOT = "art/runtime-v2/assets";
@@ -71,8 +81,9 @@ export async function collectStaticRuntimeInventory(root = PROJECT_ROOT) {
   const resolvedRoot = path.resolve(root);
   const base = await collectBaseRuntimeFiles(resolvedRoot);
   const canonicalContent = await collectCanonicalContentFiles(resolvedRoot);
+  const activationContent = await collectActivationContentFiles(resolvedRoot);
   const { files: visual, assetHashes } = await collectVisualFiles(resolvedRoot);
-  const files = [...base, ...canonicalContent, ...visual].sort();
+  const files = [...base, ...canonicalContent, ...activationContent, ...visual].sort();
 
   assertUniqueFiles(files, "runtime inventory");
   assertCount("base runtime", base, EXPECTED_RUNTIME_GROUP_COUNTS.base);
@@ -80,6 +91,11 @@ export async function collectStaticRuntimeInventory(root = PROJECT_ROOT) {
     "canonical content runtime JSON",
     canonicalContent,
     EXPECTED_RUNTIME_GROUP_COUNTS.canonicalContent,
+  );
+  assertCount(
+    "activation content runtime JSON",
+    activationContent,
+    EXPECTED_RUNTIME_GROUP_COUNTS.activationContent,
   );
   assertCount("visual runtime", visual, EXPECTED_RUNTIME_GROUP_COUNTS.visual);
   assertCount("complete runtime", files, EXPECTED_RUNTIME_FILE_COUNT);
@@ -90,6 +106,7 @@ export async function collectStaticRuntimeInventory(root = PROJECT_ROOT) {
     groups: Object.freeze({
       base: Object.freeze(base),
       canonicalContent: Object.freeze(canonicalContent),
+      activationContent: Object.freeze(activationContent),
       visual: Object.freeze(visual),
     }),
     assetHashes: Object.freeze(assetHashes),
@@ -301,6 +318,38 @@ async function collectCanonicalContentFiles(root) {
   return [...referencedFiles].sort();
 }
 
+async function collectActivationContentFiles(root) {
+  const activationBuffer = await readFile(path.join(root, ACTIVATION_MANIFEST));
+  if (sha256(activationBuffer) !== ACTIVATION_MANIFEST_SHA256) {
+    throw new Error(`${ACTIVATION_MANIFEST}: activation manifest SHA-256 mismatch`);
+  }
+  const activation = JSON.parse(activationBuffer.toString("utf8"));
+  const training = await readJson(path.join(root, TRAINING_SEQUENCE), TRAINING_SEQUENCE);
+  const medicalBuffer = await readFile(path.join(root, ACTIVATION_MEDICAL_MANIFEST));
+  const medicalManifest = JSON.parse(medicalBuffer.toString("utf8"));
+  if (sha256(medicalBuffer) !== activation.medicalSource?.manifestSha256) {
+    throw new Error(`${ACTIVATION_MEDICAL_MANIFEST}: source manifest SHA-256 mismatch`);
+  }
+  assertCount("activation medical families", medicalManifest.families || [], EXPECTED_ACTIVATION_FAMILY_COUNT);
+  assertCount("activation training lessons", training.lessons || [], 8);
+
+  const files = [ACTIVATION_MANIFEST, TRAINING_SEQUENCE, ACTIVATION_MEDICAL_MANIFEST];
+  for (const entry of medicalManifest.families) {
+    const relative = normalizeRuntimePath(`${ACTIVATION_MEDICAL_ROOT}/${entry.path}`, `activation family ${entry.familyId}`);
+    if (!relative.startsWith(`${ACTIVATION_MEDICAL_ROOT}/families/`) || !relative.endsWith("/family.production.json")) {
+      throw new Error(`${entry.familyId}: unexpected activation family path ${relative}`);
+    }
+    const buffer = await readFile(path.join(root, ...relative.split("/")));
+    if (sha256(buffer) !== entry.sha256) throw new Error(`${entry.familyId}: activation family SHA-256 mismatch`);
+    const family = JSON.parse(buffer.toString("utf8"));
+    if (family.familyId !== entry.familyId) throw new Error(`${entry.familyId}: activation family identity mismatch`);
+    files.push(relative);
+  }
+  assertUniqueFiles(files, "activation content");
+  assertCount("activation content", files, EXPECTED_ACTIVATION_CONTENT_COUNT);
+  return files.sort();
+}
+
 async function collectVisualFiles(root) {
   const manifest = await readJson(path.join(root, VISUAL_MANIFEST), VISUAL_MANIFEST);
   await readJson(path.join(root, VISUAL_LAYOUT), VISUAL_LAYOUT);
@@ -466,6 +515,7 @@ if (isMainModule()) {
       `Static runtime inventory: ${inventory.files.length} files ` +
         `(${inventory.groups.base.length} base/legacy, ` +
         `${inventory.groups.canonicalContent.length} canonical content JSON, ` +
+        `${inventory.groups.activationContent.length} activation content JSON, ` +
         `${inventory.groups.visual.length} visual) — verified`,
     );
   } catch (error) {

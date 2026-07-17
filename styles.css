@@ -510,6 +510,24 @@ button.primary { background: linear-gradient(#fff7c5, #ffe16b 48%, #e3ad22 49%, 
 .developer-panel .developer-heading { display: block; padding: 7px 8px 0; color: var(--blue-900); font-size: 10px; }
 .developer-panel .developer-actions { display: grid; gap: 6px; padding-top: 0; }
 .developer-actions button { min-height: 32px; padding: 5px; font-size: 9px; }
+.developer-panel .tester-medical-controls {
+  display: grid;
+  gap: 7px;
+  margin: 4px 8px 8px;
+  padding: 10px 0 0;
+  border-top: 1px solid #b9c9d4;
+}
+.tester-medical-controls label { display: grid; gap: 4px; color: #304e64; font-size: 10px; }
+.tester-medical-controls label:has(input) { grid-template-columns: auto 1fr; align-items: center; }
+.tester-medical-controls select {
+  width: 100%;
+  min-height: 32px;
+  color: #173957;
+  border: 1px solid #6d91a5;
+  background: #f7fbfd;
+}
+.tester-medical-controls button { min-height: 34px; font-weight: 800; }
+.tester-medical-controls small { color: #52677b; line-height: 1.3; }
 
 .shift-window, .close-shift-window { position: absolute; z-index: 50; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(8,24,38,.68); }
 .shift-card, .close-shift-card { width: min(720px,calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow-y: auto; border: 4px solid var(--line); background: #eaf7fb; box-shadow: 0 10px 0 rgba(0,0,0,.38); }

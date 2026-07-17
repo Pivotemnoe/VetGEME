@@ -1,0 +1,2809 @@
+{
+  "schemaVersion": 1,
+  "familyId": "infectious_feline_major",
+  "familyVersion": "2026.07.16.40",
+  "title": "Основные инфекции кошек",
+  "campaignPhase": "chapter_2_to_5",
+  "species": [
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": [
+    "вирус панлейкопении кошек, комплекс герпесвирус и калицивирус кошек, вирус лейкоза кошек, вирус иммунодефицита кошек, инфекционный перитонит кошек и воздействие, регулируемое бешенством, являются шестью независимыми моделями истины.",
+    "Происхождение, групповое размещение, контакты или драки или на открытом воздухе или дикая природа, даты вакцинации, беременность или возраст котят, образцы, места сбора, результаты, состояние контроля и план домохозяйства сохраняются.",
+    "Отрицательный антиген вирус панлейкопении кошек не всегда исключает заболевание, поскольку чувствительность и выделение варьируют; недавняя вакцинация может затруднить интерпретацию.",
+    "Респираторная ПЦР может выявить выделение носителя или коинфекцию, но не доказывает автоматически текущую причину.",
+    "Положительный результат скрининга на вирус лейкоза кошек или вирус иммунодефицита кошек является свидетельством инфекции, требующим подтверждения или характеристики, а не автоматическим клиническим заболеванием, прогнозом, эвтаназией или наказанием кампании.",
+    "Статус вирус лейкоза кошек может быть прогрессирующим, регрессивным или дискордантным и требует последовательных связанных тестов.",
+    "Интерпретация антител к вирус иммунодефицита кошек сохраняет возраст котенка, материнские антитела, регион или историю вакцинации и окно недавнего заражения.",
+    "вирус иммунодефицита кошек специфичен для кошек и не представляет риска для здоровья человека.",
+    "Антитело коронавирус кошек или фекальная ПЦР демонстрируют воздействие или выделение, а не инфекционный перитонит кошек.",
+    "инфекционный перитонит кошек — мультимодальный синтез; Обнаружение антигена выпота или поражения может повысить специфичность, в то время как невыпотное заболевание остается трудным.",
+    "Ривальта, общий ПЦР крови, серологические исследования или ответ на терапию сами по себе не могут доказать ФИП.",
+    "При подозрении на бешенство игнорируют обычные процедуры и следуют требованиям органов общественного здравоохранения или местному законодательству.",
+    "Никаких противовирусных, противомикробных препаратов, жидкостей, питания, вакцин, продолжительности изоляции, нормативного протокола, лекарств или доз не задаётся автоматически."
+  ],
+  "coreCapabilities": [
+    "isolation_protocol",
+    "infectious_rapid_test",
+    "cbc",
+    "biochemistry",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "feline_infectious_history_route",
+      "anyOf": [
+        "feline_infectious_history",
+        "safe_referral"
+      ],
+      "purpose": "origin_group_contacts_vaccine_exposure_timeline"
+    },
+    {
+      "id": "feline_infectious_control_route",
+      "anyOf": [
+        "feline_infectious_control",
+        "isolation_protocol",
+        "safe_referral"
+      ],
+      "purpose": "triage_isolation_ppe_flow_and_outbreak_log"
+    },
+    {
+      "id": "feline_fpv_route",
+      "anyOf": [
+        "feline_panleukopenia_testing",
+        "infectious_rapid_test",
+        "safe_referral"
+      ],
+      "purpose": "antigen_cbc_pcr_vaccine_timing_and_false_negative_context"
+    },
+    {
+      "id": "feline_respiratory_route",
+      "anyOf": [
+        "feline_respiratory_testing_external",
+        "safe_referral"
+      ],
+      "purpose": "multisite_pcr_carrier_and_coinfection_context"
+    },
+    {
+      "id": "feline_felv_route",
+      "anyOf": [
+        "felv_staged_testing",
+        "safe_referral"
+      ],
+      "purpose": "antigen_confirmatory_pcr_and_serial_status"
+    },
+    {
+      "id": "feline_fiv_route",
+      "anyOf": [
+        "fiv_staged_testing",
+        "safe_referral"
+      ],
+      "purpose": "antibody_confirmatory_age_vaccine_and_window_review"
+    },
+    {
+      "id": "feline_fip_route",
+      "anyOf": [
+        "fip_evidence_synthesis",
+        "fip_effusion_analysis_external",
+        "safe_referral"
+      ],
+      "purpose": "multimodal_effusion_lesion_pcr_and_antigen_evidence"
+    },
+    {
+      "id": "feline_retrovirus_route",
+      "anyOf": [
+        "feline_retrovirus_longitudinal_plan",
+        "safe_referral"
+      ],
+      "purpose": "secondary_disease_household_and_longitudinal_plan"
+    },
+    {
+      "id": "feline_rabies_route",
+      "anyOf": [
+        "rabies_regulated_protocol",
+        "safe_referral"
+      ],
+      "purpose": "no_routine_handling_authority_and_exposure_log"
+    },
+    {
+      "id": "feline_infectious_referral_route",
+      "anyOf": [
+        "infectious_disease_referral",
+        "safe_referral"
+      ],
+      "purpose": "external_lab_emergency_and_regulated_handoff"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "feline_infectious_origin_group_housing_contacts_vaccine_and_exposure_timeline",
+      "requires": [
+        "feline_infectious_history"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_infectious_triage_isolation_ppe_flow_and_outbreak_log",
+      "requires": [
+        "feline_infectious_control"
+      ],
+      "availability": "local_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_panleukopenia_antigen_cbc_pcr_and_vaccine_timing_context",
+      "requires": [
+        "feline_panleukopenia_testing"
+      ],
+      "availability": "local_plus_external_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_respiratory_multisite_pcr_and_carrier_coinfection_context",
+      "requires": [
+        "feline_respiratory_testing_external"
+      ],
+      "availability": "external_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_felv_antigen_confirmatory_pcr_and_serial_infection_status",
+      "requires": [
+        "felv_staged_testing"
+      ],
+      "availability": "local_plus_external_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_fiv_antibody_confirmatory_age_vaccine_and_exposure_window_review",
+      "requires": [
+        "fiv_staged_testing"
+      ],
+      "availability": "local_plus_external_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_fip_multimodal_evidence_effusion_cytology_pcr_and_antigen_detection",
+      "requires": [
+        "fip_evidence_synthesis"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_retrovirus_secondary_disease_household_and_longitudinal_plan",
+      "requires": [
+        "feline_retrovirus_longitudinal_plan"
+      ],
+      "availability": "longitudinal_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_rabies_no_routine_handling_public_health_notification_and_exposure_log",
+      "requires": [
+        "rabies_regulated_protocol"
+      ],
+      "availability": "regulated_chapter_2",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "feline_infectious_external_lab_emergency_and_regulated_referral_route",
+      "requires": [
+        "infectious_disease_referral"
+      ],
+      "availability": "external_chapter_2",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "origin_group_housing_contacts_fights_outdoor_wildlife",
+      "prompt": "Каковы происхождение, группа условия содержания, контакты, драки, выход на улицу и дикие животные контакты?"
+    },
+    {
+      "id": "vaccine_product_dates_kitten_series_and_recent_vaccination",
+      "prompt": "Каковы вакцина препарат или даты, котёнок серия и недавний вакцинация?"
+    },
+    {
+      "id": "pregnancy_kitten_age_maternal_antibody_and_prior_vaccine_region",
+      "prompt": "Каковы беременность, котёнок возраст, материнский антитело и предыдущий вакцина регион или анамнез?"
+    },
+    {
+      "id": "onset_gi_respiratory_ocular_oral_lameness_neuro_timeline",
+      "prompt": "Каков порядок желудочно-кишечный тракт, дыхательный, глазной, ротовая полость, хромота и неврологический признаки?"
+    },
+    {
+      "id": "fever_weight_appetite_effusion_organ_and_cbc_changes",
+      "prompt": "Каковы лихорадка, масса тела, аппетит, выпот, орган и общий анализ крови изменения?"
+    },
+    {
+      "id": "sample_type_site_time_storage_and_pretest_treatment",
+      "prompt": "Каковы проба тип, место, время и условия хранения и до исследования лечение?"
+    },
+    {
+      "id": "antigen_antibody_pcr_serial_and_confirmatory_results",
+      "prompt": "Каковы антиген, антитело, ПЦР, последовательный и подтверждающий результаты?"
+    },
+    {
+      "id": "secondary_disease_anemia_neoplasia_and_coinfection",
+      "prompt": "Есть ли анемия, опухолевый процесс, вторичный болезнь или сочетанная инфекция?"
+    },
+    {
+      "id": "household_cats_shared_resources_and_exposure_plan",
+      "prompt": "Какие домашняя группа кошки и общий ресурсы затронуты?"
+    },
+    {
+      "id": "behavior_swallowing_salivation_paralysis_bite_or_saliva_exposure",
+      "prompt": "Есть ли поведение, глотание, слюноотделение и паралич, укус или слюна контакт?"
+    },
+    {
+      "id": "isolation_ppe_decontamination_room_and_staff_capacity",
+      "prompt": "Каковы изоляция, средства индивидуальной защиты и обеззараживание и возможность ухода?"
+    },
+    {
+      "id": "owner_goals_cost_transport_referral_public_health_and_recheck",
+      "prompt": "Каковы владелец цели, стоимость, перевозка, направление или санитарно-эпидемиологический и повторный осмотр выполнимость?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "feline_exposure_vaccine_age_timeline_record",
+      "source": "history",
+      "requires": [
+        "feline_infectious_history"
+      ]
+    },
+    {
+      "id": "feline_pre_queue_isolation_ppe_outbreak_record",
+      "source": "infection_control",
+      "requires": [
+        "feline_infectious_control"
+      ]
+    },
+    {
+      "id": "fpv_antigen_cbc_pcr_vaccine_context_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "feline_panleukopenia_testing"
+      ]
+    },
+    {
+      "id": "respiratory_multisite_pcr_carrier_coinfection_record",
+      "source": "external_report",
+      "requires": [
+        "feline_respiratory_testing_external"
+      ]
+    },
+    {
+      "id": "felv_antigen_pcr_serial_status_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "felv_staged_testing"
+      ]
+    },
+    {
+      "id": "fiv_antibody_age_vaccine_window_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "fiv_staged_testing"
+      ]
+    },
+    {
+      "id": "fip_effusion_lesion_multimodal_evidence_record",
+      "source": "external_report",
+      "requires": [
+        "fip_evidence_synthesis"
+      ]
+    },
+    {
+      "id": "retrovirus_secondary_disease_household_qol_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "feline_retrovirus_longitudinal_plan"
+      ]
+    },
+    {
+      "id": "feline_rabies_no_handling_authority_exposure_record",
+      "source": "regulated_protocol",
+      "requires": [
+        "rabies_regulated_protocol"
+      ]
+    },
+    {
+      "id": "feline_external_lab_emergency_regulated_handoff_record",
+      "source": "referral_plan",
+      "requires": [
+        "infectious_disease_referral"
+      ]
+    },
+    {
+      "id": "same_cat_serial_status_and_sample_identity_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "feline_retrovirus_longitudinal_plan"
+      ]
+    },
+    {
+      "id": "organ_severity_effusion_cbc_chemistry_record",
+      "source": "diagnostic_test",
+      "requires": [
+        "feline_infectious_history"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "fpv_plan",
+      "fullPlan": [
+        "isolate_before_queue",
+        "age_vaccine_exposure_timeline",
+        "severity_cbc_glucose_screen",
+        "antigen_with_sensitivity_limits",
+        "pcr_or_repeat_if_discordant",
+        "outbreak_environment_followup"
+      ],
+      "stagedPlan": [
+        "isolate",
+        "triage",
+        "test",
+        "reassess"
+      ],
+      "minimumSafePlan": [
+        "negative_not_absolute",
+        "recent_vaccine_context",
+        "severe_case_referral",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "shock_sepsis_safety",
+        "isolation_critical_referral"
+      ],
+      "unsafeOrInadequate": [
+        "negative_elisa_excludes",
+        "generated_fluid_drug_or_disinfectant_recipe",
+        "no_outbreak_log"
+      ]
+    },
+    {
+      "id": "respiratory_complex_plan",
+      "fullPlan": [
+        "isolate_by_risk",
+        "ocular_oral_airway_phenotype",
+        "sample_site_and_pcr_context",
+        "carrier_coinfection_review",
+        "keratitis_lower_airway_systemic_red_flags",
+        "serial_course"
+      ],
+      "stagedPlan": [
+        "phenotype",
+        "sample_if_useful",
+        "support_safety",
+        "recheck"
+      ],
+      "minimumSafePlan": [
+        "pcr_not_causality",
+        "fhv_fcv_overlap",
+        "virulent_systemic_red_flags",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "corneal_airway_systemic_safety",
+        "infectious_ophthalmic_referral"
+      ],
+      "unsafeOrInadequate": [
+        "positive_pcr_proves_current_cause",
+        "generated_antiviral_or_antimicrobial",
+        "carrier_ignored"
+      ]
+    },
+    {
+      "id": "felv_plan",
+      "fullPlan": [
+        "risk_and_screen_context",
+        "confirm_or_characterize",
+        "serial_antigen_pcr_status",
+        "secondary_disease_workup",
+        "household_plan",
+        "longitudinal_qol"
+      ],
+      "stagedPlan": [
+        "screen",
+        "confirm",
+        "characterize",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "screen_not_prognosis",
+        "discordance_preserved",
+        "no_automatic_euthanasia",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "anemia_neoplasia_safety",
+        "retrovirus_referral"
+      ],
+      "unsafeOrInadequate": [
+        "one_screen_lifelong_truth",
+        "infection_equals_current_illness",
+        "campaign_penalty"
+      ]
+    },
+    {
+      "id": "fiv_plan",
+      "fullPlan": [
+        "risk_and_antibody_screen",
+        "kitten_maternal_vaccine_window_context",
+        "confirm_if_needed",
+        "secondary_disease_workup",
+        "household_prevention",
+        "longitudinal_qol"
+      ],
+      "stagedPlan": [
+        "screen",
+        "contextualize",
+        "confirm",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "kitten_age_visible",
+        "feline_not_human_risk",
+        "screen_not_prognosis",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "secondary_disease_safety",
+        "retrovirus_referral"
+      ],
+      "unsafeOrInadequate": [
+        "maternal_antibody_ignored",
+        "automatic_euthanasia",
+        "human_zoonosis_claim"
+      ]
+    },
+    {
+      "id": "fip_plan",
+      "fullPlan": [
+        "compatible_multisystem_phenotype",
+        "effusion_or_lesion_quality",
+        "cbc_chemistry_imaging_context",
+        "selected_pcr_antigen_cytology",
+        "alternative_diagnoses",
+        "serial_evidence_review"
+      ],
+      "stagedPlan": [
+        "phenotype",
+        "sample_best_site",
+        "synthesize",
+        "reassess"
+      ],
+      "minimumSafePlan": [
+        "no_single_blood_test",
+        "fcov_exposure_not_fip",
+        "response_not_proof",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "effusion_neuro_ocular_organ_safety",
+        "feline_internal_medicine_referral"
+      ],
+      "unsafeOrInadequate": [
+        "serology_fecal_pcr_rivalta_alone_confirms",
+        "generated_antiviral",
+        "instant_external_result"
+      ]
+    },
+    {
+      "id": "feline_rabies_plan",
+      "fullPlan": [
+        "avoid_routine_handling",
+        "secure_distance_and_exposure_log",
+        "verify_exposure_and_documents",
+        "notify_authority",
+        "follow_regulated_route",
+        "human_health_handoff"
+      ],
+      "stagedPlan": [
+        "do_not_expose",
+        "notify",
+        "document",
+        "authority_controls"
+      ],
+      "minimumSafePlan": [
+        "no_waiting_room",
+        "no_gameplay_disposition",
+        "human_exposure_log",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "regulated_no_contact_route",
+        "public_health_handoff"
+      ],
+      "unsafeOrInadequate": [
+        "invented_quarantine_or_testing",
+        "routine_exam",
+        "owner_reassurance_without_authority"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "wsava_vaccination_2024",
+      "title": "WSAVA 2024 Vaccination Guidelines",
+      "url": "https://wsava.org/wp-content/uploads/2024/04/WSAVA-Vaccination-guidelines-2024.pdf",
+      "scope": "feline_core_vaccine_maternal_antibody_and_risk_context"
+    },
+    {
+      "id": "merck_feline_panleukopenia_2026",
+      "title": "Merck Veterinary Manual: Feline Panleukopenia",
+      "url": "https://www.merckvetmanual.com/digestive-system/infectious-diseases-of-the-gastrointestinal-tract-in-small-animals/feline-panleukopenia",
+      "scope": "clinical_testing_sensitivity_leukopenia_severity_and_outbreak"
+    },
+    {
+      "id": "merck_feline_respiratory_complex",
+      "title": "Merck Veterinary Manual: Feline Respiratory Disease Complex",
+      "url": "https://www.merckvetmanual.com/respiratory-system/respiratory-diseases-of-small-animals/feline-respiratory-disease-complex",
+      "scope": "fhv_fcv_overlap_carrier_and_clinical_patterns"
+    },
+    {
+      "id": "aafp_retrovirus_2020",
+      "title": "2020 AAFP Feline Retrovirus Management Guidelines",
+      "url": "https://catvets.com/resource/feline-retrovirus-management-guidelines/",
+      "scope": "felv_fiv_staged_testing_status_household_and_longitudinal_care"
+    },
+    {
+      "id": "aafp_everycat_fip_2022",
+      "title": "2022 AAFP/EveryCat FIP Diagnosis Guidelines",
+      "url": "https://catvets.com/resource/aafp-everycat-feline-infectious-peritonitis-diagnosis-fip-guidelines/",
+      "scope": "multimodal_fip_diagnosis_sample_quality_and_test_limits"
+    },
+    {
+      "id": "merck_fip",
+      "title": "Merck Veterinary Manual: Feline Infectious Peritonitis",
+      "url": "https://www.merckvetmanual.com/infectious-diseases/feline-infectious-peritonitis/feline-infectious-peritonitis",
+      "scope": "effusive_noneffusive_organ_ocular_neuro_and_evidence"
+    },
+    {
+      "id": "who_rabies",
+      "title": "World Health Organization: Rabies",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/rabies",
+      "scope": "human_exposure_public_health_and_fatal_zoonotic_risk"
+    }
+  ],
+  "variants": [
+    {
+      "id": "feline_panleukopenia",
+      "version": "2026.07.16.40",
+      "title": "Панлейкопения кошек",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Совместимая лихорадка, анорексия, рвота или обезвоживание и лейкопения, а также действительные данные по антигену или ПЦР подтверждают вирус панлейкопении кошек; периодическое выделение вируса и недавний контекст вакцинации ограничивают единый результат, в то время как шок, гипогликемия и риск вспышки требуют срочности.",
+      "exclusions": [
+        "kitten_unvaccinated_equals_confirmed",
+        "negative_antigen_always_excludes",
+        "recent_vaccine_positive_always_active"
+      ],
+      "planBundleId": "fpv_plan",
+      "sourceIds": [
+        "wsava_vaccination_2024",
+        "merck_feline_panleukopenia_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_kitten_or_unvaccinated_cat_with_fever_gi_signs_and_leukopenia",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "urgent",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что у котенка или непривитой кошки наблюдаются лихорадка, анорексия, рвота или обезвоживание и лейкопения.",
+          "historyAnswers": {
+            "vaccine_product_dates_kitten_series_and_recent_vaccination": "По нашим наблюдениям, серия точная.",
+            "fever_weight_appetite_effusion_organ_and_cbc_changes": "Дома мы заметили, что выраженность симптома меняется в течение дня; сегодня он заметно сильнее обычного.",
+            "origin_group_housing_contacts_fights_outdoor_wildlife": "Насколько мы можем судить, экспозиция известна."
+          },
+          "examFindings": [
+            {
+              "factId": "fpv_pattern_requires_pre_queue_isolation_and_valid_test_context",
+              "source": "triage_rule",
+              "finding": "Сигнал не является доказательством."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "fpv_pattern_requires_pre_queue_isolation_and_valid_test_context",
+              "discoveryPaths": [
+                "vaccine_product_dates_kitten_series_and_recent_vaccination",
+                "feline_pre_queue_isolation_ppe_outbreak_record",
+                "fpv_antigen_cbc_pcr_vaccine_context_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_infectious_triage_isolation_ppe_flow_and_outbreak_log",
+              "classification": "required_first",
+              "result": "При динамическом наблюдении: пациента изолировали от других животных."
+            },
+            {
+              "id": "feline_panleukopenia_antigen_cbc_pcr_and_vaccine_timing_context",
+              "classification": "required",
+              "result": "Целевое лабораторное исследование показало: доказательства антигена или общий анализ крови."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "fpv_pattern_requires_pre_queue_isolation_and_valid_test_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_pattern_plus_valid_evidence"
+            ],
+            "dangerStates": [
+              "shock",
+              "hypoglycemia",
+              "severe_leukopenia",
+              "dic"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "feline_infectious_control",
+              "feline_panleukopenia_testing",
+              "isolation_protocol",
+              "infectious_rapid_test",
+              "cbc"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_infectious_control_route",
+              "feline_fpv_route",
+              "feline_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fpv_plan",
+          "followUp": {
+            "timing": "Серийный анализ крови, глюкоза, перфузия и обзор воздействия.",
+            "required": true,
+            "targets": [
+              "cbc",
+              "glucose",
+              "hydration",
+              "perfusion",
+              "contacts"
+            ]
+          },
+          "outcomes": {
+            "safe": "Изоляция и серьезность предшествуют завершению теста.",
+            "unsafe": "Диагноз ошибочно ставят только по возрасту и незавершённой вакцинации."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: немедленную изоляцию и необходимость сочетать тяжесть клинической картины с данными об антигенах или анализе крови."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "nauseous",
+              "feline_sensitive"
+            ],
+            "requiredHandlingAlternative": "isolation_floor_level_feline_triage",
+            "ownerModifiers": [
+              "vaccine_confusion"
+            ]
+          }
+        },
+        {
+          "id": "p2_negative_antigen_with_intermittent_shedding_or_recent_vaccine_context",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_condition",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что у кошки с подходящей клинической картиной экспресс-тест на антиген отрицательный, но на результат могли повлиять периодическое выделение вируса или недавняя вакцинация.",
+          "historyAnswers": {
+            "sample_type_site_time_storage_and_pretest_treatment": "Мы точно знаем, когда, откуда и до начала какого лечения взяли образец и как его хранили.",
+            "antigen_antibody_pcr_serial_and_confirmatory_results": "Мы повторили анализ, и он снова не совпал с первым; оба результата с датами у нас с собой.",
+            "vaccine_product_dates_kitten_series_and_recent_vaccination": "Мы принесли паспорт: вот название препарата и точная дата последней вакцинации."
+          },
+          "examFindings": [
+            {
+              "factId": "discordant_fpv_result_requires_shedding_timing_vaccine_and_repeat_or_pcr_review",
+              "source": "test_limit_rule",
+              "finding": "Отрицательный экспресс-тест не исключает инфекцию при подходящей клинической картине."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "discordant_fpv_result_requires_shedding_timing_vaccine_and_repeat_or_pcr_review",
+              "discoveryPaths": [
+                "sample_type_site_time_storage_and_pretest_treatment",
+                "fpv_antigen_cbc_pcr_vaccine_context_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_panleukopenia_antigen_cbc_pcr_and_vaccine_timing_context",
+              "classification": "required_discordance_review",
+              "result": "Целевое лабораторное исследование показало: контекст повтора или ПЦР."
+            },
+            {
+              "id": "feline_infectious_origin_group_housing_contacts_vaccine_and_exposure_timeline",
+              "classification": "required",
+              "result": "При уточнении анамнеза: время вакцинации или воздействия."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "discordant_fpv_result_requires_shedding_timing_vaccine_and_repeat_or_pcr_review"
+            ],
+            "confirmedDiagnosisRequires": [
+              "context_resolved_serial_evidence"
+            ],
+            "dangerStates": [
+              "worsening_despite_negative",
+              "severe_leukopenia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "feline_panleukopenia_testing",
+              "feline_infectious_history"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_fpv_route",
+              "feline_infectious_history_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fpv_plan",
+          "followUp": {
+            "timing": "Срочное повторение или курс ПЦР и общего анализа крови.",
+            "required": true,
+            "targets": [
+              "test_validity",
+              "cbc",
+              "clinical_course"
+            ]
+          },
+          "outcomes": {
+            "safe": "Противоречивые доказательства остаются открытыми.",
+            "unsafe": "Один негатив заканчивает изоляцию."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: ограниченную чувствительность и контекст недавней вакцинации."
+          ],
+          "compatibility": {
+            "temperament": [
+              "weak",
+              "isolation_required"
+            ],
+            "requiredHandlingAlternative": "continue_isolation_external_review",
+            "ownerModifiers": [
+              "expects_binary_test"
+            ]
+          }
+        },
+        {
+          "id": "p3_peracute_severe_or_group_housing_outbreak_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 4.5,
+          "complaint": "Мы обратились, потому что острое обрушение или последовательные случаи группового размещения создают вспышку вирус панлейкопении кошек и чрезвычайную ситуацию с пропускной способностью.",
+          "historyAnswers": {
+            "origin_group_housing_contacts_fights_outdoor_wildlife": "По нашим наблюдениям, карта группы зафиксирована.",
+            "isolation_ppe_decontamination_room_and_staff_capacity": "Дома мы заметили, что емкость явная.",
+            "household_cats_shared_resources_and_exposure_plan": "Насколько мы можем судить, зарегистрированы контактные когорты."
+          },
+          "examFindings": [
+            {
+              "factId": "peracute_or_outbreak_fpv_requires_critical_referral_and_persistent_environment_log",
+              "source": "outbreak_rule",
+              "finding": "Не создан рецепт дезинфицирующего средства."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "peracute_or_outbreak_fpv_requires_critical_referral_and_persistent_environment_log",
+              "discoveryPaths": [
+                "isolation_ppe_decontamination_room_and_staff_capacity",
+                "feline_pre_queue_isolation_ppe_outbreak_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_infectious_triage_isolation_ppe_flow_and_outbreak_log",
+              "classification": "required",
+              "result": "При динамическом наблюдении: контроль вспышки."
+            },
+            {
+              "id": "feline_infectious_external_lab_emergency_and_regulated_referral_route",
+              "classification": "required_if_capacity_missing",
+              "result": "По итогам консультации специалиста: критический перенос."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "peracute_or_outbreak_fpv_requires_critical_referral_and_persistent_environment_log"
+            ],
+            "confirmedDiagnosisRequires": [
+              "cluster_plus_valid_fpv_evidence"
+            ],
+            "dangerStates": [
+              "shock",
+              "mass_exposure",
+              "capacity_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "feline_infectious_control",
+              "isolation_protocol"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_infectious_control_route",
+              "feline_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fpv_plan",
+          "followUp": {
+            "timing": "Непрерывное отслеживание когорты или среды.",
+            "required": true,
+            "targets": [
+              "new_cases",
+              "capacity",
+              "environment",
+              "contacts"
+            ]
+          },
+          "outcomes": {
+            "safe": "Очаг остается в рабочем и медицинском состоянии.",
+            "unsafe": "Способность изоляции игнорируется."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: возбудитель долго сохраняется во внешней среде, поэтому больную кошку и контактных животных нужно разделить; точный срок мер назовёт врач по действующему протоколу."
+          ],
+          "compatibility": {
+            "temperament": [
+              "collapsed",
+              "group_housed"
+            ],
+            "requiredHandlingAlternative": "barrier_cohort_or_referral",
+            "ownerModifiers": [
+              "shelter_capacity_crisis"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "feline_herpes_calicivirus_complex",
+      "version": "2026.07.16.40",
+      "title": "Дыхательный комплекс герпесвирус и калицивирус кошек",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "герпесвирус кошек и калицивирус кошек клинически перекрываются; глазные или назальные, кератиты, язвы полости рта, хромота и особенности нижних дыхательных путей определяют отбор проб, в то время как выделение носителя, коинфекция и вирулентное системное заболевание ограничивают положительную ПЦР.",
+      "exclusions": [
+        "pcr_always_current_cause",
+        "oral_ulcer_equals_fcv_only",
+        "carrier_state_ignored"
+      ],
+      "planBundleId": "respiratory_complex_plan",
+      "sourceIds": [
+        "wsava_vaccination_2024",
+        "merck_feline_respiratory_complex"
+      ],
+      "presentations": [
+        {
+          "id": "p1_conjunctival_nasal_or_keratitis_dominant_fhv_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "prompt_or_urgent_by_cornea",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что заболевания конъюнктивы или носа или кератит доминируют в дыхательном комплексе, совместимом с герпесвирус кошек.",
+          "historyAnswers": {
+            "onset_gi_respiratory_ocular_oral_lameness_neuro_timeline": "По нашим наблюдениям, временная шкала зрения и дыхания.",
+            "origin_group_housing_contacts_fights_outdoor_wildlife": "Дома мы заметили, что контекст контактного стресса известен.",
+            "sample_type_site_time_storage_and_pretest_treatment": "Насколько мы можем судить, пример сайта явный."
+          },
+          "examFindings": [
+            {
+              "factId": "fhv_pattern_requires_corneal_safety_and_pcr_carrier_context",
+              "source": "phenotype_rule",
+              "finding": "ПЦР – это не только причинно-следственная связь."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "fhv_pattern_requires_corneal_safety_and_pcr_carrier_context",
+              "discoveryPaths": [
+                "onset_gi_respiratory_ocular_oral_lameness_neuro_timeline",
+                "respiratory_multisite_pcr_carrier_coinfection_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_respiratory_multisite_pcr_and_carrier_coinfection_context",
+              "classification": "conditional_decision_changing",
+              "result": "Целевое лабораторное исследование показало: контекст сайта или оператора."
+            },
+            {
+              "id": "feline_infectious_triage_isolation_ppe_flow_and_outbreak_log",
+              "classification": "required_by_group_risk",
+              "result": "При динамическом наблюдении: контроль."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "fhv_pattern_requires_corneal_safety_and_pcr_carrier_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_pattern_plus_contextual_evidence"
+            ],
+            "dangerStates": [
+              "corneal_ulcer",
+              "anorexia",
+              "lower_airway_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "feline_infectious_control"
+            ],
+            "external": [
+              "feline_respiratory_testing_external",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_respiratory_route",
+              "feline_infectious_control_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "respiratory_complex_plan",
+          "followUp": {
+            "timing": "Роговица и дыхательный путь.",
+            "required": true,
+            "targets": [
+              "cornea",
+              "intake",
+              "respiration",
+              "shedding_context"
+            ]
+          },
+          "outcomes": {
+            "safe": "Фенотип и пределы теста остаются видимыми.",
+            "unsafe": "Только ПЦР называет текущую причину."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: перекрытие и потерю несущей."
+          ],
+          "compatibility": {
+            "temperament": [
+              "feline_sensitive",
+              "ocular_pain"
+            ],
+            "requiredHandlingAlternative": "feline_friendly_ophthalmic_route",
+            "ownerModifiers": [
+              "expects_antiviral"
+            ]
+          }
+        },
+        {
+          "id": "p2_oral_ulcer_lameness_or_lower_airway_fcv_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "prompt_or_urgent_by_airway",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что язвы в полости рта, хромота или симптомы со стороны нижних дыхательных путей формируют калицивирус кошек совместимый картина.",
+          "historyAnswers": {
+            "onset_gi_respiratory_ocular_oral_lameness_neuro_timeline": "По нашим наблюдениям, порядок полости рта или хромоты или дыхательных путей.",
+            "fever_weight_appetite_effusion_organ_and_cbc_changes": "Дома мы заметили, что зарегистрирована системная тяжесть.",
+            "household_cats_shared_resources_and_exposure_plan": "Насколько мы можем судить, контакты известны."
+          },
+          "examFindings": [
+            {
+              "factId": "fcv_compatible_pattern_retains_overlap_coinfection_and_airway_safety",
+              "source": "overlap_rule",
+              "finding": "Язва в полости рта не является исключительным доказательством."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "fcv_compatible_pattern_retains_overlap_coinfection_and_airway_safety",
+              "discoveryPaths": [
+                "onset_gi_respiratory_ocular_oral_lameness_neuro_timeline",
+                "organ_severity_effusion_cbc_chemistry_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_respiratory_multisite_pcr_and_carrier_coinfection_context",
+              "classification": "conditional",
+              "result": "Целевое лабораторное исследование показало: контекст калицивирус кошек или герпесвирус кошек или коинфекции."
+            },
+            {
+              "id": "feline_infectious_triage_isolation_ppe_flow_and_outbreak_log",
+              "classification": "required_by_risk",
+              "result": "При динамическом наблюдении: контроль."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "fcv_compatible_pattern_retains_overlap_coinfection_and_airway_safety"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_pattern_plus_context"
+            ],
+            "dangerStates": [
+              "dyspnea",
+              "severe_oral_pain",
+              "anorexia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "feline_infectious_control"
+            ],
+            "external": [
+              "feline_respiratory_testing_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_respiratory_route",
+              "feline_infectious_control_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "respiratory_complex_plan",
+          "followUp": {
+            "timing": "Пероральный прием, хромота и повторная проверка дыхания.",
+            "required": true,
+            "targets": [
+              "oral_pain",
+              "intake",
+              "lameness",
+              "respiration"
+            ]
+          },
+          "outcomes": {
+            "safe": "Маршрут калицивирус кошек остается научно обоснованным.",
+            "unsafe": "Язва полости рта автоматически подтверждает наличие калицивирус кошек."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: несколько агентов перекрывают друг друга, и срочность определяется дыханием или всасыванием."
+          ],
+          "compatibility": {
+            "temperament": [
+              "oral_pain",
+              "limping"
+            ],
+            "requiredHandlingAlternative": "pain_aware_feline_exam",
+            "ownerModifiers": [
+              "feeding_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_carrier_shedding_coinfection_or_virulent_systemic_red_flags",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent_to_emergency",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что положительный результат респираторной ПЦР может отражать носительство или коинфекцию, в то время как сильная лихорадка, отек, желтуха или признаки со стороны органов вызывают вирулентную системную угрозу.",
+          "historyAnswers": {
+            "antigen_antibody_pcr_serial_and_confirmatory_results": "По нашим наблюдениям, пЦР или сайт сохранен.",
+            "secondary_disease_anemia_neoplasia_and_coinfection": "Дома мы заметили, что коинфекция открыта.",
+            "fever_weight_appetite_effusion_organ_and_cbc_changes": "Насколько мы можем судить, системные тревожные признаки."
+          },
+          "examFindings": [
+            {
+              "factId": "carrier_pcr_does_not_explain_episode_and_systemic_red_flags_change_urgency",
+              "source": "causality_and_severity_rule",
+              "finding": "Никакой случайной метки вирулентности."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "carrier_pcr_does_not_explain_episode_and_systemic_red_flags_change_urgency",
+              "discoveryPaths": [
+                "antigen_antibody_pcr_serial_and_confirmatory_results",
+                "respiratory_multisite_pcr_carrier_coinfection_record",
+                "organ_severity_effusion_cbc_chemistry_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_respiratory_multisite_pcr_and_carrier_coinfection_context",
+              "classification": "required_interpretation",
+              "result": "Целевое лабораторное исследование показало: контекст носительства или коинфекции."
+            },
+            {
+              "id": "feline_infectious_external_lab_emergency_and_regulated_referral_route",
+              "classification": "required_by_systemic_red_flags",
+              "result": "По итогам консультации специалиста: экстренное направление."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "carrier_pcr_does_not_explain_episode_and_systemic_red_flags_change_urgency"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_systemic_pattern_plus_contextual_evidence"
+            ],
+            "dangerStates": [
+              "shock",
+              "jaundice",
+              "edema",
+              "organ_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "feline_infectious_control",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "feline_respiratory_testing_external",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_respiratory_route",
+              "feline_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "respiratory_complex_plan",
+          "followUp": {
+            "timing": "Срочный системный курс.",
+            "required": true,
+            "targets": [
+              "organ_status",
+              "fever",
+              "edema",
+              "jaundice",
+              "contacts"
+            ]
+          },
+          "outcomes": {
+            "safe": "Разделяют носительство и системное заболевание.",
+            "unsafe": "Положительный результат ПЦР определяет причину или вирулентность."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему положительный результат мазка может отражать выделение вируса и почему системные признаки по-прежнему требуют неотложной помощи."
+          ],
+          "compatibility": {
+            "temperament": [
+              "systemically_ill",
+              "feline_sensitive"
+            ],
+            "requiredHandlingAlternative": "barrier_emergency_referral",
+            "ownerModifiers": [
+              "outbreak_fear"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "feline_felv_infection",
+      "version": "2026.07.16.40",
+      "title": "вирус лейкоза кошек инфекция",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Скрининг вирус лейкоза кошек требует подтверждающей или серийной характеристики; сохраняются прогрессивные, регрессивные и дискордантные состояния, в то время как инфекция не идентична текущей анемии, неоплазии, вторичному заболеванию, прогнозу или эвтаназии.",
+      "exclusions": [
+        "one_screen_lifelong_status",
+        "infection_equals_current_illness",
+        "positive_screen_auto_euthanasia"
+      ],
+      "planBundleId": "felv_plan",
+      "sourceIds": [
+        "aafp_retrovirus_2020"
+      ],
+      "presentations": [
+        {
+          "id": "p1_screen_positive_well_cat_requires_confirmed_status_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "prompt_not_emergency",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что клинически здоровая кошка имеет положительный результат скрининга на вирус лейкоза кошек.",
+          "historyAnswers": {
+            "origin_group_housing_contacts_fights_outdoor_wildlife": "По нашим наблюдениям, контекст риска.",
+            "antigen_antibody_pcr_serial_and_confirmatory_results": "Дома мы заметили, что идентичность экрана сохранена.",
+            "household_cats_shared_resources_and_exposure_plan": "Насколько мы можем судить, хозяйственный план открыт."
+          },
+          "examFindings": [
+            {
+              "factId": "well_cat_positive_felv_screen_requires_confirmatory_serial_status_not_prognosis",
+              "source": "staged_testing_rule",
+              "finding": "Никакого автоматического заболевания или эвтаназии."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "well_cat_positive_felv_screen_requires_confirmatory_serial_status_not_prognosis",
+              "discoveryPaths": [
+                "antigen_antibody_pcr_serial_and_confirmatory_results",
+                "felv_antigen_pcr_serial_status_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_felv_antigen_confirmatory_pcr_and_serial_infection_status",
+              "classification": "required",
+              "result": "Целевое лабораторное исследование показало: постановочный статус."
+            },
+            {
+              "id": "feline_retrovirus_secondary_disease_household_and_longitudinal_plan",
+              "classification": "required",
+              "result": "Целевое исследование показало: план домохозяйства или качества жизни."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "well_cat_positive_felv_screen_requires_confirmatory_serial_status_not_prognosis"
+            ],
+            "confirmedDiagnosisRequires": [
+              "contextual_confirmatory_or_serial_status"
+            ],
+            "dangerStates": []
+          },
+          "equipment": {
+            "requiredLocal": [
+              "felv_staged_testing",
+              "feline_retrovirus_longitudinal_plan",
+              "infectious_rapid_test"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_felv_route",
+              "feline_retrovirus_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "felv_plan",
+          "followUp": {
+            "timing": "Серийный статус согласно рассмотренному руководству.",
+            "required": true,
+            "targets": [
+              "antigen",
+              "pcr",
+              "clinical_status",
+              "household"
+            ]
+          },
+          "outcomes": {
+            "safe": "Экран приобретает характерный статус.",
+            "unsafe": "Один результат фиксирует продолжительность жизни или штраф."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: данные скрининга должны быть подтверждены, и многие кошки с положительным результатом могут иметь хорошее качество жизни."
+          ],
+          "compatibility": {
+            "temperament": [
+              "well",
+              "feline_sensitive"
+            ],
+            "requiredHandlingAlternative": "low_stress_serial_sampling",
+            "ownerModifiers": [
+              "euthanasia_fear"
+            ]
+          }
+        },
+        {
+          "id": "p2_progressive_regressive_or_discordant_antigen_pcr_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "prompt",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что антиген и ПЦР не согласуются или изменяются серийно, что требует прогрессивной или регрессивной характеристики.",
+          "historyAnswers": {
+            "antigen_antibody_pcr_serial_and_confirmatory_results": "По нашим наблюдениям, даты или анализы связаны.",
+            "sample_type_site_time_storage_and_pretest_treatment": "Мы принесли результаты с датами, названием лаборатории, методом и видом образца.",
+            "secondary_disease_anemia_neoplasia_and_coinfection": "Мы отдельно записали слабость, анемию и другие симптомы, а также все результаты тестов на вирус."
+          },
+          "examFindings": [
+            {
+              "factId": "discordant_felv_results_preserve_uncertainty_and_serial_identity",
+              "source": "status_rule",
+              "finding": "Новый результат оценивают вместе с предыдущими: он не отменяет историю инфекционного статуса."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "discordant_felv_results_preserve_uncertainty_and_serial_identity",
+              "discoveryPaths": [
+                "antigen_antibody_pcr_serial_and_confirmatory_results",
+                "same_cat_serial_status_and_sample_identity_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_felv_antigen_confirmatory_pcr_and_serial_infection_status",
+              "classification": "required_serial",
+              "result": "Целевое лабораторное исследование показало: прогрессивный или регрессивный или дискордантный статус."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "discordant_felv_results_preserve_uncertainty_and_serial_identity"
+            ],
+            "confirmedDiagnosisRequires": [
+              "serial_contextual_status"
+            ],
+            "dangerStates": [
+              "severe_secondary_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "felv_staged_testing",
+              "feline_retrovirus_longitudinal_plan"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_felv_route",
+              "feline_retrovirus_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "felv_plan",
+          "followUp": {
+            "timing": "Анализ серийного связанного антигена или ПЦР.",
+            "required": true,
+            "targets": [
+              "antigen",
+              "pcr",
+              "status",
+              "clinical_disease"
+            ]
+          },
+          "outcomes": {
+            "safe": "Разногласия остаются проверяемыми.",
+            "unsafe": "Последний тест стирает предыдущее состояние."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему тесты могут не совпадать и почему серийный статус имеет значение."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable"
+            ],
+            "requiredHandlingAlternative": "minimal_serial_sampling",
+            "ownerModifiers": [
+              "test_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p3_anemia_neoplasia_secondary_disease_or_longitudinal_care",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_secondary_disease",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что подтвержденный вирус лейкоза кошек сосуществует с анемией, неоплазией, вторичным заболеванием или стабильным продолжительным лечением.",
+          "historyAnswers": {
+            "secondary_disease_anemia_neoplasia_and_coinfection": "По нашим наблюдениям, доказательства связанного заболевания.",
+            "fever_weight_appetite_effusion_organ_and_cbc_changes": "Дома мы заметили, что тяжелый сериал.",
+            "household_cats_shared_resources_and_exposure_plan": "Насколько мы можем судить, план хозяйства сохранен."
+          },
+          "examFindings": [
+            {
+              "factId": "confirmed_felv_and_secondary_disease_are_linked_but_not_identical",
+              "source": "causality_rule",
+              "finding": "Излечимые вторичные проблемы остаются видимыми."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "confirmed_felv_and_secondary_disease_are_linked_but_not_identical",
+              "discoveryPaths": [
+                "secondary_disease_anemia_neoplasia_and_coinfection",
+                "retrovirus_secondary_disease_household_qol_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_retrovirus_secondary_disease_household_and_longitudinal_plan",
+              "classification": "required",
+              "result": "Целевое исследование показало: вторичное заболевание или качество жизни."
+            },
+            {
+              "id": "feline_felv_antigen_confirmatory_pcr_and_serial_infection_status",
+              "classification": "preserved",
+              "result": "Целевое лабораторное исследование показало: инфекционный статус."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "confirmed_felv_and_secondary_disease_are_linked_but_not_identical"
+            ],
+            "confirmedDiagnosisRequires": [
+              "confirmed_felv_plus_disease_specific_evidence"
+            ],
+            "dangerStates": [
+              "severe_anemia",
+              "organ_failure",
+              "aggressive_neoplasia"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "feline_retrovirus_longitudinal_plan",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_retrovirus_route",
+              "feline_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "felv_plan",
+          "followUp": {
+            "timing": "По вторичному заболеванию и качеству жизни.",
+            "required": true,
+            "targets": [
+              "cbc",
+              "secondary_disease",
+              "qol",
+              "household"
+            ]
+          },
+          "outcomes": {
+            "safe": "Инфекция и текущее заболевание остаются раздельными.",
+            "unsafe": "Сам по себе вирус лейкоза кошек требует эвтаназии или прогноза."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: обсуждайте конкретное текущее заболевание и качество жизни, а не рассматривайте результат вируса как общий прогноз."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable_or_weak"
+            ],
+            "requiredHandlingAlternative": "low_burden_longitudinal_care",
+            "ownerModifiers": [
+              "prognosis_fear"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "feline_fiv_infection",
+      "version": "2026.07.16.40",
+      "title": "ВИК-инфекция",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "При скрининге антител к вирус иммунодефицита кошек учитывается риск заражения, материнские антитела котят, контекст предшествующей вакцинации и окно недавнего контакта; подтвержденная инфекция специфична для кошек и требует лечения вторичного заболевания и длительного лечения, а не автоматического прогноза.",
+      "exclusions": [
+        "positive_kitten_is_confirmed",
+        "fiv_is_human_zoonosis",
+        "one_screen_auto_euthanasia"
+      ],
+      "planBundleId": "fiv_plan",
+      "sourceIds": [
+        "aafp_retrovirus_2020"
+      ],
+      "presentations": [
+        {
+          "id": "p1_risk_exposure_or_sick_cat_antibody_screen",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": true
+          },
+          "urgency": "routine_or_urgent_by_illness",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что кошка гуляет на улице, дерётся с другими кошками или заболела без ясной причины; поэтому нужен скрининг на антитела к вирусу иммунодефицита кошек.",
+          "historyAnswers": {
+            "origin_group_housing_contacts_fights_outdoor_wildlife": "По нашим наблюдениям, риск боя.",
+            "antigen_antibody_pcr_serial_and_confirmatory_results": "Дома мы заметили, что идентичность экрана известна.",
+            "secondary_disease_anemia_neoplasia_and_coinfection": "Насколько мы можем судить, текущая болезнь отдельная."
+          },
+          "examFindings": [
+            {
+              "factId": "fiv_antibody_screen_requires_risk_age_vaccine_and_window_context",
+              "source": "screen_rule",
+              "finding": "Экран не является прогнозом."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "fiv_antibody_screen_requires_risk_age_vaccine_and_window_context",
+              "discoveryPaths": [
+                "origin_group_housing_contacts_fights_outdoor_wildlife",
+                "fiv_antibody_age_vaccine_window_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_fiv_antibody_confirmatory_age_vaccine_and_exposure_window_review",
+              "classification": "required",
+              "result": "Целевое лабораторное исследование показало: контекстный экран."
+            },
+            {
+              "id": "feline_retrovirus_secondary_disease_household_and_longitudinal_plan",
+              "classification": "required_if_confirmed",
+              "result": "Целевое исследование показало: продольный уход."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "fiv_antibody_screen_requires_risk_age_vaccine_and_window_context"
+            ],
+            "confirmedDiagnosisRequires": [
+              "contextual_confirmatory_status"
+            ],
+            "dangerStates": [
+              "severe_secondary_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "fiv_staged_testing",
+              "infectious_rapid_test"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_fiv_route",
+              "feline_retrovirus_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fiv_plan",
+          "followUp": {
+            "timing": "По окну экспозиции или подтверждению.",
+            "required": true,
+            "targets": [
+              "antibody",
+              "exposure_window",
+              "secondary_disease"
+            ]
+          },
+          "outcomes": {
+            "safe": "Экран получает контекст.",
+            "unsafe": "Опасно по одному положительному скрининговому тесту объявлять прогноз без подтверждения инфекционного статуса и оценки состояния кошки."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: кошачью специфику и постановочную интерпретацию."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable_or_sick"
+            ],
+            "requiredHandlingAlternative": "low_stress_sampling",
+            "ownerModifiers": [
+              "human_infection_fear"
+            ]
+          }
+        },
+        {
+          "id": "p2_positive_kitten_maternal_antibody_vaccine_or_recent_exposure_context",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "routine_prompt",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что у котенка или кошки, недавно подвергшейся заражению или вакцинированной, есть положительный результат на антитела.",
+          "historyAnswers": {
+            "pregnancy_kitten_age_maternal_antibody_and_prior_vaccine_region": "По нашим наблюдениям, точный контекст возраста или матери или вакцины.",
+            "origin_group_housing_contacts_fights_outdoor_wildlife": "Дома мы заметили, что зафиксировано время экспозиции.",
+            "antigen_antibody_pcr_serial_and_confirmatory_results": "Насколько мы можем судить, идентичность результата сохранена."
+          },
+          "examFindings": [
+            {
+              "factId": "kitten_maternal_antibody_vaccine_and_recent_exposure_require_staged_retest_or_confirmation",
+              "source": "age_window_rule",
+              "finding": "Позитив – это не автоматическое заражение."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "kitten_maternal_antibody_vaccine_and_recent_exposure_require_staged_retest_or_confirmation",
+              "discoveryPaths": [
+                "pregnancy_kitten_age_maternal_antibody_and_prior_vaccine_region",
+                "fiv_antibody_age_vaccine_window_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_fiv_antibody_confirmatory_age_vaccine_and_exposure_window_review",
+              "classification": "required_contextual",
+              "result": "Целевое лабораторное исследование показало: интерпретация возраста или окна."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "kitten_maternal_antibody_vaccine_and_recent_exposure_require_staged_retest_or_confirmation"
+            ],
+            "confirmedDiagnosisRequires": [
+              "age_appropriate_confirmatory_status"
+            ],
+            "dangerStates": []
+          },
+          "equipment": {
+            "requiredLocal": [
+              "fiv_staged_testing"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_fiv_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fiv_plan",
+          "followUp": {
+            "timing": "Соответствующий обзор возраста или окна воздействия.",
+            "required": true,
+            "targets": [
+              "age",
+              "maternal_context",
+              "vaccine_context",
+              "confirmation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Контекст котенка предотвращает ложную маркировку на всю жизнь.",
+            "unsafe": "Материнские антитела игнорируются."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему антитела котенка могут не отражать инфекцию котенка."
+          ],
+          "compatibility": {
+            "temperament": [
+              "kitten",
+              "feline_sensitive"
+            ],
+            "requiredHandlingAlternative": "minimal_volume_staged_sampling",
+            "ownerModifiers": [
+              "adoption_decision_pressure"
+            ]
+          }
+        },
+        {
+          "id": "p3_confirmed_infection_with_secondary_disease_or_longitudinal_care",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "by_secondary_disease",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что подтвержденный ВИК сосуществует с вторичным заболеванием или стабильным долгосрочным лечением.",
+          "historyAnswers": {
+            "secondary_disease_anemia_neoplasia_and_coinfection": "По нашим наблюдениям, определено конкретное заболевание.",
+            "household_cats_shared_resources_and_exposure_plan": "Дома мы заметили, что записан план семейного риска.",
+            "fever_weight_appetite_effusion_organ_and_cbc_changes": "Насколько мы можем судить, тенденция качества жизни или органа сохранена."
+          },
+          "examFindings": [
+            {
+              "factId": "confirmed_fiv_requires_specific_secondary_disease_and_qol_care_not_viral_prognosis",
+              "source": "longitudinal_rule",
+              "finding": "Возможно хорошее качество жизни."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "confirmed_fiv_requires_specific_secondary_disease_and_qol_care_not_viral_prognosis",
+              "discoveryPaths": [
+                "secondary_disease_anemia_neoplasia_and_coinfection",
+                "retrovirus_secondary_disease_household_qol_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_retrovirus_secondary_disease_household_and_longitudinal_plan",
+              "classification": "required",
+              "result": "Целевое исследование показало: вторичное заболевание или качество жизни."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "confirmed_fiv_requires_specific_secondary_disease_and_qol_care_not_viral_prognosis"
+            ],
+            "confirmedDiagnosisRequires": [
+              "confirmed_fiv_plus_specific_current_disease"
+            ],
+            "dangerStates": [
+              "severe_secondary_infection",
+              "weight_loss"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "feline_retrovirus_longitudinal_plan",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_retrovirus_route",
+              "feline_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fiv_plan",
+          "followUp": {
+            "timing": "Частота индивидуальных вторичных заболеваний и качества жизни.",
+            "required": true,
+            "targets": [
+              "qol",
+              "weight",
+              "secondary_disease",
+              "household"
+            ]
+          },
+          "outcomes": {
+            "safe": "вирус иммунодефицита кошек остается контекстом, а не предложением.",
+            "unsafe": "Автоматическая эвтаназия или предупреждение о риске для человека."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: ВИК не является инфекцией человека, и уход сосредоточен на реальном здоровье кошки."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable_or_treatment_fatigued"
+            ],
+            "requiredHandlingAlternative": "low_burden_longitudinal_care",
+            "ownerModifiers": [
+              "stigma_fear"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "feline_infectious_peritonitis",
+      "version": "2026.07.16.40",
+      "title": "Инфекционный перитонит кошек",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Диагностика инфекционный перитонит кошек синтезирует совместимый мультисистемный фенотип, качество выпота или поражения, визуализацию, общий анализ крови или химический анализ и выбранную ПЦР или антиген или цитологию; Воздействие или выделение коронавирус кошек, Ривальта и ответные меры не могут существовать отдельно.",
+      "exclusions": [
+        "fcov_serology_equals_fip",
+        "fecal_pcr_equals_fip",
+        "rivalta_or_response_alone_confirms"
+      ],
+      "planBundleId": "fip_plan",
+      "sourceIds": [
+        "aafp_everycat_fip_2022",
+        "merck_fip"
+      ],
+      "presentations": [
+        {
+          "id": "p1_effusive_multisystemic_fip_evidence_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_by_effusion",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что выпот в сочетании с лихорадкой, потерей веса или мультисистемным заболеванием создает картину доказательства инфекционный перитонит кошек.",
+          "historyAnswers": {
+            "fever_weight_appetite_effusion_organ_and_cbc_changes": "По нашим наблюдениям, фенотип выпота или органа фиксирован.",
+            "sample_type_site_time_storage_and_pretest_treatment": "Дома мы заметили, что качество образца выпота точное.",
+            "antigen_antibody_pcr_serial_and_confirmatory_results": "Насколько мы можем судить, тесты связаны с сайтом."
+          },
+          "examFindings": [
+            {
+              "factId": "effusive_fip_requires_multimodal_synthesis_and_best_site_evidence",
+              "source": "evidence_rule",
+              "finding": "Сам по себе выпот не является инфекционный перитонит кошек."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "effusive_fip_requires_multimodal_synthesis_and_best_site_evidence",
+              "discoveryPaths": [
+                "fever_weight_appetite_effusion_organ_and_cbc_changes",
+                "fip_effusion_lesion_multimodal_evidence_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_fip_multimodal_evidence_effusion_cytology_pcr_and_antigen_detection",
+              "classification": "required",
+              "result": "При микроскопии материала: синтез выпота или поражения."
+            },
+            {
+              "id": "feline_infectious_external_lab_emergency_and_regulated_referral_route",
+              "classification": "required_by_instability",
+              "result": "По итогам консультации специалиста: специализированный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "effusive_fip_requires_multimodal_synthesis_and_best_site_evidence"
+            ],
+            "confirmedDiagnosisRequires": [
+              "high_specificity_compatible_multimodal_evidence"
+            ],
+            "dangerStates": [
+              "respiratory_effusion",
+              "shock",
+              "organ_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "fip_evidence_synthesis",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "fip_effusion_analysis_external",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_fip_route",
+              "feline_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fip_plan",
+          "followUp": {
+            "timing": "Неотложное течение выпота или органа и анализ доказательств.",
+            "required": true,
+            "targets": [
+              "effusion",
+              "respiration",
+              "organ_status",
+              "evidence_strength"
+            ]
+          },
+          "outcomes": {
+            "safe": "Доказательства лучших мест синтезируются.",
+            "unsafe": "Только Ривальта или выпот подтверждают это."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: ни один общий анализ крови или жидкостей не является окончательным."
+          ],
+          "compatibility": {
+            "temperament": [
+              "dyspneic_or_weak"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_internal_medicine_referral",
+            "ownerModifiers": [
+              "fip_fear"
+            ]
+          }
+        },
+        {
+          "id": "p2_noneffusive_ocular_neurologic_or_organ_specific_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 4.25,
+          "complaint": "Мы обратились, потому что неэффузивное заболевание характеризуется глазными, неврологическими или органоспецифическими поражениями с системными совместимыми признаками.",
+          "historyAnswers": {
+            "onset_gi_respiratory_ocular_oral_lameness_neuro_timeline": "По нашим наблюдениям, фиксированный курс глаз или нейро или органов.",
+            "fever_weight_appetite_effusion_organ_and_cbc_changes": "Дома мы заметили, что никакой выпот не стирает фенотип.",
+            "sample_type_site_time_storage_and_pretest_treatment": "Насколько мы можем судить, идентичность образца поражения или участка сохраняется."
+          },
+          "examFindings": [
+            {
+              "factId": "noneffusive_fip_requires_lesion_targeted_multimodal_evidence_and_alternatives",
+              "source": "difficult_diagnosis_rule",
+              "finding": "Никакого принудительного одиночного теста."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "noneffusive_fip_requires_lesion_targeted_multimodal_evidence_and_alternatives",
+              "discoveryPaths": [
+                "onset_gi_respiratory_ocular_oral_lameness_neuro_timeline",
+                "fip_effusion_lesion_multimodal_evidence_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_fip_multimodal_evidence_effusion_cytology_pcr_and_antigen_detection",
+              "classification": "required_lesion_targeted",
+              "result": "При микроскопии материала: неэффузивный синтез."
+            },
+            {
+              "id": "feline_infectious_external_lab_emergency_and_regulated_referral_route",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: обзор специалиста."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "noneffusive_fip_requires_lesion_targeted_multimodal_evidence_and_alternatives"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_lesion_specific_high_weight_evidence"
+            ],
+            "dangerStates": [
+              "seizure",
+              "vision_loss",
+              "organ_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "fip_evidence_synthesis"
+            ],
+            "external": [
+              "fip_effusion_analysis_external",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_fip_route",
+              "feline_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fip_plan",
+          "followUp": {
+            "timing": "Срочное поражение или системное течение.",
+            "required": true,
+            "targets": [
+              "ocular",
+              "neurologic",
+              "organ",
+              "evidence_strength"
+            ]
+          },
+          "outcomes": {
+            "safe": "Невыраженная неопределенность остается явной.",
+            "unsafe": "Общая ПЦР крови подтверждает ФИП."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему сухой инфекционный перитонит кошек является трудным и почему важны доказательства и альтернативы, специфичные для конкретного поражения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "neurologically_or_ocularly_abnormal"
+            ],
+            "requiredHandlingAlternative": "feline_friendly_specialist_referral",
+            "ownerModifiers": [
+              "diagnostic_fatigue"
+            ]
+          }
+        },
+        {
+          "id": "p3_fcov_pcr_serology_or_treatment_response_cannot_stand_alone",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "by_clinical_status",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что серология коронавирус кошек или ПЦР кала, Ривальта или очевидный ответ на лечение рассматриваются как отдельное доказательство ФИП.",
+          "historyAnswers": {
+            "antigen_antibody_pcr_serial_and_confirmatory_results": "По нашим наблюдениям, точная идентичность теста или образца.",
+            "sample_type_site_time_storage_and_pretest_treatment": "Дома мы заметили, что предварительная обработка и сайт зафиксированы.",
+            "secondary_disease_anemia_neoplasia_and_coinfection": "Насколько мы можем судить, альтернативы сохранены."
+          },
+          "examFindings": [
+            {
+              "factId": "fcov_exposure_shedding_rivalta_or_response_cannot_individually_confirm_fip",
+              "source": "anti_shortcut_rule",
+              "finding": "Требуются мультимодальные доказательства."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "fcov_exposure_shedding_rivalta_or_response_cannot_individually_confirm_fip",
+              "discoveryPaths": [
+                "antigen_antibody_pcr_serial_and_confirmatory_results",
+                "fip_effusion_lesion_multimodal_evidence_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_fip_multimodal_evidence_effusion_cytology_pcr_and_antigen_detection",
+              "classification": "required_reinterpretation",
+              "result": "При микроскопии материала: вес доказательств или альтернативы."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "fcov_exposure_shedding_rivalta_or_response_cannot_individually_confirm_fip"
+            ],
+            "confirmedDiagnosisRequires": [
+              "multimodal_compatible_evidence"
+            ],
+            "dangerStates": [
+              "clinical_deterioration"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "fip_evidence_synthesis"
+            ],
+            "external": [
+              "fip_effusion_analysis_external",
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_fip_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "fip_plan",
+          "followUp": {
+            "timing": "После переинтерпретации доказательств.",
+            "required": true,
+            "targets": [
+              "sample_site",
+              "specificity",
+              "alternatives",
+              "course"
+            ]
+          },
+          "outcomes": {
+            "safe": "Доказательства низкой специфичности взвешены правильно.",
+            "unsafe": "Ответ или ПЦР кала становятся диагностическим доказательством."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: на самом деле доказывает тест: воздействие или выделение против болезни."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable_or_sick"
+            ],
+            "requiredHandlingAlternative": "evidence_review_before_repeat_sampling",
+            "ownerModifiers": [
+              "internet_test_claims"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "feline_rabies_exposure_or_suspected_case",
+      "version": "2026.07.16.40",
+      "title": "Заражение бешенством или подозрительный случай у кошек",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Подозрение на бешенство или необъяснимое неврологическое заболевание требует прекратить обычный контакт, зафиксировать всех людей и животных, которые могли подвергнуться воздействию, и немедленно связаться с уполномоченной службой. Диагноз и дальнейшие обязательные меры определяются только по действующим правилам.",
+      "exclusions": [
+        "routine_exam",
+        "indoor_lifestyle_excludes",
+        "invented_legal_disposition"
+      ],
+      "planBundleId": "feline_rabies_plan",
+      "sourceIds": [
+        "wsava_vaccination_2024",
+        "who_rabies"
+      ],
+      "presentations": [
+        {
+          "id": "p1_bite_wildlife_contact_or_unknown_vaccination_status",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "regulated_urgent",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что контакт с дикими животными или укусы и сомнительные документы о вакцинации поднимают вопрос о бешенстве.",
+          "historyAnswers": {
+            "behavior_swallowing_salivation_paralysis_bite_or_saliva_exposure": "По нашим наблюдениям, экспозиция точная.",
+            "vaccine_product_dates_kitten_series_and_recent_vaccination": "Дома мы заметили, что документы, отделенные от воспоминаний.",
+            "owner_goals_cost_transport_referral_public_health_and_recheck": "Насколько мы можем судить, доступ к полномочиям известен."
+          },
+          "examFindings": [
+            {
+              "factId": "feline_rabies_exposure_requires_authority_route_before_contact",
+              "source": "regulated_rule",
+              "finding": "Внутренняя история не является абсолютным исключением."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "feline_rabies_exposure_requires_authority_route_before_contact",
+              "discoveryPaths": [
+                "behavior_swallowing_salivation_paralysis_bite_or_saliva_exposure",
+                "feline_rabies_no_handling_authority_exposure_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_rabies_no_routine_handling_public_health_notification_and_exposure_log",
+              "classification": "required_first",
+              "result": "При динамическом наблюдении: итетный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "feline_rabies_exposure_requires_authority_route_before_contact"
+            ],
+            "confirmedDiagnosisRequires": [
+              "authority_controlled_process"
+            ],
+            "dangerStates": [
+              "human_saliva_or_bite_exposure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "rabies_regulated_protocol"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_rabies_route",
+              "feline_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_rabies_plan",
+          "followUp": {
+            "timing": "Власть направлена.",
+            "required": true,
+            "targets": [
+              "exposure_log",
+              "documents",
+              "authority_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Власти контролируют маршрут.",
+            "unsafe": "Опасно вести такой случай как обычный приём или самостоятельно назначать карантин без действующих правил и уполномоченной службы."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: предотвратите контакт и уведомите уполномоченный орган."
+          ],
+          "compatibility": {
+            "temperament": [
+              "unknown_or_normal"
+            ],
+            "requiredHandlingAlternative": "no_contact_regulated_handoff",
+            "ownerModifiers": [
+              "panic"
+            ]
+          }
+        },
+        {
+          "id": "p2_behavior_swallowing_salivation_paralysis_or_unexplained_neurologic_signs",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "regulated_emergency",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что необъяснимое поведение, дисфагия, слюнотечение, паралич или неврологические симптомы вызывают беспокойство по поводу бешенства.",
+          "historyAnswers": {
+            "behavior_swallowing_salivation_paralysis_bite_or_saliva_exposure": "По нашим наблюдениям, знаки или воздействия.",
+            "household_cats_shared_resources_and_exposure_plan": "Дома мы заметили, что известны контакты с животными.",
+            "owner_goals_cost_transport_referral_public_health_and_recheck": "Насколько мы можем судить, доступен маршрут общественного здравоохранения."
+          },
+          "examFindings": [
+            {
+              "factId": "compatible_unexplained_signs_require_no_contact_public_health_route",
+              "source": "public_health_rule",
+              "finding": "Никакого стандартного неврологического осмотра."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "compatible_unexplained_signs_require_no_contact_public_health_route",
+              "discoveryPaths": [
+                "behavior_swallowing_salivation_paralysis_bite_or_saliva_exposure",
+                "feline_rabies_no_handling_authority_exposure_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_rabies_no_routine_handling_public_health_notification_and_exposure_log",
+              "classification": "required_immediate",
+              "result": "При динамическом наблюдении: бесконтактный маршрут власти."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "compatible_unexplained_signs_require_no_contact_public_health_route"
+            ],
+            "confirmedDiagnosisRequires": [
+              "authority_controlled_testing_if_applicable"
+            ],
+            "dangerStates": [
+              "bite",
+              "saliva_exposure",
+              "uncontrolled_animal"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "rabies_regulated_protocol"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_rabies_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_rabies_plan",
+          "followUp": {
+            "timing": "Власть контролируется.",
+            "required": true,
+            "targets": [
+              "human_exposures",
+              "animal_control"
+            ]
+          },
+          "outcomes": {
+            "safe": "Разоблачение предотвращено.",
+            "unsafe": "Плановый осмотр разоблачает персонал."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: соблюдайте дистанцию и немедленно свяжитесь с властями."
+          ],
+          "compatibility": {
+            "temperament": [
+              "aggressive_or_paralyzed_or_unknown"
+            ],
+            "requiredHandlingAlternative": "no_contact_secure_distance",
+            "ownerModifiers": [
+              "denial_or_fear"
+            ]
+          }
+        },
+        {
+          "id": "p3_human_exposure_public_health_and_regulated_disposition_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_2",
+            "localResolution": false
+          },
+          "urgency": "regulated_emergency",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что воздействие укуса человека или слюны требует уведомления органов здравоохранения и регламентированной утилизации.",
+          "historyAnswers": {
+            "behavior_swallowing_salivation_paralysis_bite_or_saliva_exposure": "По нашим наблюдениям, записаны люди или место или время.",
+            "owner_goals_cost_transport_referral_public_health_and_recheck": "Дома мы заметили, что передача полномочий готова.",
+            "vaccine_product_dates_kitten_series_and_recent_vaccination": "Насколько мы можем судить, документы сохранены."
+          },
+          "examFindings": [
+            {
+              "factId": "human_exposure_and_disposition_are_authority_controlled_not_generator_selected",
+              "source": "legal_boundary",
+              "finding": "Контакт с человеком и дальнейший маршрут животного определяет уполномоченная служба по действующим правилам."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "human_exposure_and_disposition_are_authority_controlled_not_generator_selected",
+              "discoveryPaths": [
+                "behavior_swallowing_salivation_paralysis_bite_or_saliva_exposure",
+                "feline_external_lab_emergency_regulated_handoff_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "feline_rabies_no_routine_handling_public_health_notification_and_exposure_log",
+              "classification": "required",
+              "result": "При динамическом наблюдении: уведомление о воздействии."
+            },
+            {
+              "id": "feline_infectious_external_lab_emergency_and_regulated_referral_route",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: передача полномочий."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "human_exposure_and_disposition_are_authority_controlled_not_generator_selected"
+            ],
+            "confirmedDiagnosisRequires": [
+              "authority_process_only"
+            ],
+            "dangerStates": [
+              "unreported_exposure",
+              "further_contact"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "rabies_regulated_protocol"
+            ],
+            "external": [
+              "infectious_disease_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "feline_rabies_route",
+              "feline_infectious_referral_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_rabies_plan",
+          "followUp": {
+            "timing": "Власть направлена.",
+            "required": true,
+            "targets": [
+              "human_handoff",
+              "authority_case",
+              "animal_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Маршруты людей или животных определяются властями.",
+            "unsafe": "Опасно самостоятельно определять дальнейшее содержание или иной обязательный маршрут животного без уполномоченной службы."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: направляйте людей, подвергшихся воздействию, на медицинское или общественное здравоохранение, не обещая последствий для животных."
+          ],
+          "compatibility": {
+            "temperament": [
+              "regulated_no_contact"
+            ],
+            "requiredHandlingAlternative": "authority_only_handoff",
+            "ownerModifiers": [
+              "human_exposure_distress"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if vaccine or indoor lifestyle absolutely excludes infection.",
+    "Reject if negative FPV antigen always excludes disease or any respiratory PCR proves current cause.",
+    "Reject if one FeLV/FIV screen fixes lifelong clinical prognosis, triggers euthanasia or campaign penalty.",
+    "Reject if FIV kitten maternal antibody, prior vaccine or recent exposure window is ignored.",
+    "Reject if FCoV antibody, fecal PCR, Rivalta or response alone proves FIP.",
+    "Reject if rabies is routinely handled or legally resolved by the generator.",
+    "Reject if external results are instant or code generates antiviral, antimicrobial, fluid, nutrition, vaccine, isolation duration, regulatory protocol or dose."
+  ]
+}

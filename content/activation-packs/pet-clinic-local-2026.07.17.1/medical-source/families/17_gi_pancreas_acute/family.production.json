@@ -1,0 +1,2993 @@
+{
+  "schemaVersion": 1,
+  "familyId": "gi_pancreas_acute",
+  "familyVersion": "2026.07.16.40",
+  "title": "Панкреатит собак и кошек",
+  "campaignPhase": "chapter_4_to_post_chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": {
+    "diagnosisRule": "Панкреатит измеряется для обнаружения клиники, специфической липазы поджелудочной железы, визуализации и исключений важных альтернатив; один тест не является диагнозом.",
+    "testRule": "Обычные амилаза и общая липаза не подтверждают панкреатит; быстрый панкреатическая липаза, количественный панкреатическая липаза и другие анализы липазы сохраняют свой метод и ограничения.",
+    "imagingRule": "Один ультразвуковой признак не подтверждает, а нормальное или неубедительное УЗИ не всегда исключает панкреатит.",
+    "severityRule": "Стабильная и шоковая или органная клинического варианта имеют разные планы; диагностика не задерживает стабилизацию.",
+    "felineRule": "У кошки отсутствие рвоты или явной боли не исключает панкреатит; фактическое питание и риск липидоза обязательны.",
+    "chronicRule": "Острый, хронический и острый-хронический процессы не получают ложной клинической точности без достаточных доказательств.",
+    "protocolRule": "Содержание не задает препарат, дозу, скорость инфузии, состав питания, технику зонда для кормления, пункции, дренирования или операции."
+  },
+  "coreCapabilities": [
+    "general_exam",
+    "hydration_assessment",
+    "pain_assessment",
+    "abdominal_palpation",
+    "temperature",
+    "body_weight",
+    "cbc",
+    "biochemistry",
+    "electrolytes",
+    "pancreatic_lipase_rapid_test",
+    "pancreatic_marker_external",
+    "pancreatic_ultrasound_external",
+    "nutritional_assessment",
+    "longitudinal_care"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "pancreatic_marker_or_referral",
+      "anyOf": [
+        "pancreatic_lipase_rapid_test",
+        "pancreatic_marker_external",
+        "gi_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "method_identified_pancreatic_specific_lipase"
+    },
+    {
+      "id": "pancreatic_imaging_or_referral",
+      "anyOf": [
+        "ultrasound",
+        "pancreatic_ultrasound_external",
+        "gi_ultrasound_external",
+        "advanced_imaging_referral",
+        "safe_referral"
+      ],
+      "purpose": "expert_abdominal_imaging_in_context"
+    },
+    {
+      "id": "pancreatic_differential_imaging_route",
+      "anyOf": [
+        "xray",
+        "gi_obstruction_ultrasound_external",
+        "advanced_imaging_referral",
+        "gi_surgical_exploration_referral",
+        "safe_referral"
+      ],
+      "purpose": "obstruction_foreign_body_or_alternative_acute_abdomen"
+    },
+    {
+      "id": "pancreatic_systemic_monitoring_route",
+      "anyOf": [
+        "cbc",
+        "biochemistry",
+        "electrolytes",
+        "coagulation",
+        "blood_gas_external",
+        "vital_monitor",
+        "hospital_referral",
+        "safe_referral"
+      ],
+      "purpose": "organ_failure_coagulation_perfusion_and_metabolic_risk"
+    },
+    {
+      "id": "pancreatic_support_route",
+      "anyOf": [
+        "pancreatic_supportive_care",
+        "analgesia",
+        "assisted_nutrition",
+        "hospital_referral",
+        "intensive_care_referral",
+        "safe_referral"
+      ],
+      "purpose": "reviewed_pain_hydration_nausea_nutrition_and_monitoring"
+    },
+    {
+      "id": "pancreatic_nutrition_route",
+      "anyOf": [
+        "nutritional_assessment",
+        "assisted_nutrition",
+        "feeding_tube_referral",
+        "gi_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "documented_intake_and_timely_nutrition_support"
+    },
+    {
+      "id": "pancreatic_comorbidity_route",
+      "anyOf": [
+        "blood_glucose",
+        "ketone_test",
+        "urinalysis",
+        "hepatobiliary_ultrasound_external",
+        "tli_external",
+        "cobalamin_folate_external",
+        "gi_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "diabetes_dka_hepatobiliary_enteropathy_or_epi_question"
+    },
+    {
+      "id": "pancreatic_emergency_route",
+      "anyOf": [
+        "oxygen",
+        "infusion_pump",
+        "vital_monitor",
+        "trained_stabilization",
+        "hospital_referral",
+        "intensive_care_referral",
+        "safe_referral"
+      ],
+      "purpose": "shock_respiratory_coagulation_or_multiorgan_emergency"
+    },
+    {
+      "id": "pancreatic_longitudinal_route",
+      "anyOf": [
+        "pancreatitis_longitudinal_monitoring",
+        "longitudinal_care",
+        "gi_specialist_referral",
+        "safe_referral"
+      ],
+      "purpose": "same_episode_clinical_response_and_recurrent_pattern"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "pancreatitis_history_pain_hydration_and_perfusion",
+      "requires": [
+        "general_exam",
+        "hydration_assessment",
+        "pain_assessment"
+      ],
+      "availability": "local_start",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pancreatitis_cbc_biochemistry_electrolytes",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "electrolytes"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pancreatitis_specific_lipase_testing",
+      "requires": [
+        "pancreatic_lipase_rapid_test",
+        "pancreatic_marker_external"
+      ],
+      "availability": "local_and_external_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pancreatitis_abdominal_ultrasound",
+      "requires": [
+        "ultrasound",
+        "pancreatic_ultrasound_external"
+      ],
+      "availability": "external_chapter_4_local_chapter_5",
+      "fallback": "gi_specialist_referral"
+    },
+    {
+      "researchId": "pancreatitis_radiography_for_differentials",
+      "requires": [
+        "xray",
+        "advanced_imaging_referral"
+      ],
+      "availability": "local_chapter_5_or_external",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pancreatitis_coagulation_and_organ_monitoring",
+      "requires": [
+        "coagulation",
+        "vital_monitor",
+        "blood_gas_external"
+      ],
+      "availability": "local_and_external_chapter_4",
+      "fallback": "intensive_care_referral"
+    },
+    {
+      "researchId": "pancreatitis_nutrition_and_comorbidity_assessment",
+      "requires": [
+        "nutritional_assessment",
+        "assisted_nutrition",
+        "blood_glucose",
+        "ketone_test"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "gi_specialist_referral"
+    },
+    {
+      "researchId": "pancreatitis_serial_clinical_response",
+      "requires": [
+        "pancreatitis_longitudinal_monitoring",
+        "longitudinal_care"
+      ],
+      "availability": "local_chapter_4",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "pancreatitis_specialist_or_intensive_referral",
+      "requires": [
+        "intensive_care_referral",
+        "safe_referral"
+      ],
+      "availability": "external_chapter_4",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "onset_course",
+      "text": "Когда началось и как меняются признаки: часы, дни, недели, постоянно или волнами?"
+    },
+    {
+      "id": "vomiting_water_retention",
+      "text": "Есть ли рвота, как часто и удерживает ли животное воду?"
+    },
+    {
+      "id": "actual_food_intake",
+      "text": "Сколько фактически съедено за последние дни?"
+    },
+    {
+      "id": "pain_posture_behavior",
+      "text": "Есть ли поза боли, нежелание двигаться, прятанье или реакция на живот?"
+    },
+    {
+      "id": "dietary_medication_exposure",
+      "text": "Был ли доступ к непривычной пище, мусору, токсинам или новым лекарствам?"
+    },
+    {
+      "id": "previous_similar_episodes",
+      "text": "Были ли похожие эпизоды и какие датированные исследования выполнялись?"
+    },
+    {
+      "id": "diabetes_endocrine_history",
+      "text": "Есть ли диабет, кетоны, эндокринная болезнь или изменения жажды и мочеиспускания?"
+    },
+    {
+      "id": "jaundice_urine_stool",
+      "text": "Есть ли желтуха, изменение мочи или стула?"
+    },
+    {
+      "id": "weight_feces_pattern",
+      "text": "Есть ли потеря массы, увеличение объёма или жирность стула?"
+    },
+    {
+      "id": "prior_pancreatic_test_method",
+      "text": "Как назывался тест: специфический панкреатическая липаза, быстрый, количественный панкреатическая липаза, обычная липаза или неизвестный?"
+    },
+    {
+      "id": "prior_treatment_tolerance",
+      "text": "Что уже применяли и что животное смогло удержать?"
+    },
+    {
+      "id": "owner_care_capacity",
+      "text": "Может ли владелец обеспечить питание, наблюдение, транспорт и повторный визит?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "mentation_temperature_perfusion_exam",
+      "source": "physical_exam",
+      "requires": [
+        "general_exam",
+        "temperature",
+        "blood_pressure"
+      ]
+    },
+    {
+      "id": "hydration_weight_trend_exam",
+      "source": "physical_exam",
+      "requires": [
+        "hydration_assessment",
+        "body_weight"
+      ]
+    },
+    {
+      "id": "gentle_abdominal_pain_exam",
+      "source": "physical_exam",
+      "requires": [
+        "abdominal_palpation",
+        "pain_assessment"
+      ]
+    },
+    {
+      "id": "respiratory_oxygen_risk_exam",
+      "source": "physical_exam",
+      "requires": [
+        "respiratory_rate",
+        "auscultation",
+        "pulse_oximetry"
+      ]
+    },
+    {
+      "id": "dated_cbc_chem_electrolyte_snapshot",
+      "source": "diagnostic_test",
+      "requires": [
+        "cbc",
+        "biochemistry",
+        "electrolytes"
+      ]
+    },
+    {
+      "id": "method_identified_pancreatic_lipase",
+      "source": "diagnostic_test",
+      "requires": [
+        "pancreatic_lipase_rapid_test",
+        "pancreatic_marker_external"
+      ]
+    },
+    {
+      "id": "expert_pancreatic_abdominal_ultrasound",
+      "source": "diagnostic_test",
+      "requires": [
+        "pancreatic_ultrasound_external"
+      ]
+    },
+    {
+      "id": "coagulation_organ_failure_screen",
+      "source": "diagnostic_test",
+      "requires": [
+        "coagulation",
+        "vital_monitor",
+        "blood_gas_external"
+      ]
+    },
+    {
+      "id": "documented_nutrition_comorbidity_screen",
+      "source": "clinical_assessment",
+      "requires": [
+        "nutritional_assessment",
+        "blood_glucose",
+        "ketone_test"
+      ]
+    },
+    {
+      "id": "same_episode_clinical_response",
+      "source": "follow_up",
+      "requires": [
+        "pancreatitis_longitudinal_monitoring",
+        "longitudinal_care"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "acvim_feline_pancreatitis_2021",
+      "title": "ACVIM consensus statement on pancreatitis in cats",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7995362/",
+      "scope": "feline_clinical_presentation_integrated_diagnosis_management_uncertainty"
+    },
+    {
+      "id": "acvim_feline_pancreatitis_jvim",
+      "title": "Journal of Veterinary Internal Medicine consensus publication",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1111/jvim.16053",
+      "scope": "peer_reviewed_consensus_record"
+    },
+    {
+      "id": "merck_pancreatitis_dogs_cats_2025",
+      "title": "Merck Veterinary Manual: Pancreatitis in Dogs and Cats",
+      "url": "https://www.merckvetmanual.com/digestive-system/the-exocrine-pancreas/pancreatitis-in-dogs-and-cats",
+      "scope": "dog_cat_diagnosis_imaging_lipase_supportive_care_complications"
+    },
+    {
+      "id": "merck_clinical_biochemistry_pancreas",
+      "title": "Merck Veterinary Manual: Clinical Biochemistry",
+      "url": "https://www.merckvetmanual.com/clinical-pathology-and-procedures/diagnostic-procedures-for-the-private-practice-laboratory/clinical-biochemistry",
+      "scope": "amylase_general_lipase_and_pancreatic_test_limitations"
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "acute_stable_pancreatitis_plan",
+      "fullPlan": [
+        "triage_perfusion_hydration_pain_and_intake",
+        "integrate_specific_lipase_with_clinical_picture",
+        "cbc_chem_electrolytes_and_targeted_imaging",
+        "exclude_obstruction_toxin_addison_and_other_dangerous_differentials",
+        "reviewed_supportive_and_nutrition_route",
+        "explicit_escalation_criteria",
+        "same_episode_clinical_followup"
+      ],
+      "stagedPlan": [
+        "triage",
+        "integrated_diagnosis",
+        "proportionate_support",
+        "clinical_recheck"
+      ],
+      "minimumSafePlan": [
+        "one_test_not_diagnosis",
+        "stable_perfusion_documented",
+        "pain_hydration_and_intake_addressed",
+        "safe_referral_if_support_unavailable"
+      ],
+      "stabilizeAndRefer": [
+        "hospital_if_water_food_or_pain_not_controllable",
+        "intensive_route_if_perfusion_or_organ_status_worsens"
+      ],
+      "unsafeOrInadequate": [
+        "fatty_food_story_confirms",
+        "ordinary_lipase_confirms",
+        "automatic_hospitalization_for_any_positive_test",
+        "discharge_without_escalation_rules"
+      ]
+    },
+    {
+      "id": "severe_systemic_pancreatitis_plan",
+      "fullPlan": [
+        "parallel_emergency_stabilization_and_diagnosis",
+        "perfusion_respiratory_renal_mentation_temperature_monitoring",
+        "cbc_chem_electrolytes_blood_gas_and_coagulation",
+        "specific_lipase_and_expert_imaging_when_safe",
+        "sepsis_toxin_obstruction_and_other_causes_remain_active",
+        "hospital_or_intensive_referral",
+        "serial_organ_and_clinical_response"
+      ],
+      "stagedPlan": [
+        "stabilize",
+        "organ_risk_map",
+        "integrated_cause_and_complication_workup",
+        "intensive_followup"
+      ],
+      "minimumSafePlan": [
+        "diagnostics_do_not_delay_support",
+        "home_plan_forbidden",
+        "each_organ_failure_stored_separately",
+        "safe_handoff_required"
+      ],
+      "stabilizeAndRefer": [
+        "oxygen_monitor_pump_and_trained_staff_or_immediate_referral",
+        "expert_imaging_or_procedure_referral_for_local_complication"
+      ],
+      "unsafeOrInadequate": [
+        "wait_for_pli_before_stabilizing",
+        "positive_pli_explains_every_organ_failure",
+        "blind_drainage",
+        "routine_antimicrobials_without_indication"
+      ]
+    },
+    {
+      "id": "feline_subtle_pancreatitis_plan",
+      "fullPlan": [
+        "recognize_nonspecific_feline_pattern",
+        "measure_actual_intake_hydration_temperature_and_pain",
+        "integrate_feline_specific_lipase_labs_and_ultrasound",
+        "assess_hepatobiliary_enteric_renal_diabetic_and_infectious_differentials",
+        "timely_reviewed_nutrition_route",
+        "low_stress_support_or_referral",
+        "weight_intake_and_clinical_followup"
+      ],
+      "stagedPlan": [
+        "feline_triage",
+        "integrated_workup",
+        "nutrition_and_support",
+        "clinical_recheck"
+      ],
+      "minimumSafePlan": [
+        "vomiting_not_required",
+        "obvious_pain_not_required",
+        "actual_intake_documented",
+        "lipidosis_risk_not_ignored"
+      ],
+      "stabilizeAndRefer": [
+        "hospital_if_hypothermic_dehydrated_or_metabolically_unstable",
+        "feeding_tube_or_specialist_route_if_intake_inadequate"
+      ],
+      "unsafeOrInadequate": [
+        "no_vomiting_excludes",
+        "no_guarding_means_mild",
+        "force_feeding_ui_action",
+        "positive_marker_only_confirms"
+      ]
+    },
+    {
+      "id": "chronic_recurrent_pancreatitis_plan",
+      "fullPlan": [
+        "build_dated_episode_and_weight_timeline",
+        "separate_current_triage_from_old_diagnosis",
+        "integrate_serial_clinical_lipase_and_imaging_evidence",
+        "assess_enteropathy_hepatobiliary_epi_diabetes_and_neoplasia",
+        "record_acute_chronic_or_acute_on_chronic_uncertainty",
+        "reviewed_longitudinal_nutrition_and_risk_plan",
+        "cross_family_followup_for_confirmed_complications"
+      ],
+      "stagedPlan": [
+        "timeline",
+        "current_episode_triage",
+        "differential_and_function_workup",
+        "longitudinal_plan"
+      ],
+      "minimumSafePlan": [
+        "old_positive_test_not_current_cause",
+        "current_dangerous_differentials_reopened",
+        "epi_and_diabetes_require_own_evidence",
+        "same_patient_timeline_preserved"
+      ],
+      "stabilizeAndRefer": [
+        "acute_severity_route_overrides_chronic_label",
+        "specialist_route_for_persistent_weight_loss_or_conflict"
+      ],
+      "unsafeOrInadequate": [
+        "every_episode_is_pancreatitis",
+        "histologic_chronicity_invented",
+        "epi_or_diabetes_guaranteed",
+        "new_acute_abdomen_dismissed"
+      ]
+    },
+    {
+      "id": "equivocal_comorbid_pancreatitis_plan",
+      "fullPlan": [
+        "verify_test_method_date_and_clinical_probability",
+        "preserve_each_result_without_averaging",
+        "review_ultrasound_timing_severity_equipment_and_operator",
+        "characterize_renal_hepatobiliary_enteric_and_diabetic_context",
+        "assign_supported_uncertain_or_alternative_classification",
+        "repeat_or_refer_only_if_decision_relevant",
+        "proportionate_followup_and_owner_explanation"
+      ],
+      "stagedPlan": [
+        "verify_evidence",
+        "resolve_decision_relevant_conflict",
+        "characterize_comorbidity",
+        "classify_and_follow"
+      ],
+      "minimumSafePlan": [
+        "positive_marker_not_automatic_disease",
+        "normal_ultrasound_not_absolute_exclusion",
+        "triaditis_not_three_diagnoses",
+        "no_aggressive_support_for_well_patient_without_indication"
+      ],
+      "stabilizeAndRefer": [
+        "treat_actual_instability_first",
+        "expert_imaging_or_gi_referral_for_unresolved_material_conflict"
+      ],
+      "unsafeOrInadequate": [
+        "choose_most_positive_test",
+        "average_conflicting_results",
+        "coin_flip_diagnosis",
+        "open_all_comorbidity_treatments"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "pancreatitis_dog_acute_stable",
+      "version": "2026.07.16.40",
+      "title": "Острый панкреатит собаки без органной недостаточности",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog"
+      ],
+      "diagnosticTruth": "Остро возникшие совместимые желудочно-кишечные или болевые признаки и интегрированные данные о поджелудочной железе без шока, органной недостаточности или тяжёлого локального определения.",
+      "exclusions": [
+        "gi_obstruction",
+        "toxin_exposure",
+        "addisonian_crisis",
+        "shock_or_organ_failure"
+      ],
+      "planBundleId": "acute_stable_pancreatitis_plan",
+      "sourceIds": [
+        "merck_pancreatitis_dogs_cats_2025",
+        "merck_clinical_biochemistry_pancreas"
+      ],
+      "presentations": [
+        {
+          "id": "p1_vomiting_abdominal_pain_after_nonspecific_trigger",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 1.75,
+          "complaint": "Мы обратились, потому что собаку рвёт, живот болезнен; владелец связывает начало с непривычной пищей, но перфузия стабильна.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, острые часы-дни.",
+            "vomiting_water_retention": "Дома мы заметили, что повторяющийся, но не неконтролируемый.",
+            "dietary_medication_exposure": "Насколько мы можем судить, возможные неспецифические диетические явления.",
+            "pain_posture_behavior": "Мы записали, что сопутствующий дискомфорт в животе.",
+            "owner_care_capacity": "По нашим наблюдениям, владелец может наблюдать животное дома, записывать воду, еду, рвоту и боль и готов приехать раньше при ухудшении."
+          },
+          "examFindings": [
+            {
+              "factId": "acute_compatible_pattern_with_stable_perfusion",
+              "source": "clinical_record",
+              "finding": "Острая рвота или боль с подтвержденной стабильной перфузией."
+            },
+            {
+              "factId": "dietary_story_does_not_close_dangerous_differentials",
+              "source": "clinical_reasoning",
+              "finding": "Обструкция, токсин, аддисоновский криз и другие причины острого живота остаются активными."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "acute_compatible_pattern_with_stable_perfusion",
+              "discoveryPaths": [
+                "onset_course",
+                "vomiting_water_retention",
+                "pain_posture_behavior",
+                "mentation_temperature_perfusion_exam"
+              ]
+            },
+            {
+              "factId": "dietary_story_does_not_close_dangerous_differentials",
+              "discoveryPaths": [
+                "dietary_medication_exposure",
+                "gentle_abdominal_pain_exam",
+                "dated_cbc_chem_electrolyte_snapshot"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_history_pain_hydration_and_perfusion",
+              "classification": "required_triage",
+              "result": "При уточнении анамнеза: стабильная полученная перфузия с состоянием боли или гидратации."
+            },
+            {
+              "id": "pancreatitis_specific_lipase_testing",
+              "classification": "integrated_support",
+              "result": "Целевое исследование показало: полученный результат панкреатическая липаза, идентифицированный методом."
+            },
+            {
+              "id": "pancreatitis_radiography_for_differentials",
+              "classification": "conditional_differential",
+              "result": "На рентгенограммах: препятствие или путь инородного тела, если указано."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "acute_compatible_pattern_with_stable_perfusion",
+              "dietary_story_does_not_close_dangerous_differentials"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_clinical_pattern_plus_integrated_pancreatic_evidence"
+            ],
+            "dangerStates": [
+              "shock",
+              "obstruction",
+              "toxin",
+              "uncontrolled_vomiting"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "pain_assessment",
+              "abdominal_palpation"
+            ],
+            "external": [
+              "pancreatic_marker_external",
+              "pancreatic_ultrasound_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pancreatic_marker_or_referral",
+              "pancreatic_differential_imaging_route",
+              "pancreatic_support_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_stable_pancreatitis_plan",
+          "followUp": {
+            "timing": "Обострение в тот же день в случае ухудшения; определяемая протоколом ранняя перепроверка.",
+            "required": true,
+            "targets": [
+              "vomiting",
+              "intake",
+              "pain",
+              "hydration",
+              "perfusion"
+            ]
+          },
+          "outcomes": {
+            "safe": "Комплексные доказательства и пропорциональная поддержка с явной эскалацией.",
+            "unsafe": "История с жирной пищей или обычной липазой ставит диагноз."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: триггер — это подсказка, а не доказательство, и перечислите признаки немедленного возврата."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "gentle_exam_and_external_imaging",
+            "ownerModifiers": [
+              "anxious",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_mild_to_moderate_dehydration_stable_perfusion",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "urgent",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что у собак рвота и анорексия вызвали умеренное обезвоживание, но электрошоковые маркеры отсутствуют.",
+          "historyAnswers": {
+            "vomiting_water_retention": "По нашим наблюдениям, немного жидкости осталось.",
+            "actual_food_intake": "Дома мы заметили, что уменьшен.",
+            "prior_treatment_tolerance": "Насколько мы можем судить, толерантность документально подтверждена.",
+            "owner_care_capacity": "Мы записали, что домашний мониторинг оценен."
+          },
+          "examFindings": [
+            {
+              "factId": "dehydration_present_without_shock",
+              "source": "physical_exam",
+              "finding": "Легкая или умеренная дегидратация со стабильной перфузией и мышлением."
+            },
+            {
+              "factId": "ambulatory_route_has_strict_eligibility",
+              "source": "clinical_reasoning",
+              "finding": "Требуется задержка воды, контролируемая боль и надежное последующее наблюдение."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "dehydration_present_without_shock",
+              "discoveryPaths": [
+                "vomiting_water_retention",
+                "hydration_weight_trend_exam",
+                "mentation_temperature_perfusion_exam"
+              ]
+            },
+            {
+              "factId": "ambulatory_route_has_strict_eligibility",
+              "discoveryPaths": [
+                "actual_food_intake",
+                "prior_treatment_tolerance",
+                "owner_care_capacity"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_cbc_biochemistry_electrolytes",
+              "classification": "required_severity",
+              "result": "В лабораторных показателях крови: исследования почек, глюкозы, печени и электролитов."
+            },
+            {
+              "id": "pancreatitis_specific_lipase_testing",
+              "classification": "integrated_support",
+              "result": "Целевое исследование показало: результат, сохраняемый методом."
+            },
+            {
+              "id": "pancreatitis_nutrition_and_comorbidity_assessment",
+              "classification": "required_management",
+              "result": "Клиническая оценка показала: фактическое право на прием и поддержку."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "dehydration_present_without_shock",
+              "ambulatory_route_has_strict_eligibility"
+            ],
+            "confirmedDiagnosisRequires": [
+              "integrated_clinical_and_pancreatic_evidence"
+            ],
+            "dangerStates": [
+              "worsening_dehydration",
+              "electrolyte_disorder",
+              "cannot_retain_water",
+              "uncontrolled_pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "blood_pressure",
+              "cbc",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "pancreatic_marker_external"
+            ],
+            "missingLocalRoute": [
+              "hospital_referral",
+              "safe_referral"
+            ],
+            "conditional": [
+              "pancreatic_systemic_monitoring_route",
+              "pancreatic_support_route",
+              "pancreatic_nutrition_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_stable_pancreatitis_plan",
+          "followUp": {
+            "timing": "Ранняя повторная оценка, определяемая протоколом.",
+            "required": true,
+            "targets": [
+              "hydration",
+              "water_retention",
+              "intake",
+              "pain",
+              "electrolytes"
+            ]
+          },
+          "outcomes": {
+            "safe": "Амбулаторная помощь только после четкой проверки приемлемости.",
+            "unsafe": "Стабильная этикетка скрывает невозможность питья или ненадежное наблюдение."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему ухудшение пищеварения, боль, слабость или рвота меняют маршрут в больницу."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "staged_low_stress_sampling",
+            "ownerModifiers": [
+              "reliable",
+              "transport_difficult"
+            ]
+          }
+        },
+        {
+          "id": "p3_improving_supportive_care_followup",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": true
+          },
+          "urgency": "follow_up",
+          "workload": 1,
+          "complaint": "Мы обратились, потому что на повторе собака снова ест, не рвёт, боль и обезвоживание объективно уменьшились.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, улучшение.",
+            "vomiting_water_retention": "Дома мы заметили, что никакой дальнейшей рвоты; вода сохранилась.",
+            "actual_food_intake": "Насколько мы можем судить, увеличение.",
+            "prior_treatment_tolerance": "Мы записали, что пересмотренный план поддержки допускается."
+          },
+          "examFindings": [
+            {
+              "factId": "clinical_response_is_objectively_improving",
+              "source": "follow_up_record",
+              "finding": "Аппетит, гидратация, тенденция к боли и рвоте улучшаются."
+            },
+            {
+              "factId": "repeat_testing_is_decision_driven",
+              "source": "clinical_reasoning",
+              "finding": "Повторять каждое исследование не нужно, если новый результат не изменит лечение или наблюдение."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "clinical_response_is_objectively_improving",
+              "discoveryPaths": [
+                "actual_food_intake",
+                "vomiting_water_retention",
+                "same_episode_clinical_response"
+              ]
+            },
+            {
+              "factId": "repeat_testing_is_decision_driven",
+              "discoveryPaths": [
+                "prior_pancreatic_test_method",
+                "previous_similar_episodes",
+                "same_episode_clinical_response"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_serial_clinical_response",
+              "classification": "required_followup",
+              "result": "При динамическом наблюдении: улучшение, созданное в том же эпизоде."
+            },
+            {
+              "id": "pancreatitis_specific_lipase_testing",
+              "classification": "optional_if_decision_relevant",
+              "result": "Целевое исследование показало: не повторяется автоматически."
+            },
+            {
+              "id": "pancreatitis_nutrition_and_comorbidity_assessment",
+              "classification": "required_recovery",
+              "result": "Клиническая оценка показала: пересмотр плана приема и факторов риска."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "clinical_response_is_objectively_improving",
+              "repeat_testing_is_decision_driven"
+            ],
+            "confirmedDiagnosisRequires": [
+              "linked_original_episode_and_response"
+            ],
+            "dangerStates": [
+              "relapse",
+              "weight_loss",
+              "recurrent_vomiting",
+              "new_pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "pain_assessment",
+              "body_weight",
+              "longitudinal_care"
+            ],
+            "external": [],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pancreatic_longitudinal_route",
+              "pancreatic_nutrition_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "acute_stable_pancreatitis_plan",
+          "followUp": {
+            "timing": "Пересмотрены интервал восстановления и критерии рецидива.",
+            "required": true,
+            "targets": [
+              "appetite",
+              "weight",
+              "vomiting",
+              "pain",
+              "recurrence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Клиническое выздоровление требует последующего наблюдения, а тестирование остается актуальным для принятия решений.",
+            "unsafe": "Обязательное повторение всех тестов, ориентированное на получение дохода."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: маркеры выздоровления, признаки постепенного перехода и рецидива."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "brief_low_stress_recheck",
+            "ownerModifiers": [
+              "budget_limited",
+              "reliable"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pancreatitis_severe_systemic",
+      "version": "2026.07.16.40",
+      "title": "Тяжёлый острый панкреатит с системными осложнениями",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Сопутствующая острая панкреатическая болезнь сопровождается плохой перфузией, органной дисфункцией, риском коагуляции или респирации или локальным осложнением; поддержка идет параллельном диагностике.",
+      "exclusions": [
+        "stable_outpatient_pattern",
+        "marker_only_without_instability"
+      ],
+      "planBundleId": "severe_systemic_pancreatitis_plan",
+      "sourceIds": [
+        "acvim_feline_pancreatitis_2021",
+        "merck_pancreatitis_dogs_cats_2025"
+      ],
+      "presentations": [
+        {
+          "id": "p1_shock_or_poor_perfusion",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что животное резко ослабло; перфузия нарушена, возможны тяжёлая дегидратация, гипотермия или гипотензия.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, резкое ухудшение.",
+            "vomiting_water_retention": "Дома мы заметили, что часто или невозможно сохранить.",
+            "actual_food_intake": "Насколько мы можем судить, минимальный или нет.",
+            "prior_treatment_tolerance": "Мы записали, что невозможно или неизвестно."
+          },
+          "examFindings": [
+            {
+              "factId": "poor_perfusion_requires_immediate_parallel_support",
+              "source": "triage_record",
+              "finding": "Присутствуют выявленные признаки шока или плохой перфузии."
+            },
+            {
+              "factId": "pancreatic_confirmation_does_not_precede_stabilization",
+              "source": "clinical_reasoning",
+              "finding": "панкреатическая липаза и визуализация выполняются параллельно только в тех случаях, когда это безопасно."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "poor_perfusion_requires_immediate_parallel_support",
+              "discoveryPaths": [
+                "onset_course",
+                "mentation_temperature_perfusion_exam",
+                "hydration_weight_trend_exam"
+              ]
+            },
+            {
+              "factId": "pancreatic_confirmation_does_not_precede_stabilization",
+              "discoveryPaths": [
+                "prior_pancreatic_test_method",
+                "method_identified_pancreatic_lipase",
+                "coagulation_organ_failure_screen"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_history_pain_hydration_and_perfusion",
+              "classification": "immediate_triage",
+              "result": "При уточнении анамнеза: шоковое состояние а."
+            },
+            {
+              "id": "pancreatitis_cbc_biochemistry_electrolytes",
+              "classification": "parallel_urgent",
+              "result": "В лабораторных показателях крови: органный или метаболический снимок."
+            },
+            {
+              "id": "pancreatitis_coagulation_and_organ_monitoring",
+              "classification": "parallel_urgent",
+              "result": "При динамическом наблюдении: серийная перфузия и органный риск."
+            },
+            {
+              "id": "pancreatitis_specialist_or_intensive_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: немедленный интенсивный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "poor_perfusion_requires_immediate_parallel_support",
+              "pancreatic_confirmation_does_not_precede_stabilization"
+            ],
+            "confirmedDiagnosisRequires": [
+              "integrated_evidence_after_or_during_support"
+            ],
+            "dangerStates": [
+              "shock",
+              "hypothermia",
+              "acidosis",
+              "oliguria",
+              "respiratory_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "oxygen",
+              "infusion_pump",
+              "vital_monitor",
+              "trained_stabilization"
+            ],
+            "external": [
+              "blood_gas_external",
+              "intensive_care_referral"
+            ],
+            "missingLocalRoute": [
+              "intensive_care_referral",
+              "safe_referral"
+            ],
+            "conditional": [
+              "pancreatic_systemic_monitoring_route",
+              "pancreatic_emergency_route",
+              "pancreatic_support_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "severe_systemic_pancreatitis_plan",
+          "followUp": {
+            "timing": "Непрерывный или серийный непрерывный мониторинг.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "mentation",
+              "temperature",
+              "urine_output",
+              "respiration",
+              "electrolytes"
+            ]
+          },
+          "outcomes": {
+            "safe": "Стабилизация и диагностика выполняются параллельно с безопасной передачей управления.",
+            "unsafe": "Игрок ждет панкреатическая липаза или отправляет пациента домой."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: непосредственную угрозу для жизни и почему перевод не может ждать полной уверенности."
+          ],
+          "compatibility": {
+            "temperament": [
+              "obtunded",
+              "fearful",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_stabilization",
+            "ownerModifiers": [
+              "budget_limited",
+              "transport_difficult",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p2_multiorgan_or_coagulation_red_flags",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 4,
+          "complaint": "Мы обратились, потому что на фоне острого живота появились почечные, дыхательные, гематологические или коагуляционные тревожные признаки.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, быстрое прогрессирование.",
+            "vomiting_water_retention": "Дома мы заметили, что переменная.",
+            "jaundice_urine_stool": "Насколько мы можем судить, может быть ненормальным.",
+            "diabetes_endocrine_history": "Мы записали, что записан метаболический контекст."
+          },
+          "examFindings": [
+            {
+              "factId": "each_organ_risk_is_explicit_not_a_single_severity_label",
+              "source": "monitoring_record",
+              "finding": "Почечные, респираторные, коагуляционные и перфузионные риски хранятся отдельно."
+            },
+            {
+              "factId": "positive_pli_does_not_explain_all_systemic_findings",
+              "source": "clinical_reasoning",
+              "finding": "Сепсис, токсин и альтернативные причины продолжают оцениваться."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "each_organ_risk_is_explicit_not_a_single_severity_label",
+              "discoveryPaths": [
+                "mentation_temperature_perfusion_exam",
+                "respiratory_oxygen_risk_exam",
+                "coagulation_organ_failure_screen"
+              ]
+            },
+            {
+              "factId": "positive_pli_does_not_explain_all_systemic_findings",
+              "discoveryPaths": [
+                "dietary_medication_exposure",
+                "dated_cbc_chem_electrolyte_snapshot",
+                "method_identified_pancreatic_lipase"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_coagulation_and_organ_monitoring",
+              "classification": "required_serial",
+              "result": "При динамическом наблюдении: полученные тревожные признаки для конкретных органов."
+            },
+            {
+              "id": "pancreatitis_cbc_biochemistry_electrolytes",
+              "classification": "required_urgent",
+              "result": "В лабораторных показателях крови: системная тяжесть или дифференциальный контекст."
+            },
+            {
+              "id": "pancreatitis_specific_lipase_testing",
+              "classification": "supportive_not_explanatory",
+              "result": "Целевое исследование показало: панкреатическая липаза с сохранением метода."
+            },
+            {
+              "id": "pancreatitis_specialist_or_intensive_referral",
+              "classification": "required",
+              "result": "По итогам консультации специалиста: больничный или интенсивный маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "each_organ_risk_is_explicit_not_a_single_severity_label",
+              "positive_pli_does_not_explain_all_systemic_findings"
+            ],
+            "confirmedDiagnosisRequires": [
+              "pancreatic_evidence_plus_separate_complication_evidence"
+            ],
+            "dangerStates": [
+              "aki",
+              "respiratory_failure",
+              "coagulopathy",
+              "sepsis",
+              "multiorgan_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "vital_monitor",
+              "oxygen",
+              "infusion_pump",
+              "cbc",
+              "biochemistry",
+              "electrolytes",
+              "coagulation"
+            ],
+            "external": [
+              "blood_gas_external",
+              "intensive_care_referral"
+            ],
+            "missingLocalRoute": [
+              "intensive_care_referral"
+            ],
+            "conditional": [
+              "pancreatic_systemic_monitoring_route",
+              "pancreatic_emergency_route"
+            ],
+            "referralFallback": "intensive_care_referral"
+          },
+          "carePlanId": "severe_systemic_pancreatitis_plan",
+          "followUp": {
+            "timing": "Серийный органоспецифичный мониторинг.",
+            "required": true,
+            "targets": [
+              "renal",
+              "respiratory",
+              "coagulation",
+              "perfusion",
+              "mentation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Каждое системное осложнение имеет доказательства и контролируемый путь.",
+            "unsafe": "Один результат панкреатическая липаза объясняет все ухудшение."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: панкреатит может сосуществовать с осложнениями или вызывать осложнения, требующие отдельного наблюдения."
+          ],
+          "compatibility": {
+            "temperament": [
+              "obtunded",
+              "pain_defensive",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_monitoring",
+            "ownerModifiers": [
+              "budget_limited",
+              "anxious"
+            ]
+          }
+        },
+        {
+          "id": "p3_local_complication_or_biliary_obstruction_suspicion",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_emergency",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что уЗИ предполагает локальную панкреатическую коллекцию или билиарную обструкцию на фоне ухудшения.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, стойкое или ухудшение.",
+            "jaundice_urine_stool": "Дома мы заметили, что могут присутствовать желтуха или изменение пигмента.",
+            "prior_pancreatic_test_method": "Насколько мы можем судить, записан конкретный результат и метод.",
+            "owner_care_capacity": "Мы записали, что оценена возможность срочного перевода."
+          },
+          "examFindings": [
+            {
+              "factId": "local_imaging_finding_requires_expert_characterization",
+              "source": "imaging_record",
+              "finding": "Подозрение на сбор или обструкцию не определяется инфекцией или точным типом наугад."
+            },
+            {
+              "factId": "blind_sampling_or_drainage_is_prohibited",
+              "source": "safety_rule",
+              "finding": "Процедура требует проверенных специалистом показаний и маршрута."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "local_imaging_finding_requires_expert_characterization",
+              "discoveryPaths": [
+                "jaundice_urine_stool",
+                "expert_pancreatic_abdominal_ultrasound",
+                "dated_cbc_chem_electrolyte_snapshot"
+              ]
+            },
+            {
+              "factId": "blind_sampling_or_drainage_is_prohibited",
+              "discoveryPaths": [
+                "prior_pancreatic_test_method",
+                "owner_care_capacity",
+                "expert_pancreatic_abdominal_ultrasound"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_abdominal_ultrasound",
+              "classification": "required_expert",
+              "result": "При ультразвуковом исследовании: полученные результаты местных и желчных протоков с оператором или контекстом."
+            },
+            {
+              "id": "pancreatitis_cbc_biochemistry_electrolytes",
+              "classification": "required_severity",
+              "result": "В лабораторных показателях крови: билиарный или данные об общем состоянии."
+            },
+            {
+              "id": "pancreatitis_specialist_or_intensive_referral",
+              "classification": "required_if_material",
+              "result": "По итогам консультации специалиста: экспертная процедура или хирургический маршрут."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "local_imaging_finding_requires_expert_characterization",
+              "blind_sampling_or_drainage_is_prohibited"
+            ],
+            "confirmedDiagnosisRequires": [
+              "expert_imaging_plus_integrated_clinical_context"
+            ],
+            "dangerStates": [
+              "biliary_obstruction",
+              "necrosis",
+              "infected_collection",
+              "sepsis",
+              "rupture"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "biochemistry",
+              "vital_monitor"
+            ],
+            "external": [
+              "pancreatic_ultrasound_external",
+              "advanced_imaging_referral",
+              "gi_surgical_exploration_referral"
+            ],
+            "missingLocalRoute": [
+              "gi_specialist_referral",
+              "intensive_care_referral"
+            ],
+            "conditional": [
+              "pancreatic_imaging_or_referral",
+              "pancreatic_systemic_monitoring_route",
+              "pancreatic_emergency_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "severe_systemic_pancreatitis_plan",
+          "followUp": {
+            "timing": "Срочная повторная оценка специалиста и серийная визуализация только при необходимости принятия решения.",
+            "required": true,
+            "targets": [
+              "jaundice",
+              "perfusion",
+              "pain",
+              "collection",
+              "biliary_flow",
+              "organ_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Местное осложнение характеризуется и устраняется без какой-либо искусственной инфекции или техники.",
+            "unsafe": "Неспецифический сбор вызывает слепой дренаж или автоматическое назначение противомикробных препаратов."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: разницу между подозрением на визуализацию и готовым к процедуре диагнозом."
+          ],
+          "compatibility": {
+            "temperament": [
+              "pain_defensive",
+              "fearful",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "expert_low_stress_or_stabilized_imaging",
+            "ownerModifiers": [
+              "transport_difficult",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pancreatitis_cat_subtle_acute",
+      "version": "2026.07.16.40",
+      "title": "Малозаметный острый панкреатит кошки",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "cat"
+      ],
+      "diagnosticTruth": "Кошачий панкреатит может проявляться вялостью и анорексией без рвоты и очевидной боли; диагноз остаётся интегрированным.",
+      "exclusions": [
+        "marker_only_incidental",
+        "hepatobiliary_renal_diabetic_or_infectious_disease_without_pancreatic_support"
+      ],
+      "planBundleId": "feline_subtle_pancreatitis_plan",
+      "sourceIds": [
+        "acvim_feline_pancreatitis_2021",
+        "acvim_feline_pancreatitis_jvim",
+        "merck_pancreatitis_dogs_cats_2025"
+      ],
+      "presentations": [
+        {
+          "id": "p1_lethargy_anorexia_without_vomiting",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что кошка мало ест и лежит больше обычного, но не рвёт и не показывает яркой боли.",
+          "historyAnswers": {
+            "actual_food_intake": "По нашим наблюдениям, измеренное сокращение.",
+            "vomiting_water_retention": "Дома мы заметили, что никакой рвоты.",
+            "pain_posture_behavior": "Насколько мы можем судить, кошка стала чаще прятаться и неохотно даёт трогать живот, но явной болезненной позы мы не видели.",
+            "onset_course": "Мы записали, что острый или подострый."
+          },
+          "examFindings": [
+            {
+              "factId": "feline_anorexia_lethargy_can_be_pancreatic_without_vomiting",
+              "source": "clinical_record",
+              "finding": "Неспецифическое кошачье представление остается совместимым."
+            },
+            {
+              "factId": "positive_marker_alone_does_not_confirm_a_well_cat",
+              "source": "clinical_reasoning",
+              "finding": "Клиническая вероятность, лабораторные исследования, визуализация и альтернативы интегрированы."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "feline_anorexia_lethargy_can_be_pancreatic_without_vomiting",
+              "discoveryPaths": [
+                "actual_food_intake",
+                "vomiting_water_retention",
+                "pain_posture_behavior"
+              ]
+            },
+            {
+              "factId": "positive_marker_alone_does_not_confirm_a_well_cat",
+              "discoveryPaths": [
+                "prior_pancreatic_test_method",
+                "method_identified_pancreatic_lipase",
+                "expert_pancreatic_abdominal_ultrasound"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_history_pain_hydration_and_perfusion",
+              "classification": "required",
+              "result": "При уточнении анамнеза: кошка ест примерно треть обычной порции, прячется и умеренно обезвожена; рвоты не было."
+            },
+            {
+              "id": "pancreatitis_specific_lipase_testing",
+              "classification": "integrated_support",
+              "result": "Целевое исследование показало: результат сохраняется при использовании кошачьего метода."
+            },
+            {
+              "id": "pancreatitis_cbc_biochemistry_electrolytes",
+              "classification": "required_differential",
+              "result": "В лабораторных показателях крови: системный или альтернативный контекст."
+            },
+            {
+              "id": "pancreatitis_abdominal_ultrasound",
+              "classification": "conditional_support",
+              "result": "При ультразвуковом исследовании: экспертная контекстная визуализация."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "feline_anorexia_lethargy_can_be_pancreatic_without_vomiting",
+              "positive_marker_alone_does_not_confirm_a_well_cat"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_feline_context_plus_integrated_evidence"
+            ],
+            "dangerStates": [
+              "prolonged_anorexia",
+              "hypothermia",
+              "dehydration",
+              "lipidosis",
+              "dka"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "temperature",
+              "body_weight",
+              "nutritional_assessment"
+            ],
+            "external": [
+              "pancreatic_marker_external",
+              "pancreatic_ultrasound_external"
+            ],
+            "missingLocalRoute": [
+              "gi_specialist_referral",
+              "safe_referral"
+            ],
+            "conditional": [
+              "pancreatic_marker_or_referral",
+              "pancreatic_imaging_or_referral",
+              "pancreatic_nutrition_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "feline_subtle_pancreatitis_plan",
+          "followUp": {
+            "timing": "Ранний прием или повторная проверка температуры или гидратации.",
+            "required": true,
+            "targets": [
+              "actual_intake",
+              "weight",
+              "temperature",
+              "hydration",
+              "activity"
+            ]
+          },
+          "outcomes": {
+            "safe": "Незаметные заболевания кошек исследуют, не полагаясь на рвоту.",
+            "unsafe": "Отсутствие рвоты закрывает случай или один маркер начинает лечение."
+          },
+          "ownerCommunication": [
+            "Я покажу, как записывать съеденную порцию и замечать небольшие изменения позы, активности и реакции на прикосновение."
+          ],
+          "compatibility": {
+            "temperament": [
+              "withdrawn",
+              "fearful",
+              "irritable"
+            ],
+            "requiredHandlingAlternative": "feline_low_stress_exam_and_sampling",
+            "ownerModifiers": [
+              "missed_subtle_signs",
+              "multiple_cats"
+            ]
+          }
+        },
+        {
+          "id": "p2_dehydration_or_hypothermia_with_vague_pain",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что кошка обезвожена или гипотермична, ест плохо; живот может не давать явной защитной реакции.",
+          "historyAnswers": {
+            "actual_food_intake": "По нашим наблюдениям, очень низкий.",
+            "vomiting_water_retention": "Дома мы заметили, что отсутствует или эпизодически.",
+            "jaundice_urine_stool": "Насколько мы можем судить, владелец подтверждает наличие этого признака.",
+            "diabetes_endocrine_history": "Мы записали, что известный или неизвестный диабет и кетоны."
+          },
+          "examFindings": [
+            {
+              "factId": "absence_of_guarding_does_not_make_feline_case_mild",
+              "source": "physical_exam",
+              "finding": "Тяжесть обезвоживания или гипотермии преобладает над нечеткой болевой реакцией."
+            },
+            {
+              "factId": "parallel_feline_differential_and_metabolic_screen_required",
+              "source": "clinical_reasoning",
+              "finding": "Холангит, ХБП, инфекция, диабет или ДКА и другие причины остаются активными."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "absence_of_guarding_does_not_make_feline_case_mild",
+              "discoveryPaths": [
+                "pain_posture_behavior",
+                "mentation_temperature_perfusion_exam",
+                "gentle_abdominal_pain_exam"
+              ]
+            },
+            {
+              "factId": "parallel_feline_differential_and_metabolic_screen_required",
+              "discoveryPaths": [
+                "diabetes_endocrine_history",
+                "jaundice_urine_stool",
+                "documented_nutrition_comorbidity_screen"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_cbc_biochemistry_electrolytes",
+              "classification": "required_urgent",
+              "result": "В лабораторных показателях крови: состояние почек, печени, глюкозы и электролитов."
+            },
+            {
+              "id": "pancreatitis_nutrition_and_comorbidity_assessment",
+              "classification": "required_urgent",
+              "result": "Клиническая оценка показала: интенсивный и метаболический скрининг."
+            },
+            {
+              "id": "pancreatitis_specific_lipase_testing",
+              "classification": "integrated_support",
+              "result": "Целевое исследование показало: результат, сохраняемый методом."
+            },
+            {
+              "id": "pancreatitis_specialist_or_intensive_referral",
+              "classification": "conditional_severity",
+              "result": "По итогам консультации специалиста: маршрут госпитализации, если он нестабилен."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "absence_of_guarding_does_not_make_feline_case_mild",
+              "parallel_feline_differential_and_metabolic_screen_required"
+            ],
+            "confirmedDiagnosisRequires": [
+              "integrated_pancreatic_evidence_not_pain_response"
+            ],
+            "dangerStates": [
+              "hypothermia",
+              "dehydration",
+              "dka",
+              "aki",
+              "sepsis"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "temperature",
+              "hydration_assessment",
+              "blood_glucose",
+              "ketone_test",
+              "cbc",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "pancreatic_marker_external",
+              "hepatobiliary_ultrasound_external"
+            ],
+            "missingLocalRoute": [
+              "hospital_referral",
+              "safe_referral"
+            ],
+            "conditional": [
+              "pancreatic_systemic_monitoring_route",
+              "pancreatic_comorbidity_route",
+              "pancreatic_support_route"
+            ],
+            "referralFallback": "hospital_referral"
+          },
+          "carePlanId": "feline_subtle_pancreatitis_plan",
+          "followUp": {
+            "timing": "Повторный осмотр в тот же день или контролируемый маршрут в больницу.",
+            "required": true,
+            "targets": [
+              "temperature",
+              "hydration",
+              "glucose",
+              "ketones",
+              "renal",
+              "intake"
+            ]
+          },
+          "outcomes": {
+            "safe": "Физиологическую нестабильность и различия решают, несмотря на неясную боль.",
+            "unsafe": "Никакая защита живота не считается успокаивающей."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему низкая температура и снижение потребления пищи могут быть более важными, чем рвота."
+          ],
+          "compatibility": {
+            "temperament": [
+              "withdrawn",
+              "fearful",
+              "obtunded"
+            ],
+            "requiredHandlingAlternative": "warm_minimal_stress_triage",
+            "ownerModifiers": [
+              "transport_difficult",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_hepatic_lipidosis_risk_requires_nutrition_plan",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_priority",
+          "workload": 2.5,
+          "complaint": "Мы обратились, потому что кошка несколько дней получает существенно меньше пищи; появляется риск или признаки печёночного липидоза.",
+          "historyAnswers": {
+            "actual_food_intake": "По нашим наблюдениям, количественно недостаточное потребление в течение нескольких дней.",
+            "owner_care_capacity": "Дома мы заметили, что оценена осуществимость поддержки питания.",
+            "prior_treatment_tolerance": "Насколько мы можем судить, зарегистрирована тошнота или толерантность к кормлению.",
+            "jaundice_urine_stool": "Мы записали, что владелец подтверждает наличие этого признака."
+          },
+          "examFindings": [
+            {
+              "factId": "prolonged_insufficient_intake_requires_timely_nutrition_route",
+              "source": "nutrition_record",
+              "finding": "Фактическое потребление и продолжительность триггера пересмотрены при планировании питания."
+            },
+            {
+              "factId": "unskilled_force_feeding_is_not_a_safe_action",
+              "source": "safety_rule",
+              "finding": "Для вспомогательного питания необходимы возможности или направление на зондовое питание."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "prolonged_insufficient_intake_requires_timely_nutrition_route",
+              "discoveryPaths": [
+                "actual_food_intake",
+                "hydration_weight_trend_exam",
+                "documented_nutrition_comorbidity_screen"
+              ]
+            },
+            {
+              "factId": "unskilled_force_feeding_is_not_a_safe_action",
+              "discoveryPaths": [
+                "owner_care_capacity",
+                "prior_treatment_tolerance",
+                "documented_nutrition_comorbidity_screen"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_nutrition_and_comorbidity_assessment",
+              "classification": "required_management",
+              "result": "Клиническая оценка показала: количественное потребление и риск липидоза или коморбидности."
+            },
+            {
+              "id": "pancreatitis_cbc_biochemistry_electrolytes",
+              "classification": "required",
+              "result": "В лабораторных показателях крови: печеночный или метаболический контекст."
+            },
+            {
+              "id": "pancreatitis_serial_clinical_response",
+              "classification": "required_followup",
+              "result": "При динамическом наблюдении: потребление, вес и переносимость отслеживаются."
+            },
+            {
+              "id": "pancreatitis_specialist_or_intensive_referral",
+              "classification": "conditional",
+              "result": "По итогам консультации специалиста: при необходимости – через зонд для кормления или в больницу."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "prolonged_insufficient_intake_requires_timely_nutrition_route",
+              "unskilled_force_feeding_is_not_a_safe_action"
+            ],
+            "confirmedDiagnosisRequires": [
+              "pancreatitis_and_hepatic_risk_evidenced_separately"
+            ],
+            "dangerStates": [
+              "hepatic_lipidosis",
+              "refeeding_risk",
+              "persistent_anorexia",
+              "electrolyte_disorder"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "nutritional_assessment",
+              "body_weight",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "feeding_tube_referral",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "feeding_tube_referral",
+              "safe_referral"
+            ],
+            "conditional": [
+              "pancreatic_nutrition_route",
+              "pancreatic_comorbidity_route",
+              "pancreatic_longitudinal_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "feline_subtle_pancreatitis_plan",
+          "followUp": {
+            "timing": "Ежедневный мониторинг потребления с помощью клинических или лабораторных контрольных точек, определенных протоколом.",
+            "required": true,
+            "targets": [
+              "actual_intake",
+              "weight",
+              "tolerance",
+              "jaundice",
+              "electrolytes"
+            ]
+          },
+          "outcomes": {
+            "safe": "Поддержка в области питания является своевременной, зависит от возможностей и контролируется.",
+            "unsafe": "Игрок игнорирует прием пищи или использует неквалифицированное принудительное кормление."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: потребление пищи является целью лечения и может потребовать направления, а не принуждения на дому."
+          ],
+          "compatibility": {
+            "temperament": [
+              "withdrawn",
+              "fearful",
+              "food_averse"
+            ],
+            "requiredHandlingAlternative": "trained_nutrition_support_or_referral",
+            "ownerModifiers": [
+              "multiple_cats",
+              "limited_home_care"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pancreatitis_chronic_or_recurrent",
+      "version": "2026.07.16.40",
+      "title": "Хронический или рецидивирующий панкреатит",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Повторяющиеся или длительные эпизоды совместимы с хроническим процессом, но клиническая хронология не заменяет гистологическую определённость и не объясняет автоматически новый острый живот.",
+      "exclusions": [
+        "single_old_positive_test_only",
+        "uninvestigated_enteropathy_hepatobiliary_neoplasia_epi_or_diabetes"
+      ],
+      "planBundleId": "chronic_recurrent_pancreatitis_plan",
+      "sourceIds": [
+        "acvim_feline_pancreatitis_2021",
+        "merck_pancreatitis_dogs_cats_2025"
+      ],
+      "presentations": [
+        {
+          "id": "p1_intermittent_gi_signs_and_weight_loss",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_follow_up",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что аппетит, рвота или стул меняются неделями или месяцами, масса постепенно снижается.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, периодические недели или месяцы.",
+            "previous_similar_episodes": "Дома мы заметили, что датированные эпизоды доступны или реконструированы.",
+            "weight_feces_pattern": "Насколько мы можем судить, снижение веса за счет описанного характера стула.",
+            "prior_pancreatic_test_method": "Мы записали, что старые и текущие методы разделены."
+          },
+          "examFindings": [
+            {
+              "factId": "longitudinal_pattern_requires_dated_multisystem_differential",
+              "source": "timeline_record",
+              "finding": "Хроническая энтеропатия, заболевания печени, РПИ, диабет и неоплазия остаются активными."
+            },
+            {
+              "factId": "old_positive_pancreatic_test_is_not_cause_of_every_episode",
+              "source": "clinical_reasoning",
+              "finding": "Требуются текущие доказательства и клиническое соответствие."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "longitudinal_pattern_requires_dated_multisystem_differential",
+              "discoveryPaths": [
+                "onset_course",
+                "previous_similar_episodes",
+                "weight_feces_pattern"
+              ]
+            },
+            {
+              "factId": "old_positive_pancreatic_test_is_not_cause_of_every_episode",
+              "discoveryPaths": [
+                "prior_pancreatic_test_method",
+                "method_identified_pancreatic_lipase",
+                "same_episode_clinical_response"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_serial_clinical_response",
+              "classification": "required_timeline",
+              "result": "При динамическом наблюдении: признаки и вес, связанные с эпизодом."
+            },
+            {
+              "id": "pancreatitis_specific_lipase_testing",
+              "classification": "serial_contextual",
+              "result": "Целевое исследование показало: старый или текущий метод и дата сохранены."
+            },
+            {
+              "id": "pancreatitis_abdominal_ultrasound",
+              "classification": "conditional_integrated",
+              "result": "При ультразвуковом исследовании: контекст поджелудочной железы и альтернативных заболеваний."
+            },
+            {
+              "id": "pancreatitis_nutrition_and_comorbidity_assessment",
+              "classification": "required_differential",
+              "result": "Клиническая оценка показала: скрининг питания и сопутствующих заболеваний."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "longitudinal_pattern_requires_dated_multisystem_differential",
+              "old_positive_pancreatic_test_is_not_cause_of_every_episode"
+            ],
+            "confirmedDiagnosisRequires": [
+              "recurrent_integrated_pancreatic_evidence_with_uncertainty_class"
+            ],
+            "dangerStates": [
+              "progressive_weight_loss",
+              "neoplasia",
+              "epi",
+              "diabetes",
+              "biliary_disease"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "body_weight",
+              "cbc",
+              "biochemistry",
+              "longitudinal_care"
+            ],
+            "external": [
+              "pancreatic_marker_external",
+              "pancreatic_ultrasound_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pancreatic_marker_or_referral",
+              "pancreatic_imaging_or_referral",
+              "pancreatic_comorbidity_route",
+              "pancreatic_longitudinal_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "chronic_recurrent_pancreatitis_plan",
+          "followUp": {
+            "timing": "Продольные контрольные точки, связанные с эпизодами.",
+            "required": true,
+            "targets": [
+              "weight",
+              "appetite",
+              "vomiting",
+              "stool",
+              "pain",
+              "comorbidities"
+            ]
+          },
+          "outcomes": {
+            "safe": "Игрок строит реальную временную шкалу и поддерживает активное альтернативное хроническое заболевание.",
+            "unsafe": "Исторический положительный тест становится постоянным объяснением."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему несколько датированных эпизодов и рекорды веса имеют большее значение, чем один старый ярлык."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "irritable"
+            ],
+            "requiredHandlingAlternative": "staged_longitudinal_workup",
+            "ownerModifiers": [
+              "incomplete_records",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_acute_on_chronic_episode",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "urgent_priority",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что у пациента с хроническим или рецидивирующим исходное состояние внезапно усилились рвота, боль, анорексия или слабость.",
+          "historyAnswers": {
+            "previous_similar_episodes": "По нашим наблюдениям, документированный хронический исходный уровень.",
+            "onset_course": "Дома мы заметили, что резкое ухудшение по сравнению с исходным уровнем.",
+            "dietary_medication_exposure": "Насколько мы можем судить, новые экспозиции проверены.",
+            "vomiting_water_retention": "Мы записали, что записана текущая серьезность."
+          },
+          "examFindings": [
+            {
+              "factId": "current_acute_triage_overrides_old_chronic_label",
+              "source": "triage_record",
+              "finding": "Новая перфузия, боль и состояние органа оцениваются с нуля."
+            },
+            {
+              "factId": "acute_on_chronic_is_an_uncertainty_class_not_invented_histology",
+              "source": "clinical_reasoning",
+              "finding": "Клинические данные сохраняют неопределенность в отношении острой и хронической патологии."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "current_acute_triage_overrides_old_chronic_label",
+              "discoveryPaths": [
+                "onset_course",
+                "vomiting_water_retention",
+                "mentation_temperature_perfusion_exam"
+              ]
+            },
+            {
+              "factId": "acute_on_chronic_is_an_uncertainty_class_not_invented_histology",
+              "discoveryPaths": [
+                "previous_similar_episodes",
+                "prior_pancreatic_test_method",
+                "same_episode_clinical_response"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_history_pain_hydration_and_perfusion",
+              "classification": "required_current_triage",
+              "result": "При уточнении анамнеза: текущая серьезность не зависит от старой метки."
+            },
+            {
+              "id": "pancreatitis_radiography_for_differentials",
+              "classification": "conditional_reopen",
+              "result": "На рентгенограммах: обструкция или другая острая причина остается открытой."
+            },
+            {
+              "id": "pancreatitis_specific_lipase_testing",
+              "classification": "integrated_current",
+              "result": "Целевое исследование показало: текущий метод или дата."
+            },
+            {
+              "id": "pancreatitis_serial_clinical_response",
+              "classification": "required_link",
+              "result": "При динамическом наблюдении: острый эпизод связан с хронической временной шкалой."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "current_acute_triage_overrides_old_chronic_label",
+              "acute_on_chronic_is_an_uncertainty_class_not_invented_histology"
+            ],
+            "confirmedDiagnosisRequires": [
+              "current_integrated_evidence_with_acute_on_chronic_classification"
+            ],
+            "dangerStates": [
+              "shock",
+              "obstruction",
+              "toxin",
+              "organ_failure",
+              "uncontrolled_vomiting"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "hydration_assessment",
+              "pain_assessment",
+              "cbc",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "pancreatic_marker_external",
+              "pancreatic_ultrasound_external"
+            ],
+            "missingLocalRoute": [
+              "hospital_referral",
+              "safe_referral"
+            ],
+            "conditional": [
+              "pancreatic_differential_imaging_route",
+              "pancreatic_systemic_monitoring_route",
+              "pancreatic_support_route",
+              "pancreatic_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "chronic_recurrent_pancreatitis_plan",
+          "followUp": {
+            "timing": "Острый мониторинг с последующим связанным хроническим обзором.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "pain",
+              "vomiting",
+              "intake",
+              "baseline_recovery"
+            ]
+          },
+          "outcomes": {
+            "safe": "Оцениваются новые острые угрозы, и сохраняется неопределенность эпизода.",
+            "unsafe": "Старый диагноз не учитывает обструкцию или органную недостаточность."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: знакомая ситуация может оказаться другой или более серьезной острой проблемой."
+          ],
+          "compatibility": {
+            "temperament": [
+              "pain_defensive",
+              "fearful",
+              "withdrawn"
+            ],
+            "requiredHandlingAlternative": "current_severity_first_low_stress_triage",
+            "ownerModifiers": [
+              "anchored_on_old_diagnosis",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p3_progression_to_diabetes_or_epi_risk",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "follow_up_priority",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что на хроническом фоне появились полиурия и полидипсия, гипергликемия, дальнейшее похудение или объёмный жирный стул.",
+          "historyAnswers": {
+            "diabetes_endocrine_history": "По нашим наблюдениям, полиурии и полидипсии пока нет; глюкоза крови и мочи в референсном диапазоне, кетоны не выявлены.",
+            "weight_feces_pattern": "Дома мы заметили, что изменения веса и стула.",
+            "previous_similar_episodes": "Насколько мы можем судить, история поджелудочной железы связана.",
+            "actual_food_intake": "Мы записали, что расход и вес разделены."
+          },
+          "examFindings": [
+            {
+              "factId": "diabetes_and_epi_are_possible_not_automatic_complications",
+              "source": "clinical_reasoning",
+              "finding": "Каждый из них требует своих собственных диагностических данных."
+            },
+            {
+              "factId": "cross_family_followup_preserves_one_patient_timeline",
+              "source": "simulation_record",
+              "finding": "Панкреатические, эндокринные и экзокринные состояния остаются связанными, но разными."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "diabetes_and_epi_are_possible_not_automatic_complications",
+              "discoveryPaths": [
+                "diabetes_endocrine_history",
+                "weight_feces_pattern",
+                "documented_nutrition_comorbidity_screen"
+              ]
+            },
+            {
+              "factId": "cross_family_followup_preserves_one_patient_timeline",
+              "discoveryPaths": [
+                "previous_similar_episodes",
+                "actual_food_intake",
+                "same_episode_clinical_response"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_nutrition_and_comorbidity_assessment",
+              "classification": "required_cross_family",
+              "result": "Клиническая оценка показала: сигналы диабета или экзокринная недостаточность поджелудочной железы направлены на собственные тесты."
+            },
+            {
+              "id": "pancreatitis_cbc_biochemistry_electrolytes",
+              "classification": "required_baseline",
+              "result": "В лабораторных показателях крови: глюкоза, орган и электролитный контекст."
+            },
+            {
+              "id": "pancreatitis_serial_clinical_response",
+              "classification": "required_longitudinal",
+              "result": "При динамическом наблюдении: общий график пациентов."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "diabetes_and_epi_are_possible_not_automatic_complications",
+              "cross_family_followup_preserves_one_patient_timeline"
+            ],
+            "confirmedDiagnosisRequires": [
+              "separate_validated_diabetes_or_epi_evidence"
+            ],
+            "dangerStates": [
+              "dka",
+              "severe_weight_loss",
+              "malnutrition",
+              "cobalamin_deficiency"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "body_weight",
+              "blood_glucose",
+              "ketone_test",
+              "cbc",
+              "biochemistry",
+              "urinalysis",
+              "longitudinal_care"
+            ],
+            "external": [
+              "tli_external",
+              "cobalamin_folate_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pancreatic_comorbidity_route",
+              "pancreatic_longitudinal_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "chronic_recurrent_pancreatitis_plan",
+          "followUp": {
+            "timing": "Последующее наблюдение, определяемое межсемейным протоколом.",
+            "required": true,
+            "targets": [
+              "glucose",
+              "ketones",
+              "weight",
+              "stool",
+              "intake",
+              "tli_context"
+            ]
+          },
+          "outcomes": {
+            "safe": "Осложнения проверяются и отслеживаются как отдельные диагнозы.",
+            "unsafe": "Диабет или РПИ возникает как гарантированное последствие."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какие новые признаки требуют отдельного обследования диабета или РПИ."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "food_motivated"
+            ],
+            "requiredHandlingAlternative": "staged_cross_family_testing",
+            "ownerModifiers": [
+              "complex_home_care",
+              "budget_limited"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pancreatitis_equivocal_or_comorbid",
+      "version": "2026.07.16.40",
+      "title": "Неоднозначный панкреатический результат или сочетанная болезнь",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Расходящиеся тесты или сочетанная болезнь требуют явного уровня уверенности; самый положительный результат не выбирается автоматически.",
+      "exclusions": [
+        "single_test_autodiagnosis",
+        "triaditis_label_without_component_evidence"
+      ],
+      "planBundleId": "equivocal_comorbid_pancreatitis_plan",
+      "sourceIds": [
+        "acvim_feline_pancreatitis_2021",
+        "merck_pancreatitis_dogs_cats_2025",
+        "merck_clinical_biochemistry_pancreas"
+      ],
+      "presentations": [
+        {
+          "id": "p1_positive_marker_without_matching_clinical_picture",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "routine_follow_up",
+          "workload": 1.5,
+          "complaint": "Мы обратились, потому что специфический маркер поджелудочной железы увеличился, но клиническая картина слаба или осмотр указывает на другую проблему.",
+          "historyAnswers": {
+            "prior_pancreatic_test_method": "По нашим наблюдениям, точный метод, дата и класс магнитуды записаны.",
+            "onset_course": "Дома мы заметили, что минимальные или отсутствующие совместимые признаки.",
+            "vomiting_water_retention": "Насколько мы можем судить, отсутствуют или не связаны.",
+            "previous_similar_episodes": "Мы записали, что нет или не совпадает."
+          },
+          "examFindings": [
+            {
+              "factId": "positive_specific_marker_requires_clinical_fit",
+              "source": "clinical_reasoning",
+              "finding": "Результат подтверждает, но не определяет автоматически клинический панкреатит."
+            },
+            {
+              "factId": "proportionate_plan_avoids_aggressive_support_in_well_patient",
+              "source": "safety_rule",
+              "finding": "Руководство учитывает фактическую серьезность и актуальность решений."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "positive_specific_marker_requires_clinical_fit",
+              "discoveryPaths": [
+                "prior_pancreatic_test_method",
+                "onset_course",
+                "method_identified_pancreatic_lipase"
+              ]
+            },
+            {
+              "factId": "proportionate_plan_avoids_aggressive_support_in_well_patient",
+              "discoveryPaths": [
+                "vomiting_water_retention",
+                "previous_similar_episodes",
+                "mentation_temperature_perfusion_exam"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_specific_lipase_testing",
+              "classification": "verify_method_context",
+              "result": "Целевое исследование показало: положительный результат сохраняется без автодиагностики."
+            },
+            {
+              "id": "pancreatitis_cbc_biochemistry_electrolytes",
+              "classification": "conditional_alternatives",
+              "result": "В лабораторных показателях крови: почечный и другой контекст."
+            },
+            {
+              "id": "pancreatitis_serial_clinical_response",
+              "classification": "decision_relevant_followup",
+              "result": "При динамическом наблюдении: клиническая эволюция, а не только маркер."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "positive_specific_marker_requires_clinical_fit",
+              "proportionate_plan_avoids_aggressive_support_in_well_patient"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_clinical_or_imaging_context_in_addition_to_marker"
+            ],
+            "dangerStates": [
+              "missed_alternative_disease",
+              "unnecessary_hospitalization",
+              "renal_confounding"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "cbc",
+              "biochemistry"
+            ],
+            "external": [
+              "pancreatic_marker_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pancreatic_marker_or_referral",
+              "pancreatic_comorbidity_route",
+              "pancreatic_longitudinal_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "equivocal_comorbid_pancreatitis_plan",
+          "followUp": {
+            "timing": "Клиническая повторная проверка, значимая для принятия решения.",
+            "required": true,
+            "targets": [
+              "new_signs",
+              "clinical_probability",
+              "alternative_diagnosis",
+              "test_context"
+            ]
+          },
+          "outcomes": {
+            "safe": "Пациент остается поддержанным или неуверенным до тех пор, пока доказательства не совпадут.",
+            "unsafe": "Любой положительный маркер является основанием для лечения панкреатита и госпитализации."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: настоящие лабораторные отклонения могут быть случайными или недостаточными для постановки клинического диагноза."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful"
+            ],
+            "requiredHandlingAlternative": "brief_proportionate_recheck",
+            "ownerModifiers": [
+              "anxious_about_lab_result",
+              "budget_limited"
+            ]
+          }
+        },
+        {
+          "id": "p2_ultrasound_and_marker_disagree",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority_follow_up",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что уЗИ и специфический маркер поджелудочной железы не совпадают с клиническими предположениями.",
+          "historyAnswers": {
+            "onset_course": "По нашим наблюдениям, клиническая вероятность.",
+            "prior_pancreatic_test_method": "Дома мы заметили, что метод или дата записи.",
+            "previous_similar_episodes": "Насколько мы можем судить, предыдущие изображения или тесты разделены.",
+            "owner_care_capacity": "Мы записали, что экспертная оценка возможности повторения."
+          },
+          "examFindings": [
+            {
+              "factId": "discordant_results_preserve_timing_operator_and_method",
+              "source": "diagnostic_record",
+              "finding": "Время проведения УЗИ или тяжесть или оператор и метод панкреатическая липаза остаются ясными."
+            },
+            {
+              "factId": "code_does_not_average_tests_or_randomize_diagnosis",
+              "source": "safety_rule",
+              "finding": "Повторное обращение или перенаправление происходит только тогда, когда конфликт меняет решение."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "discordant_results_preserve_timing_operator_and_method",
+              "discoveryPaths": [
+                "prior_pancreatic_test_method",
+                "previous_similar_episodes",
+                "expert_pancreatic_abdominal_ultrasound"
+              ]
+            },
+            {
+              "factId": "code_does_not_average_tests_or_randomize_diagnosis",
+              "discoveryPaths": [
+                "onset_course",
+                "owner_care_capacity",
+                "method_identified_pancreatic_lipase"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_specific_lipase_testing",
+              "classification": "discordant_evidence",
+              "result": "Целевое исследование показало: метод и дата сохранены."
+            },
+            {
+              "id": "pancreatitis_abdominal_ultrasound",
+              "classification": "discordant_evidence",
+              "result": "При ультразвуковом исследовании: контекст оператора или времени или серьезности сохранен."
+            },
+            {
+              "id": "pancreatitis_specialist_or_intensive_referral",
+              "classification": "conditional_material_conflict",
+              "result": "По итогам консультации специалиста: экспертная оценка в случае смены руководства."
+            },
+            {
+              "id": "pancreatitis_serial_clinical_response",
+              "classification": "required_context",
+              "result": "При динамическом наблюдении: клинический результат отслеживался."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "discordant_results_preserve_timing_operator_and_method",
+              "code_does_not_average_tests_or_randomize_diagnosis"
+            ],
+            "confirmedDiagnosisRequires": [
+              "decision_relevant_integrated_resolution_or_explicit_uncertainty"
+            ],
+            "dangerStates": [
+              "false_exclusion_by_normal_ultrasound",
+              "overdiagnosis_by_nonspecific_ultrasound",
+              "missed_obstruction"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "longitudinal_care"
+            ],
+            "external": [
+              "pancreatic_marker_external",
+              "pancreatic_ultrasound_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "pancreatic_marker_or_referral",
+              "pancreatic_imaging_or_referral",
+              "pancreatic_longitudinal_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "equivocal_comorbid_pancreatitis_plan",
+          "followUp": {
+            "timing": "Повторная или экспертная оценка только тогда, когда это важно для принятия решения.",
+            "required": true,
+            "targets": [
+              "clinical_course",
+              "operator_context",
+              "test_method",
+              "alternative_disease"
+            ]
+          },
+          "outcomes": {
+            "safe": "Конфликт объясняется, сохраняется и разрешается пропорционально.",
+            "unsafe": "автоматическая система усредняет результаты или выбирает один случайным образом."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему возможны разногласия при тестировании и какая новая информация действительно может изменить план."
+          ],
+          "compatibility": {
+            "temperament": [
+              "calm",
+              "fearful",
+              "pain_defensive"
+            ],
+            "requiredHandlingAlternative": "expert_low_stress_repeat_if_needed",
+            "ownerModifiers": [
+              "anxious",
+              "transport_difficult"
+            ]
+          }
+        },
+        {
+          "id": "p3_feline_cholangitis_enteropathy_or_diabetes_cluster",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_4",
+            "localResolution": false
+          },
+          "urgency": "priority",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что у кошки одновременно есть признаки панкреатической, гепатобилиарной, кишечной или диабетической болезни.",
+          "historyAnswers": {
+            "actual_food_intake": "По нашим наблюдениям, количественно.",
+            "jaundice_urine_stool": "Дома мы заметили, что гепатобилиарные и каловые признаки разделены.",
+            "diabetes_endocrine_history": "Насколько мы можем судить, контекст глюкозы или кетона или ПУ-ФД разделен.",
+            "weight_feces_pattern": "Мы записали, что вес и характер стула."
+          },
+          "examFindings": [
+            {
+              "factId": "each_comorbidity_requires_its_own_evidence",
+              "source": "clinical_reasoning",
+              "finding": "Панкреатит, холангит или энтеропатия и диабет остаются отдельными диагностическими предпосылками."
+            },
+            {
+              "factId": "triaditis_label_does_not_open_three_treatments",
+              "source": "safety_rule",
+              "finding": "Угрозы и питание имеют приоритетное значение; протоколы остаются на независимой проверке."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "each_comorbidity_requires_its_own_evidence",
+              "discoveryPaths": [
+                "jaundice_urine_stool",
+                "diabetes_endocrine_history",
+                "documented_nutrition_comorbidity_screen"
+              ]
+            },
+            {
+              "factId": "triaditis_label_does_not_open_three_treatments",
+              "discoveryPaths": [
+                "actual_food_intake",
+                "weight_feces_pattern",
+                "dated_cbc_chem_electrolyte_snapshot"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "pancreatitis_nutrition_and_comorbidity_assessment",
+              "classification": "required_multisystem",
+              "result": "Клиническая оценка показала: доказательства каждой системы и риски, связанные с питанием, разделены."
+            },
+            {
+              "id": "pancreatitis_cbc_biochemistry_electrolytes",
+              "classification": "required",
+              "result": "В лабораторных показателях крови: печеночный, глюкозный, почечный и электролитный контекст."
+            },
+            {
+              "id": "pancreatitis_abdominal_ultrasound",
+              "classification": "required_if_stable",
+              "result": "При ультразвуковом исследовании: поджелудочная железа, желчевыводящие пути и кишечник оцениваются в зависимости от контекста."
+            },
+            {
+              "id": "pancreatitis_specific_lipase_testing",
+              "classification": "integrated_pancreatic_component",
+              "result": "Целевое исследование показало: сохраненный методом панкреатическая липаза кошачий."
+            },
+            {
+              "id": "pancreatitis_specialist_or_intensive_referral",
+              "classification": "conditional_complexity",
+              "result": "По итогам консультации специалиста: маршрут военнослужащих или больницы на основе угроз."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "each_comorbidity_requires_its_own_evidence",
+              "triaditis_label_does_not_open_three_treatments"
+            ],
+            "confirmedDiagnosisRequires": [
+              "separate_evidence_for_each_confirmed_component"
+            ],
+            "dangerStates": [
+              "dka",
+              "biliary_obstruction",
+              "hepatic_lipidosis",
+              "sepsis",
+              "severe_enteropathy"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "general_exam",
+              "nutritional_assessment",
+              "blood_glucose",
+              "ketone_test",
+              "cbc",
+              "biochemistry",
+              "electrolytes"
+            ],
+            "external": [
+              "pancreatic_marker_external",
+              "hepatobiliary_ultrasound_external",
+              "gi_specialist_referral"
+            ],
+            "missingLocalRoute": [
+              "gi_specialist_referral",
+              "hospital_referral"
+            ],
+            "conditional": [
+              "pancreatic_comorbidity_route",
+              "pancreatic_imaging_or_referral",
+              "pancreatic_nutrition_route",
+              "pancreatic_systemic_monitoring_route"
+            ],
+            "referralFallback": "gi_specialist_referral"
+          },
+          "carePlanId": "equivocal_comorbid_pancreatitis_plan",
+          "followUp": {
+            "timing": "Многосистемное последующее наблюдение с приоритетом угроз.",
+            "required": true,
+            "targets": [
+              "intake",
+              "weight",
+              "jaundice",
+              "glucose",
+              "ketones",
+              "gi_signs",
+              "pancreatic_confidence"
+            ]
+          },
+          "outcomes": {
+            "safe": "Каждый компонент проявляется и приводит к наиболее острой физиологической потребности.",
+            "unsafe": "Слово триадит означает три диагноза и все методы лечения."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: какие данные относятся к каждому предполагаемому состоянию и какая проблема сейчас является приоритетной."
+          ],
+          "compatibility": {
+            "temperament": [
+              "withdrawn",
+              "fearful",
+              "irritable"
+            ],
+            "requiredHandlingAlternative": "staged_low_stress_multisystem_workup",
+            "ownerModifiers": [
+              "complex_case",
+              "budget_limited",
+              "multiple_cats"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if one pancreatic-lipase result, ordinary amylase/lipase or one ultrasound sign confirms pancreatitis alone.",
+    "Reject if a normal or equivocal ultrasound universally excludes pancreatitis.",
+    "Reject if shock, organ failure or severe dehydration waits for diagnostic finality.",
+    "Reject if absence of vomiting or obvious pain excludes feline pancreatitis.",
+    "Reject if the generator creates a drug, dose, fluid rate, feeding composition, tube, drainage or surgical technique."
+  ]
+}

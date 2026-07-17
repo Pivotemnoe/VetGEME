@@ -610,10 +610,22 @@
     return caseData.severity === "urgent" || caseData.severity === "emergency";
   }
 
+  function selectableCases(catalog) {
+    const allowed = catalog.selectionPolicy?.allowedCaseIds;
+    if (!Array.isArray(allowed) || allowed.length === 0) return catalog.cases;
+    const allowedIds = new Set(allowed);
+    return catalog.cases.filter((caseData) => allowedIds.has(caseData.id));
+  }
+
   function selectNewCases(catalog, dayRule, count, random, options = {}) {
+    if (catalog.selectionPolicy?.manualSelection && catalog.selectionPolicy.forcedCaseId) {
+      const selected = catalog.casesById[catalog.selectionPolicy.forcedCaseId];
+      if (!selected) throw new Error(`Configured tester presentation is unavailable: ${catalog.selectionPolicy.forcedCaseId}`);
+      return Array.from({ length: count }, () => selected);
+    }
     const allowedSpecies = new Set(catalog.manifest.contentPolicy.allowedSpeciesTier01);
     const urgentPool = new Set(dayRule.urgentPool || []);
-    const eligible = catalog.cases.filter((caseData) => (
+    const eligible = selectableCases(catalog).filter((caseData) => (
       caseData.unlockDay <= dayRule.day
       && caseData.species.every((species) => allowedSpecies.has(species))
       && (!options.routineOnly || !caseIsUrgent(caseData))
@@ -643,7 +655,7 @@
   function ensureUrgentCount(caseList, catalog, dayRule, desiredCount, random, seenCaseCounts) {
     const result = caseList.slice();
     const allowed = new Set(dayRule.urgentPool || []);
-    const candidates = catalog.cases.filter((item) => (
+    const candidates = selectableCases(catalog).filter((item) => (
       item.unlockDay <= dayRule.day
       && caseIsUrgent(item)
       && (!allowed.size || allowed.has(item.id))
@@ -685,7 +697,7 @@
     let relevantCount = caseList.filter((item) => caseMatchesEquipmentAttraction(item, capabilities)).length;
     if (relevantCount >= count) return caseList;
     const allowedSpecies = new Set(catalog.manifest.contentPolicy.allowedSpeciesTier01);
-    const candidates = catalog.cases.filter((caseData) => (
+    const candidates = selectableCases(catalog).filter((caseData) => (
       caseData.unlockDay <= dayRule.day
       && !caseIsUrgent(caseData)
       && caseData.species.every((species) => allowedSpecies.has(species))
@@ -746,7 +758,7 @@
       patient: identity,
       owner,
       complaint: clone(complaint),
-      bookingReason: BOOKING_REASONS[caseData.family] || caseData.family,
+      bookingReason: caseData.bookingReason || BOOKING_REASONS[caseData.family] || "Причина обращения",
       returnVisit: source === "follow_up",
       originalVisitId: options.originalVisitId || null,
       followUpReason: options.followUpReason || null,
@@ -842,7 +854,11 @@
     if (!contentPackMatches(day, contentPackMetadata(catalog))) errors.push("generated day content pack metadata mismatch");
     const allowedSpecies = new Set(catalog.manifest.contentPolicy.allowedSpeciesTier01);
     const urgentCount = day.visits.filter((visit) => caseIsUrgent(visit.medicalContent)).length;
-    if (day.opened && (urgentCount < rule.urgentSubset.min || urgentCount > rule.urgentSubset.max)) errors.push("urgent count outside day rules");
+    if (day.opened
+      && !catalog.selectionPolicy?.manualSelection
+      && (urgentCount < rule.urgentSubset.min || urgentCount > rule.urgentSubset.max)) {
+      errors.push("urgent count outside day rules");
+    }
     day.visits.forEach((visit) => {
       if (!catalog.casesById[visit.caseId]) errors.push(`unknown case ${visit.caseId}`);
       if (visit.diagnosisMode !== "single" || visit.maximumDiagnosisSelections !== 1) errors.push(`single visit schema mismatch for ${visit.caseId}`);
@@ -951,7 +967,7 @@
         Math.max(0, rule.urgentSubset.max - selectedUrgentFollowUps)
       );
       selectedCases = ensureUrgentCount(selectedCases, catalog, rule, desiredNewUrgent, random, state.seenCaseCounts);
-      if (dayNumber === 1) {
+      if (dayNumber === 1 && !catalog.activation) {
         const tutorialIds = new Set(FIRST_TUTORIAL_CASE_IDS);
         const tutorialIndex = selectedCases.findIndex((item) => tutorialIds.has(item.id));
         if (tutorialIndex >= 0) {
@@ -974,6 +990,14 @@
         decision.capabilities,
         state.seenCaseCounts
       );
+      const selectionPolicy = catalog.selectionPolicy || {};
+      const forcedCaseId = selectionPolicy.forcedCaseIdByDay?.[String(dayNumber)]
+        || selectionPolicy.forcedCaseId;
+      if (forcedCaseId && selectedCases.length) {
+        const forcedCase = catalog.casesById[forcedCaseId];
+        if (!forcedCase) throw new Error(`Configured medical presentation is unavailable: ${forcedCaseId}`);
+        selectedCases[0] = forcedCase;
+      }
       const categoryPool = [];
       ["campaign_teaching", "campaign_story", "clinic_referral", "word_of_mouth", "local_regular"].forEach((sourceCategory) => {
         for (let count = 0; count < (decision.sourcePlan[sourceCategory] || 0); count += 1) categoryPool.push(sourceCategory);

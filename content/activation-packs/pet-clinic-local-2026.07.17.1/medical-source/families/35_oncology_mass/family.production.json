@@ -1,0 +1,3317 @@
+{
+  "schemaVersion": 1,
+  "familyId": "oncology_mass",
+  "familyVersion": "2026.07.16.40",
+  "title": "Объёмное образование и подозрение на опухоль",
+  "campaignPhase": "chapter_5",
+  "species": [
+    "dog",
+    "cat"
+  ],
+  "review": {
+    "authorStatus": "author_complete",
+    "sourceStatus": "source_checked",
+    "veterinaryReviewStatus": "external_veterinary_review_pending",
+    "reviewedAt": null,
+    "reviewerId": null
+  },
+  "generatorEligible": false,
+  "terminology": [
+    "Масса является находкой, а не диагнозом; пальпация, размер, подвижность, возраст, порода и визуализация не определяют доброкачественность или злокачественность сами по себе.",
+    "Каждое образование получает отдельный постоянный номер. Для него записывают слой и участок, три размера, фотографию с датой, скорость роста, изъязвление, боль, влияние на функцию и состояние регионарных лимфоузлов.",
+    "Несколько масс у одного пациента имеют независимые идентификатор, образцы и результаты и не наследуют диагноз друг друга.",
+    "Цитология может быть диагностической, категориальной или неинформативной; кровь, некроз или низкая клеточность являются реальным результатом, а не отрицательным тестом.",
+    "Гистология сохраняет тип, степень, инвазию, митотические показатели, ориентацию образца и границы; цитология обычно не заменяет эти поля.",
+    "Степень злокачественности описывает микроскопическое поведение опухоли, а стадия — её анатомическую распространённость. Эти понятия не взаимозаменяемы.",
+    "Регионарный лимфоузел выбирается по дренажу, а не только по размеру; нормальный размер не исключает метастазирование.",
+    "Объём стадирования выбирают по биологии конкретной опухоли, ожидаемому влиянию результата, состоянию пациента и приоритетам владельца; единого набора для всех опухолей нет.",
+    "Биопсийный канал и метод планируются так, чтобы не ухудшить возможность окончательной операции.",
+    "Внутренняя масса с кровотечением, обструкцией, выпотом или дисфункцией органа имеет срочный маршрут независимо от окончательного типа.",
+    "Цели владельца, стоимость, контроль симптомов, паллиативный маршрут и качество жизни являются продольным состоянием.",
+    "Автоматически не назначаются биопсию, операцию, химиотерапию, лучевую терапию, препарат, дозу или протокол."
+  ],
+  "coreCapabilities": [
+    "general_exam",
+    "cytology",
+    "histology_external",
+    "imaging_or_referral",
+    "safe_referral"
+  ],
+  "safeRouteCapability": "safe_referral",
+  "requirementGroups": [
+    {
+      "id": "mass_mapping_route",
+      "anyOf": [
+        "mass_mapping",
+        "general_exam",
+        "safe_referral"
+      ],
+      "purpose": "immutable_mass_identity_measurement_photo_growth_function_and_node_map"
+    },
+    {
+      "id": "mass_cytology_route",
+      "anyOf": [
+        "mass_cytology_review",
+        "cytology",
+        "safe_referral"
+      ],
+      "purpose": "pathologist_reviewed_definitive_categorical_or_nondiagnostic_cytology"
+    },
+    {
+      "id": "mass_non_neoplastic_route",
+      "anyOf": [
+        "mass_non_neoplastic_review",
+        "safe_referral"
+      ],
+      "purpose": "inflammatory_infectious_cystic_and_reactive_differentials"
+    },
+    {
+      "id": "mass_biopsy_route",
+      "anyOf": [
+        "oncology_biopsy_planning_referral",
+        "safe_referral"
+      ],
+      "purpose": "method_site_track_and_definitive_margin_protection"
+    },
+    {
+      "id": "mass_histology_route",
+      "anyOf": [
+        "oncology_histopathology_review",
+        "histology_external",
+        "safe_referral"
+      ],
+      "purpose": "type_grade_invasion_orientation_and_margin_review"
+    },
+    {
+      "id": "mass_node_route",
+      "anyOf": [
+        "regional_node_sampling_external",
+        "safe_referral"
+      ],
+      "purpose": "drainage_based_regional_node_sampling"
+    },
+    {
+      "id": "mass_staging_route",
+      "anyOf": [
+        "oncology_staging_external",
+        "imaging_or_referral",
+        "safe_referral"
+      ],
+      "purpose": "selective_tumor_specific_regional_and_distant_staging"
+    },
+    {
+      "id": "mass_advanced_pathology_route",
+      "anyOf": [
+        "oncology_advanced_pathology_external",
+        "safe_referral"
+      ],
+      "purpose": "flow_immunophenotype_ihc_or_other_ancillary_classification"
+    },
+    {
+      "id": "mass_readiness_route",
+      "anyOf": [
+        "oncology_patient_readiness",
+        "general_exam",
+        "safe_referral"
+      ],
+      "purpose": "whole_patient_comorbidity_and_intervention_readiness"
+    },
+    {
+      "id": "mass_qol_route",
+      "anyOf": [
+        "oncology_quality_of_life_plan",
+        "safe_referral"
+      ],
+      "purpose": "owner_goals_cost_followup_palliation_and_quality_of_life"
+    }
+  ],
+  "researchCapabilityMap": [
+    {
+      "researchId": "mass_map_measure_photo_growth_function_and_sample_identity",
+      "requires": [
+        "mass_mapping"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "mass_cytology_with_pathologist_review",
+      "requires": [
+        "mass_cytology_review"
+      ],
+      "availability": "local_plus_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "mass_inflammation_infection_and_non_neoplastic_differential",
+      "requires": [
+        "mass_non_neoplastic_review"
+      ],
+      "availability": "local_plus_external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "mass_biopsy_method_site_and_definitive_surgery_planning",
+      "requires": [
+        "oncology_biopsy_planning_referral"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "mass_histopathology_grade_invasion_and_margin_review",
+      "requires": [
+        "oncology_histopathology_review"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "mass_regional_lymph_node_sampling_by_drainage_not_size_alone",
+      "requires": [
+        "regional_node_sampling_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "mass_selective_thoracic_abdominal_or_advanced_imaging_staging",
+      "requires": [
+        "oncology_staging_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "mass_flow_cytometry_immunophenotype_or_immunohistochemistry_referral",
+      "requires": [
+        "oncology_advanced_pathology_external"
+      ],
+      "availability": "external_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "mass_baseline_patient_comorbidity_and_treatment_readiness",
+      "requires": [
+        "oncology_patient_readiness"
+      ],
+      "availability": "local_chapter_5",
+      "fallback": "safe_referral"
+    },
+    {
+      "researchId": "mass_quality_of_life_owner_goals_cost_and_followup_plan",
+      "requires": [
+        "oncology_quality_of_life_plan"
+      ],
+      "availability": "longitudinal_chapter_5",
+      "fallback": "safe_referral"
+    }
+  ],
+  "commonHistoryQuestions": [
+    {
+      "id": "mass_onset_growth_change_ulceration_pain_function",
+      "prompt": "Когда появилась каждая масса и как менялись рост, изъязвление, боль и функция?"
+    },
+    {
+      "id": "mass_site_layer_three_dimensions_and_photo_date",
+      "prompt": "Каков номер этого образования, где и в каком слое оно находится, каковы три размера и дата фотографии?"
+    },
+    {
+      "id": "multiple_mass_independent_identity",
+      "prompt": "Какие отдельные идентификатор и результаты принадлежат каждой из нескольких масс?"
+    },
+    {
+      "id": "prior_sample_method_site_and_result",
+      "prompt": "Как, где и когда брали образец и каков полный результат?"
+    },
+    {
+      "id": "bleeding_obstruction_effusion_or_organ_dysfunction",
+      "prompt": "Есть ли кровотечение, обструкция, выпот или дисфункция органа?"
+    },
+    {
+      "id": "systemic_weight_appetite_fever_and_energy",
+      "prompt": "Каковы вес, аппетит, температура и активность?"
+    },
+    {
+      "id": "regional_node_and_drainage_history",
+      "prompt": "Какие регионарные узлы и пути дренажа оценены?"
+    },
+    {
+      "id": "prior_histology_grade_margins_and_orientation",
+      "prompt": "Сохранены ли тип опухоли, степень злокачественности, глубина инвазии, границы и ориентация образца?"
+    },
+    {
+      "id": "comorbidity_anesthesia_and_treatment_readiness",
+      "prompt": "Какие сопутствующие болезни меняют безопасность вмешательства?"
+    },
+    {
+      "id": "owner_curative_control_or_palliative_goal",
+      "prompt": "Какова цель владельца: излечение, контроль или паллиативная помощь?"
+    },
+    {
+      "id": "cost_turnaround_transport_and_referral_feasibility",
+      "prompt": "Каковы бюджет, сроки, транспорт и возможность направления?"
+    },
+    {
+      "id": "quality_of_life_function_pain_and_home_monitoring",
+      "prompt": "Как меняются функция, боль, домашнее наблюдение и качество жизни?"
+    }
+  ],
+  "commonExamActions": [
+    {
+      "id": "immutable_mass_map_measure_photo_record",
+      "source": "physical_exam",
+      "requires": [
+        "mass_mapping"
+      ]
+    },
+    {
+      "id": "pathologist_cytology_category_and_adequacy_record",
+      "source": "cytology_report",
+      "requires": [
+        "mass_cytology_review"
+      ]
+    },
+    {
+      "id": "inflammatory_infectious_non_neoplastic_record",
+      "source": "diagnostic_review",
+      "requires": [
+        "mass_non_neoplastic_review"
+      ]
+    },
+    {
+      "id": "biopsy_method_site_track_and_margin_plan_record",
+      "source": "referral_plan",
+      "requires": [
+        "oncology_biopsy_planning_referral"
+      ]
+    },
+    {
+      "id": "histology_type_grade_invasion_margin_orientation_record",
+      "source": "histopathology_report",
+      "requires": [
+        "oncology_histopathology_review"
+      ]
+    },
+    {
+      "id": "drainage_based_regional_node_sample_record",
+      "source": "external_report",
+      "requires": [
+        "regional_node_sampling_external"
+      ]
+    },
+    {
+      "id": "tumor_specific_staging_question_and_result_record",
+      "source": "external_imaging",
+      "requires": [
+        "oncology_staging_external"
+      ]
+    },
+    {
+      "id": "flow_immunophenotype_ihc_question_and_result_record",
+      "source": "external_pathology",
+      "requires": [
+        "oncology_advanced_pathology_external"
+      ]
+    },
+    {
+      "id": "whole_patient_comorbidity_readiness_record",
+      "source": "general_exam",
+      "requires": [
+        "oncology_patient_readiness"
+      ]
+    },
+    {
+      "id": "owner_goal_cost_followup_qol_record",
+      "source": "longitudinal_plan",
+      "requires": [
+        "oncology_quality_of_life_plan"
+      ]
+    },
+    {
+      "id": "bleeding_obstruction_effusion_organ_failure_record",
+      "source": "emergency_assessment",
+      "requires": [
+        "oncology_patient_readiness"
+      ]
+    },
+    {
+      "id": "same_mass_longitudinal_growth_and_function_record",
+      "source": "longitudinal_record",
+      "requires": [
+        "mass_mapping"
+      ]
+    }
+  ],
+  "planBundles": [
+    {
+      "id": "non_neoplastic_plan",
+      "fullPlan": [
+        "map_mass",
+        "sample_when_indicated",
+        "classify_non_neoplastic_or_inflammatory",
+        "culture_or_other_test_if_question_specific",
+        "defined_recheck"
+      ],
+      "stagedPlan": [
+        "map",
+        "sample",
+        "resolve_cause",
+        "recheck"
+      ],
+      "minimumSafePlan": [
+        "appearance_not_diagnosis",
+        "new_mass_new_identity",
+        "red_flags_visible",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "abscess_or_systemic_stabilization",
+        "referral_if_persistent_or_discordant"
+      ],
+      "unsafeOrInadequate": [
+        "response_proves_all_future_masses_benign",
+        "blind_antimicrobial",
+        "no_recheck_definition"
+      ]
+    },
+    {
+      "id": "cutaneous_mass_plan",
+      "fullPlan": [
+        "independent_map",
+        "cytology",
+        "risk_features",
+        "biopsy_plan_if_nondiagnostic_or_high_risk",
+        "histology_and_followup"
+      ],
+      "stagedPlan": [
+        "map",
+        "sample",
+        "plan",
+        "review"
+      ],
+      "minimumSafePlan": [
+        "small_mobile_not_benign",
+        "multiple_masses_independent",
+        "do_not_cut_before_plan",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "bleeding_or_ulceration_control",
+        "oncology_or_surgery_referral"
+      ],
+      "unsafeOrInadequate": [
+        "watch_without_measurement",
+        "all_masses_same_diagnosis",
+        "unplanned_excision"
+      ]
+    },
+    {
+      "id": "round_cell_plan",
+      "fullPlan": [
+        "cytology_classification",
+        "systemic_safety_screen",
+        "histology_grade_margin_question",
+        "selective_node_and_stage_route",
+        "reviewed_followup"
+      ],
+      "stagedPlan": [
+        "classify",
+        "risk_assess",
+        "stage_selectively",
+        "plan"
+      ],
+      "minimumSafePlan": [
+        "cytology_limits_visible",
+        "degranulation_red_flags",
+        "grade_not_stage",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "systemic_or_degranulation_stabilization",
+        "oncology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "cytology_supplies_all_grade_margins",
+        "random_malignancy_score",
+        "identical_staging"
+      ]
+    },
+    {
+      "id": "lymph_node_plan",
+      "fullPlan": [
+        "map_distribution_and_drainage",
+        "sample_node",
+        "separate_reactive_metastatic_lymphoid",
+        "advanced_classification_if_needed",
+        "selective_staging"
+      ],
+      "stagedPlan": [
+        "map",
+        "sample",
+        "classify",
+        "stage"
+      ],
+      "minimumSafePlan": [
+        "size_not_metastasis_test",
+        "generalized_pattern_not_final",
+        "sample_identity",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "systemic_instability_route",
+        "oncology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "large_node_equals_lymphoma",
+        "normal_node_excludes_metastasis",
+        "flow_for_every_node"
+      ]
+    },
+    {
+      "id": "internal_mass_plan",
+      "fullPlan": [
+        "organ_and_effect_map",
+        "patient_stability",
+        "selective_imaging",
+        "site_specific_sampling_risk_and_yield",
+        "specialist_route"
+      ],
+      "stagedPlan": [
+        "triage",
+        "localize",
+        "risk_assess",
+        "refer"
+      ],
+      "minimumSafePlan": [
+        "incidental_not_benign",
+        "bleeding_obstruction_effusion_urgent",
+        "unsafe_sampling_avoided",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "organ_failure_or_bleeding_stabilization",
+        "imaging_surgery_oncology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "random_organ_aspiration",
+        "imaging_label_is_histology",
+        "delay_with_instability"
+      ]
+    },
+    {
+      "id": "biopsy_planning_plan",
+      "fullPlan": [
+        "record_nondiagnostic_reason",
+        "define_remaining_question",
+        "choose_method_site_and_track",
+        "protect_definitive_margins",
+        "histology_and_ancillary_review"
+      ],
+      "stagedPlan": [
+        "audit_sample",
+        "plan_biopsy",
+        "submit",
+        "review"
+      ],
+      "minimumSafePlan": [
+        "nondiagnostic_not_negative",
+        "category_not_subtype",
+        "track_planned",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "bleeding_risk_route",
+        "planned_surgical_referral"
+      ],
+      "unsafeOrInadequate": [
+        "repeat_same_low_yield_method_blindly",
+        "excisional_biopsy_without_margin_plan",
+        "discard_orientation"
+      ]
+    },
+    {
+      "id": "confirmed_neoplasia_plan",
+      "fullPlan": [
+        "preserve_pathology_fields",
+        "separate_grade_and_stage",
+        "selective_node_and_distant_staging",
+        "patient_readiness",
+        "owner_goal_and_qol_plan",
+        "longitudinal_surveillance"
+      ],
+      "stagedPlan": [
+        "confirm",
+        "stage_selectively",
+        "choose_goal",
+        "monitor"
+      ],
+      "minimumSafePlan": [
+        "histology_fields_persist",
+        "no_universal_stage_panel",
+        "owner_goal_explicit",
+        "safe_referral"
+      ],
+      "stabilizeAndRefer": [
+        "complication_stabilization",
+        "oncology_referral"
+      ],
+      "unsafeOrInadequate": [
+        "chemotherapy_as_inventory",
+        "instant_external_results",
+        "generated_treatment_protocol"
+      ]
+    }
+  ],
+  "sourceCatalog": [
+    {
+      "id": "aaha_oncology_diagnostics_2026",
+      "title": "2026 AAHA Oncology Guidelines: Tumor Diagnostics and Staging",
+      "url": "https://www.aaha.org/resources/2026-aaha-oncology-guidelines-for-dogs-and-cats/section-3-tumor-diagnostics-staging/",
+      "scope": "mass_sampling_cytology_histology_grade_stage_nodes_and_selective_staging"
+    },
+    {
+      "id": "aaha_oncology_common_2026",
+      "title": "2026 AAHA Oncology Guidelines: Overview of Common Cancers",
+      "url": "https://www.aaha.org/resources/2026-aaha-oncology-guidelines-for-dogs-and-cats/section-1-overview-of-common-cancers/",
+      "scope": "tumor_specific_behavior_and_staging_variability"
+    },
+    {
+      "id": "merck_skin_soft_tissue_tumors",
+      "title": "Merck Veterinary Manual: Overview of Tumors of the Skin and Soft Tissues",
+      "url": "https://www.merckvetmanual.com/integumentary-system/tumors-of-the-skin-and-soft-tissues/overview-of-tumors-of-the-skin-and-soft-tissues-in-animals",
+      "scope": "cutaneous_subcutaneous_differentials_and_pathology"
+    },
+    {
+      "id": "merck_round_cell_cutaneous",
+      "title": "Merck Veterinary Manual: Lymphocytic, Histiocytic, and Related Cutaneous Tumors",
+      "url": "https://www.merckvetmanual.com/integumentary-system/tumors-of-the-skin-and-soft-tissues/lymphocytic-histiocytic-and-related-cutaneous-tumors-in-animals",
+      "scope": "round_cell_and_lymphoid_cutaneous_patterns"
+    },
+    {
+      "id": "oncology_pathology_nodal_lymphoma",
+      "title": "Oncology-Pathology Working Group: Nodal Lymphoma Classification",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12378112/",
+      "scope": "nodal_lymphoma_morphology_and_advanced_classification"
+    }
+  ],
+  "variants": [
+    {
+      "id": "mass_non_neoplastic_or_inflammatory",
+      "version": "2026.07.16.40",
+      "title": "Неопухолевое или воспалительное образование",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Киста, липома, абсцесс, гранулёма и реактивный очаг могут выглядеть как опухоль. Маршрут определяют цитология, признаки воспаления или инфекции и контроль именно этого образования; вывод нельзя переносить на новые образования.",
+      "exclusions": [
+        "appearance_confirms_benignity",
+        "response_confirms_all_future_masses",
+        "blind_antimicrobial"
+      ],
+      "planBundleId": "non_neoplastic_plan",
+      "sourceIds": [
+        "aaha_oncology_diagnostics_2026",
+        "merck_skin_soft_tissue_tumors"
+      ],
+      "presentations": [
+        {
+          "id": "p1_cyst_lipoma_or_other_benign_cytology_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "routine_unless_functional",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что у отмеченного на карте образования цитология соответствует кисте, липоме или другому доброкачественному процессу.",
+          "historyAnswers": {
+            "mass_site_layer_three_dimensions_and_photo_date": "По нашим наблюдениям, местоположение, слой, три размера и исходная фотография зафиксированы для этого образования.",
+            "prior_sample_method_site_and_result": "Дома мы заметили, что в заключении сохранены способ взятия, достаточность материала и точная формулировка цитолога.",
+            "quality_of_life_function_pain_and_home_monitoring": "Насколько мы можем судить, владелец знает, как измерять это образование дома и какие изменения требуют раннего осмотра."
+          },
+          "examFindings": [
+            {
+              "factId": "benign_cytology_applies_to_sampled_mass_only",
+              "source": "identity_rule",
+              "finding": "Результат относится только к исследованному образованию и не переносится на другие узлы."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "benign_cytology_applies_to_sampled_mass_only",
+              "discoveryPaths": [
+                "multiple_mass_independent_identity",
+                "pathologist_cytology_category_and_adequacy_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_map_measure_photo_growth_function_and_sample_identity",
+              "classification": "required",
+              "result": "Целевое исследование показало: специфичный для образования исходное состояние."
+            },
+            {
+              "id": "mass_cytology_with_pathologist_review",
+              "classification": "required",
+              "result": "При микроскопии материала: соответствующий доброкачественному процессу цитология с ограничения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "benign_cytology_applies_to_sampled_mass_only"
+            ],
+            "confirmedDiagnosisRequires": [
+              "adequate_mass_specific_cytology_or_histology"
+            ],
+            "dangerStates": [
+              "rapid_change",
+              "ulceration",
+              "functional_impairment"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_mapping",
+              "mass_cytology_review",
+              "general_exam",
+              "cytology"
+            ],
+            "external": [
+              "histology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_mapping_route",
+              "mass_cytology_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "non_neoplastic_plan",
+          "followUp": {
+            "timing": "Контроль именно этого образования назначен через четыре недели или раньше при росте, боли или изъязвлении.",
+            "required": true,
+            "targets": [
+              "dimensions",
+              "photo",
+              "growth",
+              "pain",
+              "function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Доброкачественное заключение относится только к этому образованию; его размеры и вид продолжают контролировать.",
+            "unsafe": "Все нынешние и будущие образования ошибочно считают доброкачественными по результату одной пробы."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: результат этой пробы выглядит благоприятно именно для данного образования. Если оно изменится или появится новое, его нужно оценивать отдельно."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "low_stress_mapping_and_sampling",
+            "ownerModifiers": [
+              "wants_no_followup",
+              "multiple_masses"
+            ]
+          }
+        },
+        {
+          "id": "p2_abscess_granuloma_or_reactive_lesion",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "routine_to_urgent_by_systemic_status",
+          "workload": 2.75,
+          "complaint": "Мы обратились, потому что цитология или обследование подтверждают абсцесс, гранулематозное или реактивное воспаление, а не немедленную неоплазию.",
+          "historyAnswers": {
+            "systemic_weight_appetite_fever_and_energy": "По нашим наблюдениям, скрининг системного воспаления.",
+            "prior_sample_method_site_and_result": "Дома мы заметили, что категория воспаления и микроорганизмы сохранены.",
+            "mass_onset_growth_change_ulceration_pain_function": "Насколько мы можем судить, боль, дренаж и рост."
+          },
+          "examFindings": [
+            {
+              "factId": "inflammation_requires_cause_specific_review_and_defined_response",
+              "source": "differential_rule",
+              "finding": "Воспаление не является автоматическим антимикробным диагнозом."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "inflammation_requires_cause_specific_review_and_defined_response",
+              "discoveryPaths": [
+                "prior_sample_method_site_and_result",
+                "inflammatory_infectious_non_neoplastic_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_inflammation_infection_and_non_neoplastic_differential",
+              "classification": "required",
+              "result": "Целевое исследование показало: специфический воспалительный путь."
+            },
+            {
+              "id": "mass_cytology_with_pathologist_review",
+              "classification": "required",
+              "result": "При микроскопии материала: воспалительная морфология и адекватность."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "inflammation_requires_cause_specific_review_and_defined_response"
+            ],
+            "confirmedDiagnosisRequires": [
+              "compatible_morphology_plus_cause_or_resolved_defined_followup"
+            ],
+            "dangerStates": [
+              "sepsis",
+              "deep_tissue_spread",
+              "severe_pain"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_mapping",
+              "mass_cytology_review",
+              "mass_non_neoplastic_review",
+              "cytology"
+            ],
+            "external": [
+              "histology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_mapping_route",
+              "mass_cytology_route",
+              "mass_non_neoplastic_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "non_neoplastic_plan",
+          "followUp": {
+            "timing": "После анализа причин и определения клинической контрольной точки.",
+            "required": true,
+            "targets": [
+              "size",
+              "pain",
+              "drainage",
+              "fever",
+              "cytology"
+            ]
+          },
+          "outcomes": {
+            "safe": "Воспаление имеет причину и путь реагирования.",
+            "unsafe": "Воспаление автоматически порождает курс приема лекарств."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: воспаление может быть инфекционным или стерильным, и причина определяет следующий шаг."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "stable_or_febrile"
+            ],
+            "requiredHandlingAlternative": "pain_aware_sampling_or_referral",
+            "ownerModifiers": [
+              "expects_antibiotic",
+              "cost_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_mass_resolves_persists_or_changes_on_defined_recheck",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "juvenile",
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "routine_or_prompt_by_change",
+          "workload": 2.25,
+          "complaint": "Мы обратились, потому что при определенной повторной проверке та же масса рассасывается, сохраняется или изменяется по размеру, боли, поверхности или функции.",
+          "historyAnswers": {
+            "mass_site_layer_three_dimensions_and_photo_date": "По нашим наблюдениям, сохранена та же масса и метод измерения.",
+            "mass_onset_growth_change_ulceration_pain_function": "Дома мы заметили, что изменение объективно.",
+            "prior_sample_method_site_and_result": "Насколько мы можем судить, исходный образец остается связанным."
+          },
+          "examFindings": [
+            {
+              "factId": "persistence_or_change_reopens_sampling_and_biopsy_question",
+              "source": "followup_rule",
+              "finding": "Отсутствие ответа не игнорируется."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "persistence_or_change_reopens_sampling_and_biopsy_question",
+              "discoveryPaths": [
+                "mass_onset_growth_change_ulceration_pain_function",
+                "same_mass_longitudinal_growth_and_function_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_map_measure_photo_growth_function_and_sample_identity",
+              "classification": "required_recheck",
+              "result": "Целевое исследование показало: объективная динамика."
+            },
+            {
+              "id": "mass_biopsy_method_site_and_definitive_surgery_planning",
+              "classification": "conditional_persistence_or_discordance",
+              "result": "В заключении по гистологическому исследованию: планируемая эскалация."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "persistence_or_change_reopens_sampling_and_biopsy_question"
+            ],
+            "confirmedDiagnosisRequires": [
+              "resolution_or_updated_sample_evidence"
+            ],
+            "dangerStates": [
+              "rapid_growth",
+              "ulceration",
+              "loss_of_function"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_mapping",
+              "general_exam"
+            ],
+            "external": [
+              "oncology_biopsy_planning_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_mapping_route",
+              "mass_biopsy_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "non_neoplastic_plan",
+          "followUp": {
+            "timing": "Срабатывает по событию после определенного сравнения.",
+            "required": true,
+            "targets": [
+              "dimensions",
+              "surface",
+              "pain",
+              "function",
+              "sampling_need"
+            ]
+          },
+          "outcomes": {
+            "safe": "Решительность и настойчивость приводят к различным записанным маршрутам.",
+            "unsafe": "Предыдущее улучшение доказывает благоприятность будущего."
+          },
+          "ownerCommunication": [
+            "Я покажу вам сравнение одинаковых масс и объясните, какое конкретное изменение вызывает новую выборку."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable",
+              "repeat_visit_fatigued"
+            ],
+            "requiredHandlingAlternative": "photo_measurement_first_recheck",
+            "ownerModifiers": [
+              "recheck_fatigue",
+              "false_reassurance"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "mass_cutaneous_or_subcutaneous_undifferentiated",
+      "version": "2026.07.16.40",
+      "title": "Неидентифицированная кожная или подкожная масса",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Каждая недифференцированная кожная или подкожная масса картируется и берется образец, или имеется документально подтвержденная причина не делать этого; размер и мобильность изменяют планирование, но никогда не определяют биологию.",
+      "exclusions": [
+        "small_mobile_equals_benign",
+        "large_fixed_equals_specific_cancer",
+        "multiple_masses_share_truth"
+      ],
+      "planBundleId": "cutaneous_mass_plan",
+      "sourceIds": [
+        "aaha_oncology_diagnostics_2026",
+        "merck_skin_soft_tissue_tumors"
+      ],
+      "presentations": [
+        {
+          "id": "p1_small_mobile_slow_growing_mass",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "routine",
+          "workload": 2,
+          "complaint": "Мы обратились, потому что при осмотре обнаруживается небольшая, подвижная, медленно растущая масса.",
+          "historyAnswers": {
+            "mass_site_layer_three_dimensions_and_photo_date": "По нашим наблюдениям, базовый уровень завершен.",
+            "mass_onset_growth_change_ulceration_pain_function": "Дома мы заметили, что сообщается о медленном росте, но он измеряется.",
+            "prior_sample_method_site_and_result": "Насколько мы можем судить, не установлена идентичность образца или результата."
+          },
+          "examFindings": [
+            {
+              "factId": "small_mobile_slow_mass_still_requires_identity_and_sampling_decision",
+              "source": "appearance_limit_rule",
+              "finding": "Доброжелательность не предполагается."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "small_mobile_slow_mass_still_requires_identity_and_sampling_decision",
+              "discoveryPaths": [
+                "mass_site_layer_three_dimensions_and_photo_date",
+                "immutable_mass_map_measure_photo_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_map_measure_photo_growth_function_and_sample_identity",
+              "classification": "required",
+              "result": "Целевое исследование показало: базовый уровень."
+            },
+            {
+              "id": "mass_cytology_with_pathologist_review",
+              "classification": "required_or_reason_not_to",
+              "result": "При микроскопии материала: микроскопическая классификация."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "small_mobile_slow_mass_still_requires_identity_and_sampling_decision"
+            ],
+            "confirmedDiagnosisRequires": [
+              "mass_specific_cytology_or_histology"
+            ],
+            "dangerStates": [
+              "unexpected_growth",
+              "ulceration"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_mapping",
+              "mass_cytology_review",
+              "cytology"
+            ],
+            "external": [
+              "histology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_mapping_route",
+              "mass_cytology_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "cutaneous_mass_plan",
+          "followUp": {
+            "timing": "После отбора проб или определенного интервала измерений.",
+            "required": true,
+            "targets": [
+              "size",
+              "mobility",
+              "surface",
+              "cytology"
+            ]
+          },
+          "outcomes": {
+            "safe": "Внешний вид с низким уровнем риска отбирается или тщательно контролируется.",
+            "unsafe": "Бдительное ожидание не имеет никаких измерений или триггеров."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: наощупь и размер не могут определить тип клеток."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable"
+            ],
+            "requiredHandlingAlternative": "brief_low_stress_fna_or_photo_monitoring",
+            "ownerModifiers": [
+              "minimizes_small_mass"
+            ]
+          }
+        },
+        {
+          "id": "p2_large_fixed_ulcerated_or_rapidly_growing_mass",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt_to_urgent",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что большая, фиксированная, изъязвленная или быстро растущая поверхностная масса угрожает границам или функции.",
+          "historyAnswers": {
+            "mass_onset_growth_change_ulceration_pain_function": "По нашим наблюдениям, изменение высокого риска.",
+            "bleeding_obstruction_effusion_or_organ_dysfunction": "Дома мы заметили, что кровотечение или функция проверена.",
+            "cost_turnaround_transport_and_referral_feasibility": "Насколько мы можем судить, запланированное направление осуществимо или явный запасной вариант."
+          },
+          "examFindings": [
+            {
+              "factId": "high_risk_mass_requires_planned_biopsy_before_unplanned_excision",
+              "source": "surgical_planning_rule",
+              "finding": "Окончательные поля защищены."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "high_risk_mass_requires_planned_biopsy_before_unplanned_excision",
+              "discoveryPaths": [
+                "mass_onset_growth_change_ulceration_pain_function",
+                "biopsy_method_site_track_and_margin_plan_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_cytology_with_pathologist_review",
+              "classification": "required_initial",
+              "result": "При микроскопии материала: категория, если имеется."
+            },
+            {
+              "id": "mass_biopsy_method_site_and_definitive_surgery_planning",
+              "classification": "required",
+              "result": "В заключении по гистологическому исследованию: план отслеживания и маржи."
+            },
+            {
+              "id": "mass_baseline_patient_comorbidity_and_treatment_readiness",
+              "classification": "required",
+              "result": "Целевое исследование показало: готовность к вмешательству."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "high_risk_mass_requires_planned_biopsy_before_unplanned_excision"
+            ],
+            "confirmedDiagnosisRequires": [
+              "planned_histology"
+            ],
+            "dangerStates": [
+              "active_bleeding",
+              "functional_loss",
+              "infection",
+              "rapid_growth"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_mapping",
+              "mass_cytology_review",
+              "oncology_patient_readiness"
+            ],
+            "external": [
+              "oncology_biopsy_planning_referral",
+              "histology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_mapping_route",
+              "mass_cytology_route",
+              "mass_biopsy_route",
+              "mass_readiness_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "cutaneous_mass_plan",
+          "followUp": {
+            "timing": "Оперативное планирование специалистов.",
+            "required": true,
+            "targets": [
+              "bleeding",
+              "function",
+              "biopsy_plan",
+              "pathology"
+            ]
+          },
+          "outcomes": {
+            "safe": "Биопсия защищает от окончательного хирургического вмешательства.",
+            "unsafe": "Образование вырезается без диагностики или планирования границ."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему быстрое удаление может затруднить окончательную операцию."
+          ],
+          "compatibility": {
+            "temperament": [
+              "painful",
+              "stable"
+            ],
+            "requiredHandlingAlternative": "pain_aware_sampling_and_referral",
+            "ownerModifiers": [
+              "wants_immediate_removal"
+            ]
+          }
+        },
+        {
+          "id": "p3_multiple_masses_with_independent_sample_identity",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": true
+          },
+          "urgency": "routine_or_prompt_by_highest_risk_mass",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что несколько масс сосуществуют с разными участками, слоями и моделями роста.",
+          "historyAnswers": {
+            "multiple_mass_independent_identity": "По нашим наблюдениям, каждая масса имеет свой идентификатор.",
+            "prior_sample_method_site_and_result": "Дома мы заметили, что результаты привязаны к точному идентификатору.",
+            "mass_site_layer_three_dimensions_and_photo_date": "Насколько мы можем судить, независимые карты завершены."
+          },
+          "examFindings": [
+            {
+              "factId": "each_mass_requires_independent_truth_and_sampling_priority",
+              "source": "identity_rule",
+              "finding": "Одна липома не диагностирует другую массу."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "each_mass_requires_independent_truth_and_sampling_priority",
+              "discoveryPaths": [
+                "multiple_mass_independent_identity",
+                "immutable_mass_map_measure_photo_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_map_measure_photo_growth_function_and_sample_identity",
+              "classification": "required_all_masses",
+              "result": "Целевое исследование показало: независимые личности."
+            },
+            {
+              "id": "mass_cytology_with_pathologist_review",
+              "classification": "prioritized_per_mass",
+              "result": "При микроскопии материала: массовые образцы."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "each_mass_requires_independent_truth_and_sampling_priority"
+            ],
+            "confirmedDiagnosisRequires": [
+              "separate_sample_result_per_diagnosed_mass"
+            ],
+            "dangerStates": [
+              "one_mass_rapid_growth",
+              "one_mass_ulcerated"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_mapping",
+              "mass_cytology_review",
+              "cytology"
+            ],
+            "external": [
+              "histology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_mapping_route",
+              "mass_cytology_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "cutaneous_mass_plan",
+          "followUp": {
+            "timing": "Массовый риск и результат.",
+            "required": true,
+            "targets": [
+              "mass_ids",
+              "individual_growth",
+              "individual_pathology"
+            ]
+          },
+          "outcomes": {
+            "safe": "Каждая масса сохраняет независимую истину.",
+            "unsafe": "Все массы наследуют первый диагноз."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: подпишите карту и объясните, к какой массе принадлежит каждый результат."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable",
+              "handling_sensitive"
+            ],
+            "requiredHandlingAlternative": "prioritized_staged_sampling",
+            "ownerModifiers": [
+              "confuses_mass_locations"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "mass_round_cell_or_mast_cell_pattern",
+      "version": "2026.07.16.40",
+      "title": "Круглоклеточный или тучный узор",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Цитология часто определяет морфологию тучных клеток или других круглых клеток, в то время как степень, инвазия, границы, происхождение и стадия остаются отдельными вопросами, специфичными для опухоли; системные или дегрануляционные признаки изменения срочности.",
+      "exclusions": [
+        "cytology_supplies_all_grade_and_margins",
+        "round_cell_is_final_lineage",
+        "degranulation_is_random_malignancy_score"
+      ],
+      "planBundleId": "round_cell_plan",
+      "sourceIds": [
+        "aaha_oncology_diagnostics_2026",
+        "merck_round_cell_cutaneous"
+      ],
+      "presentations": [
+        {
+          "id": "p1_cytology_supports_mast_cell_tumor",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt_or_urgent_by_systemic_signs",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что масс-специфическая цитология подтверждает морфологию опухоли тучных клеток.",
+          "historyAnswers": {
+            "prior_sample_method_site_and_result": "По нашим наблюдениям, интерпретация и адекватность тучных клеток.",
+            "regional_node_and_drainage_history": "Дома мы заметили, что записана карта узлов на основе дренажа.",
+            "systemic_weight_appetite_fever_and_energy": "Насколько мы можем судить, системные признаки проверены."
+          },
+          "examFindings": [
+            {
+              "factId": "mast_cell_cytology_can_support_type_but_histology_and_selective_stage_remain_separate",
+              "source": "pathology_boundary",
+              "finding": "Оценка или маржа не назначается автоматически."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "mast_cell_cytology_can_support_type_but_histology_and_selective_stage_remain_separate",
+              "discoveryPaths": [
+                "prior_sample_method_site_and_result",
+                "histology_type_grade_invasion_margin_orientation_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_cytology_with_pathologist_review",
+              "classification": "required",
+              "result": "При микроскопии материала: морфология тучных клеток."
+            },
+            {
+              "id": "mass_histopathology_grade_invasion_and_margin_review",
+              "classification": "required_after_planned_removal_or_biopsy",
+              "result": "При динамическом наблюдении: оценка и маржа."
+            },
+            {
+              "id": "mass_regional_lymph_node_sampling_by_drainage_not_size_alone",
+              "classification": "tumor_specific",
+              "result": "Целевое исследование показало: региональный этап."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "mast_cell_cytology_can_support_type_but_histology_and_selective_stage_remain_separate"
+            ],
+            "confirmedDiagnosisRequires": [
+              "mass_specific_cytology_or_histology"
+            ],
+            "dangerStates": [
+              "systemic_degranulation",
+              "rapid_swelling",
+              "bleeding"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_mapping",
+              "mass_cytology_review",
+              "cytology"
+            ],
+            "external": [
+              "oncology_histopathology_review",
+              "regional_node_sampling_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_cytology_route",
+              "mass_histology_route",
+              "mass_node_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "round_cell_plan",
+          "followUp": {
+            "timing": "После патологии и принятия решения о специфической стадии опухоли.",
+            "required": true,
+            "targets": [
+              "type",
+              "grade",
+              "margins",
+              "regional_node"
+            ]
+          },
+          "outcomes": {
+            "safe": "Тип, степень и стадия остаются разными.",
+            "unsafe": "Цитология определяет степень или границы."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: выявила цитология и какие области прогноза все еще требуют тканевого или выборочного стадирования."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable",
+              "itchy_or_swollen"
+            ],
+            "requiredHandlingAlternative": "gentle_mass_handling_and_referral",
+            "ownerModifiers": [
+              "expects_full_prognosis_now"
+            ]
+          }
+        },
+        {
+          "id": "p2_round_cell_tumor_requires_classification",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что цитология идентифицирует категорию круглых клеток, но не надежную линию или подтип.",
+          "historyAnswers": {
+            "prior_sample_method_site_and_result": "По нашим наблюдениям, морфологическая категория сохранена.",
+            "prior_histology_grade_margins_and_orientation": "Дома мы заметили, что несуществующие поля подтипа не выводятся.",
+            "cost_turnaround_transport_and_referral_feasibility": "Насколько мы можем судить, возможность проведения дополнительных испытаний известна."
+          },
+          "examFindings": [
+            {
+              "factId": "round_cell_category_requires_question_driven_ancillary_classification",
+              "source": "classification_rule",
+              "finding": "Поток или ИГХ выбран для определенного вопроса."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "round_cell_category_requires_question_driven_ancillary_classification",
+              "discoveryPaths": [
+                "prior_sample_method_site_and_result",
+                "flow_immunophenotype_ihc_question_and_result_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_cytology_with_pathologist_review",
+              "classification": "required",
+              "result": "При микроскопии материала: категория круглоклеточных."
+            },
+            {
+              "id": "mass_flow_cytometry_immunophenotype_or_immunohistochemistry_referral",
+              "classification": "conditional_defined_question",
+              "result": "По итогам консультации специалиста: родословная или подтип."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "round_cell_category_requires_question_driven_ancillary_classification"
+            ],
+            "confirmedDiagnosisRequires": [
+              "morphology_plus_appropriate_ancillary_or_histology"
+            ],
+            "dangerStates": [
+              "systemic_instability",
+              "rapid_progression"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_cytology_review",
+              "cytology"
+            ],
+            "external": [
+              "oncology_advanced_pathology_external",
+              "histology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_cytology_route",
+              "mass_advanced_pathology_route",
+              "mass_histology_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "round_cell_plan",
+          "followUp": {
+            "timing": "После вспомогательного результата.",
+            "required": true,
+            "targets": [
+              "lineage",
+              "subtype",
+              "adequacy",
+              "next_stage_question"
+            ]
+          },
+          "outcomes": {
+            "safe": "Вспомогательное тестирование отвечает на определенный вопрос классификации.",
+            "unsafe": "Круглоклеточная форма представлена как полный окончательный диагноз."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: семейство клеток известно, но для определения подтипа может потребоваться целевой лабораторный метод."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable"
+            ],
+            "requiredHandlingAlternative": "sample_preservation_and_external_referral",
+            "ownerModifiers": [
+              "turnaround_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_systemic_or_degranulation_red_flags_change_urgency",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "urgent_to_emergency",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что круглоклеточная или тучная клетка сосуществует с острым отеком, симптомами со стороны желудочно-кишечного тракта, коллапсом, кровотечением или другими системными сигналами тревоги.",
+          "historyAnswers": {
+            "systemic_weight_appetite_fever_and_energy": "По нашим наблюдениям, системные изменения своевременны.",
+            "bleeding_obstruction_effusion_or_organ_dysfunction": "Дома мы заметили, что критические эффекты проверены.",
+            "mass_onset_growth_change_ulceration_pain_function": "Насколько мы можем судить, зафиксировано локальное изменение."
+          },
+          "examFindings": [
+            {
+              "factId": "systemic_or_degranulation_signs_change_safety_and_urgency_not_tumor_grade",
+              "source": "safety_rule",
+              "finding": "Стабилизация не зависит от класса."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "systemic_or_degranulation_signs_change_safety_and_urgency_not_tumor_grade",
+              "discoveryPaths": [
+                "bleeding_obstruction_effusion_or_organ_dysfunction",
+                "bleeding_obstruction_effusion_organ_failure_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_baseline_patient_comorbidity_and_treatment_readiness",
+              "classification": "required_urgent",
+              "result": "Целевое исследование показало: необходимость системной готовности и стабилизации."
+            },
+            {
+              "id": "mass_cytology_with_pathologist_review",
+              "classification": "parallel_if_safe",
+              "result": "При микроскопии материала: массовая идентичность."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "systemic_or_degranulation_signs_change_safety_and_urgency_not_tumor_grade"
+            ],
+            "confirmedDiagnosisRequires": [
+              "pathology_after_stabilization"
+            ],
+            "dangerStates": [
+              "collapse",
+              "active_bleeding",
+              "shock",
+              "severe_gi_signs"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oncology_patient_readiness",
+              "general_exam",
+              "mass_cytology_review"
+            ],
+            "external": [
+              "oncology_staging_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_readiness_route",
+              "mass_cytology_route",
+              "mass_staging_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "round_cell_plan",
+          "followUp": {
+            "timing": "Немедленный маршрут безопасности, затем план патологии.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "bleeding",
+              "systemic_signs",
+              "pathology"
+            ]
+          },
+          "outcomes": {
+            "safe": "При тревожных признаках пациента сначала стабилизируют, а дальнейший план выбирают по подтверждённым данным.",
+            "unsafe": "Случайная оценка злокачественности заменяет клиническую безопасность."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: текущая системная реакция меняет срочность еще до того, как станет известна окончательная степень."
+          ],
+          "compatibility": {
+            "temperament": [
+              "collapsed",
+              "agitated",
+              "painful"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_stabilization_and_referral",
+            "ownerModifiers": [
+              "emergency_distress"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "mass_lymph_node_or_systemic_pattern",
+      "version": "2026.07.16.40",
+      "title": "Лимфоузел или системный опухолевый картина",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Реактивные, метастатические и первичные лимфоидные процессы требуют распределения, дренирования и морфологии; Размер узла недостаточен, и генерализованная лимфаденопатия может потребовать определения кровотока, иммунофенотипа или гистологического исследования.",
+      "exclusions": [
+        "large_node_equals_lymphoma",
+        "normal_node_excludes_metastasis",
+        "generalized_nodes_are_one_final_diagnosis"
+      ],
+      "planBundleId": "lymph_node_plan",
+      "sourceIds": [
+        "aaha_oncology_diagnostics_2026",
+        "oncology_pathology_nodal_lymphoma"
+      ],
+      "presentations": [
+        {
+          "id": "p1_local_reactive_vs_metastatic_node",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что региональный узел может быть реактивным, метастатическим или не связанным с близлежащим образованием.",
+          "historyAnswers": {
+            "regional_node_and_drainage_history": "По нашим наблюдениям, записана карта дренажа.",
+            "prior_sample_method_site_and_result": "Дома мы заметили, что образцы первичной массы и узла различимы.",
+            "systemic_weight_appetite_fever_and_energy": "Насколько мы можем судить, воспалительный контекст сохранен."
+          },
+          "examFindings": [
+            {
+              "factId": "regional_node_requires_drainage_based_sampling_not_size_assumption",
+              "source": "staging_rule",
+              "finding": "Нормальные и увеличенные узлы могут ввести в заблуждение."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "regional_node_requires_drainage_based_sampling_not_size_assumption",
+              "discoveryPaths": [
+                "regional_node_and_drainage_history",
+                "drainage_based_regional_node_sample_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_regional_lymph_node_sampling_by_drainage_not_size_alone",
+              "classification": "required_if_stage_relevant",
+              "result": "Целевое исследование показало: реактивные и метастатические данные."
+            },
+            {
+              "id": "mass_inflammation_infection_and_non_neoplastic_differential",
+              "classification": "required_context",
+              "result": "Целевое исследование показало: реактивные причины."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "regional_node_requires_drainage_based_sampling_not_size_assumption"
+            ],
+            "confirmedDiagnosisRequires": [
+              "node_specific_cytology_or_histology"
+            ],
+            "dangerStates": [
+              "rapid_systemic_decline"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_mapping",
+              "mass_non_neoplastic_review"
+            ],
+            "external": [
+              "regional_node_sampling_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_mapping_route",
+              "mass_non_neoplastic_route",
+              "mass_node_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "lymph_node_plan",
+          "followUp": {
+            "timing": "После результата узла.",
+            "required": true,
+            "targets": [
+              "node_identity",
+              "reactive_vs_metastatic",
+              "primary_mass"
+            ]
+          },
+          "outcomes": {
+            "safe": "Истина узла выбирается и связывается.",
+            "unsafe": "Только размер определяет ситуацию."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему узел нормального размера все еще может нуждаться в отборе проб, а увеличенный может быть воспалительным."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable"
+            ],
+            "requiredHandlingAlternative": "drainage_map_and_targeted_sampling",
+            "ownerModifiers": [
+              "questions_normal_node_sampling"
+            ]
+          }
+        },
+        {
+          "id": "p2_generalized_lymphadenopathy_or_lymphoma_pattern",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt_to_urgent",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что генерализованная лимфаденопатия создает картину лимфомы, но инфекционные и реактивные причины остаются возможными.",
+          "historyAnswers": {
+            "systemic_weight_appetite_fever_and_energy": "По нашим наблюдениям, системный фенотип завершен.",
+            "regional_node_and_drainage_history": "Дома мы заметили, что распределение нанесено на карту.",
+            "prior_sample_method_site_and_result": "Насколько мы можем судить, идентифицирован репрезентативный образец узла."
+          },
+          "examFindings": [
+            {
+              "factId": "generalized_lymphadenopathy_requires_morphology_and_systemic_differential",
+              "source": "diagnostic_boundary",
+              "finding": "Картина не является окончательным диагнозом."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "generalized_lymphadenopathy_requires_morphology_and_systemic_differential",
+              "discoveryPaths": [
+                "systemic_weight_appetite_fever_and_energy",
+                "pathologist_cytology_category_and_adequacy_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_cytology_with_pathologist_review",
+              "classification": "required",
+              "result": "При микроскопии материала: лимфоидная морфология."
+            },
+            {
+              "id": "mass_flow_cytometry_immunophenotype_or_immunohistochemistry_referral",
+              "classification": "conditional",
+              "result": "По итогам консультации специалиста: родословная или фенотип."
+            },
+            {
+              "id": "mass_baseline_patient_comorbidity_and_treatment_readiness",
+              "classification": "required",
+              "result": "Целевое исследование показало: исходный уровень всего пациента."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "generalized_lymphadenopathy_requires_morphology_and_systemic_differential"
+            ],
+            "confirmedDiagnosisRequires": [
+              "lymphoid_morphology_plus_appropriate_classification"
+            ],
+            "dangerStates": [
+              "severe_cytopenia",
+              "organ_dysfunction",
+              "rapid_decline"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_cytology_review",
+              "oncology_patient_readiness",
+              "cytology"
+            ],
+            "external": [
+              "oncology_advanced_pathology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_cytology_route",
+              "mass_advanced_pathology_route",
+              "mass_readiness_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "lymph_node_plan",
+          "followUp": {
+            "timing": "После морфологии и фенотипа.",
+            "required": true,
+            "targets": [
+              "distribution",
+              "lineage",
+              "patient_status"
+            ]
+          },
+          "outcomes": {
+            "safe": "Лимфома скорее подтверждается и классифицируется, чем выводится на основании распределения.",
+            "unsafe": "Все генерализованные узлы называются лимфомами."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: картина вызывает беспокойство, но инфекция и иммунная активация могут выглядеть одинаково."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable_or_weak"
+            ],
+            "requiredHandlingAlternative": "representative_single_node_sampling",
+            "ownerModifiers": [
+              "diagnosis_anxiety"
+            ]
+          }
+        },
+        {
+          "id": "p3_cytology_needs_flow_histology_or_immunophenotype",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что цитология узла подозрительна или неоднозначна, а линия, имеющая отношение к лечению, остается невыясненной.",
+          "historyAnswers": {
+            "prior_sample_method_site_and_result": "По нашим наблюдениям, неоднозначность и обработка образцов сохранены.",
+            "cost_turnaround_transport_and_referral_feasibility": "Дома мы заметили, что дополнительное возможность пройти наблюдение или лечение записано.",
+            "owner_curative_control_or_palliative_goal": "Насколько мы можем судить, влияние решения явное."
+          },
+          "examFindings": [
+            {
+              "factId": "advanced_pathology_is_selected_by_morphology_and_decision_question",
+              "source": "test_selection_rule",
+              "finding": "Нет автоматической полной панели."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "advanced_pathology_is_selected_by_morphology_and_decision_question",
+              "discoveryPaths": [
+                "prior_sample_method_site_and_result",
+                "flow_immunophenotype_ihc_question_and_result_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_flow_cytometry_immunophenotype_or_immunohistochemistry_referral",
+              "classification": "required_if_decision_changing",
+              "result": "По итогам консультации специалиста: родословная или фенотип."
+            },
+            {
+              "id": "mass_histopathology_grade_invasion_and_margin_review",
+              "classification": "alternative_or_additional",
+              "result": "При динамическом наблюдении: архитектура."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "advanced_pathology_is_selected_by_morphology_and_decision_question"
+            ],
+            "confirmedDiagnosisRequires": [
+              "resolved_lineage_or_histologic_classification"
+            ],
+            "dangerStates": [
+              "rapid_decline"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_cytology_review"
+            ],
+            "external": [
+              "oncology_advanced_pathology_external",
+              "oncology_histopathology_review"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_advanced_pathology_route",
+              "mass_histology_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "lymph_node_plan",
+          "followUp": {
+            "timing": "После выбранного вспомогательного результата.",
+            "required": true,
+            "targets": [
+              "lineage",
+              "architecture",
+              "decision_impact"
+            ]
+          },
+          "outcomes": {
+            "safe": "Вспомогательное испытание устраняет определенную неопределенность.",
+            "unsafe": "Каждый неоднозначный узел получает каждый тест или предполагаемый подтип."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: на что именно должен ответить дополнительный тест и как он меняет план."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable"
+            ],
+            "requiredHandlingAlternative": "sample_preservation_external_test",
+            "ownerModifiers": [
+              "budget_limit"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "mass_internal_or_organ_associated",
+      "version": "2026.07.16.40",
+      "title": "Внутренняя или орган-ассоциированная масса",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Внутренние образования требуют воздействия на органы, стабильности пациента, выборочной визуализации и оценки риска отбора проб для конкретного места; Случайное появление не является доброкачественным, тогда как кровотечение, обструкция, выпот или дисфункция указывают на неотложность.",
+      "exclusions": [
+        "incidental_equals_benign",
+        "imaging_equals_histology",
+        "every_internal_mass_is_aspirated"
+      ],
+      "planBundleId": "internal_mass_plan",
+      "sourceIds": [
+        "aaha_oncology_diagnostics_2026",
+        "aaha_oncology_common_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_incidental_internal_mass_without_clinical_effect",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt_not_automatic_emergency",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что внутреннее образование обнаруживается случайно без текущей органной дисфункции.",
+          "historyAnswers": {
+            "bleeding_obstruction_effusion_or_organ_dysfunction": "По нашим наблюдениям, текущий эффект не зарегистрирован.",
+            "prior_sample_method_site_and_result": "Дома мы заметили, что никакой выдуманной патологии.",
+            "comorbidity_anesthesia_and_treatment_readiness": "Насколько мы можем судить, исходные данные пациента известны."
+          },
+          "examFindings": [
+            {
+              "factId": "incidental_internal_mass_requires_characterization_not_benign_label",
+              "source": "incidentaloma_rule",
+              "finding": "Клиническое молчание не определяет биологию."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "incidental_internal_mass_requires_characterization_not_benign_label",
+              "discoveryPaths": [
+                "bleeding_obstruction_effusion_or_organ_dysfunction",
+                "tumor_specific_staging_question_and_result_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_selective_thoracic_abdominal_or_advanced_imaging_staging",
+              "classification": "required_characterization",
+              "result": "При томографическом исследовании: орган и протяженность."
+            },
+            {
+              "id": "mass_baseline_patient_comorbidity_and_treatment_readiness",
+              "classification": "required",
+              "result": "Целевое исследование показало: контекст пациента."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "incidental_internal_mass_requires_characterization_not_benign_label"
+            ],
+            "confirmedDiagnosisRequires": [
+              "site_specific_sample_or_defined_surveillance"
+            ],
+            "dangerStates": [
+              "new_bleeding",
+              "obstruction",
+              "effusion"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oncology_patient_readiness",
+              "general_exam"
+            ],
+            "external": [
+              "oncology_staging_external",
+              "imaging_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_readiness_route",
+              "mass_staging_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "internal_mass_plan",
+          "followUp": {
+            "timing": "После характеристики или определенного наблюдения.",
+            "required": true,
+            "targets": [
+              "size",
+              "organ_effect",
+              "sampling_question"
+            ]
+          },
+          "outcomes": {
+            "safe": "Побочная масса получает соразмерную характеристику.",
+            "unsafe": "Отсутствие симптомов означает доброкачественное течение."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: случайное означает то, как оно было найдено, а не то, что оно собой представляет."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable"
+            ],
+            "requiredHandlingAlternative": "noninvasive_imaging_first",
+            "ownerModifiers": [
+              "incidental_finding_anxiety"
+            ]
+          }
+        },
+        {
+          "id": "p2_mass_with_bleeding_obstruction_effusion_or_organ_dysfunction",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "emergency",
+          "workload": 4.25,
+          "complaint": "Мы обратились, потому что внутреннее образование связано с кровотечением, обструкцией, выпотом или дисфункцией органа.",
+          "historyAnswers": {
+            "bleeding_obstruction_effusion_or_organ_dysfunction": "По нашим наблюдениям, критический эффект рассчитан по времени.",
+            "systemic_weight_appetite_fever_and_energy": "Дома мы заметили, что стабильность оценена.",
+            "cost_turnaround_transport_and_referral_feasibility": "Насколько мы можем судить, маршрут экстренной перевозки известен."
+          },
+          "examFindings": [
+            {
+              "factId": "organ_effect_sets_emergency_route_before_final_tumor_type",
+              "source": "emergency_rule",
+              "finding": "Полной классификации предшествуют стабилизация и направление."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "organ_effect_sets_emergency_route_before_final_tumor_type",
+              "discoveryPaths": [
+                "bleeding_obstruction_effusion_or_organ_dysfunction",
+                "bleeding_obstruction_effusion_organ_failure_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_baseline_patient_comorbidity_and_treatment_readiness",
+              "classification": "required_immediate",
+              "result": "Целевое исследование показало: стабильность и готовность к вмешательству."
+            },
+            {
+              "id": "mass_selective_thoracic_abdominal_or_advanced_imaging_staging",
+              "classification": "urgent_if_safe",
+              "result": "При томографическом исследовании: причина и степень."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "organ_effect_sets_emergency_route_before_final_tumor_type"
+            ],
+            "confirmedDiagnosisRequires": [
+              "stabilized_site_specific_imaging_and_pathology"
+            ],
+            "dangerStates": [
+              "hemorrhagic_shock",
+              "complete_obstruction",
+              "respiratory_effusion",
+              "organ_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oncology_patient_readiness",
+              "general_exam"
+            ],
+            "external": [
+              "oncology_staging_external",
+              "imaging_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_readiness_route",
+              "mass_staging_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "internal_mass_plan",
+          "followUp": {
+            "timing": "Непрерывный экстренный перевод.",
+            "required": true,
+            "targets": [
+              "perfusion",
+              "bleeding",
+              "patency",
+              "effusion",
+              "organ_function"
+            ]
+          },
+          "outcomes": {
+            "safe": "Критический эффект стабилизируется без ожидания подтипа.",
+            "unsafe": "Перед направлением ожидается окончательное название рака."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: непосредственной угрозой является кровотечение или органная недостаточность, а типирование опухоли следует за стабилизацией."
+          ],
+          "compatibility": {
+            "temperament": [
+              "collapsed",
+              "dyspneic",
+              "painful"
+            ],
+            "requiredHandlingAlternative": "minimal_handling_emergency_transfer",
+            "ownerModifiers": [
+              "emergency_distress"
+            ]
+          }
+        },
+        {
+          "id": "p3_image_guided_sampling_has_site_specific_risk_or_low_yield",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt_or_urgent_by_risk",
+          "workload": 3.75,
+          "complaint": "Мы обратились, потому что внутренняя масса может быть небезопасной или малоэффективной для отбора проб доступным путем.",
+          "historyAnswers": {
+            "prior_sample_method_site_and_result": "По нашим наблюдениям, предыдущие результаты и осложнения.",
+            "comorbidity_anesthesia_and_treatment_readiness": "Дома мы заметили, что известен риск кровотечения или анестезии.",
+            "owner_curative_control_or_palliative_goal": "Насколько мы можем судить, значение решения выборки явное."
+          },
+          "examFindings": [
+            {
+              "factId": "internal_sampling_method_requires_site_specific_risk_yield_and_decision_value",
+              "source": "procedure_safety_rule",
+              "finding": "Случайное стремление заблокировано."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "internal_sampling_method_requires_site_specific_risk_yield_and_decision_value",
+              "discoveryPaths": [
+                "comorbidity_anesthesia_and_treatment_readiness",
+                "biopsy_method_site_track_and_margin_plan_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_biopsy_method_site_and_definitive_surgery_planning",
+              "classification": "required",
+              "result": "В заключении по гистологическому исследованию: безопасный метод и трек."
+            },
+            {
+              "id": "mass_baseline_patient_comorbidity_and_treatment_readiness",
+              "classification": "required",
+              "result": "Целевое исследование показало: риск и ценность решения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "internal_sampling_method_requires_site_specific_risk_yield_and_decision_value"
+            ],
+            "confirmedDiagnosisRequires": [
+              "safe_representative_sample_or_explicit_alternative"
+            ],
+            "dangerStates": [
+              "bleeding_risk",
+              "rupture_risk",
+              "unstable_patient"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oncology_patient_readiness"
+            ],
+            "external": [
+              "oncology_biopsy_planning_referral",
+              "imaging_or_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_biopsy_route",
+              "mass_readiness_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "internal_mass_plan",
+          "followUp": {
+            "timing": "После принятия специалистом решения о риске и доходности.",
+            "required": true,
+            "targets": [
+              "method",
+              "site",
+              "yield",
+              "risk",
+              "decision_value"
+            ]
+          },
+          "outcomes": {
+            "safe": "Выборка выбирается из соображений безопасности и полезности.",
+            "unsafe": "Каждая внутренняя масса аспирируется, потому что ее обнаружила визуализация."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: прежде чем выбирать образец маршрута, объясните как ожидаемую выгоду, так и риск, связанный с конкретным местом."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable_or_fragile"
+            ],
+            "requiredHandlingAlternative": "specialist_image_guided_or_alternative_route",
+            "ownerModifiers": [
+              "procedure_risk_concern"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "mass_nondiagnostic_or_biopsy_planning",
+      "version": "2026.07.16.40",
+      "title": "Неинформативная цитология или планирование биопсии",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Недиагностическая или категориальная цитология сохраняет адекватность и остающиеся вопросы; следующий метод выбирается исходя из ожидаемого результата и окончательного хирургического планирования, а не слепого повторения или иссечения.",
+      "exclusions": [
+        "nondiagnostic_equals_negative",
+        "category_equals_subtype",
+        "excisional_biopsy_needs_no_plan"
+      ],
+      "planBundleId": "biopsy_planning_plan",
+      "sourceIds": [
+        "aaha_oncology_diagnostics_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_low_cellularity_blood_or_necrosis_only",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt_by_mass_risk",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что цитология дает низкую клеточность, кровь или некроз без диагностических клеток.",
+          "historyAnswers": {
+            "prior_sample_method_site_and_result": "По нашим наблюдениям, точная недиагностическая причина сохранена.",
+            "mass_onset_growth_change_ulceration_pain_function": "Дома мы заметили, что клинический риск сохраняется.",
+            "comorbidity_anesthesia_and_treatment_readiness": "Насколько мы можем судить, риск следующего метода известен."
+          },
+          "examFindings": [
+            {
+              "factId": "nondiagnostic_sample_is_not_negative_and_requires_method_review",
+              "source": "adequacy_rule",
+              "finding": "Ложное заверение заблокировано."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "nondiagnostic_sample_is_not_negative_and_requires_method_review",
+              "discoveryPaths": [
+                "prior_sample_method_site_and_result",
+                "pathologist_cytology_category_and_adequacy_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_cytology_with_pathologist_review",
+              "classification": "required_audit",
+              "result": "При микроскопии материала: адекватность и режим отказа."
+            },
+            {
+              "id": "mass_biopsy_method_site_and_definitive_surgery_planning",
+              "classification": "required_if_question_persists",
+              "result": "В заключении по гистологическому исследованию: план с более высокой доходностью."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "nondiagnostic_sample_is_not_negative_and_requires_method_review"
+            ],
+            "confirmedDiagnosisRequires": [
+              "representative_repeat_or_histology"
+            ],
+            "dangerStates": [
+              "high_risk_mass_change"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_cytology_review"
+            ],
+            "external": [
+              "oncology_biopsy_planning_referral"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_cytology_route",
+              "mass_biopsy_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "biopsy_planning_plan",
+          "followUp": {
+            "timing": "Быстрый обзор метода.",
+            "required": true,
+            "targets": [
+              "adequacy",
+              "site",
+              "method",
+              "remaining_question"
+            ]
+          },
+          "outcomes": {
+            "safe": "Режим отказа помогает получить лучший образец.",
+            "unsafe": "Отсутствие клеток считается отсутствием рака."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: тест скорее не ответил на вопрос, а показал отсутствие заболевания."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable"
+            ],
+            "requiredHandlingAlternative": "avoid_blind_repeat_and_plan_yield",
+            "ownerModifiers": [
+              "frustrated_by_repeat_test"
+            ]
+          }
+        },
+        {
+          "id": "p2_mesenchymal_epithelial_or_indeterminate_category",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что цитология предоставляет мезенхимальные, эпителиальные или неопределенные категории без определенного подтипа или поведения.",
+          "historyAnswers": {
+            "prior_sample_method_site_and_result": "По нашим наблюдениям, категория и неопределенность сохранены.",
+            "mass_onset_growth_change_ulceration_pain_function": "Дома мы заметили, что поведенческие признаки регистрируются, но не являются диагностическими.",
+            "owner_curative_control_or_palliative_goal": "Насколько мы можем судить, потребность в точности связана с решением."
+          },
+          "examFindings": [
+            {
+              "factId": "cytologic_category_guides_biopsy_but_does_not_supply_subtype_grade_or_margins",
+              "source": "cytology_limit_rule",
+              "finding": "Архитектура остается внешней."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "cytologic_category_guides_biopsy_but_does_not_supply_subtype_grade_or_margins",
+              "discoveryPaths": [
+                "prior_sample_method_site_and_result",
+                "histology_type_grade_invasion_margin_orientation_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_biopsy_method_site_and_definitive_surgery_planning",
+              "classification": "required",
+              "result": "В заключении по гистологическому исследованию: образец, сохраняющий архитектуру."
+            },
+            {
+              "id": "mass_histopathology_grade_invasion_and_margin_review",
+              "classification": "required",
+              "result": "При динамическом наблюдении: подтип, степень и инвазия."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "cytologic_category_guides_biopsy_but_does_not_supply_subtype_grade_or_margins"
+            ],
+            "confirmedDiagnosisRequires": [
+              "histopathology"
+            ],
+            "dangerStates": [
+              "rapid_growth",
+              "functional_impairment"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "mass_cytology_review"
+            ],
+            "external": [
+              "oncology_biopsy_planning_referral",
+              "oncology_histopathology_review"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_biopsy_route",
+              "mass_histology_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "biopsy_planning_plan",
+          "followUp": {
+            "timing": "После плановой гистологии.",
+            "required": true,
+            "targets": [
+              "subtype",
+              "grade",
+              "invasion",
+              "margins"
+            ]
+          },
+          "outcomes": {
+            "safe": "Категория сообщает о следующем образце, не преувеличивая.",
+            "unsafe": "Мезенхимальный или эпителиальный становится полным диагнозом."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: цитология сузила семейство, но для окончательного планирования необходима тканевая архитектура."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable"
+            ],
+            "requiredHandlingAlternative": "planned_biopsy_referral",
+            "ownerModifiers": [
+              "expects_cytology_finality"
+            ]
+          }
+        },
+        {
+          "id": "p3_incisional_vs_excisional_plan_must_protect_definitive_margins",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что команда должна выбрать инцизионный или эксцизионный путь без ущерба для окончательных границ.",
+          "historyAnswers": {
+            "mass_site_layer_three_dimensions_and_photo_date": "По нашим наблюдениям, анатомическая карта.",
+            "comorbidity_anesthesia_and_treatment_readiness": "Дома мы заметили, что готовность пациента известна.",
+            "owner_curative_control_or_palliative_goal": "Насколько мы можем судить, намерение явное."
+          },
+          "examFindings": [
+            {
+              "factId": "biopsy_track_and_method_must_fit_definitive_surgical_plan",
+              "source": "surgical_oncology_rule",
+              "finding": "Загрязнение дорожек и потеря маржи исключены."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "biopsy_track_and_method_must_fit_definitive_surgical_plan",
+              "discoveryPaths": [
+                "comorbidity_anesthesia_and_treatment_readiness",
+                "biopsy_method_site_track_and_margin_plan_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_biopsy_method_site_and_definitive_surgery_planning",
+              "classification": "required_before_cutting",
+              "result": "В заключении по гистологическому исследованию: метод или место или трек."
+            },
+            {
+              "id": "mass_baseline_patient_comorbidity_and_treatment_readiness",
+              "classification": "required",
+              "result": "Целевое исследование показало: готовность и намерение."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "biopsy_track_and_method_must_fit_definitive_surgical_plan"
+            ],
+            "confirmedDiagnosisRequires": [
+              "planned_representative_histology"
+            ],
+            "dangerStates": [
+              "bleeding_risk",
+              "critical_location"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oncology_patient_readiness"
+            ],
+            "external": [
+              "oncology_biopsy_planning_referral",
+              "histology_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_biopsy_route",
+              "mass_readiness_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "biopsy_planning_plan",
+          "followUp": {
+            "timing": "После патологии с сохранением ориентации.",
+            "required": true,
+            "targets": [
+              "track",
+              "orientation",
+              "diagnosis",
+              "margins"
+            ]
+          },
+          "outcomes": {
+            "safe": "Диагностический доступ сохраняет окончательные варианты.",
+            "unsafe": "Удобное иссечение создает неадекватные или загрязненные края."
+          },
+          "ownerCommunication": [
+            "Я поясню, почему планирование первого разреза может уменьшить размер и стоимость последующей радикальной операции."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable"
+            ],
+            "requiredHandlingAlternative": "specialist_planning_before_anesthesia",
+            "ownerModifiers": [
+              "wants_one_step_removal"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "mass_confirmed_neoplasia_staging_and_followup",
+      "version": "2026.07.16.40",
+      "title": "Подтверждённая опухоль: степень, стадия и наблюдение",
+      "review": {
+        "authorStatus": "author_complete",
+        "sourceStatus": "source_checked",
+        "veterinaryReviewStatus": "external_veterinary_review_pending"
+      },
+      "generatorEligible": false,
+      "allowedSpecies": [
+        "dog",
+        "cat"
+      ],
+      "diagnosticTruth": "Подтвержденная неоплазия сохраняет полную патологию, отделяет степень от стадии, выбирает стадию на основе биологии опухоли и влияния решения, а также связывает назначение лечения, наблюдение, паллиативное лечение и качество жизни в продольном направлении.",
+      "exclusions": [
+        "grade_equals_stage",
+        "all_tumors_get_same_staging",
+        "pathology_lost_after_removal"
+      ],
+      "planBundleId": "confirmed_neoplasia_plan",
+      "sourceIds": [
+        "aaha_oncology_diagnostics_2026",
+        "aaha_oncology_common_2026"
+      ],
+      "presentations": [
+        {
+          "id": "p1_histology_confirms_type_grade_and_margin_status",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt_by_pathology",
+          "workload": 3,
+          "complaint": "Мы обратились, потому что гистология подтверждает тип опухоли с указанием степени, инвазии и границ, когда это применимо.",
+          "historyAnswers": {
+            "prior_histology_grade_margins_and_orientation": "По нашим наблюдениям, полный отчет и ориентация сохранены.",
+            "multiple_mass_independent_identity": "Дома мы заметили, что образец привязан к точному идентификатору массы.",
+            "owner_curative_control_or_palliative_goal": "Насколько мы можем судить, намерение проверено после отчета."
+          },
+          "examFindings": [
+            {
+              "factId": "full_histology_fields_persist_and_grade_remains_distinct_from_stage",
+              "source": "pathology_persistence_rule",
+              "finding": "Нет хранилища только для этикеток."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "full_histology_fields_persist_and_grade_remains_distinct_from_stage",
+              "discoveryPaths": [
+                "prior_histology_grade_margins_and_orientation",
+                "histology_type_grade_invasion_margin_orientation_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_histopathology_grade_invasion_and_margin_review",
+              "classification": "required",
+              "result": "При динамическом наблюдении: тип, сорт, инвазия, поля."
+            },
+            {
+              "id": "mass_quality_of_life_owner_goals_cost_and_followup_plan",
+              "classification": "required",
+              "result": "При динамическом наблюдении: намерение решения."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "full_histology_fields_persist_and_grade_remains_distinct_from_stage"
+            ],
+            "confirmedDiagnosisRequires": [
+              "mass_linked_histopathology"
+            ],
+            "dangerStates": [
+              "incomplete_margin_at_critical_site",
+              "aggressive_pathology"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oncology_quality_of_life_plan"
+            ],
+            "external": [
+              "oncology_histopathology_review"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_histology_route",
+              "mass_qol_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "confirmed_neoplasia_plan",
+          "followUp": {
+            "timing": "Обзор патологии перед следующим вмешательством.",
+            "required": true,
+            "targets": [
+              "type",
+              "grade",
+              "invasion",
+              "margins",
+              "orientation"
+            ]
+          },
+          "outcomes": {
+            "safe": "Полная патология вызывает следующий вопрос.",
+            "unsafe": "После удаления остается только название рака."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: просмотрите тип, оценку и маржу отдельно и укажите, что спред — это другой промежуточный вопрос."
+          ],
+          "compatibility": {
+            "temperament": [
+              "postoperative_or_stable"
+            ],
+            "requiredHandlingAlternative": "report_review_without_unnecessary_handling",
+            "ownerModifiers": [
+              "pathology_overload"
+            ]
+          }
+        },
+        {
+          "id": "p2_selective_regional_and_distant_staging",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "prompt",
+          "workload": 3.5,
+          "complaint": "Мы обратились, потому что подтвержденная биология опухоли определяет, какие региональные и отдаленные тесты на стадию могут изменить прогноз или лечение.",
+          "historyAnswers": {
+            "regional_node_and_drainage_history": "По нашим наблюдениям, соответствующий маршрут узла сопоставлен.",
+            "cost_turnaround_transport_and_referral_feasibility": "Дома мы заметили, что явные практические ограничения.",
+            "owner_curative_control_or_palliative_goal": "Насколько мы можем судить, тестовое воздействие на цель известно."
+          },
+          "examFindings": [
+            {
+              "factId": "staging_is_tumor_specific_prognostic_practical_and_pertinent",
+              "source": "aaha_three_p_rule",
+              "finding": "Нет универсальной панели."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "staging_is_tumor_specific_prognostic_practical_and_pertinent",
+              "discoveryPaths": [
+                "owner_curative_control_or_palliative_goal",
+                "tumor_specific_staging_question_and_result_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_regional_lymph_node_sampling_by_drainage_not_size_alone",
+              "classification": "tumor_specific",
+              "result": "Целевое исследование показало: региональный масштаб."
+            },
+            {
+              "id": "mass_selective_thoracic_abdominal_or_advanced_imaging_staging",
+              "classification": "tumor_specific",
+              "result": "При томографическом исследовании: отдаленная протяженность."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "staging_is_tumor_specific_prognostic_practical_and_pertinent"
+            ],
+            "confirmedDiagnosisRequires": [
+              "preserved_primary_pathology"
+            ],
+            "dangerStates": [
+              "organ_compromise",
+              "rapid_progression"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oncology_quality_of_life_plan"
+            ],
+            "external": [
+              "regional_node_sampling_external",
+              "oncology_staging_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_node_route",
+              "mass_staging_route",
+              "mass_qol_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "confirmed_neoplasia_plan",
+          "followUp": {
+            "timing": "После выбранных результатов постановки.",
+            "required": true,
+            "targets": [
+              "regional_extent",
+              "distant_extent",
+              "decision_impact",
+              "cost"
+            ]
+          },
+          "outcomes": {
+            "safe": "Выполняется только постановка, релевантная для принятия решения.",
+            "unsafe": "Каждая опухоль получает идентичную визуализацию грудной клетки, брюшной полости и расширенную визуализацию."
+          },
+          "ownerCommunication": [
+            "Я поясню вам: может изменить каждый предложенный промежуточный тест, и опустите лишние тесты."
+          ],
+          "compatibility": {
+            "temperament": [
+              "stable_or_fragile"
+            ],
+            "requiredHandlingAlternative": "prioritized_low_burden_staging",
+            "ownerModifiers": [
+              "budget_limit",
+              "test_burden_concern"
+            ]
+          }
+        },
+        {
+          "id": "p3_treatment_surveillance_palliative_or_quality_of_life_route",
+          "version": "2026.07.16.40",
+          "review": {
+            "authorStatus": "author_complete",
+            "sourceStatus": "source_checked",
+            "veterinaryReviewStatus": "external_veterinary_review_pending"
+          },
+          "generatorEligible": false,
+          "species": [
+            "dog",
+            "cat"
+          ],
+          "ageBands": [
+            "young_adult",
+            "adult",
+            "mature",
+            "senior"
+          ],
+          "campaignAvailability": {
+            "earliest": "chapter_5",
+            "localResolution": false
+          },
+          "urgency": "longitudinal_or_urgent_by_complication",
+          "workload": 3.25,
+          "complaint": "Мы обратились, потому что подтвержденная опухоль подлежит пересмотренному лечению, наблюдению, контролю или паллиативному планированию качества жизни.",
+          "historyAnswers": {
+            "owner_curative_control_or_palliative_goal": "По нашим наблюдениям, текущая цель и зафиксированные изменения.",
+            "quality_of_life_function_pain_and_home_monitoring": "Дома мы заметили, что функция, боль и домашние измерения серийные.",
+            "cost_turnaround_transport_and_referral_feasibility": "Насколько мы можем судить, нагрузка и доступ продольный."
+          },
+          "examFindings": [
+            {
+              "factId": "owner_goal_qol_and_surveillance_remain_longitudinal_not_one_time_choice",
+              "source": "continuity_rule",
+              "finding": "Цели могут меняться без устранения патологии."
+            }
+          ],
+          "criticalFacts": [
+            {
+              "factId": "owner_goal_qol_and_surveillance_remain_longitudinal_not_one_time_choice",
+              "discoveryPaths": [
+                "quality_of_life_function_pain_and_home_monitoring",
+                "owner_goal_cost_followup_qol_record"
+              ]
+            }
+          ],
+          "investigations": [
+            {
+              "id": "mass_quality_of_life_owner_goals_cost_and_followup_plan",
+              "classification": "required_longitudinal",
+              "result": "При динамическом наблюдении: цель, нагрузка и качество жизни."
+            },
+            {
+              "id": "mass_map_measure_photo_growth_function_and_sample_identity",
+              "classification": "surveillance_as_applicable",
+              "result": "Целевое исследование показало: локальная динамика."
+            },
+            {
+              "id": "mass_baseline_patient_comorbidity_and_treatment_readiness",
+              "classification": "before_each_major_intervention",
+              "result": "Целевое исследование показало: готовность."
+            }
+          ],
+          "dataSufficiency": {
+            "safePlanRequires": [
+              "owner_goal_qol_and_surveillance_remain_longitudinal_not_one_time_choice"
+            ],
+            "confirmedDiagnosisRequires": [
+              "preserved_pathology_and_stage_context"
+            ],
+            "dangerStates": [
+              "uncontrolled_pain",
+              "bleeding",
+              "obstruction",
+              "organ_failure"
+            ]
+          },
+          "equipment": {
+            "requiredLocal": [
+              "oncology_quality_of_life_plan",
+              "mass_mapping",
+              "oncology_patient_readiness"
+            ],
+            "external": [
+              "oncology_staging_external"
+            ],
+            "missingLocalRoute": [
+              "safe_referral"
+            ],
+            "conditional": [
+              "mass_qol_route",
+              "mass_mapping_route",
+              "mass_readiness_route",
+              "mass_staging_route"
+            ],
+            "referralFallback": "safe_referral"
+          },
+          "carePlanId": "confirmed_neoplasia_plan",
+          "followUp": {
+            "timing": "Индивидуально проверенная частота кадров и триггеры событий.",
+            "required": true,
+            "targets": [
+              "qol",
+              "pain",
+              "function",
+              "local_control",
+              "stage_change",
+              "owner_goal"
+            ]
+          },
+          "outcomes": {
+            "safe": "Намерение ухода и качество жизни остаются явными и подлежат пересмотру.",
+            "unsafe": "Химиотерапия становится обычным инвентарем или создается универсальный протокол."
+          },
+          "ownerCommunication": [
+            "Я объясню вам: пересмотрите, какой результат наиболее важен, какое бремя приемлемо и какие изменения вызывают контакт."
+          ],
+          "compatibility": {
+            "temperament": [
+              "treatment_fatigued",
+              "stable_or_painful"
+            ],
+            "requiredHandlingAlternative": "low_burden_qol_monitoring_and_referral",
+            "ownerModifiers": [
+              "caregiver_fatigue",
+              "changing_goals"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "familyValidationRules": [
+    "Reject if appearance, size, breed, palpation or imaging alone declares benignity or cancer.",
+    "Reject if multiple masses share a diagnosis without independent sample identity.",
+    "Reject if nondiagnostic cytology becomes negative or cytology automatically supplies grade, invasion and margins.",
+    "Reject if grade and stage are conflated or every tumor receives the same staging panel.",
+    "Reject if regional nodes are selected by size alone or normal size universally excludes metastasis.",
+    "Reject if biopsy method, site and track do not protect definitive margins.",
+    "Reject if removed tissue loses orientation, full histology or margin status.",
+    "Reject if external results are instant or code generates biopsy, surgery, chemotherapy, radiation, drug protocols or doses."
+  ]
+}

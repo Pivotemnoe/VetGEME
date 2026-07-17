@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "sequenceId": "pet-clinic-training-sequence-v1",
+  "medicalSource": "vetgeme-medical-production-authoring@2026.07.16.40",
+  "lessons": [
+    {
+      "lesson": 1,
+      "title": "Первичный приём",
+      "familyId": "gi_acute",
+      "variantId": "gi_acute_uncomplicated_vomiting",
+      "presentationId": "p1_single_episode_stable",
+      "teaches": ["жалоба", "анамнез", "общий осмотр", "достаточность данных"]
+    },
+    {
+      "lesson": 2,
+      "title": "Ухо и микроскопия",
+      "familyId": "ear_external",
+      "variantId": "ear_yeast_otitis",
+      "presentationId": "p1_uncomplicated",
+      "teaches": ["уточняющие вопросы", "отоскопия", "взятие материала", "микроскопия"]
+    },
+    {
+      "lesson": 3,
+      "title": "Кожа и разговор с владельцем",
+      "familyId": "skin_ectoparasites",
+      "variantId": "skin_flea_infestation",
+      "presentationId": "p1_visible_fleas",
+      "teaches": ["осмотр кожи", "выбор достаточного плана", "объяснение владельцу", "контроль"]
+    },
+    {
+      "lesson": 4,
+      "title": "Срочность и нижние мочевыводящие пути",
+      "familyId": "urinary_feline_lower",
+      "variantId": "urinary_feline_luts_undifferentiated",
+      "presentationId": "p1_pollakiuria_periuria",
+      "teaches": ["оценка срочности", "критические факты", "локальное исследование или направление"]
+    },
+    {
+      "lesson": 5,
+      "title": "Изоляция и поток пациентов",
+      "familyId": "resp_cat_upper",
+      "variantId": "resp_cat_uri_acute_uncomplicated",
+      "presentationId": "p1_mild_sneeze_serous_discharge",
+      "teaches": ["инфекционная безопасность", "изоляция", "очередь", "человеческое объяснение владельцу"]
+    },
+    {
+      "lesson": 6,
+      "title": "Рана и повторный визит",
+      "familyId": "wound_abscess",
+      "variantId": "wound_superficial_clean",
+      "presentationId": "p1_recent_abrasion_stable",
+      "teaches": ["процедура", "расходники", "выписка", "follow-up"]
+    },
+    {
+      "lesson": 7,
+      "title": "Неотложный маршрут",
+      "familyId": "gi_obstruction",
+      "variantId": "gi_obstruction_discrete_foreign_body",
+      "presentationId": "p1_witnessed_ingestion_with_early_signs",
+      "teaches": ["срочная диагностика", "нехватка оборудования", "стабилизация", "безопасное направление"]
+    },
+    {
+      "lesson": 8,
+      "title": "Экстренная командная работа",
+      "familyId": "gi_gdv",
+      "variantId": "gdv_gastric_dilatation_without_confirmed_volvulus",
+      "presentationId": "p1_gastric_dilatation_stable_enough_for_differentiation",
+      "teaches": ["экстренная срочность", "резервации", "передача задачи", "процедурная и краткий стационар"]
+    }
+  ],
+  "rules": {
+    "medicalTruthComesOnlyFromReferencedPresentation": true,
+    "lessonMayAddNewMedicalText": false,
+    "requiredLessonResourcesMayBeTemporarilyLoaned": true,
+    "loanedResourcesDoNotCarryIntoOtherModes": true,
+    "failureHasNoIrreversibleEconomicOrReputationPenalty": true
+  }
+}
+
