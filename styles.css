@@ -19,6 +19,8 @@
 }
 
 * { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
 html, body { width: 100%; min-height: 100%; }
 body {
   margin: 0;
@@ -27,6 +29,127 @@ body {
   font-family: var(--font);
   background: #172b23;
   image-rendering: pixelated;
+}
+
+.start-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  padding: 32px;
+  color: #f5fbff;
+  background:
+    linear-gradient(180deg, rgba(7, 26, 42, 0.84), rgba(8, 37, 55, 0.94)),
+    radial-gradient(circle at 24% 20%, #318cb0 0 12%, transparent 38%),
+    linear-gradient(135deg, #183f50, #0b2637 65%, #071a28);
+}
+
+.start-menu::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.15;
+  background-image:
+    linear-gradient(90deg, transparent 49%, rgba(143, 219, 230, 0.55) 50%, transparent 51%),
+    linear-gradient(transparent 49%, rgba(143, 219, 230, 0.4) 50%, transparent 51%);
+  background-size: 96px 96px;
+}
+
+.start-menu-brand {
+  position: fixed;
+  top: 28px;
+  left: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.start-menu-brand strong,
+.start-menu-brand span { display: block; }
+.start-menu-brand strong { font-size: 24px; }
+.start-menu-brand div > span { font-size: 12px; color: #b9d9e8; }
+
+.start-menu-panel {
+  position: relative;
+  z-index: 1;
+  width: min(980px, 100%);
+  padding: 24px;
+  border: 1px solid rgba(183, 225, 238, 0.32);
+  border-radius: 20px;
+  background: rgba(8, 31, 47, 0.88);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(12px);
+}
+
+.start-menu-panel > header { max-width: 660px; margin-bottom: 14px; }
+.start-menu-panel h1 { margin: 2px 0 5px; font-size: clamp(30px, 3.5vw, 42px); }
+.start-menu-panel > header > p:last-child { margin: 0; color: #c6dce7; line-height: 1.5; }
+
+.mode-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.mode-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 184px;
+  padding: 15px 18px;
+  border: 1px solid rgba(170, 216, 231, 0.24);
+  border-radius: 14px;
+  background: rgba(241, 249, 252, 0.07);
+}
+
+.mode-card:hover { border-color: rgba(115, 205, 233, 0.65); background: rgba(241, 249, 252, 0.1); }
+.mode-card > span { color: #83d1e8; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+.mode-card h2 { margin: 5px 0 5px; font-size: 21px; }
+.mode-card p { flex: 1; margin: 0 0 10px; color: #c7dce6; font-size: 14px; line-height: 1.35; }
+.mode-card > div { display: flex; gap: 10px; }
+.mode-card button, .start-menu-panel footer button, .start-menu-dialog button {
+  min-height: 38px;
+  padding: 7px 12px;
+  border: 1px solid #6fa9be;
+  border-radius: 8px;
+  color: #eefaff;
+  background: rgba(23, 78, 101, 0.7);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.mode-card button.primary, .start-menu-dialog button.primary { color: #09273a; border-color: #7ed8ee; background: #7ed8ee; }
+.mode-card button:disabled { cursor: default; opacity: 0.42; }
+.mode-card button:focus-visible, .start-menu-panel footer button:focus-visible, .start-menu-dialog button:focus-visible { outline: 3px solid #fff4a3; outline-offset: 2px; }
+.tester-mode-card { border-color: rgba(241, 190, 88, 0.5); }
+.tester-mode-card > span { color: #f2c970; }
+.start-menu-panel footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
+
+.start-menu-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(3, 14, 22, 0.76);
+}
+.start-menu-dialog > div { width: min(500px, 100%); padding: 26px; border: 1px solid #78b8cd; border-radius: 14px; background: #102e40; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45); }
+.start-menu-dialog h2 { margin-top: 0; }
+.start-menu-dialog p { color: #c9dce6; line-height: 1.5; }
+
+@media (max-width: 760px) {
+  .start-menu { align-items: start; padding: 96px 16px 24px; }
+  .start-menu-brand { top: 18px; left: 18px; }
+  .start-menu-panel { padding: 20px; }
+  .mode-card-grid { grid-template-columns: 1fr; }
+  .mode-card { min-height: 0; }
+  .mode-card > div { flex-wrap: wrap; }
 }
 
 button {

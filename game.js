@@ -24,6 +24,7 @@
   });
   let campaign = window.PET_CLINIC_CAMPAIGN;
   let generatorRuntime = { mode: "current", catalog: null, generator: null };
+  let activeGameMode = null;
   const visualRenderer = window.PET_CLINIC_VISUAL_V2;
   const visitState = window.PET_CLINIC_VISIT_STATE;
   const clinicalDecisions = window.PET_CLINIC_CLINICAL_DECISIONS_V2;
@@ -6077,6 +6078,7 @@
       delete document.documentElement.dataset.campaignDirectorInitialized;
     }
     const detail = Object.freeze({
+      gameMode: activeGameMode?.modeId || null,
       mode: generatorRuntime.mode,
       restoreStatus,
       activeId: state.activeId ?? null,
@@ -6138,6 +6140,7 @@
   }
 
   async function bootstrapGame() {
+    activeGameMode = await window.PET_CLINIC_GAME_MODE_V11.requireSelection();
     try {
       generatorRuntime = await window.PET_CLINIC_GENERATOR_READY;
     } catch (error) {

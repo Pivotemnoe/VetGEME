@@ -5,10 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pet Clinic: ветеринарная клиника</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eaf6ff'/%3E%3Cpath d='M13 5h6v22h-6zM5 13h22v6H5z' fill='%231976d2'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="styles.css?v=20260715e">
+    <link rel="stylesheet" href="styles.css?v=20260717a">
   </head>
   <body>
-    <div class="app-loading-veil" id="appLoadingVeil" role="status" aria-live="polite">
+    <section class="start-menu" id="startMenu" aria-labelledby="startMenuTitle" hidden>
+      <div class="start-menu-brand" aria-label="Pet Clinic">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div><strong>Pet Clinic</strong><span>ветеринарная клиника</span></div>
+      </div>
+      <div class="start-menu-panel">
+        <header>
+          <p class="eyebrow">Локальная тестовая сборка</p>
+          <h1 id="startMenuTitle">Выберите режим</h1>
+          <p>Каждый режим хранит отдельное состояние и не изменяет прогресс остальных режимов.</p>
+        </header>
+        <div class="mode-card-grid">
+          <article class="mode-card">
+            <span>30 дней</span><h2>Кампания</h2>
+            <p>Развивайте клинику, ведите пациентов и отвечайте за экономику, команду и последствия решений.</p>
+            <div><button class="primary" data-mode-launch="campaign" data-launch-action="new" type="button">Новая кампания</button><button data-mode-launch="campaign" data-mode-continue="campaign" data-launch-action="continue" type="button">Продолжить</button></div>
+          </article>
+          <article class="mode-card">
+            <span>8 уроков</span><h2>Обучение</h2>
+            <p>Пройдите клинические основы без необратимых финансовых и репутационных потерь.</p>
+            <div><button class="primary" data-mode-launch="training" data-launch-action="new" type="button">Начать обучение</button><button data-mode-launch="training" data-mode-continue="training" data-launch-action="continue" type="button">Продолжить</button></div>
+          </article>
+          <article class="mode-card">
+            <span>Без финального дня</span><h2>Бесконечная игра</h2>
+            <p>Продолжайте работу клиники с полной экономикой, очередью, персоналом и последствиями.</p>
+            <div><button class="primary" data-mode-launch="endless" data-launch-action="new" type="button">Новая клиника</button><button data-mode-launch="endless" data-mode-continue="endless" data-launch-action="continue" type="button">Продолжить</button></div>
+          </article>
+          <article class="mode-card tester-mode-card">
+            <span>Ручной выбор</span><h2>Режим тестировщика</h2>
+            <p>Проверяйте конкретные семейства, варианты и представления в отдельном техническом сохранении.</p>
+            <div><button class="primary" data-mode-launch="tester" data-launch-action="new" type="button">Открыть тестирование</button><button data-mode-launch="tester" data-mode-continue="tester" data-launch-action="continue" type="button">Продолжить</button></div>
+          </article>
+        </div>
+        <footer><button data-menu-dialog="startMenuSettings" type="button">Настройки</button><button data-menu-dialog="startMenuAbout" type="button">О сборке</button></footer>
+      </div>
+      <section class="start-menu-dialog" id="startMenuSettings" role="dialog" aria-modal="true" aria-labelledby="startMenuSettingsTitle" hidden>
+        <div><h2 id="startMenuSettingsTitle">Настройки запуска</h2><p>Звук и масштаб интерфейса будут доступны во время игры. Сохранения четырёх режимов независимы.</p><button class="primary" data-menu-dialog-close="startMenuSettings" type="button">Закрыть</button></div>
+      </section>
+      <section class="start-menu-dialog" id="startMenuAbout" role="dialog" aria-modal="true" aria-labelledby="startMenuAboutTitle" hidden>
+        <div><h2 id="startMenuAboutTitle">О сборке</h2><p>Это локальная сборка для ручной проверки владельцем проекта. Она не является публичным релизом или заявлением о внешней ветеринарной сертификации.</p><button class="primary" data-menu-dialog-close="startMenuAbout" type="button">Закрыть</button></div>
+      </section>
+    </section>
+    <div class="app-loading-veil" id="appLoadingVeil" role="status" aria-live="polite" hidden>
       <div class="app-loading-card">
         <span class="app-loading-mark" aria-hidden="true"></span>
         <strong>Открываем клинику</strong>
@@ -260,6 +302,7 @@
         <button class="settings-button" id="developerBtn" type="button" title="Настройки" aria-label="Открыть настройки">⚙</button>
       </section>
     </main>
+    <script src="systems/game-mode-v11.js?v=20260717a" defer></script>
     <script src="campaign.js?v=20260712k" defer></script>
     <script src="generator/save-namespaces.js?v=20260712a" defer></script>
     <script src="generator/atomic-save-migration.js?v=20260715a" defer></script>
@@ -289,8 +332,8 @@
     <script src="generator/generator-v2.js?v=20260715a" defer></script>
     <script src="generator/game-adapter-v2.js?v=20260714c" defer></script>
     <script src="generator/multi-diagnosis-engine-v2.js?v=20260713a" defer></script>
-    <script src="generator/generator-mode.js?v=20260715b" defer></script>
+    <script src="generator/generator-mode.js?v=20260717a" defer></script>
     <script src="visual/clinic-renderer-v2.js?v=20260715d" defer></script>
-    <script src="game.js?v=20260715i" defer></script>
+    <script src="game.js?v=20260717a" defer></script>
   </body>
 </html>

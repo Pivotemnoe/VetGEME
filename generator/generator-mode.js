@@ -14,18 +14,19 @@
     return MODES.includes(saved) ? saved : "current";
   }
 
-  const mode = requestedMode();
-  window.PET_CLINIC_GENERATOR_MODE = Object.freeze({
-    mode,
-    gameSaveKey: window.PET_CLINIC_SAVE_NAMESPACES.gameSaveKey(mode),
-    modes: MODES.slice(),
-    isCurrent: mode === "current",
-    isLegacy: mode === "legacy-v1",
-    isTier01V2: mode === "tier-01-v2",
-    reset() {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-  });
+  function exposeMode(mode) {
+    window.PET_CLINIC_GENERATOR_MODE = Object.freeze({
+      mode,
+      gameSaveKey: window.PET_CLINIC_SAVE_NAMESPACES.gameSaveKey(mode),
+      modes: MODES.slice(),
+      isCurrent: mode === "current",
+      isLegacy: mode === "legacy-v1",
+      isTier01V2: mode === "tier-01-v2",
+      reset() {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    });
+  }
 
   async function loadLegacyV1() {
     const sandbox = {};
@@ -42,8 +43,8 @@
     };
   }
 
-  if (mode === "tier-01-v2") {
-    window.PET_CLINIC_GENERATOR_READY = window.PET_CLINIC_CONTENT_V2
+  function loadTier01V2() {
+    return window.PET_CLINIC_CONTENT_V2
       .loadFromFetch({
         packId: "tier-01-v2",
         packVersion: "2026.07.12.2",
@@ -67,9 +68,24 @@
         generator: null,
         initializationError: error
       }));
-  } else if (mode === "legacy-v1") {
-    window.PET_CLINIC_GENERATOR_READY = loadLegacyV1();
-  } else {
-    window.PET_CLINIC_GENERATOR_READY = Promise.resolve({ mode: "current", catalog: null, generator: null });
   }
+
+  const gameModeSelection = window.PET_CLINIC_GAME_MODE_V11?.selectionPromise;
+  if (!gameModeSelection) {
+    const mode = requestedMode();
+    exposeMode(mode);
+    window.PET_CLINIC_GENERATOR_READY = mode === "tier-01-v2"
+      ? loadTier01V2()
+      : mode === "legacy-v1" ? loadLegacyV1() : Promise.resolve({ mode: "current", catalog: null, generator: null });
+    return;
+  }
+
+  window.PET_CLINIC_GENERATOR_READY = gameModeSelection.then((selection) => {
+    const mode = MODES.includes(selection.runtimeGeneratorMode) ? selection.runtimeGeneratorMode : "tier-01-v2";
+    localStorage.setItem(STORAGE_KEY, mode);
+    exposeMode(mode);
+    if (mode === "tier-01-v2") return loadTier01V2();
+    if (mode === "legacy-v1") return loadLegacyV1();
+    return { mode: "current", catalog: null, generator: null };
+  });
 })();
