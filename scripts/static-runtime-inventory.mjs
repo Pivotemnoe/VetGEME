@@ -5,11 +5,12 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const EXPECTED_RUNTIME_FILE_COUNT = 276;
+export const EXPECTED_RUNTIME_FILE_COUNT = 311;
 export const EXPECTED_RUNTIME_GROUP_COUNTS = Object.freeze({
   base: 49,
   canonicalContent: 100,
-  activationContent: 62,
+  activationContent: 82,
+  activationArt: 15,
   visual: 65,
 });
 
@@ -81,9 +82,16 @@ const TRAINING_SEQUENCE = `${ACTIVATION_CONTENT_ROOT}/TRAINING_SEQUENCE.json`;
 const ACTIVATION_MEDICAL_ROOT = `${ACTIVATION_CONTENT_ROOT}/medical-source`;
 const ACTIVATION_MEDICAL_MANIFEST = `${ACTIVATION_MEDICAL_ROOT}/MANIFEST.json`;
 const EXPECTED_ACTIVATION_FAMILY_COUNT = 39;
-const EXPECTED_ACTIVATION_CONTENT_COUNT = 62;
+const EXPECTED_ACTIVATION_CONTENT_COUNT = 82;
 const EXPECTED_OPERATIONAL_ACTIVATION_CONTENT_COUNT = 20;
+const EXPECTED_P5_ACTIVATION_CONTENT_COUNT = 12;
+const EXPECTED_P9_ACTIVATION_CONTENT_COUNT = 7;
 const ACTIVATION_MANIFEST_SHA256 = "fd056331fa894f9689bbd794f4ece12fb964ebb3e69b95e907282811ae7ad3bd";
+const ACTIVATION_P9_ROOT = `${ACTIVATION_CONTENT_ROOT}/visual-source`;
+const ACTIVATION_ART_SOURCE_MANIFEST = `${ACTIVATION_CONTENT_ROOT}/visual/ART_ASSET_MANIFEST.json`;
+const ACTIVATION_ART_ROOT = "assets/pet-clinic-full-activation-2026.07.17.1";
+const ACTIVATION_ART_MANIFEST = `${ACTIVATION_ART_ROOT}/manifest.json`;
+const EXPECTED_ACTIVATION_ART_ASSET_COUNT = 14;
 const VISUAL_MANIFEST = "art/runtime-v2/manifest.json";
 const VISUAL_LAYOUT = "art/runtime-v2/scene-layout.json";
 const VISUAL_ASSET_ROOT = "art/runtime-v2/assets";
@@ -93,8 +101,9 @@ export async function collectStaticRuntimeInventory(root = PROJECT_ROOT) {
   const base = await collectBaseRuntimeFiles(resolvedRoot);
   const canonicalContent = await collectCanonicalContentFiles(resolvedRoot);
   const activationContent = await collectActivationContentFiles(resolvedRoot);
+  const activationArt = await collectActivationArtFiles(resolvedRoot);
   const { files: visual, assetHashes } = await collectVisualFiles(resolvedRoot);
-  const files = [...base, ...canonicalContent, ...activationContent, ...visual].sort();
+  const files = [...base, ...canonicalContent, ...activationContent, ...activationArt, ...visual].sort();
 
   assertUniqueFiles(files, "runtime inventory");
   assertCount("base runtime", base, EXPECTED_RUNTIME_GROUP_COUNTS.base);
@@ -108,6 +117,7 @@ export async function collectStaticRuntimeInventory(root = PROJECT_ROOT) {
     activationContent,
     EXPECTED_RUNTIME_GROUP_COUNTS.activationContent,
   );
+  assertCount("activation art runtime", activationArt, EXPECTED_RUNTIME_GROUP_COUNTS.activationArt);
   assertCount("visual runtime", visual, EXPECTED_RUNTIME_GROUP_COUNTS.visual);
   assertCount("complete runtime", files, EXPECTED_RUNTIME_FILE_COUNT);
   const fileHashes = await hashRuntimeFiles(resolvedRoot, files);
@@ -118,6 +128,7 @@ export async function collectStaticRuntimeInventory(root = PROJECT_ROOT) {
       base: Object.freeze(base),
       canonicalContent: Object.freeze(canonicalContent),
       activationContent: Object.freeze(activationContent),
+      activationArt: Object.freeze(activationArt),
       visual: Object.freeze(visual),
     }),
     assetHashes: Object.freeze(assetHashes),
@@ -372,8 +383,74 @@ async function collectActivationContentFiles(root) {
     JSON.parse(buffer.toString("utf8"));
     files.push(normalized);
   }
+  const p5LoaderPath = require.resolve(path.join(root, "generator/activation-p5-v11.js"));
+  delete require.cache[p5LoaderPath];
+  const p5Loader = require(p5LoaderPath);
+  const p5Files = Object.entries(p5Loader.FILE_HASHES || {});
+  assertCount("P5 activation content", p5Files, EXPECTED_P5_ACTIVATION_CONTENT_COUNT);
+  for (const [relative, expectedHash] of p5Files) {
+    const normalized = normalizeRuntimePath(relative, "P5 activation content");
+    if (!normalized.startsWith(`${ACTIVATION_CONTENT_ROOT}/`) || !normalized.endsWith(".json")) {
+      throw new Error(`unexpected P5 activation path ${normalized}`);
+    }
+    const buffer = await readFile(path.join(root, ...normalized.split("/")));
+    if (sha256(buffer) !== expectedHash) throw new Error(`${normalized}: P5 activation SHA-256 mismatch`);
+    JSON.parse(buffer.toString("utf8"));
+    files.push(normalized);
+  }
+  const economyLoaderPath = require.resolve(path.join(root, "generator/activation-economy-v11.js"));
+  delete require.cache[economyLoaderPath];
+  const economyLoader = require(economyLoaderPath);
+  const economyPath = normalizeRuntimePath(economyLoader.APPROVAL_PATH, "economy activation approval");
+  const economyBuffer = await readFile(path.join(root, ...economyPath.split("/")));
+  if (sha256(economyBuffer) !== economyLoader.APPROVAL_SHA256) {
+    throw new Error(`${economyPath}: economy activation SHA-256 mismatch`);
+  }
+  JSON.parse(economyBuffer.toString("utf8"));
+  files.push(economyPath);
+
+  const visualLoaderPath = require.resolve(path.join(root, "generator/activation-visual-v11.js"));
+  delete require.cache[visualLoaderPath];
+  const visualLoader = require(visualLoaderPath);
+  const p9Files = [
+    [`${ACTIVATION_P9_ROOT}/MANIFEST.json`, visualLoader.P9_MANIFEST_SHA256],
+    [`${ACTIVATION_P9_ROOT}/generated/room-visual-state-catalog.json`, visualLoader.CATALOG_SHA256.rooms],
+    [`${ACTIVATION_P9_ROOT}/generated/equipment-visual-state-catalog.json`, visualLoader.CATALOG_SHA256.equipment],
+    [`${ACTIVATION_P9_ROOT}/generated/staff-visual-state-catalog.json`, visualLoader.CATALOG_SHA256.staff],
+    [`${ACTIVATION_P9_ROOT}/generated/hud-data-contract.json`, visualLoader.CATALOG_SHA256.hud],
+    [`${ACTIVATION_P9_ROOT}/runtime-crosswalk.json`, visualLoader.CROSSWALK_SHA256],
+    [ACTIVATION_ART_SOURCE_MANIFEST, visualLoader.ART_SOURCE_MANIFEST_SHA256],
+  ];
+  assertCount("P9 activation content", p9Files, EXPECTED_P9_ACTIVATION_CONTENT_COUNT);
+  for (const [relative, expectedHash] of p9Files) {
+    const normalized = normalizeRuntimePath(relative, "P9 activation content");
+    const buffer = await readFile(path.join(root, ...normalized.split("/")));
+    if (sha256(buffer) !== expectedHash) throw new Error(`${normalized}: P9 activation SHA-256 mismatch`);
+    JSON.parse(buffer.toString("utf8"));
+    files.push(normalized);
+  }
   assertUniqueFiles(files, "activation content");
   assertCount("activation content", files, EXPECTED_ACTIVATION_CONTENT_COUNT);
+  return files.sort();
+}
+
+async function collectActivationArtFiles(root) {
+  const manifest = await readJson(path.join(root, ACTIVATION_ART_MANIFEST), ACTIVATION_ART_MANIFEST);
+  if (manifest.packId !== "pet-clinic-full-activation-art" || manifest.packVersion !== "2026.07.17.1") {
+    throw new Error(`${ACTIVATION_ART_MANIFEST}: activation art identity mismatch`);
+  }
+  assertCount("activation art assets", manifest.assets || [], EXPECTED_ACTIVATION_ART_ASSET_COUNT);
+  const files = [ACTIVATION_ART_MANIFEST];
+  for (const asset of manifest.assets) {
+    const relative = normalizeRuntimePath(asset.file, `activation art ${asset.resourceId}`);
+    if (!relative.startsWith(`${ACTIVATION_ART_ROOT}/`) || !relative.endsWith(".png")) {
+      throw new Error(`${asset.resourceId}: unexpected activation art path ${relative}`);
+    }
+    const buffer = await readFile(path.join(root, ...relative.split("/")));
+    if (sha256(buffer) !== asset.sha256) throw new Error(`${asset.resourceId}: activation art SHA-256 mismatch`);
+    files.push(relative);
+  }
+  assertUniqueFiles(files, "activation art");
   return files.sort();
 }
 
@@ -543,6 +620,7 @@ if (isMainModule()) {
         `(${inventory.groups.base.length} base/legacy, ` +
         `${inventory.groups.canonicalContent.length} canonical content JSON, ` +
         `${inventory.groups.activationContent.length} activation content JSON, ` +
+        `${inventory.groups.activationArt.length} activation art, ` +
         `${inventory.groups.visual.length} visual) — verified`,
     );
   } catch (error) {

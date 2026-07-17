@@ -94,6 +94,22 @@ async function inspectDockerRuntime() {
     "registered capability index is absent from image",
   );
   assert.ok(
+    imageFiles.includes("content/activation-packs/pet-clinic-local-2026.07.17.1/ACTIVATION_MANIFEST.json"),
+    "full activation manifest is absent from image",
+  );
+  assert.ok(
+    imageFiles.includes("content/activation-packs/pet-clinic-local-2026.07.17.1/decisions/ECONOMY_TEST_APPROVAL.json"),
+    "approved local economy decision is absent from image",
+  );
+  assert.ok(
+    imageFiles.includes("assets/pet-clinic-full-activation-2026.07.17.1/manifest.json"),
+    "full activation art manifest is absent from image",
+  );
+  assert.ok(
+    imageFiles.includes("assets/pet-clinic-full-activation-2026.07.17.1/rooms/staff-room.png"),
+    "staff room activation asset is absent from image",
+  );
+  assert.ok(
     !imageFiles.some((file) => file.startsWith("content/medical-packs/") && file.endsWith(".md")),
     "medical authoring Markdown leaked into the runtime image",
   );

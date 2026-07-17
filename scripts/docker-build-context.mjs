@@ -27,6 +27,7 @@ export const DOCKER_BUILD_INPUT_PATHS = Object.freeze([
   "content/activation-packs/pet-clinic-local-2026.07.17.1",
   "tier-01-v2/scripts",
   "art/runtime-v2",
+  "assets/pet-clinic-full-activation-2026.07.17.1",
   "scripts",
   "docker/nginx/default.conf",
 ]);

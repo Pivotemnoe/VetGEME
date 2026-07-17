@@ -21,6 +21,8 @@ const sourceFiles = Object.fromEntries([
   ["/index.html", "index.html"],
   ["/game.js", "game.js"],
   ...runtimeInventory.groups.canonicalContent.map((relativeFile) => [`/${relativeFile}`, relativeFile]),
+  ...runtimeInventory.groups.activationContent.map((relativeFile) => [`/${relativeFile}`, relativeFile]),
+  ...runtimeInventory.groups.activationArt.map((relativeFile) => [`/${relativeFile}`, relativeFile]),
 ]);
 
 try {
@@ -101,6 +103,18 @@ async function runHttpSmoke() {
       type: "application/json",
     },
     {
+      path: "/content/activation-packs/pet-clinic-local-2026.07.17.1/ACTIVATION_MANIFEST.json",
+      type: "application/json",
+    },
+    {
+      path: "/assets/pet-clinic-full-activation-2026.07.17.1/manifest.json",
+      type: "application/json",
+    },
+    {
+      path: "/assets/pet-clinic-full-activation-2026.07.17.1/rooms/staff-room.png",
+      type: "image/png",
+    },
+    {
       path: "/art/runtime-v2/assets/rooms/doctor-office.png",
       type: "image/png",
     },
@@ -170,7 +184,6 @@ async function runHttpSmoke() {
     "/package.json",
     "/docker/nginx/default.conf",
     "/scripts/test-docker-http.mjs",
-    "/systems/resource-lifecycle-v5.js",
     "/systems/p9-visual-state-adapter-v2.js",
     "/visual/p9-review-surface-v2.js",
     "/visual/p9-review-surface-v2.css",
@@ -199,6 +212,8 @@ async function runHttpSmoke() {
     "/content/system-packs/not-a-pack/capability-registry.json",
     "/content/system-packs/vetgeme-master-2026-07-14/README.md",
     "/content/system-packs/vetgeme-master-2026-07-14/not-shipped.json",
+    "/content/activation-packs/pet-clinic-local-2026.07.17.1/not-shipped.json",
+    "/assets/pet-clinic-full-activation-2026.07.17.1/not-shipped.png",
     "/handoff/vetgeme-master-package/systems/catalog/capability-registry.json",
     "/tier-01-v2/content/clinical/tier-01/manifest.json",
     "/tier-01-v2/scripts/validate-tier-01-content-v2.mjs",

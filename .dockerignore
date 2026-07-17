@@ -41,6 +41,10 @@
 !art/runtime-v2/
 !art/runtime-v2/**
 
+!assets/
+!assets/pet-clinic-full-activation-2026.07.17.1/
+!assets/pet-clinic-full-activation-2026.07.17.1/**
+
 !scripts/
 !scripts/**
 

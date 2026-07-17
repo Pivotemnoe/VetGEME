@@ -14,6 +14,7 @@ COPY visual/ ./visual/
 COPY content/ ./content/
 COPY tier-01-v2/scripts/ ./tier-01-v2/scripts/
 COPY art/runtime-v2/ ./art/runtime-v2/
+COPY assets/pet-clinic-full-activation-2026.07.17.1/ ./assets/pet-clinic-full-activation-2026.07.17.1/
 COPY scripts/ ./scripts/
 
 RUN test ! -e content/review-inputs \

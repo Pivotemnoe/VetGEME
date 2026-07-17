@@ -262,6 +262,7 @@ async function createFixture(root) {
     "content/medical-packs/vetgeme-master-2026-07-14",
     "tier-01-v2/scripts",
     "art/runtime-v2",
+    "assets/pet-clinic-full-activation-2026.07.17.1",
     "scripts",
   ]);
   await writeFile(path.join(root, ".gitignore"), "scripts/*.tmp\n");
