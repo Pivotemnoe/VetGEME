@@ -6,8 +6,8 @@
 
 Исходный HEAD перед activation-slice: `e6ee42fba381d52c80197eb134900d21fd6dce7d`.
 
-Проверенный implementation HEAD перед добавлением этого отчёта:
-`00543272318fcc38523092050055bc237447db72`.
+Проверенный implementation HEAD перед последней редакцией этого отчёта:
+`8e28d3e294c37ce3fdd57e3b58e7f0f988907160`.
 
 ## Что теперь работает
 
@@ -50,7 +50,9 @@
 9. `59619a689181a926f191ccc80575e61387826c9f` — срочность, календарь и 10 000 генераций;
 10. `f2b96680fe320f56574f60406b13eabd76a21574` — полный browser/visual gate v11;
 11. `00543272318fcc38523092050055bc237447db72` — Docker browser gate переведён
-    со старого v10-контракта на полный v11-сценарий с CSP и same-origin контролем.
+    со старого v10-контракта на полный v11-сценарий с CSP и same-origin контролем;
+12. `8e28d3e294c37ce3fdd57e3b58e7f0f988907160` — Docker shipping inventory
+    дополнен всеми девятью новыми v11 runtime-модулями (276 точных файлов).
 
 Каждый коммит отправлен в `origin/codex/tier-01-v2-integration`.
 
@@ -94,6 +96,9 @@ Review-only метаданные исходных пакетов не переп
 - Content registry, medical catalog, capability registry, tier-01 и tier-01-v2
   validators — PASS.
 - `git diff --check` — PASS.
+- Финальный Docker prebuild сначала fail-closed обнаружил отсутствие девяти v11
+  модулей в shipping allowlist. После отдельного исправления exact inventory
+  содержит 276 файлов; полный gate повторяется на финальном HEAD перед сборкой.
 
 ### Browser и visual matrix
 
