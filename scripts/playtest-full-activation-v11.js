@@ -7,7 +7,12 @@ const os = require("node:os");
 const path = require("node:path");
 const { chromium } = require("playwright");
 
-const baseUrl = new URL(process.env.PLAYTEST_BASE_URL || "http://127.0.0.1:5174/");
+const baseUrl = new URL(
+  process.env.PLAYTEST_BASE_URL
+    || process.env.DOCKER_BASE_URL
+    || "http://127.0.0.1:5174/"
+);
+const dockerBrowserGate = process.env.DOCKER_BROWSER_GATE === "1";
 const chromiumPath = process.env.PLAYWRIGHT_CHROMIUM_PATH || chromium.executablePath();
 const artifactRoot = path.resolve(process.env.PLAYTEST_ARTIFACT_DIR
   || path.join(os.tmpdir(), "vetgeme-full-activation-v11-playtest"));
@@ -27,6 +32,11 @@ const modeKeys = Object.freeze(Object.fromEntries(modeLaunches.map(({ id }) => [
   id,
   `pet-clinic-game-v11:${id}`
 ])));
+const dockerEvidence = {
+  cspNavigationCount: 0,
+  cspViolations: [],
+  requests: []
+};
 
 fs.mkdirSync(artifactRoot, { recursive: true });
 
@@ -42,7 +52,60 @@ function observePage(page) {
   page.on("response", (response) => {
     if (response.status() >= 400) issues.push(`response ${response.status()}: ${response.url()}`);
   });
+  if (dockerBrowserGate) {
+    page.on("request", (request) => {
+      dockerEvidence.requests.push({ method: request.method(), url: request.url() });
+    });
+  }
   return issues;
+}
+
+async function installDockerBrowserObserver(context) {
+  if (!dockerBrowserGate) return;
+  await context.addInitScript(() => {
+    window.__VETGEME_CSP_VIOLATIONS__ = [];
+    document.addEventListener("securitypolicyviolation", (event) => {
+      window.__VETGEME_CSP_VIOLATIONS__.push({
+        blockedURI: event.blockedURI,
+        effectiveDirective: event.effectiveDirective,
+        sourceFile: event.sourceFile,
+        lineNumber: event.lineNumber
+      });
+    });
+  });
+}
+
+async function collectDockerBrowserEvidence(page) {
+  if (!dockerBrowserGate || page.isClosed()) return;
+  dockerEvidence.cspViolations.push(...await page.evaluate(() => (
+    window.__VETGEME_CSP_VIOLATIONS__ || []
+  )));
+}
+
+function assertDockerBrowserEvidence() {
+  if (!dockerBrowserGate) return null;
+  assert.ok(dockerEvidence.cspNavigationCount > 0, "Docker browser gate observed no CSP-protected navigation");
+  assert.ok(dockerEvidence.requests.length > 0, "Docker browser gate observed no requests");
+  assert.deepEqual(dockerEvidence.cspViolations, [], "Docker runtime produced CSP violations");
+  const reviewInputRequests = [];
+  for (const request of dockerEvidence.requests) {
+    assert.ok(["GET", "HEAD"].includes(request.method), `Unexpected browser method: ${request.method} ${request.url}`);
+    const requestUrl = new URL(request.url);
+    if (["http:", "https:"].includes(requestUrl.protocol)) {
+      assert.equal(requestUrl.origin, baseUrl.origin, `Cross-origin browser request: ${request.url}`);
+      if (requestUrl.pathname.startsWith("/content/review-inputs/")) reviewInputRequests.push(request.url);
+    } else {
+      assert.equal(requestUrl.protocol, "data:", `Unexpected browser request scheme: ${request.url}`);
+    }
+  }
+  assert.deepEqual(reviewInputRequests, [], "Docker runtime requested review-only authoring inputs");
+  return {
+    cspNavigations: dockerEvidence.cspNavigationCount,
+    cspViolations: dockerEvidence.cspViolations.length,
+    requestCount: dockerEvidence.requests.length,
+    reviewInputRequests: reviewInputRequests.length,
+    sameOriginOnly: true
+  };
 }
 
 function menuUrl() {
@@ -61,6 +124,10 @@ async function dismissLegacyNotice(page) {
 async function openMenu(page) {
   const response = await page.goto(menuUrl().href, { waitUntil: "networkidle", timeout: 30000 });
   assert.equal(response?.status(), 200);
+  if (dockerBrowserGate) {
+    assert.ok(response.headers()["content-security-policy"], "Docker navigation is missing Content-Security-Policy");
+    dockerEvidence.cspNavigationCount += 1;
+  }
   await page.locator("#startMenu:not([hidden])").waitFor({ state: "visible", timeout: 30000 });
   await dismissLegacyNotice(page);
   return page.locator("#startMenu");
@@ -371,6 +438,7 @@ async function visualMatrix(browser) {
   const matrix = [];
   for (const viewport of viewports) {
     const context = await browser.newContext({ viewport, deviceScaleFactor: 1 });
+    await installDockerBrowserObserver(context);
     await context.addInitScript(() => {
       if (sessionStorage.getItem("full-activation-v11-clean") === "1") return;
       localStorage.clear();
@@ -412,6 +480,7 @@ async function visualMatrix(browser) {
     if (viewport.width === 1280) assert.equal(game.verticalOverflow, 0, "1280x720 game requires document scrolling");
     await page.screenshot({ path: path.join(artifactRoot, `game-${viewport.width}x${viewport.height}.png`) });
     assert.deepEqual(issues, [], `${viewport.width}: browser issues: ${issues.join(" | ")}`);
+    await collectDockerBrowserEvidence(page);
     matrix.push({ viewport, menu, game });
     await context.close();
   }
@@ -422,6 +491,7 @@ async function visualMatrix(browser) {
   const browser = await chromium.launch({ headless: true, executablePath: chromiumPath });
   try {
     const context = await browser.newContext({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
+    await installDockerBrowserObserver(context);
     await context.addInitScript(() => {
       if (sessionStorage.getItem("full-activation-v11-clean") === "1") return;
       localStorage.clear();
@@ -448,9 +518,11 @@ async function visualMatrix(browser) {
     const visibleText = await page.locator("body").innerText();
     assert.doesNotMatch(visibleText, /(?:reasonCode|reason_code|\b(?:asset|capability|case|equipment|room|staff|task)\.[A-Za-z0-9._:-]+)/iu);
     assert.deepEqual(issues, [], `mode/runtime browser issues: ${issues.join(" | ")}`);
+    await collectDockerBrowserEvidence(page);
     await context.close();
 
     const matrix = await visualMatrix(browser);
+    const docker = assertDockerBrowserEvidence();
     console.log(JSON.stringify({
       status: "passed",
       modes: modeSmoke.modes,
@@ -462,6 +534,7 @@ async function visualMatrix(browser) {
         gameOverflow: [game.horizontalOverflow, game.verticalOverflow],
         noPlayfieldOverlap: !game.canvasRailOverlap && !game.canvasHudOverlap
       })),
+      docker,
       artifacts: artifactRoot,
       browserIssues: 0
     }, null, 2));
