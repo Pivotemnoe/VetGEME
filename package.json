@@ -76,6 +76,7 @@
     "test:activation-economy:v11": "node scripts/test-full-activation-economy-v11.js",
     "test:activation-visual:v11": "node scripts/test-full-activation-visual-v11.js",
     "test:activation-generation:v11": "node scripts/simulate-full-activation-v11.js 10000",
+    "test:activation-browser:v11": "node scripts/playtest-full-activation-v11.js",
     "test:player-text:v11": "node scripts/test-player-facing-text-v11.js",
     "build:static-dist": "node scripts/build-static-dist.mjs",
     "test:docker:prebuild": "node scripts/test-docker-prebuild.mjs",
