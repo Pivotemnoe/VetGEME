@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "contractId": "vetgeme-p5-handoff-contract",
+  "contractVersion": "2026.07.16.2",
+  "allowedTaskStates": [
+    "active"
+  ],
+  "commandFields": [
+    "commandId",
+    "taskId",
+    "at",
+    "reassignments"
+  ],
+  "reassignmentFields": [
+    "groupId",
+    "fromResourceId",
+    "toResourceId",
+    "capabilityId",
+    "units"
+  ],
+  "medicalPayloadForbidden": true,
+  "policyBreakpoints": [
+    {
+      "policyId": "not_allowed",
+      "allowedFractions": [],
+      "minimumElapsedMinutes": 0,
+      "requiresSameCapability": true
+    },
+    {
+      "policyId": "midpoint",
+      "allowedFractions": [
+        0.5
+      ],
+      "minimumElapsedMinutes": 5,
+      "requiresSameCapability": true
+    },
+    {
+      "policyId": "urgent_quarter_breakpoints",
+      "allowedFractions": [
+        0.25,
+        0.5,
+        0.75
+      ],
+      "minimumElapsedMinutes": 2,
+      "requiresSameCapability": true
+    }
+  ],
+  "invariants": [
+    "target_resource_must_be_active_available_and_capable",
+    "source_reservation_owned_before_command",
+    "all_reassignments_validate_before_any_mutation",
+    "release_and_reserve_are_atomic",
+    "elapsed_work_and_medical_payload_are_unchanged",
+    "command_id_is_idempotent",
+    "reload_reconstructs_same_reservation_ownership"
+  ],
+  "forbidden": [
+    "handoff_before_task_start",
+    "handoff_after_task_completion",
+    "partial_reassignment_commit",
+    "renderer_owned_reservation",
+    "medical_result_mutation"
+  ]
+}

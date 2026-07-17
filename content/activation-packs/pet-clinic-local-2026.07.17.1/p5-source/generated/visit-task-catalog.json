@@ -1,0 +1,925 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p5-visit-task-catalog",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_validated_programmer_integration_required",
+  "runtimeEligible": false,
+  "tasks": [
+    {
+      "taskTemplateId": "visit.checkin",
+      "durationMinutes": 6,
+      "priority": 100,
+      "urgency": "routine",
+      "staffCapability": "task.checkin",
+      "roomCapability": "task.checkin",
+      "handoff": "not_allowed",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.administrator.lebedeva"
+      ],
+      "eligibleRoomIds": [
+        "room.reception.1"
+      ],
+      "runtimeTemplate": {
+        "priority": 100,
+        "authoredDurationMinutes": 6,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.administrator.lebedeva",
+                "capabilityId": "task.checkin",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.reception.1",
+                "capabilityId": "task.checkin",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    },
+    {
+      "taskTemplateId": "visit.intake",
+      "durationMinutes": 8,
+      "priority": 120,
+      "urgency": "routine",
+      "staffCapability": "task.intake",
+      "roomCapability": "room.consult",
+      "fallbackStaffCapability": "role.doctor",
+      "handoff": "not_allowed",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.assistant.volkova",
+        "staff.dentist.orlova",
+        "staff.doctor.belov",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "eligibleRoomIds": [
+        "room.consult.1",
+        "room.consult.2"
+      ],
+      "runtimeTemplate": {
+        "priority": 120,
+        "authoredDurationMinutes": 8,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.assistant.volkova",
+                "capabilityId": "task.intake",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.dentist.orlova",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.belov",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "role.doctor",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.consult.1",
+                "capabilityId": "room.consult",
+                "units": 1
+              },
+              {
+                "resourceId": "room.consult.2",
+                "capabilityId": "room.consult",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    },
+    {
+      "taskTemplateId": "visit.history",
+      "durationMinutes": 10,
+      "priority": 150,
+      "urgency": "routine",
+      "staffCapability": "task.history",
+      "roomCapability": "task.history",
+      "handoff": "not_allowed",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.doctor.belov",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "eligibleRoomIds": [
+        "room.consult.1",
+        "room.consult.2"
+      ],
+      "runtimeTemplate": {
+        "priority": 150,
+        "authoredDurationMinutes": 10,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.doctor.belov",
+                "capabilityId": "task.history",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "task.history",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "task.history",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.consult.1",
+                "capabilityId": "task.history",
+                "units": 1
+              },
+              {
+                "resourceId": "room.consult.2",
+                "capabilityId": "task.history",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    },
+    {
+      "taskTemplateId": "visit.exam",
+      "durationMinutes": 15,
+      "priority": 180,
+      "urgency": "routine",
+      "staffCapability": "task.exam",
+      "roomCapability": "task.exam",
+      "handoff": "not_allowed",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.doctor.belov",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "eligibleRoomIds": [
+        "room.consult.1",
+        "room.consult.2",
+        "room.isolation.1"
+      ],
+      "runtimeTemplate": {
+        "priority": 180,
+        "authoredDurationMinutes": 15,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.doctor.belov",
+                "capabilityId": "task.exam",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "task.exam",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "task.exam",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.consult.1",
+                "capabilityId": "task.exam",
+                "units": 1
+              },
+              {
+                "resourceId": "room.consult.2",
+                "capabilityId": "task.exam",
+                "units": 1
+              },
+              {
+                "resourceId": "room.isolation.1",
+                "capabilityId": "task.exam",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    },
+    {
+      "taskTemplateId": "visit.urgent_triage",
+      "durationMinutes": 8,
+      "priority": 500,
+      "urgency": "urgent",
+      "staffCapability": "task.urgent_triage",
+      "roomCapability": "task.exam",
+      "handoff": "urgent_quarter_breakpoints",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.doctor.belov",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "eligibleRoomIds": [
+        "room.consult.1",
+        "room.consult.2",
+        "room.isolation.1"
+      ],
+      "runtimeTemplate": {
+        "priority": 500,
+        "authoredDurationMinutes": 8,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.doctor.belov",
+                "capabilityId": "task.urgent_triage",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "task.urgent_triage",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "task.urgent_triage",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.consult.1",
+                "capabilityId": "task.exam",
+                "units": 1
+              },
+              {
+                "resourceId": "room.consult.2",
+                "capabilityId": "task.exam",
+                "units": 1
+              },
+              {
+                "resourceId": "room.isolation.1",
+                "capabilityId": "task.exam",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "urgent",
+        "safeRouteRequired": true
+      }
+    },
+    {
+      "taskTemplateId": "visit.diagnosis_decision",
+      "durationMinutes": 6,
+      "priority": 190,
+      "urgency": "routine",
+      "staffCapability": "task.diagnosis",
+      "roomCapability": "room.consult",
+      "handoff": "not_allowed",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.doctor.belov",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "eligibleRoomIds": [
+        "room.consult.1",
+        "room.consult.2"
+      ],
+      "runtimeTemplate": {
+        "priority": 190,
+        "authoredDurationMinutes": 6,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.doctor.belov",
+                "capabilityId": "task.diagnosis",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "task.diagnosis",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "task.diagnosis",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.consult.1",
+                "capabilityId": "room.consult",
+                "units": 1
+              },
+              {
+                "resourceId": "room.consult.2",
+                "capabilityId": "room.consult",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    },
+    {
+      "taskTemplateId": "visit.plan",
+      "durationMinutes": 8,
+      "priority": 190,
+      "urgency": "routine",
+      "staffCapability": "task.plan",
+      "roomCapability": "task.plan",
+      "handoff": "not_allowed",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.dentist.orlova",
+        "staff.doctor.belov",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "eligibleRoomIds": [
+        "room.consult.1",
+        "room.consult.2"
+      ],
+      "runtimeTemplate": {
+        "priority": 190,
+        "authoredDurationMinutes": 8,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.dentist.orlova",
+                "capabilityId": "task.plan",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.belov",
+                "capabilityId": "task.plan",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "task.plan",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "task.plan",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.consult.1",
+                "capabilityId": "task.plan",
+                "units": 1
+              },
+              {
+                "resourceId": "room.consult.2",
+                "capabilityId": "task.plan",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    },
+    {
+      "taskTemplateId": "visit.owner_communication",
+      "durationMinutes": 10,
+      "priority": 170,
+      "urgency": "routine",
+      "staffCapability": "task.owner_communication",
+      "roomCapability": "task.owner_communication",
+      "handoff": "not_allowed",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "eligibleRoomIds": [
+        "room.consult.1",
+        "room.consult.2"
+      ],
+      "runtimeTemplate": {
+        "priority": 170,
+        "authoredDurationMinutes": 10,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "task.owner_communication",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "task.owner_communication",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.consult.1",
+                "capabilityId": "task.owner_communication",
+                "units": 1
+              },
+              {
+                "resourceId": "room.consult.2",
+                "capabilityId": "task.owner_communication",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    },
+    {
+      "taskTemplateId": "visit.checkout",
+      "durationMinutes": 6,
+      "priority": 100,
+      "urgency": "routine",
+      "staffCapability": "task.checkout",
+      "roomCapability": "task.checkout",
+      "fallbackStaffCapability": "role.doctor",
+      "handoff": "not_allowed",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.administrator.lebedeva",
+        "staff.dentist.orlova",
+        "staff.doctor.belov",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "eligibleRoomIds": [
+        "room.reception.1"
+      ],
+      "runtimeTemplate": {
+        "priority": 100,
+        "authoredDurationMinutes": 6,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.administrator.lebedeva",
+                "capabilityId": "task.checkout",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.dentist.orlova",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.belov",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "role.doctor",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.reception.1",
+                "capabilityId": "task.checkout",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    },
+    {
+      "taskTemplateId": "visit.room_cleaning",
+      "durationMinutes": 8,
+      "priority": 90,
+      "urgency": "routine",
+      "staffCapability": "task.cleaning",
+      "roomCapability": "room.consult",
+      "fallbackStaffCapability": "role.doctor",
+      "handoff": "midpoint",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.care.romanova",
+        "staff.dentist.orlova",
+        "staff.doctor.belov",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "eligibleRoomIds": [
+        "room.consult.1",
+        "room.consult.2"
+      ],
+      "runtimeTemplate": {
+        "priority": 90,
+        "authoredDurationMinutes": 8,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.care.romanova",
+                "capabilityId": "task.cleaning",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.dentist.orlova",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.belov",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "role.doctor",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.consult.1",
+                "capabilityId": "room.consult",
+                "units": 1
+              },
+              {
+                "resourceId": "room.consult.2",
+                "capabilityId": "room.consult",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    },
+    {
+      "taskTemplateId": "visit.result_review",
+      "durationMinutes": 8,
+      "priority": 300,
+      "urgency": "routine",
+      "staffCapability": "task.result_review",
+      "roomCapability": "room.consult",
+      "handoff": "not_allowed",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.dentist.orlova",
+        "staff.doctor.belov",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "eligibleRoomIds": [
+        "room.consult.1",
+        "room.consult.2"
+      ],
+      "runtimeTemplate": {
+        "priority": 300,
+        "authoredDurationMinutes": 8,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.dentist.orlova",
+                "capabilityId": "task.result_review",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.belov",
+                "capabilityId": "task.result_review",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "task.result_review",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "task.result_review",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.consult.1",
+                "capabilityId": "room.consult",
+                "units": 1
+              },
+              {
+                "resourceId": "room.consult.2",
+                "capabilityId": "room.consult",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    },
+    {
+      "taskTemplateId": "visit.result_contact",
+      "durationMinutes": 6,
+      "priority": 280,
+      "urgency": "routine",
+      "staffCapability": "task.result_contact",
+      "roomCapability": "room.reception",
+      "fallbackStaffCapability": "task.owner_communication",
+      "handoff": "not_allowed",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.administrator.lebedeva",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "eligibleRoomIds": [
+        "room.reception.1"
+      ],
+      "runtimeTemplate": {
+        "priority": 280,
+        "authoredDurationMinutes": 6,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.administrator.lebedeva",
+                "capabilityId": "task.result_contact",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "task.owner_communication",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "task.owner_communication",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.reception.1",
+                "capabilityId": "room.reception",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    },
+    {
+      "taskTemplateId": "visit.referral_coordination",
+      "durationMinutes": 12,
+      "priority": 350,
+      "urgency": "routine",
+      "staffCapability": "task.referral_coordination",
+      "roomCapability": "room.reception",
+      "fallbackStaffCapability": "role.doctor",
+      "handoff": "midpoint",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.administrator.lebedeva",
+        "staff.dentist.orlova",
+        "staff.doctor.belov",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova"
+      ],
+      "eligibleRoomIds": [
+        "room.reception.1"
+      ],
+      "runtimeTemplate": {
+        "priority": 350,
+        "authoredDurationMinutes": 12,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.administrator.lebedeva",
+                "capabilityId": "task.referral_coordination",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.dentist.orlova",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.belov",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "role.doctor",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.reception.1",
+                "capabilityId": "room.reception",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    },
+    {
+      "taskTemplateId": "visit.shift_handoff",
+      "durationMinutes": 10,
+      "priority": 400,
+      "urgency": "routine",
+      "staffCapability": "task.staff_handoff",
+      "roomCapability": "task.staff_handoff",
+      "fallbackStaffCapability": "role.doctor",
+      "handoff": "not_allowed",
+      "sourceType": "visit_stage",
+      "eligibleStaffIds": [
+        "staff.dentist.orlova",
+        "staff.doctor.belov",
+        "staff.doctor.morozov",
+        "staff.doctor.sokolova",
+        "staff.manager.smirnova"
+      ],
+      "eligibleRoomIds": [
+        "room.reception.1",
+        "room.staff.1"
+      ],
+      "runtimeTemplate": {
+        "priority": 400,
+        "authoredDurationMinutes": 10,
+        "requirementGroups": [
+          {
+            "id": "staff",
+            "anyOf": [
+              {
+                "resourceId": "staff.dentist.orlova",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.belov",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.morozov",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.doctor.sokolova",
+                "capabilityId": "role.doctor",
+                "units": 1
+              },
+              {
+                "resourceId": "staff.manager.smirnova",
+                "capabilityId": "task.staff_handoff",
+                "units": 1
+              }
+            ]
+          },
+          {
+            "id": "room",
+            "anyOf": [
+              {
+                "resourceId": "room.reception.1",
+                "capabilityId": "task.staff_handoff",
+                "units": 1
+              },
+              {
+                "resourceId": "room.staff.1",
+                "capabilityId": "task.staff_handoff",
+                "units": 1
+              }
+            ]
+          }
+        ],
+        "urgency": "routine",
+        "safeRouteRequired": false
+      }
+    }
+  ]
+}

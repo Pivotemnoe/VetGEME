@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "overlayId": "pet-clinic-p5-room-reservation-corrections-2026.07.17.1",
+  "basePackage": "vetgeme-p5-production-authoring@2026.07.16.2",
+  "reason": "close_15_ready_room_available_gaps_in_10_templates",
+  "replaceImmutableSource": false,
+  "expectedPostOverlayAudit": {
+    "taskTemplates": 2606,
+    "affectedTemplates": 0,
+    "predicateGaps": 0
+  },
+  "corrections": [
+    {
+      "correctionId": "gdv_postoperative_ordered_room_handoff",
+      "appliesTo": {
+        "capabilityIds": ["gdv_postoperative_monitoring"],
+        "researchIds": ["gdv_postoperative_reperfusion_arrhythmia_and_organ_monitoring"],
+        "usagePrefixes": ["gi_gdv."]
+      },
+      "executionBranches": [
+        {
+          "branchId": "local_postoperative_monitoring",
+          "sequence": [
+            {
+              "phase": "procedure_and_initial_stabilization",
+              "requiredRoomId": "room.procedure.1",
+              "requiredCapabilityId": "procedure_room",
+              "requiredPredicate": "ready_room_available"
+            },
+            {
+              "phase": "short_stay_monitoring",
+              "requiredRoomId": "room.short_stay.1",
+              "requiredCapabilityId": "short_stay",
+              "requiredPredicate": "ready_room_available"
+            }
+          ],
+          "handoffMustBeAtomic": true,
+          "consultRoomMaySubstitute": false
+        },
+        {
+          "branchId": "safe_referral",
+          "trigger": "either_required_room_or_staff_or_equipment_unavailable",
+          "partialLocalReservationAllowed": false
+        }
+      ]
+    },
+    {
+      "correctionId": "pancreatitis_radiography_local_or_referral",
+      "appliesTo": {
+        "researchIds": ["pancreatitis_radiography_for_differentials"],
+        "usageIds": [
+          "gi_pancreas_acute.pancreatitis_chronic_or_recurrent.p2_acute_on_chronic_episode.pancreatitis_radiography_for_differentials.2",
+          "gi_pancreas_acute.pancreatitis_dog_acute_stable.p1_vomiting_abdominal_pain_after_nonspecific_trigger.pancreatitis_radiography_for_differentials.3"
+        ]
+      },
+      "executionBranches": [
+        {
+          "branchId": "local_radiography",
+          "allRequired": [
+            {"resourceId": "room.imaging.1", "capabilityId": "imaging_room", "predicate": "ready_room_available"},
+            {"resourceId": "equipment.xray_system", "capabilityId": "xray_system", "predicate": "ready_equipment_available"},
+            {"resourceKind": "staff", "capabilityId": "trained_imaging", "predicate": "trained_staff_available"}
+          ]
+        },
+        {
+          "branchId": "external_referral",
+          "requiresLocalImagingRoom": false,
+          "requiresLocalXray": false,
+          "partialLocalReservationAllowed": false
+        }
+      ]
+    },
+    {
+      "correctionId": "pyometra_radiography_local_or_referral",
+      "appliesTo": {
+        "researchIds": ["pyometra_radiography_for_differentials"],
+        "usageIds": [
+          "repro_pyometra.pyometra_closed_cervix.p2_abdominal_distension_and_fluid_filled_uterus.pyometra_radiography_for_differentials.2"
+        ]
+      },
+      "executionBranches": [
+        {
+          "branchId": "local_radiography",
+          "allRequired": [
+            {"resourceId": "room.imaging.1", "capabilityId": "imaging_room", "predicate": "ready_room_available"},
+            {"resourceId": "equipment.xray_system", "capabilityId": "xray_system", "predicate": "ready_equipment_available"},
+            {"resourceKind": "staff", "capabilityId": "trained_imaging", "predicate": "trained_staff_available"}
+          ]
+        },
+        {
+          "branchId": "external_referral",
+          "requiresLocalImagingRoom": false,
+          "requiresLocalXray": false,
+          "partialLocalReservationAllowed": false
+        }
+      ]
+    }
+  ],
+  "globalRules": {
+    "roomReadinessComesFromP5Lifecycle": true,
+    "visualPresenceNeverGrantsCapability": true,
+    "unknownRoomOrPredicateFailsClosed": true,
+    "safeReferralMustUseHumanRussianText": true
+  }
+}
+

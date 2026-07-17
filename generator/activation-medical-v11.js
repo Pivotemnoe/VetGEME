@@ -4,10 +4,21 @@
   const supportLoader = typeof module === "object" && module.exports
     ? require("./content-loader-v2.js")
     : root.PET_CLINIC_CONTENT_V2;
-  const api = factory(root, supportLoader);
+  const operationalLoader = typeof module === "object" && module.exports
+    ? require("./activation-operational-v11.js")
+    : root.PET_CLINIC_ACTIVATION_OPERATIONAL_V11;
+  const p5Loader = typeof module === "object" && module.exports
+    ? require("./activation-p5-v11.js")
+    : root.PET_CLINIC_ACTIVATION_P5_V11;
+  const api = factory(root, supportLoader, operationalLoader, p5Loader);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_ACTIVATION_MEDICAL_V11 = api;
-})(typeof window !== "undefined" ? window : globalThis, function (root, supportLoader) {
+})(typeof window !== "undefined" ? window : globalThis, function (
+  root,
+  supportLoader,
+  operationalLoader,
+  p5Loader
+) {
   "use strict";
 
   const ACTIVATION_ROOT = "content/activation-packs/pet-clinic-local-2026.07.17.1";
@@ -139,7 +150,7 @@
   function normalizePresentation(family, variant, presentation, manifestEntry, operationalBundle, testerUrgencyBand) {
     const id = internalCaseId(family.familyId, variant.id, presentation.id);
     const exams = examGroupsFor(presentation);
-    const operationalApi = root.PET_CLINIC_ACTIVATION_OPERATIONAL_V11;
+    const operationalApi = operationalLoader;
     assert(operationalApi, "operational activation adapter is unavailable");
     const operational = operationalApi.presentationContract(
       operationalBundle,
@@ -347,9 +358,15 @@
     assert(activation.medicalSource.variantCount === variants.length, "activation variant count drift");
     assert(activation.medicalSource.presentationCount === presentations.length, "activation presentation count drift");
 
-    const operationalApi = root.PET_CLINIC_ACTIVATION_OPERATIONAL_V11;
+    const operationalApi = operationalLoader;
     assert(operationalApi?.loadFromReader, "operational activation adapter is unavailable");
     const operationalBundle = await operationalApi.loadFromReader(async (relativePath) => {
+      const document = await read(relativePath);
+      return document.bytes;
+    });
+    const p5Api = p5Loader;
+    assert(p5Api?.loadFromReader, "P5 activation adapter is unavailable");
+    const p5Bundle = await p5Api.loadFromReader(async (relativePath) => {
       const document = await read(relativePath);
       return document.bytes;
     });
@@ -357,7 +374,10 @@
       medicalDocument.sha256,
       operationalApi.OPERATIONAL_MANIFEST_SHA256,
       operationalApi.P8_MANIFEST_SHA256,
-      operationalBundle.version
+      operationalBundle.version,
+      p5Api.P5_MANIFEST_SHA256,
+      p5Api.ROOM_CORRECTION_SHA256,
+      p5Bundle.version
     ].join("|")));
     const index = buildIndex(families);
     const modeId = options.modeId || "campaign";
@@ -386,7 +406,7 @@
     if (modeId === "tester" && params.get("testerPool") === "legacy30") {
       const requested = params.get("legacyCaseId");
       const legacyCaseId = supportCatalog.casesById[requested] ? requested : supportCatalog.cases[0].id;
-      return {
+      return p5Api.applyCatalog(p5Bundle, {
         ...supportCatalog,
         runtimeModeId: modeId,
         activation: clone(activation),
@@ -406,10 +426,10 @@
           forcedCaseId: legacyCaseId,
           allowedCaseIds: [legacyCaseId]
         }
-      };
+      });
     }
 
-    const catalog = operationalApi.applyCatalog(operationalBundle, {
+    const catalog = p5Api.applyCatalog(p5Bundle, operationalApi.applyCatalog(operationalBundle, {
       ...supportCatalog,
       manifest: activationManifest(medicalDocument.sha256, runtimeContentHash, cases),
       cases,
@@ -425,8 +445,11 @@
         normalPoolContainsLegacyIds: cases.some((item) => supportCatalog.casesById[item.id]),
         operationalManifestSha256: operationalApi.OPERATIONAL_MANIFEST_SHA256,
         p8ManifestSha256: operationalApi.P8_MANIFEST_SHA256,
+        p5ManifestSha256: p5Api.P5_MANIFEST_SHA256,
+        p5RoomCorrectionSha256: p5Api.ROOM_CORRECTION_SHA256,
         runtimeContentHash,
         operational: clone(operationalBundle.audit),
+        p5: clone(p5Bundle.audit),
         unresolvedDynamicPresentations: cases.filter((item) => !item.generationEligible).length,
         testerPool: "medical_2026.07.16.40"
       },
@@ -446,7 +469,7 @@
         manualSelection: modeId === "tester",
         forcedCaseId: modeId === "tester" ? selectedTesterCase(index, params) : null
       }
-    });
+    }));
     assert(catalog.activationAudit.normalPoolContainsLegacyIds === false, "legacy case leaked into the activated normal pool");
     const selectedDynamicResolved = modeId === "tester"
       && Boolean(requestedTesterUrgency)

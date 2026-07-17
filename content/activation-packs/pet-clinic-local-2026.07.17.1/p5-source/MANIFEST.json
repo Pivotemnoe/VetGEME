@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "packageId": "vetgeme-p5-production-authoring",
+  "packageVersion": "2026.07.16.2",
+  "createdAt": "2026-07-16",
+  "status": "author_validated_programmer_integration_required",
+  "runtimeEligible": false,
+  "activationRequires": [
+    "programmer_adapter",
+    "runtime_browser_smoke",
+    "save_reload_replay",
+    "product_owner_staffing_acceptance"
+  ],
+  "boundaries": {
+    "medicalTruthAllowed": false,
+    "rendererGrantsOwnership": false,
+    "fatigueChangesClinicalResult": false,
+    "p3OwnsResearchResults": true,
+    "p6OwnsInventoryAssetsAndMaintenanceLedger": true,
+    "p7OwnsEventTriggering": true,
+    "saveSchemaChange": false,
+    "newCampaignsOnly": true
+  },
+  "sources": {
+    "capabilityRegistryId": "vetgeme-clinic-capabilities",
+    "capabilityRegistryVersion": "2026.07.14.38",
+    "p3ResearchCatalogVersion": "2026.07.16.2",
+    "p3UsageCatalogVersion": "2026.07.16.2",
+    "p6EconomyCatalogVersion": "2026.07.16.2"
+  },
+  "counts": {
+    "staff": 10,
+    "rooms": 12,
+    "equipmentResources": 27,
+    "totalResources": 49,
+    "visitTaskTemplates": 14,
+    "capabilitiesMapped": 447,
+    "supplementalCapabilitiesMapped": 8,
+    "researchTasks": 361,
+    "investigationUsagesMapped": 1864,
+    "scheduleDays": 30,
+    "staffSkillsCovered": 24
+  },
+  "files": [
+    "MANIFEST.json",
+    "README.md",
+    "PROGRAMMER_HANDOFF.md",
+    "FINAL_COMPLETION_AUDIT.md",
+    "schemas/P5_AUTHORING_CONTRACT.md",
+    "source/p5-policy.json",
+    "source/p5-exact-capability-resource-map.json",
+    "source/p5-resource-lifecycle.json",
+    "source/p5-handoff-contract.json",
+    "scripts/build-p5-package.mjs",
+    "scripts/author-v2-lifecycle-contracts.mjs",
+    "scripts/validate-p5-package.mjs",
+    "generated/resource-catalog.json",
+    "generated/visit-task-catalog.json",
+    "generated/capability-operations-map.json",
+    "generated/research-task-catalog.json",
+    "generated/investigation-usage-task-map.json",
+    "generated/recommended-30-day-staffing.json",
+    "generated/operational-policies.json",
+    "generated/resource-lifecycle-catalog.json",
+    "reports/ENGINE_COMPATIBILITY_REPORT.md",
+    "reports/P5_V2_AUTHOR_DECISION_MATRIX.json",
+    "reports/VALIDATION_REPORT.json"
+  ],
+  "validation": {
+    "status": "pass",
+    "report": "reports/VALIDATION_REPORT.json",
+    "runtimeTasksValidated": 2606,
+    "simulatedCampaigns": 10000,
+    "simulatedDemandDays": 300000
+  }
+}

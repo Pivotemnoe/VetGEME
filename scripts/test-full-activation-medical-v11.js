@@ -42,6 +42,14 @@ function generatedDay(catalog, seed, storage = generatorApi.createMemoryStorage(
   assert.equal(campaign.activationAudit.normalPoolContainsLegacyIds, false);
   assert.equal(campaign.activationAudit.operationalManifestSha256, operationalLoader.OPERATIONAL_MANIFEST_SHA256);
   assert.equal(campaign.activationAudit.p8ManifestSha256, operationalLoader.P8_MANIFEST_SHA256);
+  assert.equal(campaign.activationAudit.p5ManifestSha256, campaign.p5Activation.manifestSha256);
+  assert.equal(campaign.activationAudit.p5RoomCorrectionSha256, campaign.p5Activation.correctionSha256);
+  assert.equal(campaign.p5Activation.documents.resourceCatalog.resources.length, 49);
+  assert.equal(campaign.p5Activation.audit.taskTemplates, 2606);
+  assert.equal(campaign.p5Activation.audit.preOverlayAffectedTemplates, 10);
+  assert.equal(campaign.p5Activation.audit.preOverlayPredicateGaps, 15);
+  assert.equal(campaign.p5Activation.audit.affectedTemplates, 0);
+  assert.equal(campaign.p5Activation.audit.predicateGaps, 0);
   assert.equal(campaign.activationAudit.unresolvedDynamicPresentations, 2);
   assert.equal(campaign.operationalActivation.audit.exactUrgencyValues, 206);
   assert.equal(campaign.operationalActivation.audit.exactClassificationValues, 875);

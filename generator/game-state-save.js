@@ -113,7 +113,8 @@
     "ownerTrust", "clinicalReliability", "awareness", "campaignFinance", "dailyLedger",
     "equipmentCapabilities", "demandState", "campaignOutcome", "appointments", "treatmentCourses",
     "longitudinalPatients", "attendanceEvents", "capabilityState", "researchOrders", "referralOrders",
-    "asyncEvents", "deviceQueues", "identityRegistry", "operationsState", "economyState", "reputationState",
+    "asyncEvents", "deviceQueues", "identityRegistry", "operationsState", "resourceLifecycleState",
+    "economyState", "reputationState",
     "campaignDirectorState"
   ]);
   const operationsRuntime = operationsRuntimeFactory.createOperationsRuntime(resourceScheduler);
@@ -257,11 +258,29 @@
     return operationsRuntime.createState();
   }
 
-  function addP5Defaults(state) {
-    return {
+  function defaultResourceLifecycleState(state = {}, options = {}) {
+    const lifecycle = options.p5Activation?.lifecycle;
+    if (!lifecycle) return state.resourceLifecycleState === undefined
+      ? undefined
+      : clone(state.resourceLifecycleState);
+    if (state.resourceLifecycleState !== undefined) {
+      const validation = lifecycle.validateState(state.resourceLifecycleState);
+      if (!validation.valid) {
+        throw new Error(`Game save resourceLifecycleState is invalid: ${validation.errors.join(", ")}`);
+      }
+      return lifecycle.normalizeState(state.resourceLifecycleState);
+    }
+    return lifecycle.createState();
+  }
+
+  function addP5Defaults(state, options = {}) {
+    const next = {
       ...clone(state || {}),
       operationsState: defaultOperationsState(state)
     };
+    const lifecycleState = defaultResourceLifecycleState(state, options);
+    if (lifecycleState !== undefined) next.resourceLifecycleState = lifecycleState;
+    return next;
   }
 
   function defaultEconomyState(state = {}) {
@@ -629,10 +648,20 @@
     return state;
   }
 
-  function validateP5State(state) {
+  function validateP5State(state, options = {}) {
     const validation = operationsRuntime.validateState(state.operationsState);
     if (!validation.valid) {
       throw new Error(`Game save operationsState is invalid: ${validation.errors.join(", ")}`);
+    }
+    const lifecycle = options.p5Activation?.lifecycle;
+    if (lifecycle) {
+      if (state.resourceLifecycleState === undefined) {
+        throw new Error("Game save resourceLifecycleState is missing");
+      }
+      const lifecycleValidation = lifecycle.validateState(state.resourceLifecycleState);
+      if (!lifecycleValidation.valid) {
+        throw new Error(`Game save resourceLifecycleState is invalid: ${lifecycleValidation.errors.join(", ")}`);
+      }
     }
     const deviceTaskIds = new Set();
     const deviceOrderReferences = new Set();
@@ -688,15 +717,21 @@
   }
 
   function createSnapshot(mode, state, options = {}) {
+    let serializedState;
+    if (mode === "tier-01-v2") {
+      serializedState = compactTierState(addP4Defaults(state, options), options.catalog);
+      serializedState = addP3Defaults(serializedState);
+      serializedState = addP5Defaults(serializedState, options);
+      serializedState = addP6Defaults(serializedState);
+      serializedState = addP7Defaults(serializedState);
+    } else {
+      serializedState = snapshotState(state);
+    }
     const snapshot = {
       gameStateSaveVersion: saveVersionForMode(mode),
       generatorMode: mode,
       savedAt: new Date().toISOString(),
-      state: mode === "tier-01-v2"
-        ? addP7Defaults(addP6Defaults(addP5Defaults(addP3Defaults(
-          compactTierState(addP4Defaults(state, options), options.catalog)
-        ))))
-        : snapshotState(state)
+      state: serializedState
     };
     if (mode === "tier-01-v2") {
       snapshot.capabilityRegistryId = CAPABILITY_REGISTRY_ID;
@@ -725,7 +760,7 @@
       validatePatientStateReferences(validationState, options.catalog, "Game save");
       validateP3State(validationState, options);
       validateP4State(validationState, options);
-      validateP5State(validationState);
+      validateP5State(validationState, options);
       validateP6State(validationState);
       validateP7State(validationState, options);
     }

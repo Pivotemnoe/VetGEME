@@ -841,6 +841,7 @@
     asyncEvents: [],
     deviceQueues: { schemaVersion: 1, resources: {} },
     identityRegistry: null,
+    resourceLifecycleState: null,
     operationsState: null,
     economyState: null,
     reputationState: null,
@@ -924,6 +925,7 @@
       const saveOptions = {
         catalog: generatorRuntime.catalog,
         campaignIdentity: isTier01V2() ? tierCampaignIdentity() : undefined,
+        p5Activation: isTier01V2() ? generatorRuntime.catalog?.p5Activation : undefined,
         snapshotApi: window.PET_CLINIC_GAME_STATE_SAVE
       };
       if (usesV11Save()) {
@@ -957,6 +959,7 @@
       const loadOptions = {
         catalog: generatorRuntime.catalog,
         campaignIdentity: isTier01V2() ? tierCampaignIdentity() : undefined,
+        p5Activation: isTier01V2() ? generatorRuntime.catalog?.p5Activation : undefined,
         snapshotApi: window.PET_CLINIC_GAME_STATE_SAVE
       };
       const snapshot = usesV11Save()
@@ -2474,18 +2477,115 @@
   function ensureP5RuntimeState() {
     if (!isTier01V2()) return null;
     if (!resourceScheduler || !operationsRuntime) throw new Error("Operations runtime v5 is unavailable");
-    if (!state.operationsState) state.operationsState = operationsRuntime.createState();
-    const validation = operationsRuntime.validateState(state.operationsState);
+    const p5 = generatorRuntime.catalog?.p5Activation;
+    if (!p5?.lifecycle || !p5?.reconcileOperationsState) {
+      throw new Error("P5 activation runtime is unavailable");
+    }
+    const lifecycleState = state.resourceLifecycleState || p5.createLifecycleState();
+    const lifecycleValidation = p5.lifecycle.validateState(lifecycleState);
+    if (!lifecycleValidation.valid) {
+      throw new Error(`Resource lifecycle state is incompatible: ${lifecycleValidation.errors.join(", ")}`);
+    }
+    const operationsState = state.operationsState || operationsRuntime.createState();
+    const validation = operationsRuntime.validateState(operationsState);
     if (!validation.valid) {
       throw new Error(`Operations state is incompatible: ${validation.errors.join(", ")}`);
     }
-    state.operationsState = operationsRuntime.normalizeState(state.operationsState);
+    const normalizedLifecycle = p5.lifecycle.normalizeState(lifecycleState);
+    const normalizedOperations = operationsRuntime.normalizeState(operationsState);
+    const reconciledOperations = p5.reconcileOperationsState(normalizedLifecycle, normalizedOperations);
+    const reconciledValidation = operationsRuntime.validateState(reconciledOperations);
+    if (!reconciledValidation.valid) {
+      throw new Error(`Reconciled operations state is incompatible: ${reconciledValidation.errors.join(", ")}`);
+    }
+    state.resourceLifecycleState = normalizedLifecycle;
+    state.operationsState = operationsRuntime.normalizeState(reconciledOperations);
     return state.operationsState;
+  }
+
+  function executeP5Lifecycle(command, payload, context = {}) {
+    ensureP5RuntimeState();
+    const p5 = generatorRuntime.catalog.p5Activation;
+    const result = p5.lifecycle.execute(state.resourceLifecycleState, command, payload, context);
+    const reconciled = p5.reconcileOperationsState(result.state, state.operationsState);
+    const validation = operationsRuntime.validateState(reconciled);
+    if (!validation.valid) {
+      throw new Error(`P5 lifecycle command produced invalid operations state: ${validation.errors.join(", ")}`);
+    }
+    state.resourceLifecycleState = result.state;
+    state.operationsState = operationsRuntime.normalizeState(reconciled);
+    publishP5Telemetry();
+    return result;
+  }
+
+  function p5DoctorResourceId(doctor = currentDoctor()) {
+    return doctor?.id ? `staff.doctor.${doctor.id}` : null;
+  }
+
+  function assignCurrentP5DoctorShift(doctor) {
+    if (!isTier01V2()) return null;
+    const dayStartAt = (state.day - 1) * 1440 + DAY_START;
+    const dayEndAt = (state.day - 1) * 1440 + STANDARD_DAY_END;
+    const staffId = p5DoctorResourceId(doctor);
+    return executeP5Lifecycle("assign_shift", {
+      commandId: `campaign-day-${state.day}:${staffId}:assign-shift`,
+      staffId,
+      shiftId: `campaign-day-${state.day}:${staffId}`,
+      startAt: dayStartAt,
+      endAt: dayEndAt
+    }, { currentMinute: dayStartAt });
   }
 
   function operationsSummary() {
     if (!isTier01V2()) return null;
     return operationsRuntime.summarizeState(ensureP5RuntimeState());
+  }
+
+  function p5RuntimeSummary() {
+    if (!isTier01V2()) return null;
+    const p5 = generatorRuntime.catalog?.p5Activation;
+    if (!p5) return null;
+    ensureP5RuntimeState();
+    const at = campaignMinuteAt();
+    const lifecycleSnapshot = p5.lifecycle.snapshot(state.resourceLifecycleState, at, {
+      schedulerState: {
+        schemaVersion: state.operationsState.schemaVersion,
+        resources: cloneData(state.operationsState.resources),
+        tasks: cloneData(state.operationsState.tasks),
+        reservations: cloneData(state.operationsState.reservations),
+        appliedCommandIds: cloneData(state.operationsState.appliedCommandIds)
+      },
+      absenceWindows: []
+    });
+    return {
+      version: p5.version,
+      sourceVersion: p5.sourceVersion,
+      manifestSha256: p5.manifestSha256,
+      correctionSha256: p5.correctionSha256,
+      resourceCount: Object.keys(lifecycleSnapshot.resources).length,
+      activeResourceCount: lifecycleSnapshot.activeResourceIds.length,
+      commandCount: lifecycleSnapshot.commandCount,
+      taskTemplateCount: p5.audit.taskTemplates,
+      affectedTemplates: p5.audit.affectedTemplates,
+      predicateGaps: p5.audit.predicateGaps
+    };
+  }
+
+  function publishP5Telemetry(status = p5RuntimeSummary()) {
+    if (status) {
+      document.documentElement.dataset.p5Source = status.sourceVersion;
+      document.documentElement.dataset.p5Resources = String(status.resourceCount);
+      document.documentElement.dataset.p5TaskTemplates = String(status.taskTemplateCount);
+      document.documentElement.dataset.p5RoomCorrectionGaps = String(status.predicateGaps);
+      document.documentElement.dataset.p5LifecycleCommands = String(status.commandCount);
+    } else {
+      delete document.documentElement.dataset.p5Source;
+      delete document.documentElement.dataset.p5Resources;
+      delete document.documentElement.dataset.p5TaskTemplates;
+      delete document.documentElement.dataset.p5RoomCorrectionGaps;
+      delete document.documentElement.dataset.p5LifecycleCommands;
+    }
+    return status;
   }
 
   function ensureP6RuntimeState() {
@@ -2571,7 +2671,57 @@
     return identityRuntime.authoredOwnerCues(state.identityRegistry, patient);
   }
 
-  function diagnosticCapabilityState(test) {
+  function p5ResearchExecution(patient, test, branch = "local", commit = false) {
+    const p5 = generatorRuntime.catalog?.p5Activation;
+    if (!isTier01V2() || !p5 || !patient?.v2Visit || !test?.id || !test.operationalUsageId) {
+      return { mapped: false, scheduled: true, reasonCode: "unmapped", tasks: [], reservations: [] };
+    }
+    ensureP5RuntimeState();
+    const visitId = patient.v2Visit.visitId || patient.visitId || patient.id;
+    const result = p5.scheduleResearch({
+      operationsState: state.operationsState,
+      researchId: test.id,
+      usageId: test.operationalUsageId,
+      taskId: `visit-${visitId}:research-${test.id}`,
+      branch,
+      at: campaignMinuteAt(),
+      fatigue: p5.fatigueFor(currentDoctor().fatigue),
+      identifiers: {
+        patientId: stableVisitPatientId(patient),
+        ownerId: patient.persistentOwnerId || patient.ownerId || patient.owner || `visit-${visitId}-owner`
+      }
+    });
+    if (commit && result.scheduled) state.operationsState = result.state;
+    return { mapped: true, ...result };
+  }
+
+  function completeP5ResearchExecution(execution) {
+    if (!execution?.mapped || !execution.scheduled || !execution.tasks?.length) return;
+    const p5 = generatorRuntime.catalog.p5Activation;
+    const commandRoot = execution.tasks[0].id.replace(/:[^:]+$/u, "");
+    state.operationsState = p5.completeTasks(state.operationsState, execution.tasks, commandRoot);
+  }
+
+  function diagnosticCapabilityState(test, patient = activePatient()) {
+    if (patient?.v2Visit && test?.operationalUsageId && generatorRuntime.catalog?.p5Activation) {
+      try {
+        const execution = p5ResearchExecution(patient, test, "local", false);
+        return {
+          mapped: true,
+          available: execution.scheduled,
+          reasonCode: execution.scheduled ? "available" : execution.reasonCode,
+          authority: "p5_exact_resource_reservation"
+        };
+      } catch (error) {
+        console.error("P5 research preflight failed closed.", error);
+        return {
+          mapped: true,
+          available: false,
+          reasonCode: "reservation_contract_error",
+          authority: "p5_exact_resource_reservation"
+        };
+      }
+    }
     const registry = p3CapabilityDocument();
     if (!registry || !capabilityRegistry || !test?.id) return { mapped: false, available: true, reasonCode: "unmapped" };
     const index = capabilityRegistry.buildIndex(registry);
@@ -2597,7 +2747,13 @@
       out_of_stock: "закончился необходимый расходник",
       requires_unavailable: "не выполнены обязательные зависимости",
       no_available_alternative: "нет доступного локального или внешнего варианта",
-      not_activated: "возможность не активирована"
+      not_activated: "возможность не активирована",
+      no_available_resource: "нужные кабинет, оборудование или сотрудник заняты либо недоступны",
+      no_matching_resource: "в клинике пока нет полного набора нужных ресурсов",
+      resource_unavailable: "нужный ресурс сейчас недоступен",
+      requirements_exceed_capacity: "нужные кабинет, оборудование или сотрудник заняты либо недоступны",
+      routine_blocked_by_fatigue: "усталость врача не позволяет безопасно выполнить плановое исследование",
+      reservation_contract_error: "не удалось безопасно подтвердить полный набор ресурсов"
     }[reasonCode] || "возможность недоступна";
   }
 
@@ -2787,6 +2943,18 @@
 
   function createSafeReferralForTest(patient, test, capabilityStatus) {
     if (!referralOrders || !patient?.v2Visit) return;
+    if (test?.operationalUsageId && generatorRuntime.catalog?.p5Activation) {
+      try {
+        const execution = p5ResearchExecution(patient, test, "referral", false);
+        if (!execution.scheduled || execution.tasks.length || execution.reservations.length) {
+          throw new Error("P5 safe referral attempted to create a local reservation");
+        }
+      } catch (error) {
+        console.error("P5 safe referral validation failed closed.", error);
+        setLog("Направление пока не создано: не удалось безопасно проверить маршрут. Повторите действие позже.");
+        return;
+      }
+    }
     ensureP3RuntimeState();
     const createdAt = campaignMinuteAt();
     let order = referralOrders.createReferralOrder({
@@ -3056,6 +3224,20 @@
       setLog("Для микроскопии нужно минимум 2 диагностических очка.");
       return;
     }
+    let p5Execution = null;
+    if (patient.v2Visit && approvedTest?.operationalUsageId && generatorRuntime.catalog?.p5Activation) {
+      try {
+        p5Execution = p5ResearchExecution(patient, approvedTest, "local", true);
+      } catch (error) {
+        console.error("P5 research reservation failed closed.", error);
+        setLog("Исследование не начато: не удалось безопасно подтвердить кабинет, оборудование и сотрудника.");
+        return;
+      }
+      if (!p5Execution.scheduled) {
+        setLog(`Исследование локально недоступно: ${capabilityReasonText(p5Execution.reasonCode)}. Выберите безопасное направление.`);
+        return;
+      }
+    }
     const testFee = patient.v2Visit
       ? (Number.isFinite(approvedTest?.costVetcoins) ? approvedTest.costVetcoins : null)
       : MICROSCOPY_FEE;
@@ -3094,6 +3276,11 @@
     if (patient.v2Visit && approvedTest?.id) {
       completeImmediateResearchOrder(patient, approvedTest, result, testFee, testMinutes);
     }
+    completeP5ResearchExecution(p5Execution);
+    const reservedMinutes = p5Execution?.tasks?.length
+      ? Math.max(...p5Execution.tasks.map((task) => task.endAt)) - campaignMinuteAt()
+      : null;
+    const elapsedMinutes = Number.isInteger(reservedMinutes) && reservedMinutes > 0 ? reservedMinutes : testMinutes;
     const lowValueTest = approvedTest?.classification === "low_value";
     if (lowValueTest) {
       adjustTrust(patient, -3);
@@ -3104,7 +3291,7 @@
       ? `Исследование выполнено и оплачено: +${testFee} V.`
       : "Исследование выполнено; цена в карточке не указана, начисление не создано.");
     if (tutorialPatient(patient)) advanceTutorial("test", `${approvedTest?.label || "Исследование"}: результат получен.`);
-    if (testMinutes) passTime(testMinutes);
+    if (elapsedMinutes) passTime(elapsedMinutes);
     else {
       renderAll();
       persistGameState(true);
@@ -3902,6 +4089,14 @@
     const selectedMode = document.querySelector('input[name="hoursMode"]:checked');
     state.hoursMode = state.day <= campaignDayCount() ? "standard" : selectedMode ? selectedMode.value : "standard";
     if (isTier01V2()) {
+      try {
+        assignCurrentP5DoctorShift(doctor);
+      } catch (error) {
+        console.error("P5 doctor shift assignment failed closed.", error);
+        setLog("Смена не открыта: не удалось безопасно подтвердить рабочий график врача.");
+        renderShiftPlanning();
+        return;
+      }
       try {
         generatorRuntime.generator.openDay(state.day, tierDemandCampaignState());
       } catch (error) {
@@ -6082,6 +6277,7 @@
 
     appBootstrapComplete = true;
     const operationStatus = operationsSummary();
+    const p5Status = p5RuntimeSummary();
     const p6Status = p6RuntimeSummary();
     const p7Status = p7RuntimeSummary();
     if (operationStatus) {
@@ -6093,6 +6289,7 @@
       delete document.documentElement.dataset.operationsActiveTasks;
       delete document.documentElement.dataset.operationsQueuedTasks;
     }
+    publishP5Telemetry(p5Status);
     if (p6Status) {
       document.documentElement.dataset.economySchema = String(p6Status.economy.schemaVersion);
       document.documentElement.dataset.reputationSchema = String(p6Status.reputation.schemaVersion);
@@ -6131,6 +6328,7 @@
       activeId: state.activeId ?? null,
       visitId: activeVisitId(),
       operations: operationStatus,
+      p5: p5Status,
       economy: p6Status?.economy || null,
       reputation: p6Status?.reputation || null,
       campaignDirector: p7Status,
