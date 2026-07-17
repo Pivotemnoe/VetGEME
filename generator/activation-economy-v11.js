@@ -260,6 +260,13 @@
     }))].sort((left, right) => left.localeCompare(right, "en"));
   }
 
+  function researchStockAvailable(economyState, researchTask) {
+    const categories = stockCategoriesForResearch(researchTask);
+    return categories.every((categoryId) => economyState.inventoryLots
+      .filter((lot) => lot.itemId === `stock.${categoryId}` && lot.unitId === "unit")
+      .reduce((total, lot) => total + lot.quantityAvailable, 0) > 0);
+  }
+
   function consumeResearchStock(runtime, input) {
     const sourceId = requireId(input.sourceId, "stock source ID");
     const at = requireMinute(input.at, "stock time");
@@ -497,6 +504,7 @@
       recordBudgetDecision,
       recordReputationEvent,
       stockCategoriesForResearch,
+      researchStockAvailable,
       consumeResearchStock(input) { return consumeResearchStock(runtime, input); },
       purchaseAsset(input) { return purchaseAsset(runtime, input); },
       completeDelivery(input) { return completeDelivery(runtime, input); },

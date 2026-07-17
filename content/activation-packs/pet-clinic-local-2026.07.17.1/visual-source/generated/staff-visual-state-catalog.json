@@ -1,0 +1,373 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p9-staff-visual-states",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "staff": [
+    {
+      "resourceId": "staff.doctor.sokolova",
+      "name": "Вера Соколова",
+      "role": "doctor",
+      "candidateAssetIds": [
+        "characters.room-scale.veterinarian-female",
+        "characters.room-scale.veterinarian-male"
+      ],
+      "appearanceSelectionAuthority": "p4_identity_appearance_seed",
+      "behaviorSelectionAuthority": "p4_owner_patient_state_not_sprite",
+      "visualStates": {
+        "not_hired": {
+          "visibleInClinic": false,
+          "rosterLabel": "Пока не работает в клинике"
+        },
+        "hired_unscheduled": {
+          "visibleInClinic": false,
+          "rosterLabel": "Нужно поставить смену"
+        },
+        "scheduled": {
+          "visibleInClinic": true,
+          "rosterLabel": "Сегодня на смене"
+        },
+        "busy": {
+          "visibleInClinic": true,
+          "statusLabel": "Сейчас занят"
+        },
+        "resting": {
+          "visibleInClinic": true,
+          "statusLabel": "Отдыхает"
+        },
+        "absent": {
+          "visibleInClinic": false,
+          "statusLabel": "Сегодня отсутствует"
+        }
+      }
+    },
+    {
+      "resourceId": "staff.doctor.morozov",
+      "name": "Алексей Морозов",
+      "role": "doctor",
+      "candidateAssetIds": [
+        "characters.room-scale.veterinarian-female",
+        "characters.room-scale.veterinarian-male"
+      ],
+      "appearanceSelectionAuthority": "p4_identity_appearance_seed",
+      "behaviorSelectionAuthority": "p4_owner_patient_state_not_sprite",
+      "visualStates": {
+        "not_hired": {
+          "visibleInClinic": false,
+          "rosterLabel": "Пока не работает в клинике"
+        },
+        "hired_unscheduled": {
+          "visibleInClinic": false,
+          "rosterLabel": "Нужно поставить смену"
+        },
+        "scheduled": {
+          "visibleInClinic": true,
+          "rosterLabel": "Сегодня на смене"
+        },
+        "busy": {
+          "visibleInClinic": true,
+          "statusLabel": "Сейчас занят"
+        },
+        "resting": {
+          "visibleInClinic": true,
+          "statusLabel": "Отдыхает"
+        },
+        "absent": {
+          "visibleInClinic": false,
+          "statusLabel": "Сегодня отсутствует"
+        }
+      }
+    },
+    {
+      "resourceId": "staff.assistant.volkova",
+      "name": "Ирина Волкова",
+      "role": "assistant",
+      "candidateAssetIds": [
+        "characters.room-scale.veterinary-assistant"
+      ],
+      "appearanceSelectionAuthority": "p4_identity_appearance_seed",
+      "behaviorSelectionAuthority": "p4_owner_patient_state_not_sprite",
+      "visualStates": {
+        "not_hired": {
+          "visibleInClinic": false,
+          "rosterLabel": "Пока не работает в клинике"
+        },
+        "hired_unscheduled": {
+          "visibleInClinic": false,
+          "rosterLabel": "Нужно поставить смену"
+        },
+        "scheduled": {
+          "visibleInClinic": true,
+          "rosterLabel": "Сегодня на смене"
+        },
+        "busy": {
+          "visibleInClinic": true,
+          "statusLabel": "Сейчас занят"
+        },
+        "resting": {
+          "visibleInClinic": true,
+          "statusLabel": "Отдыхает"
+        },
+        "absent": {
+          "visibleInClinic": false,
+          "statusLabel": "Сегодня отсутствует"
+        }
+      }
+    },
+    {
+      "resourceId": "staff.administrator.lebedeva",
+      "name": "Анна Лебедева",
+      "role": "administrator",
+      "candidateAssetIds": [
+        "characters.room-scale.receptionist"
+      ],
+      "appearanceSelectionAuthority": "p4_identity_appearance_seed",
+      "behaviorSelectionAuthority": "p4_owner_patient_state_not_sprite",
+      "visualStates": {
+        "not_hired": {
+          "visibleInClinic": false,
+          "rosterLabel": "Пока не работает в клинике"
+        },
+        "hired_unscheduled": {
+          "visibleInClinic": false,
+          "rosterLabel": "Нужно поставить смену"
+        },
+        "scheduled": {
+          "visibleInClinic": true,
+          "rosterLabel": "Сегодня на смене"
+        },
+        "busy": {
+          "visibleInClinic": true,
+          "statusLabel": "Сейчас занят"
+        },
+        "resting": {
+          "visibleInClinic": true,
+          "statusLabel": "Отдыхает"
+        },
+        "absent": {
+          "visibleInClinic": false,
+          "statusLabel": "Сегодня отсутствует"
+        }
+      }
+    },
+    {
+      "resourceId": "staff.lab.krylova",
+      "name": "Марина Крылова",
+      "role": "lab_staff",
+      "candidateAssetIds": [
+        "characters.room-scale.veterinary-assistant"
+      ],
+      "appearanceSelectionAuthority": "p4_identity_appearance_seed",
+      "behaviorSelectionAuthority": "p4_owner_patient_state_not_sprite",
+      "visualStates": {
+        "not_hired": {
+          "visibleInClinic": false,
+          "rosterLabel": "Пока не работает в клинике"
+        },
+        "hired_unscheduled": {
+          "visibleInClinic": false,
+          "rosterLabel": "Нужно поставить смену"
+        },
+        "scheduled": {
+          "visibleInClinic": true,
+          "rosterLabel": "Сегодня на смене"
+        },
+        "busy": {
+          "visibleInClinic": true,
+          "statusLabel": "Сейчас занят"
+        },
+        "resting": {
+          "visibleInClinic": true,
+          "statusLabel": "Отдыхает"
+        },
+        "absent": {
+          "visibleInClinic": false,
+          "statusLabel": "Сегодня отсутствует"
+        }
+      }
+    },
+    {
+      "resourceId": "staff.imaging.zhukova",
+      "name": "Ольга Жукова",
+      "role": "imaging_staff",
+      "candidateAssetIds": [
+        "characters.room-scale.veterinary-assistant"
+      ],
+      "appearanceSelectionAuthority": "p4_identity_appearance_seed",
+      "behaviorSelectionAuthority": "p4_owner_patient_state_not_sprite",
+      "visualStates": {
+        "not_hired": {
+          "visibleInClinic": false,
+          "rosterLabel": "Пока не работает в клинике"
+        },
+        "hired_unscheduled": {
+          "visibleInClinic": false,
+          "rosterLabel": "Нужно поставить смену"
+        },
+        "scheduled": {
+          "visibleInClinic": true,
+          "rosterLabel": "Сегодня на смене"
+        },
+        "busy": {
+          "visibleInClinic": true,
+          "statusLabel": "Сейчас занят"
+        },
+        "resting": {
+          "visibleInClinic": true,
+          "statusLabel": "Отдыхает"
+        },
+        "absent": {
+          "visibleInClinic": false,
+          "statusLabel": "Сегодня отсутствует"
+        }
+      }
+    },
+    {
+      "resourceId": "staff.doctor.belov",
+      "name": "Николай Белов",
+      "role": "doctor",
+      "candidateAssetIds": [
+        "characters.room-scale.veterinarian-female",
+        "characters.room-scale.veterinarian-male"
+      ],
+      "appearanceSelectionAuthority": "p4_identity_appearance_seed",
+      "behaviorSelectionAuthority": "p4_owner_patient_state_not_sprite",
+      "visualStates": {
+        "not_hired": {
+          "visibleInClinic": false,
+          "rosterLabel": "Пока не работает в клинике"
+        },
+        "hired_unscheduled": {
+          "visibleInClinic": false,
+          "rosterLabel": "Нужно поставить смену"
+        },
+        "scheduled": {
+          "visibleInClinic": true,
+          "rosterLabel": "Сегодня на смене"
+        },
+        "busy": {
+          "visibleInClinic": true,
+          "statusLabel": "Сейчас занят"
+        },
+        "resting": {
+          "visibleInClinic": true,
+          "statusLabel": "Отдыхает"
+        },
+        "absent": {
+          "visibleInClinic": false,
+          "statusLabel": "Сегодня отсутствует"
+        }
+      }
+    },
+    {
+      "resourceId": "staff.care.romanova",
+      "name": "Елена Романова",
+      "role": "care_staff",
+      "candidateAssetIds": [
+        "characters.room-scale.veterinary-assistant"
+      ],
+      "appearanceSelectionAuthority": "p4_identity_appearance_seed",
+      "behaviorSelectionAuthority": "p4_owner_patient_state_not_sprite",
+      "visualStates": {
+        "not_hired": {
+          "visibleInClinic": false,
+          "rosterLabel": "Пока не работает в клинике"
+        },
+        "hired_unscheduled": {
+          "visibleInClinic": false,
+          "rosterLabel": "Нужно поставить смену"
+        },
+        "scheduled": {
+          "visibleInClinic": true,
+          "rosterLabel": "Сегодня на смене"
+        },
+        "busy": {
+          "visibleInClinic": true,
+          "statusLabel": "Сейчас занят"
+        },
+        "resting": {
+          "visibleInClinic": true,
+          "statusLabel": "Отдыхает"
+        },
+        "absent": {
+          "visibleInClinic": false,
+          "statusLabel": "Сегодня отсутствует"
+        }
+      }
+    },
+    {
+      "resourceId": "staff.dentist.orlova",
+      "name": "Дарья Орлова",
+      "role": "doctor",
+      "candidateAssetIds": [
+        "characters.room-scale.veterinarian-female",
+        "characters.room-scale.veterinarian-male"
+      ],
+      "appearanceSelectionAuthority": "p4_identity_appearance_seed",
+      "behaviorSelectionAuthority": "p4_owner_patient_state_not_sprite",
+      "visualStates": {
+        "not_hired": {
+          "visibleInClinic": false,
+          "rosterLabel": "Пока не работает в клинике"
+        },
+        "hired_unscheduled": {
+          "visibleInClinic": false,
+          "rosterLabel": "Нужно поставить смену"
+        },
+        "scheduled": {
+          "visibleInClinic": true,
+          "rosterLabel": "Сегодня на смене"
+        },
+        "busy": {
+          "visibleInClinic": true,
+          "statusLabel": "Сейчас занят"
+        },
+        "resting": {
+          "visibleInClinic": true,
+          "statusLabel": "Отдыхает"
+        },
+        "absent": {
+          "visibleInClinic": false,
+          "statusLabel": "Сегодня отсутствует"
+        }
+      }
+    },
+    {
+      "resourceId": "staff.manager.smirnova",
+      "name": "Ирина Смирнова",
+      "role": "manager",
+      "candidateAssetIds": [
+        "characters.room-scale.receptionist"
+      ],
+      "appearanceSelectionAuthority": "p4_identity_appearance_seed",
+      "behaviorSelectionAuthority": "p4_owner_patient_state_not_sprite",
+      "visualStates": {
+        "not_hired": {
+          "visibleInClinic": false,
+          "rosterLabel": "Пока не работает в клинике"
+        },
+        "hired_unscheduled": {
+          "visibleInClinic": false,
+          "rosterLabel": "Нужно поставить смену"
+        },
+        "scheduled": {
+          "visibleInClinic": true,
+          "rosterLabel": "Сегодня на смене"
+        },
+        "busy": {
+          "visibleInClinic": true,
+          "statusLabel": "Сейчас занят"
+        },
+        "resting": {
+          "visibleInClinic": true,
+          "statusLabel": "Отдыхает"
+        },
+        "absent": {
+          "visibleInClinic": false,
+          "statusLabel": "Сегодня отсутствует"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "vetgeme-p9-hud-data-contract",
+  "catalogVersion": "2026.07.16.2",
+  "status": "author_complete_programmer_adapter_required",
+  "runtimeEligible": false,
+  "persistentSurfaces": [
+    {
+      "surfaceId": "clinic_identity",
+      "zone": "top_left",
+      "authority": "p7.campaignState",
+      "fields": [
+        "clinicLevel",
+        "chapter",
+        "day",
+        "campaignDay"
+      ]
+    },
+    {
+      "surfaceId": "next_patient",
+      "zone": "right_rail_top",
+      "authority": "p5.queueState+p4.identityState",
+      "fields": [
+        "patientName",
+        "species",
+        "waitingMinutes",
+        "ownerRequestHumanText"
+      ]
+    },
+    {
+      "surfaceId": "queue",
+      "zone": "right_rail",
+      "authority": "p5.queueState",
+      "fields": [
+        "waitingCount",
+        "inRoomCount",
+        "patientCards"
+      ]
+    },
+    {
+      "surfaceId": "day_goals",
+      "zone": "right_rail_bottom",
+      "authority": "p7.dayState",
+      "fields": [
+        "goalHumanText",
+        "progress",
+        "completed"
+      ]
+    },
+    {
+      "surfaceId": "cash",
+      "zone": "bottom_left",
+      "authority": "p6.ledgerState",
+      "fields": [
+        "cash",
+        "todayDelta"
+      ]
+    },
+    {
+      "surfaceId": "clock_controls",
+      "zone": "bottom",
+      "authority": "simulation.clock",
+      "fields": [
+        "day",
+        "time",
+        "minutesToClose",
+        "speed",
+        "paused"
+      ]
+    },
+    {
+      "surfaceId": "trust_reputation",
+      "zone": "bottom",
+      "authority": "p4.ownerState+p6.reputationState",
+      "fields": [
+        "ownerTrust",
+        "clinicalReliability",
+        "staffFatigue"
+      ]
+    },
+    {
+      "surfaceId": "active_capacity",
+      "zone": "bottom",
+      "authority": "p5.scheduler",
+      "fields": [
+        "activeVisits",
+        "capacity",
+        "blockedReasonHumanText"
+      ]
+    },
+    {
+      "surfaceId": "event_log",
+      "zone": "bottom_right",
+      "authority": "appendOnlyEventLog",
+      "fields": [
+        "time",
+        "humanText",
+        "severity"
+      ]
+    }
+  ],
+  "disclosure": {
+    "longPatientDetails": "drawer",
+    "fullGoals": "drawer_on_mobile",
+    "inventoryAndAssets": "management_drawer",
+    "medicalResultDetails": "visit_or_results_panel",
+    "criticalAlert": "edge_toast_with_action",
+    "normalPlayCenterOverlay": false
+  },
+  "priorityOrder": [
+    "clinical_danger",
+    "missing_safe_route",
+    "result_due",
+    "resource_blocked",
+    "queue_pressure",
+    "economy_warning",
+    "informational"
+  ]
+}

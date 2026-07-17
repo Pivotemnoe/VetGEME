@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "packId": "pet-clinic-full-activation-art",
+  "packVersion": "2026.07.17.1",
+  "sourceManifestId": "pet-clinic-full-activation-art-2026.07.17.1",
+  "capabilityAuthority": "simulation_state_only",
+  "assets": [
+    {
+      "resourceId": "equipment.tonometer",
+      "assetId": "equipment.tonometer",
+      "title": "Тонометр для глаз",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/tonometer.png",
+      "sha256": "7cbcf28e189dc45e1ac8f015439a70935bdd2cc3f2e69b2f92e54ef7729f6a9d",
+      "presentation": "small_device_on_support"
+    },
+    {
+      "resourceId": "equipment.ophthalmoscope",
+      "assetId": "equipment.ophthalmoscope",
+      "title": "Офтальмоскоп",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/ophthalmoscope.png",
+      "sha256": "409c558d68393cf3fa1058531dbc4bdbde8c27f8233bf463a779efe95f8dc2ea",
+      "presentation": "small_device_on_support"
+    },
+    {
+      "resourceId": "equipment.wood_lamp",
+      "assetId": "equipment.wood_lamp",
+      "title": "Лампа Вуда",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/wood-lamp.png",
+      "sha256": "2b4fa4a61a88698ed1fde5616e88d79eef773ba3327f9cd10dd5d692ff5fe9a8",
+      "presentation": "small_device_on_support"
+    },
+    {
+      "resourceId": "equipment.nebulizer",
+      "assetId": "equipment.nebulizer",
+      "title": "Небулайзер",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/nebulizer.png",
+      "sha256": "d8376f38c61904ff572c9e10136102cd09a4e165ba5ee8504f569aea986e3c87",
+      "presentation": "small_device_on_support"
+    },
+    {
+      "resourceId": "equipment.pulse_oximeter",
+      "assetId": "equipment.pulse_oximeter",
+      "title": "Пульсоксиметр",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/pulse-oximeter.png",
+      "sha256": "192cc01050b267223a25a10be54f2f89dfa590bbe646a63f707859709b52106e",
+      "presentation": "small_device_on_support"
+    },
+    {
+      "resourceId": "equipment.glucometer",
+      "assetId": "equipment.glucometer",
+      "title": "Глюкометр",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/glucometer.png",
+      "sha256": "1b4b72964f6d4e8a9cee66a7f8bc7c1c157885c48c9e9f3dff208e94652c5ae2",
+      "presentation": "small_device_on_support"
+    },
+    {
+      "resourceId": "equipment.blood_ketone_meter",
+      "assetId": "equipment.blood_ketone_meter",
+      "title": "Измеритель кетонов",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/blood-ketone-meter.png",
+      "sha256": "3cd79d18f848001007ac0202b97115639f833182e42691ec021075a18eb11b82",
+      "presentation": "small_device_on_support"
+    },
+    {
+      "resourceId": "equipment.cgm_sensor",
+      "assetId": "equipment.cgm_sensor",
+      "title": "Система непрерывного контроля глюкозы",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/cgm-sensor.png",
+      "sha256": "960f577c6fcbd3031ddc52d3641d52127b5fe35b51a716a4b5d8ad55f9387575",
+      "presentation": "small_device_on_support"
+    },
+    {
+      "resourceId": "equipment.refractometer",
+      "assetId": "equipment.refractometer",
+      "title": "Рефрактометр",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/refractometer.png",
+      "sha256": "233cab35d651929fcb4cfb64669b9c3b17d0c7a257300457c664c20b3f4133f2",
+      "presentation": "small_device_on_support"
+    },
+    {
+      "resourceId": "equipment.blood_pressure_monitor",
+      "assetId": "equipment.blood_pressure_monitor",
+      "title": "Монитор артериального давления",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/blood-pressure-monitor.png",
+      "sha256": "2d3ab2bc55e72fb5de29f82c92d856d14b33f6982e870b8ed5ed6d85b1198109",
+      "presentation": "small_device_on_support"
+    },
+    {
+      "resourceId": "equipment.feline_inhaler_spacer",
+      "assetId": "equipment.feline_inhaler_spacer",
+      "title": "Спейсер для кошек",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/feline-inhaler-spacer.png",
+      "sha256": "4845ed91c9d0689b06ae53674221748070a26cc38b531e759fee068a50649200",
+      "presentation": "small_device_on_support"
+    },
+    {
+      "resourceId": "equipment.lactate_meter",
+      "assetId": "equipment.lactate_meter",
+      "title": "Измеритель лактата",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/lactate-meter.png",
+      "sha256": "5e21a2e294373a6188d52e34eef6cd7ef77a30e205623906668ba93ff4ccac6e",
+      "presentation": "small_device_on_support"
+    },
+    {
+      "resourceId": "equipment.anesthesia_machine",
+      "assetId": "equipment.anesthesia_machine",
+      "title": "Наркозный аппарат",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/equipment/anesthesia-machine.png",
+      "sha256": "69f4e77f7ffc8887a352735d2d574c2c173598c00d258765a14c5bf258b7ac19",
+      "presentation": "mobile_equipment"
+    },
+    {
+      "resourceId": "room.staff.1",
+      "assetId": "room.staff.1",
+      "title": "Комната персонала",
+      "file": "assets/pet-clinic-full-activation-2026.07.17.1/rooms/staff-room.png",
+      "sha256": "b08a8d4ce46b699a2ad0d7e12da3e3517451c7d0da2491b0409ee9faf6897504",
+      "presentation": "empty_room_shell"
+    }
+  ]
+}

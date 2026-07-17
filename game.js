@@ -45,9 +45,13 @@
   const economyRuntime = window.PET_CLINIC_ECONOMY_RUNTIME_V6;
   const reputationRuntime = window.PET_CLINIC_REPUTATION_RUNTIME_V6;
   const campaignDirector = window.PET_CLINIC_CAMPAIGN_DIRECTOR_V7;
+  const resourceSurfaceFactory = window.PET_CLINIC_RESOURCE_STATE_SURFACE_V11;
   let gameSaveBlocked = false;
   let lastGameSaveAt = 0;
   let appBootstrapComplete = false;
+  let resourceSurface = null;
+  let p9VisualView = null;
+  let p9VisualSignature = null;
 
   function cloneData(value) {
     return value === undefined ? undefined : JSON.parse(JSON.stringify(value));
@@ -2724,6 +2728,200 @@
     };
   }
 
+  function p5SchedulerState() {
+    ensureP5RuntimeState();
+    return {
+      schemaVersion: state.operationsState.schemaVersion,
+      resources: cloneData(state.operationsState.resources),
+      tasks: cloneData(state.operationsState.tasks),
+      reservations: cloneData(state.operationsState.reservations),
+      appliedCommandIds: cloneData(state.operationsState.appliedCommandIds),
+      commandFingerprints: cloneData(state.operationsState.commandFingerprints)
+    };
+  }
+
+  function p9PreparationSignals(lifecycleSnapshot, at) {
+    return Object.values(lifecycleSnapshot.resources)
+      .filter((resource) => resource.resourceKind === "equipment" && resource.owned && !resource.active)
+      .flatMap((resource) => {
+        if (!resource.delivered) return [{ resourceId: resource.resourceId, state: "pending_delivery" }];
+        const maintenanceActive = resource.maintenanceWindows
+          .some((window) => window.startAt <= at && at < window.endAt);
+        if (maintenanceActive || (Number.isSafeInteger(resource.nextDueAt) && resource.nextDueAt <= at)) return [];
+        return [{
+          resourceId: resource.resourceId,
+          state: resource.trainedStaffIds.length ? "delivered_not_ready" : "training_pending"
+        }];
+      });
+  }
+
+  function p9StockSignals(lifecycleSnapshot) {
+    const patient = activePatient();
+    if (!patient?.pendingDiagnosticTestId) return [];
+    const test = diagnosticOptionsForPatient(patient)
+      .find((candidate) => candidate.id === patient.pendingDiagnosticTestId);
+    const task = generatorRuntime.catalog.p5Activation.documents.researchTasks.researchTasks
+      .find((candidate) => candidate.researchId === test?.id);
+    if (!task || generatorRuntime.catalog.economyActivation.researchStockAvailable(state.economyState, task)) return [];
+    return task.physicalResourceIds
+      .filter((resourceId) => lifecycleSnapshot.resources[resourceId]?.active === true)
+      .map((resourceId) => ({ resourceId, blocked: true }));
+  }
+
+  function p9HudAuthorities() {
+    const waiting = waitingPatients();
+    const next = waiting[0] || null;
+    const plan = currentPlan();
+    const goals = plan?.goals || [];
+    const doctor = currentDoctor();
+    const dayPosition = campaignDayPosition();
+    const operationStatus = operationsSummary();
+    return [
+      {
+        surfaceId: "clinic_identity",
+        authority: "p7.campaignState",
+        data: {
+          clinicLevel: 1,
+          chapter: dayPosition?.chapterNumber || 1,
+          day: dayPosition?.chapterDayNumber || state.day,
+          campaignDay: state.day
+        }
+      },
+      {
+        surfaceId: "next_patient",
+        authority: "p5.queueState+p4.identityState",
+        data: {
+          patientName: next?.animal || "Пациентов пока нет",
+          species: next ? (speciesLabels[next.species] || "животное") : "—",
+          waitingMinutes: next ? Math.max(0, Math.round(next.age || 0)) : 0,
+          ownerRequestHumanText: next?.complaint || "Новых обращений пока нет"
+        }
+      },
+      {
+        surfaceId: "queue",
+        authority: "p5.queueState",
+        data: {
+          waitingCount: waiting.length,
+          inRoomCount: state.queue.filter((patient) => isPatientInConsult(patient)).length,
+          patientCards: waiting.map((patient) => `${patient.animal}, ${speciesLabels[patient.species] || "животное"} — ожидает ${Math.max(0, Math.round(patient.age || 0))} минут`)
+        }
+      },
+      {
+        surfaceId: "day_goals",
+        authority: "p7.dayState",
+        data: {
+          goalHumanText: goals.map((goal) => goal.label),
+          progress: goals.map((goal) => `${goalProgress(goal)} из ${goal.target}`),
+          completed: goals.filter(goalComplete).length
+        }
+      },
+      {
+        surfaceId: "cash",
+        authority: "p6.ledgerState",
+        data: { cash: state.money, todayDelta: state.revenueToday - state.expensesToday }
+      },
+      {
+        surfaceId: "clock_controls",
+        authority: "simulation.clock",
+        data: {
+          day: state.day,
+          time: formatClinicTime(state.minute),
+          minutesToClose: Math.max(0, Math.ceil(state.dayEnd - state.minute)),
+          speed: state.speed,
+          paused: state.paused
+        }
+      },
+      {
+        surfaceId: "trust_reputation",
+        authority: "p4.ownerState+p6.reputationState",
+        data: {
+          ownerTrust: state.ownerTrust,
+          clinicalReliability: state.clinicalReliability,
+          staffFatigue: Math.round(doctor.fatigue)
+        }
+      },
+      {
+        surfaceId: "active_capacity",
+        authority: "p5.scheduler",
+        data: {
+          activeVisits: operationStatus?.activeTaskCount || 0,
+          capacity: 12,
+          blockedReasonHumanText: waiting.length >= 12 ? "Очередь заполнена" : "Свободные места есть"
+        }
+      },
+      {
+        surfaceId: "event_log",
+        authority: "appendOnlyEventLog",
+        data: { time: formatClinicTime(state.minute), humanText: state.log, severity: "обычно" }
+      }
+    ];
+  }
+
+  function p9ProjectionSignature() {
+    return JSON.stringify([
+      Math.floor(campaignMinuteAt() / 5),
+      state.activeId,
+      activePatient()?.pendingDiagnosticTestId || null,
+      state.resourceLifecycleState?.appliedCommandIds?.length || 0,
+      state.operationsState?.appliedCommandIds?.length || 0,
+      state.economyState?.inventoryMovements?.length || 0,
+      state.reputationState?.auditHistory?.length || 0,
+      state.dayStarted,
+      state.paused,
+      state.log
+    ]);
+  }
+
+  function projectP9VisualState(force = false) {
+    const activation = generatorRuntime.catalog?.visualActivation;
+    if (!isTier01V2() || !generatorRuntime.generator || !activation?.runtimeEligible) return null;
+    const signature = p9ProjectionSignature();
+    if (!force && signature === p9VisualSignature && p9VisualView) return p9VisualView;
+    try {
+      ensureP5RuntimeState();
+      ensureP6RuntimeState();
+      const at = campaignMinuteAt();
+      const schedulerState = p5SchedulerState();
+      const lifecycleSnapshot = generatorRuntime.catalog.p5Activation.lifecycle.snapshot(
+        state.resourceLifecycleState,
+        at,
+        { schedulerState, absenceWindows: [] }
+      );
+      p9VisualView = activation.project({
+        schemaVersion: 1,
+        at,
+        lifecycleSnapshot,
+        schedulerState,
+        preparationSignals: p9PreparationSignals(lifecycleSnapshot, at),
+        stockSignals: p9StockSignals(lifecycleSnapshot),
+        hudAuthorities: p9HudAuthorities(),
+        transitionNotice: null,
+        presentation: {
+          reducedMotion: window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true
+        }
+      });
+      p9VisualSignature = signature;
+      resourceSurface?.render(p9VisualView);
+      document.documentElement.dataset.visualProjection = activation.sourceVersion;
+      document.documentElement.dataset.visualResources = String(
+        activation.audit.rooms + activation.audit.equipment + activation.audit.staff
+      );
+      return p9VisualView;
+    } catch (error) {
+      console.error("Визуальное состояние ресурсов не обновлено.", error);
+      document.documentElement.dataset.visualProjection = "fallback";
+      return null;
+    }
+  }
+
+  function initializeResourceSurface() {
+    if (!generatorRuntime.generator
+      || !generatorRuntime.catalog?.visualActivation?.runtimeEligible
+      || !resourceSurfaceFactory?.createResourceSurface) return;
+    if (!resourceSurface) resourceSurface = resourceSurfaceFactory.createResourceSurface({ document }).mount();
+    projectP9VisualState(true);
+  }
+
   function ensureP7RuntimeState() {
     if (!isTier01V2()) return null;
     if (!campaignDirector) throw new Error("Campaign director runtime v7 is unavailable");
@@ -5378,6 +5576,7 @@
     renderCase();
     renderCampaign();
     renderHud();
+    projectP9VisualState();
     drawClinic();
   }
 
@@ -5470,6 +5669,7 @@
       visualRenderer.drawScene(ctx, {
         time: state.animationTime,
         actors: buildModularActors(),
+        visualState: p9VisualView,
         fallbackActor: (actor) => {
           if (actor.fallbackSpecies) drawAnimal(actor.fallbackSpecies, actor.x, actor.y - 27, actor.active);
         }
@@ -6418,6 +6618,7 @@
     await Promise.resolve(visualRenderer?.prepare?.());
     normalizeVisualMotionRoutes();
     updateVisualModeSettings();
+    initializeResourceSurface();
   }
 
   async function revealReadyGame(restoreStatus, render = renderAll) {
@@ -6491,6 +6692,7 @@
       reputation: p6Status?.reputation || null,
       campaignDirector: p7Status,
       operational: operationalActivation?.audit || null,
+      visualProjection: generatorRuntime.catalog?.visualActivation?.audit || null,
       visualStatus: visualRenderer?.getStatus?.() || {
         enabled: false,
         ready: false,

@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "crosswalkId": "vetgeme-p9-runtime-v2-asset-crosswalk",
+  "crosswalkVersion": "2026.07.16.2",
+  "runtimeEligible": false,
+  "sourceArtPackId": "vetgeme-modular-clinic-art-v1",
+  "targetArtPackId": "vetgeme-modular-clinic-art-v2",
+  "targetSceneLayoutSha256": "de71c885b5f54b2a199b65228a0000106d8be02e6a0b61b8141ed533ee2eec90",
+  "assetAliases": [
+    { "sourceAssetId": "characters.room-scale.receptionist", "targetAssetId": "character.receptionist", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "characters.room-scale.veterinarian-female", "targetAssetId": "character.veterinarian-female", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "characters.room-scale.veterinarian-male", "targetAssetId": "character.veterinarian-male", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "characters.room-scale.veterinary-assistant", "targetAssetId": "character.veterinary-assistant", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "equipment.diagnostic.centrifuge", "targetAssetId": "equipment.centrifuge", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "equipment.diagnostic.hematology-analyzer", "targetAssetId": "equipment.hematology-analyzer", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "equipment.diagnostic.microscope", "targetAssetId": "equipment.microscope", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "equipment.diagnostic.otoscope-station", "targetAssetId": "equipment.otoscope-station", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "equipment.diagnostic.ultrasound-machine", "targetAssetId": "equipment.ultrasound-machine", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "equipment.diagnostic.vital-sign-monitor", "targetAssetId": "equipment.vital-sign-monitor", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "equipment.procedural.dental-station", "targetAssetId": "equipment.dental-station", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "equipment.procedural.infusion-pumps", "targetAssetId": "equipment.infusion-pumps", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "equipment.procedural.oxygen-cage", "targetAssetId": "equipment.oxygen-cage", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "equipment.procedural.xray-console", "targetAssetId": "equipment.xray-console", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "equipment.procedural.xray-table", "targetAssetId": "equipment.xray-table", "evidence": "explicit_runtime_v2_asset_alias" },
+    { "sourceAssetId": "progression.covered-equipment", "targetAssetId": "progression.covered-equipment", "evidence": "exact_runtime_v2_asset_id" },
+    { "sourceAssetId": "progression.delivery-pallet", "targetAssetId": "progression.delivery-pallet", "evidence": "exact_runtime_v2_asset_id" },
+    { "sourceAssetId": "progression.locked-door-overlay", "targetAssetId": "progression.locked-door-overlay", "evidence": "exact_runtime_v2_asset_id" },
+    { "sourceAssetId": "progression.opened-crates", "targetAssetId": "progression.opened-crates", "evidence": "exact_runtime_v2_asset_id" },
+    { "sourceAssetId": "progression.renovation-cart", "targetAssetId": "progression.renovation-cart", "evidence": "exact_runtime_v2_asset_id" },
+    { "sourceAssetId": "progression.safety-barrier", "targetAssetId": "progression.safety-barrier", "evidence": "exact_runtime_v2_asset_id" },
+    { "sourceAssetId": "progression.stacked-boxes", "targetAssetId": "progression.stacked-boxes", "evidence": "exact_runtime_v2_asset_id" },
+    { "sourceAssetId": "room-doctor-office-empty", "targetAssetId": "room.doctor-office", "evidence": "explicit_runtime_v2_reviewed_shell_alias" },
+    { "sourceAssetId": "room-exam-02-empty", "targetAssetId": "room.exam-02", "evidence": "explicit_runtime_v2_reviewed_shell_alias" },
+    { "sourceAssetId": "room-imaging-empty", "targetAssetId": "room.imaging", "evidence": "explicit_runtime_v2_reviewed_shell_alias" },
+    { "sourceAssetId": "room-isolation-empty", "targetAssetId": "room.isolation", "evidence": "explicit_runtime_v2_reviewed_shell_alias" },
+    { "sourceAssetId": "room-laboratory-empty", "targetAssetId": "room.laboratory", "evidence": "explicit_runtime_v2_reviewed_shell_alias" },
+    { "sourceAssetId": "room-pharmacy-empty", "targetAssetId": "room.pharmacy", "evidence": "explicit_runtime_v2_reviewed_shell_alias" },
+    { "sourceAssetId": "room-procedure-empty", "targetAssetId": "room.procedure", "evidence": "explicit_runtime_v2_reviewed_shell_alias" },
+    { "sourceAssetId": "room-reception-empty", "targetAssetId": "room.reception", "evidence": "explicit_runtime_v2_reviewed_shell_alias" },
+    { "sourceAssetId": "room-waiting-empty", "targetAssetId": "room.waiting", "evidence": "explicit_runtime_v2_reviewed_shell_alias" }
+  ],
+  "sceneBindings": {
+    "rooms": [
+      {
+        "resourceId": "room.consult.1",
+        "sceneRoomId": "doctor-office",
+        "placementIds": ["doctor-clock", "doctor-diploma", "doctor-exam-table", "doctor-stool", "doctor-desk"],
+        "overlayAnchors": [
+          { "assetId": "progression.locked-door-overlay", "x": 350, "y": 286, "zFootY": 308, "scale": 0.42 },
+          { "assetId": "progression.delivery-pallet", "x": 315, "y": 220, "zFootY": 220, "scale": 0.42 },
+          { "assetId": "progression.stacked-boxes", "x": 385, "y": 220, "zFootY": 220, "scale": 0.42 },
+          { "assetId": "progression.opened-crates", "x": 315, "y": 220, "zFootY": 220, "scale": 0.42 },
+          { "assetId": "progression.covered-equipment", "x": 385, "y": 220, "zFootY": 220, "scale": 0.42 }
+        ]
+      },
+      {
+        "resourceId": "room.lab.basic",
+        "sceneRoomId": "laboratory",
+        "placementIds": ["lab-diploma", "lab-clock", "lab-sample-cart", "lab-sample-tray", "lab-microscope-cart", "lab-microscope"],
+        "overlayAnchors": [
+          { "assetId": "progression.locked-door-overlay", "x": 915, "y": 286, "zFootY": 308, "scale": 0.42 },
+          { "assetId": "progression.delivery-pallet", "x": 875, "y": 220, "zFootY": 220, "scale": 0.42 },
+          { "assetId": "progression.stacked-boxes", "x": 945, "y": 220, "zFootY": 220, "scale": 0.42 },
+          { "assetId": "progression.opened-crates", "x": 875, "y": 220, "zFootY": 220, "scale": 0.42 },
+          { "assetId": "progression.covered-equipment", "x": 945, "y": 220, "zFootY": 220, "scale": 0.42 }
+        ]
+      },
+      {
+        "resourceId": "room.waiting.1",
+        "sceneRoomId": "waiting",
+        "placementIds": ["waiting-diploma", "waiting-clock", "waiting-bench-1", "waiting-bench-2"],
+        "overlayAnchors": [
+          { "assetId": "progression.locked-door-overlay", "x": 380, "y": 595, "zFootY": 620, "scale": 0.42 },
+          { "assetId": "progression.delivery-pallet", "x": 340, "y": 490, "zFootY": 490, "scale": 0.42 },
+          { "assetId": "progression.stacked-boxes", "x": 420, "y": 490, "zFootY": 490, "scale": 0.42 },
+          { "assetId": "progression.opened-crates", "x": 340, "y": 490, "zFootY": 490, "scale": 0.42 },
+          { "assetId": "progression.covered-equipment", "x": 420, "y": 490, "zFootY": 490, "scale": 0.42 }
+        ]
+      },
+      {
+        "resourceId": "room.reception.1",
+        "sceneRoomId": "reception",
+        "placementIds": ["reception-diploma", "reception-clock", "reception-seat-1", "reception-counter"],
+        "overlayAnchors": [
+          { "assetId": "progression.locked-door-overlay", "x": 1025, "y": 595, "zFootY": 620, "scale": 0.42 },
+          { "assetId": "progression.delivery-pallet", "x": 980, "y": 490, "zFootY": 490, "scale": 0.42 },
+          { "assetId": "progression.stacked-boxes", "x": 1060, "y": 490, "zFootY": 490, "scale": 0.42 },
+          { "assetId": "progression.opened-crates", "x": 980, "y": 490, "zFootY": 490, "scale": 0.42 },
+          { "assetId": "progression.covered-equipment", "x": 1060, "y": 490, "zFootY": 490, "scale": 0.42 }
+        ]
+      }
+    ],
+    "equipment": [
+      { "resourceId": "equipment.microscope", "placementIds": ["lab-microscope"] }
+    ],
+    "staff": []
+  },
+  "domFallbackBindings": {
+    "rooms": [
+      "room.storage.1",
+      "room.isolation.1",
+      "room.consult.2",
+      "room.staff.1",
+      "room.procedure.1",
+      "room.imaging.1",
+      "room.short_stay.1",
+      "room.dental.1"
+    ],
+    "equipment": [
+      "equipment.otoscope",
+      "equipment.tonometer",
+      "equipment.ophthalmoscope",
+      "equipment.fecal_centrifuge",
+      "equipment.wood_lamp",
+      "equipment.nebulizer",
+      "equipment.pulse_oximeter",
+      "equipment.glucometer",
+      "equipment.blood_ketone_meter",
+      "equipment.cgm_sensor",
+      "equipment.centrifuge",
+      "equipment.refractometer",
+      "equipment.hematology_analyzer",
+      "equipment.biochemistry_analyzer",
+      "equipment.electrolyte_analyzer",
+      "equipment.blood_pressure_monitor",
+      "equipment.oxygen_device",
+      "equipment.infusion_pump",
+      "equipment.vital_monitor",
+      "equipment.feline_inhaler_spacer",
+      "equipment.lactate_meter",
+      "equipment.xray_system",
+      "equipment.ultrasound_system",
+      "equipment.anesthesia_machine",
+      "equipment.dental_xray_system",
+      "equipment.coagulation_analyzer"
+    ],
+    "staff": [
+      "staff.doctor.sokolova",
+      "staff.doctor.morozov",
+      "staff.assistant.volkova",
+      "staff.administrator.lebedeva",
+      "staff.lab.krylova",
+      "staff.imaging.zhukova",
+      "staff.doctor.belov",
+      "staff.care.romanova",
+      "staff.dentist.orlova",
+      "staff.manager.smirnova"
+    ]
+  },
+  "unplacedPolicy": "dom_fallback_only_no_coordinate_inference",
+  "notes": [
+    "Only four existing room coordinates and the existing microscope placement are bound to Canvas.",
+    "The receptionist candidate is roster-only; this crosswalk does not place a secretary in the live scene.",
+    "Visual aliases and placements never grant ownership, readiness, training, capacity or capability."
+  ]
+}

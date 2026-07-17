@@ -13,7 +13,13 @@
   const economyLoader = typeof module === "object" && module.exports
     ? require("./activation-economy-v11.js")
     : root.PET_CLINIC_ACTIVATION_ECONOMY_V11;
-  const api = factory(root, supportLoader, operationalLoader, p5Loader, economyLoader);
+  const visualLoader = typeof module === "object" && module.exports
+    ? require("./activation-visual-v11.js")
+    : root.PET_CLINIC_ACTIVATION_VISUAL_V11;
+  const schedulerAuthority = typeof module === "object" && module.exports
+    ? require("../systems/resource-scheduler-v5.js")
+    : root.PET_CLINIC_RESOURCE_SCHEDULER_V5;
+  const api = factory(root, supportLoader, operationalLoader, p5Loader, economyLoader, visualLoader, schedulerAuthority);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_ACTIVATION_MEDICAL_V11 = api;
 })(typeof window !== "undefined" ? window : globalThis, function (
@@ -21,7 +27,9 @@
   supportLoader,
   operationalLoader,
   p5Loader,
-  economyLoader
+  economyLoader,
+  visualLoader,
+  schedulerAuthority
 ) {
   "use strict";
 
@@ -29,6 +37,9 @@
   const ACTIVATION_MANIFEST_PATH = `${ACTIVATION_ROOT}/ACTIVATION_MANIFEST.json`;
   const TRAINING_SEQUENCE_PATH = `${ACTIVATION_ROOT}/TRAINING_SEQUENCE.json`;
   const RUNTIME_MEDICAL_ROOT = `${ACTIVATION_ROOT}/medical-source`;
+  const P9_SOURCE_ROOT = `${ACTIVATION_ROOT}/visual-source`;
+  const P9_ART_SOURCE_MANIFEST_PATH = `${ACTIVATION_ROOT}/visual/ART_ASSET_MANIFEST.json`;
+  const P9_RUNTIME_ART_MANIFEST_PATH = "assets/pet-clinic-full-activation-2026.07.17.1/manifest.json";
   const ACTIVATION_MANIFEST_SHA256 = "fd056331fa894f9689bbd794f4ece12fb964ebb3e69b95e907282811ae7ad3bd";
   const PACKAGE_ID = "pet-clinic-local-full-activation";
   const PACKAGE_VERSION = "2026.07.17.1";
@@ -379,6 +390,52 @@
     assert(economyApprovalDocument.sha256 === economyLoader.APPROVAL_SHA256,
       "economy approval SHA-256 mismatch");
     const economyBundle = economyLoader.buildRuntime(p5Bundle, economyApprovalDocument.value);
+    assert(visualLoader?.buildRuntime, "P9 activation adapter is unavailable");
+    const [
+      p9ManifestDocument,
+      p9RoomCatalogDocument,
+      p9EquipmentCatalogDocument,
+      p9StaffCatalogDocument,
+      p9HudContractDocument,
+      p9CrosswalkDocument,
+      p9ArtSourceManifestDocument,
+      p9RuntimeArtManifestDocument
+    ] = await Promise.all([
+      read(`${P9_SOURCE_ROOT}/MANIFEST.json`),
+      read(`${P9_SOURCE_ROOT}/generated/room-visual-state-catalog.json`),
+      read(`${P9_SOURCE_ROOT}/generated/equipment-visual-state-catalog.json`),
+      read(`${P9_SOURCE_ROOT}/generated/staff-visual-state-catalog.json`),
+      read(`${P9_SOURCE_ROOT}/generated/hud-data-contract.json`),
+      read(`${P9_SOURCE_ROOT}/runtime-crosswalk.json`),
+      read(P9_ART_SOURCE_MANIFEST_PATH),
+      read(P9_RUNTIME_ART_MANIFEST_PATH)
+    ]);
+    assert(p9ManifestDocument.sha256 === visualLoader.P9_MANIFEST_SHA256, "P9 manifest SHA-256 mismatch");
+    assert(p9RoomCatalogDocument.sha256 === visualLoader.CATALOG_SHA256.rooms,
+      "P9 room catalog SHA-256 mismatch");
+    assert(p9EquipmentCatalogDocument.sha256 === visualLoader.CATALOG_SHA256.equipment,
+      "P9 equipment catalog SHA-256 mismatch");
+    assert(p9StaffCatalogDocument.sha256 === visualLoader.CATALOG_SHA256.staff,
+      "P9 staff catalog SHA-256 mismatch");
+    assert(p9HudContractDocument.sha256 === visualLoader.CATALOG_SHA256.hud,
+      "P9 HUD contract SHA-256 mismatch");
+    assert(p9CrosswalkDocument.sha256 === visualLoader.CROSSWALK_SHA256, "P9 crosswalk SHA-256 mismatch");
+    assert(p9ArtSourceManifestDocument.sha256 === visualLoader.ART_SOURCE_MANIFEST_SHA256,
+      "P9 approved art manifest SHA-256 mismatch");
+    assert(p9RuntimeArtManifestDocument.sha256 === visualLoader.RUNTIME_ART_MANIFEST_SHA256,
+      "P9 runtime art manifest SHA-256 mismatch");
+    const visualBundle = visualLoader.buildRuntime({
+      p9Manifest: p9ManifestDocument.value,
+      roomCatalog: p9RoomCatalogDocument.value,
+      equipmentCatalog: p9EquipmentCatalogDocument.value,
+      staffCatalog: p9StaffCatalogDocument.value,
+      hudContract: p9HudContractDocument.value,
+      resourceCatalog: p5Bundle.documents.resourceCatalog,
+      assetCrosswalk: p9CrosswalkDocument.value,
+      artSourceManifest: p9ArtSourceManifestDocument.value,
+      runtimeArtManifest: p9RuntimeArtManifestDocument.value,
+      schedulerAuthority
+    });
     const runtimeContentHash = await sha256Hex(new TextEncoder().encode([
       medicalDocument.sha256,
       operationalApi.OPERATIONAL_MANIFEST_SHA256,
@@ -388,7 +445,12 @@
       p5Api.ROOM_CORRECTION_SHA256,
       p5Bundle.version,
       economyApprovalDocument.sha256,
-      economyBundle.version
+      economyBundle.version,
+      p9ManifestDocument.sha256,
+      p9CrosswalkDocument.sha256,
+      p9ArtSourceManifestDocument.sha256,
+      p9RuntimeArtManifestDocument.sha256,
+      visualBundle.version
     ].join("|")));
     const index = buildIndex(families);
     const modeId = options.modeId || "campaign";
@@ -417,7 +479,7 @@
     if (modeId === "tester" && params.get("testerPool") === "legacy30") {
       const requested = params.get("legacyCaseId");
       const legacyCaseId = supportCatalog.casesById[requested] ? requested : supportCatalog.cases[0].id;
-      return economyLoader.applyCatalog(economyBundle, p5Api.applyCatalog(p5Bundle, {
+      return visualLoader.applyCatalog(visualBundle, economyLoader.applyCatalog(economyBundle, p5Api.applyCatalog(p5Bundle, {
         ...supportCatalog,
         runtimeModeId: modeId,
         activation: clone(activation),
@@ -437,10 +499,10 @@
           forcedCaseId: legacyCaseId,
           allowedCaseIds: [legacyCaseId]
         }
-      }));
+      })));
     }
 
-    const catalog = economyLoader.applyCatalog(economyBundle,
+    const catalog = visualLoader.applyCatalog(visualBundle, economyLoader.applyCatalog(economyBundle,
       p5Api.applyCatalog(p5Bundle, operationalApi.applyCatalog(operationalBundle, {
       ...supportCatalog,
       manifest: activationManifest(medicalDocument.sha256, runtimeContentHash, cases),
@@ -460,10 +522,15 @@
         p5ManifestSha256: p5Api.P5_MANIFEST_SHA256,
         p5RoomCorrectionSha256: p5Api.ROOM_CORRECTION_SHA256,
         economyApprovalSha256: economyApprovalDocument.sha256,
+        p9ManifestSha256: p9ManifestDocument.sha256,
+        p9CrosswalkSha256: p9CrosswalkDocument.sha256,
+        p9ArtSourceManifestSha256: p9ArtSourceManifestDocument.sha256,
+        p9RuntimeArtManifestSha256: p9RuntimeArtManifestDocument.sha256,
         runtimeContentHash,
         operational: clone(operationalBundle.audit),
         p5: clone(p5Bundle.audit),
         economy: clone(economyBundle.audit),
+        visual: clone(visualBundle.audit),
         unresolvedDynamicPresentations: cases.filter((item) => !item.generationEligible).length,
         testerPool: "medical_2026.07.16.40"
       },
@@ -483,7 +550,7 @@
         manualSelection: modeId === "tester",
         forcedCaseId: modeId === "tester" ? selectedTesterCase(index, params) : null
       }
-    })));
+    }))));
     assert(catalog.activationAudit.normalPoolContainsLegacyIds === false, "legacy case leaked into the activated normal pool");
     const selectedDynamicResolved = modeId === "tester"
       && Boolean(requestedTesterUrgency)

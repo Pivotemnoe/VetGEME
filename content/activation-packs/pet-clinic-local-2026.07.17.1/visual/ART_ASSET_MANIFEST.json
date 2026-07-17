@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "manifestId": "pet-clinic-full-activation-art-2026.07.17.1",
+  "targetArtPack": "vetgeme-modular-clinic-art-v2",
+  "runtimeAssetCount": 14,
+  "assets": [
+    {
+      "resourceId": "equipment.tonometer",
+      "title": "Тонометр для глаз",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/tonometer.png",
+      "sha256": "7cbcf28e189dc45e1ac8f015439a70935bdd2cc3f2e69b2f92e54ef7729f6a9d",
+      "width": 164,
+      "height": 288,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "equipment.ophthalmoscope",
+      "title": "Офтальмоскоп",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/ophthalmoscope.png",
+      "sha256": "409c558d68393cf3fa1058531dbc4bdbde8c27f8233bf463a779efe95f8dc2ea",
+      "width": 99,
+      "height": 289,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "equipment.wood_lamp",
+      "title": "Лампа Вуда",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/wood-lamp.png",
+      "sha256": "2b4fa4a61a88698ed1fde5616e88d79eef773ba3327f9cd10dd5d692ff5fe9a8",
+      "width": 183,
+      "height": 288,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "equipment.nebulizer",
+      "title": "Небулайзер",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/nebulizer.png",
+      "sha256": "d8376f38c61904ff572c9e10136102cd09a4e165ba5ee8504f569aea986e3c87",
+      "width": 231,
+      "height": 257,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "equipment.pulse_oximeter",
+      "title": "Пульсоксиметр",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/pulse-oximeter.png",
+      "sha256": "192cc01050b267223a25a10be54f2f89dfa590bbe646a63f707859709b52106e",
+      "width": 234,
+      "height": 260,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "equipment.glucometer",
+      "title": "Глюкометр",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/glucometer.png",
+      "sha256": "1b4b72964f6d4e8a9cee66a7f8bc7c1c157885c48c9e9f3dff208e94652c5ae2",
+      "width": 187,
+      "height": 247,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "equipment.blood_ketone_meter",
+      "title": "Измеритель кетонов",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/blood-ketone-meter.png",
+      "sha256": "3cd79d18f848001007ac0202b97115639f833182e42691ec021075a18eb11b82",
+      "width": 188,
+      "height": 249,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "equipment.cgm_sensor",
+      "title": "Система непрерывного контроля глюкозы",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/cgm-sensor.png",
+      "sha256": "960f577c6fcbd3031ddc52d3641d52127b5fe35b51a716a4b5d8ad55f9387575",
+      "width": 259,
+      "height": 193,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "equipment.refractometer",
+      "title": "Рефрактометр",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/refractometer.png",
+      "sha256": "233cab35d651929fcb4cfb64669b9c3b17d0c7a257300457c664c20b3f4133f2",
+      "width": 235,
+      "height": 239,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "equipment.blood_pressure_monitor",
+      "title": "Монитор артериального давления",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/blood-pressure-monitor.png",
+      "sha256": "2d3ab2bc55e72fb5de29f82c92d856d14b33f6982e870b8ed5ed6d85b1198109",
+      "width": 250,
+      "height": 279,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "equipment.feline_inhaler_spacer",
+      "title": "Спейсер для кошек",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/feline-inhaler-spacer.png",
+      "sha256": "4845ed91c9d0689b06ae53674221748070a26cc38b531e759fee068a50649200",
+      "width": 277,
+      "height": 197,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "equipment.lactate_meter",
+      "title": "Измеритель лактата",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/lactate-meter.png",
+      "sha256": "5e21a2e294373a6188d52e34eef6cd7ef77a30e205623906668ba93ff4ccac6e",
+      "width": 192,
+      "height": 241,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "equipment.anesthesia_machine",
+      "title": "Наркозный аппарат",
+      "kind": "equipment_sprite",
+      "path": "art/equipment/anesthesia-machine.png",
+      "sha256": "69f4e77f7ffc8887a352735d2d574c2c173598c00d258765a14c5bf258b7ac19",
+      "width": 213,
+      "height": 307,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    },
+    {
+      "resourceId": "room.staff.1",
+      "title": "Комната персонала",
+      "kind": "empty_room_shell",
+      "path": "art/rooms/staff-room.png",
+      "sha256": "b08a8d4ce46b699a2ad0d7e12da3e3517451c7d0da2491b0409ee9faf6897504",
+      "width": 620,
+      "height": 259,
+      "hasAlpha": true,
+      "capabilityComesFromSimulationState": true
+    }
+  ],
+  "sourceMasters": [
+    "art/equipment/equipment-atlas-source.png",
+    "art/equipment/equipment-atlas-magenta.png",
+    "art/equipment/equipment-atlas-transparent.png",
+    "art/rooms/staff-room-magenta.png",
+    "art/rooms/staff-room-large.png"
+  ],
+  "rules": {
+    "sprite presence never grants gameplay capability": true,
+    "room shell is empty and furniture remains separate": true,
+    "missing or failed image falls back to honest Russian DOM label": true
+  }
+}
