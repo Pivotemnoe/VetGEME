@@ -532,6 +532,8 @@
         operationalPolicies,
         resourceCrosswalk,
         handoffContract,
+        researchTasks: sourceDocuments.researchTasks,
+        usageTasks: sourceDocuments.usageTasks,
         recommendedStaffing: documents[`${P5_ROOT}/generated/recommended-30-day-staffing.json`]
       }),
       lifecycle,

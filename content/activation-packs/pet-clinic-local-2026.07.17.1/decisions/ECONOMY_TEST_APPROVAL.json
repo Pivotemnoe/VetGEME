@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "pet-clinic-economy-local-test-approval-2026.07.17.1",
+  "scope": "local_manual_testing",
+  "status": "approved_without_numeric_changes",
+  "sourcePackage": "vetgeme-operational-production-authoring@2026.07.16.4",
+  "sourceManifestSha256": "5fc89dc34234d0626846fef797ba247ea0154068eeeb6b0953a990b3745f146d",
+  "modes": {
+    "campaign": "enabled",
+    "training": "sandboxed_no_irreversible_failure",
+    "endless": "enabled",
+    "tester": "toggle_real_or_unlimited"
+  },
+  "mustAffectRuntime": [
+    "patient_income",
+    "investigation_costs",
+    "consumables_and_stock",
+    "staff_wages",
+    "room_and_equipment_purchase",
+    "delivery_and_training",
+    "maintenance_and_breakdown",
+    "referral_cost_or_lost_income",
+    "reputation_and_trust_consequences"
+  ],
+  "balanceStatus": "provisional_until_manual_campaign_playtest",
+  "programmerMayRebalance": false
+}
+

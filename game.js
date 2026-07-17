@@ -845,6 +845,7 @@
     operationsState: null,
     economyState: null,
     reputationState: null,
+    economyPolicy: null,
     campaignDirectorState: null,
     demandState: null,
     campaignOutcome: null,
@@ -1896,6 +1897,7 @@
   }
 
   function changeOwnerTrust(delta, reason) {
+    if (isTier01V2()) delta = p6ProtectedReputationDelta(delta);
     const before = state.ownerTrust;
     state.ownerTrust = clamp(state.ownerTrust + delta, 0, 100);
     state.reputation = state.ownerTrust;
@@ -1904,6 +1906,7 @@
     const ledger = currentDailyLedger(true);
     ledger.ownerTrustEnd = state.ownerTrust;
     ledger.ownerTrustEvents.push({ delta: applied, reason });
+    recordP6Reputation("communication", applied, "owner_trust_change");
   }
 
   function changeClinicalReliability(delta, reason) {
@@ -1911,6 +1914,7 @@
       changeReputation(delta, reason);
       return;
     }
+    delta = p6ProtectedReputationDelta(delta);
     const before = state.clinicalReliability;
     state.clinicalReliability = clamp(state.clinicalReliability + delta, 0, 100);
     const applied = state.clinicalReliability - before;
@@ -1918,6 +1922,7 @@
     const ledger = currentDailyLedger(true);
     ledger.clinicalReliabilityEnd = state.clinicalReliability;
     ledger.clinicalReliabilityEvents.push({ delta: applied, reason });
+    recordP6Reputation("clinical", applied, "clinical_reliability_change");
   }
 
   function spendVisitTime(patient, minutes) {
@@ -2591,8 +2596,24 @@
   function ensureP6RuntimeState() {
     if (!isTier01V2()) return null;
     if (!economyRuntime || !reputationRuntime) throw new Error("Economy/reputation runtime v6 is unavailable");
+    const activation = generatorRuntime.catalog?.economyActivation;
+    if (!activation) throw new Error("P6 activation runtime is unavailable");
     if (!state.economyState) state.economyState = economyRuntime.createState();
     if (!state.reputationState) state.reputationState = reputationRuntime.createState();
+    state.economyState = activation.initializeEconomyState(state.economyState);
+    if (!reputationRuntime.summarizeState(state.reputationState).initialized) {
+      state.reputationState = activation.initializeReputationState(state.reputationState, {
+        clinical: state.clinicalReliability,
+        communication: state.ownerTrust,
+        accessibility: state.ownerTrust,
+        organization: state.ownerTrust
+      });
+    }
+    const policy = activation.modePolicy(
+      activeGameMode?.modeId || "campaign",
+      new URLSearchParams(window.location.search)
+    );
+    state.economyPolicy = cloneData(policy);
     const economyValidation = economyRuntime.validateState(state.economyState);
     if (!economyValidation.valid) {
       throw new Error(`Economy state is incompatible: ${economyValidation.errors.join(", ")}`);
@@ -2606,10 +2627,98 @@
     return { economyState: state.economyState, reputationState: state.reputationState };
   }
 
+  function p6EconomyPolicy() {
+    ensureP6RuntimeState();
+    return generatorRuntime.catalog.economyActivation.modePolicy(
+      activeGameMode?.modeId || "campaign",
+      new URLSearchParams(window.location.search)
+    );
+  }
+
+  function applyClinicCashFlow(input) {
+    const direction = input.direction;
+    const signed = direction === "income" ? input.amount : -input.amount;
+    if (!isTier01V2() || !generatorRuntime.catalog?.economyActivation) {
+      state.money += signed;
+      return signed;
+    }
+    ensureP6RuntimeState();
+    const result = generatorRuntime.catalog.economyActivation.recordCashFlow(
+      state.economyState,
+      input,
+      p6EconomyPolicy()
+    );
+    state.economyState = result.state;
+    state.money += result.cashDelta;
+    return result.cashDelta;
+  }
+
+  function recordP6Reputation(axis, delta, sourceType) {
+    if (!isTier01V2() || !delta || !generatorRuntime.catalog?.economyActivation) return;
+    ensureP6RuntimeState();
+    const sequence = state.reputationState.auditHistory.length;
+    const eventId = `legacy.${axis}.${sequence}`;
+    const result = generatorRuntime.catalog.economyActivation.recordReputationEvent(
+      state.reputationState,
+      {
+        eventId,
+        sourceType,
+        sourceId: eventId,
+        axis,
+        delta
+      }
+    );
+    state.reputationState = result.state;
+  }
+
+  function p6ProtectedReputationDelta(delta) {
+    return activeGameMode?.modeId === "training" && delta < 0 ? 0 : delta;
+  }
+
+  function recordUnpricedReferralEconomy(patient, order) {
+    if (!isTier01V2() || !generatorRuntime.catalog?.economyActivation) return;
+    ensureP6RuntimeState();
+    const decisionId = `referral.${order.id}`;
+    const result = generatorRuntime.catalog.economyActivation.recordBudgetDecision(state.economyState, {
+      decisionId,
+      sourceType: "safe_referral",
+      sourceId: order.id,
+      ownerId: patient.persistentOwnerId || patient.ownerId || `visit.${patient.v2Visit.visitId}.owner`,
+      budgetId: "local_income",
+      outcomeId: "not_authored_no_charge",
+      at: campaignMinuteAt(),
+      amount: null
+    });
+    state.economyState = result.state;
+  }
+
+  function consumeP6ResearchStock(patient, test, p5Execution) {
+    if (!isTier01V2() || !test?.operationalUsageId || !generatorRuntime.catalog?.economyActivation) return;
+    const p5 = generatorRuntime.catalog.p5Activation;
+    const researchTask = p5.documents.researchTasks.researchTasks
+      .find((candidate) => candidate.researchId === test.id);
+    if (!researchTask) throw new Error(`P6 stock mapping is missing research task ${test.id}`);
+    ensureP6RuntimeState();
+    const sourceId = `visit.${patient.v2Visit.visitId}.research.${test.id}`;
+    const result = generatorRuntime.catalog.economyActivation.consumeResearchStock({
+      lifecycleState: state.resourceLifecycleState,
+      economyState: state.economyState,
+      researchTask,
+      sourceId,
+      at: campaignMinuteAt()
+    });
+    state.resourceLifecycleState = result.lifecycleState;
+    state.economyState = result.economyState;
+    state.operationsState = p5Execution.state;
+  }
+
   function p6RuntimeSummary() {
     if (!isTier01V2()) return null;
     const runtimeState = ensureP6RuntimeState();
     return {
+      version: generatorRuntime.catalog.economyActivation.version,
+      approvalSha256: generatorRuntime.catalog.economyActivation.approvalSha256,
+      mode: cloneData(state.economyPolicy),
       economy: economyRuntime.summarizeState(runtimeState.economyState),
       reputation: reputationRuntime.summarizeState(runtimeState.reputationState)
     };
@@ -2985,6 +3094,7 @@
       payload: { transmission }
     }).order;
     state.referralOrders[index] = order;
+    recordUnpricedReferralEconomy(patient, order);
     patient.pendingDiagnosticTestId = null;
     patient.diagnosticSkipped = true;
     patient.diagnosticUncertainty = {
@@ -3227,7 +3337,7 @@
     let p5Execution = null;
     if (patient.v2Visit && approvedTest?.operationalUsageId && generatorRuntime.catalog?.p5Activation) {
       try {
-        p5Execution = p5ResearchExecution(patient, approvedTest, "local", true);
+        p5Execution = p5ResearchExecution(patient, approvedTest, "local", false);
       } catch (error) {
         console.error("P5 research reservation failed closed.", error);
         setLog("Исследование не начато: не удалось безопасно подтвердить кабинет, оборудование и сотрудника.");
@@ -3235,6 +3345,13 @@
       }
       if (!p5Execution.scheduled) {
         setLog(`Исследование локально недоступно: ${capabilityReasonText(p5Execution.reasonCode)}. Выберите безопасное направление.`);
+        return;
+      }
+      try {
+        consumeP6ResearchStock(patient, approvedTest, p5Execution);
+      } catch (error) {
+        console.error("P6 research stock reservation failed closed.", error);
+        setLog("Исследование не начато: нужный расходный материал отсутствует или не подтверждён.");
         return;
       }
     }
@@ -3258,7 +3375,14 @@
     recordClinical(patient, "diagnosticTests", result);
     assessClinicalUrgency(patient);
     if (Number.isFinite(testFee)) {
-      state.money += testFee;
+      applyClinicCashFlow({
+        flowId: `visit.${patient.v2Visit?.visitId || patient.id}.research.${approvedTest?.id || "microscopy"}`,
+        sourceType: "investigation_charge",
+        at: campaignMinuteAt(),
+        amount: testFee,
+        direction: "income",
+        accountId: "revenue.investigation"
+      });
       state.revenueToday += testFee;
       state.diagnosticRevenueToday += testFee;
       const ledger = currentDailyLedger(true);
@@ -3592,7 +3716,14 @@
         && !["more_anxious", "irritated"].includes(patient.communicationResult.reactionId)
       )
       : patient.selectedCommunicationId === patient.ownerProfile.prefers;
-    state.money += total;
+    applyClinicCashFlow({
+      flowId: `visit.${patient.v2Visit?.visitId || patient.id}.consultation`,
+      sourceType: "patient_income",
+      at: campaignMinuteAt(),
+      amount: total,
+      direction: "income",
+      accountId: "revenue.patient"
+    });
     state.revenueToday += total;
     const ledger = currentDailyLedger(true);
     if (ledger) ledger.consultationRevenue += total;
@@ -4285,11 +4416,38 @@
       }
     }
     const doctor = currentDoctor();
-    const payroll = state.hoursMode === "extended" ? 430 : 360;
+    const payroll = isTier01V2()
+      ? generatorRuntime.catalog.economyActivation.wageFor(p5DoctorResourceId(doctor))
+      : state.hoursMode === "extended" ? 430 : 360;
     const rentAndUtilities = state.hoursMode === "extended" ? 150 : 110;
     const supplies = state.treatedToday * 35;
     state.expensesToday = payroll + rentAndUtilities + supplies;
-    state.money -= state.expensesToday;
+    applyClinicCashFlow({
+      flowId: `day.${state.day}.wage.${doctor.id}`,
+      sourceType: "staff_wage",
+      at: campaignMinuteAt(),
+      amount: payroll,
+      direction: "expense",
+      accountId: "expense.staff_wage"
+    });
+    applyClinicCashFlow({
+      flowId: `day.${state.day}.facilities`,
+      sourceType: "operating_expense",
+      at: campaignMinuteAt(),
+      amount: rentAndUtilities,
+      direction: "expense",
+      accountId: "expense.facilities"
+    });
+    if (supplies > 0) {
+      applyClinicCashFlow({
+        flowId: `day.${state.day}.consumables`,
+        sourceType: "consumable_expense",
+        at: campaignMinuteAt(),
+        amount: supplies,
+        direction: "expense",
+        accountId: "expense.consumables"
+      });
+    }
     const net = state.revenueToday - state.expensesToday;
     const fatigueBeforeClosing = doctor.fatigue;
     const closingFatigueLoad = 12

@@ -10,14 +10,18 @@
   const p5Loader = typeof module === "object" && module.exports
     ? require("./activation-p5-v11.js")
     : root.PET_CLINIC_ACTIVATION_P5_V11;
-  const api = factory(root, supportLoader, operationalLoader, p5Loader);
+  const economyLoader = typeof module === "object" && module.exports
+    ? require("./activation-economy-v11.js")
+    : root.PET_CLINIC_ACTIVATION_ECONOMY_V11;
+  const api = factory(root, supportLoader, operationalLoader, p5Loader, economyLoader);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.PET_CLINIC_ACTIVATION_MEDICAL_V11 = api;
 })(typeof window !== "undefined" ? window : globalThis, function (
   root,
   supportLoader,
   operationalLoader,
-  p5Loader
+  p5Loader,
+  economyLoader
 ) {
   "use strict";
 
@@ -370,6 +374,11 @@
       const document = await read(relativePath);
       return document.bytes;
     });
+    assert(economyLoader?.buildRuntime, "P6 activation adapter is unavailable");
+    const economyApprovalDocument = await read(economyLoader.APPROVAL_PATH);
+    assert(economyApprovalDocument.sha256 === economyLoader.APPROVAL_SHA256,
+      "economy approval SHA-256 mismatch");
+    const economyBundle = economyLoader.buildRuntime(p5Bundle, economyApprovalDocument.value);
     const runtimeContentHash = await sha256Hex(new TextEncoder().encode([
       medicalDocument.sha256,
       operationalApi.OPERATIONAL_MANIFEST_SHA256,
@@ -377,7 +386,9 @@
       operationalBundle.version,
       p5Api.P5_MANIFEST_SHA256,
       p5Api.ROOM_CORRECTION_SHA256,
-      p5Bundle.version
+      p5Bundle.version,
+      economyApprovalDocument.sha256,
+      economyBundle.version
     ].join("|")));
     const index = buildIndex(families);
     const modeId = options.modeId || "campaign";
@@ -406,7 +417,7 @@
     if (modeId === "tester" && params.get("testerPool") === "legacy30") {
       const requested = params.get("legacyCaseId");
       const legacyCaseId = supportCatalog.casesById[requested] ? requested : supportCatalog.cases[0].id;
-      return p5Api.applyCatalog(p5Bundle, {
+      return economyLoader.applyCatalog(economyBundle, p5Api.applyCatalog(p5Bundle, {
         ...supportCatalog,
         runtimeModeId: modeId,
         activation: clone(activation),
@@ -426,10 +437,11 @@
           forcedCaseId: legacyCaseId,
           allowedCaseIds: [legacyCaseId]
         }
-      });
+      }));
     }
 
-    const catalog = p5Api.applyCatalog(p5Bundle, operationalApi.applyCatalog(operationalBundle, {
+    const catalog = economyLoader.applyCatalog(economyBundle,
+      p5Api.applyCatalog(p5Bundle, operationalApi.applyCatalog(operationalBundle, {
       ...supportCatalog,
       manifest: activationManifest(medicalDocument.sha256, runtimeContentHash, cases),
       cases,
@@ -447,9 +459,11 @@
         p8ManifestSha256: operationalApi.P8_MANIFEST_SHA256,
         p5ManifestSha256: p5Api.P5_MANIFEST_SHA256,
         p5RoomCorrectionSha256: p5Api.ROOM_CORRECTION_SHA256,
+        economyApprovalSha256: economyApprovalDocument.sha256,
         runtimeContentHash,
         operational: clone(operationalBundle.audit),
         p5: clone(p5Bundle.audit),
+        economy: clone(economyBundle.audit),
         unresolvedDynamicPresentations: cases.filter((item) => !item.generationEligible).length,
         testerPool: "medical_2026.07.16.40"
       },
@@ -469,7 +483,7 @@
         manualSelection: modeId === "tester",
         forcedCaseId: modeId === "tester" ? selectedTesterCase(index, params) : null
       }
-    }));
+    })));
     assert(catalog.activationAudit.normalPoolContainsLegacyIds === false, "legacy case leaked into the activated normal pool");
     const selectedDynamicResolved = modeId === "tester"
       && Boolean(requestedTesterUrgency)
@@ -521,6 +535,7 @@
       "<label><span>Представление</span><select id=\"testerPresentationSelect\"></select></label>",
       "<label class=\"tester-urgency-select\" hidden><span>Срочность для динамического случая</span><select id=\"testerUrgencySelect\"></select></label>",
       "<label class=\"tester-legacy-select\" hidden><span>Архивный случай</span><select id=\"testerLegacyCaseSelect\"></select></label>",
+      "<label><span>Экономика</span><select id=\"testerEconomySelect\"><option value=\"unlimited\">Без ограничений</option><option value=\"real\">Реальная экономика</option></select></label>",
       "<button id=\"testerApplyMedicalSource\" type=\"button\">Открыть выбранный случай</button>",
       "<small>Выбор создаёт новый день только в сохранении режима тестировщика.</small>"
     ].join("");
@@ -534,8 +549,11 @@
     const urgencySelect = section.querySelector("#testerUrgencySelect");
     const legacyWrap = section.querySelector(".tester-legacy-select");
     const legacySelect = section.querySelector("#testerLegacyCaseSelect");
+    const economySelect = section.querySelector("#testerEconomySelect");
     const params = new URLSearchParams(root.location.search);
     archiveToggle.checked = catalog.selectionPolicy?.testerPool === "legacy_30_archive";
+    economySelect.value = new URL(root.location.href).searchParams.get("testerEconomy") === "real"
+      ? "real" : "unlimited";
 
     function option(select, value, label) {
       const entry = root.document.createElement("option");
@@ -626,6 +644,7 @@
         if (!urgencyWrap.hidden) url.searchParams.set("testerUrgency", urgencySelect.value);
         else url.searchParams.delete("testerUrgency");
       }
+      url.searchParams.set("testerEconomy", economySelect.value);
       root.PET_CLINIC_SAVE_MANAGER_V11?.clearMode(root.localStorage, "tester");
       root.location.assign(url.toString());
     });

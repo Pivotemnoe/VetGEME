@@ -317,7 +317,16 @@
     const pack = contentPackMetadata(catalog);
     requireContentPack(day, catalog, `Generated day ${day.day}`);
     const compact = clone(day);
-    compact.visits = (day.visits || []).map((visit) => compactVisit(visit, catalog, pack));
+    compact.visits = (day.visits || []).map((visit) => {
+      const nested = compactVisit(visit, catalog, pack);
+      // The generated day already carries the exact content-pack identity.
+      // Keep standalone compact visits self-describing, but avoid repeating the
+      // same identity for every visit in a persisted 30-day campaign.
+      delete nested.contentPackId;
+      delete nested.contentPackVersion;
+      delete nested.contentPackHash;
+      return nested;
+    });
     return compact;
   }
 
@@ -325,7 +334,12 @@
     requireContentPack(day, catalog, `Generated day ${day.day}`);
     const hydrated = clone(day);
     hydrated.visits = (day.visits || []).map((visit) => (
-      visit.medicalContent ? clone(visit) : hydrateVisit(visit, catalog)
+      visit.medicalContent ? clone(visit) : hydrateVisit({
+        contentPackId: day.contentPackId,
+        contentPackVersion: day.contentPackVersion,
+        contentPackHash: day.contentPackHash,
+        ...visit
+      }, catalog)
     ));
     return hydrated;
   }

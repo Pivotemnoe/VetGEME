@@ -114,7 +114,7 @@
     "equipmentCapabilities", "demandState", "campaignOutcome", "appointments", "treatmentCourses",
     "longitudinalPatients", "attendanceEvents", "capabilityState", "researchOrders", "referralOrders",
     "asyncEvents", "deviceQueues", "identityRegistry", "operationsState", "resourceLifecycleState",
-    "economyState", "reputationState",
+    "economyState", "reputationState", "economyPolicy",
     "campaignDirectorState"
   ]);
   const operationsRuntime = operationsRuntimeFactory.createOperationsRuntime(resourceScheduler);

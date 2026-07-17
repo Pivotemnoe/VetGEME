@@ -4,3 +4,4 @@ content/review-inputs/vetgeme-p8-medical-review-authoring-2026.07.16.2/source/**
 content/activation-packs/pet-clinic-local-2026.07.17.1/ACTIVATION_MANIFEST.json whitespace=-blank-at-eof
 content/activation-packs/pet-clinic-local-2026.07.17.1/TRAINING_SEQUENCE.json whitespace=-blank-at-eof
 content/activation-packs/pet-clinic-local-2026.07.17.1/corrections/P5_ROOM_RESERVATION_CORRECTIONS.json whitespace=-blank-at-eof
+content/activation-packs/pet-clinic-local-2026.07.17.1/decisions/ECONOMY_TEST_APPROVAL.json whitespace=-blank-at-eof
