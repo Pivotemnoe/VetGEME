@@ -5,9 +5,9 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const EXPECTED_RUNTIME_FILE_COUNT = 267;
+export const EXPECTED_RUNTIME_FILE_COUNT = 276;
 export const EXPECTED_RUNTIME_GROUP_COUNTS = Object.freeze({
-  base: 40,
+  base: 49,
   canonicalContent: 100,
   activationContent: 62,
   visual: 65,
@@ -16,9 +16,12 @@ export const EXPECTED_RUNTIME_GROUP_COUNTS = Object.freeze({
 const EXPECTED_BASE_RUNTIME_FILES = Object.freeze([
   "campaign.js",
   "game.js",
+  "generator/activation-economy-v11.js",
   "generator/atomic-save-migration.js",
   "generator/activation-medical-v11.js",
   "generator/activation-operational-v11.js",
+  "generator/activation-p5-v11.js",
+  "generator/activation-visual-v11.js",
   "generator/compact-visit-v2.js",
   "generator/content-loader-v2.js",
   "generator/demand-director-v2.js",
@@ -48,12 +51,18 @@ const EXPECTED_BASE_RUNTIME_FILES = Object.freeze([
   "systems/identity-runtime-v4.js",
   "systems/longitudinal-care-v2.js",
   "systems/operations-runtime-v5.js",
+  "systems/player-facing-text-v11.js",
   "systems/referral-orders-v3.js",
   "systems/reputation-runtime-v6.js",
+  "systems/resource-lifecycle-v5.js",
   "systems/resource-scheduler-v5.js",
+  "systems/resource-visual-projection-v11.js",
   "systems/research-orders-v3.js",
   "systems/save-manager-v11.js",
   "visual/clinic-renderer-v2.js",
+  "visual/resource-state-renderer-v11.js",
+  "visual/resource-state-surface-v11.css",
+  "visual/resource-state-surface-v11.js",
 ]);
 
 const CONTENT_REGISTRY = "content/registry.json";
