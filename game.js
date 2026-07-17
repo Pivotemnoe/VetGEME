@@ -6107,6 +6107,23 @@
       delete document.documentElement.dataset.campaignDirectorSchema;
       delete document.documentElement.dataset.campaignDirectorInitialized;
     }
+    const operationalActivation = generatorRuntime.catalog?.operationalActivation || null;
+    if (operationalActivation) {
+      document.documentElement.dataset.operationalSource = operationalActivation.sourceVersion;
+      document.documentElement.dataset.p8Source = operationalActivation.p8SourceVersion;
+      document.documentElement.dataset.operationalExactJoins = String(
+        operationalActivation.audit?.investigationUsages === 1864
+        && operationalActivation.audit?.presentationBehaviorBindings === 645
+      );
+      document.documentElement.dataset.operationalDynamicFailClosed = String(
+        generatorRuntime.catalog.activationAudit?.unresolvedDynamicPresentations ?? 0
+      );
+    } else {
+      delete document.documentElement.dataset.operationalSource;
+      delete document.documentElement.dataset.p8Source;
+      delete document.documentElement.dataset.operationalExactJoins;
+      delete document.documentElement.dataset.operationalDynamicFailClosed;
+    }
     const detail = Object.freeze({
       gameMode: activeGameMode?.modeId || null,
       mode: generatorRuntime.mode,
@@ -6117,6 +6134,7 @@
       economy: p6Status?.economy || null,
       reputation: p6Status?.reputation || null,
       campaignDirector: p7Status,
+      operational: operationalActivation?.audit || null,
       visualStatus: visualRenderer?.getStatus?.() || {
         enabled: false,
         ready: false,

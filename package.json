@@ -71,6 +71,7 @@
     "test:game-modes:v11": "node scripts/test-game-modes-v11.js",
     "test:save-manager:v11": "node scripts/test-save-manager-v11.js",
     "test:activation-medical:v11": "node scripts/test-full-activation-medical-v11.js",
+    "test:activation-operational:v11": "node scripts/test-full-activation-operational-v11.js",
     "build:static-dist": "node scripts/build-static-dist.mjs",
     "test:docker:prebuild": "node scripts/test-docker-prebuild.mjs",
     "docker:build": "node scripts/docker-build.mjs",

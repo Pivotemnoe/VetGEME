@@ -5,11 +5,11 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const EXPECTED_RUNTIME_FILE_COUNT = 246;
+export const EXPECTED_RUNTIME_FILE_COUNT = 267;
 export const EXPECTED_RUNTIME_GROUP_COUNTS = Object.freeze({
-  base: 39,
+  base: 40,
   canonicalContent: 100,
-  activationContent: 42,
+  activationContent: 62,
   visual: 65,
 });
 
@@ -18,6 +18,7 @@ const EXPECTED_BASE_RUNTIME_FILES = Object.freeze([
   "game.js",
   "generator/atomic-save-migration.js",
   "generator/activation-medical-v11.js",
+  "generator/activation-operational-v11.js",
   "generator/compact-visit-v2.js",
   "generator/content-loader-v2.js",
   "generator/demand-director-v2.js",
@@ -71,7 +72,8 @@ const TRAINING_SEQUENCE = `${ACTIVATION_CONTENT_ROOT}/TRAINING_SEQUENCE.json`;
 const ACTIVATION_MEDICAL_ROOT = `${ACTIVATION_CONTENT_ROOT}/medical-source`;
 const ACTIVATION_MEDICAL_MANIFEST = `${ACTIVATION_MEDICAL_ROOT}/MANIFEST.json`;
 const EXPECTED_ACTIVATION_FAMILY_COUNT = 39;
-const EXPECTED_ACTIVATION_CONTENT_COUNT = 42;
+const EXPECTED_ACTIVATION_CONTENT_COUNT = 62;
+const EXPECTED_OPERATIONAL_ACTIVATION_CONTENT_COUNT = 20;
 const ACTIVATION_MANIFEST_SHA256 = "fd056331fa894f9689bbd794f4ece12fb964ebb3e69b95e907282811ae7ad3bd";
 const VISUAL_MANIFEST = "art/runtime-v2/manifest.json";
 const VISUAL_LAYOUT = "art/runtime-v2/scene-layout.json";
@@ -344,6 +346,22 @@ async function collectActivationContentFiles(root) {
     const family = JSON.parse(buffer.toString("utf8"));
     if (family.familyId !== entry.familyId) throw new Error(`${entry.familyId}: activation family identity mismatch`);
     files.push(relative);
+  }
+  const require = createRequire(import.meta.url);
+  const operationalLoaderPath = require.resolve(path.join(root, "generator/activation-operational-v11.js"));
+  delete require.cache[operationalLoaderPath];
+  const operationalLoader = require(operationalLoaderPath);
+  const operationalFiles = Object.entries(operationalLoader.FILE_HASHES || {});
+  assertCount("operational/P8 activation content", operationalFiles, EXPECTED_OPERATIONAL_ACTIVATION_CONTENT_COUNT);
+  for (const [relative, expectedHash] of operationalFiles) {
+    const normalized = normalizeRuntimePath(relative, "operational activation content");
+    if (!normalized.startsWith(`${ACTIVATION_CONTENT_ROOT}/`) || !normalized.endsWith(".json")) {
+      throw new Error(`unexpected operational activation path ${normalized}`);
+    }
+    const buffer = await readFile(path.join(root, ...normalized.split("/")));
+    if (sha256(buffer) !== expectedHash) throw new Error(`${normalized}: operational activation SHA-256 mismatch`);
+    JSON.parse(buffer.toString("utf8"));
+    files.push(normalized);
   }
   assertUniqueFiles(files, "activation content");
   assertCount("activation content", files, EXPECTED_ACTIVATION_CONTENT_COUNT);

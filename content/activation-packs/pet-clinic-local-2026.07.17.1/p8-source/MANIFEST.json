@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "packageId": "vetgeme-p8-medical-review-authoring",
+  "packageVersion": "2026.07.16.2",
+  "status": "author_correction_gate_passed_external_review_pending",
+  "activationAllowed": false,
+  "input": {
+    "packageId": "vetgeme-medical-production-authoring",
+    "packageVersion": "2026.07.16.40",
+    "archiveSha256": "171659e929f4b8a83cf921a8fa689cd3f5ac632466c4c328dd047199fced71c5",
+    "sourceAggregateSha256": "3f3f89ab93e005a5100b39586328c38fa6b4fcf52887be63cabc41ac05c557c8"
+  },
+  "counts": {
+    "families": 39,
+    "variants": 215,
+    "presentations": 645,
+    "investigations": 1864,
+    "playerFacingFields": 9847,
+    "auditIssues": 0,
+    "p0": 0,
+    "p1": 0,
+    "ownerProfiles": 12,
+    "doctorSpeechFunctions": 15
+  },
+  "gates": {
+    "sourceAudit": "reviewable",
+    "displayLanguageAudit": "passed",
+    "humanDialogueLibrary": "pass",
+    "correctionComplete": true,
+    "externalVeterinaryApproval": false,
+    "activationManifestPresent": false
+  },
+  "authoritativeFiles": [
+    "source/p8-review-policy.json",
+    "source/human-dialogue-library.json",
+    "source/reviewer-decision-template.json",
+    "generated/P8_SOURCE_AUDIT.json",
+    "generated/P8_DISPLAY_LANGUAGE_AUDIT_2026.07.16.40.json",
+    "generated/P8_DIALOGUE_VALIDATION.json",
+    "generated/P8_DIALOGUE_SAMPLE_MATRIX_2026.07.16.40.md",
+    "P8_REVIEW_MATRIX.md",
+    "SOURCE_REFRESH_NOTES.md",
+    "REVIEWER_GUIDE.md",
+    "PROGRAMMER_HANDOFF.md"
+  ],
+  "fileSha256": {
+    "source/p8-review-policy.json": "5b008d7868f651b2369b5732910363bc462d3e860ae03687986e8467c326f71d",
+    "source/human-dialogue-library.json": "a3bf989041f9fdfa4f07209e9b0ba936b4d8d23f04f4677f14ecd9fcd30c6fd5",
+    "source/reviewer-decision-template.json": "53a8bce8cb45972c6f83e387f971bbd74576867b85fc6d33bb2adf5392b7f12a",
+    "generated/P8_SOURCE_AUDIT.json": "739cba25f918d326986ac3303d71912251f59878bbc2d3a1b7391618378d04de",
+    "generated/P8_DISPLAY_LANGUAGE_AUDIT_2026.07.16.40.json": "2a09161661f593de46a47479f5e0eef2d11c6a7d9c9ae6c24239a9a7bb094dfd",
+    "generated/P8_DIALOGUE_VALIDATION.json": "e07043fae4cf57e70cee3972a4d5465eb9ff4f8ee2538617964820da7192f33a",
+    "generated/P8_DIALOGUE_SAMPLE_MATRIX_2026.07.16.40.md": "ce77aeeb71ed250288ecf8ac0bbd4522380162c1ce0ce3d548008c0b07d2722e",
+    "P8_REVIEW_MATRIX.md": "621e69e8ef3275e474070ff98620d5d1d1db77d5c95cc6211cab2f4cb0a6ecb0",
+    "SOURCE_REFRESH_NOTES.md": "cf923abcf58607a9d99dce0b829b437837da15099606111d5fdce45a8efba036",
+    "REVIEWER_GUIDE.md": "293f2ffed9f3115373b6dad217c05ead26636c16a04d65de66074b6c4aaac1e9",
+    "PROGRAMMER_HANDOFF.md": "f578a9150cab4295cef9f1b9f1623dee3b8186ff10ebd33aa07f84ef90829f4d"
+  }
+}

@@ -41,6 +41,18 @@
     check_owner_understanding_twice: 2,
     finish_two_followups: 2
   };
+  const operationalGoalLabels = Object.freeze({
+    complete_safe_visits: "Безопасно завершить назначенные приёмы",
+    clean_shift_close: "Закрыть смену без незавершённых срочных задач",
+    teach_back: "Проверить, как владелец понял домашний план",
+    protect_rest: "Сохранить безопасный режим отдыха команды",
+    use_safe_referral: "Оформить безопасное направление при нехватке возможностей",
+    maintain_reserve: "Сохранить необходимый резерв клиники",
+    inventory_prepared: "Подготовить нужные материалы до начала работы",
+    review_due_results: "Проверить результаты, срок которых наступил",
+    complete_followup: "Завершить запланированный повторный визит",
+    low_stress_action: "Выполнить действие с учётом стресса животного"
+  });
   const bookingReasonByFamily = {
     ear: "Проблема с ухом",
     skin: "Зуд или изменение кожи",
@@ -61,12 +73,19 @@
     const preferences = {
       budget_limited: "budgetPlan",
       anxious: "empathetic",
-      demanding: "strict"
+      demanding: "strict",
+      owner_budget_constrained: "budgetPlan",
+      owner_anxious_observant: "empathetic",
+      owner_distrustful: "evidence",
+      owner_defensive_after_failure: "empathetic",
+      owner_overconfident: "evidence",
+      owner_low_comprehension: "strict"
     };
+    const financialFlexibility = visit.owner.profile.operationalTraits?.financialFlexibility;
     return {
       id: visit.owner.profileId,
       label: visit.owner.profile.label,
-      budget: visit.owner.profileId === "budget_limited" ? 520 : 820,
+      budget: financialFlexibility < 25 || visit.owner.profileId === "budget_limited" ? 520 : 820,
       trust: traits.trust,
       anxiety: traits.anxiety,
       visitLimit: Math.max(18, Math.round(22 + traits.patience * 0.18)),
@@ -168,6 +187,14 @@
   }
 
   function goalsForDay(catalog, dayNumber) {
+    const operationalDay = catalog.operationalActivation?.p7?.days?.find((item) => item.day === dayNumber);
+    if (operationalDay) {
+      return operationalDay.goals.map((goal) => ({
+        id: goal.goalId,
+        label: operationalGoalLabels[goal.goalType],
+        target: goal.minimum
+      }));
+    }
     const definition = catalog.dayGoals.goalsByDay.find((item) => item.day === dayNumber);
     if (!definition) return [];
     const ids = [...definition.required, ...definition.candidates.slice(0, 1)];

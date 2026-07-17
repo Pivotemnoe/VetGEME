@@ -612,15 +612,19 @@
 
   function selectableCases(catalog) {
     const allowed = catalog.selectionPolicy?.allowedCaseIds;
-    if (!Array.isArray(allowed) || allowed.length === 0) return catalog.cases;
+    const eligible = catalog.cases.filter((caseData) => caseData.generationEligible !== false);
+    if (!Array.isArray(allowed) || allowed.length === 0) return eligible;
     const allowedIds = new Set(allowed);
-    return catalog.cases.filter((caseData) => allowedIds.has(caseData.id));
+    return eligible.filter((caseData) => allowedIds.has(caseData.id));
   }
 
   function selectNewCases(catalog, dayRule, count, random, options = {}) {
     if (catalog.selectionPolicy?.manualSelection && catalog.selectionPolicy.forcedCaseId) {
       const selected = catalog.casesById[catalog.selectionPolicy.forcedCaseId];
       if (!selected) throw new Error(`Configured tester presentation is unavailable: ${catalog.selectionPolicy.forcedCaseId}`);
+      if (selected.generationEligible === false) {
+        throw new Error("Для этого тестового случая сначала явно выберите допустимую срочность в настройках тестировщика.");
+      }
       return Array.from({ length: count }, () => selected);
     }
     const allowedSpecies = new Set(catalog.manifest.contentPolicy.allowedSpeciesTier01);
@@ -721,19 +725,30 @@
     return result;
   }
 
-  function makeIdentity(caseData, random) {
+  function makeIdentity(caseData, catalog, random) {
     const species = weightedPick(caseData.species, random, () => 1);
+    const compatibleTemperaments = new Set(caseData.compatibleTemperaments || []);
+    const temperament = weightedPick(
+      (catalog.patientTemperaments || []).filter((item) => compatibleTemperaments.has(item.temperamentId)),
+      random,
+      () => 1
+    );
+    if (compatibleTemperaments.size > 0 && !temperament) {
+      throw new Error(`No exact temperament profile for ${caseData.id}`);
+    }
     return {
       species,
       animal: weightedPick(animalNames[species], random, () => 1),
       sex: weightedPick(caseData.allowedSex, random, () => 1),
-      ageYears: species === "cat" ? integerBetween({ min: 1, max: 12 }, random) : integerBetween({ min: 1, max: 11 }, random)
+      ageYears: species === "cat" ? integerBetween({ min: 1, max: 12 }, random) : integerBetween({ min: 1, max: 11 }, random),
+      temperamentId: temperament?.temperamentId || null,
+      temperamentProfile: temperament ? clone(temperament.runtimePatientProfileTemplate) : null
     };
   }
 
   function createVisit(caseData, dayNumber, source, catalog, random, state, options = {}) {
     const tutorialActive = dayNumber === 1 && options.tutorialActive;
-    const identity = options.identity ? clone(options.identity) : makeIdentity(caseData, random);
+    const identity = options.identity ? clone(options.identity) : makeIdentity(caseData, catalog, random);
     const owner = options.owner ? clone(options.owner) : buildOwner(caseData, dayNumber, catalog, random, tutorialActive);
     const complaint = options.followUpLine || weightedPick(caseData.initialComplaintVariants, random, () => 1);
     const routing = demandApi.routingForCase(caseData, options.equipmentCapabilities || {});
@@ -755,6 +770,7 @@
       family: caseData.family,
       severity: caseData.severity,
       urgency: caseIsUrgent(caseData) ? "urgent" : caseData.severity,
+      operationalUrgencyBand: caseData.operationalUrgencyBand,
       patient: identity,
       owner,
       complaint: clone(complaint),
@@ -845,9 +861,41 @@
     return fullFingerprint(day, contentPack);
   }
 
+  function progressionRuleForCatalog(catalog, dayNumber) {
+    const sourceRule = catalog.dayPlan.days.find((item) => item.day === dayNumber) || null;
+    const rule = demandApi.progressionRule(dayNumber, sourceRule);
+    const operationalDay = catalog.operationalActivation?.p7?.days?.find((item) => item.day === dayNumber);
+    if (!operationalDay) return rule;
+    const [minimumLoad, maximumLoad] = operationalDay.loadTarget;
+    return {
+      ...rule,
+      title: operationalDay.title,
+      visitsTotal: { min: minimumLoad, max: maximumLoad },
+      bookedNew: {
+        min: Math.min(rule.bookedNew.min, minimumLoad),
+        max: maximumLoad
+      },
+      followUps: {
+        min: Math.min(rule.followUps.min, maximumLoad),
+        max: Math.min(rule.followUps.max, maximumLoad)
+      },
+      followUpTarget: Math.min(rule.followUpTarget ?? rule.followUps.min, maximumLoad),
+      followUpMaximum: Math.min(rule.followUpMaximum ?? rule.followUps.max, maximumLoad),
+      urgentSubset: {
+        min: Math.min(rule.urgentSubset.min, maximumLoad),
+        max: Math.min(rule.urgentSubset.max, maximumLoad)
+      },
+      minimumFamilies: Math.min(rule.minimumFamilies, minimumLoad),
+      operationalDayId: operationalDay.dayId,
+      operationalChapter: operationalDay.chapter,
+      operationalGoalIds: operationalDay.goals.map((goal) => goal.goalId),
+      operationalEventSlots: operationalDay.eventSlots.slice()
+    };
+  }
+
   function validateGeneratedDay(day, catalog, equipment) {
     const errors = [];
-    const rule = demandApi.progressionRule(day.day, catalog.dayPlan.days.find((item) => item.day === day.day) || null);
+    const rule = progressionRuleForCatalog(catalog, day.day);
     if (!rule) return [`Unknown day ${day.day}`];
     if (day.visits.length + day.pendingUnplanned !== day.plannedVisitCount) errors.push("visit total does not match the persisted plan");
     if (day.plannedVisitCount < rule.visitsTotal.min || day.plannedVisitCount > rule.visitsTotal.max) errors.push("visit total outside day rules");
@@ -898,7 +946,7 @@
 
     function getDayRule(dayNumber) {
       if (dayNumber < 1 || dayNumber > 30) return null;
-      return demandApi.progressionRule(dayNumber, catalog.dayPlan.days.find((item) => item.day === dayNumber) || null);
+      return progressionRuleForCatalog(catalog, dayNumber);
     }
 
     function getOrGenerateDay(dayNumber, campaignState = {}) {
@@ -1059,6 +1107,10 @@
         campaignSeed: state.campaignSeed,
         day: dayNumber,
         title: rule.title,
+        operationalDayId: rule.operationalDayId || null,
+        operationalChapter: rule.operationalChapter || null,
+        operationalGoalIds: clone(rule.operationalGoalIds || []),
+        operationalEventSlots: clone(rule.operationalEventSlots || []),
         start: rule.start,
         end: rule.end,
         tutorial: rule.tutorial,

@@ -87,37 +87,7 @@
     return ({ chapter_1: 1, chapter_2: 6, chapter_3: 11, chapter_4: 16, chapter_5: 21, post_chapter_5: 30 })[value] || 1;
   }
 
-  function normalizedUrgency(authored) {
-    const value = String(authored || "routine");
-    if (value.includes("emergency") || value.includes("critical")) return "emergency";
-    if (value.includes("urgent")) return "urgent";
-    if (value.includes("priority")) return "priority";
-    return "routine";
-  }
-
-  function normalizedClassification(authored) {
-    const exact = {
-      required_for_safe_decision: "required",
-      required: "required",
-      recommended_changes_plan: "recommended",
-      optional_adds_information: "optional",
-      low_value_in_context: "low_value",
-      unavailable_requires_referral: "unavailable"
-    };
-    return exact[authored] || "recommended";
-  }
-
-  function ownerProfilesFor(presentation, supportCatalog) {
-    const available = new Set((supportCatalog.owners?.["base-profiles"]?.profiles || []).map((item) => item.id));
-    const authored = [
-      ...(presentation.compatibility?.temperament || []),
-      ...(presentation.compatibility?.ownerModifiers || [])
-    ].filter((id) => available.has(id));
-    return [...new Set(authored.length ? authored : available)];
-  }
-
-  function historyQuestionsFor(family, presentation, supportCatalog) {
-    const ownerIds = ownerProfilesFor(presentation, supportCatalog);
+  function historyQuestionsFor(family, presentation, ownerIds) {
     const criticalFacts = presentation.criticalFacts || [];
     const safeFacts = new Set(presentation.dataSufficiency?.safePlanRequires || []);
     return family.commonHistoryQuestions
@@ -166,24 +136,43 @@
     return { general, target };
   }
 
-  function normalizePresentation(family, variant, presentation, supportCatalog, manifestEntry) {
+  function normalizePresentation(family, variant, presentation, manifestEntry, operationalBundle, testerUrgencyBand) {
     const id = internalCaseId(family.familyId, variant.id, presentation.id);
     const exams = examGroupsFor(presentation);
-    const requiredInvestigations = (presentation.investigations || [])
-      .filter((item) => normalizedClassification(item.classification) === "required")
+    const operationalApi = root.PET_CLINIC_ACTIVATION_OPERATIONAL_V11;
+    assert(operationalApi, "operational activation adapter is unavailable");
+    const operational = operationalApi.presentationContract(
+      operationalBundle,
+      family.familyId,
+      variant.id,
+      presentation
+    );
+    const resolvedUrgencyBand = operationalApi.resolveTesterUrgency(operational, testerUrgencyBand);
+    const diagnosticTests = operational.investigations.map(({ usage, uiClassification }, index) => {
+      const item = presentation.investigations[index];
+      return {
+        id: item.id,
+        label: "Клиническое исследование",
+        type: "authored",
+        source: "diagnostic_test",
+        text: item.result,
+        requires: [],
+        classification: uiClassification,
+        authoredClassification: item.classification,
+        operationalClassificationBand: usage.classificationBandId,
+        operationalDecisionWeight: usage.decisionWeight,
+        operationalResultReviewClass: usage.resultReviewClass,
+        operationalReviewPolicy: clone(usage.reviewPolicy),
+        operationalTurnaroundPolicy: clone(usage.turnaroundPolicy),
+        operationalUsageId: usage.usageId,
+        costVetcoins: null,
+        durationMinutes: usage.turnaroundPolicy.kind === "local" ? usage.turnaroundPolicy.minutes : null
+      };
+    });
+    const requiredInvestigations = diagnosticTests
+      .filter((item) => item.classification === "required")
       .map((item) => item.id);
-    const diagnosticTests = (presentation.investigations || []).map((item) => ({
-      id: item.id,
-      label: "Клиническое исследование",
-      type: "authored",
-      source: "diagnostic_test",
-      text: item.result,
-      requires: [],
-      classification: normalizedClassification(item.classification),
-      authoredClassification: item.classification,
-      costVetcoins: null,
-      durationMinutes: null
-    }));
+    const ownerIds = operational.behavior.ownerArchetypeIds.slice();
     const communication = (presentation.ownerCommunication || []).slice();
     return {
       schemaVersion: 2,
@@ -201,8 +190,11 @@
       localActivationAuthority: "product_owner_local_manual_testing",
       tier: 1,
       unlockDay: chapterUnlockDay(presentation.campaignAvailability?.earliest),
-      severity: normalizedUrgency(presentation.urgency),
+      severity: resolvedUrgencyBand,
       authoredUrgency: presentation.urgency,
+      operationalUrgencyBand: resolvedUrgencyBand,
+      operationalUrgencyResolution: clone(operational.urgency),
+      generationEligible: resolvedUrgencyBand !== null,
       species: presentation.species.slice(),
       allowedSex: ["male", "female"],
       ageBands: clone(presentation.ageBands || []),
@@ -221,7 +213,7 @@
         text: presentation.complaint,
         species: presentation.species.slice()
       }],
-      historyQuestions: historyQuestionsFor(family, presentation, supportCatalog),
+      historyQuestions: historyQuestionsFor(family, presentation, ownerIds),
       generalExam: { label: "Общий осмотр", findings: exams.general },
       targetExam: { label: "Целевой осмотр", findings: exams.target },
       sampleActions: [],
@@ -253,8 +245,10 @@
         plan: communication.join(" "),
         checkUnderstanding: communication.at(-1) || ""
       },
-      compatibleOwnerProfiles: ownerProfilesFor(presentation, supportCatalog),
+      compatibleOwnerProfiles: ownerIds,
       compatibleOwnerModifiers: [],
+      compatibleTemperaments: operational.behavior.temperamentArchetypeIds.slice(),
+      handlingActions: clone(operational.behavior.handlingBindings || []),
       criticalFacts: clone(presentation.criticalFacts || []),
       sourceRecord: {
         familyId: family.familyId,
@@ -262,6 +256,8 @@
         presentationId: presentation.id,
         familyManifestSha256: manifestEntry.sha256,
         diagnosticTruth: variant.diagnosticTruth,
+        operationalPresentationRef: operational.ref,
+        operationalHandlingActionIds: operational.behavior.handlingActionIds.slice(),
         presentation: clone(presentation)
       }
     };
@@ -293,12 +289,12 @@
     return all.some((entry) => entry.caseId === requested) ? requested : all[0]?.caseId || null;
   }
 
-  function activationManifest(medicalManifestHash, cases) {
+  function activationManifest(medicalManifestHash, runtimeContentHash, cases) {
     return {
       schemaVersion: 2,
       contentPackId: PACKAGE_ID,
       contentPackVersion: PACKAGE_VERSION,
-      contentPackHash: medicalManifestHash,
+      contentPackHash: runtimeContentHash,
       tier: "full-local-activation",
       status: "local_manual_testing",
       integrationStatus: "connected_for_local_manual_testing",
@@ -351,15 +347,41 @@
     assert(activation.medicalSource.variantCount === variants.length, "activation variant count drift");
     assert(activation.medicalSource.presentationCount === presentations.length, "activation presentation count drift");
 
-    const cases = loadedFamilies.flatMap(({ entry, value: family }) => family.variants.flatMap((variant) => (
-      variant.presentations.map((presentation) => normalizePresentation(family, variant, presentation, supportCatalog, entry))
-    )));
-    assert(new Set(cases.map((item) => item.id)).size === cases.length, "duplicate runtime medical identity");
+    const operationalApi = root.PET_CLINIC_ACTIVATION_OPERATIONAL_V11;
+    assert(operationalApi?.loadFromReader, "operational activation adapter is unavailable");
+    const operationalBundle = await operationalApi.loadFromReader(async (relativePath) => {
+      const document = await read(relativePath);
+      return document.bytes;
+    });
+    const runtimeContentHash = await sha256Hex(new TextEncoder().encode([
+      medicalDocument.sha256,
+      operationalApi.OPERATIONAL_MANIFEST_SHA256,
+      operationalApi.P8_MANIFEST_SHA256,
+      operationalBundle.version
+    ].join("|")));
     const index = buildIndex(families);
     const modeId = options.modeId || "campaign";
     const params = options.urlSearchParams || new URLSearchParams(root?.location?.search || "");
+    const selectedCaseId = modeId === "tester" ? selectedTesterCase(index, params) : null;
+    const requestedTesterUrgency = modeId === "tester" ? params.get("testerUrgency") : null;
+    const cases = loadedFamilies.flatMap(({ entry, value: family }) => family.variants.flatMap((variant) => (
+      variant.presentations.map((presentation) => {
+        const caseId = internalCaseId(family.familyId, variant.id, presentation.id);
+        return normalizePresentation(
+          family,
+          variant,
+          presentation,
+          entry,
+          operationalBundle,
+          caseId === selectedCaseId ? requestedTesterUrgency : null
+        );
+      })
+    )));
+    assert(new Set(cases.map((item) => item.id)).size === cases.length, "duplicate runtime medical identity");
     const sequenceIds = trainingCaseIds(trainingDocument.value);
     sequenceIds.forEach((id) => assert(cases.some((item) => item.id === id), `unknown training source ${id}`));
+    sequenceIds.forEach((id) => assert(cases.find((item) => item.id === id)?.generationEligible,
+      `training source ${id} has unresolved dynamic urgency`));
 
     if (modeId === "tester" && params.get("testerPool") === "legacy30") {
       const requested = params.get("legacyCaseId");
@@ -387,9 +409,9 @@
       };
     }
 
-    const catalog = {
+    const catalog = operationalApi.applyCatalog(operationalBundle, {
       ...supportCatalog,
-      manifest: activationManifest(medicalDocument.sha256, cases),
+      manifest: activationManifest(medicalDocument.sha256, runtimeContentHash, cases),
       cases,
       casesById: Object.fromEntries(cases.map((item) => [item.id, item])),
       runtimeModeId: modeId,
@@ -401,6 +423,11 @@
         counts: clone(EXPECTED_COUNTS),
         sourceFamilyHashesVerified: loadedFamilies.length,
         normalPoolContainsLegacyIds: cases.some((item) => supportCatalog.casesById[item.id]),
+        operationalManifestSha256: operationalApi.OPERATIONAL_MANIFEST_SHA256,
+        p8ManifestSha256: operationalApi.P8_MANIFEST_SHA256,
+        runtimeContentHash,
+        operational: clone(operationalBundle.audit),
+        unresolvedDynamicPresentations: cases.filter((item) => !item.generationEligible).length,
         testerPool: "medical_2026.07.16.40"
       },
       activationIndex: index,
@@ -419,8 +446,14 @@
         manualSelection: modeId === "tester",
         forcedCaseId: modeId === "tester" ? selectedTesterCase(index, params) : null
       }
-    };
+    });
     assert(catalog.activationAudit.normalPoolContainsLegacyIds === false, "legacy case leaked into the activated normal pool");
+    const selectedDynamicResolved = modeId === "tester"
+      && Boolean(requestedTesterUrgency)
+      && cases.find((item) => item.id === selectedCaseId)?.operationalUrgencyResolution?.resolutionMode
+        === "runtime_state_required_before_order";
+    assert(catalog.activationAudit.unresolvedDynamicPresentations === (selectedDynamicResolved ? 1 : 2),
+      "unexpected dynamic urgency resolution count");
     return catalog;
   }
 
@@ -463,6 +496,7 @@
       "<label><span>Семейство</span><select id=\"testerFamilySelect\"></select></label>",
       "<label><span>Вариант</span><select id=\"testerVariantSelect\"></select></label>",
       "<label><span>Представление</span><select id=\"testerPresentationSelect\"></select></label>",
+      "<label class=\"tester-urgency-select\" hidden><span>Срочность для динамического случая</span><select id=\"testerUrgencySelect\"></select></label>",
       "<label class=\"tester-legacy-select\" hidden><span>Архивный случай</span><select id=\"testerLegacyCaseSelect\"></select></label>",
       "<button id=\"testerApplyMedicalSource\" type=\"button\">Открыть выбранный случай</button>",
       "<small>Выбор создаёт новый день только в сохранении режима тестировщика.</small>"
@@ -473,6 +507,8 @@
     const variantSelect = section.querySelector("#testerVariantSelect");
     const presentationSelect = section.querySelector("#testerPresentationSelect");
     const archiveToggle = section.querySelector("#testerArchiveToggle");
+    const urgencyWrap = section.querySelector(".tester-urgency-select");
+    const urgencySelect = section.querySelector("#testerUrgencySelect");
     const legacyWrap = section.querySelector(".tester-legacy-select");
     const legacySelect = section.querySelector("#testerLegacyCaseSelect");
     const params = new URLSearchParams(root.location.search);
@@ -508,6 +544,28 @@
       if (params.get("presentationId") && [...presentationSelect.options].some((entry) => entry.value === params.get("presentationId"))) {
         presentationSelect.value = params.get("presentationId");
       }
+      fillUrgency();
+    }
+    function selectedCaseData() {
+      return catalog.casesById[internalCaseId(familySelect.value, variantSelect.value, presentationSelect.value)] || null;
+    }
+    function fillUrgency() {
+      urgencySelect.replaceChildren();
+      const resolution = selectedCaseData()?.operationalUrgencyResolution;
+      const dynamic = resolution?.resolutionMode === "runtime_state_required_before_order";
+      urgencyWrap.hidden = !dynamic || archiveToggle.checked;
+      if (!dynamic) return;
+      const labels = {
+        emergency: "Экстренная",
+        urgent: "Срочная",
+        priority: "Приоритетная",
+        scheduled: "Плановая",
+        routine: "Обычная"
+      };
+      resolution.allowedBandIds.forEach((bandId) => option(urgencySelect, bandId, labels[bandId]));
+      if (params.get("testerUrgency") && [...urgencySelect.options].some((entry) => entry.value === params.get("testerUrgency"))) {
+        urgencySelect.value = params.get("testerUrgency");
+      }
     }
     if (params.get("familyId") && [...familySelect.options].some((entry) => entry.value === params.get("familyId"))) {
       familySelect.value = params.get("familyId");
@@ -523,25 +581,29 @@
       variantSelect.closest("label").hidden = archive;
       presentationSelect.closest("label").hidden = archive;
       legacyWrap.hidden = !archive;
+      fillUrgency();
     }
     toggleFields();
     familySelect.addEventListener("change", fillVariants);
     variantSelect.addEventListener("change", fillPresentations);
+    presentationSelect.addEventListener("change", fillUrgency);
     archiveToggle.addEventListener("change", toggleFields);
     section.querySelector("#testerApplyMedicalSource").addEventListener("click", () => {
       const url = new URL(root.location.href);
       if (archiveToggle.checked) {
         url.searchParams.set("testerPool", "legacy30");
         url.searchParams.set("legacyCaseId", legacySelect.value);
-        ["familyId", "variantId", "presentationId"].forEach((key) => url.searchParams.delete(key));
+        ["familyId", "variantId", "presentationId", "testerUrgency"].forEach((key) => url.searchParams.delete(key));
       } else {
         url.searchParams.delete("testerPool");
         url.searchParams.delete("legacyCaseId");
         url.searchParams.set("familyId", familySelect.value);
         url.searchParams.set("variantId", variantSelect.value);
         url.searchParams.set("presentationId", presentationSelect.value);
+        if (!urgencyWrap.hidden) url.searchParams.set("testerUrgency", urgencySelect.value);
+        else url.searchParams.delete("testerUrgency");
       }
-      root.PET_CLINIC_SAVE_MANAGER_V11?.clearMode(storage, "tester");
+      root.PET_CLINIC_SAVE_MANAGER_V11?.clearMode(root.localStorage, "tester");
       root.location.assign(url.toString());
     });
   }

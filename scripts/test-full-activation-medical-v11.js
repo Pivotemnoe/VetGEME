@@ -3,6 +3,7 @@
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
+const operationalLoader = require("../generator/activation-operational-v11.js");
 const loader = require("../generator/activation-medical-v11.js");
 const generatorApi = require("../generator/generator-v2.js");
 
@@ -39,6 +40,17 @@ function generatedDay(catalog, seed, storage = generatorApi.createMemoryStorage(
   assert.equal(campaign.activationAudit.medicalManifestSha256, "87ded58e62ecf0b05d87af83e00570004cadafa9a0edd74768eda6e8cb9b3f49");
   assert.equal(campaign.activationAudit.sourceFamilyHashesVerified, 39);
   assert.equal(campaign.activationAudit.normalPoolContainsLegacyIds, false);
+  assert.equal(campaign.activationAudit.operationalManifestSha256, operationalLoader.OPERATIONAL_MANIFEST_SHA256);
+  assert.equal(campaign.activationAudit.p8ManifestSha256, operationalLoader.P8_MANIFEST_SHA256);
+  assert.equal(campaign.activationAudit.unresolvedDynamicPresentations, 2);
+  assert.equal(campaign.operationalActivation.audit.exactUrgencyValues, 206);
+  assert.equal(campaign.operationalActivation.audit.exactClassificationValues, 875);
+  assert.equal(campaign.operationalActivation.audit.investigationUsages, 1864);
+  assert.equal(campaign.operationalActivation.audit.researchRoutes, 361);
+  assert.equal(campaign.operationalActivation.audit.presentationBehaviorBindings, 645);
+  assert.equal(campaign.operationalActivation.audit.p7EvidenceContracts, 93);
+  assert.equal(campaign.owners["base-profiles"].profiles.length, 12);
+  assert.equal(campaign.patientTemperaments.length, 8);
   assert.equal(campaign.manifest.contentPolicy.runtimeGenerationOfMedicalText, false);
   assert.equal(campaign.manifest.contentPolicy.externalVeterinaryCertificationClaimed, false);
 
